@@ -1,0 +1,29 @@
+# Default values for apply-for-legal-aid.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 1G
+
+deploy:
+  secretKeyBase: change_me_uat
+
+
+postgresql:
+  enabled: true
+  resources:
+    limits:
+     cpu: 250m
+     memory: 256Mi
+    requests:
+     cpu: 250m
+     memory: 256Mi
+  postgresqlUsername: postgres
+  postgresqlPassword: change_me_uat
+  postgresqlDatabase: check_financial_eligibility
+  persistence:
+    enabled: false
