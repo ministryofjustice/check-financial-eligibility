@@ -1,5 +1,5 @@
 require 'rails_helper'
 
-RSpec.describe StatusesController, type: :controller do
+RSpec.describe StatusController, type: :controller do
 
 end
