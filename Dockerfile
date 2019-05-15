@@ -1,19 +1,19 @@
-# Base image
 FROM ruby:2.5.3
-
-ENV HOME /home/rails/webapp
-
-# Install PGsql dependencies and js engine
-RUN apt-get update -qq && apt-get install 
-
-WORKDIR $HOME
-
-# Install gems
-ADD Gemfile* $HOME/
+MAINTAINER apply for legal aid team
+ENV RAILS_ENV production
+RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
+RUN mkdir /myapp
+WORKDIR /myapp
+COPY Gemfile /myapp/Gemfile
+COPY Gemfile.lock /myapp/Gemfile.lock
 RUN bundle install
+COPY . /myapp
 
-# Add the app code
-ADD . $HOME
+EXPOSE 3000
 
-# Default command
-CMD ["rails", "server", "--binding", "0.0.0.0”]
+RUN adduser --disabled-password apply -u 1001 && \
+    chown -R apply:apply /myapp
+
+USER 1001
+
+CMD ["docker/run"]
