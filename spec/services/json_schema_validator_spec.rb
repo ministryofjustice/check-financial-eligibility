@@ -14,7 +14,7 @@ describe JsonSchemaValidator do
       end
     end
 
-    context 'client_referenc_id' do
+    context 'client_reference_id' do
       context 'missing' do
         before do
           assessment_hash.delete(:client_reference_id)
@@ -387,8 +387,19 @@ describe JsonSchemaValidator do
           end
 
           it 'has an error message' do
-            expected_error = "The property '#/applicant_outgoings/0/amount' did not have a minimum value of 0.01"
+            expected_error = "The property '#/applicant_outgoings/0/amount' did not have a minimum value of 0.0"
             expect(validator.errors.first).to match(/#{expected_error}/)
+          end
+        end
+
+        context 'amount is zero' do
+          before do
+            assessment_hash[:applicant_outgoings].first[:amount] = 0.0
+            validator.run
+          end
+
+          it 'is valid' do
+            expect(validator).to be_valid
           end
         end
 

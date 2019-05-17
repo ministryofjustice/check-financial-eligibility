@@ -2,7 +2,7 @@
   "id": "#{Rails.root}/config/api/assessment_schema.json",
   "$schema": "http://json-schema.org/draft-04/schema#",
   "title": "Legal Aid Check Financial Eligibility payload schema",
-  "description": "This schema defines the payload required to submit data to the Legal Aid Check Financial Eligibility API",
+  "description": " defines the payload required to submit data to the Legal Aid Check Financial Eligibility API",
 
 
   "type": "object",
@@ -17,34 +17,29 @@
 
 
   "definitions": {
-    "uuid": {
-      "type": "string",
-      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
-      "description": "has to be a valid uuid"
-    },
     "date": {
       "type": "string",
-      "pattern": "^([12][0-9]{3}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01]))$",
+      "pattern": "^([12][9|0][0-9]{2}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01]))$",
       "description": "Date in format YYYY-MM-DD in range 1900-01-01 to 2999-12-31"
     },
     "matter_proceeding_type": {
       "type": "string",
-      "pattern": "^Domestic abuse$",
+      "enum": ["Domestic abuse"],
       "description": "The matter proceeding type - the only one currently handled is 'Domestic abuse'"
     },
     "applicant_involvement_type": {
       "type": "string",
-      "enum": ["applicant", "defendent"],
-      "description": "The type of involvement of the applicant in the case.  Currently limited to applicant in the case, or defendant"
+      "enum": ["applicant", "defendant"],
+      "description": "The type of involvement of the applicant in the case."
     },
     "number_with_two_decimals": {
       "type": "number",
       "multipleOf": 0.01,
-      "minimum": 0.01,
-      "description": "Positive number with two decimal places"
+      "minimum": 0.00,
+      "description": "Non-negative number (including zero) with two decimal places"
     },
     "benefit_name": {
-      "description": "Name of benefit received - must be on eof the values listed in the enum below",
+      "description": "Name of benefit received - must be one of the values listed in the enum below",
       "type": "string",
       "enum": ["child_allowance", "jobseekers_allowance"]
     },
