@@ -59,3 +59,7 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 end
+
+require_relative 'fixtures/base_assessment_fixture'
+require_relative 'fixtures/assessment_fixture'
+require_relative 'fixtures/assessment_response_fixture'

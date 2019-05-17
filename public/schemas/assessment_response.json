@@ -1,0 +1,113 @@
+{
+  "id": "http://localhost:3000/schemas/assessment_response_schema.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Legal Aid Check Financial Eligibility response schema",
+  "description": "This schema defines the response to an eligibility assessment request",
+
+  "type": "object",
+  "required": [
+    "assessment_id",
+    "details"
+  ],
+  "additionalProperties": false,
+
+  "definitions": {
+    "assessment_result": {
+      "type": "string",
+      "enum": [
+        "eligible",
+        "not_eligible",
+        "contribution_required",
+        "out_of_scope"
+      ]
+    }
+  },
+  "properties": {
+    "assessment_id": {
+      "description": "A unique id for this eligibilty check",
+      "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/uuid"
+    },
+    "client_reference_id": {
+      "description": "The client reference id specified in the request, if present",
+      "type": "string"
+    },
+    "result": {
+      "description": "The result of the eligibility check as  follows:\neligible: Eligible for legal aid\nnot_eligible: Not eligible for legal aid\ncontribution_required: The applicant is eligible for legal aid, but a monthly contribution and/or a capital contribution as specified in the details is required\nout_of_scope: This applicant is out of scope for automatic determination of eligibility",
+      "$ref": "#/definitions/assessment_result"
+    },
+    "details": {
+      "description": "Interim values used in the calculation",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "passported",
+        "self_employed",
+        "monthly_gross_income",
+        "upper_income_threshold",
+        "monthly_disposable_income",
+        "disposable_income_lower_threshold",
+        "disposable_income_upper_threshold",
+        "total_capital_assessment",
+        "total_capital_lower_threshold",
+        "total_capital_upper_threshold",
+        "disposable_capital_assessment",
+        "monthly_contribution",
+        "capital_contribution"
+      ],
+      "properties": {
+        "passported": {
+          "description": "Whether or not the applicant receives a qualifying benefit",
+          "type": "boolean"
+        },
+        "self_employed": {
+          "description": "Whether or not the applicant is self-employed",
+          "type": "boolean"
+        },
+        "monthly_gross_income": {
+          "description": "The monthly gross income calculated from the individual income values given",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/number_with_two_decimals"
+        },
+        "upper_income_threshold": {
+          "description": "The upper income threshold that was used (valies according to the circumstances of the applicant)",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/number_with_two_decimals"
+        },
+        "monthly_disposable_income": {
+          "description": "The monthly dispasable income calculated from the individual income values given and allowable expenses",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/number_with_two_decimals"
+        },
+        "disposable_income_lower_threshold": {
+          "description": "The lower threshold of the monthly disposable income used in the calculation",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/number_with_two_decimals"
+        },
+        "disposable_income_upper_threshold": {
+          "description": "The upper threshold of the monthly disposable income used in the calculation",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/number_with_two_decimals"
+        },
+        "total_capital_assessment": {
+          "description": "The total capital assets of the applicant calculated from all the values given",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/number_with_two_decimals"
+        },
+        "total_capital_lower_threshold": {
+          "description": "The lower threshold of the capital allowance used in the calculation",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/number_with_two_decimals"
+        },
+        "total_capital_upper_threshold": {
+          "description": "The upper threshold of the capital allowance used in the calculation",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/number_with_two_decimals"
+        },
+        "disposable_capital_assessment": {
+          "description": "The applicant's disposable capital calculated after subtracting allowable items from the list of capital assets given",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/number_with_two_decimals"
+        },
+        "monthly_contribution": {
+          "description": "The monthly contribution required from the applicant",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/number_with_two_decimals"
+        },
+        "capital_contribution": {
+          "description": "The capital contribution required from the applicant",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/number_with_two_decimals"
+        }
+      }
+    }
+  }
+}
