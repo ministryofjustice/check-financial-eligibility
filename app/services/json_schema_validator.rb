@@ -13,6 +13,6 @@ class JsonSchemaValidator
   end
 
   def valid?
-   @errors.empty?
+    @errors.empty?
   end
 end
