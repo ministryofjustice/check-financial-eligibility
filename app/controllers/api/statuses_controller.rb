@@ -5,7 +5,7 @@ module Api
       render json: { status: 'SUCCESS', message: 'Response Messages', data: responses }
     end
 
-    private
+    # private
 
     # def status_params
     #   params.require(:status).permit(:response)
