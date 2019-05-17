@@ -1,5 +1,4 @@
 class JsonSchemaValidator
-
   SCHEMA_PATH = File.join(Rails.root, 'config', 'api', 'assessment_schema.json')
 
   attr_reader :errors

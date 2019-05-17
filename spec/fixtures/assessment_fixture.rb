@@ -1,7 +1,7 @@
 class AssessmentFixture
   def self.ruby_hash
     {
-      assessment_id: "edef9abe-9b44-4164-9cb2-d6a0df0033ff",
+      client_reference_id: "my-eligibility-check-01",
       meta_data: {
         submission_date: Date.parse('02 Apr 2019'),
         matter_proceeding_type: "Domestic abuse"

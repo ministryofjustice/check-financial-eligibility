@@ -1,14 +1,12 @@
 require 'rails_helper'
 require_relative '../fixtures/assessment_fixture'
 
-describe 'JsonSchemaValidator' do
-
+describe JsonSchemaValidator do
   let(:assessment_hash) { AssessmentFixture.ruby_hash }
   let(:payload) { JSON.pretty_generate(assessment_hash) }
   let(:validator) { JsonSchemaValidator.new(payload) }
 
   context 'valid assessment payloads' do
-
     context 'unchanged payload' do
       it 'is valid' do
         validator.run
@@ -16,36 +14,15 @@ describe 'JsonSchemaValidator' do
       end
     end
 
-    context 'assessment_id' do
+    context 'client_referenc_id' do
       context 'missing' do
         before do
-          assessment_hash.delete(:assessment_id)
+          assessment_hash.delete(:client_reference_id)
           validator.run
         end
 
-        it 'is not valid' do
-          expect(validator).not_to be_valid
-        end
-
-        it 'has an error message' do
-          expected_error = "The property '#/' did not contain a required property of 'assessment_id'"
-          expect(validator.errors.first).to match /#{expected_error}/
-        end
-      end
-
-      context 'not a valid UUID' do
-        before do
-          assessment_hash[:assessment_id] = 'abdefg-1234x'
-          validator.run
-        end
-
-        it 'is not valid' do
-          expect(validator).not_to be_valid
-        end
-
-        it 'has an error message' do
-          expected_error = %q|The property '#/assessment_id' value \"abdefg-1234x\" did not match the regex|
-          expect(validator.errors.first).to match /#{expected_error}/
+        it 'is valid' do
+          expect(validator).to be_valid
         end
       end
     end
@@ -63,7 +40,7 @@ describe 'JsonSchemaValidator' do
 
         it 'shows an error message' do
           expected_error = "The property '#/' contains additional properties.*added_property"
-          expect(validator.errors.first).to match /#{expected_error}/
+          expect(validator.errors.first).to match(/#{expected_error}/)
         end
       end
 
@@ -116,7 +93,6 @@ describe 'JsonSchemaValidator' do
             expected_error = "The property '#/applicant/date_of_birth' value \"24-03-1966\" did not match the regex"
             expect(validator.errors.first).to match(/#{expected_error}/)
           end
-
         end
       end
 
@@ -132,7 +108,7 @@ describe 'JsonSchemaValidator' do
 
         it 'has an error' do
           expected_error = "The property '#/applicant' contains additional properties .*mother_in_law"
-          expect(validator.errors.first).to match /#{expected_error}/
+          expect(validator.errors.first).to match(/#{expected_error}/)
         end
       end
 
@@ -162,7 +138,6 @@ describe 'JsonSchemaValidator' do
             expected_error = "The property '#/applicant/dependents/0' did not contain a required property of 'in_full_time_education'"
             expect(validator.errors.first).to match(/#{expected_error}/)
           end
-
         end
 
         context 'extra attribute' do
@@ -182,7 +157,6 @@ describe 'JsonSchemaValidator' do
         end
       end
     end
-
 
     context 'applicant_income' do
       context 'wage slips' do
@@ -386,7 +360,7 @@ describe 'JsonSchemaValidator' do
           end
         end
 
-        context 'amount has thee decimal places'  do
+        context 'amount has thee decimal places' do
           before do
             assessment_hash[:applicant_outgoings].first[:amount] = 153.667
             validator.run
@@ -402,7 +376,7 @@ describe 'JsonSchemaValidator' do
           end
         end
 
-        context 'amount is negative'  do
+        context 'amount is negative' do
           before do
             assessment_hash[:applicant_outgoings].first[:amount] = -455.23
             validator.run
@@ -418,7 +392,7 @@ describe 'JsonSchemaValidator' do
           end
         end
 
-        context 'amount is a positive two decimal number'  do
+        context 'amount is a positive two decimal number' do
           before do
             assessment_hash[:applicant_outgoings].first[:amount] = 754.22
             validator.run
@@ -607,7 +581,6 @@ describe 'JsonSchemaValidator' do
             end
           end
 
-
           context 'it has a missing attribute' do
             before do
               assessment_hash[:applicant_capital][:liquid_capital][:valuable_items].first.delete(:value)
@@ -714,8 +687,6 @@ describe 'JsonSchemaValidator' do
           end
         end
       end
-
     end
   end
-
 end
