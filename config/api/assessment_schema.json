@@ -18,25 +18,25 @@
 
   "definitions": {
     "date": {
+      "description": "Date in format YYYY-MM-DD in range 1900-01-01 to 2999-12-31",
       "type": "string",
-      "pattern": "^([12][9|0][0-9]{2}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01]))$",
-      "description": "Date in format YYYY-MM-DD in range 1900-01-01 to 2999-12-31"
+      "pattern": "^([12][9|0][0-9]{2}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01]))$"
     },
     "matter_proceeding_type": {
+      "description": "The matter proceeding type",
       "type": "string",
-      "enum": ["Domestic abuse"],
-      "description": "The matter proceeding type - the only one currently handled is 'Domestic abuse'"
+      "enum": ["domestic_abuse"]
     },
     "applicant_involvement_type": {
+      "description": "The type of involvement of the applicant in the case.",
       "type": "string",
-      "enum": ["applicant", "defendant"],
-      "description": "The type of involvement of the applicant in the case."
+      "enum": ["applicant", "defendant"]
     },
     "number_with_two_decimals": {
+      "description": "Non-negative number (including zero) with two decimal places",
       "type": "number",
       "multipleOf": 0.01,
-      "minimum": 0.00,
-      "description": "Non-negative number (including zero) with two decimal places"
+      "minimum": 0.00
     },
     "benefit_name": {
       "description": "Name of benefit received - must be one of the values listed in the enum below",
@@ -52,19 +52,19 @@
       "additionalProperties": false,
       "properties": {
         "date_of_birth": {
-          "$ref": "#/definitions/date",
-          "description": "Date of birth of the dependent"
+          "description": "Date of birth of the dependent",
+          "$ref": "#/definitions/date"
         },
         "in_full_time_education": {
-          "type": "boolean",
-          "description": "Whether or not the dependent is in full time education"
+          "description": "Whether or not the dependent is in full time education",
+          "type": "boolean"
         },
         "income": {
+          "description": "Optional array of income objects defining the income the dependent received during the calculation period",
           "type": "array",
           "items": {
             "$ref": "#/definitions/dependent_income"
-          },
-          "description": "Optional array of income objects defining the income the dependent received during the calculation period"
+          }
         }
       }
     },
@@ -76,8 +76,8 @@
       ],
       "properties": {
         "date_of_payment": {
-          "$ref": "#/definitions/date",
-          "description": "the date upon which the dependent received this income"
+          "description": "the date upon which the dependent received this income",
+          "$ref": "#/definitions/date"
         },
         "amount": {
           "$ref": "#/definitions/number_with_two_decimals"
@@ -170,12 +170,15 @@
       "additionalProperties": false,
       "properties": {
         "value": {
+          "description": "The current value of the property",
           "$ref": "#/definitions/number_with_two_decimals"
         },
         "outstanding_mortgage": {
+          "description": "The value of the outstanding mortgage",
           "$ref": "#/definitions/number_with_two_decimals"
         },
         "percentage_owned": {
+          "description": "The percentage owned, e.g. '33.33' or '100'",
           "$ref": "#/definitions/percentage_with_two_decimals"
         }
       }

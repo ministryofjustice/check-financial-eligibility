@@ -9,7 +9,6 @@ describe JsonSchemaValidator do
   context 'valid assessment payloads' do
     context 'unchanged payload' do
       it 'is valid' do
-        validator.run
         expect(validator.valid?).to be true
       end
     end
@@ -18,7 +17,6 @@ describe JsonSchemaValidator do
       context 'missing' do
         before do
           assessment_hash.delete(:client_reference_id)
-          validator.run
         end
 
         it 'is valid' do
@@ -31,7 +29,6 @@ describe JsonSchemaValidator do
       context 'extra property' do
         before do
           assessment_hash['added_property'] = 33
-          validator.run
         end
 
         it 'is not valid' do
@@ -47,7 +44,6 @@ describe JsonSchemaValidator do
       context 'missing property' do
         before do
           assessment_hash.delete(:applicant)
-          validator.run
         end
 
         it 'is not valid' do
@@ -66,7 +62,6 @@ describe JsonSchemaValidator do
         context 'missing' do
           before do
             assessment_hash[:applicant].delete(:date_of_birth)
-            validator.run
           end
 
           it 'is invalid' do
@@ -82,7 +77,6 @@ describe JsonSchemaValidator do
         context 'invalid' do
           before do
             assessment_hash[:applicant][:date_of_birth] = '24-03-1966'
-            validator.run
           end
 
           it 'is invalid' do
@@ -99,7 +93,6 @@ describe JsonSchemaValidator do
       context 'additional property' do
         before do
           assessment_hash[:applicant][:mother_in_law] = true
-          validator.run
         end
 
         it 'is invalid' do
@@ -116,7 +109,6 @@ describe JsonSchemaValidator do
         context 'none specified' do
           before do
             assessment_hash[:applicant].delete(:dependents)
-            validator.run
           end
         end
 
@@ -127,7 +119,6 @@ describe JsonSchemaValidator do
         context 'missing attribute' do
           before do
             assessment_hash[:applicant][:dependents].first.delete(:in_full_time_education)
-            validator.run
           end
 
           it 'is invalid' do
@@ -143,7 +134,6 @@ describe JsonSchemaValidator do
         context 'extra attribute' do
           before do
             assessment_hash[:applicant][:dependents].last[:name] = 'Joe'
-            validator.run
           end
 
           it 'is invalid' do
@@ -163,7 +153,6 @@ describe JsonSchemaValidator do
         context 'no wage_slips specified' do
           before do
             assessment_hash[:applicant_income].delete(:wage_slips)
-            validator.run
           end
 
           it 'is valid' do
@@ -174,7 +163,6 @@ describe JsonSchemaValidator do
         context 'wage slip has missing property' do
           before do
             assessment_hash[:applicant_income][:wage_slips].last.delete(:paye)
-            validator.run
           end
 
           it 'is invalid' do
@@ -191,7 +179,6 @@ describe JsonSchemaValidator do
       context 'wage slip has an extra unknown property' do
         before do
           assessment_hash[:applicant_income][:wage_slips].first[:bonus] = true
-          validator.run
         end
 
         it 'is invalid' do
@@ -208,7 +195,6 @@ describe JsonSchemaValidator do
         context 'no benefits specified' do
           before do
             assessment_hash[:applicant_income].delete(:benefits)
-            validator.run
           end
 
           it 'is valid' do
@@ -219,7 +205,6 @@ describe JsonSchemaValidator do
         context 'additional unknown property' do
           before do
             assessment_hash[:applicant_income][:benefits].first[:xxxx] = true
-            validator.run
           end
 
           it 'is invalid' do
@@ -235,7 +220,6 @@ describe JsonSchemaValidator do
         context 'missing property' do
           before do
             assessment_hash[:applicant_income][:benefits].first.delete(:benefit_name)
-            validator.run
           end
 
           it 'is invalid' do
@@ -254,7 +238,6 @@ describe JsonSchemaValidator do
       context 'not present' do
         before do
           assessment_hash.delete(:applicant_outgoings)
-          validator.run
         end
         it 'is invalid' do
           expect(validator).not_to be_valid
@@ -269,7 +252,6 @@ describe JsonSchemaValidator do
       context 'there is not one outgoing' do
         before do
           assessment_hash[:applicant_outgoings] = []
-          validator.run
         end
 
         it 'is invalid' do
@@ -285,7 +267,6 @@ describe JsonSchemaValidator do
       context 'an attribute is missing' do
         before do
           assessment_hash[:applicant_outgoings].first.delete(:type_of_outgoing)
-          validator.run
         end
 
         it 'is invalid' do
@@ -301,7 +282,6 @@ describe JsonSchemaValidator do
       context 'it has an extra unknown attribute' do
         before do
           assessment_hash[:applicant_outgoings].first[:xxxx] = false
-          validator.run
         end
 
         it 'is invalid' do
@@ -318,7 +298,6 @@ describe JsonSchemaValidator do
         context 'a value not in the permitted list of values' do
           before do
             assessment_hash[:applicant_outgoings].first[:type_of_outgoing] = 'loan to a friend'
-            validator.run
           end
 
           it 'is invalid' do
@@ -336,7 +315,6 @@ describe JsonSchemaValidator do
         context 'amount is not numeric' do
           before do
             assessment_hash[:applicant_outgoings].first[:amount] = 'ten point 3'
-            validator.run
           end
 
           it 'is invalid' do
@@ -352,7 +330,6 @@ describe JsonSchemaValidator do
         context 'amount is an integer' do
           before do
             assessment_hash[:applicant_outgoings].first[:amount] = 354
-            validator.run
           end
 
           it 'is valid' do
@@ -363,7 +340,6 @@ describe JsonSchemaValidator do
         context 'amount has thee decimal places' do
           before do
             assessment_hash[:applicant_outgoings].first[:amount] = 153.667
-            validator.run
           end
 
           it 'is invalid' do
@@ -379,7 +355,6 @@ describe JsonSchemaValidator do
         context 'amount is negative' do
           before do
             assessment_hash[:applicant_outgoings].first[:amount] = -455.23
-            validator.run
           end
 
           it 'is invalid' do
@@ -395,7 +370,6 @@ describe JsonSchemaValidator do
         context 'amount is zero' do
           before do
             assessment_hash[:applicant_outgoings].first[:amount] = 0.0
-            validator.run
           end
 
           it 'is valid' do
@@ -406,7 +380,6 @@ describe JsonSchemaValidator do
         context 'amount is a positive two decimal number' do
           before do
             assessment_hash[:applicant_outgoings].first[:amount] = 754.22
-            validator.run
           end
 
           it 'is valid' do
@@ -420,7 +393,6 @@ describe JsonSchemaValidator do
       context 'an additional unknown property is present' do
         before do
           assessment_hash[:applicant_capital][:trust_fund] = 'BVI'
-          validator.run
         end
 
         it 'is invalid' do
@@ -437,7 +409,6 @@ describe JsonSchemaValidator do
         context 'it is not present' do
           before do
             assessment_hash[:applicant_capital].delete(:property)
-            validator.run
           end
 
           it 'is valid' do
@@ -448,7 +419,6 @@ describe JsonSchemaValidator do
         context 'an extra unknown attribute is present' do
           before do
             assessment_hash[:applicant_capital][:property][:holiday_let] = 'France'
-            validator.run
           end
 
           it 'is invalid' do
@@ -465,7 +435,6 @@ describe JsonSchemaValidator do
           context 'it is not present' do
             before do
               assessment_hash[:applicant_capital][:property].delete(:main_home)
-              validator.run
             end
 
             it 'is valid' do
@@ -476,7 +445,6 @@ describe JsonSchemaValidator do
           context 'it has an extra attribute' do
             before do
               assessment_hash[:applicant_capital][:property][:main_home][:purchase_price] = 12_000
-              validator.run
             end
 
             it 'is invalid' do
@@ -492,7 +460,6 @@ describe JsonSchemaValidator do
           context 'it has a missing attribute' do
             before do
               assessment_hash[:applicant_capital][:property][:main_home].delete(:value)
-              validator.run
             end
 
             it 'is invalid' do
@@ -510,7 +477,6 @@ describe JsonSchemaValidator do
           context 'it is not present' do
             before do
               assessment_hash[:applicant_capital][:property].delete(:other_properties)
-              validator.run
             end
 
             it 'is valid' do
@@ -521,7 +487,6 @@ describe JsonSchemaValidator do
           context 'it has an extra attribute' do
             before do
               assessment_hash[:applicant_capital][:property][:other_properties].first[:purchase_price] = 12_000
-              validator.run
             end
 
             it 'is invalid' do
@@ -537,7 +502,6 @@ describe JsonSchemaValidator do
           context 'it has a missing attribute' do
             before do
               assessment_hash[:applicant_capital][:property][:other_properties].first.delete(:value)
-              validator.run
             end
 
             it 'is invalid' do
@@ -556,7 +520,6 @@ describe JsonSchemaValidator do
         context 'it is not present' do
           before do
             assessment_hash[:applicant_capital].delete(:liquid_capital)
-            validator.run
           end
 
           it 'is valid' do
@@ -568,7 +531,6 @@ describe JsonSchemaValidator do
           context 'it is not present' do
             before do
               assessment_hash[:applicant_capital][:liquid_capital].delete(:valuable_items)
-              validator.run
             end
 
             it 'is valid' do
@@ -579,7 +541,6 @@ describe JsonSchemaValidator do
           context 'it has an extra attribute' do
             before do
               assessment_hash[:applicant_capital][:liquid_capital][:valuable_items].first[:name] = 'Michael'
-              validator.run
             end
 
             it 'is invalid' do
@@ -595,7 +556,6 @@ describe JsonSchemaValidator do
           context 'it has a missing attribute' do
             before do
               assessment_hash[:applicant_capital][:liquid_capital][:valuable_items].first.delete(:value)
-              validator.run
             end
 
             it 'is invalid' do
@@ -613,7 +573,6 @@ describe JsonSchemaValidator do
           context 'it is not present' do
             before do
               assessment_hash[:applicant_capital][:liquid_capital].delete(:vehicles)
-              validator.run
             end
 
             it 'is valid' do
@@ -624,7 +583,6 @@ describe JsonSchemaValidator do
           context 'it has an extra attribute' do
             before do
               assessment_hash[:applicant_capital][:liquid_capital][:vehicles].first[:name] = 'Michael'
-              validator.run
             end
 
             it 'is invalid' do
@@ -640,7 +598,6 @@ describe JsonSchemaValidator do
           context 'it has a missing attribute' do
             before do
               assessment_hash[:applicant_capital][:liquid_capital][:vehicles].first.delete(:value)
-              validator.run
             end
 
             it 'is invalid' do
@@ -659,7 +616,6 @@ describe JsonSchemaValidator do
         context 'it is not present' do
           before do
             assessment_hash[:applicant_capital].delete(:non_liquid_capital)
-            validator.run
           end
 
           it 'is valid' do
@@ -669,7 +625,6 @@ describe JsonSchemaValidator do
         context 'it has an extra attribute' do
           before do
             assessment_hash[:applicant_capital][:non_liquid_capital].first[:name] = 'Michael'
-            validator.run
           end
 
           it 'is invalid' do
@@ -685,7 +640,6 @@ describe JsonSchemaValidator do
         context 'it has a missing attribute' do
           before do
             assessment_hash[:applicant_capital][:non_liquid_capital].first.delete(:value)
-            validator.run
           end
 
           it 'is invalid' do
