@@ -18,7 +18,11 @@ class AssessmentResponseFixture < BaseAssessmentFixture
         disposable_capital_assessment: 100.00,
         monthly_contribution: 0.00,
         capital_contribution: 0.00
-      }
+      },
+      errors: [
+        'This is error message 1',
+        'This is error message 2'
+      ]
     }
   end
 end

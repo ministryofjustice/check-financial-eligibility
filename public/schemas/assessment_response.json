@@ -7,7 +7,8 @@
   "type": "object",
   "required": [
     "assessment_id",
-    "details"
+    "details",
+    "errors"
   ],
   "additionalProperties": false,
 
@@ -18,7 +19,8 @@
         "eligible",
         "not_eligible",
         "contribution_required",
-        "out_of_scope"
+        "out_of_scope",
+        "invalid_request"
       ]
     }
   },
@@ -107,6 +109,12 @@
           "description": "The capital contribution required from the applicant",
           "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/number_with_two_decimals"
         }
+      }
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "type": "string"
       }
     }
   }
