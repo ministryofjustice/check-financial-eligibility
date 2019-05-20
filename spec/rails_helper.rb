@@ -60,6 +60,8 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 end
 
-require_relative 'fixtures/base_assessment_fixture'
-require_relative 'fixtures/assessment_fixture'
-require_relative 'fixtures/assessment_response_fixture'
+require 'webmock/rspec'
+
+require Rails.root.join('spec/fixtures/base_assessment_fixture')
+require Rails.root.join('spec/fixtures/assessment_fixture')
+require Rails.root.join('spec/fixtures/assessment_response_fixture')
