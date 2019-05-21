@@ -19,7 +19,7 @@ RSpec.describe Assessment, type: :model do
         expect {
           Assessment.create!(client_reference_id: 'client-ref-1',
                              request_payload: payload)
-        }.to raise_error ActiveRecord::RecordInvalid, "Validation failed: Remote ip can't be blank"
+        }.to raise_error ActiveRecord::NotNullViolation, /null value in column "remote_ip"/
       end
     end
 
@@ -28,7 +28,7 @@ RSpec.describe Assessment, type: :model do
         expect {
           Assessment.create!(client_reference_id: 'client-ref-1',
                              remote_ip: '192.168.9.8')
-        }.to raise_error ActiveRecord::RecordInvalid, "Validation failed: Request payload can't be blank"
+        }.to raise_error ActiveRecord::NotNullViolation, /null value in column "request_payload"/
       end
     end
   end

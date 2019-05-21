@@ -18,8 +18,8 @@ ActiveRecord::Schema.define(version: 2019_05_17_092721) do
 
   create_table "assessments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "client_reference_id"
-    t.inet "remote_ip"
-    t.json "request_payload"
+    t.inet "remote_ip", null: false
+    t.json "request_payload", null: false
     t.json "response_payload"
     t.string "result"
     t.datetime "created_at", null: false
