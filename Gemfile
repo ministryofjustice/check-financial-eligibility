@@ -37,7 +37,7 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'pry-byebug'
   gem 'rspec-rails', '~> 3.8'
-
+  gem 'recursive-open-struct'
   gem 'rubocop', require: false
   gem 'rubocop-performance'
 end
@@ -54,6 +54,8 @@ group :test do
   gem 'shoulda-matchers'
   gem 'faker'
   gem 'database_cleaner'
+  gem 'simplecov', require: false
+  gem 'simplecov-rcov'
   gem 'webmock'
 end
 

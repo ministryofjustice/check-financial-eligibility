@@ -11,7 +11,7 @@ class AssessmentFixture < BaseAssessmentFixture
         involvement_type: 'applicant',
         has_partner_opponent: false,
         receives_qualifying_benefit: false,
-        dependents: [
+        dependants: [
           {
             date_of_birth: Date.parse('02 Feb 1995'),
             in_full_time_education: false,
@@ -22,7 +22,7 @@ class AssessmentFixture < BaseAssessmentFixture
               },
               {
                 date_of_payment: Date.parse('20 Mar 2019'),
-                amount: 40.34
+                amount: 40.35
               }
             ]
           },

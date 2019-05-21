@@ -47,7 +47,7 @@
       "type": "string",
       "enum": ["child_allowance", "jobseekers_allowance"]
     },
-    "dependent": {
+    "dependant": {
       "type": "object",
       "required": [
         "date_of_birth",
@@ -56,23 +56,23 @@
       "additionalProperties": false,
       "properties": {
         "date_of_birth": {
-          "description": "Date of birth of the dependent",
+          "description": "Date of birth of the dependant",
           "$ref": "#/definitions/date"
         },
         "in_full_time_education": {
-          "description": "Whether or not the dependent is in full time education",
+          "description": "Whether or not the dependant is in full time education",
           "type": "boolean"
         },
         "income": {
-          "description": "Optional array of income objects defining the income the dependent received during the calculation period",
+          "description": "Optional array of income objects defining the income the dependant received during the calculation period",
           "type": "array",
           "items": {
-            "$ref": "#/definitions/dependent_income"
+            "$ref": "#/definitions/dependant_income"
           }
         }
       }
     },
-    "dependent_income": {
+    "dependant_income": {
       "type": "object",
       "required": [
         "date_of_payment",
@@ -80,7 +80,7 @@
       ],
       "properties": {
         "date_of_payment": {
-          "description": "the date upon which the dependent received this income",
+          "description": "the date upon which the dependant received this income",
           "$ref": "#/definitions/date"
         },
         "amount": {
@@ -294,7 +294,7 @@
         "involvement_type",
         "has_partner_opponent",
         "receives_qualifying_benefit",
-        "dependents"
+        "dependants"
       ],
       "additionalProperties": false,
       "properties": {
@@ -312,10 +312,10 @@
           "type": "boolean",
           "description": "Whether or not the applicant recieves a qualifying DWP benefit"
         },
-        "dependents": {
+        "dependants": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/dependent"
+            "$ref": "#/definitions/dependant"
           }
         }
       }
