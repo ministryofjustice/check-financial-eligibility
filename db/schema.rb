@@ -10,10 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_17_114315) do
+ActiveRecord::Schema.define(version: 2019_05_17_092721) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  create_table "assessments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "client_reference_id"
+    t.inet "remote_ip", null: false
+    t.json "request_payload", null: false
+    t.json "response_payload"
+    t.string "result"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_reference_id"], name: "index_assessments_on_client_reference_id"
+  end
 
   create_table "statuses", force: :cascade do |t|
     t.string "response"

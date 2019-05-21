@@ -1,5 +1,4 @@
 require 'rails_helper'
-require_relative '../fixtures/assessment_fixture'
 
 describe JsonSchemaValidator do
   let(:assessment_hash) { AssessmentFixture.ruby_hash }

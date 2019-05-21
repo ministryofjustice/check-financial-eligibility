@@ -1,5 +1,5 @@
 class JsonSchemaValidator
-  SCHEMA_PATH = File.join(Rails.root, 'config', 'api', 'assessment_schema.json')
+  SCHEMA_PATH = Rails.root.join('public/schemas/assessment_request.json').to_s
 
   def initialize(payload)
     @payload = payload

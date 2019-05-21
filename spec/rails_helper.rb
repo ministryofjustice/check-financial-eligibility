@@ -59,3 +59,9 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 end
+
+require 'webmock/rspec'
+
+require Rails.root.join('spec/fixtures/base_assessment_fixture')
+require Rails.root.join('spec/fixtures/assessment_fixture')
+require Rails.root.join('spec/fixtures/assessment_response_fixture')

@@ -1,4 +1,4 @@
-class AssessmentFixture
+class AssessmentFixture < BaseAssessmentFixture
   def self.ruby_hash
     {
       client_reference_id: 'my-eligibility-check-01',
