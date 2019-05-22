@@ -14,7 +14,7 @@ RSpec.describe YamlStore do
     end
 
     it 'raises error if unknown' do
-      expect { threshold_store.value(:unkonwn) }.to raise_error(described_class::KeyNotRecognisedError)
+      expect { threshold_store.value(:unknown) }.to raise_error(described_class::KeyNotRecognisedError)
     end
 
     context 'with string keyed data' do
@@ -30,35 +30,7 @@ RSpec.describe YamlStore do
     let(:threshold_store) { described_class.from_yaml_file(file_path) }
 
     it 'returns data from file' do
-      expect(threshold_store.value(:ccms)).to eq(data['ccms'].deep_symbolize_keys)
-    end
-
-    context 'using sub-section' do
-      let(:threshold_store) { described_class.from_yaml_file(file_path, section: :ccms) }
-
-      it 'returns data from sub-section of file' do
-        expect(threshold_store.value(:capital_upper)).to eq(data['ccms']['capital_upper'])
-      end
-    end
-  end
-
-  describe '.threshold' do
-    let(:data) { YAML.load_file file_path }
-    let(:subclass) { Class.new(described_class) }
-    let(:configure_subclass) { subclass.use_yml_file(file_path) }
-
-    before { configure_subclass }
-
-    it 'returns data from file' do
-      expect(subclass.value(:ccms)).to eq(data['ccms'].deep_symbolize_keys)
-    end
-
-    context 'with subsection defined' do
-      let(:configure_subclass) { subclass.use_yml_file(file_path, section: :ccms) }
-
-      it 'returns data from sub-section of file' do
-        expect(subclass.value(:capital_upper)).to eq(data['ccms']['capital_upper'])
-      end
+      expect(threshold_store.value(:capital_lower)).to eq(data['capital_lower'])
     end
   end
 end
