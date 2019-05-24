@@ -57,6 +57,7 @@ RSpec.describe AssessmentParticulars do
         end
 
         it 'can be populated' do
+          particulars.response.details.total_capital_assessment
           particulars.response.details.total_capital_assessment = 2_855.55
           expect(particulars.response.details.total_capital_assessment).to eq 2_855.55
         end
