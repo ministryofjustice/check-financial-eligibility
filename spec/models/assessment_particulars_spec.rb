@@ -11,7 +11,8 @@ RSpec.describe AssessmentParticulars do
 
       describe '#meta_data' do
         it 'is same as specified in request payload' do
-          expect(request.meta_data).to eq RecursiveOpenStruct.new(request_hash[:meta_data])
+          particulars.request.meta_data
+          expect(request.meta_data).to eq OpenStruct.new(request_hash[:meta_data])
         end
       end
 
@@ -29,8 +30,8 @@ RSpec.describe AssessmentParticulars do
             dependants = request.applicant.dependants
             expect(dependants).to be_instance_of(Array)
             expect(dependants.size).to eq 2
-            expect(dependants.first).to be_instance_of(RecursiveOpenStruct)
-            expect(dependants.last).to be_instance_of(RecursiveOpenStruct)
+            expect(dependants.first).to be_instance_of(OpenStruct)
+            expect(dependants.last).to be_instance_of(OpenStruct)
           end
 
           it 'can be accessed an an item level' do
@@ -53,7 +54,7 @@ RSpec.describe AssessmentParticulars do
 
       describe '#details' do
         it 'is an empty RecursiveOpenStruct' do
-          expect(particulars.response.details).to eq RecursiveOpenStruct.new({})
+          expect(particulars.response.details).to eq OpenStruct.new({})
         end
 
         it 'can be populated' do
@@ -73,6 +74,54 @@ RSpec.describe AssessmentParticulars do
           particulars.response.errors << 'error_2'
           expect(particulars.response.errors).to eq %w[error_1 error_2]
         end
+      end
+    end
+  end
+
+  context 'method_missing' do
+    context 'unknown method with no arguments' do
+      it 'it returns nil' do
+        expect(particulars.xxx).to be nil
+      end
+    end
+
+    context 'unknown setter method' do
+      it 'adds a new element to the structure' do
+        expect {
+          particulars.zzz = 'ZZZ'
+        }.to raise_error NoMethodError, /undefined method `zzz='/
+      end
+    end
+
+    context 'unknown method  with arguments' do
+      it 'raises NoMethodError' do
+        expect {
+          particulars.aaa('param1')
+        }.to raise_error NoMethodError, /undefined method `aaa'/
+      end
+    end
+  end
+
+  context '#respond_to?' do
+    context 'unknown method with no arguments' do
+      it 'it returns true' do
+        expect(particulars.respond_to?(:xxx)).to be false
+      end
+    end
+
+    context 'unknown setter method' do
+      it 'adds a new element to the structure' do
+        expect {
+          particulars.zzz = 'ZZZ'
+        }.to raise_error NoMethodError, /undefined method `zzz='/
+      end
+    end
+
+    context 'unknown method  with arguments' do
+      it 'raises NoMethodError' do
+        expect {
+          particulars.aaa('param1')
+        }.to raise_error NoMethodError, /undefined method `aaa'/
       end
     end
   end
