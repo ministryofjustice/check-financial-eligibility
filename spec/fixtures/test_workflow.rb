@@ -25,7 +25,7 @@ WORKFLOW = {
 }
 
 
-class StandardWorkflow
+class TestWorkflow
   def self.workflow
     WORKFLOW
   end

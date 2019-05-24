@@ -1,6 +1,6 @@
 module WorkflowPredicate
-  class DeterminePassported
-    def result(particulars)
+  class DetermineSelfEmployed  < BaseWorkflowService
+    def result_for(particulars)
       true
     end
   end

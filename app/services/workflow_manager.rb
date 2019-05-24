@@ -1,8 +1,8 @@
 class WorkflowManager
 
-  def initialize(particulars)
+  def initialize(particulars, workflow)
     @particulars = particulars
-    @workflow = StandardWorkflow.workflow
+    @workflow = workflow
     @workflow_terminated = false
   end
 
@@ -14,28 +14,19 @@ class WorkflowManager
   private
 
   def process_step(step_config:, step_name:)
-    @workflow_terminated = false if step_name == :end
+    @workflow_terminated = true if step_config == :end_workflow
     return if @workflow_terminated
-    if step_config.key?(:predicate)
-      process_predicate(step_config: step_config, step_name: step_name)
-    elsif step_config.key?(:service)
+    if step_config.key?(:klass)
       process_service(step_config: step_config, step_name: step_name)
     else
-      raise ArgumentError, "Step #{step_name.inspect} has no :predicate or :service keys"
+      raise ArgumentError, "Step #{step_name.inspect} has no :klass key"
     end
   end
 
-  def process_predicate(step_config:, _step_name:)
-    predicate_class = "WorkflowPredicate::#{step_config[:predicate][:name]}".constantize
-    result = predicate_class.__send__(:result?, @particulars)
-    next_step = @workflow[result.to_s_to_sym]
-    process_step(step_config: @workflow[next_step], step_name: next_step)
-  end
-
   def process_service(step_config:, step_name:)
-    service_class = "WorkflowService::#{step_config[:service]}".constantize
-    service_class.new(@particulars).call
-    next_step = step_config[:next]
-    process_step(@workflow[next_step], step_name: next_step)
+    service_class = step_config[:klass]
+    result = service_class.new(@particulars).result_for
+    next_step = step_config[("#{result}_step").to_sym]
+    process_step(step_config: @workflow[next_step], step_name: next_step)
   end
 end

@@ -40,6 +40,7 @@ group :development, :test do
 
   gem 'rubocop', require: false
   gem 'rubocop-performance'
+  gem 'pry-byebug'
 end
 
 group :development do
