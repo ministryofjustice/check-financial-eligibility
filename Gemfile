@@ -29,7 +29,6 @@ gem 'bootsnap', '>= 1.1.0', require: false
 # gem 'rack-cors'
 
 gem 'json-schema'
-gem 'recursive-open-struct'
 
 group :development, :test do
   gem 'awesome_print'

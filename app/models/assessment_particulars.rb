@@ -1,8 +1,7 @@
 class AssessmentParticulars
-
-  SETTER_METHOD_REGEX = /^[a-z][a-z0-9_]+[=]$/
-  NON_SETTER_METHOD_REGEX = /^[a-z][a-z0-9_]+$/
-  VALID_METHOD_REGEX = /^[a-z][a-z0-9_]+[=]?$/
+  SETTER_METHOD_REGEX = /^[a-z][a-z0-9_]+[=]$/.freeze
+  NON_SETTER_METHOD_REGEX = /^[a-z][a-z0-9_]+$/.freeze
+  VALID_METHOD_REGEX = /^[a-z][a-z0-9_]+[=]?$/.freeze
 
   def initialize(assessment)
     @data = JSON.parse(initial_data(assessment).to_json, object_class: OpenStruct)
@@ -13,7 +12,7 @@ class AssessmentParticulars
     @data.__send__(method, *args)
   end
 
-  def respond_to_missing?(method, include_private = false)
+  def respond_to_missing?(method, _include_private = false)
     VALID_METHOD_REGEX.match?(method)
   end
 
