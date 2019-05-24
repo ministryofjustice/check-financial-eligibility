@@ -6,14 +6,6 @@ RSpec.describe AssessmentParticulars do
   let(:request_hash) { JSON.parse(assessment.request_payload).deep_symbolize_keys }
 
   context '.new' do
-    it 'stores the assessment_id' do
-      expect(particulars.assessment_id).to eq assessment.id
-    end
-
-    it 'stores the client_reference_id' do
-      expect(particulars.client_reference_id).to eq assessment.client_reference_id
-    end
-
     context 'request' do
       let(:request) { particulars.request }
 
@@ -50,6 +42,15 @@ RSpec.describe AssessmentParticulars do
     end
 
     context 'response' do
+      it 'stores the assessment_id' do
+        particulars
+        expect(particulars.response.assessment_id).to eq assessment.id
+      end
+
+      it 'stores the client_reference_id' do
+        expect(particulars.response.client_reference_id).to eq assessment.client_reference_id
+      end
+
       describe '#details' do
         it 'is an empty RecursiveOpenStruct' do
           expect(particulars.response.details).to eq RecursiveOpenStruct.new({})

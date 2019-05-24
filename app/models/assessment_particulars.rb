@@ -7,15 +7,15 @@ class AssessmentParticulars < RecursiveOpenStruct
 
   def initial_data(assessment)
     {
-      assessment_id: assessment.id,
-      client_reference_id: assessment.client_reference_id,
       request: RecursiveOpenStruct.new(JSON.parse(assessment.request_payload), recurse_over_arrays: true),
-      response: RecursiveOpenStruct.new(initial_response_data, recurse_over_arrays: true)
+      response: RecursiveOpenStruct.new(initial_response_data(assessment), recurse_over_arrays: true)
     }
   end
 
-  def initial_response_data
+  def initial_response_data(assessment)
     {
+      assessment_id: assessment.id,
+      client_reference_id: assessment.client_reference_id,
       details: RecursiveOpenStruct.new({}, recurse_over_arrays: true),
       errors: []
     }
