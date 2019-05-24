@@ -87,9 +87,8 @@ RSpec.describe AssessmentParticulars do
 
     context 'unknown setter method' do
       it 'adds a new element to the structure' do
-        expect {
-          particulars.zzz = 'ZZZ'
-        }.to raise_error NoMethodError, /undefined method `zzz='/
+        particulars.zzz = 'ZZZ'
+        expect(particulars.zzz).to eq 'ZZZ'
       end
     end
 
@@ -105,23 +104,13 @@ RSpec.describe AssessmentParticulars do
   context '#respond_to?' do
     context 'unknown method with no arguments' do
       it 'it returns true' do
-        expect(particulars.respond_to?(:xxx)).to be false
+        expect(particulars.respond_to?(:xxx)).to be true
       end
     end
 
     context 'unknown setter method' do
-      it 'adds a new element to the structure' do
-        expect {
-          particulars.zzz = 'ZZZ'
-        }.to raise_error NoMethodError, /undefined method `zzz='/
-      end
-    end
-
-    context 'unknown method  with arguments' do
-      it 'raises NoMethodError' do
-        expect {
-          particulars.aaa('param1')
-        }.to raise_error NoMethodError, /undefined method `aaa'/
+      it 'returns true' do
+        expect(particulars.respond_to?(:xxx=)).to be true
       end
     end
   end
