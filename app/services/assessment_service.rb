@@ -4,9 +4,9 @@ class AssessmentService
 
   attr_reader :response_payload, :http_status
 
-  def initialize(_remote_ip, request_payload)
+  def initialize(remote_ip, request_payload)
     @request_payload = request_payload
-    @assessment = Assessment.create!(remote_ip: request.remote_ip, request_payload: @request_payload)
+    @assessment = Assessment.create!(remote_ip: remote_ip, request_payload: @request_payload)
   end
 
   def call
