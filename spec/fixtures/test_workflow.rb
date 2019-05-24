@@ -22,8 +22,7 @@ WORKFLOW = {
     true_step: :end_step
   },
   end_step: :end_workflow
-}
-
+}.freeze
 
 class TestWorkflow
   def self.workflow

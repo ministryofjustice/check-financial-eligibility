@@ -2,9 +2,9 @@ require 'rails_helper'
 require Rails.root.join 'spec/fixtures/test_workflow.rb'
 
 RSpec.describe WorkflowManager do
-  let(:manager) {described_class.new(particulars, workflow)}
-  let(:particulars) {double "particulars"}
-  let(:workflow) {TestWorkflow.workflow}
+  let(:manager) { described_class.new(particulars, workflow) }
+  let(:particulars) { double 'particulars' }
+  let(:workflow) { TestWorkflow.workflow }
 
   it 'follows non-passported, self-employed flow' do
     expect_service_result(WorkflowPredicate::DeterminePassported, false)

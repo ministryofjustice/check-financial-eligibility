@@ -1,5 +1,4 @@
 class WorkflowManager
-
   def initialize(particulars, workflow)
     @particulars = particulars
     @workflow = workflow
@@ -16,17 +15,14 @@ class WorkflowManager
   def process_step(step_config:, step_name:)
     @workflow_terminated = true if step_config == :end_workflow
     return if @workflow_terminated
-    if step_config.key?(:klass)
-      process_service(step_config: step_config, step_name: step_name)
-    else
-      raise ArgumentError, "Step #{step_name.inspect} has no :klass key"
-    end
+
+    step_config.key?(:klass) ? process_service(step_config: step_config) : raise(ArgumentError, "Step #{step_name.inspect} has no :klass key")
   end
 
-  def process_service(step_config:, step_name:)
+  def process_service(step_config:)
     service_class = step_config[:klass]
     result = service_class.new(@particulars).result_for
-    next_step = step_config[("#{result}_step").to_sym]
+    next_step = step_config["#{result}_step".to_sym]
     process_step(step_config: @workflow[next_step], step_name: next_step)
   end
 end
