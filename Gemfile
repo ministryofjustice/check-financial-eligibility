@@ -29,7 +29,6 @@ gem 'bootsnap', '>= 1.1.0', require: false
 # gem 'rack-cors'
 
 gem 'json-schema'
-gem 'recursive-open-struct'
 
 group :development, :test do
   gem 'awesome_print'
@@ -37,7 +36,6 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'pry-byebug'
   gem 'rspec-rails', '~> 3.8'
-
   gem 'rubocop', require: false
   gem 'rubocop-performance'
 end
@@ -54,6 +52,8 @@ group :test do
   gem 'shoulda-matchers'
   gem 'faker'
   gem 'database_cleaner'
+  gem 'simplecov', require: false
+  gem 'simplecov-rcov'
   gem 'webmock'
 end
 

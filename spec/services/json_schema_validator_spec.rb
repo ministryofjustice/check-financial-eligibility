@@ -117,7 +117,7 @@ describe JsonSchemaValidator do
 
         context 'missing attribute' do
           before do
-            assessment_hash[:applicant][:dependents].first.delete(:in_full_time_education)
+            assessment_hash[:applicant][:dependants].first.delete(:in_full_time_education)
           end
 
           it 'is invalid' do
@@ -125,14 +125,14 @@ describe JsonSchemaValidator do
           end
 
           it 'has an error message' do
-            expected_error = "The property '#/applicant/dependents/0' did not contain a required property of 'in_full_time_education'"
+            expected_error = "The property '#/applicant/dependants/0' did not contain a required property of 'in_full_time_education'"
             expect(validator.errors.first).to match(/#{expected_error}/)
           end
         end
 
         context 'extra attribute' do
           before do
-            assessment_hash[:applicant][:dependents].last[:name] = 'Joe'
+            assessment_hash[:applicant][:dependants].last[:name] = 'Joe'
           end
 
           it 'is invalid' do
@@ -140,7 +140,7 @@ describe JsonSchemaValidator do
           end
 
           it 'has an error message' do
-            expected_error = "The property '#/applicant/dependents/1' contains additional properties .*name"
+            expected_error = "The property '#/applicant/dependants/1' contains additional properties .*name"
             expect(validator.errors.first).to match(/#{expected_error}/)
           end
         end
