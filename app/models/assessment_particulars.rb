@@ -19,11 +19,7 @@ class AssessmentParticulars
   private
 
   def valid_missing_method?(method, args)
-    return true if setter_method?(method, args)
-
-    return true if getter_method?(method, args)
-
-    false
+    setter_method?(method, args) || getter_method?(method, args)
   end
 
   def setter_method?(method, args)
