@@ -67,47 +67,47 @@
         },
         "monthly_gross_income": {
           "description": "The monthly gross income calculated from the individual income values given",
-          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/number_with_two_decimals"
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
         },
         "upper_income_threshold": {
           "description": "The upper income threshold that was used (valies according to the circumstances of the applicant)",
-          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/number_with_two_decimals"
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
         },
         "monthly_disposable_income": {
           "description": "The monthly dispasable income calculated from the individual income values given and allowable expenses",
-          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/number_with_two_decimals"
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
         },
         "disposable_income_lower_threshold": {
           "description": "The lower threshold of the monthly disposable income used in the calculation",
-          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/number_with_two_decimals"
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
         },
         "disposable_income_upper_threshold": {
           "description": "The upper threshold of the monthly disposable income used in the calculation",
-          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/number_with_two_decimals"
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
         },
         "total_capital_assessment": {
           "description": "The total capital assets of the applicant calculated from all the values given",
-          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/number_with_two_decimals"
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
         },
         "total_capital_lower_threshold": {
           "description": "The lower threshold of the capital allowance used in the calculation",
-          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/number_with_two_decimals"
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
         },
         "total_capital_upper_threshold": {
           "description": "The upper threshold of the capital allowance used in the calculation",
-          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/number_with_two_decimals"
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
         },
         "disposable_capital_assessment": {
           "description": "The applicant's disposable capital calculated after subtracting allowable items from the list of capital assets given",
-          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/number_with_two_decimals"
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
         },
         "monthly_contribution": {
           "description": "The monthly contribution required from the applicant",
-          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/number_with_two_decimals"
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
         },
         "capital_contribution": {
           "description": "The capital contribution required from the applicant",
-          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/number_with_two_decimals"
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
         }
       }
     },

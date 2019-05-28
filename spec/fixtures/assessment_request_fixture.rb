@@ -1,5 +1,5 @@
-class AssessmentFixture < BaseAssessmentFixture
-  def self.ruby_hash
+class AssessmentRequestFixture < BaseAssessmentFixture # rubocop:disable Metrics/ClassLength
+  def self.ruby_hash # rubocop:disable Metrics/MethodLength
     {
       client_reference_id: 'my-eligibility-check-01',
       meta_data: {
@@ -93,6 +93,16 @@ class AssessmentFixture < BaseAssessmentFixture
           ]
         },
         liquid_capital: {
+          bank_accounts: [
+            {
+              account_name: 'Account #1',
+              lowest_balance: -33.44
+            },
+            {
+              account_name: 'Account #2',
+              lowest_balance: 256.44
+            }
+          ],
           valuable_items: [
             {
               item_description: 'jewellery',

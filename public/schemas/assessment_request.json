@@ -36,11 +36,16 @@
       "type": "string",
       "enum": ["applicant", "defendant"]
     },
-    "number_with_two_decimals": {
+    "positive_number_with_two_decimals": {
       "description": "Non-negative number (including zero) with two decimal places",
       "type": "number",
       "multipleOf": 0.01,
       "minimum": 0.00
+    },
+    "neg_or_pos_number_with_two_decimals": {
+      "description": "A negative or positive number (including zero) with two decimal places",
+      "type": "number",
+      "multipleOf": 0.01
     },
     "benefit_name": {
       "description": "Name of benefit received - must be one of the values listed in the enum below",
@@ -84,7 +89,7 @@
           "$ref": "#/definitions/date"
         },
         "amount": {
-          "$ref": "#/definitions/number_with_two_decimals"
+          "$ref": "#/definitions/positive_number_with_two_decimals"
         }
       }
     },
@@ -102,13 +107,13 @@
           "$ref": "#/definitions/date"
         },
         "gross_pay": {
-          "$ref": "#/definitions/number_with_two_decimals"
+          "$ref": "#/definitions/positive_number_with_two_decimals"
         },
         "paye": {
-          "$ref": "#/definitions/number_with_two_decimals"
+          "$ref": "#/definitions/positive_number_with_two_decimals"
         },
         "national_insurance_contribution": {
-          "$ref": "#/definitions/number_with_two_decimals"
+          "$ref": "#/definitions/positive_number_with_two_decimals"
         }
       }
     },
@@ -128,7 +133,7 @@
           "$ref": "#/definitions/date"
         },
         "amount": {
-          "$ref": "#/definitions/number_with_two_decimals"
+          "$ref": "#/definitions/positive_number_with_two_decimals"
         }
       }
     },
@@ -152,7 +157,7 @@
         },
         "amount": {
           "description": "the amount paid in pounds and pence, e.g. 45.22",
-          "$ref": "#/definitions/number_with_two_decimals"
+          "$ref": "#/definitions/positive_number_with_two_decimals"
         }
       }
     },
@@ -175,11 +180,11 @@
       "properties": {
         "value": {
           "description": "The current value of the property",
-          "$ref": "#/definitions/number_with_two_decimals"
+          "$ref": "#/definitions/positive_number_with_two_decimals"
         },
         "outstanding_mortgage": {
           "description": "The value of the outstanding mortgage",
-          "$ref": "#/definitions/number_with_two_decimals"
+          "$ref": "#/definitions/positive_number_with_two_decimals"
         },
         "percentage_owned": {
           "description": "The percentage owned, e.g. '33.33' or '100'",
@@ -217,7 +222,7 @@
           "type": "string"
         },
         "value": {
-          "$ref": "#/definitions/number_with_two_decimals"
+          "$ref": "#/definitions/positive_number_with_two_decimals"
         }
       }
     },
@@ -230,15 +235,30 @@
       "additionalProperties": false,
       "properties": {
         "value": {
-          "$ref": "#/definitions/number_with_two_decimals"
+          "$ref": "#/definitions/positive_number_with_two_decimals"
         },
         "loan_amount_outstanding": {
-          "$ref": "#/definitions/number_with_two_decimals"
+          "$ref": "#/definitions/positive_number_with_two_decimals"
+        }
+      }
+    },
+    "bank_accounts": {
+      "description": "Describes the name of the bank account and the lowest balance during the computation period",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "account_name": {
+          "description": "The name of the bank account",
+          "type": "string"
+        },
+        "lowest_balance": {
+          "description": "The lowest balance on the account during the caluclation period",
+          "$ref": "#/definitions/neg_or_pos_number_with_two_decimals"
         }
       }
     },
     "applicant_liquid_capital": {
-      "description": "Describes valuable items and vehicles",
+      "description": "Describes valuable items, residual balances in bank accounts and vehicles",
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -246,6 +266,12 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/capital_item"
+          }
+        },
+        "bank_accounts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/bank_accounts"
           }
         },
         "vehicles": {

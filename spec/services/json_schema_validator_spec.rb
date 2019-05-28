@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe JsonSchemaValidator do
-  let(:assessment_hash) { AssessmentFixture.ruby_hash }
+  let(:assessment_hash) { AssessmentRequestFixture.ruby_hash }
   let(:payload) { JSON.pretty_generate(assessment_hash) }
   let(:validator) { JsonSchemaValidator.new(payload) }
 
