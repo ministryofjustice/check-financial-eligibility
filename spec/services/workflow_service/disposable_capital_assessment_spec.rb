@@ -108,6 +108,44 @@ module WorkflowService
             end
           end
         end
+
+        xcontext 'additional_properties and main dwelling' do
+          context 'main dwelling wholly owned and additional properties wholly owned' do
+            it 'deducts a maximum of £100k mortgage' do
+              particulars.request.applicant_capital.property = open_structify(main_dwelling_and_addtional_properties_wholly_owned)
+              expect(service.result_for).to be true
+              ap1 = particulars.response.details.capital.property.additional_properties.first
+              expect(ap1.notional_sale_costs_pctg).to eq 3.0
+              expect(ap1.net_value_after_deduction).to eq 339_500.0
+              expect(ap1.maximum_mortgage_allowance).to eq 55_000.0
+              expect(ap1.net_value_after_mortgage).to eq 284_500.0
+              expect(ap1.percentage_owned).to eq 100.0
+              expect(ap1.net_equity_value).to eq 284_500.0
+              expect(ap1.property_disregard).to eq 0.0
+              expect(ap1.assessed_capital_value).to eq 284_500.0
+
+              ap2 = particulars.response.details.capital.property.additional_properties[1]
+              expect(ap2.notional_sale_costs_pctg).to eq 3.0
+              expect(ap2.net_value_after_deduction).to eq 261_900.0
+              expect(ap2.maximum_mortgage_allowance).to eq 40_000.0
+              expect(ap2.net_value_after_mortgage).to eq 221_900.0
+              expect(ap2.percentage_owned).to eq 100.0
+              expect(ap2.net_equity_value).to eq 221_900.0
+              expect(ap2.property_disregard).to eq 0.0
+              expect(ap2.assessed_capital_value).to eq 221_900.0
+
+              md = particulars.response.details.capital.property.main_dwelling
+              expect(md.notional_sale_costs_pctg).to eq 3.0
+              expect(md.net_value_after_deduction).to eq 213_400
+              expect(md.maximum_mortgage_allowance).to eq 5_000.0
+              expect(md.net_value_after_mortgage).to eq 208_400.0
+              expect(md.percentage_owned).to eq 100.0
+              expect(md.net_equity_value).to eq 208_400.0
+              expect(md.property_disregard).to eq 100_000.0
+              expect(md.assessed_capital_value).to eq 108_400.0
+            end
+          end
+        end
       end
     end
 
@@ -168,7 +206,7 @@ module WorkflowService
           outstanding_mortgage: 266_000,
           percentage_owned: 66.66
         },
-        other_properties: []
+        additional_properties: []
       }
     end
 
@@ -179,7 +217,29 @@ module WorkflowService
           outstanding_mortgage: 37_256.44,
           percentage_owned: 66.66
         },
-        other_properties: []
+        additional_properties: []
+      }
+    end
+
+    def main_dwelling_and_addtional_properties_wholly_owned
+      {
+        main_home: {
+          value: 220_000,
+          outstanding_mortgage: 35_000,
+          percentage_owned: 100.0
+        },
+        additional_properties: [
+          {
+            value: 350_000,
+            outstanding_mortgage: 55_000,
+            percentage_owned: 100
+          },
+          {
+            value: 270_000,
+            outstanding_mortgage: 40_000,
+            percentage_owned: 100
+          }
+        ]
       }
     end
   end

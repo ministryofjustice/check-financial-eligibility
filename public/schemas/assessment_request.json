@@ -200,7 +200,7 @@
         "main_home": {
           "$ref": "#/definitions/property_details"
         },
-        "other_properties": {
+        "additional_properties": {
           "description": "An array of property descriptions for any additional properties",
           "type": "array",
           "items": {
