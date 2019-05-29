@@ -246,6 +246,7 @@
       "description": "Describes the name of the bank account and the lowest balance during the computation period",
       "type": "object",
       "additionalProperties": false,
+      "required": ["account_name", "lowest_balance"],
       "properties": {
         "account_name": {
           "description": "The name of the bank account",
@@ -261,6 +262,7 @@
       "description": "Describes valuable items, residual balances in bank accounts and vehicles",
       "type": "object",
       "additionalProperties": false,
+      "required": ["bank_accounts"],
       "properties": {
         "valuable_items": {
           "type": "array",
@@ -270,6 +272,7 @@
         },
         "bank_accounts": {
           "type": "array",
+          "minItems": 1,
           "items": {
             "$ref": "#/definitions/bank_accounts"
           }
@@ -386,6 +389,7 @@
     "applicant_capital": {
       "description": "Describes the property and capital of the applicant",
       "additionalProperties": false,
+      "required": ["liquid_capital"],
       "properties": {
         "property": {
           "$ref": "#/definitions/applicant_property"

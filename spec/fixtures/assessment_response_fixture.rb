@@ -12,6 +12,7 @@ class AssessmentResponseFixture < BaseAssessmentFixture
         monthly_disposable_income: 220.55,
         disposable_income_lower_threshold: 310.00,
         disposable_income_upper_threshold: 733.00,
+        liquid_capital_assessment: 45.00,
         total_capital_assessment: 2_855.55,
         total_capital_lower_threshold: 3_000.00,
         total_capital_upper_threshold: 8_000.00,
@@ -26,3 +27,7 @@ class AssessmentResponseFixture < BaseAssessmentFixture
     }
   end
 end
+# include outgoings total
+# allowances  -> dependents, adult dependents, over 65, et
+
+# return any aggregate values and any allowances, and calculated sums that we have used.

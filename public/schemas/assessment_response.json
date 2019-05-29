@@ -85,6 +85,10 @@
           "description": "The upper threshold of the monthly disposable income used in the calculation",
           "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
         },
+        "liquid_capital_assessment": {
+          "description": "The calculated value for liquid capital assets used to determine disposable capital assessment",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
+        },
         "total_capital_assessment": {
           "description": "The total capital assets of the applicant calculated from all the values given",
           "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"

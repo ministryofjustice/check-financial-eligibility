@@ -522,7 +522,32 @@ describe JsonSchemaValidator do
           end
 
           it 'is valid' do
-            expect(validator).to be_valid
+            expect(validator).not_to be_valid
+            expect(validator.errors.first).to match(%r{The property '#/applicant_capital' did not contain a required property of 'liquid_capital'})
+          end
+        end
+
+        context 'bank_accounts' do
+          context 'it is not present' do
+            before do
+              assessment_hash[:applicant_capital][:liquid_capital].delete(:bank_accounts)
+            end
+
+            it 'errors' do
+              expect(validator).not_to be_valid
+              expect(validator.errors.first).to match(%r{The property '#/applicant_capital/liquid_capital' did not contain a required property of 'bank_accounts'})
+            end
+          end
+
+          context 'it is empty' do
+            before do
+              assessment_hash[:applicant_capital][:liquid_capital][:bank_accounts] = []
+            end
+
+            it 'errors' do
+              expect(validator).not_to be_valid
+              expect(validator.errors.first).to match(%r{The property '#/applicant_capital/liquid_capital/bank_accounts' did not contain a minimum number of items 1})
+            end
           end
         end
 
