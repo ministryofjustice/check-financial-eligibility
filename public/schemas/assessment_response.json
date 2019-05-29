@@ -109,7 +109,7 @@
       "type": "object",
       "description": "Details of value, equity, mortgages and debts for a property",
       "required": [
-        "pctg_property_deduction",
+        "notional_sale_costs_pctg",
         "net_value_after_deduction",
         "net_value_after_mortgage",
         "percentage_owned",
@@ -119,8 +119,8 @@
       ],
       "additionalProperties": false,
       "properties": {
-        "pctg_property_deduction": {
-          "description": "Percentage of value deducted before calculations",
+        "notional_sale_costs_pctg": {
+          "description": "Notional sale costs (as a percentage) deducted from property value",
           "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/percentage_with_two_decimals"
         },
         "net_value_after_deduction": {

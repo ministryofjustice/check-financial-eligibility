@@ -18,7 +18,7 @@ class AssessmentResponseFixture < BaseAssessmentFixture
           liquid_capital_assessment: 45.00,
           property: {
             main_dwelling: {
-              pctg_property_deduction: 3.0,
+              notional_sale_costs_pctg: 3.0,
               net_value_after_deduction: 485_000.0,
               maximum_mortgage_allowance: 100_000.0,
               net_value_after_mortgage: 335_000.0,
@@ -29,7 +29,7 @@ class AssessmentResponseFixture < BaseAssessmentFixture
             },
             additional_properties: [
               {
-                pctg_property_deduction: 3.0,
+                notional_sale_costs_pctg: 3.0,
                 net_value_after_deduction: 485_000.0,
                 maximum_mortgage_allowance: 100_000.0,
                 net_value_after_mortgage: 335_000.0,
@@ -39,7 +39,7 @@ class AssessmentResponseFixture < BaseAssessmentFixture
                 assessed_capital_value: 101_000
               },
               {
-                pctg_property_deduction: 3.0,
+                notional_sale_costs_pctg: 3.0,
                 net_value_after_deduction: 485_000.0,
                 maximum_mortgage_allowance: 100_000.0,
                 net_value_after_mortgage: 335_000.0,

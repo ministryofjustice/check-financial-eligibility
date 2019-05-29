@@ -8,3 +8,7 @@ disposable_income_lower: 1000
 disposable_income_upper: 10000
 capital_lower: 10
 capital_upper: 10000
+property_notional_sale_costs_percentage: 3.0
+property_maximum_mortgage_allowance: 100_000
+property_main_dwelling_disregard: 100_000
+
