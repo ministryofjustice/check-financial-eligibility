@@ -56,6 +56,56 @@ module WorkflowService
                 expect(result.assessed_capital_value).to eq 252_983.21
               end
             end
+
+            context 'with_mortgage less than 100k' do
+              it 'only deducts the actual outstanding amount' do
+                particulars.request.applicant_capital.property = open_structify(main_dwelling_small_mortgage_wholly_owned)
+                expect(service.result_for).to be true
+                result = particulars.response.details.capital.property.main_dwelling
+                expect(result.notional_sale_costs_pctg).to eq 3.0
+                expect(result.net_value_after_deduction).to eq 452_983.21
+                expect(result.maximum_mortgage_allowance).to eq 37_256.44
+                expect(result.net_value_after_mortgage).to eq 415_726.77
+                expect(result.percentage_owned).to eq 100.0
+                expect(result.net_equity_value).to eq 415_726.77
+                expect(result.property_disregard).to eq 100_000.0
+                expect(result.assessed_capital_value).to eq 315_726.77
+              end
+            end
+          end
+
+          context '66.66% owned' do
+            context 'with mortgage > £100,000' do
+              it 'only deducts first 100k of mortgage' do
+                particulars.request.applicant_capital.property = open_structify(main_dwelling_big_mortgage_partly_owned)
+                expect(service.result_for).to be true
+                result = particulars.response.details.capital.property.main_dwelling
+                expect(result.notional_sale_costs_pctg).to eq 3.0
+                expect(result.net_value_after_deduction).to eq 452_983.21
+                expect(result.maximum_mortgage_allowance).to eq 100_000.0
+                expect(result.net_value_after_mortgage).to eq 352_983.21
+                expect(result.percentage_owned).to eq 66.66
+                expect(result.net_equity_value).to eq 235_298.61
+                expect(result.property_disregard).to eq 100_000.0
+                expect(result.assessed_capital_value).to eq 135_298.61
+              end
+            end
+
+            context 'with mortgage < £100,000' do
+              it 'only deducts the actual outstanding amount' do
+                particulars.request.applicant_capital.property = open_structify(main_dwelling_small_mortgage_partly_owned)
+                expect(service.result_for).to be true
+                result = particulars.response.details.capital.property.main_dwelling
+                expect(result.notional_sale_costs_pctg).to eq 3.0
+                expect(result.net_value_after_deduction).to eq 452_983.21
+                expect(result.maximum_mortgage_allowance).to eq 37_256.44
+                expect(result.net_value_after_mortgage).to eq 415_726.77
+                expect(result.percentage_owned).to eq 66.66
+                expect(result.net_equity_value).to eq 277_123.46
+                expect(result.property_disregard).to eq 100_000.0
+                expect(result.assessed_capital_value).to eq 177_123.46
+              end
+            end
           end
         end
       end
@@ -95,6 +145,39 @@ module WorkflowService
           value: 466_993,
           outstanding_mortgage: 266_000,
           percentage_owned: 100.0
+        },
+        other_properties: []
+      }
+    end
+
+    def main_dwelling_small_mortgage_wholly_owned
+      {
+        main_home: {
+          value: 466_993,
+          outstanding_mortgage: 37_256.44,
+          percentage_owned: 100.0
+        },
+        other_properties: []
+      }
+    end
+
+    def main_dwelling_big_mortgage_partly_owned
+      {
+        main_home: {
+          value: 466_993,
+          outstanding_mortgage: 266_000,
+          percentage_owned: 66.66
+        },
+        other_properties: []
+      }
+    end
+
+    def main_dwelling_small_mortgage_partly_owned
+      {
+        main_home: {
+          value: 466_993,
+          outstanding_mortgage: 37_256.44,
+          percentage_owned: 66.66
         },
         other_properties: []
       }
