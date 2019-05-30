@@ -53,10 +53,6 @@ RSpec.describe AssessmentParticulars do
       end
 
       describe '#details' do
-        it 'is an empty RecursiveOpenStruct' do
-          expect(particulars.response.details).to eq OpenStruct.new({})
-        end
-
         it 'can be populated' do
           particulars.response.details.total_capital_assessment
           particulars.response.details.total_capital_assessment = 2_855.55

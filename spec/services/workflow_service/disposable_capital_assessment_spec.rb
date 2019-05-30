@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-module WorkflowService
+module WorkflowService # rubocop:disable Metrics/ModuleLength
   RSpec.describe DisposableCapitalAssessment do
     let(:service) { DisposableCapitalAssessment.new(particulars) }
     let(:request_hash) { AssessmentRequestFixture.ruby_hash }
@@ -109,7 +109,7 @@ module WorkflowService
           end
         end
 
-        xcontext 'additional_properties and main dwelling' do
+        context 'additional_properties and main dwelling' do
           context 'main dwelling wholly owned and additional properties wholly owned' do
             it 'deducts a maximum of £100k mortgage' do
               particulars.request.applicant_capital.property = open_structify(main_dwelling_and_addtional_properties_wholly_owned)
@@ -184,7 +184,7 @@ module WorkflowService
           outstanding_mortgage: 266_000,
           percentage_owned: 100.0
         },
-        other_properties: []
+        additional_properties: []
       }
     end
 
@@ -195,7 +195,7 @@ module WorkflowService
           outstanding_mortgage: 37_256.44,
           percentage_owned: 100.0
         },
-        other_properties: []
+        additional_properties: []
       }
     end
 

@@ -7,6 +7,19 @@ class AssessmentParticulars
     @data = JSON.parse(initial_data(assessment).to_json, object_class: OpenStruct)
   end
 
+  def self.initial_property_details
+    {
+      notional_sale_costs_pctg: 0.0,
+      net_value_after_deduction: 0.0,
+      maximum_mortgage_allowance: 0.0,
+      net_value_after_mortgage: 0.0,
+      percentage_owned: 0.0,
+      net_equity_value: 0.0,
+      property_disregard: 0.0,
+      assessed_capital_value: 0.0
+    }
+  end
+
   def method_missing(method, *args)
     super unless valid_missing_method?(method, args)
     @data.__send__(method, *args)
@@ -66,16 +79,7 @@ class AssessmentParticulars
     {
       liquid_capital_assessment: 0.0,
       property: {
-        main_dwelling: {
-          notional_sale_costs_pctg: 0.0,
-          net_value_after_deduction: 0.0,
-          maximum_mortgage_allowance: 0.0,
-          net_value_after_mortgage: 0.0,
-          percentage_owned: 0.0,
-          net_equity_value: 0.0,
-          property_disregard: 0.0,
-          assessed_capital_value: 0.0
-        },
+        main_dwelling: AssessmentParticulars.initial_property_details,
         additional_properties: []
       },
       total_capital_lower_threshold: 0.0,
@@ -91,4 +95,3 @@ class AssessmentParticulars
     }
   end
 end
-

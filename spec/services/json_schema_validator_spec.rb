@@ -475,7 +475,7 @@ describe JsonSchemaValidator do
         context 'other properties' do
           context 'it is not present' do
             before do
-              assessment_hash[:applicant_capital][:property].delete(:other_properties)
+              assessment_hash[:applicant_capital][:property].delete(:additional_properties)
             end
 
             it 'is valid' do
@@ -485,7 +485,7 @@ describe JsonSchemaValidator do
 
           context 'it has an extra attribute' do
             before do
-              assessment_hash[:applicant_capital][:property][:other_properties].first[:purchase_price] = 12_000
+              assessment_hash[:applicant_capital][:property][:additional_properties].first[:purchase_price] = 12_000
             end
 
             it 'is invalid' do
@@ -493,14 +493,14 @@ describe JsonSchemaValidator do
             end
 
             it 'has an error message' do
-              expected_error = "The property '#/applicant_capital/property/other_properties/0' contains additional properties .*purchase_price"
+              expected_error = "The property '#/applicant_capital/property/additional_properties/0' contains additional properties .*purchase_price"
               expect(validator.errors.first).to match(/#{expected_error}/)
             end
           end
 
           context 'it has a missing attribute' do
             before do
-              assessment_hash[:applicant_capital][:property][:other_properties].first.delete(:value)
+              assessment_hash[:applicant_capital][:property][:additional_properties].first.delete(:value)
             end
 
             it 'is invalid' do
@@ -508,7 +508,7 @@ describe JsonSchemaValidator do
             end
 
             it 'has an error message' do
-              expected_error = "The property '#/applicant_capital/property/other_properties/0' did not contain a required property of 'value'"
+              expected_error = "The property '#/applicant_capital/property/additional_properties/0' did not contain a required property of 'value'"
               expect(validator.errors.first).to match(/#{expected_error}/)
             end
           end

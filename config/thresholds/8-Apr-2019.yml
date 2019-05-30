@@ -11,4 +11,6 @@ capital_lower: 1
 capital_upper: 30000
 property_notional_sale_costs_percentage: 3.0
 property_maximum_mortgage_allowance: 100_000
-property_main_dwelling_disregard: 100_000
+property_disregard:
+  main_dwelling: 100_000
+  additional_property: 0.0
