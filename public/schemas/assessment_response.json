@@ -113,6 +113,7 @@
         "net_value_after_deduction",
         "net_value_after_mortgage",
         "percentage_owned",
+        "shared_with_housing_assoc",
         "net_equity_value",
         "property_disregard",
         "assessed_capital_value"
@@ -138,6 +139,10 @@
         "percentage_owned": {
           "description": "Percentage of property owned by applicant",
           "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/percentage_with_two_decimals"
+        },
+        "shared_with_housing_assoc": {
+          "description": "Whether the rules defining shared ownership were applied",
+          "type": "boolean"
         },
         "net_equity_value": {
           "description": "Value of applicant's equity in the property",

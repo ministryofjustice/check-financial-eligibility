@@ -169,12 +169,13 @@
       "maximum": 100.00
     },
     "property_details": {
-      "description": "Defines value and ownership of the main dwellling or other property",
+      "description": "Defines value and ownership of the main dwelling or other property",
       "type": "object",
       "required": [
         "value",
         "outstanding_mortgage",
-        "percentage_owned"
+        "percentage_owned",
+        "shared_with_housing_assoc"
       ],
       "additionalProperties": false,
       "properties": {
@@ -189,6 +190,10 @@
         "percentage_owned": {
           "description": "The percentage owned, e.g. '33.33' or '100'",
           "$ref": "#/definitions/percentage_with_two_decimals"
+        },
+        "shared_with_housing_assoc": {
+          "description": "Defines whether the property is in shared ownership with Local Authority or Housing Association",
+          "type": "boolean"
         }
       }
     },

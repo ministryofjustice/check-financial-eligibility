@@ -77,18 +77,21 @@ class AssessmentRequestFixture < BaseAssessmentFixture # rubocop:disable Metrics
           main_home: {
             value: 466_933,
             outstanding_mortgage: 266_000,
-            percentage_owned: 50
+            percentage_owned: 50,
+            shared_with_housing_assoc: false
           },
           additional_properties: [
             {
               value: 466_933,
               outstanding_mortgage: 266_000,
-              percentage_owned: 100
+              percentage_owned: 100,
+              shared_with_housing_assoc: false
             },
             {
               value: 466_933,
               outstanding_mortgage: 266_000,
-              percentage_owned: 33.33
+              percentage_owned: 33.33,
+              shared_with_housing_assoc: false
             }
           ]
         },

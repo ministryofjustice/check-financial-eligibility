@@ -107,6 +107,22 @@ module WorkflowService # rubocop:disable Metrics/ModuleLength
               end
             end
           end
+
+          context '50% shared with housing association' do
+            it 'subtracts outstanding mortgage only from the share owned by applicant' do
+              particulars.request.applicant_capital.property = open_structify(main_dwelling_shared_with_housing_association)
+              expect(service.result_for).to be true
+              result = particulars.response.details.capital.property.main_dwelling
+              expect(result.notional_sale_costs_pctg).to eq 3.0
+              expect(result.net_value_after_deduction).to eq 155_200.0
+              expect(result.maximum_mortgage_allowance).to eq 70_000.0
+              expect(result.net_value_after_mortgage).to eq 85_200.0
+              expect(result.percentage_owned).to eq 50.0
+              expect(result.net_equity_value).to eq 5_200.0
+              expect(result.property_disregard).to eq 100_000.0
+              expect(result.assessed_capital_value).to eq 0.0
+            end
+          end
         end
 
         context 'additional_properties and main dwelling' do
@@ -182,7 +198,8 @@ module WorkflowService # rubocop:disable Metrics/ModuleLength
         main_home: {
           value: 466_993,
           outstanding_mortgage: 266_000,
-          percentage_owned: 100.0
+          percentage_owned: 100.0,
+          shared_with_housing_assoc: false
         },
         additional_properties: []
       }
@@ -193,7 +210,8 @@ module WorkflowService # rubocop:disable Metrics/ModuleLength
         main_home: {
           value: 466_993,
           outstanding_mortgage: 37_256.44,
-          percentage_owned: 100.0
+          percentage_owned: 100.0,
+          shared_with_housing_assoc: false
         },
         additional_properties: []
       }
@@ -204,7 +222,8 @@ module WorkflowService # rubocop:disable Metrics/ModuleLength
         main_home: {
           value: 466_993,
           outstanding_mortgage: 266_000,
-          percentage_owned: 66.66
+          percentage_owned: 66.66,
+          shared_with_housing_assoc: false
         },
         additional_properties: []
       }
@@ -215,7 +234,20 @@ module WorkflowService # rubocop:disable Metrics/ModuleLength
         main_home: {
           value: 466_993,
           outstanding_mortgage: 37_256.44,
-          percentage_owned: 66.66
+          percentage_owned: 66.66,
+          shared_with_housing_assoc: false
+        },
+        additional_properties: []
+      }
+    end
+
+    def main_dwelling_shared_with_housing_association
+      {
+        main_home: {
+          value: 160_000,
+          outstanding_mortgage: 70_000,
+          percentage_owned: 50.0,
+          shared_with_housing_assoc: true
         },
         additional_properties: []
       }
@@ -226,18 +258,21 @@ module WorkflowService # rubocop:disable Metrics/ModuleLength
         main_home: {
           value: 220_000,
           outstanding_mortgage: 35_000,
-          percentage_owned: 100.0
+          percentage_owned: 100.0,
+          shared_with_housing_assoc: false
         },
         additional_properties: [
           {
             value: 350_000,
             outstanding_mortgage: 55_000,
-            percentage_owned: 100
+            percentage_owned: 100,
+            shared_with_housing_assoc: false
           },
           {
             value: 270_000,
             outstanding_mortgage: 40_000,
-            percentage_owned: 100
+            percentage_owned: 100,
+            shared_with_housing_assoc: false
           }
         ]
       }

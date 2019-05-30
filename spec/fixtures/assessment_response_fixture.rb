@@ -23,6 +23,7 @@ class AssessmentResponseFixture < BaseAssessmentFixture
               maximum_mortgage_allowance: 100_000.0,
               net_value_after_mortgage: 335_000.0,
               percentage_owned: 60.0,
+              shared_with_housing_assoc: false,
               net_equity_value: 201_000.00,
               property_disregard: 100_000,
               assessed_capital_value: 101_000
@@ -34,6 +35,7 @@ class AssessmentResponseFixture < BaseAssessmentFixture
                 maximum_mortgage_allowance: 100_000.0,
                 net_value_after_mortgage: 335_000.0,
                 percentage_owned: 60.0,
+                shared_with_housing_assoc: false,
                 net_equity_value: 201_000.00,
                 property_disregard: 100_000,
                 assessed_capital_value: 101_000
@@ -44,6 +46,7 @@ class AssessmentResponseFixture < BaseAssessmentFixture
                 maximum_mortgage_allowance: 100_000.0,
                 net_value_after_mortgage: 335_000.0,
                 percentage_owned: 60.0,
+                shared_with_housing_assoc: false,
                 net_equity_value: 201_000.00,
                 property_disregard: 100_000,
                 assessed_capital_value: 101_000
