@@ -137,10 +137,6 @@ module WorkflowService # rubocop:disable Metrics/ModuleLength
       end
     end
 
-    def open_structify(data)
-      JSON.parse(data.to_json, object_class: OpenStruct)
-    end
-
     def main_dwelling_big_mortgage_wholly_owned
       {
         main_home: {

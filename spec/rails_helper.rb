@@ -69,3 +69,8 @@ require 'webmock/rspec'
 require Rails.root.join('spec/fixtures/base_assessment_fixture')
 require Rails.root.join('spec/fixtures/assessment_request_fixture')
 require Rails.root.join('spec/fixtures/assessment_response_fixture')
+
+# helper methods
+def open_structify(data)
+  JSON.parse(data.to_json, object_class: OpenStruct)
+end

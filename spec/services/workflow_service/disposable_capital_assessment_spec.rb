@@ -49,10 +49,6 @@ module WorkflowService # rubocop:disable Metrics/ModuleLength
       end
     end
 
-    def open_structify(data)
-      JSON.parse(data.to_json, object_class: OpenStruct)
-    end
-
     def all_positive_bank_accounts
       [
         { account_name: 'Account 1', lowest_balance: 35.66 },
