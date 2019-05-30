@@ -1,6 +1,6 @@
 module WorkflowPredicate
   class DeterminePassported < BaseWorkflowService
-    def result_for
+    def call
       @particulars.request.applicant.receives_qualifying_benefit
     end
   end

@@ -7,16 +7,16 @@ module WorkflowService # rubocop:disable Metrics/ModuleLength
     let(:assessment) { create :assessment, request_payload: request_hash.to_json }
     let(:particulars) { AssessmentParticulars.new(assessment) }
 
-    describe '#result_for' do
+    describe '#call' do
       it 'always returns true' do
-        expect(service.result_for).to be true
+        expect(service.call).to be true
       end
 
       context 'liquid capital' do
         context 'all positive supplied' do
           it 'adds them all together' do
             particulars.request.applicant_capital.liquid_capital.bank_accounts = open_structify(all_positive_bank_accounts)
-            expect(service.result_for).to be true
+            expect(service.call).to be true
             expect(particulars.response.details.liquid_capital_assessment).to eq 136.87
           end
         end
@@ -24,7 +24,7 @@ module WorkflowService # rubocop:disable Metrics/ModuleLength
         context 'mixture of positive and negative supplied' do
           it 'ignores negative values' do
             particulars.request.applicant_capital.liquid_capital.bank_accounts = open_structify(mixture_of_negative_and_positive_bank_accounts)
-            expect(service.result_for).to be true
+            expect(service.call).to be true
             expect(particulars.response.details.liquid_capital_assessment).to eq 35.88
           end
         end
@@ -32,7 +32,7 @@ module WorkflowService # rubocop:disable Metrics/ModuleLength
         context 'all negative supplied' do
           it 'ignores negative values' do
             particulars.request.applicant_capital.liquid_capital.bank_accounts = open_structify(all_negative_bank_accounts)
-            expect(service.result_for).to be true
+            expect(service.call).to be true
             expect(particulars.response.details.liquid_capital_assessment).to eq 0.0
           end
         end
@@ -44,7 +44,7 @@ module WorkflowService # rubocop:disable Metrics/ModuleLength
             context 'with mortgage > £100,000' do
               it 'only deducts first 100k of mortgage' do
                 particulars.request.applicant_capital.property = open_structify(main_dwelling_big_mortgage_wholly_owned)
-                expect(service.result_for).to be true
+                expect(service.call).to be true
                 result = particulars.response.details.capital.property.main_dwelling
                 expect(result.notional_sale_costs_pctg).to eq 3.0
                 expect(result.net_value_after_deduction).to eq 452_983.21
@@ -60,7 +60,7 @@ module WorkflowService # rubocop:disable Metrics/ModuleLength
             context 'with_mortgage less than 100k' do
               it 'only deducts the actual outstanding amount' do
                 particulars.request.applicant_capital.property = open_structify(main_dwelling_small_mortgage_wholly_owned)
-                expect(service.result_for).to be true
+                expect(service.call).to be true
                 result = particulars.response.details.capital.property.main_dwelling
                 expect(result.notional_sale_costs_pctg).to eq 3.0
                 expect(result.net_value_after_deduction).to eq 452_983.21
@@ -78,7 +78,7 @@ module WorkflowService # rubocop:disable Metrics/ModuleLength
             context 'with mortgage > £100,000' do
               it 'only deducts first 100k of mortgage' do
                 particulars.request.applicant_capital.property = open_structify(main_dwelling_big_mortgage_partly_owned)
-                expect(service.result_for).to be true
+                expect(service.call).to be true
                 result = particulars.response.details.capital.property.main_dwelling
                 expect(result.notional_sale_costs_pctg).to eq 3.0
                 expect(result.net_value_after_deduction).to eq 452_983.21
@@ -94,7 +94,7 @@ module WorkflowService # rubocop:disable Metrics/ModuleLength
             context 'with mortgage < £100,000' do
               it 'only deducts the actual outstanding amount' do
                 particulars.request.applicant_capital.property = open_structify(main_dwelling_small_mortgage_partly_owned)
-                expect(service.result_for).to be true
+                expect(service.call).to be true
                 result = particulars.response.details.capital.property.main_dwelling
                 expect(result.notional_sale_costs_pctg).to eq 3.0
                 expect(result.net_value_after_deduction).to eq 452_983.21
@@ -111,7 +111,7 @@ module WorkflowService # rubocop:disable Metrics/ModuleLength
           context '50% shared with housing association' do
             it 'subtracts outstanding mortgage only from the share owned by applicant' do
               particulars.request.applicant_capital.property = open_structify(main_dwelling_shared_with_housing_association)
-              expect(service.result_for).to be true
+              expect(service.call).to be true
               result = particulars.response.details.capital.property.main_dwelling
               expect(result.notional_sale_costs_pctg).to eq 3.0
               expect(result.net_value_after_deduction).to eq 155_200.0
@@ -129,7 +129,7 @@ module WorkflowService # rubocop:disable Metrics/ModuleLength
           context 'main dwelling wholly owned and additional properties wholly owned' do
             it 'deducts a maximum of £100k mortgage' do
               particulars.request.applicant_capital.property = open_structify(main_dwelling_and_addtional_properties_wholly_owned)
-              expect(service.result_for).to be true
+              expect(service.call).to be true
               ap1 = particulars.response.details.capital.property.additional_properties.first
               expect(ap1.notional_sale_costs_pctg).to eq 3.0
               expect(ap1.net_value_after_deduction).to eq 339_500.0

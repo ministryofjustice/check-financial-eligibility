@@ -1,6 +1,6 @@
 module WorkflowService
   class Passported < BaseWorkflowService
-    def result_for
+    def call
       true
     end
   end

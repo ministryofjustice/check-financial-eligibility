@@ -1,8 +1,8 @@
 module WorkflowService
   class DisposableCapitalAssessment < BaseWorkflowService
-    def result_for
+    def call
       calculate_liquid_capital
-      PropertyAssessment.new(@particulars).result_for
+      PropertyAssessment.new(@particulars).call
       true
     end
 

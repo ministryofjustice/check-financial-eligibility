@@ -23,6 +23,6 @@ RSpec.describe WorkflowManager do
   end
 
   def expect_service_result(klass, result)
-    expect(klass).to receive(:new).with(particulars).and_return(double(klass, result_for: result))
+    expect(klass).to receive(:new).with(particulars).and_return(double(klass, call: result))
   end
 end

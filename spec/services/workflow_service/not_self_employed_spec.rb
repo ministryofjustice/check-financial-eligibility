@@ -14,7 +14,7 @@ module WorkflowService
       }
       request = JSON.parse(request_hash.to_json, object_class: OpenStruct)
       allow(particulars).to receive(:request).and_return(request)
-      expect(service.result_for).to be true
+      expect(service.call).to be true
     end
   end
 end

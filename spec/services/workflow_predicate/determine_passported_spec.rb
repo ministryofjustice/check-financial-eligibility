@@ -8,14 +8,14 @@ module WorkflowPredicate
 
     context 'does not receive qualifying benefit' do
       it 'returns false' do
-        expect(service.result_for).to be false
+        expect(service.call).to be false
       end
     end
 
     context 'receives qualifying benefit' do
       it 'returs true' do
         allow(particulars.request.applicant).to receive(:receives_qualifying_benefit).and_return true
-        expect(service.result_for).to be true
+        expect(service.call).to be true
       end
     end
   end

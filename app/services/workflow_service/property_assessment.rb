@@ -1,6 +1,6 @@
 module WorkflowService
   class PropertyAssessment < BaseWorkflowService
-    def result_for
+    def call
       calculate_property
     end
 
