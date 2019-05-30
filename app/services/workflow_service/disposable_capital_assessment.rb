@@ -3,6 +3,7 @@ module WorkflowService
     def call
       calculate_liquid_capital
       PropertyAssessment.new(@particulars).call
+      VehicleAssessment.new(@particulars).call
       true
     end
 

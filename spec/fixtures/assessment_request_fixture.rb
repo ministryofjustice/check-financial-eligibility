@@ -115,7 +115,9 @@ class AssessmentRequestFixture < BaseAssessmentFixture # rubocop:disable Metrics
           vehicles: [
             {
               value: 9500,
-              loan_amount_outstanding: 6000
+              loan_amount_outstanding: 6000,
+              date_of_purchase: Date.parse('13 Aug 2015'),
+              in_regular_use: true
             }
           ]
         },

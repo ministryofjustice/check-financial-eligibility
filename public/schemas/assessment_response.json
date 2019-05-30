@@ -60,6 +60,7 @@
       "type": "object",
       "required": [
         "liquid_capital_assessment",
+        "vehicles",
         "property",
         "total_capital_lower_threshold",
         "total_capital_upper_threshold",
@@ -155,6 +156,37 @@
         "assessed_capital_value": {
           "description": "Assessed capital value after all deductions on this property",
           "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
+        }
+      }
+    },
+    "applicant_vehicle": {
+      "description": "Details of an individual vehicle",
+      "required": [
+        "value",
+        "loan_amount_outstanding",
+        "date_of_purchase",
+        "in_regular_use",
+        "assessed_value"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
+        },
+        "loan_amount_outstanding": {
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
+        },
+        "date_of_purchase": {
+          "description": "The date the vehicle was purchased",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/date"
+        },
+        "in_regular_use": {
+          "description": "Whether or not the vehicle is in regular use by the applicant or their partner",
+          "type": "boolean"
+        },
+        "assessed_value": {
+          "description": "The assessed value of the vehicle after deducting any allowances",
+          "type": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
         }
       }
     },

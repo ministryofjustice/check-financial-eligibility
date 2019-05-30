@@ -43,7 +43,15 @@ module WorkflowService # rubocop:disable Metrics/ModuleLength
           property_service = double PropertyAssessment
           expect(PropertyAssessment).to receive(:new).with(particulars).and_return(property_service)
           expect(property_service).to receive(:call).and_return(true)
+          service.call
+        end
+      end
 
+      context 'vehicle assessment' do
+        it 'instantiates and calles the Vehicle Assesment service' do
+          vehicle_service = double VehicleAssessment
+          expect(VehicleAssessment).to receive(:new).with(particulars).and_return(vehicle_service)
+          expect(vehicle_service).to receive(:call).and_return(true)
           service.call
         end
       end

@@ -235,7 +235,9 @@
       "description": "Details of an individual vehicle",
       "required": [
         "value",
-        "loan_amount_outstanding"
+        "loan_amount_outstanding",
+        "date_of_purchase",
+        "in_regular_use"
       ],
       "additionalProperties": false,
       "properties": {
@@ -244,6 +246,14 @@
         },
         "loan_amount_outstanding": {
           "$ref": "#/definitions/positive_number_with_two_decimals"
+        },
+        "date_of_purchase": {
+          "description": "The date the vehicle was purchased",
+          "$ref": "#/definitions/date"
+        },
+        "in_regular_use": {
+          "description": "Whether or not the vehicle is in regular use by the applicant or their partner",
+          "type": "boolean"
         }
       }
     },
