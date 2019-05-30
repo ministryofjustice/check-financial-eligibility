@@ -2,7 +2,10 @@ module WorkflowService
   class PropertyAssessment < BaseWorkflowService
     def call
       calculate_property
+      true
     end
+
+    private
 
     def calculate_property
       @remaining_mortgage_allowance = Threshold.value_for(:property_maximum_mortgage_allowance, at: @submission_date)
