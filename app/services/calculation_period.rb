@@ -2,7 +2,7 @@ class CalculationPeriod
   attr_reader :period_start, :period_end
 
   def initialize(submission_date)
-    submission_date = Date.parse(submission_date) if submission_date.is_a?(String)
+    submission_date = submission_date
     @period_end = submission_date - 1.day
     @period_start = @period_end - 3.months
   end

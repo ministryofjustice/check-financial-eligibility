@@ -53,6 +53,22 @@ class AssessmentResponseFixture < BaseAssessmentFixture
               }
             ]
           },
+          vehicles: [
+            {
+              value: 12_500,
+              loan_amount_outstanding: 7_200,
+              date_of_purchase: 34.months.ago.to_date,
+              in_regular_use: true,
+              assessed_value: 5_300
+            },
+            {
+              value: 4_300,
+              loan_amount_outstanding: 0,
+              date_of_purchase: 40.months.ago.to_date,
+              in_regular_use: true,
+              assessed_value: 0
+            }
+          ],
           total_capital_lower_threshold: 3_000.00,
           total_capital_upper_threshold: 8_000.00,
           disposable_capital_assessment: 100.00

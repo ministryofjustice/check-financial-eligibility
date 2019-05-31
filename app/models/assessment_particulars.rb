@@ -20,6 +20,16 @@ class AssessmentParticulars
     }
   end
 
+  def self.initial_vehicle_details
+    {
+      value: 0.0,
+      loan_amount_outstanding: 0.0,
+      date_of_purchase: nil,
+      in_regular_use: true,
+      assessed_value: 0.0
+    }
+  end
+
   def method_missing(method, *args)
     super unless valid_missing_method?(method, args)
     @data.__send__(method, *args)
@@ -82,6 +92,7 @@ class AssessmentParticulars
         main_dwelling: AssessmentParticulars.initial_property_details,
         additional_properties: []
       },
+      vehicles: [],
       total_capital_lower_threshold: 0.0,
       total_capital_upper_threshold: 0.0,
       disposable_capital_assessment: 0.0

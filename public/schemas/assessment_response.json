@@ -76,6 +76,12 @@
           "description": "Details of property values and calculations",
           "$ref": "#/definitions/property_details"
         },
+        "vehicles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/vehicle_detail"
+          }
+        },
         "disposable_capital_assessment": {
           "description": "The applicant's disposable capital calculated after subtracting allowable items from the list of capital assets given",
           "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
@@ -86,6 +92,37 @@
         },
         "total_capital_upper_threshold": {
           "description": "The upper threshold of the capital allowance used in the calculation",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
+        }
+      }
+    },
+    "vehicle_detail": {
+      "description": "Details of an individual vehicle",
+      "required": [
+        "value",
+        "loan_amount_outstanding",
+        "date_of_purchase",
+        "in_regular_use",
+        "assessed_value"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
+        },
+        "loan_amount_outstanding": {
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
+        },
+        "date_of_purchase": {
+          "description": "The date the vehicle was purchased",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/date"
+        },
+        "in_regular_use": {
+          "description": "Whether or not the vehicle is in regular use by the applicant or their partner",
+          "type": "boolean"
+        },
+        "assessed_value": {
+          "description": "The assessed value of the vehicle after deducting all allowances",
           "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
         }
       }
