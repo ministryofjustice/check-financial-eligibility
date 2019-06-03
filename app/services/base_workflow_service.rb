@@ -1,12 +1,12 @@
 class BaseWorkflowService
   attr_accessor :particulars
 
-  REQUEST_METHODS = %i[applicant applicant_income applicant_outgoings applicant_capital].freeze
+  REQUEST_METHODS = %i[meta_data applicant applicant_income applicant_outgoings applicant_capital].freeze
   RESPONSE_METHODS = %i[response].freeze
 
   def initialize(particulars)
     @particulars = particulars
-    @submission_date = Date.parse(@particulars.request.meta_data.submission_date)
+    @submission_date = meta_data.submission_date
     @calculation_period = CalculationPeriod.new(@submission_date)
   end
 

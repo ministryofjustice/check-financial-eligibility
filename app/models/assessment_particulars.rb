@@ -4,7 +4,7 @@ class AssessmentParticulars
   VALID_METHOD_REGEX = /^[a-z][a-z0-9_]+[=]?$/.freeze
 
   def initialize(assessment)
-    @data = JSON.parse(initial_data(assessment).to_json, object_class: OpenStruct)
+    @data = JSON.parse(initial_data(assessment).to_json, object_class: DatedStruct)
   end
 
   def self.initial_property_details

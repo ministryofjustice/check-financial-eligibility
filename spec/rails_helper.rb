@@ -72,5 +72,5 @@ require Rails.root.join('spec/fixtures/assessment_response_fixture')
 
 # helper methods
 def open_structify(data)
-  JSON.parse(data.to_json, object_class: OpenStruct)
+  JSON.parse(data.to_json, object_class: DatedStruct)
 end

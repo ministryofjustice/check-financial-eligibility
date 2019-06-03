@@ -12,7 +12,7 @@ module WorkflowPredicate
           submission_date: Date.today
         }
       }
-      request = JSON.parse(request_hash.to_json, object_class: OpenStruct)
+      request = JSON.parse(request_hash.to_json, object_class: DatedStruct)
       allow(particulars).to receive(:request).and_return(request)
       expect(service.call).to be false
     end

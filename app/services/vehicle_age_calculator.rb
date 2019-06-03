@@ -1,6 +1,6 @@
 class VehicleAgeCalculator
   def initialize(purchase_date, calculation_date)
-    @purchase_date = Date.parse(purchase_date)
+    @purchase_date = purchase_date
     @calculation_date = calculation_date
   end
 

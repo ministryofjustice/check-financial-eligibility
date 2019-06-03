@@ -130,7 +130,7 @@ module WorkflowService # rubocop:disable Metrics/ModuleLength
           {
             value: 9_500,
             loan_amount_outstanding: 0,
-            date_of_purchase: 26.months.ago,
+            date_of_purchase: 26.months.ago.to_date,
             in_regular_use: true
           }
         ]
@@ -141,7 +141,7 @@ module WorkflowService # rubocop:disable Metrics/ModuleLength
           {
             value: 18_700,
             loan_amount_outstanding: 0,
-            date_of_purchase: 38.months.ago,
+            date_of_purchase: 38.months.ago.to_date,
             in_regular_use: true
           }
         ]
@@ -153,7 +153,7 @@ module WorkflowService # rubocop:disable Metrics/ModuleLength
           {
             value: 23_700,
             loan_amount_outstanding: 2_250,
-            date_of_purchase: 5.months.ago,
+            date_of_purchase: 5.months.ago.to_date,
             in_regular_use: true
           }
         ]
@@ -165,7 +165,7 @@ module WorkflowService # rubocop:disable Metrics/ModuleLength
           {
             value: 23_700,
             loan_amount_outstanding: 0,
-            date_of_purchase: 5.months.ago,
+            date_of_purchase: 5.months.ago.to_date,
             in_regular_use: true
           }
         ]
@@ -177,7 +177,7 @@ module WorkflowService # rubocop:disable Metrics/ModuleLength
           {
             value: 23_700,
             loan_amount_outstanding: 2_250,
-            date_of_purchase: 15.months.ago,
+            date_of_purchase: 15.months.ago.to_date,
             in_regular_use: true
           }
         ]
@@ -189,7 +189,7 @@ module WorkflowService # rubocop:disable Metrics/ModuleLength
           {
             value: 23_700,
             loan_amount_outstanding: 0,
-            date_of_purchase: 15.months.ago,
+            date_of_purchase: 15.months.ago.to_date,
             in_regular_use: true
           }
         ]
@@ -201,7 +201,7 @@ module WorkflowService # rubocop:disable Metrics/ModuleLength
           {
             value: 23_700,
             loan_amount_outstanding: 2_250,
-            date_of_purchase: 26.months.ago,
+            date_of_purchase: 26.months.ago.to_date,
             in_regular_use: true
           }
         ]
@@ -213,7 +213,7 @@ module WorkflowService # rubocop:disable Metrics/ModuleLength
           {
             value: 23_700,
             loan_amount_outstanding: 2_250,
-            date_of_purchase: 26.months.ago,
+            date_of_purchase: 26.months.ago.to_date,
             in_regular_use: false
           }
         ]
