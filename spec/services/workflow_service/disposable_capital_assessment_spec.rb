@@ -13,28 +13,14 @@ module WorkflowService # rubocop:disable Metrics/ModuleLength
       end
 
       context 'liquid capital' do
-        context 'all positive supplied' do
-          it 'adds them all together' do
-            particulars.request.applicant_capital.liquid_capital.bank_accounts = open_structify(all_positive_bank_accounts)
-            expect(service.call).to be true
-            expect(particulars.response.details.liquid_capital_assessment).to eq 136.87
-          end
-        end
-
-        context 'mixture of positive and negative supplied' do
-          it 'ignores negative values' do
-            particulars.request.applicant_capital.liquid_capital.bank_accounts = open_structify(mixture_of_negative_and_positive_bank_accounts)
-            expect(service.call).to be true
-            expect(particulars.response.details.liquid_capital_assessment).to eq 35.88
-          end
-        end
-
-        context 'all negative supplied' do
-          it 'ignores negative values' do
-            particulars.request.applicant_capital.liquid_capital.bank_accounts = open_structify(all_negative_bank_accounts)
-            expect(service.call).to be true
-            expect(particulars.response.details.liquid_capital_assessment).to eq 0.0
-          end
+        it 'instantiates and calls the Property Assessment service' do
+          lcas = double LiquidCapitalAssessment
+          expect(LiquidCapitalAssessment).to receive(:new)
+            .with(particulars.request.applicant_capital.liquid_capital)
+            .and_return(lcas)
+          expect(lcas).to receive(:call).and_return(156.26)
+          expect(particulars.response.details.capital).to receive(:liquid_capital_assessment=).with(156.26)
+          service.call
         end
       end
 
@@ -55,30 +41,6 @@ module WorkflowService # rubocop:disable Metrics/ModuleLength
           service.call
         end
       end
-    end
-
-    def all_positive_bank_accounts
-      [
-        { account_name: 'Account 1', lowest_balance: 35.66 },
-        { account_name: 'Account 2', lowest_balance: 100.99 },
-        { account_name: 'Account 3', lowest_balance: 0.22 }
-      ]
-    end
-
-    def mixture_of_negative_and_positive_bank_accounts
-      [
-        { account_name: 'Account 1', lowest_balance: 35.66 },
-        { account_name: 'Account 2', lowest_balance: - 100.99 },
-        { account_name: 'Account 3', lowest_balance: 0.22 }
-      ]
-    end
-
-    def all_negative_bank_accounts
-      [
-        { account_name: 'Account 1', lowest_balance: -35.66 },
-        { account_name: 'Account 2', lowest_balance: - 100.99 },
-        { account_name: 'Account 3', lowest_balance: -0.22 }
-      ]
     end
 
     def main_dwelling_big_mortgage_wholly_owned
