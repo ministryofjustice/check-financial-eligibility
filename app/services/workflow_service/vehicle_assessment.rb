@@ -1,7 +1,7 @@
 module WorkflowService
   class VehicleAssessment < BaseWorkflowService
     def call
-      @particulars.request.applicant_capital.liquid_capital.vehicles.each { |v| assess(v) }
+      applicant_capital.liquid_capital.vehicles.each { |v| assess(v) }
       true
     end
 
@@ -11,7 +11,7 @@ module WorkflowService
       result = OpenStruct.new(AssessmentParticulars.initial_vehicle_details)
       copy_request_details_to_result(vehicle, result)
       result.assessed_value = assessed_value(vehicle)
-      @particulars.response.details.capital.vehicles << result
+      response.details.capital.vehicles << result
     end
 
     def vehicle_disregard

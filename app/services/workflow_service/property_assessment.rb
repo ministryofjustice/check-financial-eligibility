@@ -10,44 +10,44 @@ module WorkflowService
     def calculate_property
       @remaining_mortgage_allowance = Threshold.value_for(:property_maximum_mortgage_allowance, at: @submission_date)
       calculate_additional_properties
-      calculate_main_dwelling(request_data: @particulars.request.applicant_capital.property.main_home,
-                              response_data: @particulars.response.details.capital.property.main_dwelling)
+      calculate_main_dwelling(property: applicant_capital.property.main_home,
+                              assessment: response.details.capital.property.main_dwelling)
     end
 
     def calculate_additional_properties
-      @particulars.request.applicant_capital.property.additional_properties.each do |additional_property|
-        response_data = OpenStruct.new(AssessmentParticulars.initial_property_details)
-        calculate_individual_property(request_data: additional_property, response_data: response_data, property_type: :additional_property)
-        @particulars.response.details.capital.property.additional_properties << response_data
+      applicant_capital.property.additional_properties.each do |additional_property|
+        assessment = OpenStruct.new(AssessmentParticulars.initial_property_details)
+        calculate_individual_property(property: additional_property, assessment: assessment, property_type: :additional_property)
+        response.details.capital.property.additional_properties << assessment
       end
     end
 
-    def calculate_main_dwelling(request_data:, response_data:)
-      calculate_individual_property(request_data: request_data, response_data: response_data, property_type: :main_dwelling)
+    def calculate_main_dwelling(property:, assessment:)
+      calculate_individual_property(property: property, assessment: assessment, property_type: :main_dwelling)
     end
 
-    def calculate_individual_property(request_data:, response_data:, property_type:) # rubocop:disable Metrics/AbcSize
-      response_data.notional_sale_costs_pctg = Threshold.value_for(:property_notional_sale_costs_percentage, at: @submission_date)
-      response_data.net_value_after_deduction = (request_data.value - (request_data.value * (response_data.notional_sale_costs_pctg / 100))).round(2)
-      response_data.maximum_mortgage_allowance = allowable_mortgage_deduction(request_data.outstanding_mortgage)
-      response_data.net_value_after_mortgage = response_data.net_value_after_deduction - response_data.maximum_mortgage_allowance
-      response_data.percentage_owned = request_data.percentage_owned
-      response_data.net_equity_value = net_equity_value(request_data: request_data, response_data: response_data)
-      response_data.property_disregard = property_disregard(property_type)
-      response_data.assessed_capital_value = assessed_capital_value(response_data: response_data)
+    def calculate_individual_property(property:, assessment:, property_type:) # rubocop:disable Metrics/AbcSize
+      assessment.notional_sale_costs_pctg = Threshold.value_for(:property_notional_sale_costs_percentage, at: @submission_date)
+      assessment.net_value_after_deduction = (property.value - (property.value * (assessment.notional_sale_costs_pctg / 100))).round(2)
+      assessment.maximum_mortgage_allowance = allowable_mortgage_deduction(property.outstanding_mortgage)
+      assessment.net_value_after_mortgage = assessment.net_value_after_deduction - assessment.maximum_mortgage_allowance
+      assessment.percentage_owned = property.percentage_owned
+      assessment.net_equity_value = net_equity_value(property: property, assessment: assessment)
+      assessment.property_disregard = property_disregard(property_type)
+      assessment.assessed_capital_value = assessed_capital_value(assessment: assessment)
     end
 
-    def net_equity_value(request_data:, response_data:)
-      if request_data.shared_with_housing_assoc
-        housing_assoc_pctg = 100 - request_data.percentage_owned
-        response_data.net_value_after_mortgage - (request_data.value * housing_assoc_pctg / 100).round(2)
+    def net_equity_value(property:, assessment:)
+      if property.shared_with_housing_assoc
+        housing_assoc_pctg = 100 - property.percentage_owned
+        assessment.net_value_after_mortgage - (property.value * housing_assoc_pctg / 100).round(2)
       else
-        (response_data.net_value_after_mortgage * (response_data.percentage_owned / 100)).round(2)
+        (assessment.net_value_after_mortgage * (assessment.percentage_owned / 100)).round(2)
       end
     end
 
-    def assessed_capital_value(response_data:)
-      [0, (response_data.net_equity_value - response_data.property_disregard).round(2)].max
+    def assessed_capital_value(assessment:)
+      [0, (assessment.net_equity_value - assessment.property_disregard).round(2)].max
     end
 
     def allowable_mortgage_deduction(outstanding_mortgage)
