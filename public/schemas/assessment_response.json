@@ -22,6 +22,225 @@
         "out_of_scope",
         "invalid_request"
       ]
+    },
+    "income_details": {
+      "type": "object",
+      "required": [
+        "monthly_gross_income",
+        "upper_income_threshold",
+        "monthly_disposable_income",
+        "disposable_income_lower_threshold",
+        "disposable_income_upper_threshold"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "monthly_gross_income": {
+          "description": "The monthly gross income calculated from the individual income values given",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
+        },
+        "upper_income_threshold": {
+          "description": "The upper income threshold that was used (valies according to the circumstances of the applicant)",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
+        },
+        "monthly_disposable_income": {
+          "description": "The monthly dispasable income calculated from the individual income values given and allowable expenses",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
+        },
+        "disposable_income_lower_threshold": {
+          "description": "The lower threshold of the monthly disposable income used in the calculation",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
+        },
+        "disposable_income_upper_threshold": {
+          "description": "The upper threshold of the monthly disposable income used in the calculation",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
+        }
+      }
+    },
+    "capital_details": {
+      "type": "object",
+      "required": [
+        "liquid_capital_assessment",
+        "vehicles",
+        "property",
+        "total_capital_lower_threshold",
+        "total_capital_upper_threshold",
+        "disposable_capital_assessment"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "liquid_capital_assessment": {
+          "description": "Aggregate value of lowest balances of bank accounts during the calculation period",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
+        },
+        "property": {
+          "description": "Details of property values and calculations",
+          "$ref": "#/definitions/property_details"
+        },
+        "vehicles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/vehicle_detail"
+          }
+        },
+        "disposable_capital_assessment": {
+          "description": "The applicant's disposable capital calculated after subtracting allowable items from the list of capital assets given",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
+        },
+        "total_capital_lower_threshold": {
+          "description": "The lower threshold of the capital allowance used in the calculation",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
+        },
+        "total_capital_upper_threshold": {
+          "description": "The upper threshold of the capital allowance used in the calculation",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
+        }
+      }
+    },
+    "vehicle_detail": {
+      "description": "Details of an individual vehicle",
+      "required": [
+        "value",
+        "loan_amount_outstanding",
+        "date_of_purchase",
+        "in_regular_use",
+        "assessed_value"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
+        },
+        "loan_amount_outstanding": {
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
+        },
+        "date_of_purchase": {
+          "description": "The date the vehicle was purchased",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/date"
+        },
+        "in_regular_use": {
+          "description": "Whether or not the vehicle is in regular use by the applicant or their partner",
+          "type": "boolean"
+        },
+        "assessed_value": {
+          "description": "The assessed value of the vehicle after deducting all allowances",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
+        }
+      }
+    },
+    "property_details": {
+      "type": "object",
+      "required": ["main_dwelling", "additional_properties"],
+      "properties": {
+        "main_dwelling": {
+          "description": "Details of value, equity, mortgage and allowances for the main dwelling",
+          "$ref": "#/definitions/dwelling"
+        },
+        "additional_properties": {
+          "type": "Array",
+          "items": {
+            "$ref": "#/definitions/dwelling"
+          }
+        }
+      }
+    },
+    "dwelling": {
+      "type": "object",
+      "description": "Details of value, equity, mortgages and debts for a property",
+      "required": [
+        "notional_sale_costs_pctg",
+        "net_value_after_deduction",
+        "net_value_after_mortgage",
+        "percentage_owned",
+        "shared_with_housing_assoc",
+        "net_equity_value",
+        "property_disregard",
+        "assessed_capital_value"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "notional_sale_costs_pctg": {
+          "description": "Notional sale costs (as a percentage) deducted from property value",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/percentage_with_two_decimals"
+        },
+        "net_value_after_deduction": {
+          "description": "Value of property after deduction",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
+        },
+        "maximum_mortgage_allowance": {
+          "description": "Maximum outstanding mortgage allowance",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
+        },
+        "net_value_after_mortgage": {
+          "description": "Value of property after deduction of outstanding mortgage",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
+        },
+        "percentage_owned": {
+          "description": "Percentage of property owned by applicant",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/percentage_with_two_decimals"
+        },
+        "shared_with_housing_assoc": {
+          "description": "Whether the rules defining shared ownership were applied",
+          "type": "boolean"
+        },
+        "net_equity_value": {
+          "description": "Value of applicant's equity in the property",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
+        },
+        "property_disregard": {
+          "description": "Value of the property disregarded for Legal Aid purposes",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
+        },
+        "assessed_capital_value": {
+          "description": "Assessed capital value after all deductions on this property",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
+        }
+      }
+    },
+    "applicant_vehicle": {
+      "description": "Details of an individual vehicle",
+      "required": [
+        "value",
+        "loan_amount_outstanding",
+        "date_of_purchase",
+        "in_regular_use",
+        "assessed_value"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
+        },
+        "loan_amount_outstanding": {
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
+        },
+        "date_of_purchase": {
+          "description": "The date the vehicle was purchased",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/date"
+        },
+        "in_regular_use": {
+          "description": "Whether or not the vehicle is in regular use by the applicant or their partner",
+          "type": "boolean"
+        },
+        "assessed_value": {
+          "description": "The assessed value of the vehicle after deducting any allowances",
+          "type": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
+        }
+      }
+    },
+    "contribution_details": {
+      "type": "object",
+      "required": ["monthly_contribution", "capital_contribution"],
+      "addtionalProperties": false,
+      "properties": {
+        "monthly_contribution": {
+          "description": "The monthly contribution required from the applicant",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
+        },
+        "capital_contribution": {
+          "description": "The capital contribution required from the applicant",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
+        }
+      }
     }
   },
   "properties": {
@@ -44,17 +263,9 @@
       "required": [
         "passported",
         "self_employed",
-        "monthly_gross_income",
-        "upper_income_threshold",
-        "monthly_disposable_income",
-        "disposable_income_lower_threshold",
-        "disposable_income_upper_threshold",
-        "total_capital_assessment",
-        "total_capital_lower_threshold",
-        "total_capital_upper_threshold",
-        "disposable_capital_assessment",
-        "monthly_contribution",
-        "capital_contribution"
+        "income",
+        "capital",
+        "contributions"
       ],
       "properties": {
         "passported": {
@@ -65,49 +276,17 @@
           "description": "Whether or not the applicant is self-employed",
           "type": "boolean"
         },
-        "monthly_gross_income": {
-          "description": "The monthly gross income calculated from the individual income values given",
-          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/number_with_two_decimals"
+        "income": {
+          "descripion": "Aggregate income details and allowances used in calculation",
+          "$ref": "#/definitions/income_details"
         },
-        "upper_income_threshold": {
-          "description": "The upper income threshold that was used (valies according to the circumstances of the applicant)",
-          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/number_with_two_decimals"
+        "capital": {
+          "description": "Aggregate capital details and allowances used in calculation",
+          "$ref": "#/definitions/capital_details"
         },
-        "monthly_disposable_income": {
-          "description": "The monthly dispasable income calculated from the individual income values given and allowable expenses",
-          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/number_with_two_decimals"
-        },
-        "disposable_income_lower_threshold": {
-          "description": "The lower threshold of the monthly disposable income used in the calculation",
-          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/number_with_two_decimals"
-        },
-        "disposable_income_upper_threshold": {
-          "description": "The upper threshold of the monthly disposable income used in the calculation",
-          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/number_with_two_decimals"
-        },
-        "total_capital_assessment": {
-          "description": "The total capital assets of the applicant calculated from all the values given",
-          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/number_with_two_decimals"
-        },
-        "total_capital_lower_threshold": {
-          "description": "The lower threshold of the capital allowance used in the calculation",
-          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/number_with_two_decimals"
-        },
-        "total_capital_upper_threshold": {
-          "description": "The upper threshold of the capital allowance used in the calculation",
-          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/number_with_two_decimals"
-        },
-        "disposable_capital_assessment": {
-          "description": "The applicant's disposable capital calculated after subtracting allowable items from the list of capital assets given",
-          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/number_with_two_decimals"
-        },
-        "monthly_contribution": {
-          "description": "The monthly contribution required from the applicant",
-          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/number_with_two_decimals"
-        },
-        "capital_contribution": {
-          "description": "The capital contribution required from the applicant",
-          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/number_with_two_decimals"
+        "contributions": {
+          "description": "Details of any contributions required, if any",
+          "$ref": "#/definitions/contribution_details"
         }
       }
     },

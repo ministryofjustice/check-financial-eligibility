@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe JsonSchemaValidator do
-  let(:assessment_hash) { AssessmentFixture.ruby_hash }
+  let(:assessment_hash) { AssessmentRequestFixture.ruby_hash }
   let(:payload) { JSON.pretty_generate(assessment_hash) }
   let(:validator) { JsonSchemaValidator.new(payload) }
 
@@ -475,7 +475,7 @@ describe JsonSchemaValidator do
         context 'other properties' do
           context 'it is not present' do
             before do
-              assessment_hash[:applicant_capital][:property].delete(:other_properties)
+              assessment_hash[:applicant_capital][:property].delete(:additional_properties)
             end
 
             it 'is valid' do
@@ -485,7 +485,7 @@ describe JsonSchemaValidator do
 
           context 'it has an extra attribute' do
             before do
-              assessment_hash[:applicant_capital][:property][:other_properties].first[:purchase_price] = 12_000
+              assessment_hash[:applicant_capital][:property][:additional_properties].first[:purchase_price] = 12_000
             end
 
             it 'is invalid' do
@@ -493,14 +493,14 @@ describe JsonSchemaValidator do
             end
 
             it 'has an error message' do
-              expected_error = "The property '#/applicant_capital/property/other_properties/0' contains additional properties .*purchase_price"
+              expected_error = "The property '#/applicant_capital/property/additional_properties/0' contains additional properties .*purchase_price"
               expect(validator.errors.first).to match(/#{expected_error}/)
             end
           end
 
           context 'it has a missing attribute' do
             before do
-              assessment_hash[:applicant_capital][:property][:other_properties].first.delete(:value)
+              assessment_hash[:applicant_capital][:property][:additional_properties].first.delete(:value)
             end
 
             it 'is invalid' do
@@ -508,7 +508,7 @@ describe JsonSchemaValidator do
             end
 
             it 'has an error message' do
-              expected_error = "The property '#/applicant_capital/property/other_properties/0' did not contain a required property of 'value'"
+              expected_error = "The property '#/applicant_capital/property/additional_properties/0' did not contain a required property of 'value'"
               expect(validator.errors.first).to match(/#{expected_error}/)
             end
           end
@@ -522,7 +522,32 @@ describe JsonSchemaValidator do
           end
 
           it 'is valid' do
-            expect(validator).to be_valid
+            expect(validator).not_to be_valid
+            expect(validator.errors.first).to match(%r{The property '#/applicant_capital' did not contain a required property of 'liquid_capital'})
+          end
+        end
+
+        context 'bank_accounts' do
+          context 'it is not present' do
+            before do
+              assessment_hash[:applicant_capital][:liquid_capital].delete(:bank_accounts)
+            end
+
+            it 'errors' do
+              expect(validator).not_to be_valid
+              expect(validator.errors.first).to match(%r{The property '#/applicant_capital/liquid_capital' did not contain a required property of 'bank_accounts'})
+            end
+          end
+
+          context 'it is empty' do
+            before do
+              assessment_hash[:applicant_capital][:liquid_capital][:bank_accounts] = []
+            end
+
+            it 'errors' do
+              expect(validator).not_to be_valid
+              expect(validator.errors.first).to match(%r{The property '#/applicant_capital/liquid_capital/bank_accounts' did not contain a minimum number of items 1})
+            end
           end
         end
 

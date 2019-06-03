@@ -11,15 +11,15 @@ RSpec.describe AssessmentParticulars do
 
       describe '#meta_data' do
         it 'is same as specified in request payload' do
-          particulars.request.meta_data
-          expect(request.meta_data).to eq OpenStruct.new(request_hash[:meta_data])
+          expect(request.meta_data).to eq DatedStruct.new(request_hash[:meta_data])
         end
       end
 
       context '#applicant' do
         context '#date_of_birth' do
-          it 'is as specified in the request_payload and formatted as YYYY-MM-DD' do
-            expect(request.applicant.date_of_birth).to eq request_hash[:applicant][:date_of_birth]
+          it 'is converted to a date object' do
+            expect(request.applicant.date_of_birth).to be_instance_of(Date)
+            expect(request.applicant.date_of_birth).to eq Date.parse(request_hash[:applicant][:date_of_birth])
           end
         end
       end
@@ -30,8 +30,8 @@ RSpec.describe AssessmentParticulars do
             dependants = request.applicant.dependants
             expect(dependants).to be_instance_of(Array)
             expect(dependants.size).to eq 2
-            expect(dependants.first).to be_instance_of(OpenStruct)
-            expect(dependants.last).to be_instance_of(OpenStruct)
+            expect(dependants.first).to be_instance_of(DatedStruct)
+            expect(dependants.last).to be_instance_of(DatedStruct)
           end
 
           it 'can be accessed an an item level' do
@@ -53,10 +53,6 @@ RSpec.describe AssessmentParticulars do
       end
 
       describe '#details' do
-        it 'is an empty RecursiveOpenStruct' do
-          expect(particulars.response.details).to eq OpenStruct.new({})
-        end
-
         it 'can be populated' do
           particulars.response.details.total_capital_assessment
           particulars.response.details.total_capital_assessment = 2_855.55

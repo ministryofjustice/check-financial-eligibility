@@ -1,6 +1,6 @@
 module WorkflowPredicate
   class DetermineSelfEmployed < BaseWorkflowService
-    def result_for
+    def call
       false
     end
   end

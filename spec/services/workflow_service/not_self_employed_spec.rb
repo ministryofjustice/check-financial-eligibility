@@ -6,7 +6,15 @@ module WorkflowService
     let(:service) { described_class.new(particulars) }
 
     it 'returns true' do
-      expect(service.result_for).to be true
+      # dummy this out until NotSelfEmployed acually has code
+      request_hash = {
+        meta_data: {
+          submission_date: Date.today
+        }
+      }
+      request = JSON.parse(request_hash.to_json, object_class: DatedStruct)
+      allow(particulars).to receive(:request).and_return(request)
+      expect(service.call).to be true
     end
   end
 end

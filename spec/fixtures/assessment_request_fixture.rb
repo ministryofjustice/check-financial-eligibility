@@ -1,5 +1,5 @@
-class AssessmentFixture < BaseAssessmentFixture
-  def self.ruby_hash
+class AssessmentRequestFixture < BaseAssessmentFixture # rubocop:disable Metrics/ClassLength
+  def self.ruby_hash # rubocop:disable Metrics/MethodLength
     {
       client_reference_id: 'my-eligibility-check-01',
       meta_data: {
@@ -77,22 +77,35 @@ class AssessmentFixture < BaseAssessmentFixture
           main_home: {
             value: 466_933,
             outstanding_mortgage: 266_000,
-            percentage_owned: 50
+            percentage_owned: 50,
+            shared_with_housing_assoc: false
           },
-          other_properties: [
+          additional_properties: [
             {
               value: 466_933,
               outstanding_mortgage: 266_000,
-              percentage_owned: 100
+              percentage_owned: 100,
+              shared_with_housing_assoc: false
             },
             {
               value: 466_933,
               outstanding_mortgage: 266_000,
-              percentage_owned: 33.33
+              percentage_owned: 33.33,
+              shared_with_housing_assoc: false
             }
           ]
         },
         liquid_capital: {
+          bank_accounts: [
+            {
+              account_name: 'Account #1',
+              lowest_balance: -33.44
+            },
+            {
+              account_name: 'Account #2',
+              lowest_balance: 256.44
+            }
+          ],
           valuable_items: [
             {
               item_description: 'jewellery',
@@ -102,7 +115,9 @@ class AssessmentFixture < BaseAssessmentFixture
           vehicles: [
             {
               value: 9500,
-              loan_amount_outstanding: 6000
+              loan_amount_outstanding: 6000,
+              date_of_purchase: Date.parse('13 Aug 2015'),
+              in_regular_use: true
             }
           ]
         },
