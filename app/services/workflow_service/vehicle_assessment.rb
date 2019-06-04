@@ -1,17 +1,23 @@
 module WorkflowService
-  class VehicleAssessment < BaseWorkflowService
+  class VehicleAssessment
+    def initialize(vehicles, submission_date)
+      @vehicles = vehicles
+      @submission_date = submission_date
+      @response = []
+    end
+
     def call
-      applicant_capital.liquid_capital.vehicles.each { |v| assess(v) }
-      true
+      @vehicles.each { |v| assess(v) }
+      @response
     end
 
     private
 
     def assess(vehicle)
-      result = OpenStruct.new(AssessmentParticulars.initial_vehicle_details)
+      result = DatedStruct.new(AssessmentParticulars.initial_vehicle_details)
       copy_request_details_to_result(vehicle, result)
       result.assessed_value = assessed_value(vehicle)
-      response.details.capital.vehicles << result
+      @response << result
     end
 
     def vehicle_disregard

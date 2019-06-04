@@ -129,9 +129,9 @@
     },
     "property_details": {
       "type": "object",
-      "required": ["main_dwelling", "additional_properties"],
+      "required": ["main_home", "additional_properties"],
       "properties": {
-        "main_dwelling": {
+        "main_home": {
           "description": "Details of value, equity, mortgage and allowances for the main dwelling",
           "$ref": "#/definitions/dwelling"
         },

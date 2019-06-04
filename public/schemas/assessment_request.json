@@ -231,13 +231,14 @@
         }
       }
     },
-    "applicant_vehicle": {
+    "applicant_vehicleXXXX": {
       "description": "Details of an individual vehicle",
       "required": [
         "value",
         "loan_amount_outstanding",
         "date_of_purchase",
-        "in_regular_use"
+        "in_regular_use",
+        "xxx"
       ],
       "additionalProperties": false,
       "properties": {
@@ -290,13 +291,6 @@
           "minItems": 1,
           "items": {
             "$ref": "#/definitions/bank_accounts"
-          }
-        },
-        "vehicles": {
-          "description": "Details of applicant vehicles",
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/applicant_vehicle"
           }
         }
       }
@@ -408,6 +402,10 @@
       "properties": {
         "property": {
           "$ref": "#/definitions/applicant_property"
+        },
+        "vehicles": {
+          "type": "array",
+          "items": "#/definitions/applicant_vehiclezzz"
         },
         "liquid_capital": {
           "$ref": "#/definitions/applicant_liquid_capital"

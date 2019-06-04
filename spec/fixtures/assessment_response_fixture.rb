@@ -17,7 +17,7 @@ class AssessmentResponseFixture < BaseAssessmentFixture
         capital: {
           liquid_capital_assessment: 45.00,
           property: {
-            main_dwelling: {
+            main_home: {
               notional_sale_costs_pctg: 3.0,
               net_value_after_deduction: 485_000.0,
               maximum_mortgage_allowance: 100_000.0,

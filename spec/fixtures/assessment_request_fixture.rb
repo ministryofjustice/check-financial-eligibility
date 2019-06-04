@@ -95,6 +95,14 @@ class AssessmentRequestFixture < BaseAssessmentFixture # rubocop:disable Metrics
             }
           ]
         },
+        vehicles: [
+          {
+            value: 9500,
+            loan_amount_outstanding: 6000,
+            date_of_purchase: Date.parse('13 Aug 2015'),
+            in_regular_use: true
+          }
+        ],
         liquid_capital: {
           bank_accounts: [
             {
@@ -110,14 +118,6 @@ class AssessmentRequestFixture < BaseAssessmentFixture # rubocop:disable Metrics
             {
               item_description: 'jewellery',
               value: 34_000
-            }
-          ],
-          vehicles: [
-            {
-              value: 9500,
-              loan_amount_outstanding: 6000,
-              date_of_purchase: Date.parse('13 Aug 2015'),
-              in_regular_use: true
             }
           ]
         },
