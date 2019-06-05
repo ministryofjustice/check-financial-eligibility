@@ -18,7 +18,7 @@ module WorkflowService # rubocop:disable Metrics/ModuleLength
 
         context 'valued at more than threshold' do
           context 'more than 3 years old' do
-            let(:request) { open_structify(in_use_more_than_three_yeas_old) }
+            let(:request) { open_structify(in_use_more_than_three_years_old) }
             it 'is assessed at zero' do
               result = service.call
               expect(result.first).to have_matching_attributes(request.first, common_attributes)
@@ -106,7 +106,7 @@ module WorkflowService # rubocop:disable Metrics/ModuleLength
         ]
       end
 
-      def in_use_more_than_three_yeas_old
+      def in_use_more_than_three_years_old
         [
           {
             value: 18_700,

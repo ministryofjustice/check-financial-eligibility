@@ -14,7 +14,7 @@ module WorkflowService
       end
 
       context 'liquid capital' do
-        it 'instantiates and calls the Property Assessment service' do
+        it 'instantiates and calls the Liquid Capital Assessment service' do
           lcas = double LiquidCapitalAssessment
           expect(LiquidCapitalAssessment).to receive(:new)
             .with(particulars.request.applicant_capital.liquid_capital)

@@ -117,15 +117,15 @@ module WorkflowService # rubocop:disable Metrics/ModuleLength
             expect(ap2.property_disregard).to eq 0.0
             expect(ap2.assessed_capital_value).to eq 221_900.0
 
-            md = result.main_home
-            expect(md.notional_sale_costs_pctg).to eq 3.0
-            expect(md.net_value_after_deduction).to eq 213_400
-            expect(md.maximum_mortgage_allowance).to eq 5_000.0
-            expect(md.net_value_after_mortgage).to eq 208_400.0
-            expect(md.percentage_owned).to eq 100.0
-            expect(md.net_equity_value).to eq 208_400.0
-            expect(md.property_disregard).to eq 100_000.0
-            expect(md.assessed_capital_value).to eq 108_400.0
+            mh = result.main_home
+            expect(mh.notional_sale_costs_pctg).to eq 3.0
+            expect(mh.net_value_after_deduction).to eq 213_400
+            expect(mh.maximum_mortgage_allowance).to eq 5_000.0
+            expect(mh.net_value_after_mortgage).to eq 208_400.0
+            expect(mh.percentage_owned).to eq 100.0
+            expect(mh.net_equity_value).to eq 208_400.0
+            expect(mh.property_disregard).to eq 100_000.0
+            expect(mh.assessed_capital_value).to eq 108_400.0
           end
         end
       end
