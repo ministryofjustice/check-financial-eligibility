@@ -231,14 +231,13 @@
         }
       }
     },
-    "applicant_vehicleXXXX": {
+    "applicant_vehicle": {
       "description": "Details of an individual vehicle",
       "required": [
         "value",
         "loan_amount_outstanding",
         "date_of_purchase",
-        "in_regular_use",
-        "xxx"
+        "in_regular_use"
       ],
       "additionalProperties": false,
       "properties": {
@@ -405,7 +404,9 @@
         },
         "vehicles": {
           "type": "array",
-          "items": "#/definitions/applicant_vehiclezzz"
+          "items": {
+            "$ref": "#/definitions/applicant_vehicle"
+          }
         },
         "liquid_capital": {
           "$ref": "#/definitions/applicant_liquid_capital"
