@@ -1,9 +1,10 @@
 module WorkflowService
   class DisposableCapitalAssessment < BaseWorkflowService
-    def call
+    def call # rubocop:disable Metrics/AbcSize
       response.details.capital.liquid_capital_assessment = calculate_liquid_capital
       response.details.capital.property = calculate_property
       response.details.capital.vehicles = calculate_vehicles
+      response.details.capital.non_liquid_capital_assessment = calculate_non_liquid_capital
       true
     end
 
@@ -11,6 +12,10 @@ module WorkflowService
 
     def calculate_liquid_capital
       LiquidCapitalAssessment.new(applicant_capital.liquid_capital).call
+    end
+
+    def calculate_non_liquid_capital
+      NonLiquidCapitalAssessment.new(applicant_capital.non_liquid_capital).call
     end
 
     def calculate_property

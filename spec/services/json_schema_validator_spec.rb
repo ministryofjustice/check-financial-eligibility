@@ -592,48 +592,6 @@ describe JsonSchemaValidator do
             end
           end
         end
-
-        context 'valuable_items' do
-          context 'it is not present' do
-            before do
-              assessment_hash[:applicant_capital][:liquid_capital].delete(:valuable_items)
-            end
-
-            it 'is valid' do
-              expect(validator).to be_valid
-            end
-          end
-
-          context 'it has an extra attribute' do
-            before do
-              assessment_hash[:applicant_capital][:liquid_capital][:valuable_items].first[:name] = 'Michael'
-            end
-
-            it 'is invalid' do
-              expect(validator).not_to be_valid
-            end
-
-            it 'has an error message' do
-              expected_error = "The property '#/applicant_capital/liquid_capital/valuable_items/0' contains additional properties .*name"
-              expect(validator.errors.first).to match(/#{expected_error}/)
-            end
-          end
-
-          context 'it has a missing attribute' do
-            before do
-              assessment_hash[:applicant_capital][:liquid_capital][:valuable_items].first.delete(:value)
-            end
-
-            it 'is invalid' do
-              expect(validator).not_to be_valid
-            end
-
-            it 'has an error message' do
-              expected_error = "The property '#/applicant_capital/liquid_capital/valuable_items/0' did not contain a required property of 'value'"
-              expect(validator.errors.first).to match(/#{expected_error}/)
-            end
-          end
-        end
       end
 
       context 'non_liquid_capital' do
@@ -646,6 +604,7 @@ describe JsonSchemaValidator do
             expect(validator).to be_valid
           end
         end
+
         context 'it has an extra attribute' do
           before do
             assessment_hash[:applicant_capital][:non_liquid_capital].first[:name] = 'Michael'

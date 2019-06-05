@@ -47,6 +47,18 @@ module WorkflowService
           expect(particulars.response.details.capital.vehicles).to eq 'Vehicle Result'
         end
       end
+
+      context 'non_liquid_capital_assessment' do
+        it 'instantiates and calls NonLiquidCapitalAssessment' do
+          nlcas = double NonLiquidCapitalAssessment
+          expect(NonLiquidCapitalAssessment).to receive(:new)
+            .with(particulars.request.applicant_capital.non_liquid_capital)
+            .and_return(nlcas)
+          expect(nlcas).to receive(:call).and_return(26_733.77)
+          expect(particulars.response.details.capital).to receive(:non_liquid_capital_assessment=).with(26_733.77)
+          service.call
+        end
+      end
     end
   end
 end

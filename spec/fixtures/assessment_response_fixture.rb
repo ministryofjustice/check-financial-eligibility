@@ -69,6 +69,7 @@ class AssessmentResponseFixture < BaseAssessmentFixture
               assessed_value: 0
             }
           ],
+          non_liquid_capital_assessment: 3664.0,
           total_capital_lower_threshold: 3_000.00,
           total_capital_upper_threshold: 8_000.00,
           disposable_capital_assessment: 100.00
