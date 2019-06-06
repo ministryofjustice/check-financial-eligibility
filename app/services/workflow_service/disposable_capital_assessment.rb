@@ -1,10 +1,14 @@
 module WorkflowService
   class DisposableCapitalAssessment < BaseWorkflowService
     def call # rubocop:disable Metrics/AbcSize
-      response.details.capital.liquid_capital_assessment = calculate_liquid_capital
-      response.details.capital.property = calculate_property
-      response.details.capital.vehicles = calculate_vehicles
-      response.details.capital.non_liquid_capital_assessment = calculate_non_liquid_capital
+      capital = response.details.capital
+      capital.liquid_capital_assessment = calculate_liquid_capital
+      capital.property = calculate_property
+      capital.vehicles = calculate_vehicles
+      capital.non_liquid_capital_assessment = calculate_non_liquid_capital
+      capital.single_capital_assessment = sum_assessed_values(capital)
+      capital.pensioner_disregard = PensionerCapitalDisregard.new(@particulars).value
+      capital.disposable_capital_assessment = capital.single_capital_assessment - capital.pensioner_disregard
       true
     end
 
@@ -24,6 +28,14 @@ module WorkflowService
 
     def calculate_vehicles
       VehicleAssessment.new(applicant_capital.vehicles, @submission_date).call
+    end
+
+    def sum_assessed_values(capital)
+      capital.liquid_capital_assessment +
+        capital.property.main_home.assessed_capital_value +
+        capital.property.additional_properties.sum(&:asssessed_capital_value) +
+        capital.vehicles.sum(&:assessed_value) +
+        capital.non_liquid_capital_assessment
     end
   end
 end

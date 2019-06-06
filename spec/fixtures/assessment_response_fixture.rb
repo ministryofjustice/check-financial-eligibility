@@ -1,10 +1,10 @@
-class AssessmentResponseFixture < BaseAssessmentFixture
+class x. < BaseAssessmentFixture
   def self.ruby_hash
     {
       assessment_id: 'e34ce98e-8cfa-4a41-a011-7a15a6724b82',
       client_reference_id: 'client-ref-1',
       result: 'eligible',
-      details: {
+      details: {x.deta
         passported: true,
         self_employed: false,
         income: {
@@ -70,9 +70,12 @@ class AssessmentResponseFixture < BaseAssessmentFixture
             }
           ],
           non_liquid_capital_assessment: 3664.0,
+          single_capital_assessment: 75_000.0,
+          pensioner_disregard: 100_000.0,
+          disposable_capital_assessment: 25_000,
           total_capital_lower_threshold: 3_000.00,
           total_capital_upper_threshold: 8_000.00,
-          disposable_capital_assessment: 100.00
+
         },
         contributions: {
           monthly_contribution: 0.00,

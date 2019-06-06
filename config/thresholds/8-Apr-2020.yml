@@ -7,6 +7,21 @@ disposable_income_lower: 2000
 disposable_income_upper: 20000
 capital_lower: 5
 capital_upper: 20000
+pensioner_capital_disregard:
+  passported: 100_000
+  # disregard to use if monthly disposable income (excluding income derived from capital) is eqqual to or below these figures
+  monthly_income_values:
+    0: 100_000
+    25.01: 90_000
+    50.01: 80_000
+    75.01: 70_000
+    100.01: 60_000
+    125.01: 50_000
+    150.01: 40_000
+    175.01: 30_000
+    200.01: 20_000
+    225.01: 10_000
+    315.01: 0
 property_notional_sale_costs_percentage: 3.0
 property_maximum_mortgage_allowance: 100_000
 property_disregard:
