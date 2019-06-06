@@ -291,13 +291,6 @@
           "items": {
             "$ref": "#/definitions/bank_accounts"
           }
-        },
-        "vehicles": {
-          "description": "Details of applicant vehicles",
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/applicant_vehicle"
-          }
         }
       }
     }
@@ -408,6 +401,12 @@
       "properties": {
         "property": {
           "$ref": "#/definitions/applicant_property"
+        },
+        "vehicles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/applicant_vehicle"
+          }
         },
         "liquid_capital": {
           "$ref": "#/definitions/applicant_liquid_capital"

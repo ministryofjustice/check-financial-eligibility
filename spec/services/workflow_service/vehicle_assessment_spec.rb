@@ -2,104 +2,77 @@ require 'rails_helper'
 
 module WorkflowService # rubocop:disable Metrics/ModuleLength
   RSpec.describe VehicleAssessment do
-    let(:service) { VehicleAssessment.new(particulars) }
-    let(:request_hash) { AssessmentRequestFixture.ruby_hash }
-    let(:assessment) { create :assessment, request_payload: request_hash.to_json }
-    let(:particulars) { AssessmentParticulars.new(assessment) }
+    let(:service) { VehicleAssessment.new(request, today) }
+    let(:today) { Date.today }
 
     describe '#call' do
-      it 'always returns true' do
-        expect(service.call).to be true
-      end
-
       context 'vehicle in use' do
         context 'valued less than threshold' do
+          let(:request) { open_structify(in_use_less_than_threshold) }
           it 'is assessed at zero' do
-            request_detail = open_structify(in_use_less_than_threshold)
-            particulars.request.applicant_capital.liquid_capital.vehicles = request_detail
-            expect(service.call).to be true
-            result = particulars.response.details.capital.vehicles.first
-
-            expect(result).to have_matching_attributes(request_detail.first, common_attributes)
-            expect(result.assessed_value).to eq 0.0
+            result = service.call
+            expect(result.first).to have_matching_attributes(request.first, common_attributes)
+            expect(result.first.assessed_value).to eq 0.0
           end
         end
 
         context 'valued at more than threshold' do
           context 'more than 3 years old' do
+            let(:request) { open_structify(in_use_more_than_three_years_old) }
             it 'is assessed at zero' do
-              request_detail = open_structify(in_use_more_than_three_yeas_old)
-              particulars.request.applicant_capital.liquid_capital.vehicles = request_detail
-              expect(service.call).to be true
-              result = particulars.response.details.capital.vehicles.first
-
-              expect(result).to have_matching_attributes(request_detail.first, common_attributes)
-              expect(result.assessed_value).to eq 0.0
+              result = service.call
+              expect(result.first).to have_matching_attributes(request.first, common_attributes)
+              expect(result.first.assessed_value).to eq 0.0
             end
           end
 
           context 'less than 1 year old' do
             context 'with an outstanding loan' do
+              let(:request) { open_structify(in_use_less_than_1_year) }
               it 'is assessed at value less loan less threshold' do
-                request_detail = open_structify(in_use_less_than_1_year)
-                particulars.request.applicant_capital.liquid_capital.vehicles = request_detail
-                expect(service.call).to be true
-                result = particulars.response.details.capital.vehicles.first
-
-                expect(result).to have_matching_attributes(request_detail.first, common_attributes)
-                expect(result.assessed_value).to eq 6_450.0
+                result = service.call
+                expect(result.first).to have_matching_attributes(request.first, common_attributes)
+                expect(result.first.assessed_value).to eq 6_450.0
               end
             end
 
             context 'without an outstanding loan' do
+              let(:request) { open_structify(in_use_less_than_1_year_no_loan) }
               it 'is assessed at value less threshold' do
-                request_detail = open_structify(in_use_less_than_1_year_no_loan)
-                particulars.request.applicant_capital.liquid_capital.vehicles = request_detail
-                expect(service.call).to be true
-                result = particulars.response.details.capital.vehicles.first
-
-                expect(result).to have_matching_attributes(request_detail.first, common_attributes)
-                expect(result.assessed_value).to eq 8_700.0
+                result = service.call
+                expect(result.first).to have_matching_attributes(request.first, common_attributes)
+                expect(result.first.assessed_value).to eq 8_700.0
               end
             end
           end
 
           context 'more than 1 year less than 2 years old' do
             context 'with an outstanding loan' do
+              let(:request) { open_structify(in_use_15_months) }
               it 'is assessed at 80% of value less outstanding loan' do
-                request_detail = open_structify(in_use_15_months)
-                particulars.request.applicant_capital.liquid_capital.vehicles = request_detail
-                expect(service.call).to be true
-                result = particulars.response.details.capital.vehicles.first
-
-                expect(result).to have_matching_attributes(request_detail.first, common_attributes)
-                expect(result.assessed_value).to eq 2_160.0
+                result = service.call
+                expect(result.first).to have_matching_attributes(request.first, common_attributes)
+                expect(result.first.assessed_value).to eq 2_160.0
               end
             end
 
             context 'without an oustanding loan' do
+              let(:request) { open_structify(in_use_15_months_no_loan) }
               it 'is assesssed at 80% of value' do
-                request_detail = open_structify(in_use_15_months_no_loan)
-                particulars.request.applicant_capital.liquid_capital.vehicles = request_detail
-                expect(service.call).to be true
-                result = particulars.response.details.capital.vehicles.first
-
-                expect(result).to have_matching_attributes(request_detail.first, common_attributes)
-                expect(result.assessed_value).to eq 3_960.0
+                result = service.call
+                expect(result.first).to have_matching_attributes(request.first, common_attributes)
+                expect(result.first.assessed_value).to eq 3_960.0
               end
             end
           end
 
           context 'more than 2 years less than 3 years old' do
             context 'with an outstanding loan' do
+              let(:request) { open_structify(in_use_26_months) }
               it 'is assessed at 60% of value less outstanding loan' do
-                request_detail = open_structify(in_use_26_months)
-                particulars.request.applicant_capital.liquid_capital.vehicles = request_detail
-                expect(service.call).to be true
-                result = particulars.response.details.capital.vehicles.first
-
-                expect(result).to have_matching_attributes(request_detail.first, common_attributes)
-                expect(result.assessed_value).to eq 0.0
+                result = service.call
+                expect(result.first).to have_matching_attributes(request.first, common_attributes)
+                expect(result.first.assessed_value).to eq 0.0
               end
             end
           end
@@ -107,14 +80,11 @@ module WorkflowService # rubocop:disable Metrics/ModuleLength
       end
 
       context 'vehicle not in regular use' do
+        let(:request) { open_structify(not_in_regular_use) }
         it 'is assessed at full value' do
-          request_detail = open_structify(not_in_regular_use)
-          particulars.request.applicant_capital.liquid_capital.vehicles = request_detail
-          expect(service.call).to be true
-          result = particulars.response.details.capital.vehicles.first
-
-          expect(result).to have_matching_attributes(request_detail.first, common_attributes)
-          expect(result.assessed_value).to eq 23_700.00
+          result = service.call
+          expect(result.first).to have_matching_attributes(request.first, common_attributes)
+          expect(result.first.assessed_value).to eq 23_700.0
         end
       end
 
@@ -136,7 +106,7 @@ module WorkflowService # rubocop:disable Metrics/ModuleLength
         ]
       end
 
-      def in_use_more_than_three_yeas_old
+      def in_use_more_than_three_years_old
         [
           {
             value: 18_700,

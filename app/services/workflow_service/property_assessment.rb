@@ -1,29 +1,37 @@
 module WorkflowService
-  class PropertyAssessment < BaseWorkflowService
+  class PropertyAssessment
+    def initialize(request, submission_date)
+      @submission_date = submission_date
+      @main_home = request.main_home
+      @additional_properties = request.additional_properties
+      @remaining_mortgage_allowance = Threshold.value_for(:property_maximum_mortgage_allowance, at: submission_date)
+      @response = DatedStruct.new(main_home: DatedStruct.new, additional_properties: [])
+    end
+
     def call
       calculate_property
-      true
+      @response
     end
 
     private
 
     def calculate_property
-      @remaining_mortgage_allowance = Threshold.value_for(:property_maximum_mortgage_allowance, at: @submission_date)
       calculate_additional_properties
-      calculate_main_dwelling(property: applicant_capital.property.main_home,
-                              assessment: response.details.capital.property.main_dwelling)
+      @response.main_home = calculate_main_home(property: @main_home)
     end
 
     def calculate_additional_properties
-      applicant_capital.property.additional_properties.each do |additional_property|
-        assessment = OpenStruct.new(AssessmentParticulars.initial_property_details)
+      @additional_properties.each do |additional_property|
+        assessment = DatedStruct.new(AssessmentParticulars.initial_property_details)
         calculate_individual_property(property: additional_property, assessment: assessment, property_type: :additional_property)
-        response.details.capital.property.additional_properties << assessment
+        @response.additional_properties << assessment
       end
     end
 
-    def calculate_main_dwelling(property:, assessment:)
-      calculate_individual_property(property: property, assessment: assessment, property_type: :main_dwelling)
+    def calculate_main_home(property:)
+      assessment = DatedStruct.new(AssessmentParticulars.initial_property_details)
+      calculate_individual_property(property: property, assessment: assessment, property_type: :main_home)
+      assessment
     end
 
     def calculate_individual_property(property:, assessment:, property_type:) # rubocop:disable Metrics/AbcSize

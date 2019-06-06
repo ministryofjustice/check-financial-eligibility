@@ -12,7 +12,7 @@ capital_upper: 30000
 property_notional_sale_costs_percentage: 3.0
 property_maximum_mortgage_allowance: 100_000
 property_disregard:
-  main_dwelling: 100_000
+  main_home: 100_000
   additional_property: 0.0
 vehicle_disregard: 15_000
 vehicle_out_of_scope_months: 36

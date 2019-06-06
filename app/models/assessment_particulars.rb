@@ -89,7 +89,7 @@ class AssessmentParticulars
     {
       liquid_capital_assessment: 0.0,
       property: {
-        main_dwelling: AssessmentParticulars.initial_property_details,
+        main_home: AssessmentParticulars.initial_property_details,
         additional_properties: []
       },
       vehicles: [],

@@ -2,108 +2,102 @@ require 'rails_helper'
 
 module WorkflowService # rubocop:disable Metrics/ModuleLength
   RSpec.describe PropertyAssessment do
-    let(:service) { PropertyAssessment.new(particulars) }
-    let(:request_hash) { AssessmentRequestFixture.ruby_hash }
-    let(:assessment) { create :assessment, request_payload: request_hash.to_json }
-    let(:particulars) { AssessmentParticulars.new(assessment) }
+    let(:today) { Date.today }
+    let(:service) { PropertyAssessment.new(request, today) }
 
     describe '#call' do
-      it 'always returns true' do
-        expect(service.call).to be true
-      end
-
-      context 'main_dwelling_only' do
+      context 'main_home_only' do
         context '100% owned' do
           context 'with mortgage > £100,000' do
+            let(:request) { open_structify(main_home_big_mortgage_wholly_owned) }
             it 'only deducts first 100k of mortgage' do
-              particulars.request.applicant_capital.property = open_structify(main_dwelling_big_mortgage_wholly_owned)
-              expect(service.call).to be true
-              result = particulars.response.details.capital.property.main_dwelling
-              expect(result.notional_sale_costs_pctg).to eq 3.0
-              expect(result.net_value_after_deduction).to eq 452_983.21
-              expect(result.maximum_mortgage_allowance).to eq 100_000.0
-              expect(result.net_value_after_mortgage).to eq 352_983.21
-              expect(result.percentage_owned).to eq 100.0
-              expect(result.net_equity_value).to eq 352_983.21
-              expect(result.property_disregard).to eq 100_000.0
-              expect(result.assessed_capital_value).to eq 252_983.21
+              result = service.call
+              main_home = result.main_home
+              expect(main_home.notional_sale_costs_pctg).to eq 3.0
+              expect(main_home.net_value_after_deduction).to eq 452_983.21
+              expect(main_home.maximum_mortgage_allowance).to eq 100_000.0
+              expect(main_home.net_value_after_mortgage).to eq 352_983.21
+              expect(main_home.percentage_owned).to eq 100.0
+              expect(main_home.net_equity_value).to eq 352_983.21
+              expect(main_home.property_disregard).to eq 100_000.0
+              expect(main_home.assessed_capital_value).to eq 252_983.21
             end
           end
 
           context 'with_mortgage less than 100k' do
+            let(:request) { open_structify(main_home_small_mortgage_wholly_owned) }
             it 'only deducts the actual outstanding amount' do
-              particulars.request.applicant_capital.property = open_structify(main_dwelling_small_mortgage_wholly_owned)
-              expect(service.call).to be true
-              result = particulars.response.details.capital.property.main_dwelling
-              expect(result.notional_sale_costs_pctg).to eq 3.0
-              expect(result.net_value_after_deduction).to eq 452_983.21
-              expect(result.maximum_mortgage_allowance).to eq 37_256.44
-              expect(result.net_value_after_mortgage).to eq 415_726.77
-              expect(result.percentage_owned).to eq 100.0
-              expect(result.net_equity_value).to eq 415_726.77
-              expect(result.property_disregard).to eq 100_000.0
-              expect(result.assessed_capital_value).to eq 315_726.77
+              result = service.call
+              main_home = result.main_home
+              expect(main_home.notional_sale_costs_pctg).to eq 3.0
+              expect(main_home.net_value_after_deduction).to eq 452_983.21
+              expect(main_home.maximum_mortgage_allowance).to eq 37_256.44
+              expect(main_home.net_value_after_mortgage).to eq 415_726.77
+              expect(main_home.percentage_owned).to eq 100.0
+              expect(main_home.net_equity_value).to eq 415_726.77
+              expect(main_home.property_disregard).to eq 100_000.0
+              expect(main_home.assessed_capital_value).to eq 315_726.77
             end
           end
         end
 
         context '66.66% owned' do
           context 'with mortgage > £100,000' do
+            let(:request) { open_structify(main_home_big_mortgage_partly_owned) }
             it 'only deducts first 100k of mortgage' do
-              particulars.request.applicant_capital.property = open_structify(main_dwelling_big_mortgage_partly_owned)
-              expect(service.call).to be true
-              result = particulars.response.details.capital.property.main_dwelling
-              expect(result.notional_sale_costs_pctg).to eq 3.0
-              expect(result.net_value_after_deduction).to eq 452_983.21
-              expect(result.maximum_mortgage_allowance).to eq 100_000.0
-              expect(result.net_value_after_mortgage).to eq 352_983.21
-              expect(result.percentage_owned).to eq 66.66
-              expect(result.net_equity_value).to eq 235_298.61
-              expect(result.property_disregard).to eq 100_000.0
-              expect(result.assessed_capital_value).to eq 135_298.61
+              result = service.call
+              main_home = result.main_home
+              expect(main_home.notional_sale_costs_pctg).to eq 3.0
+              expect(main_home.net_value_after_deduction).to eq 452_983.21
+              expect(main_home.maximum_mortgage_allowance).to eq 100_000.0
+              expect(main_home.net_value_after_mortgage).to eq 352_983.21
+              expect(main_home.percentage_owned).to eq 66.66
+              expect(main_home.net_equity_value).to eq 235_298.61
+              expect(main_home.property_disregard).to eq 100_000.0
+              expect(main_home.assessed_capital_value).to eq 135_298.61
             end
           end
 
           context 'with mortgage < £100,000' do
+            let(:request) { open_structify(main_home_small_mortgage_partly_owned) }
             it 'only deducts the actual outstanding amount' do
-              particulars.request.applicant_capital.property = open_structify(main_dwelling_small_mortgage_partly_owned)
-              expect(service.call).to be true
-              result = particulars.response.details.capital.property.main_dwelling
-              expect(result.notional_sale_costs_pctg).to eq 3.0
-              expect(result.net_value_after_deduction).to eq 452_983.21
-              expect(result.maximum_mortgage_allowance).to eq 37_256.44
-              expect(result.net_value_after_mortgage).to eq 415_726.77
-              expect(result.percentage_owned).to eq 66.66
-              expect(result.net_equity_value).to eq 277_123.46
-              expect(result.property_disregard).to eq 100_000.0
-              expect(result.assessed_capital_value).to eq 177_123.46
+              result = service.call
+              main_home = result.main_home
+              expect(main_home.notional_sale_costs_pctg).to eq 3.0
+              expect(main_home.net_value_after_deduction).to eq 452_983.21
+              expect(main_home.maximum_mortgage_allowance).to eq 37_256.44
+              expect(main_home.net_value_after_mortgage).to eq 415_726.77
+              expect(main_home.percentage_owned).to eq 66.66
+              expect(main_home.net_equity_value).to eq 277_123.46
+              expect(main_home.property_disregard).to eq 100_000.0
+              expect(main_home.assessed_capital_value).to eq 177_123.46
             end
           end
         end
 
         context '50% shared with housing association' do
+          let(:request) { open_structify(main_home_shared_with_housing_association) }
           it 'subtracts outstanding mortgage only from the share owned by applicant' do
-            particulars.request.applicant_capital.property = open_structify(main_dwelling_shared_with_housing_association)
-            expect(service.call).to be true
-            result = particulars.response.details.capital.property.main_dwelling
-            expect(result.notional_sale_costs_pctg).to eq 3.0
-            expect(result.net_value_after_deduction).to eq 155_200.0
-            expect(result.maximum_mortgage_allowance).to eq 70_000.0
-            expect(result.net_value_after_mortgage).to eq 85_200.0
-            expect(result.percentage_owned).to eq 50.0
-            expect(result.net_equity_value).to eq 5_200.0
-            expect(result.property_disregard).to eq 100_000.0
-            expect(result.assessed_capital_value).to eq 0.0
+            result = service.call
+            main_home = result.main_home
+            expect(main_home.notional_sale_costs_pctg).to eq 3.0
+            expect(main_home.net_value_after_deduction).to eq 155_200.0
+            expect(main_home.maximum_mortgage_allowance).to eq 70_000.0
+            expect(main_home.net_value_after_mortgage).to eq 85_200.0
+            expect(main_home.percentage_owned).to eq 50.0
+            expect(main_home.net_equity_value).to eq 5_200.0
+            expect(main_home.property_disregard).to eq 100_000.0
+            expect(main_home.assessed_capital_value).to eq 0.0
           end
         end
       end
 
       context 'additional_properties and main dwelling' do
         context 'main dwelling wholly owned and additional properties wholly owned' do
+          let(:request) { open_structify(main_home_and_addtional_properties_wholly_owned) }
           it 'deducts a maximum of £100k mortgage' do
-            particulars.request.applicant_capital.property = open_structify(main_dwelling_and_addtional_properties_wholly_owned)
-            expect(service.call).to be true
-            ap1 = particulars.response.details.capital.property.additional_properties.first
+            result = service.call
+            ap1 = result.additional_properties.first
             expect(ap1.notional_sale_costs_pctg).to eq 3.0
             expect(ap1.net_value_after_deduction).to eq 339_500.0
             expect(ap1.maximum_mortgage_allowance).to eq 55_000.0
@@ -113,7 +107,7 @@ module WorkflowService # rubocop:disable Metrics/ModuleLength
             expect(ap1.property_disregard).to eq 0.0
             expect(ap1.assessed_capital_value).to eq 284_500.0
 
-            ap2 = particulars.response.details.capital.property.additional_properties[1]
+            ap2 = result.additional_properties[1]
             expect(ap2.notional_sale_costs_pctg).to eq 3.0
             expect(ap2.net_value_after_deduction).to eq 261_900.0
             expect(ap2.maximum_mortgage_allowance).to eq 40_000.0
@@ -123,21 +117,21 @@ module WorkflowService # rubocop:disable Metrics/ModuleLength
             expect(ap2.property_disregard).to eq 0.0
             expect(ap2.assessed_capital_value).to eq 221_900.0
 
-            md = particulars.response.details.capital.property.main_dwelling
-            expect(md.notional_sale_costs_pctg).to eq 3.0
-            expect(md.net_value_after_deduction).to eq 213_400
-            expect(md.maximum_mortgage_allowance).to eq 5_000.0
-            expect(md.net_value_after_mortgage).to eq 208_400.0
-            expect(md.percentage_owned).to eq 100.0
-            expect(md.net_equity_value).to eq 208_400.0
-            expect(md.property_disregard).to eq 100_000.0
-            expect(md.assessed_capital_value).to eq 108_400.0
+            mh = result.main_home
+            expect(mh.notional_sale_costs_pctg).to eq 3.0
+            expect(mh.net_value_after_deduction).to eq 213_400
+            expect(mh.maximum_mortgage_allowance).to eq 5_000.0
+            expect(mh.net_value_after_mortgage).to eq 208_400.0
+            expect(mh.percentage_owned).to eq 100.0
+            expect(mh.net_equity_value).to eq 208_400.0
+            expect(mh.property_disregard).to eq 100_000.0
+            expect(mh.assessed_capital_value).to eq 108_400.0
           end
         end
       end
     end
 
-    def main_dwelling_big_mortgage_wholly_owned
+    def main_home_big_mortgage_wholly_owned
       {
         main_home: {
           value: 466_993,
@@ -149,7 +143,7 @@ module WorkflowService # rubocop:disable Metrics/ModuleLength
       }
     end
 
-    def main_dwelling_small_mortgage_wholly_owned
+    def main_home_small_mortgage_wholly_owned
       {
         main_home: {
           value: 466_993,
@@ -161,7 +155,7 @@ module WorkflowService # rubocop:disable Metrics/ModuleLength
       }
     end
 
-    def main_dwelling_big_mortgage_partly_owned
+    def main_home_big_mortgage_partly_owned
       {
         main_home: {
           value: 466_993,
@@ -173,7 +167,7 @@ module WorkflowService # rubocop:disable Metrics/ModuleLength
       }
     end
 
-    def main_dwelling_small_mortgage_partly_owned
+    def main_home_small_mortgage_partly_owned
       {
         main_home: {
           value: 466_993,
@@ -185,7 +179,7 @@ module WorkflowService # rubocop:disable Metrics/ModuleLength
       }
     end
 
-    def main_dwelling_shared_with_housing_association
+    def main_home_shared_with_housing_association
       {
         main_home: {
           value: 160_000,
@@ -197,7 +191,7 @@ module WorkflowService # rubocop:disable Metrics/ModuleLength
       }
     end
 
-    def main_dwelling_and_addtional_properties_wholly_owned
+    def main_home_and_addtional_properties_wholly_owned
       {
         main_home: {
           value: 220_000,
