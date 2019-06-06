@@ -60,6 +60,7 @@
       "type": "object",
       "required": [
         "liquid_capital_assessment",
+        "non_liquid_capital_assessment",
         "vehicles",
         "property",
         "total_capital_lower_threshold",
@@ -70,6 +71,10 @@
       "properties": {
         "liquid_capital_assessment": {
           "description": "Aggregate value of lowest balances of bank accounts during the calculation period",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
+        },
+        "non_liquid_capital_assessment": {
+          "description": "Aggregate value of all non-liquid capital itesm excluding property and vehicles, e.g. stocks and shares, valuable items, jewellery",
           "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
         },
         "property": {
