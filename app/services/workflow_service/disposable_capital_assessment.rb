@@ -9,6 +9,8 @@ module WorkflowService
       capital.single_capital_assessment = sum_assessed_values(capital)
       capital.pensioner_disregard = PensionerCapitalDisregard.new(@particulars).value
       capital.disposable_capital_assessment = capital.single_capital_assessment - capital.pensioner_disregard
+      capital.total_capital_lower_threshold = Threshold.value_for(:capital_lower, at: @submission_date)
+      capital.total_capital_upper_threshold = Threshold.value_for(:capital_upper, at: @submission_date)
       true
     end
 

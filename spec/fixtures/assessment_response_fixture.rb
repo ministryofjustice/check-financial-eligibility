@@ -72,9 +72,9 @@ class AssessmentResponseFixture < BaseAssessmentFixture
           ],
           single_capital_assessment: 75_000.0,
           pensioner_disregard: 100_000.0,
-          disposable_capital_assessment: 25_000,
-          total_capital_lower_threshold: 3_000.00,
-          total_capital_upper_threshold: 8_000.00
+          disposable_capital_assessment: 25_000.0,
+          total_capital_lower_threshold: 3_000.0,
+          total_capital_upper_threshold: 8_000.0
         },
         contributions: {
           monthly_contribution: 0.00,

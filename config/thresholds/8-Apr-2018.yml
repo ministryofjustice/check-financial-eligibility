@@ -6,8 +6,8 @@ gross_income_upper:
     many: 7
 disposable_income_lower: 1000
 disposable_income_upper: 10000
-capital_lower: 10
-capital_upper: 10000
+capital_lower: 3_000
+capital_upper: 8_000
 pensioner_capital_disregard:
   minimum_age_in_years: 60
   passported: 100_000
