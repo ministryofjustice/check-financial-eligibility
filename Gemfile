@@ -30,6 +30,9 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'json-schema'
 
+# Adds Statistical methods to objects such as arrays
+gem 'descriptive_statistics', require: 'descriptive_statistics/safe'
+
 group :development, :test do
   gem 'awesome_print'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
