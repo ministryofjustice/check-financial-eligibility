@@ -1,16 +1,15 @@
 module WorkflowService
   class DisposableCapitalAssessment < BaseWorkflowService
     def call # rubocop:disable Metrics/AbcSize
-      capital = response_capital
-      capital.liquid_capital_assessment = calculate_liquid_capital
-      capital.property = calculate_property
-      capital.vehicles = calculate_vehicles
-      capital.non_liquid_capital_assessment = calculate_non_liquid_capital
-      capital.single_capital_assessment = sum_assessed_values(capital)
-      capital.pensioner_disregard = PensionerCapitalDisregard.new(@particulars).value
-      capital.disposable_capital_assessment = capital.single_capital_assessment - capital.pensioner_disregard
-      capital.total_capital_lower_threshold = Threshold.value_for(:capital_lower, at: @submission_date)
-      capital.total_capital_upper_threshold = Threshold.value_for(:capital_upper, at: @submission_date)
+      response_capital.liquid_capital_assessment = calculate_liquid_capital
+      response_capital.property = calculate_property
+      response_capital.vehicles = calculate_vehicles
+      response_capital.non_liquid_capital_assessment = calculate_non_liquid_capital
+      response_capital.single_capital_assessment = sum_assessed_values(response_capital)
+      response_capital.pensioner_disregard = PensionerCapitalDisregard.new(@particulars).value
+      response_capital.disposable_capital_assessment = response_capital.single_capital_assessment - response_capital.pensioner_disregard
+      response_capital.total_capital_lower_threshold = Threshold.value_for(:capital_lower, at: @submission_date)
+      response_capital.total_capital_upper_threshold = Threshold.value_for(:capital_upper, at: @submission_date)
       true
     end
 
