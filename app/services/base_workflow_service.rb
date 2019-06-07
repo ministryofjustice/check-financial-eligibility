@@ -2,7 +2,7 @@ class BaseWorkflowService
   attr_accessor :particulars
 
   REQUEST_METHODS = %i[meta_data applicant applicant_income applicant_outgoings applicant_capital].freeze
-  RESPONSE_METHODS = %i[response].freeze
+  RESPONSE_METHODS = %i[response_capital response_income response_contributions].freeze
 
   def initialize(particulars)
     @particulars = particulars
@@ -10,11 +10,23 @@ class BaseWorkflowService
     @calculation_period = CalculationPeriod.new(@submission_date)
   end
 
+  # method missing - enables the following shortcut methods:
+  #
+  # * meta_data               @particulars.response.meta_data
+  # * applicant               @particulars.response.applicant
+  # * applicant_income        @particulars.response.applicant_income
+  # * applicant_outgoings     @particulars.response.applicant_outgoings
+  # * applicant_capital       @particulars.response.applicant_capital
+  # * response_capital        @particulars.response.details.capital
+  # * response_income         @particulars.response.income
+  # * response_contributions  @particulars.response.contributions
+  #
   def method_missing(meth, *params)
     if meth.in?(REQUEST_METHODS)
       @particulars.request.__send__(meth)
     elsif meth.in?(RESPONSE_METHODS)
-      @particulars.response
+      actual_method = meth.to_s.sub(/^response_/, '')
+      @particulars.response.details.__send__(actual_method)
     else
       super
     end
