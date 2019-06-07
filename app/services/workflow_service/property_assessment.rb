@@ -47,11 +47,19 @@ module WorkflowService
 
     def net_equity_value(property:, assessment:)
       if property.shared_with_housing_assoc
-        housing_assoc_pctg = 100 - property.percentage_owned
-        assessment.net_value_after_mortgage - (property.value * housing_assoc_pctg / 100).round(2)
+        net_equity_from_housing_asoc(property: property, assessment: assessment)
       else
-        (assessment.net_value_after_mortgage * (assessment.percentage_owned / 100)).round(2)
+        net_equity_from_co_owner(assessment: assessment)
       end
+    end
+
+    def net_equity_from_housing_asoc(property:, assessment:)
+      housing_assoc_pctg = 100 - property.percentage_owned
+      assessment.net_value_after_mortgage - (property.value * housing_assoc_pctg.to_f / 100.0).round(2)
+    end
+
+    def net_equity_from_co_owner(assessment:)
+      (assessment.net_value_after_mortgage * (assessment.percentage_owned.to_f / 100.0)).round(2)
     end
 
     def assessed_capital_value(assessment:)

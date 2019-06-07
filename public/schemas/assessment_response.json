@@ -60,8 +60,11 @@
       "type": "object",
       "required": [
         "liquid_capital_assessment",
+        "non_liquid_capital_assessment",
         "vehicles",
         "property",
+        "single_capital_assessment",
+        "pensioner_disregard",
         "total_capital_lower_threshold",
         "total_capital_upper_threshold",
         "disposable_capital_assessment"
@@ -70,6 +73,10 @@
       "properties": {
         "liquid_capital_assessment": {
           "description": "Aggregate value of lowest balances of bank accounts during the calculation period",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
+        },
+        "non_liquid_capital_assessment": {
+          "description": "Aggregate value of all non-liquid capital items excluding property and vehicles, e.g. stocks and shares, valuable items, jewellery",
           "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
         },
         "property": {
@@ -81,6 +88,14 @@
           "items": {
             "$ref": "#/definitions/vehicle_detail"
           }
+        },
+        "single_capital_assessment": {
+          "description": "The sum of all capital assets before any disregards are applied",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
+        },
+        "pensioner_disregard": {
+          "description": "The capital that will be disregarded for over-60s before comparison with the capital thresholds",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
         },
         "disposable_capital_assessment": {
           "description": "The applicant's disposable capital calculated after subtracting allowable items from the list of capital assets given",

@@ -16,6 +16,7 @@ class AssessmentResponseFixture < BaseAssessmentFixture
         },
         capital: {
           liquid_capital_assessment: 45.00,
+          non_liquid_capital_assessment: 3_664.0,
           property: {
             main_home: {
               notional_sale_costs_pctg: 3.0,
@@ -69,9 +70,11 @@ class AssessmentResponseFixture < BaseAssessmentFixture
               assessed_value: 0
             }
           ],
-          total_capital_lower_threshold: 3_000.00,
-          total_capital_upper_threshold: 8_000.00,
-          disposable_capital_assessment: 100.00
+          single_capital_assessment: 75_000.0,
+          pensioner_disregard: 100_000.0,
+          disposable_capital_assessment: 25_000.0,
+          total_capital_lower_threshold: 3_000.0,
+          total_capital_upper_threshold: 8_000.0
         },
         contributions: {
           monthly_contribution: 0.00,

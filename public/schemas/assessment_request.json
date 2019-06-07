@@ -274,17 +274,11 @@
       }
     },
     "applicant_liquid_capital": {
-      "description": "Describes valuable items, residual balances in bank accounts and vehicles",
+      "description": "Describes residual balances in bank accounts and vehicles",
       "type": "object",
       "additionalProperties": false,
       "required": ["bank_accounts"],
       "properties": {
-        "valuable_items": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/capital_item"
-          }
-        },
         "bank_accounts": {
           "type": "array",
           "minItems": 1,
@@ -412,7 +406,7 @@
           "$ref": "#/definitions/applicant_liquid_capital"
         },
         "non_liquid_capital": {
-          "description": "An array of objects describing applicant's non-liquid capital items (excluding property)",
+          "description": "An array of objects describing applicant's non-liquid capital items (excluding property), e.g. valuable items, jewellery, trusts, other investments",
           "type": "array",
           "items": {
             "$ref": "#/definitions/capital_item"

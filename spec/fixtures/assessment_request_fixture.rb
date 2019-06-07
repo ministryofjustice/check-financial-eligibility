@@ -113,12 +113,6 @@ class AssessmentRequestFixture < BaseAssessmentFixture # rubocop:disable Metrics
               account_name: 'Account #2',
               lowest_balance: 256.44
             }
-          ],
-          valuable_items: [
-            {
-              item_description: 'jewellery',
-              value: 34_000
-            }
           ]
         },
         non_liquid_capital: [
@@ -129,6 +123,10 @@ class AssessmentRequestFixture < BaseAssessmentFixture # rubocop:disable Metrics
           {
             item_description: 'trust fund',
             value: 34_000
+          },
+          {
+            item_description: 'jewllery',
+            value: 2_225
           }
         ]
       }
