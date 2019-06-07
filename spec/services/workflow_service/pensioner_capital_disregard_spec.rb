@@ -13,7 +13,7 @@ module WorkflowService
           particulars.request.applicant.date_of_birth = 59.years.ago.to_date
         end
         it 'returns zero' do
-         expect(service.value).to eq 0.0
+          expect(service.value).to eq 0.0
         end
       end
 

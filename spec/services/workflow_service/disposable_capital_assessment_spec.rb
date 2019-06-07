@@ -30,10 +30,9 @@ module WorkflowService
           property_service = double PropertyAssessment
           property_details = particulars.request.applicant_capital.property
           expect(PropertyAssessment).to receive(:new).with(property_details, today).and_return(property_service)
-          expect(property_service).to receive(:call).and_return('Property Result')
-
+          expect(property_service).to receive(:call).and_return(property_assessment_result)
           service.call
-          expect(particulars.response.details.capital.property).to eq 'Property Result'
+          expect(particulars.response.details.capital.property).to eq property_assessment_result
         end
       end
 
@@ -59,6 +58,10 @@ module WorkflowService
           service.call
         end
       end
+    end
+
+    def property_assessment_result
+      @property_assessment_result ||= JSON.parse(AssessmentResponseFixture.ruby_hash[:details][:capital][:property].to_json, object_class: DatedStruct)
     end
   end
 end

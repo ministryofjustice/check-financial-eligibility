@@ -31,11 +31,11 @@ module WorkflowService
     end
 
     def sum_assessed_values(capital)
-      capital.liquid_capital_assessment +
+      (capital.liquid_capital_assessment +
         capital.property.main_home.assessed_capital_value +
-        capital.property.additional_properties.sum(&:asssessed_capital_value) +
+        capital.property.additional_properties.sum(&:assessed_capital_value) +
         capital.vehicles.sum(&:assessed_value) +
-        capital.non_liquid_capital_assessment
+        capital.non_liquid_capital_assessment).round(2)
     end
   end
 end
