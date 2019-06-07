@@ -25,7 +25,6 @@ class DatedStruct < OpenStruct
     else
       to_h
     end
-    # @options[:serialize_as_open_struct] ? super : to_h
   end
 
   private

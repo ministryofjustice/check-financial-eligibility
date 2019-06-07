@@ -76,7 +76,7 @@
           "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
         },
         "non_liquid_capital_assessment": {
-          "description": "Aggregate value of all non-liquid capital itesm excluding property and vehicles, e.g. stocks and shares, valuable items, jewellery",
+          "description": "Aggregate value of all non-liquid capital items excluding property and vehicles, e.g. stocks and shares, valuable items, jewellery",
           "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
         },
         "property": {

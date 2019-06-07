@@ -19,7 +19,6 @@ module WorkflowService
     private
 
     def pensioner?
-      earliest_dob_for_pensioner
       @submission_date - minimum_pensioner_age.years >= applicant_dob
     end
 
