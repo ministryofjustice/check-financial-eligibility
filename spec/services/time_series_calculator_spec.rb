@@ -68,4 +68,13 @@ describe TimeSeriesCalculator do
       expect(subject.latest_value).to eq(latest_value)
     end
   end
+
+  describe '#max_variance' do
+    let(:salary_offset) { 20 }
+    let(:max) { payments.values.max }
+    let(:min) { payments.values.min }
+    it 'is the value between max and min' do
+      expect(subject.max_variance).to eq(max - min)
+    end
+  end
 end

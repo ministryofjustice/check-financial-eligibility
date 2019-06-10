@@ -9,6 +9,10 @@ class TimeSeriesCalculator
     values.mean
   end
 
+  def max_variance
+    values.range
+  end
+
   def latest_value
     @latest_value ||= sorted_data.values.last
   end
