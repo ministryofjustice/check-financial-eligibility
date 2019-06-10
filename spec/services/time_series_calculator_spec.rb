@@ -3,11 +3,14 @@ require 'rails_helper'
 describe TimeSeriesCalculator do
   let(:salary) { 100 }
   let(:period) { :monthly }
+  let(:salary_offset) { nil }
+  let(:variance) { {} }
   let(:payments) do
     SalaryPatternGenerator.call(
       period: period,
-      salary: salary
-    )
+      salary: salary,
+      salary_offset: salary_offset
+    ).merge(variance)
   end
 
   subject { described_class.new(payments) }
@@ -15,6 +18,19 @@ describe TimeSeriesCalculator do
   describe '#mean' do
     it 'returns the average' do
       expect(subject.mean).to eq(salary)
+    end
+  end
+
+  describe '#standard_deviation' do
+    it 'returns zero if no variance' do
+      expect(subject.standard_deviation).to eq(0)
+    end
+
+    context 'with variance values' do
+      let(:variance) { { 1.week.ago => (salary - 2) } }
+      it 'returns a number greater than zero' do
+        expect(subject.standard_deviation).to be_between(0, 2).exclusive
+      end
     end
   end
 
@@ -42,6 +58,14 @@ describe TimeSeriesCalculator do
       it 'returns zerodeviation' do
         expect(subject.deviation_between_dates).to be_zero
       end
+    end
+  end
+
+  describe '#latest_value' do
+    let(:latest_value) { Faker::Number.normal(50, 10) }
+    let(:variance) { { 1.week.from_now => latest_value } }
+    it 'returns that latest value' do
+      expect(subject.latest_value).to eq(latest_value)
     end
   end
 end
