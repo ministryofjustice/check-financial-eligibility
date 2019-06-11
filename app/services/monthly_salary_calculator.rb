@@ -48,7 +48,7 @@ class MonthlySalaryCalculator
   end
 
   def normalize_monthly
-    return time_series_calc.mean if time_series_calc.max_variance > NORMAL_VARIANCE_THRESHOLD
+    return time_series_calc.mean if time_series_calc.max_variance >= NORMAL_VARIANCE_THRESHOLD
 
     time_series_calc.latest_value
   end
