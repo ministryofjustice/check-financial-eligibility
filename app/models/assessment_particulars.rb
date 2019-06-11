@@ -96,7 +96,7 @@ class AssessmentParticulars
       non_liquid_capital_assessment: 0.0,
       total_capital_lower_threshold: 0.0,
       total_capital_upper_threshold: 0.0,
-      disposable_capital_assessment: 0.0
+      disposable_capital_assessment: nil
     }
   end
 

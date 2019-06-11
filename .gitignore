@@ -25,3 +25,6 @@
 # Ignore simplecov coverage stats
 /coverage/
 
+# Ignore all .orig files
+*.orig
+
