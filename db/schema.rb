@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_17_092721) do
+ActiveRecord::Schema.define(version: 2019_06_12_085729) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -19,11 +19,10 @@ ActiveRecord::Schema.define(version: 2019_05_17_092721) do
   create_table "assessments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "client_reference_id"
     t.inet "remote_ip", null: false
-    t.json "request_payload", null: false
-    t.json "response_payload"
-    t.string "result"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "submission_date", null: false
+    t.string "matter_proceeding_type", null: false
     t.index ["client_reference_id"], name: "index_assessments_on_client_reference_id"
   end
 

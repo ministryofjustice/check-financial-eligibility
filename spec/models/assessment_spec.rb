@@ -1,7 +1,7 @@
 require 'rails_helper'
 require Rails.root.join('spec/fixtures/assessment_request_fixture.rb')
 
-RSpec.describe Assessment, type: :model do
+RSpec.xdescribe Assessment, type: :model do
   context 'saving request before result is known' do
     let(:payload) { AssessmentRequestFixture.json }
 

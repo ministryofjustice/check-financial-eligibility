@@ -7,7 +7,7 @@ module WorkflowService
     let(:assessment) { create :assessment, request_payload: request_hash.to_json }
     let(:particulars) { AssessmentParticulars.new(assessment) }
 
-    describe '#value' do
+    xdescribe '#value' do
       context 'not a pensioner' do
         before do
           particulars.request.applicant.date_of_birth = 59.years.ago.to_date
