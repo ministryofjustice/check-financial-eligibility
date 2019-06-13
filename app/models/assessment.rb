@@ -3,4 +3,6 @@ class Assessment < ApplicationRecord
             :submission_date,
             :matter_proceeding_type,
             :client_reference_id, presence: true
+
+  has_many :dependents
 end

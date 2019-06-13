@@ -1,0 +1,70 @@
+{
+  "id": "http://localhost:3000/schemas/dependent.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Legal Aid Check Financial Eligibility create dependent payload schema",
+  "description": "This schema defines the payload required to create one or more dependents and specify any income they may have  for the Legal Aid Check Financial Eligibility API",
+  "definitions": {
+    "dependent": {
+      "required": [
+        "date_of_birth",
+        "in_full_time_education"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "date_of_birth": {
+          "description": "The date of birth of the dependent",
+          "$rel": "http://localhost:3000/schemas/assessment_request.json#definitions/date"
+        },
+        "in_full_time_education": {
+          "description": "Whether or not the dependent is in full time education",
+          "type":  "boolean"
+        },
+        "income": {
+          "description": "An array of objects describing the dependent's income receipts during the calculation period",
+          "type": "array",
+          "items":{
+            "$ref": "#/definitions/dependent_income_receipt"
+          }
+        }
+      }
+    },
+    "dependent_income_receipt": {
+      "description": "An object describing one income receipt by a dependent",
+      "type": "object",
+      "required": [
+        "date_of_payment",
+        "amount"
+      ],
+      "properties": {
+        "date_of_payment": {
+          "description": "The date the dependent received this income",
+          "$rel": "http://localhost:3000/schemas/assessment_request.json#definitions/date"
+        },
+        "amount": {
+          "description": "The amount of income received",
+          "$rel": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "type": "object",
+  "required":[
+    "assessment_id",
+    "dependents"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "assessment_id": {
+      "description": "The UUID of the assessment returned from the call to the assessment endpoint",
+      "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/uuid"
+    },
+    "dependents": {
+      "description": "An array of objects describing the applicant's dependents",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/dependent"
+      }
+    }
+  }
+}
