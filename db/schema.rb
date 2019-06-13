@@ -26,6 +26,15 @@ ActiveRecord::Schema.define(version: 2019_06_19_092242) do
     t.index ["client_reference_id"], name: "index_assessments_on_client_reference_id"
   end
 
+  create_table "benefit_receipts", force: :cascade do |t|
+    t.uuid "assessment_id"
+    t.string "benefit_name"
+    t.date "payment_date"
+    t.decimal "amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "dependent_income_receipts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "dependent_id"
     t.date "date_of_payment"
@@ -61,4 +70,14 @@ ActiveRecord::Schema.define(version: 2019_06_19_092242) do
   end
 
   add_foreign_key "properties", "assessments"
+
+  create_table "wage_slips", force: :cascade do |t|
+    t.uuid "assessment_id"
+    t.date "payment_date"
+    t.decimal "gross_pay"
+    t.decimal "paye"
+    t.decimal "nic"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 end

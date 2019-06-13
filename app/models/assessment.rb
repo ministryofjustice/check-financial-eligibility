@@ -6,4 +6,6 @@ class Assessment < ApplicationRecord
 
   has_many :dependents
   has_many :properties
+  has_many :wage_slips
+  has_many :benefit_receipts
 end
