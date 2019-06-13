@@ -2,6 +2,14 @@ require 'simplecov'
 
 SimpleCov.minimum_coverage 100
 
+# TODO: Remove these filters once the refactoring is complete and the services are re-written
+#       to take values from models rather than payload hash
+SimpleCov.start do
+  add_filter 'app/services/workflow_service/'
+  add_filter 'app/services/workflow_predicate/'
+  add_filter 'app/services/base_workflow_service.rb'
+end
+
 unless ENV['NOCOVERAGE']
   SimpleCov.start do
     add_filter 'spec/'
