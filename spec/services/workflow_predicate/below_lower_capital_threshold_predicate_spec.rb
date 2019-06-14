@@ -1,14 +1,14 @@
 require 'rails_helper'
 
 module WorkflowPredicate
-  RSpec.describe BelowLowerCapitalThresholdPredicate do
+  RSpec.xdescribe BelowLowerCapitalThresholdPredicate do
     let(:predicate) { described_class.new(particulars) }
     let(:request_hash) { AssessmentRequestFixture.ruby_hash }
     let(:assessment) { create :assessment, request_payload: request_hash.to_json }
     let(:particulars) { AssessmentParticulars.new(assessment) }
     let(:today) { Date.new(2019, 4, 2) }
 
-    context 'unpopulated response' do
+    xcontext 'unpopulated response' do
       it 'raises' do
         expect {
           predicate.call
@@ -16,7 +16,7 @@ module WorkflowPredicate
       end
     end
 
-    context 'below threshold' do
+    xcontext 'below threshold' do
       it 'returns true' do
         particulars.response.details.capital.total_capital_lower_threshold = 3_000.0
         particulars.response.details.capital.disposable_capital_assessment = 2_999.99

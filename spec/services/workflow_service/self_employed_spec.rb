@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 module WorkflowService
-  RSpec.describe SelfEmployed do
+  RSpec.xdescribe SelfEmployed do
     let(:particulars) { double AssessmentParticulars }
     let(:service) { described_class.new(particulars) }
 

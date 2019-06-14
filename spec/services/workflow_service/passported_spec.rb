@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 module WorkflowService
-  RSpec.describe Passported do
+  RSpec.xdescribe Passported do
     let(:particulars) { double AssessmentParticulars }
     let(:service) { described_class.new(particulars) }
 

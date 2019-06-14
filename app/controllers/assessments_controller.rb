@@ -1,7 +1,6 @@
 class AssessmentsController < ApplicationController
   def create
-    service = AssessmentService.new(request.remote_ip, request.raw_post)
-    service.call
+    service = AssessmentCreationService.new(request.remote_ip, request.raw_post)
     render json: service.response_payload, status: service.http_status
   end
 end

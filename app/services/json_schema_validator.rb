@@ -1,19 +1,18 @@
 class JsonSchemaValidator
-  SCHEMA_PATH = Rails.root.join('public/schemas/assessment_request.json').to_s
-
-  def initialize(payload)
+  def initialize(payload, schema_path)
     @payload = payload
+    @schema_path = schema_path
   end
 
   def errors
-    @errors ||= JSON::Validator.fully_validate(SCHEMA_PATH, payload)
+    @errors ||= JSON::Validator.fully_validate(@schema_path, @payload)
   end
 
   def valid?
     errors.empty?
   end
 
-  private
-
-  attr_reader :payload
+  def invalid?
+    errors.any?
+  end
 end

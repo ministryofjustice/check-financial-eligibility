@@ -2,8 +2,9 @@ require 'rails_helper'
 
 describe JsonSchemaValidator do
   let(:assessment_hash) { AssessmentRequestFixture.ruby_hash }
+  let(:schema_path) { Rails.root.join('public/schemas/assessment_request.json').to_s }
   let(:payload) { JSON.pretty_generate(assessment_hash) }
-  let(:validator) { JsonSchemaValidator.new(payload) }
+  let(:validator) { JsonSchemaValidator.new(payload, schema_path) }
 
   context 'valid assessment payloads' do
     context 'unchanged payload' do

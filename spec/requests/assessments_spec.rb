@@ -8,9 +8,8 @@ RSpec.describe AssessmentsController, type: :request do
 
     context 'valid payload' do
       it 'returns http success' do
-        service = double AssessmentService, response_payload: response_payload, http_status: 200
-        expect(AssessmentService).to receive(:new).with(remote_ip, request_payload).and_return(service)
-        expect(service).to receive(:call)
+        service = double AssessmentCreationService, response_payload: response_payload, http_status: 200
+        expect(AssessmentCreationService).to receive(:new).with(remote_ip, request_payload).and_return(service)
 
         post assessments_path, params: request_payload
         expect(response).to have_http_status(:success)
@@ -20,9 +19,8 @@ RSpec.describe AssessmentsController, type: :request do
 
     context 'invalid payload' do
       it 'returns http unprocessable entity' do
-        service = double AssessmentService, response_payload: response_payload, http_status: 422
-        expect(AssessmentService).to receive(:new).with(remote_ip, request_payload).and_return(service)
-        expect(service).to receive(:call)
+        service = double AssessmentCreationService, response_payload: response_payload, http_status: 422
+        expect(AssessmentCreationService).to receive(:new).with(remote_ip, request_payload).and_return(service)
 
         post assessments_path, params: request_payload
         expect(response).to have_http_status(:unprocessable_entity)

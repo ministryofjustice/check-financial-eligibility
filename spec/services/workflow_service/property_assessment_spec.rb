@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 module WorkflowService # rubocop:disable Metrics/ModuleLength
-  RSpec.describe PropertyAssessment do
+  RSpec.xdescribe PropertyAssessment do
     let(:today) { Date.today }
     let(:service) { PropertyAssessment.new(request, today) }
 
