@@ -10,11 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_20_114204) do
+ActiveRecord::Schema.define(version: 2019_06_14_123520) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  create_table "applicants", force: :cascade do |t|
+    t.uuid "assessment_id"
+    t.datetime "date_of_birth"
+    t.string "involvement_type"
+    t.boolean "has_partner_opponent"
+    t.boolean "receives_qualifying_benefit"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "assessments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "client_reference_id"
