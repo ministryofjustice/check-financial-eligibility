@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe IncomesController, type: :request do
-
   describe 'POST incomes' do
     let(:assessment) { double Assessment, id: '3d24c939-7c35-48a2-a45b-594485038371' }
     let(:request_payload) { { json_key: :json_value }.to_json }

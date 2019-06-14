@@ -36,7 +36,7 @@ class IncomeCreationService
     @result = :ok
     @assessment = Assessment.find_by_id(@payload[:assessment_id])
     if @assessment.nil?
-      @errors << "No such assessment id"
+      @errors << 'No such assessment id'
       false
     else
       @payload[:income][:wage_slips]&.each do |slip|
@@ -50,21 +50,20 @@ class IncomeCreationService
     end
   end
 
-
   def create_wage_slip(params)
     wage_slip = @assessment.wage_slips.new(params)
-    unless wage_slip.save
-      @result = :error
-      @errors << wage_slip.errors.full_messages
-    end
+    return if wage_slip.save
+
+    @result = :error
+    @errors << wage_slip.errors.full_messages
   end
 
   def create_benefit(params)
     benefit = @assessment.benefit_receipts.new(params)
-    unless benefit.save
-      @result = :error
-      @errors << benefit.errors.full_messages
-    end
+    return if benefit.save
+
+    @result = :error
+    @errors << benefit.errors.full_messages
   end
 
   def success_response
@@ -89,4 +88,3 @@ class IncomeCreationService
     }.to_json
   end
 end
-

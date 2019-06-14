@@ -18,7 +18,7 @@ RSpec.describe IncomeCreationService do
       .to_return(status: 200, body: full_schema, headers: {})
   end
 
-  shared_examples 'an_error_response'do
+  shared_examples 'an_error_response' do
     it 'returns status code 422' do
       service.result_payload
       expect(service.http_status).to eq 422
@@ -167,7 +167,7 @@ RSpec.describe IncomeCreationService do
             benefit_name: 'child_allowance',
             payment_date: Date.tomorrow,
             amount: 200.66
-          },
+          }
         ]
       }
     }.to_json
@@ -212,9 +212,8 @@ RSpec.describe IncomeCreationService do
   end
 
   def payload_with_invalid_asssessment_id
-    (valid_payload_as_hash.merge(assessment_id: 'b382e86e-3056-41bd-b39a-213c84ed6cac')).to_json
+    valid_payload_as_hash.merge(assessment_id: 'b382e86e-3056-41bd-b39a-213c84ed6cac').to_json
   end
-
 
   def expected_result_payload
     {
