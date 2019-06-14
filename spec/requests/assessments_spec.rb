@@ -2,30 +2,54 @@ require 'rails_helper'
 
 RSpec.describe AssessmentsController, type: :request do
   describe 'POST assessments' do
-    let(:request_payload) { { json_key: :json_value }.to_json }
-    let(:remote_ip) { '127.0.0.1' }
-    let(:response_payload) { { result: :ok }.to_json }
+    let(:params) do
+      {
+        client_reference_id: 'psr-123',
+        submission_date: '2019-06-06',
+        matter_proceeding_type: 'domestic_abuse'
+      }
+    end
 
-    context 'valid payload' do
-      it 'returns http success' do
-        service = double AssessmentCreationService, response_payload: response_payload, http_status: 200
-        expect(AssessmentCreationService).to receive(:new).with(remote_ip, request_payload).and_return(service)
+    subject { post assessments_path, params: params.to_json }
 
-        post assessments_path, params: request_payload
-        expect(response).to have_http_status(:success)
-        expect(response.body).to eq response_payload
-      end
+    before do
+      # stub requests to get schemas
+      stub_request(:get, 'http://localhost:3000/schemas/assessment_request.json')
+        .with(
+          headers: {
+            'Accept' => '*/*',
+            'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent' => 'Ruby'
+          }
+        )
+        .to_return(status: 200, body: full_schema, headers: {})
+    end
+
+    before { subject }
+
+    it 'returns http success' do
+      expect(response).to have_http_status(:success)
+    end
+
+    it 'has a valid payload' do
+      expect(json['status']).to eq('ok')
+      expect(json['assessment_id']).to eq(Assessment.last.id)
     end
 
     context 'invalid payload' do
-      it 'returns http unprocessable entity' do
-        service = double AssessmentCreationService, response_payload: response_payload, http_status: 422
-        expect(AssessmentCreationService).to receive(:new).with(remote_ip, request_payload).and_return(service)
+      let(:params) { { matter_proceeding_type: 'xxx' } }
 
-        post assessments_path, params: request_payload
+      it 'returns http unprocessable entity' do
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.body).to eq response_payload
+      end
+
+      it 'returns the errors' do
+        expect(json['errors']).not_to be_empty
       end
     end
+  end
+
+  def full_schema
+    File.read(Rails.root.join('public/schemas/assessment_request.json'))
   end
 end

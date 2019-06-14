@@ -1,51 +1,32 @@
 class AssessmentCreationService
   SCHEMA_PATH = Rails.root.join('public/schemas/assessment.json').to_s
 
-  attr_reader :http_status
+  attr_reader :assessment_hash, :raw_post
 
   def initialize(remote_ip, raw_post)
     @raw_post = raw_post
     @assessment_hash = JSON.parse(raw_post).merge(remote_ip: remote_ip)
   end
 
-  def response_payload
-    @validator = JsonSchemaValidator.new(@raw_post, SCHEMA_PATH)
-    if @validator.valid? && create_assessment
-      @http_status = 200
-      @response = success_response
-    else
-      @http_status = 422
-      @response = error_response
-    end
-    @response.to_json
+  def success?
+    errors.empty?
+  end
+
+  def assessment
+    new_assessment if errors.empty?
+  end
+
+  def errors
+    validator.valid? ? new_assessment.errors.full_messages : validator.errors
   end
 
   private
 
-  def create_assessment
-    @assessment = Assessment.new(@assessment_hash)
-    @assessment.save
+  def new_assessment
+    @new_assessment ||= Assessment.create(assessment_hash)
   end
 
-  def success_response
-    {
-      status: :ok,
-      assessment_id: @assessment.id,
-      links: [
-        {
-          href: "https://check-for-legal-aid-eligibility/assessment/#{@assessment.id}/applicant",
-          rel: 'applicant',
-          type: 'POST'
-        }
-      ]
-    }
-  end
-
-  def error_response
-    errors = @validator.valid? ? @assessment.errors.full_messages : @validator.errors
-    {
-      status: :error,
-      errors: errors
-    }
+  def validator
+    @validator ||= JsonSchemaValidator.new(raw_post, SCHEMA_PATH)
   end
 end

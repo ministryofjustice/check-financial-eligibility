@@ -62,6 +62,7 @@ RSpec.configure do |config|
   # remove the need to prefix every create or build with FactoryBot
   # https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#rspec
   config.include FactoryBot::Syntax::Methods
+  config.include RequestHelpers, type: :request
 end
 
 require 'webmock/rspec'
