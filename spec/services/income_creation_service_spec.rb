@@ -5,129 +5,128 @@ RSpec.describe IncomeCreationService do
   let(:assessment) { create :assessment }
   let(:service) { described_class.new(request_payload) }
 
-  before do
-    # stub request to get schema
-    stub_request(:get, 'http://localhost:3000/schemas/assessment_request.json')
-      .with(
-        headers: {
-          'Accept' => '*/*',
-          'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-          'User-Agent' => 'Ruby'
-        }
-      )
-      .to_return(status: 200, body: full_schema, headers: {})
-  end
+  before { stub_call_to_get_json_schema }
 
-  shared_examples 'an_error_response' do
-    it 'returns status code 422' do
-      service.result_payload
-      expect(service.http_status).to eq 422
-    end
-
+  shared_examples 'it did not create any records' do
     it 'does not create any WageSlip records' do
       expect {
-        service.result_payload
+        service.success?
       }.not_to change { WageSlip.count }
     end
 
     it 'does not create and BenefitReceipt records' do
       expect {
-        service.result_payload
+        service.success?
       }.not_to change { BenefitReceipt.count }
     end
   end
 
   context 'valid payload' do
     let(:request_payload) { valid_payload }
-    it 'responds with expected success payload' do
-      expect(service.result_payload).to eq expected_result_payload
-    end
 
-    it 'responds with status code 200' do
-      service.result_payload
-      expect(service.http_status).to eq 200
-    end
+    describe '#success?' do
+      it 'responds true' do
+        expect(service.success?).to be true
+      end
+      it 'creates two WageSlip records' do
+        expect {
+          service.success?
+        }.to change { WageSlip.count }.by(2)
 
-    it 'creates two WageSlip records' do
-      expect {
-        service.result_payload
-      }.to change { WageSlip.count }.by(2)
+        slips = assessment.wage_slips.order(:payment_date)
+        slip = slips.first
+        expect(slip.payment_date).to eq 40.days.ago.to_date
+        expect(slip.gross_pay).to eq 4_444.44
+        expect(slip.paye).to eq 400.44
+        expect(slip.nic).to eq 40.44
 
-      slips = assessment.wage_slips.order(:payment_date)
-      slip = slips.first
-      expect(slip.payment_date).to eq 40.days.ago.to_date
-      expect(slip.gross_pay).to eq 4_444.44
-      expect(slip.paye).to eq 400.44
-      expect(slip.nic).to eq 40.44
+        slip = slips.last
+        expect(slip.payment_date).to eq 10.days.ago.to_date
+        expect(slip.gross_pay).to eq 1_111.11
+        expect(slip.paye).to eq 100.11
+        expect(slip.nic).to eq 10.11
+      end
 
-      slip = slips.last
-      expect(slip.payment_date).to eq 10.days.ago.to_date
-      expect(slip.gross_pay).to eq 1_111.11
-      expect(slip.paye).to eq 100.11
-      expect(slip.nic).to eq 10.11
-    end
+      it 'creates 2 BenefitReceipt records' do
+        expect {
+          service.success?
+        }.to change { BenefitReceipt.count }.by(2)
 
-    it 'creates 2 BenefitReceipt records' do
-      expect {
-        service.result_payload
-      }.to change { BenefitReceipt.count }.by(2)
+        benefit_receipts = assessment.benefit_receipts.order(:payment_date)
+        br = benefit_receipts.first
+        expect(br.benefit_name).to eq 'child_allowance'
+        expect(br.payment_date).to eq 15.days.ago.to_date
+        expect(br.amount).to eq 200.66
 
-      benefit_receipts = assessment.benefit_receipts.order(:payment_date)
-      br = benefit_receipts.first
-      expect(br.benefit_name).to eq 'child_allowance'
-      expect(br.payment_date).to eq 15.days.ago.to_date
-      expect(br.amount).to eq 200.66
-
-      br = benefit_receipts.last
-      expect(br.benefit_name).to eq 'jobseekers_allowance'
-      expect(br.payment_date).to eq 2.days.ago.to_date
-      expect(br.amount).to eq 100.44
+        br = benefit_receipts.last
+        expect(br.benefit_name).to eq 'jobseekers_allowance'
+        expect(br.payment_date).to eq 2.days.ago.to_date
+        expect(br.amount).to eq 100.44
+      end
     end
   end
 
   context 'payload fails schema validation' do
     let(:request_payload) { invalid_payload }
 
-    it 'responds with error payload' do
-      result = JSON.parse(service.result_payload, symbolize_names: true)
-      expect(result[:status]).to eq 'error'
-      expect(result[:assessment_id]).to be_nil
-      expect(result[:errors].size).to eq 4
-      expect(result[:errors][0]).to match %r{The property '#/' did not contain a required property of 'assessment_id'}
-      expect(result[:errors][1]).to match %r{The property '#/' contains additional properties \["extra_root_property"\]}
-      expect(result[:errors][2]).to match %r{The property '#/income' did not contain a required property of 'benefits'}
-      expect(result[:errors][3]).to match %r{The property '#/income' contains additional properties \["extra_income_property"\]}
+    describe '#success?' do
+      it 'is false' do
+        expect(service.success?).to be false
+      end
     end
 
-    it_behaves_like 'an_error_response'
+    describe '#errors' do
+      it 'stores all the errors' do
+        service.success?
+        expect(service.errors.size).to eq 4
+        expect(service.errors[0]).to match %r{The property '#/' did not contain a required property of 'assessment_id'}
+        expect(service.errors[1]).to match %r{The property '#/' contains additional properties \["extra_root_property"\]}
+        expect(service.errors[2]).to match %r{The property '#/income' did not contain a required property of 'benefits'}
+        expect(service.errors[3]).to match %r{The property '#/income' contains additional properties \["extra_income_property"\]}
+      end
+    end
+
+    it_behaves_like 'it did not create any records'
   end
 
   context 'fails ActiveRecord validations' do
     let(:request_payload) { future_date_payload }
-    it 'responds with error payload' do
-      result = JSON.parse(service.result_payload, symbolize_names: true)
-      expect(result[:status]).to eq 'error'
-      expect(result[:assessment_id]).to eq assessment.id
-      expect(result[:errors].size).to eq 2
-      expect(result[:errors][0]).to eq 'Wage slip payment date cannot be in the future'
-      expect(result[:errors][1]).to eq 'Benefit payment date cannot be in the future'
+
+    describe '#success?' do
+      it 'is false' do
+        expect(service.success?).to be false
+      end
     end
 
-    it_behaves_like 'an_error_response'
+    describe '#errors' do
+      it 'stores all the errors' do
+        service.success?
+        expect(service.errors.size).to eq 2
+        expect(service.errors[0]).to eq 'Wage slip payment date cannot be in the future'
+        expect(service.errors[1]).to eq 'Benefit payment date cannot be in the future'
+      end
+      it_behaves_like 'it did not create any records'
+    end
   end
 
   context 'payload has invalid assessment id' do
     let(:request_payload) { payload_with_invalid_asssessment_id }
 
-    it 'responds with error payload' do
-      result = JSON.parse(service.result_payload, symbolize_names: true)
-      expect(result[:status]).to eq 'error'
-      expect(result[:assessment_id]).to eq 'b382e86e-3056-41bd-b39a-213c84ed6cac'
-      expect(result[:errors].size).to eq 1
-      expect(result[:errors].first).to eq 'No such assessment id'
+    describe '#success?' do
+      it 'is false' do
+        expect(service.success?).to be false
+      end
     end
 
-    it_behaves_like 'an_error_response'
+    describe '#errors' do
+      it 'stores all the errors' do
+        service.success?
+        expect(service.errors.size).to eq 1
+        expect(service.errors[0]).to eq 'No such assessment id'
+      end
+
+      it_behaves_like 'it did not create any records'
+    end
   end
 
   def invalid_payload
@@ -227,9 +226,5 @@ RSpec.describe IncomeCreationService do
         }
       ]
     }.to_json
-  end
-
-  def full_schema
-    File.read(Rails.root.join('public/schemas/assessment_request.json'))
   end
 end
