@@ -10,12 +10,12 @@ RSpec.describe DependentsController, type: :request do
 
     context 'valid payload' do
       before do
-        service = double DependentCreationService, success?: true, assessment: assessment
-        expect(DependentCreationService).to receive(:new).with(request_payload).and_return(service)
+        service = double DependentsCreationService, success?: true, assessment: assessment
+        expect(DependentsCreationService).to receive(:new).with(request_payload).and_return(service)
         post assessment_dependents_path(assessment), params: request_payload
       end
 
-      let(:service) { double DependentCreationService, success?: true, assessment: assessment }
+      let(:service) { double DependentsCreationService, success?: true, assessment: assessment }
 
       it 'returns http success' do
         expect(response).to have_http_status(:success)
@@ -28,8 +28,8 @@ RSpec.describe DependentsController, type: :request do
 
     context 'invalid payload' do
       before do
-        service = double DependentCreationService, success?: false, errors: %w[error_1 error_2]
-        expect(DependentCreationService).to receive(:new).with(request_payload).and_return(service)
+        service = double DependentsCreationService, success?: false, errors: %w[error_1 error_2]
+        expect(DependentsCreationService).to receive(:new).with(request_payload).and_return(service)
         post assessment_dependents_path(assessment), params: request_payload
       end
 

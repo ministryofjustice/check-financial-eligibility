@@ -28,6 +28,6 @@ class DependentsController < ApplicationController
   end
 
   def dependent_creation_service
-    @dependent_creation_service ||= DependentCreationService.new(request.raw_post)
+    @dependent_creation_service ||= DependentsCreationService.new(request.raw_post)
   end
 end

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe DependentCreationService do
+RSpec.describe DependentsCreationService do
   include Rails.application.routes.url_helpers
   let(:assessment) { create :assessment }
   let(:service) { described_class.new(request_payload) }
@@ -118,6 +118,51 @@ RSpec.describe DependentCreationService do
         expect(service.errors[2]).to eq 'Date of payment cannot be in the future'
       end
     end
+  end
+
+  context 'no such assessment id' do
+    let(:request_payload) { payload_with_invalid_id }
+    describe '#success?' do
+      it 'returns false' do
+        expect(service.success?).to be false
+      end
+
+      it 'does not create a Dependent record' do
+        expect {
+          service.success?
+        }.not_to change { Dependent.count }
+      end
+
+      it 'does not create any DependentIncomeReceipt records' do
+        expect {
+          service.success?
+        }.not_to change { DependentIncomeReceipt.count }
+      end
+    end
+
+    describe 'errors' do
+      it 'returns an error payload' do
+        service.success?
+        expect(service.errors.size).to eq 1
+        expect(service.errors[0]).to eq 'No such assessment id'
+      end
+    end
+  end
+
+  def payload_with_invalid_id
+    {
+      assessment_id: '34e353e2-dedb-4314-a271-9ff579e19f45',
+      dependents: [
+        {
+          date_of_birth: 12.years.ago.to_date,
+          in_full_time_education: false
+        },
+        {
+          date_of_birth: 6.years.ago.to_date,
+          in_full_time_education: true
+        }
+      ]
+    }.to_json
   end
 
   def invalid_payload
