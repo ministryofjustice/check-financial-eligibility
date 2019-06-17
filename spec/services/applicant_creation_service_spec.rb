@@ -53,7 +53,7 @@ RSpec.describe ApplicantCreationService do
     context 'payload fails JSON Schema' do
       let(:invalid_payload) do
         {
-          assessment_id: assessment.id,
+          assessment_id: 'xxxx',
           extra_property: 'this should not be here',
           applicant: {
             date_of_birth: '2010x-04-04',
@@ -73,11 +73,12 @@ RSpec.describe ApplicantCreationService do
 
         it 'returns errors' do
           service.success?
-          expect(service.errors.size).to eq 4
-          expect(service.errors[0]).to match %r{The property '#/applicant' did not contain a required property of 'has_partner_opponent'}
-          expect(service.errors[1]).to match %r{The property '#/applicant' contains additional properties \[\"reason\"\]}
-          expect(service.errors[2]).to match %r{The property '#/applicant/date_of_birth' value \"2010x-04-04\" did not match the regex }
-          expect(service.errors[3]).to match %r{The property '#/' contains additional properties \[\"extra_property\"\] }
+          expect(service.errors.size).to eq 5
+          expect(service.errors[0]).to match %r{The property '#/assessment_id' value \"xxxx\" did not match the regex}
+          expect(service.errors[1]).to match %r{The property '#/applicant' did not contain a required property of 'has_partner_opponent'}
+          expect(service.errors[2]).to match %r{The property '#/applicant' contains additional properties \[\"reason\"\]}
+          expect(service.errors[3]).to match %r{The property '#/applicant/date_of_birth' value \"2010x-04-04\" did not match the regex }
+          expect(service.errors[4]).to match %r{The property '#/' contains additional properties \[\"extra_property\"\] }
         end
 
         it 'does not create an applicant' do
@@ -89,7 +90,7 @@ RSpec.describe ApplicantCreationService do
     context 'ActiveRecord validation fails' do
       let(:invalid_payload) do
         {
-          assessment_id: assessment.id,
+          assessment_id: assessment_id,
           applicant: {
             date_of_birth: Date.tomorrow.to_date,
             involvement_type: 'applicant',
@@ -98,7 +99,7 @@ RSpec.describe ApplicantCreationService do
           }
         }.to_json
       end
-
+      let(:assessment_id) { assessment.id }
       let(:request_payload) { invalid_payload }
 
       describe '#success?' do
@@ -114,6 +115,23 @@ RSpec.describe ApplicantCreationService do
 
         it 'does not create an applicant' do
           expect { service.success? }.not_to change { Applicant.count }
+        end
+      end
+
+      context 'assessment id not found' do
+        let(:assessment_id) { SecureRandom.uuid }
+
+        describe '#success?' do
+          it 'can not find non-existant assessment' do
+            expect(service.success?).to eq false
+          end
+        end
+
+        describe '#errors' do
+          it 'returns correct error' do
+            service.success?
+            expect(service.errors).to eq ['No such assessment ID']
+          end
         end
       end
     end
