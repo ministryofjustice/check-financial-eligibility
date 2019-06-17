@@ -64,23 +64,4 @@ class IncomeCreationService
     benefit.save
     @errors << benefit.errors.full_messages
   end
-
-
-  def create_incomes
-    @result = :ok
-    @assessment = Assessment.find_by_id(@payload[:assessment_id])
-    if @assessment.nil?
-      @errors << 'No such assessment id'
-      false
-    else
-      @payload[:income][:wage_slips]&.each do |slip|
-        create_wage_slip(slip)
-      end
-      @payload[:income][:benefits]&.each do |benefit_params|
-        create_benefit(benefit_params)
-      end
-      @errors.flatten!
-      @result == :ok
-    end
-  end
 end
