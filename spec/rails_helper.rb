@@ -75,3 +75,19 @@ require Rails.root.join('spec/fixtures/assessment_response_fixture')
 def open_structify(data)
   JSON.parse(data.to_json, object_class: DatedStruct)
 end
+
+def stub_call_to_get_json_schema
+  stub_request(:get, 'http://localhost:3000/schemas/assessment_request.json')
+    .with(
+      headers: {
+        'Accept' => '*/*',
+        'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+        'User-Agent' => 'Ruby'
+      }
+    )
+    .to_return(status: 200, body: full_schema, headers: {})
+end
+
+def full_schema
+  File.read(Rails.root.join('public/schemas/assessment_request.json'))
+end

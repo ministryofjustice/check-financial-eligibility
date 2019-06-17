@@ -12,15 +12,7 @@ class AssessmentsController < ApplicationController
   def success_response
     {
       status: :ok,
-      assessment_id: assessment.id,
-      links: [
-        {
-          # TODO: applicant's url
-          # href: "https://check-for-legal-aid-eligibility/assessment/#{assessment.id}/applicant",
-          rel: 'applicant',
-          type: 'POST'
-        }
-      ]
+      assessment_id: assessment.id
     }
   end
 
