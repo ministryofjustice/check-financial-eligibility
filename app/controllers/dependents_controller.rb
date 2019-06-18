@@ -1,33 +1,23 @@
 class DependentsController < ApplicationController
   def create
-    if dependent_creation_service.success?
-      render json: success_response
+    if creation_service_result.success?
+      render json: {
+        success: true,
+        objects: creation_service_result.dependents,
+        errors: []
+      }
     else
-      render json: error_response, status: 422
+      render json: {
+        success: false,
+        objects: nil,
+        errors: creation_service_result.errors
+      }, status: 422
     end
   end
 
   private
 
-  def success_response
-    {
-      status: :ok,
-      assessment_id: assessment.id
-    }
-  end
-
-  def error_response
-    {
-      status: :error,
-      errors: dependent_creation_service.errors
-    }
-  end
-
-  def assessment
-    dependent_creation_service.assessment
-  end
-
-  def dependent_creation_service
-    @dependent_creation_service ||= DependentsCreationService.new(request.raw_post)
+  def creation_service_result
+    @creation_service_result ||= DependentsCreationService.call(request.raw_post)
   end
 end

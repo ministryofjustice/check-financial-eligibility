@@ -21,8 +21,8 @@ RSpec.describe AssessmentsController, type: :request do
     end
 
     it 'has a valid payload' do
-      expect(json['status']).to eq('ok')
-      expect(json['assessment_id']).to eq(Assessment.last.id)
+      expect(json[:status]).to eq('ok')
+      expect(json[:assessment_id]).to eq(Assessment.last.id)
     end
 
     context 'invalid payload' do
@@ -33,7 +33,7 @@ RSpec.describe AssessmentsController, type: :request do
       end
 
       it 'returns the errors' do
-        expect(json['errors']).not_to be_empty
+        expect(json[:errors]).not_to be_empty
       end
     end
   end

@@ -1,62 +1,56 @@
-class DependentsCreationService
+class DependentsCreationService < BaseCreationService
   SCHEMA_PATH = Rails.root.join('public/schemas/dependent.json').to_s
 
+  attr_accessor :raw_post, :dependents
+
   def initialize(raw_post)
-    @raw_post =  raw_post
-    @payload = JSON.parse(@raw_post, symbolize_names: true)
-    @errors = nil
+    @raw_post = raw_post
   end
 
-  def success?
-    errors.empty?
-  end
-
-  def assessment
-    @assessment ||= Assessment.find_by(id: @payload[:assessment_id])
-    @errors = ['No such assessment id'] if @assessment.nil?
-    @assessment
-  end
-
-  def errors
-    @errors ||= validator.valid? ? dependent_errors : validator.errors
+  def call
+    validate_and_create
+    self
   end
 
   private
 
-  def validator
-    @validator ||= JsonSchemaValidator.new(@raw_post, SCHEMA_PATH)
+  def validate_and_create
+    validate_json
+    create_dependents
+  rescue CreationError => e
+    self.errors = e.errors
   end
 
-  def model_errors
-    @model_errors ||= create_dependents
+  def validate_json
+    raise CreationError, json_validator.errors unless json_validator.valid?
   end
 
-  def dependent_errors
-    assessment.nil? ? @errors : model_errors
+  def json_validator
+    @json_validator ||= JsonSchemaValidator.new(@raw_post, schema_path)
   end
 
   def create_dependents
-    ar_errors = []
-    ActiveRecord::Base.transaction do
-      @payload[:dependents].each do |dependent_params|
-        income_params = dependent_params.delete(:income)
-        dependent = assessment.dependents.new(dependent_params)
-        income_params&.each do |ip|
-          dependent.dependent_income_receipts.new(ip)
-        end
-        next if dependent.save
+    self.dependents = assessment.dependents.create!(dependent_params)
+  rescue ActiveRecord::RecordInvalid => e
+    raise CreationError, e.record.errors.full_messages
+  end
 
-        ar_errors << collect_errors(dependent)
-      end
-      ar_errors.flatten
+  def schema_path
+    SCHEMA_PATH
+  end
+
+  def assessment
+    @assessment ||= Assessment.find_by(id: payload[:assessment_id]) || (raise CreationError, ['No such assessment id'])
+  end
+
+  def payload
+    @payload ||= JSON.parse(@raw_post, symbolize_names: true)
+  end
+
+  def dependent_params
+    payload[:dependents].map do |dependent|
+      dependent[:dependent_income_receipts_attributes] = dependent.delete(:income) if dependent[:income]
+      dependent
     end
-  end
-
-  def collect_errors(dependent)
-    dependent.errors.full_messages + income_receipt_errors(dependent)
-  end
-
-  def income_receipt_errors(dependent)
-    dependent.dependent_income_receipts.map { |ir| ir.errors.full_messages }
   end
 end
