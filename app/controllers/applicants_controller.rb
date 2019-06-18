@@ -17,13 +17,13 @@ class ApplicantsController < ApplicationController
     {
       status: :ok,
       assessment_id: applicant_creation_service.assessment.id
-    }.to_json
+    }
   end
 
   def error_response
     {
       status: :error,
       errors: applicant_creation_service.errors
-    }.to_json
+    }
   end
 end

@@ -25,7 +25,7 @@
       "additionalProperties": false,
       "properties": {
         "date_of_birth": {
-          "description": "Date of the original submission of this assessment",
+          "description": "The date of birth of the applicant",
           "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/date"
         },
         "involvement_type": {

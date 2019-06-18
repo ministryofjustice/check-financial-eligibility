@@ -16,14 +16,15 @@ ActiveRecord::Schema.define(version: 2019_06_14_123520) do
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
-  create_table "applicants", force: :cascade do |t|
-    t.uuid "assessment_id"
-    t.datetime "date_of_birth"
+  create_table "applicants", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "assessment_id", null: false
+    t.date "date_of_birth"
     t.string "involvement_type"
     t.boolean "has_partner_opponent"
     t.boolean "receives_qualifying_benefit"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["assessment_id"], name: "index_applicants_on_assessment_id"
   end
 
   create_table "assessments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -98,32 +99,5 @@ ActiveRecord::Schema.define(version: 2019_06_14_123520) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "vehicles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "assessment_id", null: false
-    t.decimal "value"
-    t.decimal "loan_amount_outstanding"
-    t.date "date_of_purchase"
-    t.boolean "in_regular_use"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["assessment_id"], name: "index_vehicles_on_assessment_id"
-  end
-
-  create_table "wage_slips", force: :cascade do |t|
-    t.uuid "assessment_id", null: false
-    t.date "payment_date"
-    t.decimal "gross_pay"
-    t.decimal "paye"
-    t.decimal "nic"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["assessment_id"], name: "index_wage_slips_on_assessment_id"
-  end
-
-  add_foreign_key "bank_accounts", "assessments"
-  add_foreign_key "benefit_receipts", "assessments"
-  add_foreign_key "non_liquid_assets", "assessments"
-  add_foreign_key "properties", "assessments"
-  add_foreign_key "vehicles", "assessments"
-  add_foreign_key "wage_slips", "assessments"
+  add_foreign_key "applicants", "assessments"
 end
