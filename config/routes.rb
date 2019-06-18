@@ -3,5 +3,6 @@ Rails.application.routes.draw do
     resources :dependents, only: [:create]
     resources :properties, only: [:create]
     resource :income, only: [:create]
+    resources :vehicles, only: :create
   end
 end
