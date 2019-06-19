@@ -31,7 +31,10 @@
           "description": "Whether or not this house is shared with a housing association",
           "type": "boolean"
         },
-        "main_home"
+        "main_home": {
+          "description": "Whether or not this is the main home of an applicant",
+          "type": "boolean"
+        }
       }
     }
   },
@@ -47,19 +50,10 @@
         "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/uuid"
       },
       "properties": {
+        "type": "array",
         "description": "An array of objects describing the applicant's properties",
-        "type": "object",
-        "required": [
-          "main_home"
-        ],
-        "main_home": {},
-        "additional_properties": {
-          "type": "string",
-          "enum": [
-            {
-              "$ref": "#/definitions/property"
-            }
-          ]
+        "items": {
+          "$ref": "#/definitions/property"
         }
       }
     }

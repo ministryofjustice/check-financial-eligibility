@@ -13,7 +13,7 @@
       "properties": {
         "date_of_birth": {
           "description": "The date of birth of the dependent",
-          "$rel": "http://localhost:3000/schemas/assessment_request.json#definitions/date"
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/date"
         },
         "in_full_time_education": {
           "description": "Whether or not the dependent is in full time education",
