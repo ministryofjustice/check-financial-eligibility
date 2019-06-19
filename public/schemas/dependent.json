@@ -38,11 +38,11 @@
       "properties": {
         "date_of_payment": {
           "description": "The date the dependent received this income",
-          "$rel": "http://localhost:3000/schemas/assessment_request.json#definitions/date"
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/date"
         },
         "amount": {
           "description": "The amount of income received",
-          "$rel": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
         }
       },
       "additionalProperties": false

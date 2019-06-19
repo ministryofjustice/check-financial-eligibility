@@ -5,4 +5,5 @@ class Assessment < ApplicationRecord
             :client_reference_id, presence: true
 
   has_many :dependents
+  has_many :properties
 end

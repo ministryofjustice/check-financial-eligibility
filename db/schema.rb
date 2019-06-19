@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_13_081734) do
+ActiveRecord::Schema.define(version: 2019_06_19_092242) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -42,10 +42,33 @@ ActiveRecord::Schema.define(version: 2019_06_13_081734) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "properties", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "assessment_id", null: false
+    t.decimal "value"
+    t.decimal "outstanding_mortgage"
+    t.decimal "percentage_owned"
+    t.boolean "main_home"
+    t.boolean "shared_with_housing_assoc"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["assessment_id"], name: "index_properties_on_assessment_id"
+  end
+
   create_table "statuses", force: :cascade do |t|
     t.string "response"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
+  create_table "vehicles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "assessment_id"
+    t.decimal "value"
+    t.decimal "loan_amount_outstanding"
+    t.date "date_of_purchase"
+    t.boolean "in_regular_use"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "properties", "assessments"
 end
