@@ -1,38 +1,33 @@
 require 'rails_helper'
 
 RSpec.describe IncomeCreationService do
-  include Rails.application.routes.url_helpers
   let(:assessment) { create :assessment }
-  let(:service) { described_class.new(request_payload) }
+  # let(:service) { described_class.new(request_payload) }
 
-  before { stub_call_to_get_json_schema }
+  before { stub_call_to_json_schema }
+
+  subject { described_class.call(request_payload) }
 
   shared_examples 'it did not create any records' do
     it 'does not create any WageSlip records' do
-      expect {
-        service.success?
-      }.not_to change { WageSlip.count }
+      expect { subject }.not_to change { WageSlip.count }
     end
 
     it 'does not create and BenefitReceipt records' do
-      expect {
-        service.success?
-      }.not_to change { BenefitReceipt.count }
+      expect { subject }.not_to change { BenefitReceipt.count }
     end
   end
 
   context 'valid payload' do
     let(:request_payload) { valid_payload }
 
-    describe '#success?' do
-      it 'responds true' do
-        expect(service.success?).to be true
+    describe '.call' do
+      it 'creates a response with success = true' do
+        expect(subject.success).to be true
       end
-      it 'creates two WageSlip records' do
-        expect {
-          service.success?
-        }.to change { WageSlip.count }.by(2)
 
+      it 'creates two WageSlip records' do
+        expect { subject }.to change { WageSlip.count }.by(2)
         slips = assessment.wage_slips.order(:payment_date)
         slip = slips.first
         expect(slip.payment_date).to eq 40.days.ago.to_date
@@ -48,9 +43,7 @@ RSpec.describe IncomeCreationService do
       end
 
       it 'creates 2 BenefitReceipt records' do
-        expect {
-          service.success?
-        }.to change { BenefitReceipt.count }.by(2)
+        expect { subject }.to change { BenefitReceipt.count }.by(2)
 
         benefit_receipts = assessment.benefit_receipts.order(:payment_date)
         br = benefit_receipts.first
@@ -69,20 +62,17 @@ RSpec.describe IncomeCreationService do
   context 'payload fails schema validation' do
     let(:request_payload) { invalid_payload }
 
-    describe '#success?' do
-      it 'is false' do
-        expect(service.success?).to be false
+    describe '.call' do
+      it 'creates a response with success = false' do
+        expect(subject.success?).to be false
       end
-    end
 
-    describe '#errors' do
       it 'stores all the errors' do
-        service.success?
-        expect(service.errors.size).to eq 4
-        expect(service.errors[0]).to match %r{The property '#/' did not contain a required property of 'assessment_id'}
-        expect(service.errors[1]).to match %r{The property '#/' contains additional properties \["extra_root_property"\]}
-        expect(service.errors[2]).to match %r{The property '#/income' did not contain a required property of 'benefits'}
-        expect(service.errors[3]).to match %r{The property '#/income' contains additional properties \["extra_income_property"\]}
+        expect(subject.errors.size).to eq 4
+        expect(subject.errors[0]).to match %r{The property '#/' did not contain a required property of 'assessment_id'}
+        expect(subject.errors[1]).to match %r{The property '#/' contains additional properties \["extra_root_property"\]}
+        expect(subject.errors[2]).to match %r{The property '#/income' did not contain a required property of 'benefits'}
+        expect(subject.errors[3]).to match %r{The property '#/income' contains additional properties \["extra_income_property"\]}
       end
     end
 
@@ -92,19 +82,17 @@ RSpec.describe IncomeCreationService do
   context 'fails ActiveRecord validations' do
     let(:request_payload) { future_date_payload }
 
-    describe '#success?' do
-      it 'is false' do
-        expect(service.success?).to be false
+    describe '.call' do
+      it 'success is false' do
+        expect(subject.success?).to be false
       end
-    end
 
-    describe '#errors' do
       it 'stores all the errors' do
-        service.success?
-        expect(service.errors.size).to eq 2
-        expect(service.errors[0]).to eq 'Wage slip payment date cannot be in the future'
-        expect(service.errors[1]).to eq 'Benefit payment date cannot be in the future'
+        expect(subject.errors.size).to eq 2
+        expect(subject.errors[0]).to eq 'Wage slip payment date cannot be in the future'
+        expect(subject.errors[1]).to eq 'Benefit payment date cannot be in the future'
       end
+
       it_behaves_like 'it did not create any records'
     end
   end
@@ -112,17 +100,14 @@ RSpec.describe IncomeCreationService do
   context 'payload has invalid assessment id' do
     let(:request_payload) { payload_with_invalid_asssessment_id }
 
-    describe '#success?' do
-      it 'is false' do
-        expect(service.success?).to be false
+    describe '.call' do
+      it 'success is false' do
+        expect(subject.success?).to be false
       end
-    end
 
-    describe '#errors' do
       it 'stores all the errors' do
-        service.success?
-        expect(service.errors.size).to eq 1
-        expect(service.errors[0]).to eq 'No such assessment id'
+        expect(subject.errors.size).to eq 1
+        expect(subject.errors[0]).to eq 'No such assessment id'
       end
 
       it_behaves_like 'it did not create any records'

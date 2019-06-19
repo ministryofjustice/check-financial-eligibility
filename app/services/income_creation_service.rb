@@ -1,7 +1,10 @@
 class IncomeCreationService
   SCHEMA_PATH = Rails.root.join('public/schemas/income.json').to_s
 
-  attr_reader :http_status
+  def self.call(raw_post)
+    service = new(raw_post)
+    service.call
+  end
 
   def initialize(raw_post)
     @raw_post = raw_post
@@ -9,59 +12,63 @@ class IncomeCreationService
     @errors = []
   end
 
-  def success?
-    errors.empty?
-  end
-
-  def assessment
-    @assessment ||= Assessment.find_by_id(@payload[:assessment_id])
-  end
-
-  def errors
-    validator.valid? ? model_errors : validator.errors
+  def call
+    if json_valid? && assessment_exists?
+      return success_response if create_income_records
+    end
+    error_response
   end
 
   private
 
-  def validator
-    @validator ||= JsonSchemaValidator.new(@raw_post, SCHEMA_PATH)
+  def json_valid?
+    validator = JsonSchemaValidator.new(@raw_post, SCHEMA_PATH)
+    return true if validator.valid?
+
+    @errors = validator.errors
+    false
   end
 
-  def model_errors
-    @model_errors ||= create_income_records
+  def assessment_exists?
+    @assessment = Assessment.find_by(id: @payload[:assessment_id])
+    return true unless @assessment.nil?
+
+    @errors << 'No such assessment id'
+    false
   end
 
   def create_income_records
-    if assessment.nil?
-      @errors << 'No such assessment id'
-    else
-      create_wage_slips
-      create_benefit_receipts
-    end
-    @errors.flatten
+    new_wage_slips
+    new_benefit_receipts
+    return true if @assessment.save
+
+    collect_model_errors
+    false
   end
 
-  def create_wage_slips
+  def new_wage_slips
     @payload[:income][:wage_slips]&.each do |slip|
-      create_wage_slip(slip)
+      @assessment.wage_slips.new(slip)
     end
   end
 
-  def create_wage_slip(params)
-    wage_slip = @assessment.wage_slips.new(params)
-    wage_slip.save
-    @errors << wage_slip.errors.full_messages
-  end
-
-  def create_benefit_receipts
+  def new_benefit_receipts
     @payload[:income][:benefits]&.each do |benefit_params|
-      create_benefit(benefit_params)
+      @assessment.benefit_receipts.new(benefit_params)
     end
   end
 
-  def create_benefit(params)
-    benefit = @assessment.benefit_receipts.new(params)
-    benefit.save
-    @errors << benefit.errors.full_messages
+  def collect_model_errors
+    @errors = @assessment.wage_slips.map { |ws| ws.errors.full_messages } +
+              @assessment.benefit_receipts.map { |br| br.errors.full_messages }
+    @errors.flatten!
+  end
+
+  def success_response
+    ApiResponse.success(@assessment.wage_slips + @assessment.benefit_receipts)
+  end
+
+  def error_response
+    ApiResponse.error(@errors)
   end
 end

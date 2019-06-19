@@ -70,7 +70,6 @@ RSpec.describe DependentsCreationService do
     end
 
     it 'returns an error payload' do
-# <<<<<<< HEAD
       expect(subject.errors.size).to eq 6
       expect(subject.errors[0]).to match %r{The property '#/' contains additional properties \[\"extra_property\"\] }
       expect(subject.errors[1]).to match %r{The property '#/dependents/0' did not contain a required property of 'in_full_time_education'}
@@ -78,17 +77,6 @@ RSpec.describe DependentsCreationService do
       expect(subject.errors[3]).to match %r{The property '#/dependents/0/date_of_birth' value \"not-a-valid-date\" did not match the regex}
       expect(subject.errors[4]).to match %r{The property '#/dependents/1/income/0/date_of_payment' value \".+\" did not match the regex}
       expect(subject.errors[5]).to match %r{The property '#/dependents/1/income/0' contains additional properties \[\"reason\"\]}
-# =======
-#       result = JSON.parse(service.result_payload, symbolize_names: true)
-#       expect(result[:status]).to eq 'error'
-#       expect(result[:errors].size).to eq 6
-#       expect(result[:errors][0]).to match %r{The property '#/' contains additional properties \[\"extra_property\"\] }
-#       expect(result[:errors][1]).to match %r{The property '#/dependents/0' did not contain a required property of 'in_full_time_education'}
-#       expect(result[:errors][2]).to match %r{The property '#/dependents/0' contains additional properties \[\"extra_dependent_property\"\]}
-#       expect(result[:errors][3]).to match %r{The property '#/dependents/0/date_of_birth' value "not-a-valid-date" did not match the regex}
-#       expect(result[:errors][4]).to match %r{The property '#/dependents/1/income/0/date_of_payment' value ".*" did not match the regex}
-#       expect(result[:errors][5]).to match %r{The property '#/dependents/1/income/0' contains additional properties \["reason"\] }
-# >>>>>>> AP-730 Rubocop fixes
     end
 
     it 'does not create a Dependent record' do
@@ -253,20 +241,6 @@ RSpec.describe DependentsCreationService do
           ]
         }
 
-      ]
-    }.to_json
-  end
-
-  let(:expected_result_payload) do
-    {
-      status: :ok,
-      assessment_id: assessment.id,
-      links: [
-        {
-          href: assessment_properties_path(assessment),
-          rel: 'capital',
-          type: 'POST'
-        }
       ]
     }.to_json
   end
