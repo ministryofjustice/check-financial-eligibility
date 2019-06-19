@@ -76,11 +76,11 @@ def open_structify(data)
   JSON.parse(data.to_json, object_class: DatedStruct)
 end
 
-def stub_call_to_get_json_schema
+def stub_call_to_json_schema
   stub_request(:get, 'http://localhost:3000/schemas/assessment_request.json')
-    .to_return(status: 200, body: full_schema, headers: {})
+    .to_return(status: 200, body: json_schema_definitions)
 end
 
-def full_schema
+def json_schema_definitions
   File.read(Rails.root.join('public/schemas/assessment_request.json'))
 end

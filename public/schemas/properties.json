@@ -1,0 +1,66 @@
+{
+  "id": "http://localhost:3000/schemas/properties.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Legal Aid Check Financial Eligibility create properties payload schema",
+  "description": "This schema defines the payload required to create one or more properties for the Legal Aid Check Financial Eligibility API",
+  "definitions": {
+    "property": {
+      "type": "object",
+      "required": [
+        "value",
+        "outstanding_mortgage",
+        "percentage_owned",
+        "shared_with_housing_assoc"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "description": "The value of this property",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
+        },
+        "outstanding_mortgage": {
+          "description": "The amount outstanding on any mortgage",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
+        },
+        "percentage_owned": {
+          "description": "The percentage share of the property which is owned by the applicant",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/percentage_with_two_decimals"
+        },
+        "shared_with_housing_assoc": {
+          "description": "Whether or not this house is shared with a housing association",
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  "type": "object",
+  "required": [
+    "assessment_id",
+    "properties"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "assessment_id": {
+      "description": "The UUID of the assessment returned from the call to the assessment endpoint",
+      "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/uuid"
+    },
+    "properties": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "main_home": {
+          "description": "The applicant's main home",
+          "$ref": "#/definitions/property"
+        },
+        "additional_properties": {
+          "description": "An array of objects describing properties, which is no the applicant's main home",
+          "type": "array",
+          "items": {
+            "description": "The applicant's property which is not their main home",
+            "$ref": "#/definitions/property"
+          }
+        }
+      }
+    }
+  }
+}

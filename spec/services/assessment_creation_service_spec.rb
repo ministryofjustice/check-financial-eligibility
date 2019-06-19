@@ -5,7 +5,7 @@ RSpec.describe AssessmentCreationService do
 
   subject { described_class.new(remote_ip, raw_post) }
 
-  before { stub_call_to_get_json_schema }
+  before { stub_call_to_json_schema }
 
   context 'invalid json' do
     let(:raw_post) do

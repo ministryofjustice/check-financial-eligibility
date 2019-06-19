@@ -8,7 +8,7 @@ RSpec.describe DependentsController, type: :request do
 
     subject { post assessment_dependents_path(assessment), params: request_payload }
 
-    before { stub_call_to_get_json_schema }
+    before { stub_call_to_json_schema }
 
     context 'valid payload' do
       before do
