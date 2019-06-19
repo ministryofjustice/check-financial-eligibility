@@ -24,11 +24,10 @@ RSpec.describe VehicleCreationService do
 
       it 'returns expected payload' do
         result = described_class.call(payload)
-        puts ">>>>>>>>>>  #{__FILE__}:#{__LINE__} <<<<<<<<<<"
-        ap result
-        puts ">>>>>>>>>>  #{__FILE__}:#{__LINE__} <<<<<<<<<<"
-        ap expected_success_result
-        expect(described_class.call(payload)).to eq expected_success_result
+        expect(result.success).to eq true
+        expect(result.objects.size).to eq 2
+        expect(result.objects.map(&:class).uniq).to eq [Vehicle]
+        expect(result.errors).to be_empty
       end
     end
   end
