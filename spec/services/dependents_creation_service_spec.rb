@@ -1,39 +1,18 @@
 require 'rails_helper'
 
-RSpec.describe DependentCreationService do
+RSpec.describe DependentsCreationService do
   include Rails.application.routes.url_helpers
   let(:assessment) { create :assessment }
-  let(:service) { described_class.new(request_payload) }
 
-  before do
-    # stub request to get schema
-    stub_request(:get, 'http://localhost:3000/schemas/assessment_request.json')
-      .with(
-        headers: {
-          'Accept' => '*/*',
-          'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-          'User-Agent' => 'Ruby'
-        }
-      )
-      .to_return(status: 200, body: full_schema, headers: {})
-  end
+  let(:subject) { described_class.call(request_payload) }
+
+  before { stub_call_to_get_json_schema }
 
   context 'valid payload without income' do
     let(:request_payload) { valid_payload_without_income }
 
-    it 'returns status code 200' do
-      service.result_payload
-      expect(service.http_status).to eq 200
-    end
-
-    it 'returns expected success payload' do
-      expect(service.result_payload).to eq expected_result_payload
-    end
-
     it 'creates two dependent records for this assessment' do
-      expect {
-        service.result_payload
-      }.to change { Dependent.count }.by(2)
+      expect { subject }.to change { Dependent.count }.by(2)
 
       dependent = assessment.dependents.order(:date_of_birth).first
       expect(dependent.date_of_birth).to eq 12.years.ago.to_date
@@ -43,96 +22,139 @@ RSpec.describe DependentCreationService do
       expect(dependent.date_of_birth).to eq 6.years.ago.to_date
       expect(dependent.in_full_time_education).to be true
     end
+
+    describe '#success?' do
+      it 'returns true' do
+        expect(subject).to be_success
+      end
+    end
+
+    describe '#dependents' do
+      it 'returns the created dependents' do
+        expect(subject.dependents.count).to eq(2)
+        expect(subject.dependents.first).to be_a(Dependent)
+        expect(subject.dependents.first.assessment.id).to eq(assessment.id)
+      end
+    end
   end
 
   context 'valid payload with income' do
     let(:request_payload) { valid_payload_with_income }
+    describe '#success?' do
+      it 'creates one dependent' do
+        expect { subject }.to change { Dependent.count }.by(1)
+      end
 
-    it 'creates one dependent' do
-      expect {
-        service.result_payload
-      }.to change { Dependent.count }.by(1)
-    end
+      it 'creates three income records' do
+        expect { subject }.to change { DependentIncomeReceipt.count }.by(3)
 
-    it 'creates three income records' do
-      expect {
-        service.result_payload
-      }.to change { DependentIncomeReceipt.count }.by(3)
+        dirs = assessment.dependents.first.dependent_income_receipts.order(:date_of_payment)
+        expect(dirs.first.date_of_payment).to eq 60.days.ago.to_date
+        expect(dirs.first.amount).to eq 66.66
 
-      dirs = assessment.dependents.first.dependent_income_receipts.order(:date_of_payment)
-      expect(dirs.first.date_of_payment).to eq 60.days.ago.to_date
-      expect(dirs.first.amount).to eq 66.66
+        expect(dirs[1].date_of_payment).to eq 40.days.ago.to_date
+        expect(dirs[1].amount).to eq 44.44
 
-      expect(dirs[1].date_of_payment).to eq 40.days.ago.to_date
-      expect(dirs[1].amount).to eq 44.44
-
-      expect(dirs.last.date_of_payment).to eq 20.days.ago.to_date
-      expect(dirs.last.amount).to eq 22.22
+        expect(dirs.last.date_of_payment).to eq 20.days.ago.to_date
+        expect(dirs.last.amount).to eq 22.22
+      end
     end
   end
 
   context 'payload fails JSON schema' do
     let(:request_payload) { invalid_payload }
-
-    it 'returns https status 422' do
-      service.result_payload
-      expect(service.http_status).to eq 422
+    describe '#success?' do
+      it 'returns false' do
+        expect(subject.success?).to be false
+      end
     end
 
-    it 'returns an error payload' do
-      result = JSON.parse(service.result_payload, symbolize_names: true)
-      expect(result[:status]).to eq 'error'
-      expect(result[:errors].size).to eq 4
-      expect(result[:errors][0]).to match %r{The property '#/' contains additional properties \[\"extra_property\"\] }
-      expect(result[:errors][1]).to match %r{The property '#/dependents/0' did not contain a required property of 'in_full_time_education'}
-      expect(result[:errors][2]).to match %r{The property '#/dependents/0' contains additional properties \[\"extra_dependent_property\"\]}
-      expect(result[:errors][3]).to match %r{The property '#/dependents/1/income/0' contains additional properties \[\"reason\"\]}
+    describe 'errors' do
+      it 'returns array of errors' do
+        subject.success?
+        expect(subject.errors.size).to eq 4
+        expect(subject.errors[0]).to match %r{The property '#/' contains additional properties \[\"extra_property\"\] }
+        expect(subject.errors[1]).to match %r{The property '#/dependents/0' did not contain a required property of 'in_full_time_education'}
+        expect(subject.errors[2]).to match %r{The property '#/dependents/0' contains additional properties \[\"extra_dependent_property\"\]}
+        expect(subject.errors[3]).to match %r{The property '#/dependents/1/income/0' contains additional properties \[\"reason\"\]}
+      end
     end
 
     it 'does not create a Dependent record' do
-      expect {
-        service.result_payload
-      }.not_to change { Dependent.count }
+      expect { subject }.not_to change { Dependent.count }
     end
 
     it 'does not create any DependentIncomeReceipt records' do
-      expect {
-        service.result_payload
-      }.not_to change { DependentIncomeReceipt.count }
+      expect { subject }.not_to change { DependentIncomeReceipt.count }
     end
   end
 
   context 'payload fails ActiveRecord validations' do
     let(:request_payload) { payload_with_future_dates }
+    describe '#success?' do
+      it 'returns false' do
+        expect(subject.success?).to be false
+      end
 
-    it 'returns https status 422' do
-      service.result_payload
-      expect(service.http_status).to eq 422
+      it 'does not create a Dependent record' do
+        expect { subject }.not_to change { Dependent.count }
+      end
+
+      it 'does not create any DependentIncomeReceipt records' do
+        expect { subject }.not_to change { DependentIncomeReceipt.count }
+      end
     end
 
-    it 'returns an error payload' do
-      result = JSON.parse(service.result_payload, symbolize_names: true)
-      expect(result[:status]).to eq 'error'
-      expect(result[:errors].size).to eq 3
-      expect(result[:errors][0]).to eq 'Dependent income receipts is invalid'
-      expect(result[:errors][1]).to eq 'Date of birth cannot be in future'
-      expect(result[:errors][2]).to eq 'Date of payment cannot be in the future'
-    end
-
-    it 'does not create a Dependent record' do
-      expect {
-        service.result_payload
-      }.not_to change { Dependent.count }
-    end
-
-    it 'does not create any DependentIncomeReceipt records' do
-      expect {
-        service.result_payload
-      }.not_to change { DependentIncomeReceipt.count }
+    describe 'errors' do
+      it 'returns an error payload' do
+        expect(subject.errors.size).to eq 2
+        expect(subject.errors).to include 'Dependent income receipts date of payment cannot be in the future'
+        expect(subject.errors).to include 'Date of birth cannot be in future'
+      end
     end
   end
 
-  def invalid_payload
+  context 'no such assessment id' do
+    let(:request_payload) { payload_with_invalid_id }
+    describe '#success?' do
+      it 'returns false' do
+        expect(subject.success?).to be false
+      end
+
+      it 'does not create a Dependent record' do
+        expect { subject }.not_to change { Dependent.count }
+      end
+
+      it 'does not create any DependentIncomeReceipt records' do
+        expect { subject }.not_to change { DependentIncomeReceipt.count }
+      end
+    end
+
+    describe 'errors' do
+      it 'returns an error payload' do
+        expect(subject.errors.size).to eq 1
+        expect(subject.errors[0]).to eq 'No such assessment id'
+      end
+    end
+  end
+
+  let(:payload_with_invalid_id) do
+    {
+      assessment_id: '34e353e2-dedb-4314-a271-9ff579e19f45',
+      dependents: [
+        {
+          date_of_birth: 12.years.ago.to_date,
+          in_full_time_education: false
+        },
+        {
+          date_of_birth: 6.years.ago.to_date,
+          in_full_time_education: true
+        }
+      ]
+    }.to_json
+  end
+
+  let(:invalid_payload) do
     {
       assessment_id: assessment.id,
       extra_property: 'this should not be here',
@@ -154,7 +176,7 @@ RSpec.describe DependentCreationService do
     }.to_json
   end
 
-  def valid_payload_without_income
+  let(:valid_payload_without_income) do
     {
       assessment_id: assessment.id,
       dependents: [
@@ -170,7 +192,7 @@ RSpec.describe DependentCreationService do
     }.to_json
   end
 
-  def valid_payload_with_income
+  let(:valid_payload_with_income) do
     {
       assessment_id: assessment.id,
       dependents: [
@@ -197,7 +219,7 @@ RSpec.describe DependentCreationService do
     }.to_json
   end
 
-  def payload_with_future_dates
+  let(:payload_with_future_dates) do
     {
       assessment_id: assessment.id,
       dependents: [
@@ -224,7 +246,7 @@ RSpec.describe DependentCreationService do
     }.to_json
   end
 
-  def expected_result_payload
+  let(:expected_result_payload) do
     {
       status: :ok,
       assessment_id: assessment.id,
@@ -236,9 +258,5 @@ RSpec.describe DependentCreationService do
         }
       ]
     }.to_json
-  end
-
-  def full_schema
-    File.read(Rails.root.join('public/schemas/assessment_request.json'))
   end
 end

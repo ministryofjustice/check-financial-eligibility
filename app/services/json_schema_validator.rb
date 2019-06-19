@@ -11,8 +11,4 @@ class JsonSchemaValidator
   def valid?
     errors.empty?
   end
-
-  def invalid?
-    errors.any?
-  end
 end

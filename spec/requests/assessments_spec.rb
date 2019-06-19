@@ -12,18 +12,7 @@ RSpec.describe AssessmentsController, type: :request do
 
     subject { post assessments_path, params: params.to_json }
 
-    before do
-      # stub requests to get schemas
-      stub_request(:get, 'http://localhost:3000/schemas/assessment_request.json')
-        .with(
-          headers: {
-            'Accept' => '*/*',
-            'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-            'User-Agent' => 'Ruby'
-          }
-        )
-        .to_return(status: 200, body: full_schema, headers: {})
-    end
+    before { stub_call_to_get_json_schema }
 
     before { subject }
 
@@ -32,8 +21,8 @@ RSpec.describe AssessmentsController, type: :request do
     end
 
     it 'has a valid payload' do
-      expect(json['status']).to eq('ok')
-      expect(json['assessment_id']).to eq(Assessment.last.id)
+      expect(json[:status]).to eq('ok')
+      expect(json[:assessment_id]).to eq(Assessment.last.id)
     end
 
     context 'invalid payload' do
@@ -44,12 +33,8 @@ RSpec.describe AssessmentsController, type: :request do
       end
 
       it 'returns the errors' do
-        expect(json['errors']).not_to be_empty
+        expect(json[:errors]).not_to be_empty
       end
     end
-  end
-
-  def full_schema
-    File.read(Rails.root.join('public/schemas/assessment_request.json'))
   end
 end

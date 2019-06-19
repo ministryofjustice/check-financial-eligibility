@@ -5,18 +5,7 @@ RSpec.describe AssessmentCreationService do
 
   subject { described_class.new(remote_ip, raw_post) }
 
-  before do
-    # stub requests to get schemas
-    stub_request(:get, 'http://localhost:3000/schemas/assessment_request.json')
-      .with(
-        headers: {
-          'Accept' => '*/*',
-          'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-          'User-Agent' => 'Ruby'
-        }
-      )
-      .to_return(status: 200, body: full_schema, headers: {})
-  end
+  before { stub_call_to_get_json_schema }
 
   context 'invalid json' do
     let(:raw_post) do
@@ -88,9 +77,5 @@ RSpec.describe AssessmentCreationService do
     it 'returns the created assessment' do
       expect(subject.assessment.id).to eq Assessment.last.id
     end
-  end
-
-  def full_schema
-    File.read(Rails.root.join('public/schemas/assessment_request.json'))
   end
 end
