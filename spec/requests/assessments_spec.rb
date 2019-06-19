@@ -12,7 +12,7 @@ RSpec.describe AssessmentsController, type: :request do
 
     subject { post assessments_path, params: params.to_json }
 
-    before { stub_call_to_get_json_schema }
+    before { stub_call_to_json_schema }
 
     before { subject }
 

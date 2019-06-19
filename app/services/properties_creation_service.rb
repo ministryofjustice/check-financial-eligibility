@@ -14,9 +14,7 @@ class PropertiesCreationService
 
   def call
     if json_valid? && assessment_exists?
-      if create_properties
-        return success_response
-      end
+      return success_response if create_properties
     end
     error_response
   end
@@ -26,6 +24,7 @@ class PropertiesCreationService
   def json_valid?
     validator = JsonSchemaValidator.new(@raw_post, SCHEMA_PATH)
     return true if validator.valid?
+
     @errors = validator.errors
     false
   end
@@ -49,9 +48,7 @@ class PropertiesCreationService
   end
 
   def new_main_home
-    if @payload[:properties][:main_home]
-      new_property(@payload[:properties][:main_home], true)
-    end
+    new_property(@payload[:properties][:main_home], true) if @payload[:properties][:main_home]
   end
 
   def new_property(attrs, main_home)
@@ -60,15 +57,12 @@ class PropertiesCreationService
   end
 
   def new_additional_properties
-    if @payload[:properties][:additional_properties]
-      @payload[:properties][:additional_properties].each do |attrs|
-        new_property(attrs, false)
-      end
+    @payload[:properties][:additional_properties]&.each do |attrs|
+      new_property(attrs, false)
     end
   end
 
   def collect_model_errors
-    @errors = @assessment.errors.full_messages
     @assessment.properties.each do |property|
       @errors += property.errors.full_messages
     end
@@ -84,9 +78,9 @@ class PropertiesCreationService
 
   def error_response
     OpenStruct.new(
-                success: false,
-                objects: nil,
-                errors: @errors
+      success: false,
+      objects: nil,
+      errors: @errors
     )
   end
 end
