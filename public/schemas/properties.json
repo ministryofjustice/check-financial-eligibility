@@ -38,23 +38,27 @@
       }
     }
   },
-    "type": "object",
-    "required": [
-      "assessment_id",
-      "properties"
-    ],
-    "additionalProperties": false,
-    "properties": {
-      "assessment_id": {
-        "description": "The UUID of the assessment returned from the call to the assessment endpoint",
-        "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/uuid"
-      },
-      "properties": {
-        "type": "array",
-        "description": "An array of objects describing the applicant's properties",
-        "items": {
-          "$ref": "#/definitions/property"
-        }
+  "type": "object",
+  "required": [
+    "assessment_id"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "assessment_id": {
+      "description": "The UUID of the assessment returned from the call to the assessment endpoint",
+      "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/uuid"
+    },
+    "main_home": {
+        "description": "The applicant's main home",
+        "$ref": "#/definitions/property"
+    },
+    "additional_properties": {
+      "description": "An array of objects describing properties, which is no the applicant's main home",
+      "type": "array",
+      "items": {
+        "description": "The applicant's property which is not their main home",
+        "$ref": "#/definitions/property"
       }
     }
   }
+}
