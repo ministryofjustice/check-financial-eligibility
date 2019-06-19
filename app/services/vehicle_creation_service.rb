@@ -1,11 +1,16 @@
 class VehicleCreationService
   SCHEMA_PATH = Rails.root.join('public/schemas/vehicles.json').to_s
 
+  def self.call(raw_post)
+    service_instance = new(raw_post)
+    service_instance.call
+  end
+
   def initialize(raw_post)
     @raw_post = raw_post
     @payload = JSON.parse(@raw_post, symbolize_names: true)
     @errors = []
-    @result = OpenStruct.new(success: nil, vehicles: nil, errors: [])
+    @result = OpenStruct.new(success: nil, objects: nil, errors: [])
   end
 
   def call
@@ -19,13 +24,13 @@ class VehicleCreationService
 
   def success_result
     @result.success = true
-    @result.vehicles = @assessment.vehicles
+    @result.objects = @assessment.vehicles
     @result
   end
 
   def error_result
     @result.success = false
-    @result.vehicles = nil
+    @result.objects = nil
     @result.errors = @errors
     @result
   end

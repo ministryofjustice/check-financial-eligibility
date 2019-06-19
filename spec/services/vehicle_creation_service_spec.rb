@@ -2,29 +2,33 @@ require 'rails_helper'
 
 RSpec.describe VehicleCreationService do
   let(:assessment) { create :assessment }
-  let(:service) { described_class.new(payload) }
 
   before { stub_call_to_json_schema }
 
   shared_examples 'it does not create any vehicle records' do
     it 'does not create any vehicle records' do
       expect {
-        service.call
+        described_class.call(payload)
       }.not_to change { Vehicle.count }
     end
   end
 
   context 'valid payload' do
     let(:payload) { valid_payload }
-    describe '#call' do
+    describe '.call' do
       it 'creates vehicle records' do
         expect {
-          service.call
+          described_class.call(payload)
         }.to change { assessment.vehicles.count }.by(2)
       end
 
       it 'returns expected payload' do
-        expect(service.call).to eq expected_success_result
+        result = described_class.call(payload)
+        puts ">>>>>>>>>>  #{__FILE__}:#{__LINE__} <<<<<<<<<<"
+        ap result
+        puts ">>>>>>>>>>  #{__FILE__}:#{__LINE__} <<<<<<<<<<"
+        ap expected_success_result
+        expect(described_class.call(payload)).to eq expected_success_result
       end
     end
   end
@@ -35,10 +39,10 @@ RSpec.describe VehicleCreationService do
       it_behaves_like 'it does not create any vehicle records'
 
       it 'returns expected payload with errors' do
-        result = service.call
+        result = described_class.call(payload)
         expect(result).to be_instance_of(OpenStruct)
         expect(result.success).to be false
-        expect(result.vehicles).to be_nil
+        expect(result.objects).to be_nil
         expect(result.errors.size).to eq 4
         expect(result.errors[0]).to eq 'Payload did not conform to JSON schema'
         expect(result.errors[1]).to match %r{The property '#/' did not contain a required property of 'assessment_id'}
@@ -54,10 +58,10 @@ RSpec.describe VehicleCreationService do
       it_behaves_like 'it does not create any vehicle records'
 
       it 'returns expected payload with errors' do
-        result = service.call
+        result = described_class.call(payload)
         expect(result).to be_instance_of(OpenStruct)
         expect(result.success).to be false
-        expect(result.vehicles).to be_nil
+        expect(result.objects).to be_nil
         expect(result.errors.size).to eq 1
         expect(result.errors[0]).to eq 'No such assessment id'
       end
@@ -70,24 +74,20 @@ RSpec.describe VehicleCreationService do
       it_behaves_like 'it does not create any vehicle records'
 
       it 'returns expected payload with errors' do
-        result = service.call
+        result = described_class.call(payload)
         expect(result).to be_instance_of(OpenStruct)
         expect(result.success).to be false
-        expect(result.vehicles).to be_nil
+        expect(result.objects).to be_nil
         expect(result.errors.size).to eq 1
         expect(result.errors[0]).to eq 'Date of purchase cannot be in the future'
       end
-    end
-
-    describe '#errors' do
-      it 'contains all the errors'
     end
   end
 
   def expected_success_result
     OpenStruct.new(
       success: true,
-      vehicles: assessment.vehicles,
+      objects: assessment.vehicles,
       errors: []
     )
   end
