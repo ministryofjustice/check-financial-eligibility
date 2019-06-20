@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_19_092242) do
+ActiveRecord::Schema.define(version: 2019_06_20_114204) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -24,6 +24,15 @@ ActiveRecord::Schema.define(version: 2019_06_19_092242) do
     t.date "submission_date", null: false
     t.string "matter_proceeding_type", null: false
     t.index ["client_reference_id"], name: "index_assessments_on_client_reference_id"
+  end
+
+  create_table "bank_accounts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "assessment_id", null: false
+    t.string "name"
+    t.decimal "lowest_balance"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["assessment_id"], name: "index_bank_accounts_on_assessment_id"
   end
 
   create_table "benefit_receipts", force: :cascade do |t|
@@ -50,6 +59,15 @@ ActiveRecord::Schema.define(version: 2019_06_19_092242) do
     t.boolean "in_full_time_education"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "non_liquid_assets", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "assessment_id", null: false
+    t.string "description"
+    t.decimal "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["assessment_id"], name: "index_non_liquid_assets_on_assessment_id"
   end
 
   create_table "properties", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -92,7 +110,9 @@ ActiveRecord::Schema.define(version: 2019_06_19_092242) do
     t.index ["assessment_id"], name: "index_wage_slips_on_assessment_id"
   end
 
+  add_foreign_key "bank_accounts", "assessments"
   add_foreign_key "benefit_receipts", "assessments"
+  add_foreign_key "non_liquid_assets", "assessments"
   add_foreign_key "properties", "assessments"
   add_foreign_key "vehicles", "assessments"
   add_foreign_key "wage_slips", "assessments"

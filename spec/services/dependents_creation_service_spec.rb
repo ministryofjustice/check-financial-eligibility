@@ -4,7 +4,7 @@ RSpec.describe DependentsCreationService do
   include Rails.application.routes.url_helpers
   let(:assessment) { create :assessment }
 
-  let(:subject) { described_class.call(request_payload) }
+  subject { described_class.call(request_payload) }
 
   before { stub_call_to_json_schema }
 

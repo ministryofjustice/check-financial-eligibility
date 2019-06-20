@@ -4,5 +4,6 @@ Rails.application.routes.draw do
     resources :properties, only: [:create]
     resource :income, only: [:create]
     resources :vehicles, only: :create
+    resources :capitals, only: [:create]
   end
 end
