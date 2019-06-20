@@ -7,12 +7,14 @@ class ApiResponse
     response = new
     response.success = true
     response.objects = objects
+    response.errors = []
     response
   end
 
   def self.error(messages)
     response = new
     response.success = false
+    response.objects = nil
     response.errors = messages
     response
   end

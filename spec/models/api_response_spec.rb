@@ -17,7 +17,7 @@ RSpec.describe ApiResponse do
     end
 
     it 'sets errors to nil' do
-      expect(subject.errors).to be_nil
+      expect(subject.errors).to be_empty
     end
   end
 
