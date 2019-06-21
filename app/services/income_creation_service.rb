@@ -13,9 +13,8 @@ class IncomeCreationService
   end
 
   def call
-    if json_valid? && assessment_exists?
-      return success_response if create_income_records
-    end
+    return success_response if json_valid? && assessment_exists? && create_income_records
+
     error_response
   end
 
