@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.describe IncomeCreationService do
   let(:assessment) { create :assessment }
-  # let(:service) { described_class.new(request_payload) }
 
   before { stub_call_to_json_schema }
 
