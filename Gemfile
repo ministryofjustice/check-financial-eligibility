@@ -37,6 +37,7 @@ group :development, :test do
   gem 'awesome_print'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'faker'
   gem 'pry-byebug'
   gem 'rspec-rails', '~> 3.8'
   gem 'rubocop', require: false
@@ -53,7 +54,6 @@ end
 group :test do
   gem 'factory_bot_rails'
   gem 'shoulda-matchers'
-  gem 'faker'
   gem 'database_cleaner'
   gem 'simplecov', require: false
   gem 'simplecov-rcov'

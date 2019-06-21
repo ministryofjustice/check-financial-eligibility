@@ -1,0 +1,56 @@
+{
+  "id": "http://localhost:3000/schemas/vehicles.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Legal Aid Check Financial Eligibility create dependent payload schema",
+  "description": "This schema defines the payload required to create one or more define vehicles owned by the applicant for the Legal Aid Check Financial Eligibility API",
+  "definitions": {
+    "vehicle": {
+      "description": "Describes a vehicle",
+      "type": "object",
+      "required": [
+        "value",
+        "loan_amount_outstanding",
+        "date_of_purchase",
+        "in_regular_use"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "description": "The current value of the vehicle",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
+        },
+        "loan_amount_outstanding": {
+          "description": "the amount, if any, of a loan used to purchase the vehicle which is still left to pay",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
+        },
+        "date_of_purchase": {
+          "description": "the date the car was purchased by the applicant",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/date"
+        },
+        "in_regular_use": {
+          "description": "Whether or not the vehicle is in regular use",
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  "type": "object",
+  "required":[
+    "assessment_id",
+    "vehicles"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "assessment_id": {
+      "description": "The UUID of the assessment returned from the call to the assessment endpoint",
+      "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/uuid"
+    },
+    "vehicles": {
+      "description": "An array of objects describing the applicant's vehicles",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/vehicle"
+      }
+    }
+  }
+}
