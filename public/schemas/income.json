@@ -1,0 +1,99 @@
+{
+  "id": "http://localhost:3000/schemas/dependent.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Legal Aid Check Financial Eligibility create dependent payload schema",
+  "description": "This schema defines the payload required to define the applicant's income during the calculation period for  the Legal Aid Check Financial Eligibility API",
+  "definitions": {
+    "wage_slip": {
+      "description": "An object describing a salary or wage payment and deductions",
+      "type": "object",
+      "required": [
+        "payment_date",
+        "gross_pay",
+        "paye",
+        "nic"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "payment_date": {
+          "description": "The date upon which the payment was received",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/date"
+        },
+        "gross_pay": {
+          "description": "Gross pay before deductions",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
+        },
+        "paye": {
+          "description": "Income tax deducted from gross pay",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
+        },
+        "nic": {
+          "description": "National Insurance contribution deducted from gross pay",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
+        }
+      }
+    },
+    "benefit": {
+      "description": "Describes a benefit payment received",
+      "type": "object",
+      "required": [
+        "benefit_name",
+        "payment_date",
+        "amount"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "benefit_name": {
+          "description": "The type of benefit received - must be one of the values listed in the enum below",
+          "type": "string",
+          "enum": [
+            "child_benefit",
+            "jobseekers allowance",
+            "universal credit"
+          ]
+        },
+        "payment_date": {
+          "description": "The date the benefit payment was received",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/date"
+        },
+        "amount": {
+          "description": "The amount received",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
+        }
+      }
+    }
+  },
+  "type": "object",
+  "required":[
+    "assessment_id",
+    "income"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "assessment_id": {
+      "description": "The UUID of the assessment returned from the call to the assessment endpoint",
+      "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/uuid"
+    },
+    "income": {
+      "description": "An object describing wage slips and benefit payment receipts during the calculation period",
+      "type": "object",
+      "required": [
+        "wage_slips",
+        "benefits"
+      ],
+      "properties": {
+        "wage_slips": {
+          "description": "An array of objects describing each wage slip received during the calculation period",
+          "type": "array",
+          "items": "#/definitions/wage_slip"
+        },
+        "benefits": {
+          "description": "An array of objects describing each benefit payment received during the calculation period",
+          "type": "array",
+          "items": "#/definitions/benefit"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

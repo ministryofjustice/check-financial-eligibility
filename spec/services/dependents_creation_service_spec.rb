@@ -244,18 +244,4 @@ RSpec.describe DependentsCreationService do
       ]
     }.to_json
   end
-
-  let(:expected_result_payload) do
-    {
-      status: :ok,
-      assessment_id: assessment.id,
-      links: [
-        {
-          href: assessment_properties_path(assessment),
-          rel: 'capital',
-          type: 'POST'
-        }
-      ]
-    }.to_json
-  end
 end
