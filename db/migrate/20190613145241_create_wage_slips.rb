@@ -1,7 +1,7 @@
 class CreateWageSlips < ActiveRecord::Migration[5.2]
   def change
     create_table :wage_slips do |t|
-      t.uuid :assessment_id
+      t.belongs_to :assessment, foreign_key: true, null: false, type: :uuid
       t.date :payment_date
       t.decimal :gross_pay
       t.decimal :paye

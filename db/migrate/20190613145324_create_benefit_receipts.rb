@@ -1,7 +1,7 @@
 class CreateBenefitReceipts < ActiveRecord::Migration[5.2]
   def change
     create_table :benefit_receipts do |t|
-      t.uuid :assessment_id
+      t.belongs_to :assessment, foreign_key: true, null: false, type: :uuid
       t.string :benefit_name
       t.date :payment_date
       t.decimal :amount
@@ -10,3 +10,5 @@ class CreateBenefitReceipts < ActiveRecord::Migration[5.2]
     end
   end
 end
+
+
