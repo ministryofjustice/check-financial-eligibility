@@ -14,9 +14,10 @@ class VehicleCreationService
   end
 
   def call
-    if json_valid? && assessment_exists?
-      return success_result if create_vehicles
-    end
+    return success_result if json_valid? &&
+                             assessment_exists? &&
+                             create_vehicles
+
     error_result
   end
 
