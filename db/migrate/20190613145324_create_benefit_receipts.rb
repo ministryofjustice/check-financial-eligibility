@@ -10,5 +10,3 @@ class CreateBenefitReceipts < ActiveRecord::Migration[5.2]
     end
   end
 end
-
-
