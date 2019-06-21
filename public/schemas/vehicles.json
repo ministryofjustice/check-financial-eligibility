@@ -4,7 +4,7 @@
   "title": "Legal Aid Check Financial Eligibility create dependent payload schema",
   "description": "This schema defines the payload required to create one or more define vehicles owned by the applicant for the Legal Aid Check Financial Eligibility API",
   "definitions": {
-    "dependent": {
+    "vehicle": {
       "description": "Describes a vehicle",
       "type": "object",
       "required": [
@@ -49,7 +49,7 @@
       "description": "An array of objects describing the applicant's vehicles",
       "type": "array",
       "items": {
-        "$ref": "#/definitions/dependent"
+        "$ref": "#/definitions/vehicle"
       }
     }
   }
