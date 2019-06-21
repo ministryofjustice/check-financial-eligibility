@@ -96,9 +96,4 @@ ActiveRecord::Schema.define(version: 2019_06_19_092242) do
   add_foreign_key "properties", "assessments"
   add_foreign_key "vehicles", "assessments"
   add_foreign_key "wage_slips", "assessments"
-  end
-
-  add_foreign_key "properties", "assessments"
-  add_foreign_key "vehicles", "assessments"
->>>>>>> AP-732 change migration to use t.belongs_to
 end
