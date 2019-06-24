@@ -9,4 +9,6 @@ class Assessment < ApplicationRecord
   has_many :wage_slips
   has_many :benefit_receipts
   has_many :vehicles
+  has_many :bank_accounts
+  has_many :non_liquid_assets
 end

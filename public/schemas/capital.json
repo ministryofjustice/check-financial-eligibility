@@ -1,0 +1,81 @@
+{
+  "id": "http://localhost:3000/schemas/capital.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Legal Aid Check Financial Eligibility create capital payload schema",
+  "description": "This schema defines the payload required to create liquid and non liquid capital for the Legal Aid Check Financial Eligibility API",
+  "definitions": {
+    "liquid_capital": {
+      "required": [
+        "bank_accounts"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "bank_accounts": {
+          "description": "An array of bank accounts owned by the applicant",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/bank_account"
+          }
+        }
+      }
+    },
+    "bank_account": {
+      "required": [
+        "name",
+        "lowest_balance"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "description": "Name of the bank account",
+          "type": "string"
+        },
+        "lowest_balance": {
+          "description": "Lowest balance of bank account during the last three months",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/neg_or_pos_number_with_two_decimals"
+        }
+      }
+    },
+    "non_liquid_capital": {
+      "required": [
+        "description",
+        "value"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "description": "Description of this type of non liquid capital",
+          "type": "string"
+        },
+        "value": {
+          "description": "Value owned in this type of non liquid capital",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/neg_or_pos_number_with_two_decimals"
+        }
+      }
+    }
+  },
+  "type": "object",
+  "required":[
+    "assessment_id",
+    "liquid_capital",
+    "non_liquid_capital"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "liquid_capital": {
+      "description": "Liquid capital",
+      "$ref": "#/definitions/liquid_capital"
+    },
+    "assessment_id": {
+      "description": "The UUID of the assessment returned from the call to the assessment endpoint",
+      "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/uuid"
+    },
+    "non_liquid_capital": {
+      "description": "An array of objects describing the non liquid capital",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/non_liquid_capital"
+      }
+    }
+  }
+}

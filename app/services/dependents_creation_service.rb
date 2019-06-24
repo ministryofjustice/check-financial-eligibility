@@ -26,17 +26,13 @@ class DependentsCreationService < BaseCreationService
   end
 
   def json_validator
-    @json_validator ||= JsonSchemaValidator.new(@raw_post, schema_path)
+    @json_validator ||= JsonSchemaValidator.new(@raw_post, SCHEMA_PATH)
   end
 
   def create_dependents
     self.dependents = assessment.dependents.create!(dependent_params)
   rescue ActiveRecord::RecordInvalid => e
     raise CreationError, e.record.errors.full_messages
-  end
-
-  def schema_path
-    SCHEMA_PATH
   end
 
   def assessment
