@@ -1,6 +1,23 @@
 class PropertiesController < ApplicationController
   def create
-    result = PropertiesCreationService.call(request.raw_post)
-    render json: result.to_h, status: result.success ? 200 : 422
+    if creation_service_result.success?
+      render json: {
+        success: true,
+        objects: creation_service_result.properties,
+        errors: []
+      }
+    else
+      render json: {
+        success: false,
+        objects: nil,
+        errors: creation_service_result.errors
+      }, status: 422
+    end
+  end
+
+  private
+
+  def creation_service_result
+    @creation_service_result ||= PropertiesCreationService.call(request.raw_post)
   end
 end
