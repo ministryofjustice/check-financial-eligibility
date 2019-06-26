@@ -1,29 +1,23 @@
 class ApplicantsController < ApplicationController
   def create
-    if applicant_creation_service.success?
-      render json: success_response
+    if creation_service_result.success?
+      render json: {
+        success: true,
+        objects: creation_service_result.applicant,
+        errors: []
+      }
     else
-      render json: error_response, status: 422
+      render json: {
+        success: false,
+        objects: nil,
+        errors: creation_service_result.errors
+      }, status: 422
     end
   end
 
   private
 
-  def applicant_creation_service
-    @applicant_creation_service ||= ApplicantCreationService.new(request.raw_post)
-  end
-
-  def success_response
-    {
-      status: :ok,
-      assessment_id: applicant_creation_service.assessment.id
-    }
-  end
-
-  def error_response
-    {
-      status: :error,
-      errors: applicant_creation_service.errors
-    }
+  def creation_service_result
+    @creation_service_result ||= ApplicantCreationService.call(request.raw_post)
   end
 end

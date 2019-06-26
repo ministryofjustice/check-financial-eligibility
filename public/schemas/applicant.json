@@ -29,7 +29,7 @@
           "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/date"
         },
         "involvement_type": {
-          "description": "The Legal Aid Applicant's involvment in the case e.g. defendant, applicant.",
+          "description": "The Legal Aid Applicant's involvement in the case e.g. defendant, applicant.",
           "type": "string",
           "enum": [
             "applicant", 
