@@ -30,8 +30,8 @@ class ApplicantCreationService < BaseCreationService
   end
 
   def create_applicant
-    # return (raise CreationError, ['Applicant already exists']) if assessment.applicant.present?
-    @applicant ||= assessment.create_applicant(payload[:applicant])
+    (raise CreationError, ['Applicant already exists']) if assessment.applicant.present?
+    @applicant ||= assessment.create_applicant!(payload[:applicant])
   end
 
   def assessment

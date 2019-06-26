@@ -3,134 +3,128 @@ require 'rails_helper'
 RSpec.describe ApplicantCreationService do
   describe 'POST applicant' do
     let(:assessment) { create :assessment }
-    let(:service) { described_class.new(request_payload) }
+    
+    subject { described_class.call(request_payload) }
 
-    before do
-      # stub requests to get schemas
-      stub_request(:get, 'http://localhost:3000/schemas/assessment_request.json')
-        .with(
-          headers: {
-            'Accept' => '*/*',
-            'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-            'User-Agent' => 'Ruby'
-          }
-        )
-        .to_return(status: 200, body: full_schema, headers: {})
-    end
+    before { stub_call_to_json_schema }
 
-    context 'valid payload' do
-      let(:valid_payload) do
-        {
-          assessment_id: assessment.id,
-          applicant: {
-            date_of_birth: '2010-04-04',
-            involvement_type: 'applicant',
-            has_partner_opponent: true,
-            receives_qualifying_benefit: true
-          }
-        }.to_json
-      end
-
-      let(:request_payload) { valid_payload }
-
-      describe '#success?' do
-        it 'returns true' do
-          expect(service.success?).to be true
+    describe '.call' do
+      context 'valid payload' do
+        let(:valid_payload) do
+          {
+            assessment_id: assessment.id,
+            applicant: {
+              date_of_birth: '2010-04-04',
+              involvement_type: 'applicant',
+              has_partner_opponent: true,
+              receives_qualifying_benefit: true
+            }
+          }.to_json
         end
 
-        it 'creates an applicant' do
-          expect { service.success? }.to change { Applicant.count }.by 1
-        end
-      end
-
-      describe '#assessment' do
-        it 'returns the assessment record' do
-          expect(service.assessment).to eq assessment
-        end
-      end
-    end
-
-    context 'payload fails JSON Schema' do
-      let(:invalid_payload) do
-        {
-          assessment_id: 'xxxx',
-          extra_property: 'this should not be here',
-          applicant: {
-            date_of_birth: '2010x-04-04',
-            involvement_type: 'applicant',
-            receives_qualifying_benefit: false,
-            reason: 'extra property'
-          }
-        }.to_json
-      end
-
-      let(:request_payload) { invalid_payload }
-
-      describe '#success?' do
-        it 'returns false' do
-          expect(service.success?).to be false
-        end
-
-        it 'returns errors' do
-          service.success?
-          expect(service.errors.size).to eq 5
-          expect(service.errors[0]).to match %r{The property '#/assessment_id' value \"xxxx\" did not match the regex}
-          expect(service.errors[1]).to match %r{The property '#/applicant' did not contain a required property of 'has_partner_opponent'}
-          expect(service.errors[2]).to match %r{The property '#/applicant' contains additional properties \[\"reason\"\]}
-          expect(service.errors[3]).to match %r{The property '#/applicant/date_of_birth' value \"2010x-04-04\" did not match the regex }
-          expect(service.errors[4]).to match %r{The property '#/' contains additional properties \[\"extra_property\"\] }
-        end
-
-        it 'does not create an applicant' do
-          expect { service.success? }.not_to change { Applicant.count }
-        end
-      end
-    end
-
-    context 'ActiveRecord validation fails' do
-      let(:invalid_payload) do
-        {
-          assessment_id: assessment_id,
-          applicant: {
-            date_of_birth: Date.tomorrow.to_date,
-            involvement_type: 'applicant',
-            has_partner_opponent: false,
-            receives_qualifying_benefit: false
-          }
-        }.to_json
-      end
-      let(:assessment_id) { assessment.id }
-      let(:request_payload) { invalid_payload }
-
-      describe '#success?' do
-        it 'returns false' do
-          expect(service.success?).to be false
-        end
-
-        it 'returns errors' do
-          service.success?
-          expect(service.errors.size).to eq 1
-          expect(service.errors[0]).to eq 'Date of birth cannot be in future'
-        end
-
-        it 'does not create an applicant' do
-          expect { service.success? }.not_to change { Applicant.count }
-        end
-      end
-
-      context 'assessment id not found' do
-        let(:assessment_id) { SecureRandom.uuid }
+        let(:request_payload) { valid_payload }
 
         describe '#success?' do
-          it 'can not find non-existant assessment' do
-            expect(service.success?).to eq false
+          it 'returns true' do
+            expect(subject.success?).to be true
+          end
+
+          it 'creates an applicant' do
+            expect { subject.success? }.to change { Applicant.count }.by 1
+          end
+        end
+
+        describe '#assessment' do
+          it 'returns the assessment record' do
+            expect(subject.assessment).to eq assessment
+          end
+        end
+      end
+
+      context 'with invalid JSON' do
+        let(:invalid_payload) do
+          {
+            assessment_id: 'xxxx',
+            extra_property: 'this should not be here',
+            applicant: {
+              date_of_birth: '2010x-04-04',
+              involvement_type: 'applicant',
+              receives_qualifying_benefit: false,
+              reason: 'extra property'
+            }
+          }.to_json
+        end
+
+        let(:request_payload) { invalid_payload }
+
+        describe '#success?' do
+          it 'returns false' do
+            expect(subject.success?).to be false
           end
         end
 
         describe '#errors' do
-          it 'returns correct error' do
-            service.success?
-            expect(service.errors).to eq ['No such assessment ID']
+          it 'returns errors' do
+            expect(subject.errors.size).to eq 5
+            expect(subject.errors[0]).to match %r{The property '#/assessment_id' value \"xxxx\" did not match the regex}
+            expect(subject.errors[1]).to match %r{The property '#/applicant' did not contain a required property of 'has_partner_opponent'}
+            expect(subject.errors[2]).to match %r{The property '#/applicant' contains additional properties \[\"reason\"\]}
+            expect(subject.errors[3]).to match %r{The property '#/applicant/date_of_birth' value \"2010x-04-04\" did not match the regex}
+            expect(subject.errors[4]).to match %r{The property '#/' contains additional properties \[\"extra_property\"\]}
+          end
+        end
+
+        it 'does not create an applicant' do
+          expect { subject }.not_to change { Applicant.count }
+        end
+      end
+
+      context 'ActiveRecord validation fails' do
+        let(:invalid_payload) do
+          {
+            assessment_id: assessment_id,
+            applicant: {
+              date_of_birth: Date.tomorrow.to_date,
+              involvement_type: 'applicant',
+              has_partner_opponent: false,
+              receives_qualifying_benefit: false
+            }
+          }.to_json
+        end
+        let(:assessment_id) { assessment.id }
+        let(:request_payload) { invalid_payload }
+
+        describe '#success?' do
+          it 'returns false' do
+            expect(subject.success?).to be false
+          end
+        end
+
+        describe '#errors' do
+          it 'should return errors' do
+          end
+        end
+
+        context 'assessment id does not exist' do
+          let(:assessment_id) { SecureRandom.uuid }
+
+          it 'returns an error' do
+            expect(subject.errors).to eq ['No such assessment id']
+          end
+        end
+
+        context 'applicant already exists' do
+
+          it 'does not create an applicant' do
+            subject
+            expect { subject }.not_to change { Applicant.count }
+          end
+
+          describe '#errors' do
+            it 'returns error' do
+              subject
+              expect(subject.errors[0]).to eq 'Applicant already exists'
+            end
           end
         end
       end
