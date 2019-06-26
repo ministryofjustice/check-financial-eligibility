@@ -30,8 +30,10 @@ class ApplicantCreationService < BaseCreationService
   end
 
   def create_applicant
-    (raise CreationError, ['Applicant already exists']) if assessment.applicant.present?
+    (raise CreationError, ['There is already an applicant for this assesssment']) if assessment.applicant.present?
     @applicant ||= assessment.create_applicant!(payload[:applicant])
+  rescue ActiveRecord::RecordInvalid => e
+    raise CreationError, e.record.errors.full_messages
   end
 
   def assessment

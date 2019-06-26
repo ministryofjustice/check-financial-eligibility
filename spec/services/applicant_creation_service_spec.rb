@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe ApplicantCreationService do
   describe 'POST applicant' do
     let(:assessment) { create :assessment }
-    
+
     subject { described_class.call(request_payload) }
 
     before { stub_call_to_json_schema }
@@ -34,9 +34,15 @@ RSpec.describe ApplicantCreationService do
           end
         end
 
-        describe '#assessment' do
-          it 'returns the assessment record' do
-            expect(subject.assessment).to eq assessment
+        describe '#applicant' do
+          it 'returns the applicant' do
+            expect(subject.applicant).to be_a Applicant
+          end
+        end
+
+        describe '#errors' do
+          it 'should be empty' do
+            expect(subject.errors).to be_empty
           end
         end
       end
@@ -63,6 +69,12 @@ RSpec.describe ApplicantCreationService do
           end
         end
 
+        describe '#applicant' do
+          it 'returns empty array' do
+            expect(subject.applicant).to be_nil
+          end
+        end
+
         describe '#errors' do
           it 'returns errors' do
             expect(subject.errors.size).to eq 5
@@ -80,28 +92,45 @@ RSpec.describe ApplicantCreationService do
       end
 
       context 'ActiveRecord validation fails' do
-        let(:invalid_payload) do
+        let(:valid_payload) do
           {
             assessment_id: assessment_id,
             applicant: {
-              date_of_birth: Date.tomorrow.to_date,
+              date_of_birth: date_of_birth,
               involvement_type: 'applicant',
-              has_partner_opponent: false,
-              receives_qualifying_benefit: false
+              has_partner_opponent: true,
+              receives_qualifying_benefit: true
             }
           }.to_json
         end
         let(:assessment_id) { assessment.id }
-        let(:request_payload) { invalid_payload }
+        let(:date_of_birth) { Date.today.to_date }
+        let(:request_payload) { valid_payload }
 
-        describe '#success?' do
-          it 'returns false' do
-            expect(subject.success?).to be false
+        context 'date of birth cannot be in future' do
+          let(:date_of_birth) { Date.tomorrow.to_date }
+
+          describe '#success?' do
+            it 'returns false' do
+              expect(subject.success?).to be false
+            end
           end
-        end
 
-        describe '#errors' do
-          it 'should return errors' do
+          describe '#applicant' do
+            it 'returns empty array' do
+              expect(subject.applicant).to be_nil
+            end
+          end
+
+          describe '#errors' do
+            it 'returns error' do
+              expect(subject.errors.size).to eq 1
+              expect(subject.errors[0]).to eq 'Date of birth cannot be in future'
+            end
+          end
+
+          it 'does not create an applicant' do
+            expect { subject }.not_to change { Applicant.count }
           end
         end
 
@@ -114,16 +143,26 @@ RSpec.describe ApplicantCreationService do
         end
 
         context 'applicant already exists' do
+          before { described_class.call(request_payload) }
+          describe '#success?' do
+            it 'returns false' do
+              expect(subject.success?).to be false
+            end
+          end
+
+          describe '#applicant' do
+            it 'returns empty array' do
+              expect(subject.applicant).to be_nil
+            end
+          end
 
           it 'does not create an applicant' do
-            subject
             expect { subject }.not_to change { Applicant.count }
           end
 
           describe '#errors' do
             it 'returns error' do
-              subject
-              expect(subject.errors[0]).to eq 'Applicant already exists'
+              expect(subject.errors[0]).to eq 'There is already an applicant for this assesssment'
             end
           end
         end
