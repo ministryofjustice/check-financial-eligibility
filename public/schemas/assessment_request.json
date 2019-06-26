@@ -42,6 +42,13 @@
       "multipleOf": 0.01,
       "minimum": 0.00
     },
+    "number_greater_than_zero_with_two_decimals": {
+      "description": "Non-negative number greater than zero with two decimal places",
+      "type": "number",
+      "multipleOf": 0.01,
+      "minimum": 0.00,
+      "exclusiveMinimum": true
+    },
     "neg_or_pos_number_with_two_decimals": {
       "description": "A negative or positive number (including zero) with two decimal places",
       "type": "number",

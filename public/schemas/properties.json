@@ -16,7 +16,7 @@
       "properties": {
         "value": {
           "description": "The value of this property",
-          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/positive_number_with_two_decimals"
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/number_greater_than_zero_with_two_decimals"
         },
         "outstanding_mortgage": {
           "description": "The amount outstanding on any mortgage",

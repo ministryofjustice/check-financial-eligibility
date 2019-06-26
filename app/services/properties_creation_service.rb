@@ -33,8 +33,6 @@ class PropertiesCreationService < BaseCreationService
   def create_properties
     new_main_home
     new_additional_properties
-  rescue ActiveRecord::RecordInvalid => e
-    raise CreationError, e.record.errors.full_messages
   end
 
   def new_main_home
