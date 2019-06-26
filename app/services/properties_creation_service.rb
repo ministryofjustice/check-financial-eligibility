@@ -1,59 +1,44 @@
-class PropertiesCreationService
+class PropertiesCreationService < BaseCreationService
   SCHEMA_PATH = Rails.root.join('public/schemas/properties.json').to_s
 
-  def self.call(raw_post)
-    service = new(raw_post)
-    service.call
-  end
+  attr_accessor :raw_post, :properties
 
   def initialize(raw_post)
     @raw_post = raw_post
-    @payload = JSON.parse(@raw_post, symbolize_names: true)
-    @errors = []
+    @properties = []
   end
 
   def call
-    if json_valid? && assessment_exists?
-      return success_response if create_properties
-    end
-    error_response
+    validate_and_create
+    self
   end
 
   private
 
-  def json_valid?
-    validator = JsonSchemaValidator.new(@raw_post, SCHEMA_PATH)
-    return true if validator.valid?
-
-    @errors = validator.errors
-    false
+  def validate_and_create
+    validate_json
+    create_properties
+  rescue CreationError => e
+    self.errors = e.errors
   end
 
-  def assessment_exists?
-    @assessment = Assessment.find_by(id: @payload[:assessment_id])
-    if @assessment.nil?
-      @errors << 'No such assessment id'
-      return false
-    end
-    true
+  def validate_json
+    raise CreationError, json_validator.errors unless json_validator.valid?
+  end
+
+  def json_validator
+    @json_validator ||= JsonSchemaValidator.new(@raw_post, schema_path)
   end
 
   def create_properties
     new_main_home
     new_additional_properties
-    return true if @assessment.save
-
-    collect_model_errors
-    false
+  rescue ActiveRecord::RecordInvalid => e
+    raise CreationError, e.record.errors.full_messages
   end
 
   def new_main_home
-    new_property(@payload[:properties][:main_home], true) if @payload[:properties][:main_home]
-  end
-
-  def new_property(attrs, main_home)
-    attrs[:main_home] = main_home
-    @assessment.properties.new(attrs)
+    new_property(payload[:properties][:main_home], true) if payload[:properties][:main_home]
   end
 
   def new_additional_properties
@@ -62,25 +47,20 @@ class PropertiesCreationService
     end
   end
 
-  def collect_model_errors
-    @assessment.properties.each do |property|
-      @errors += property.errors.full_messages
-    end
+  def new_property(attrs, main_home)
+    attrs[:main_home] = main_home
+    @properties << assessment.properties.create!(attrs)
   end
 
-  def success_response
-    OpenStruct.new(
-      success: true,
-      objects: @assessment.properties,
-      errors: []
-    )
+  def schema_path
+    SCHEMA_PATH
   end
 
-  def error_response
-    OpenStruct.new(
-      success: false,
-      objects: nil,
-      errors: @errors
-    )
+  def assessment
+    @assessment ||= Assessment.find_by(id: payload[:assessment_id]) || (raise CreationError, ['No such assessment id'])
+  end
+
+  def payload
+    @payload ||= JSON.parse(@raw_post, symbolize_names: true)
   end
 end

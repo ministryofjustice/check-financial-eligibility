@@ -5,10 +5,11 @@ RSpec.describe PropertiesController, type: :request do
     let(:assessment) { create :assessment }
     let(:property) { create :property, assessment: assessment }
     let(:dummy_payload) { { key: :value }.to_json }
+    let(:properties_creation_service) { double PropertiesCreationService, success?: true, properties: [property] }
 
     context 'valid params' do
       before do
-        expect(PropertiesCreationService).to receive(:call).with(dummy_payload).and_return(success_response)
+        expect(PropertiesCreationService).to receive(:call).with(dummy_payload).and_return(properties_creation_service)
         post assessment_properties_path(assessment), params: dummy_payload
       end
 

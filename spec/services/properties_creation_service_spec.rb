@@ -4,78 +4,107 @@ RSpec.describe PropertiesCreationService do
   before { stub_call_to_json_schema }
 
   let(:assessment) { create :assessment }
+  let(:payload) { valid_payload }
+
+  subject { described_class.call(payload) }
 
   shared_examples 'error response' do
-    it 'does not create any property records' do
-      expect {
-        described_class.call(payload)
-      }.not_to change { Property.count }
-    end
   end
 
   describe '.call' do
     context 'valid payload' do
-      it 'returns a valid success response' do
-        result = described_class.call(valid_payload)
-        expect(result.success).to be true
-        expect(result.objects.size).to eq 3
-        expect(result.objects.map(&:class).uniq).to eq [Property]
-        expect(result.errors).to be_empty
+      describe '#success?' do
+        it 'returns true' do
+          expect(subject.success?).to be true
+        end
+      end
+
+      describe '#properties' do
+        it 'returns array of properties' do
+          expect(subject.properties.size).to eq 3
+          expect(subject.properties.map(&:class).uniq).to eq [Property]
+        end
+        it 'returns the ids of the new property records in the response' do
+          expect(subject.properties[0].id).to eq assessment.properties[0].id
+          expect(subject.properties[1].id).to eq assessment.properties[1].id
+          expect(subject.properties[2].id).to eq assessment.properties[2].id
+        end
+      end
+
+      describe '#errors' do
+        it 'returns an empty array' do
+          expect(subject.errors).to be_empty
+        end
       end
 
       it 'creates 3 property records for this assessment' do
         expect {
-          described_class.call(valid_payload)
+          subject
         }.to change { assessment.properties.count }.by(3)
-      end
-
-      it 'returns the ids of the new property records in the response' do
-        result = described_class.call(valid_payload)
-        expect(result.objects[0].id).to eq assessment.properties[0].id
-        expect(result.objects[1].id).to eq assessment.properties[1].id
-        expect(result.objects[2].id).to eq assessment.properties[2].id
       end
     end
 
     context 'invalid json' do
       let(:payload)  { invalid_json_payload }
-      it 'returns error response' do
-        response = described_class.call(payload)
-        expect(response.success).to be false
-        expect(response.objects).to be_nil
-        expect(response.errors[0]).to match %r{The property '#/' did not contain a required property of 'assessment_id'}
-        expect(response.errors[1]).to match %r{The property '#/' contains additional properties \["extra_root_attr"\]}
-        expect(response.errors[2]).to match %r{The property '#/properties/main_home' did not contain a required property of 'percentage_owned'}
-        expect(response.errors[3]).to match %r{The property '#/properties/main_home' contains additional properties \["extra_main_home_attr"\]}
-        expect(response.errors[4]).to match %r{The property '#/properties/additional_properties/0' contains additional properties \["extra_main_home_attr"\]}
+
+      describe '#errors' do
+        it 'returns errors' do
+          expect(subject.errors[0]).to match %r{The property '#/' did not contain a required property of 'assessment_id'}
+          expect(subject.errors[1]).to match %r{The property '#/' contains additional properties \["extra_root_attr"\]}
+          expect(subject.errors[2]).to match %r{The property '#/properties/main_home' did not contain a required property of 'percentage_owned'}
+          expect(subject.errors[3]).to match %r{The property '#/properties/main_home' contains additional properties \["extra_main_home_attr"\]}
+          expect(subject.errors[4]).to match %r{The property '#/properties/additional_properties/0' contains additional properties \["extra_main_home_attr"\]}
+        end
       end
 
-      it_behaves_like 'error response'
+      describe '#success?' do
+        it 'returns false' do
+          expect(subject.success?).to be false
+        end
+      end
+
+      describe '#properties' do
+        it 'returns empty array' do
+          expect(subject.properties).to be_empty
+        end
+      end
+
+      it 'does not create any property records' do
+        expect {
+          described_class.call(payload)
+        }.not_to change { Property.count }
+      end
     end
 
     context 'invalid assessment id' do
       let(:payload) { invalid_assessment_payload }
 
-      it 'returns error response' do
-        response = described_class.call(payload)
-        expect(response.success).to be false
-        expect(response.objects).to be_nil
-        expect(response.errors.size).to eq 1
-        expect(response.errors.first).to eq 'No such assessment id'
+      describe '#success?' do
+        it 'returns false' do
+          expect(subject.success?).to be false
+        end
       end
 
-      it_behaves_like 'error response'
+      it 'returns errors' do
+        expect(subject.errors.size).to eq 1
+        expect(subject.errors.first).to eq 'No such assessment id'
+      end
+
+      it 'does not create any property records' do
+        expect {
+          described_class.call(payload)
+        }.not_to change { Property.count }
+      end
     end
 
     context 'ActiveRecord errors' do
       let(:payload) { active_record_error_payload }
 
       it 'returns error response' do
-        response = described_class.call(payload)
-        expect(response.success).to be false
-        expect(response.objects).to be_nil
-        expect(response.errors.size).to eq 1
-        expect(response.errors.first).to eq 'Value must be greater than 0'
+        expect(subject.success?).to be false
+        expect(subject.properties).to be_empty
+        expect(subject.errors.size).to eq 1
+        expect(subject.errors.first).to eq 'Value must be greater than 0'
       end
     end
   end
