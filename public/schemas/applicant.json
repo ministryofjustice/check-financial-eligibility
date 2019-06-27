@@ -1,0 +1,51 @@
+{
+  "id": "http://localhost:3000/schemas/applicant.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Legal Aid Check Financial Eligibility create applicant payload schema",
+  "description": "This schema defines the payload required to create an applicant for the Legal Aid Check Financial Eligibility API",
+  "type": "object",
+  "required": [
+    "assessment_id",
+    "applicant"
+  ],
+  "properties": {
+    "assessment_id": {
+      "description": "The UUID of the assessment returned from the call to the assessment endpoint",
+      "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/uuid"
+    },
+    "applicant": {
+      "description": "An array of objects describing the applicant",
+      "type": "object",
+      "required": [
+        "date_of_birth",
+        "involvement_type",
+        "has_partner_opponent",
+        "receives_qualifying_benefit"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "date_of_birth": {
+          "description": "The date of birth of the applicant",
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/date"
+        },
+        "involvement_type": {
+          "description": "The Legal Aid Applicant's involvement in the case e.g. defendant, applicant.",
+          "type": "string",
+          "enum": [
+            "applicant", 
+            "defendant"
+          ]
+        },
+        "has_partner_opponent": {
+          "description": "Does the applicant have a partner opponent",
+          "type": "boolean"
+        },
+        "receives_qualifying_benefit": {
+          "description": "Does the applicant receive qualifying benefit",
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

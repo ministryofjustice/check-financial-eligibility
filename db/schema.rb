@@ -16,6 +16,17 @@ ActiveRecord::Schema.define(version: 2019_06_20_114204) do
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
+  create_table "applicants", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "assessment_id", null: false
+    t.date "date_of_birth"
+    t.string "involvement_type"
+    t.boolean "has_partner_opponent"
+    t.boolean "receives_qualifying_benefit"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["assessment_id"], name: "index_applicants_on_assessment_id"
+  end
+
   create_table "assessments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "client_reference_id"
     t.inet "remote_ip", null: false
@@ -110,6 +121,7 @@ ActiveRecord::Schema.define(version: 2019_06_20_114204) do
     t.index ["assessment_id"], name: "index_wage_slips_on_assessment_id"
   end
 
+  add_foreign_key "applicants", "assessments"
   add_foreign_key "bank_accounts", "assessments"
   add_foreign_key "benefit_receipts", "assessments"
   add_foreign_key "non_liquid_assets", "assessments"

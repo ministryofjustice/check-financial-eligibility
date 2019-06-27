@@ -4,6 +4,7 @@ class Assessment < ApplicationRecord
             :matter_proceeding_type,
             :client_reference_id, presence: true
 
+  has_one :applicant
   has_many :dependents
   has_many :properties
   has_many :wage_slips
