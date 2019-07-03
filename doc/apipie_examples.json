@@ -1,0 +1,86 @@
+{
+  "outgoings#create": [
+    {
+      "verb": "POST",
+      "path": "/assessments/62376c92-c5aa-423e-afd0-cf282fb5e07b/outgoings",
+      "versions": [
+        "1.0"
+      ],
+      "query": null,
+      "request_data": {
+        "outgoings": [
+          {
+            "outgoing_type": "rent",
+            "payment_date": "2019-06-12",
+            "amount": "999.05"
+          },
+          {
+            "outgoing_type": "mortgage",
+            "payment_date": "2019-06-12",
+            "amount": "162.07"
+          }
+        ]
+      },
+      "response_data": {
+        "success": true,
+        "outgoings": [
+          {
+            "id": "516d5fca-915c-40b3-8ac1-6ef3587a0027",
+            "outgoing_type": "rent",
+            "payment_date": "2019-06-12",
+            "amount": "999.05",
+            "created_at": "2019-07-03T13:55:25.861Z",
+            "updated_at": "2019-07-03T13:55:25.861Z",
+            "assessment_id": "62376c92-c5aa-423e-afd0-cf282fb5e07b"
+          },
+          {
+            "id": "e43e49c9-eb76-441c-ad6c-1ca27cd22216",
+            "outgoing_type": "mortgage",
+            "payment_date": "2019-06-12",
+            "amount": "162.07",
+            "created_at": "2019-07-03T13:55:25.863Z",
+            "updated_at": "2019-07-03T13:55:25.863Z",
+            "assessment_id": "62376c92-c5aa-423e-afd0-cf282fb5e07b"
+          }
+        ],
+        "errors": [
+
+        ]
+      },
+      "code": 200,
+      "show_in_doc": 1,
+      "recorded": true
+    },
+    {
+      "verb": "POST",
+      "path": "/assessments/33/outgoings",
+      "versions": [
+        "1.0"
+      ],
+      "query": null,
+      "request_data": {
+        "outgoings": [
+          {
+            "outgoing_type": "legal_aid",
+            "payment_date": "2019-06-12",
+            "amount": "649.03"
+          },
+          {
+            "outgoing_type": "legal_aid",
+            "payment_date": "2019-06-12",
+            "amount": "438.08"
+          }
+        ]
+      },
+      "response_data": {
+        "errors": [
+          "Invalid parameter 'assessment_id' value \"33\": Must be an UUID. For example: b369784a-6c81-4e08-bb17-ba3bd54a3551"
+        ],
+        "success": false
+      },
+      "code": 422,
+      "show_in_doc": 1,
+      "recorded": true
+    }
+  ]
+}

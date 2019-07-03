@@ -60,12 +60,12 @@
   },
   "applicant_outgoings": [
     {
-      "type_of_outgoing": "mortgage",
+      "outgoing_type": "mortgage",
       "payment_date": "2019-01-22",
       "amount": 356.77
     },
     {
-      "type_of_outgoing": "maintenance",
+      "outgoing_type": "maintenance",
       "payment_date": "2019-01-22",
       "amount": 166.98
     }

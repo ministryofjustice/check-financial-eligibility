@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_20_114204) do
+ActiveRecord::Schema.define(version: 2019_06_24_151225) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -81,6 +81,16 @@ ActiveRecord::Schema.define(version: 2019_06_20_114204) do
     t.index ["assessment_id"], name: "index_non_liquid_assets_on_assessment_id"
   end
 
+  create_table "outgoings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "outgoing_type"
+    t.date "payment_date"
+    t.decimal "amount"
+    t.uuid "assessment_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["assessment_id"], name: "index_outgoings_on_assessment_id"
+  end
+
   create_table "properties", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "assessment_id", null: false
     t.decimal "value"
@@ -125,6 +135,7 @@ ActiveRecord::Schema.define(version: 2019_06_20_114204) do
   add_foreign_key "bank_accounts", "assessments"
   add_foreign_key "benefit_receipts", "assessments"
   add_foreign_key "non_liquid_assets", "assessments"
+  add_foreign_key "outgoings", "assessments"
   add_foreign_key "properties", "assessments"
   add_foreign_key "vehicles", "assessments"
   add_foreign_key "wage_slips", "assessments"

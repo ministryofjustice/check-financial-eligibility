@@ -62,12 +62,12 @@ class AssessmentRequestFixture < BaseAssessmentFixture # rubocop:disable Metrics
       },
       applicant_outgoings: [
         {
-          type_of_outgoing: 'mortgage',
+          outgoing_type: 'mortgage',
           payment_date: Date.parse('22 Jan 2019'),
           amount: 356.77
         },
         {
-          type_of_outgoing: 'maintenance',
+          outgoing_type: 'maintenance',
           payment_date: Date.parse('22 Jan 2019'),
           amount: 166.98
         }

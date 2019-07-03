@@ -30,6 +30,9 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'json-schema'
 
+# Api documentation
+gem 'apipie-rails'
+
 # Adds Statistical methods to objects such as arrays
 gem 'descriptive_statistics', require: 'descriptive_statistics/safe'
 

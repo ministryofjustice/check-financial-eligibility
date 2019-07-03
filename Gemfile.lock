@@ -44,6 +44,8 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.6.0)
       public_suffix (>= 2.0.2, < 4.0)
+    apipie-rails (0.5.16)
+      rails (>= 4.1)
     arel (9.0.0)
     ast (2.4.0)
     awesome_print (1.8.0)
@@ -209,6 +211,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  apipie-rails
   awesome_print
   bootsnap (>= 1.1.0)
   byebug

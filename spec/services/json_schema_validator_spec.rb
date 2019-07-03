@@ -266,7 +266,7 @@ describe JsonSchemaValidator do
 
       context 'an attribute is missing' do
         before do
-          assessment_hash[:applicant_outgoings].first.delete(:type_of_outgoing)
+          assessment_hash[:applicant_outgoings].first.delete(:outgoing_type)
         end
 
         it 'is invalid' do
@@ -274,7 +274,7 @@ describe JsonSchemaValidator do
         end
 
         it 'has an error message' do
-          expected_error = "The property '#/applicant_outgoings/0' did not contain a required property of 'type_of_outgoing'"
+          expected_error = "The property '#/applicant_outgoings/0' did not contain a required property of 'outgoing_type'"
           expect(validator.errors.first).to match(/#{expected_error}/)
         end
       end
@@ -297,7 +297,7 @@ describe JsonSchemaValidator do
       context 'type of outgoing' do
         context 'a value not in the permitted list of values' do
           before do
-            assessment_hash[:applicant_outgoings].first[:type_of_outgoing] = 'loan to a friend'
+            assessment_hash[:applicant_outgoings].first[:outgoing_type] = 'loan to a friend'
           end
 
           it 'is invalid' do
@@ -305,7 +305,7 @@ describe JsonSchemaValidator do
           end
 
           it 'has an error message' do
-            expected_error = "The property '#/applicant_outgoings/0/type_of_outgoing' value .*loan to a friend.* did not match one of the following values: mortgage, maintenance"
+            expected_error = "The property '#/applicant_outgoings/0/outgoing_type' value .*loan to a friend.* did not match one of the following values: mortgage, maintenance"
             expect(validator.errors.first).to match(/#{expected_error}/)
           end
         end
