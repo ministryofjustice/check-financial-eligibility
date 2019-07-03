@@ -147,13 +147,13 @@
     "applicant_outgoing": {
       "description": "Describes an allowable outgoing during the calculation period",
       "required": [
-        "type_of_outgoing",
+        "outgoing_type",
         "payment_date",
         "amount"
       ],
       "additionalProperties": false,
       "properties": {
-        "type_of_outgoing": {
+        "outgoing_type": {
           "description": "The type of allowable outgoing - must be one of the values listed below",
           "type": "string",
           "enum": ["mortgage", "maintenance"]
