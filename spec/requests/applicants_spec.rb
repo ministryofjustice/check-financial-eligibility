@@ -19,19 +19,37 @@ RSpec.describe ApplicantsController, type: :request do
 
     context 'valid payload' do
       before do
-        service = double ApplicantCreationService, success?: true, applicant: applicant
+        # service = double ApplicantCreationService, success?: true, applicant: applicant
         expect(ApplicantCreationService).to receive(:call).with(params.to_json).and_return(service)
         post assessment_applicant_path(assessment.id), params: params.to_json, headers: headers
       end
 
-      it 'returns success', :show_in_doc do
-        expect(response).to have_http_status(:success)
+      context 'service returns success' do
+        let(:service) { double ApplicantCreationService, success?: true, applicant: applicant }
+
+        it 'returns success', :show_in_doc do
+          expect(response).to have_http_status(:success)
+        end
+
+        it 'returns expected response' do
+          expect(json[:success]).to eq(true)
+          expect(json[:errors]).to be_empty
+          expect(json[:objects]).to eq(applicant)
+        end
       end
 
-      it 'returns expected response' do
-        expect(json[:success]).to eq(true)
-        expect(json[:errors]).to be_empty
-        expect(json[:objects]).to eq(applicant)
+      context 'service returns failure' do
+        let(:service) { double ApplicantCreationService, success?: false, errors: %w[error-1 error-2] }
+
+        it 'returns 422' do
+          expect(response).to have_http_status(:unprocessable_entity)
+        end
+
+        it 'returns expected response' do
+          expect(json[:success]).to eq(false)
+          expect(json[:errors]).to eq %w[error-1 error-2]
+          expect(json[:objects]).to be_nil
+        end
       end
     end
 
