@@ -36,7 +36,6 @@ RSpec.describe ApplicantsController, type: :request do
     end
 
     context 'invalid payload' do
-
       shared_examples 'it fails with message' do |message|
         it 'returns unprocessable entity' do
           expect(response).to have_http_status(422)
@@ -94,7 +93,7 @@ RSpec.describe ApplicantsController, type: :request do
           post assessment_applicant_path(assessment.id), params: params.to_json, headers: headers
         end
 
-        it_behaves_like 'it fails with message', %[Invalid parameter 'involvement_type' value "Witness": Must be one of: <code>Applicant</code>.]
+        it_behaves_like 'it fails with message', %(Invalid parameter 'involvement_type' value "Witness": Must be one of: <code>Applicant</code>.)
       end
 
       context 'has_partner_opponent not a boolean' do
@@ -103,7 +102,8 @@ RSpec.describe ApplicantsController, type: :request do
           post assessment_applicant_path(assessment.id), params: params.to_json, headers: headers
         end
 
-        it_behaves_like 'it fails with message', %[Invalid parameter 'has_partner_opponent' value "yes": Must be an boolean, for example 'true' or 'false']
+        it_behaves_like 'it fails with message',
+                        %(Invalid parameter 'has_partner_opponent' value \"yes\": Must be one of: <code>true</code>, <code>false</code>, <code>1</code>, <code>0</code>.)
       end
 
       context 'for documentation' do
