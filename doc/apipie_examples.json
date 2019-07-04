@@ -1,8 +1,63 @@
 {
+  "applicants#create": [
+    {
+      "verb": "POST",
+      "path": "/assessments/6e47ab88-1ae7-42a3-baa8-8788d09e4625/applicant",
+      "versions": [
+        "1.0"
+      ],
+      "query": null,
+      "request_data": {
+        "assessment_id": "6e47ab88-1ae7-42a3-baa8-8788d09e4625",
+        "applicant": {
+          "date_of_birth": "1999-07-04",
+          "involvement_type": "Applicant",
+          "has_parter_opponent": false,
+          "receives_qualifying_benefit": true
+        }
+      },
+      "response_data": {
+        "success": true,
+        "objects": "applicant",
+        "errors": [
+
+        ]
+      },
+      "code": 200,
+      "show_in_doc": 1,
+      "recorded": true
+    },
+    {
+      "verb": "POST",
+      "path": "/assessments/57d662f2-f475-4de5-a424-a4cde1f0814c/applicant",
+      "versions": [
+        "1.0"
+      ],
+      "query": null,
+      "request_data": {
+        "assessment_id": "57d662f2-f475-4de5-a424-a4cde1f0814c",
+        "applicant": {
+          "date_of_birth": "1999-07-04",
+          "involvement_type": "Applicant",
+          "has_parter_opponent": false,
+          "receives_qualifying_benefit": "yes"
+        }
+      },
+      "response_data": {
+        "errors": [
+          "Invalid parameter 'receives_qualifying_benefit' value \"yes\": Must be one of: <code>true</code>, <code>false</code>, <code>1</code>, <code>0</code>."
+        ],
+        "success": false
+      },
+      "code": 422,
+      "show_in_doc": 1,
+      "recorded": true
+    }
+  ],
   "outgoings#create": [
     {
       "verb": "POST",
-      "path": "/assessments/62376c92-c5aa-423e-afd0-cf282fb5e07b/outgoings",
+      "path": "/assessments/9c5c2c2d-b12e-4681-a6ae-78f79c3804fc/outgoings",
       "versions": [
         "1.0"
       ],
@@ -10,14 +65,14 @@
       "request_data": {
         "outgoings": [
           {
-            "outgoing_type": "rent",
-            "payment_date": "2019-06-12",
-            "amount": "999.05"
+            "outgoing_type": "mortgage",
+            "payment_date": "2019-06-13",
+            "amount": "875.03"
           },
           {
             "outgoing_type": "mortgage",
-            "payment_date": "2019-06-12",
-            "amount": "162.07"
+            "payment_date": "2019-06-13",
+            "amount": "299.02"
           }
         ]
       },
@@ -25,22 +80,22 @@
         "success": true,
         "outgoings": [
           {
-            "id": "516d5fca-915c-40b3-8ac1-6ef3587a0027",
-            "outgoing_type": "rent",
-            "payment_date": "2019-06-12",
-            "amount": "999.05",
-            "created_at": "2019-07-03T13:55:25.861Z",
-            "updated_at": "2019-07-03T13:55:25.861Z",
-            "assessment_id": "62376c92-c5aa-423e-afd0-cf282fb5e07b"
+            "id": "0f140032-f9eb-4ef1-aa50-8cb6bbf53102",
+            "outgoing_type": "mortgage",
+            "payment_date": "2019-06-13",
+            "amount": "875.03",
+            "assessment_id": "9c5c2c2d-b12e-4681-a6ae-78f79c3804fc",
+            "created_at": "2019-07-04T11:17:17.590Z",
+            "updated_at": "2019-07-04T11:17:17.590Z"
           },
           {
-            "id": "e43e49c9-eb76-441c-ad6c-1ca27cd22216",
+            "id": "61104df2-1a73-4131-ae18-bcab8a9ad25d",
             "outgoing_type": "mortgage",
-            "payment_date": "2019-06-12",
-            "amount": "162.07",
-            "created_at": "2019-07-03T13:55:25.863Z",
-            "updated_at": "2019-07-03T13:55:25.863Z",
-            "assessment_id": "62376c92-c5aa-423e-afd0-cf282fb5e07b"
+            "payment_date": "2019-06-13",
+            "amount": "299.02",
+            "assessment_id": "9c5c2c2d-b12e-4681-a6ae-78f79c3804fc",
+            "created_at": "2019-07-04T11:17:17.593Z",
+            "updated_at": "2019-07-04T11:17:17.593Z"
           }
         ],
         "errors": [
@@ -61,14 +116,14 @@
       "request_data": {
         "outgoings": [
           {
-            "outgoing_type": "legal_aid",
-            "payment_date": "2019-06-12",
-            "amount": "649.03"
+            "outgoing_type": "mortgage",
+            "payment_date": "2019-06-13",
+            "amount": "333.09"
           },
           {
-            "outgoing_type": "legal_aid",
-            "payment_date": "2019-06-12",
-            "amount": "438.08"
+            "outgoing_type": "mortgage",
+            "payment_date": "2019-06-13",
+            "amount": "155.06"
           }
         ]
       },
