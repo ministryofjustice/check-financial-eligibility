@@ -4,6 +4,9 @@ class UuidValidator < Apipie::Validator::BaseValidator
   end
 
   def validate(value)
+    puts ">>>>>>>>> VALUE #{__FILE__}:#{__LINE__} <<<<<<<<<<\n"
+    puts value
+
     value =~ /\A^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\Z$/
   end
 

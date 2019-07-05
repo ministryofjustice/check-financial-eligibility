@@ -64,23 +64,35 @@ RSpec.describe CapitalsController, type: :request do
           expect(parsed_response[:objects][:non_liquid_assets].size).to eq 2
         end
       end
-    end
 
-    context 'invalid payload' do
       context 'empty payload' do
-        before { post assessment_capitals_path(assessment), params: "".to_json, headers: headers }
+        let(:params) { {} }
+
+        before { post assessment_capitals_path(assessment), params: params.to_json, headers: headers }
 
         it 'returns http unprocessable entity' do
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:success)
         end
 
         it 'returns error payload' do
-          puts ">>>>>>>>>  #{__FILE__}:#{__LINE__} <<<<<<<<<<\n"
-
-          ap parsed_response
-          expect(parsed_response[:errors]).not_to be_empty
+          expect(parsed_response[:success]).to eq(true)
+          expect(parsed_response[:errors]).to be_empty
+          expect(parsed_response[:objects][:bank_accounts]).to be_empty
+          expect(parsed_response[:objects][:non_liquid_assets]).to be_empty
         end
       end
+
+      context 'Active Record error' do
+        ################################################# TO DO #################################
+      end
+    end
+
+    context 'invalid payload' do
+      context 'mmissing bank account on liquid capital'
+      context 'missing name on bank account'
+      context 'missing lowest balance on bank account'
+      context 'missin description on non_liquid capital'
+      context 'missing value on non-liquid capital'
     end
   end
 end
