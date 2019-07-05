@@ -68,7 +68,6 @@
     {
       "verb": "POST",
       "path": "/assessments/706f292e-2210-4c18-8f0d-be542ff522fd/applicant",
-      "versions": [
         "1.0"
       ],
       "query": null,
@@ -84,6 +83,104 @@
       "response_data": {
         "errors": [
           "Invalid parameter 'receives_qualifying_benefit' value \"yes\": Must be one of: <code>true</code>, <code>false</code>, <code>1</code>, <code>0</code>."
+        ],
+        "success": false
+      },
+      "code": 422,
+      "show_in_doc": 1,
+      "recorded": true
+    }
+  ],
+  "assessments#create": [
+    {
+      "verb": "POST",
+      "path": "/assessments",
+      "versions": [
+        "1.0"
+      ],
+      "query": null,
+      "request_data": {
+        "client_reference_id": "psr-123",
+        "submission_date": "2019-06-06",
+        "matter_proceeding_type": "domestic abuse"
+      },
+      "response_data": {
+        "success": true,
+        "objects": [
+          {
+            "id": "da65fb59-ef11-4389-a052-7debcf77bece",
+            "client_reference_id": "psr-123",
+            "remote_ip": {
+              "family": 2,
+              "addr": 2130706433,
+              "mask_addr": 4294967295
+            },
+            "created_at": "2019-07-05T12:58:54.665Z",
+            "updated_at": "2019-07-05T12:58:54.665Z",
+            "submission_date": "2019-06-06",
+            "matter_proceeding_type": "domestic abuse"
+          }
+        ],
+        "errors": [
+
+        ]
+      },
+      "code": 200,
+      "show_in_doc": 1,
+      "recorded": true
+    },
+    {
+      "verb": "POST",
+      "path": "/assessments",
+      "versions": [
+        "1.0"
+      ],
+      "query": null,
+      "request_data": {
+        "client_reference_id": "psr-123",
+        "submission_date": "2019-06-06",
+        "matter_proceeding_type": "domestic abuse"
+      },
+      "response_data": {
+        "success": true,
+        "objects": [
+          {
+            "id": "65e31f8b-1fe5-4069-8e9f-8100aaf63dfb",
+            "client_reference_id": "psr-123",
+            "remote_ip": {
+              "family": 2,
+              "addr": 2130706433,
+              "mask_addr": 4294967295
+            },
+            "created_at": "2019-07-05T12:58:54.676Z",
+            "updated_at": "2019-07-05T12:58:54.676Z",
+            "submission_date": "2019-06-06",
+            "matter_proceeding_type": "domestic abuse"
+          }
+        ],
+        "errors": [
+
+        ]
+      },
+      "code": 200,
+      "show_in_doc": 1,
+      "recorded": true
+    },
+    {
+      "verb": "POST",
+      "path": "/assessments",
+      "versions": [
+        "1.0"
+      ],
+      "query": null,
+      "request_data": {
+        "client_reference_id": "psr-123",
+        "submission_date": "2019-06-06",
+        "matter_proceeding_type": "domestic abuse"
+      },
+      "response_data": {
+        "errors": [
+          "error creating record"
         ],
         "success": false
       },
