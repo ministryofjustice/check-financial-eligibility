@@ -30,12 +30,16 @@ RSpec.describe ApplicantsController, type: :request do
         it 'returns expected response' do
           expect(parsed_response[:success]).to eq(true)
           expect(parsed_response[:errors]).to be_empty
+<<<<<<< HEAD
           expect(parsed_response[:objects].size).to eq 1
           expect(parsed_response[:objects].first[:date_of_birth]).to eq 20.years.ago.to_date.strftime('%Y-%m-%d')
           expect(parsed_response[:objects].first[:assessment_id]).to eq assessment.id
           expect(parsed_response[:objects].first[:involvement_type]).to eq 'Applicant'
           expect(parsed_response[:objects].first[:has_partner_opponent]).to be false
           expect(parsed_response[:objects].first[:receives_qualifying_benefit]).to be true
+=======
+          expect(parsed_response[:objects]).to eq([applicant])
+>>>>>>> AP-766 fix spec
         end
       end
 
