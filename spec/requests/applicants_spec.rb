@@ -69,41 +69,8 @@ RSpec.describe ApplicantsController, type: :request do
       end
     end
 
-    context 'errors' do
-      shared_examples 'it fails with message' do |message|
-        it 'returns unprocessable entity' do
-          expect(response).to have_http_status(422)
-        end
-
-        it 'returns a response with the specified message' do
-          expect(parsed_response[:success]).to be false
-          message.is_a?(Regexp) ? expect_message_match(message) : expect_message_equal(message)
-          expect(parsed_response[:object]).to be_nil
-        end
-
-        def expect_message_match(message)
-          expect(parsed_response[:errors].first).to match message
-        end
-
-        def expect_message_equal(message)
-          expect(parsed_response[:errors].first).to eq message
-        end
-      end
-
-      context 'Active Record error in service' do
-        let(:non_existent_assessment_id) { SecureRandom.uuid }
-        let(:params) do
-          {
-            assessment_id: non_existent_assessment_id,
-            applicant: {
-              date_of_birth: 25.years.ago.to_date,
-              involvement_type: 'Applicant',
-              has_partner_opponent: false,
-              receives_qualifying_benefit: true
-            }
-          }
-        end
-
+    context 'invalid payload' do
+      before { expect(ApplicantCreationService).not_to receive(:call) }
         before do
           post assessment_applicant_path(non_existent_assessment_id), params: params.to_json, headers: headers
         end
