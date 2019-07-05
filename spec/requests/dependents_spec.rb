@@ -22,10 +22,10 @@ RSpec.describe DependentsController, type: :request do
       end
 
       it 'generates a valid response' do
-        expect(json[:success]).to eq(true)
-        expect(json[:errors]).to be_empty
-        expect(json[:objects]).not_to be_empty
-        expect(json[:objects].first[:id]).to eq(dependents.first.id)
+        expect(parsed_response[:success]).to eq(true)
+        expect(parsed_response[:errors]).to be_empty
+        expect(parsed_response[:objects]).not_to be_empty
+        expect(parsed_response[:objects].first[:id]).to eq(dependents.first.id)
       end
     end
 
@@ -41,9 +41,9 @@ RSpec.describe DependentsController, type: :request do
       end
 
       it 'returns error payload' do
-        expect(json[:success]).to eq(false)
-        expect(json[:objects]).to eq(nil)
-        expect(json[:errors]).to match_array(%w[error_1 error_2])
+        expect(parsed_response[:success]).to eq(false)
+        expect(parsed_response[:objects]).to eq(nil)
+        expect(parsed_response[:errors]).to match_array(%w[error_1 error_2])
       end
     end
 
@@ -55,7 +55,7 @@ RSpec.describe DependentsController, type: :request do
       end
 
       it 'returns error payload' do
-        expect(json[:errors]).not_to be_empty
+        expect(parsed_response[:errors]).not_to be_empty
       end
     end
   end
