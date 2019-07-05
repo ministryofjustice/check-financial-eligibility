@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 2019_06_24_151225) do
   end
 
   create_table "benefit_receipts", force: :cascade do |t|
-    t.uuid "assessment_id"
+    t.uuid "assessment_id", null: false
     t.string "benefit_name"
     t.date "payment_date"
     t.decimal "amount"

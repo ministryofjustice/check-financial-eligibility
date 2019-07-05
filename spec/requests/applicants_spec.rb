@@ -19,7 +19,6 @@ RSpec.describe ApplicantsController, type: :request do
 
     context 'valid payload' do
       before do
-        # service = double ApplicantCreationService, success?: true, applicant: applicant
         expect(ApplicantCreationService).to receive(:call).with(params.to_json).and_return(service)
         post assessment_applicant_path(assessment.id), params: params.to_json, headers: headers
       end
