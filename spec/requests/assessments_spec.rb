@@ -56,17 +56,7 @@ RSpec.describe AssessmentsController, type: :request do
       context 'invalid matter proceeding type' do
         let(:params) { { matter_proceeding_type: 'xxx', submission_date: '2019-07-01' } }
 
-        it 'returns http unprocessable entity' do
-          expect(response).to have_http_status(:unprocessable_entity)
-        end
-
-        it 'returns the errors' do
-          expected_response = {
-            errors: [%(Invalid parameter 'matter_proceeding_type' value "xxx": Must be one of: <code>domestic abuse</code>.)],
-            success: false
-          }
-          expect(parsed_response).to eq expected_response
-        end
+        it_behaves_like 'it fails with message', %(Invalid parameter 'matter_proceeding_type' value "xxx": Must be one of: <code>domestic abuse</code>.)
       end
 
       context 'missing submission date' do
@@ -77,17 +67,7 @@ RSpec.describe AssessmentsController, type: :request do
           }
         end
 
-        it 'returns http unprocessable entity' do
-          expect(response).to have_http_status(:unprocessable_entity)
-        end
-
-        it 'returns the errors' do
-          expected_response = {
-            errors: ['Missing parameter submission_date'],
-            success: false
-          }
-          expect(parsed_response).to eq expected_response
-        end
+        it_behaves_like 'it fails with message', 'Missing parameter submission_date'
       end
     end
   end
