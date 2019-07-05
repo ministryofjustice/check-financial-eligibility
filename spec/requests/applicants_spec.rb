@@ -24,7 +24,7 @@ RSpec.describe ApplicantsController, type: :request do
       end
 
       context 'service returns success' do
-        let(:service) { double ApplicantCreationService, success?: true, applicant: applicant }
+        let(:service) { double ApplicantCreationService, success?: true, applicant: [applicant] }
 
         it 'returns success', :show_in_doc do
           expect(response).to have_http_status(:success)
@@ -33,7 +33,7 @@ RSpec.describe ApplicantsController, type: :request do
         it 'returns expected response' do
           expect(json[:success]).to eq(true)
           expect(json[:errors]).to be_empty
-          expect(json[:objects]).to eq(applicant)
+          expect(json[:objects]).to eq([applicant])
         end
       end
 
