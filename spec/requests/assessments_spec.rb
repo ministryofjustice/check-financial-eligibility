@@ -22,6 +22,7 @@ RSpec.describe AssessmentsController, type: :request do
         end
 
         it 'has a valid payload', :show_in_doc do
+
           expected_response = {
             success: true,
             objects: [Assessment.last],
