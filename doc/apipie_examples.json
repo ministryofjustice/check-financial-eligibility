@@ -2,23 +2,34 @@
   "applicants#create": [
     {
       "verb": "POST",
-      "path": "/assessments/6e47ab88-1ae7-42a3-baa8-8788d09e4625/applicant",
+      "path": "/assessments/18dbbdeb-3ff4-4bd7-8a6d-485f7b062f13/applicant",
       "versions": [
         "1.0"
       ],
       "query": null,
       "request_data": {
-        "assessment_id": "6e47ab88-1ae7-42a3-baa8-8788d09e4625",
+        "assessment_id": "18dbbdeb-3ff4-4bd7-8a6d-485f7b062f13",
         "applicant": {
-          "date_of_birth": "1999-07-04",
+          "date_of_birth": "1999-07-08",
           "involvement_type": "Applicant",
-          "has_parter_opponent": false,
+          "has_partner_opponent": false,
           "receives_qualifying_benefit": true
         }
       },
       "response_data": {
         "success": true,
-        "objects": "applicant",
+        "objects": [
+          {
+            "id": "3f81e056-c17a-4eac-9833-5dabc943846e",
+            "assessment_id": "18dbbdeb-3ff4-4bd7-8a6d-485f7b062f13",
+            "date_of_birth": "1999-07-08",
+            "involvement_type": "Applicant",
+            "has_partner_opponent": false,
+            "receives_qualifying_benefit": true,
+            "created_at": "2019-07-08T10:56:57.922Z",
+            "updated_at": "2019-07-08T10:56:57.922Z"
+          }
+        ],
         "errors": [
 
         ]
@@ -29,17 +40,44 @@
     },
     {
       "verb": "POST",
-      "path": "/assessments/57d662f2-f475-4de5-a424-a4cde1f0814c/applicant",
+      "path": "/assessments/10b56501-03e7-49b9-b35e-dda49a89457d/applicant",
       "versions": [
         "1.0"
       ],
       "query": null,
       "request_data": {
-        "assessment_id": "57d662f2-f475-4de5-a424-a4cde1f0814c",
+        "assessment_id": "10b56501-03e7-49b9-b35e-dda49a89457d",
         "applicant": {
-          "date_of_birth": "1999-07-04",
+          "date_of_birth": "1994-07-08",
           "involvement_type": "Applicant",
-          "has_parter_opponent": false,
+          "has_partner_opponent": false,
+          "receives_qualifying_benefit": true
+        }
+      },
+      "response_data": {
+        "success": false,
+        "objects": null,
+        "errors": [
+          "No such assessment id"
+        ]
+      },
+      "code": 422,
+      "show_in_doc": 1,
+      "recorded": true
+    },
+    {
+      "verb": "POST",
+      "path": "/assessments/706f292e-2210-4c18-8f0d-be542ff522fd/applicant",
+      "versions": [
+        "1.0"
+      ],
+      "query": null,
+      "request_data": {
+        "assessment_id": "706f292e-2210-4c18-8f0d-be542ff522fd",
+        "applicant": {
+          "date_of_birth": "1999-07-08",
+          "involvement_type": "Applicant",
+          "has_partner_opponent": false,
           "receives_qualifying_benefit": "yes"
         }
       },
@@ -57,7 +95,7 @@
   "outgoings#create": [
     {
       "verb": "POST",
-      "path": "/assessments/9c5c2c2d-b12e-4681-a6ae-78f79c3804fc/outgoings",
+      "path": "/assessments/5d5f8454-c4ef-46d0-bab0-76b2b61dc76d/outgoings",
       "versions": [
         "1.0"
       ],
@@ -65,14 +103,14 @@
       "request_data": {
         "outgoings": [
           {
-            "outgoing_type": "mortgage",
-            "payment_date": "2019-06-13",
-            "amount": "875.03"
+            "outgoing_type": "child_care",
+            "payment_date": "2019-06-17",
+            "amount": "984.05"
           },
           {
-            "outgoing_type": "mortgage",
-            "payment_date": "2019-06-13",
-            "amount": "299.02"
+            "outgoing_type": "legal_aid",
+            "payment_date": "2019-06-17",
+            "amount": "399.02"
           }
         ]
       },
@@ -80,22 +118,22 @@
         "success": true,
         "outgoings": [
           {
-            "id": "0f140032-f9eb-4ef1-aa50-8cb6bbf53102",
-            "outgoing_type": "mortgage",
-            "payment_date": "2019-06-13",
-            "amount": "875.03",
-            "assessment_id": "9c5c2c2d-b12e-4681-a6ae-78f79c3804fc",
-            "created_at": "2019-07-04T11:17:17.590Z",
-            "updated_at": "2019-07-04T11:17:17.590Z"
+            "id": "ae94d692-1cd8-41e8-a719-ce94e9e8affe",
+            "outgoing_type": "child_care",
+            "payment_date": "2019-06-17",
+            "amount": "984.05",
+            "assessment_id": "5d5f8454-c4ef-46d0-bab0-76b2b61dc76d",
+            "created_at": "2019-07-08T10:56:57.978Z",
+            "updated_at": "2019-07-08T10:56:57.978Z"
           },
           {
-            "id": "61104df2-1a73-4131-ae18-bcab8a9ad25d",
-            "outgoing_type": "mortgage",
-            "payment_date": "2019-06-13",
-            "amount": "299.02",
-            "assessment_id": "9c5c2c2d-b12e-4681-a6ae-78f79c3804fc",
-            "created_at": "2019-07-04T11:17:17.593Z",
-            "updated_at": "2019-07-04T11:17:17.593Z"
+            "id": "e71030d5-566e-4923-b1ef-677b73351203",
+            "outgoing_type": "legal_aid",
+            "payment_date": "2019-06-17",
+            "amount": "399.02",
+            "assessment_id": "5d5f8454-c4ef-46d0-bab0-76b2b61dc76d",
+            "created_at": "2019-07-08T10:56:57.981Z",
+            "updated_at": "2019-07-08T10:56:57.981Z"
           }
         ],
         "errors": [
@@ -116,14 +154,14 @@
       "request_data": {
         "outgoings": [
           {
-            "outgoing_type": "mortgage",
-            "payment_date": "2019-06-13",
-            "amount": "333.09"
+            "outgoing_type": "legal_aid",
+            "payment_date": "2019-06-17",
+            "amount": "994.09"
           },
           {
-            "outgoing_type": "mortgage",
-            "payment_date": "2019-06-13",
-            "amount": "155.06"
+            "outgoing_type": "child_care",
+            "payment_date": "2019-06-17",
+            "amount": "913.02"
           }
         ]
       },

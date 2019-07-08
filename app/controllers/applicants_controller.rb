@@ -22,7 +22,7 @@ class ApplicantsController < ApplicationController
     if creation_service_result.success?
       render json: {
         success: true,
-        objects: creation_service_result.applicant,
+        objects: [creation_service_result.applicant],
         errors: []
       }
     else

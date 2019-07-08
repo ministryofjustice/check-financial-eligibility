@@ -11,7 +11,7 @@ RSpec.describe ApplicantsController, type: :request do
         applicant: {
           date_of_birth: 20.years.ago.to_date,
           involvement_type: 'Applicant',
-          has_parter_opponent: false,
+          has_partner_opponent: false,
           receives_qualifying_benefit: true
         }
       }
@@ -19,13 +19,10 @@ RSpec.describe ApplicantsController, type: :request do
 
     context 'valid payload' do
       before do
-        expect(ApplicantCreationService).to receive(:call).with(params.to_json).and_return(service)
         post assessment_applicant_path(assessment.id), params: params.to_json, headers: headers
       end
 
       context 'service returns success' do
-        let(:service) { double ApplicantCreationService, success?: true, applicant: [applicant] }
-
         it 'returns success', :show_in_doc do
           expect(response).to have_http_status(:success)
         end
@@ -33,12 +30,27 @@ RSpec.describe ApplicantsController, type: :request do
         it 'returns expected response' do
           expect(json[:success]).to eq(true)
           expect(json[:errors]).to be_empty
-          expect(json[:objects]).to eq([applicant])
+          expect(json[:objects].size).to eq 1
+          expect(json[:objects].first[:date_of_birth]).to eq 20.years.ago.to_date.strftime('%Y-%m-%d')
+          expect(json[:objects].first[:assessment_id]).to eq assessment.id
+          expect(json[:objects].first[:involvement_type]).to eq 'Applicant'
+          expect(json[:objects].first[:has_partner_opponent]).to be false
+          expect(json[:objects].first[:receives_qualifying_benefit]).to be true
         end
       end
 
       context 'service returns failure' do
-        let(:service) { double ApplicantCreationService, success?: false, errors: %w[error-1 error-2] }
+        let(:params) do
+          {
+            assessment_id: assessment.id,
+            applicant: {
+              date_of_birth: 4.years.from_now.to_date,
+              involvement_type: 'Applicant',
+              has_partner_opponent: false,
+              receives_qualifying_benefit: true
+            }
+          }
+        end
 
         it 'returns 422' do
           expect(response).to have_http_status(:unprocessable_entity)
@@ -46,13 +58,13 @@ RSpec.describe ApplicantsController, type: :request do
 
         it 'returns expected response' do
           expect(json[:success]).to eq(false)
-          expect(json[:errors]).to eq %w[error-1 error-2]
+          expect(json[:errors]).to eq [%(Invalid parameter 'date_of_birth' value "2023-07-08": Date must be parsable and in the past. For example: '2019-05-23')]
           expect(json[:objects]).to be_nil
         end
       end
     end
 
-    context 'invalid payload' do
+    context 'errors' do
       shared_examples 'it fails with message' do |message|
         it 'returns unprocessable entity' do
           expect(response).to have_http_status(422)
@@ -73,61 +85,84 @@ RSpec.describe ApplicantsController, type: :request do
         end
       end
 
-      before { expect(ApplicantCreationService).not_to receive(:call) }
-
-      context 'missing applicant' do
-        before do
-          params.delete(:applicant)
-          post assessment_applicant_path(assessment.id), params: params.to_json, headers: headers
+      context 'Active Record error in service' do
+        let(:non_existent_assessment_id) { SecureRandom.uuid }
+        let(:params) do
+          {
+            assessment_id: non_existent_assessment_id,
+            applicant: {
+              date_of_birth: 25.years.ago.to_date,
+              involvement_type: 'Applicant',
+              has_partner_opponent: false,
+              receives_qualifying_benefit: true
+            }
+          }
         end
 
-        it_behaves_like 'it fails with message', 'Missing parameter date_of_birth'
-      end
-
-      context 'future date of birth' do
-        let(:dob) { 3.days.from_now.to_date }
-
         before do
-          params[:applicant][:date_of_birth] = dob
-          post assessment_applicant_path(assessment.id), params: params.to_json, headers: headers
+          post assessment_applicant_path(non_existent_assessment_id), params: params.to_json, headers: headers
         end
 
-        it_behaves_like 'it fails with message', /Date must be parsable and in the past/
+        it_behaves_like 'it fails with message', 'No such assessment id'
       end
 
-      context 'missing involvement_type' do
-        before do
-          params[:applicant].delete(:involvement_type)
-          post assessment_applicant_path(assessment.id), params: params.to_json, headers: headers
+      context 'malformed JSON payload' do
+        before { expect(ApplicantCreationService).not_to receive(:call) }
+
+        context 'missing applicant' do
+          before do
+            params.delete(:applicant)
+            post assessment_applicant_path(assessment.id), params: params.to_json, headers: headers
+          end
+
+          it_behaves_like 'it fails with message', 'Missing parameter date_of_birth'
         end
 
-        it_behaves_like 'it fails with message', 'Missing parameter involvement_type'
-      end
+        context 'future date of birth' do
+          let(:dob) { 3.days.from_now.to_date }
 
-      context 'invalid involvement type' do
-        before do
-          params[:applicant][:involvement_type] = 'Witness'
-          post assessment_applicant_path(assessment.id), params: params.to_json, headers: headers
+          before do
+            params[:applicant][:date_of_birth] = dob
+            post assessment_applicant_path(assessment.id), params: params.to_json, headers: headers
+          end
+
+          it_behaves_like 'it fails with message', /Date must be parsable and in the past/
         end
 
-        it_behaves_like 'it fails with message', %(Invalid parameter 'involvement_type' value "Witness": Must be one of: <code>Applicant</code>.)
-      end
+        context 'missing involvement_type' do
+          before do
+            params[:applicant].delete(:involvement_type)
+            post assessment_applicant_path(assessment.id), params: params.to_json, headers: headers
+          end
 
-      context 'has_partner_opponent not a boolean' do
-        before do
-          params[:applicant][:has_partner_opponent] = 'yes'
-          post assessment_applicant_path(assessment.id), params: params.to_json, headers: headers
+          it_behaves_like 'it fails with message', 'Missing parameter involvement_type'
         end
 
-        it_behaves_like 'it fails with message',
-                        %(Invalid parameter 'has_partner_opponent' value \"yes\": Must be one of: <code>true</code>, <code>false</code>, <code>1</code>, <code>0</code>.)
-      end
+        context 'invalid involvement type' do
+          before do
+            params[:applicant][:involvement_type] = 'Witness'
+            post assessment_applicant_path(assessment.id), params: params.to_json, headers: headers
+          end
 
-      context 'for documentation' do
-        it 'fails with a message', :show_in_doc do
-          params[:applicant][:receives_qualifying_benefit] = 'yes'
-          post assessment_applicant_path(assessment.id), params: params.to_json, headers: headers
-          expect(response).to have_http_status(422)
+          it_behaves_like 'it fails with message', %(Invalid parameter 'involvement_type' value "Witness": Must be one of: <code>Applicant</code>.)
+        end
+
+        context 'has_partner_opponent not a boolean' do
+          before do
+            params[:applicant][:has_partner_opponent] = 'yes'
+            post assessment_applicant_path(assessment.id), params: params.to_json, headers: headers
+          end
+
+          it_behaves_like 'it fails with message',
+                          %(Invalid parameter 'has_partner_opponent' value \"yes\": Must be one of: <code>true</code>, <code>false</code>, <code>1</code>, <code>0</code>.)
+        end
+
+        context 'for documentation' do
+          it 'fails with a message', :show_in_doc do
+            params[:applicant][:receives_qualifying_benefit] = 'yes'
+            post assessment_applicant_path(assessment.id), params: params.to_json, headers: headers
+            expect(response).to have_http_status(422)
+          end
         end
       end
     end
