@@ -3,15 +3,15 @@ class CapitalsController < ApplicationController
   formats ['json']
   param :assessment_id, :uuid, required: true
   param :liquid_capital, Hash, desc: 'Defines liquid capital assets' do
-    param :bank_accounts, Array, required: true, desc: "Collection of bank accounts" do
+    param :bank_accounts, Array, required: true, desc: 'Collection of bank accounts' do
       param :name, String, required: true, desc: 'An identifying name for this bank account'
       param :lowest_balance, :currency, required: true, desc: 'The lowest balance on this bank account during the calculation period'
     end
   end
 
-  param :non_liquid_capital, Array, desc: "Collection of non-liquid capital assets" do
-    param :description, String, required: true, desc: "An description of this non-liquid asset"
-    param :value, :currency, required: true, desc: "Estimated value of this non-liquid asset"
+  param :non_liquid_capital, Array, desc: 'Collection of non-liquid capital assets' do
+    param :description, String, required: true, desc: 'An description of this non-liquid asset'
+    param :value, :currency, required: true, desc: 'Estimated value of this non-liquid asset'
   end
 
   returns code: :ok, desc: 'Successful response' do

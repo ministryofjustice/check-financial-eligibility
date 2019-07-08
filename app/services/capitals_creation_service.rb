@@ -21,7 +21,6 @@ class CapitalsCreationService < BaseCreationService
         non_liquid_assets: non_liquid_assets
       }
     end
-
   rescue CreationError => e
     self.errors = e.errors
   end

@@ -17,7 +17,7 @@ RSpec.describe CapitalsController, type: :request do
     context 'valid payload' do
       context 'with both types of assets' do
         before { post assessment_capitals_path(assessment), params: params.to_json, headers: headers }
-        it 'returns http success' do
+        it 'returns http success', :show_in_doc do
           expect(response).to have_http_status(:success)
         end
 
@@ -83,16 +83,60 @@ RSpec.describe CapitalsController, type: :request do
       end
 
       context 'Active Record error' do
-        ################################################# TO DO #################################
+        before do
+          params[:assessment_id] = SecureRandom.uuid
+          post assessment_capitals_path(assessment), params: params.to_json, headers: headers
+        end
+
+        it 'errors and is shown in apidocs', :show_in_doc do
+          expect(response).to have_http_status(422)
+        end
+
+        it_behaves_like 'it fails with message', 'No such assessment id'
       end
     end
 
     context 'invalid payload' do
-      context 'mmissing bank account on liquid capital'
-      context 'missing name on bank account'
-      context 'missing lowest balance on bank account'
-      context 'missin description on non_liquid capital'
-      context 'missing value on non-liquid capital'
+      context 'missing bank account on liquid capital' do
+        before do
+          params[:liquid_capital] = {}
+          post assessment_capitals_path(assessment), params: params.to_json, headers: headers
+        end
+
+        it_behaves_like 'it fails with message', 'Missing parameter bank_accounts'
+      end
+
+      context 'missing name on bank account' do
+        before do
+          params[:liquid_capital][:bank_accounts].first.delete(:name)
+          post assessment_capitals_path(assessment), params: params.to_json, headers: headers
+        end
+        it_behaves_like 'it fails with message', 'Missing parameter name'
+      end
+
+      context 'missing lowest balance on bank account' do
+        before do
+          params[:liquid_capital][:bank_accounts].first.delete(:lowest_balance)
+          post assessment_capitals_path(assessment), params: params.to_json, headers: headers
+        end
+        it_behaves_like 'it fails with message', 'Missing parameter lowest_balance'
+      end
+
+      context 'missing description on non_liquid capital' do
+        before do
+          params[:non_liquid_capital].first.delete(:description)
+          post assessment_capitals_path(assessment), params: params.to_json, headers: headers
+        end
+        it_behaves_like 'it fails with message', 'Missing parameter description'
+      end
+
+      context 'missing value on non-liquid capital' do
+        before do
+          params[:non_liquid_capital].first.delete(:value)
+          post assessment_capitals_path(assessment), params: params.to_json, headers: headers
+        end
+        it_behaves_like 'it fails with message', 'Missing parameter value'
+      end
     end
   end
 end

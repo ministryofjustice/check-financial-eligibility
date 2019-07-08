@@ -132,6 +132,7 @@
             "matter_proceeding_type": "domestic abuse"
           }
         ],
+
         "errors": [
 
         ]
@@ -148,6 +149,7 @@
       ],
       "query": null,
       "request_data": {
+<<<<<< HEAD
         "client_reference_id": "psr-123",
         "submission_date": "2019-06-06",
         "matter_proceeding_type": "domestic abuse"
