@@ -28,28 +28,33 @@ RSpec.describe ApplicantsController, type: :request do
         end
 
         it 'returns expected response' do
-          expect(json[:success]).to eq(true)
-          expect(json[:errors]).to be_empty
-          expect(json[:objects].size).to eq 1
-          expect(json[:objects].first[:date_of_birth]).to eq 20.years.ago.to_date.strftime('%Y-%m-%d')
-          expect(json[:objects].first[:assessment_id]).to eq assessment.id
-          expect(json[:objects].first[:involvement_type]).to eq 'Applicant'
-          expect(json[:objects].first[:has_partner_opponent]).to be false
-          expect(json[:objects].first[:receives_qualifying_benefit]).to be true
+          expect(parsed_response[:success]).to eq(true)
+          expect(parsed_response[:errors]).to be_empty
+          expect(parsed_response[:objects].size).to eq 1
+          expect(parsed_response[:objects].first[:date_of_birth]).to eq 20.years.ago.to_date.strftime('%Y-%m-%d')
+          expect(parsed_response[:objects].first[:assessment_id]).to eq assessment.id
+          expect(parsed_response[:objects].first[:involvement_type]).to eq 'Applicant'
+          expect(parsed_response[:objects].first[:has_partner_opponent]).to be false
+          expect(parsed_response[:objects].first[:receives_qualifying_benefit]).to be true
         end
       end
 
       context 'service returns failure' do
+        let(:future_date) { 4.years.from_now.to_date }
+        let(:future_date_string) { future_date.strftime('%Y-%m-%d') }
         let(:params) do
           {
             assessment_id: assessment.id,
             applicant: {
-              date_of_birth: 4.years.from_now.to_date,
+              date_of_birth: future_date,
               involvement_type: 'Applicant',
               has_partner_opponent: false,
               receives_qualifying_benefit: true
             }
           }
+        end
+        let(:expected_message) do
+          %(Invalid parameter 'date_of_birth' value "#{future_date_string}": Date must be parsable and in the past. For example: '2019-05-23')
         end
 
         it 'returns 422' do
@@ -57,9 +62,9 @@ RSpec.describe ApplicantsController, type: :request do
         end
 
         it 'returns expected response' do
-          expect(json[:success]).to eq(false)
-          expect(json[:errors]).to eq [%(Invalid parameter 'date_of_birth' value "2023-07-08": Date must be parsable and in the past. For example: '2019-05-23')]
-          expect(json[:objects]).to be_nil
+          expect(parsed_response[:success]).to eq(false)
+          expect(parsed_response[:errors]).to eq [expected_message]
+          expect(parsed_response[:objects]).to be_nil
         end
       end
     end
@@ -71,17 +76,17 @@ RSpec.describe ApplicantsController, type: :request do
         end
 
         it 'returns a response with the specified message' do
-          expect(json[:success]).to be false
-          message.is_a?(Regexp) ? expect_message_match(json, message) : expect_message_equal(json, message)
-          expect(json[:object]).to be_nil
+          expect(parsed_response[:success]).to be false
+          message.is_a?(Regexp) ? expect_message_match(message) : expect_message_equal(message)
+          expect(parsed_response[:object]).to be_nil
         end
 
-        def expect_message_match(json, message)
-          expect(json[:errors].first).to match message
+        def expect_message_match(message)
+          expect(parsed_response[:errors].first).to match message
         end
 
-        def expect_message_equal(json, message)
-          expect(json[:errors].first).to eq message
+        def expect_message_equal(message)
+          expect(parsed_response[:errors].first).to eq message
         end
       end
 

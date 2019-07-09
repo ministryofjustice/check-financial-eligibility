@@ -26,12 +26,12 @@ RSpec.describe OutgoingsController, type: :request do
 
     it 'sets success flag to false' do
       subject
-      expect(json[:success]).to be true
+      expect(parsed_response[:success]).to be true
     end
 
     it 'returns blank errors' do
       subject
-      expect(json[:errors]).to be_empty
+      expect(parsed_response[:errors]).to be_empty
     end
 
     context 'with an invalid id' do
@@ -44,11 +44,11 @@ RSpec.describe OutgoingsController, type: :request do
       end
 
       it 'returns error information' do
-        expect(json[:errors].join).to match(/Invalid.*assessment_id/)
+        expect(parsed_response[:errors].join).to match(/Invalid.*assessment_id/)
       end
 
       it 'sets success flag to false' do
-        expect(json[:success]).to be false
+        expect(parsed_response[:success]).to be false
       end
     end
 
@@ -62,11 +62,11 @@ RSpec.describe OutgoingsController, type: :request do
       end
 
       it 'returns error information' do
-        expect(json[:errors].join).to match(/Invalid.*payment_date/)
+        expect(parsed_response[:errors].join).to match(/Invalid.*payment_date/)
       end
 
       it 'sets success flag to false' do
-        expect(json[:success]).to be false
+        expect(parsed_response[:success]).to be false
       end
     end
 
@@ -82,11 +82,11 @@ RSpec.describe OutgoingsController, type: :request do
       end
 
       it 'returns error information' do
-        expect(json[:errors].join).to match(/foo/)
+        expect(parsed_response[:errors].join).to match(/foo/)
       end
 
       it 'sets success flag to false' do
-        expect(json[:success]).to be false
+        expect(parsed_response[:success]).to be false
       end
     end
   end

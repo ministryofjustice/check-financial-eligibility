@@ -2,15 +2,15 @@
   "applicants#create": [
     {
       "verb": "POST",
-      "path": "/assessments/18dbbdeb-3ff4-4bd7-8a6d-485f7b062f13/applicant",
+      "path": "/assessments/773be764-8a84-4ad0-b6fc-a2dbd9247fa9/applicant",
       "versions": [
         "1.0"
       ],
       "query": null,
       "request_data": {
-        "assessment_id": "18dbbdeb-3ff4-4bd7-8a6d-485f7b062f13",
+        "assessment_id": "773be764-8a84-4ad0-b6fc-a2dbd9247fa9",
         "applicant": {
-          "date_of_birth": "1999-07-08",
+          "date_of_birth": "1999-07-09",
           "involvement_type": "Applicant",
           "has_partner_opponent": false,
           "receives_qualifying_benefit": true
@@ -20,14 +20,14 @@
         "success": true,
         "objects": [
           {
-            "id": "3f81e056-c17a-4eac-9833-5dabc943846e",
-            "assessment_id": "18dbbdeb-3ff4-4bd7-8a6d-485f7b062f13",
-            "date_of_birth": "1999-07-08",
+            "id": "bed25c65-96a3-447c-b372-c58c99e4e995",
+            "assessment_id": "773be764-8a84-4ad0-b6fc-a2dbd9247fa9",
+            "date_of_birth": "1999-07-09",
             "involvement_type": "Applicant",
             "has_partner_opponent": false,
             "receives_qualifying_benefit": true,
-            "created_at": "2019-07-08T10:56:57.922Z",
-            "updated_at": "2019-07-08T10:56:57.922Z"
+            "created_at": "2019-07-09T11:59:39.440Z",
+            "updated_at": "2019-07-09T11:59:39.440Z"
           }
         ],
         "errors": [
@@ -40,42 +40,15 @@
     },
     {
       "verb": "POST",
-      "path": "/assessments/10b56501-03e7-49b9-b35e-dda49a89457d/applicant",
+      "path": "/assessments/ef51fefb-3dd4-4c66-b354-42079f60e9e7/applicant",
       "versions": [
         "1.0"
       ],
       "query": null,
       "request_data": {
-        "assessment_id": "10b56501-03e7-49b9-b35e-dda49a89457d",
+        "assessment_id": "ef51fefb-3dd4-4c66-b354-42079f60e9e7",
         "applicant": {
-          "date_of_birth": "1994-07-08",
-          "involvement_type": "Applicant",
-          "has_partner_opponent": false,
-          "receives_qualifying_benefit": true
-        }
-      },
-      "response_data": {
-        "success": false,
-        "objects": null,
-        "errors": [
-          "No such assessment id"
-        ]
-      },
-      "code": 422,
-      "show_in_doc": 1,
-      "recorded": true
-    },
-    {
-      "verb": "POST",
-      "path": "/assessments/706f292e-2210-4c18-8f0d-be542ff522fd/applicant",
-      "versions": [
-        "1.0"
-      ],
-      "query": null,
-      "request_data": {
-        "assessment_id": "706f292e-2210-4c18-8f0d-be542ff522fd",
-        "applicant": {
-          "date_of_birth": "1999-07-08",
+          "date_of_birth": "1999-07-09",
           "involvement_type": "Applicant",
           "has_partner_opponent": false,
           "receives_qualifying_benefit": "yes"
@@ -92,10 +65,108 @@
       "recorded": true
     }
   ],
+  "assessments#create": [
+    {
+      "verb": "POST",
+      "path": "/assessments",
+      "versions": [
+        "1.0"
+      ],
+      "query": null,
+      "request_data": {
+        "client_reference_id": "psr-123",
+        "submission_date": "2019-06-06",
+        "matter_proceeding_type": "domestic abuse"
+      },
+      "response_data": {
+        "success": true,
+        "objects": [
+          {
+            "id": "948d7d6f-c694-4d34-9072-06fcf0c059d5",
+            "client_reference_id": "psr-123",
+            "remote_ip": {
+              "family": 2,
+              "addr": 2130706433,
+              "mask_addr": 4294967295
+            },
+            "created_at": "2019-07-09T11:59:39.472Z",
+            "updated_at": "2019-07-09T11:59:39.472Z",
+            "submission_date": "2019-06-06",
+            "matter_proceeding_type": "domestic abuse"
+          }
+        ],
+        "errors": [
+
+        ]
+      },
+      "code": 200,
+      "show_in_doc": 1,
+      "recorded": true
+    },
+    {
+      "verb": "POST",
+      "path": "/assessments",
+      "versions": [
+        "1.0"
+      ],
+      "query": null,
+      "request_data": {
+        "client_reference_id": "psr-123",
+        "submission_date": "2019-06-06",
+        "matter_proceeding_type": "domestic abuse"
+      },
+      "response_data": {
+        "success": true,
+        "objects": [
+          {
+            "id": "35872255-8445-45dc-9c4d-864988ca325f",
+            "client_reference_id": "psr-123",
+            "remote_ip": {
+              "family": 2,
+              "addr": 2130706433,
+              "mask_addr": 4294967295
+            },
+            "created_at": "2019-07-09T11:59:39.483Z",
+            "updated_at": "2019-07-09T11:59:39.483Z",
+            "submission_date": "2019-06-06",
+            "matter_proceeding_type": "domestic abuse"
+          }
+        ],
+        "errors": [
+
+        ]
+      },
+      "code": 200,
+      "show_in_doc": 1,
+      "recorded": true
+    },
+    {
+      "verb": "POST",
+      "path": "/assessments",
+      "versions": [
+        "1.0"
+      ],
+      "query": null,
+      "request_data": {
+        "client_reference_id": "psr-123",
+        "submission_date": "2019-06-06",
+        "matter_proceeding_type": "domestic abuse"
+      },
+      "response_data": {
+        "errors": [
+          "error creating record"
+        ],
+        "success": false
+      },
+      "code": 422,
+      "show_in_doc": 1,
+      "recorded": true
+    }
+  ],
   "outgoings#create": [
     {
       "verb": "POST",
-      "path": "/assessments/5d5f8454-c4ef-46d0-bab0-76b2b61dc76d/outgoings",
+      "path": "/assessments/72d77300-58e2-4905-be8b-50f477b28631/outgoings",
       "versions": [
         "1.0"
       ],
@@ -103,14 +174,14 @@
       "request_data": {
         "outgoings": [
           {
-            "outgoing_type": "child_care",
-            "payment_date": "2019-06-17",
-            "amount": "984.05"
+            "outgoing_type": "mortgage",
+            "payment_date": "2019-06-18",
+            "amount": "431.09"
           },
           {
             "outgoing_type": "legal_aid",
-            "payment_date": "2019-06-17",
-            "amount": "399.02"
+            "payment_date": "2019-06-18",
+            "amount": "323.03"
           }
         ]
       },
@@ -118,22 +189,22 @@
         "success": true,
         "outgoings": [
           {
-            "id": "ae94d692-1cd8-41e8-a719-ce94e9e8affe",
-            "outgoing_type": "child_care",
-            "payment_date": "2019-06-17",
-            "amount": "984.05",
-            "assessment_id": "5d5f8454-c4ef-46d0-bab0-76b2b61dc76d",
-            "created_at": "2019-07-08T10:56:57.978Z",
-            "updated_at": "2019-07-08T10:56:57.978Z"
+            "id": "084599d3-12a3-4679-a157-fe4a91e0ecfc",
+            "outgoing_type": "mortgage",
+            "payment_date": "2019-06-18",
+            "amount": "431.09",
+            "assessment_id": "72d77300-58e2-4905-be8b-50f477b28631",
+            "created_at": "2019-07-09T11:59:39.519Z",
+            "updated_at": "2019-07-09T11:59:39.519Z"
           },
           {
-            "id": "e71030d5-566e-4923-b1ef-677b73351203",
+            "id": "5dea909e-3e5d-41d9-a985-303b57b90531",
             "outgoing_type": "legal_aid",
-            "payment_date": "2019-06-17",
-            "amount": "399.02",
-            "assessment_id": "5d5f8454-c4ef-46d0-bab0-76b2b61dc76d",
-            "created_at": "2019-07-08T10:56:57.981Z",
-            "updated_at": "2019-07-08T10:56:57.981Z"
+            "payment_date": "2019-06-18",
+            "amount": "323.03",
+            "assessment_id": "72d77300-58e2-4905-be8b-50f477b28631",
+            "created_at": "2019-07-09T11:59:39.526Z",
+            "updated_at": "2019-07-09T11:59:39.526Z"
           }
         ],
         "errors": [
@@ -154,14 +225,14 @@
       "request_data": {
         "outgoings": [
           {
-            "outgoing_type": "legal_aid",
-            "payment_date": "2019-06-17",
-            "amount": "994.09"
+            "outgoing_type": "maintenance",
+            "payment_date": "2019-06-18",
+            "amount": "480.02"
           },
           {
             "outgoing_type": "child_care",
-            "payment_date": "2019-06-17",
-            "amount": "913.02"
+            "payment_date": "2019-06-18",
+            "amount": "301.04"
           }
         ]
       },

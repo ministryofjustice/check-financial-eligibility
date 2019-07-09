@@ -1,33 +1,30 @@
 class AssessmentsController < ApplicationController
+  api :POST, 'asssessments', 'Create asssessment'
+  formats ['json']
+  param :client_reference_id, String, "The client's reference number for this application"
+  param :submission_date, Date, date_option: :today_or_older, required: true, desc: 'The date of the original submission'
+  param :matter_proceeding_type, ['domestic abuse'], required: true, desc: 'The matter type of the case'
+
+  returns code: :ok, desc: 'Successful response' do
+    property :objects, array_of: Assessment
+    property :success, ['true'], desc: 'Success flag shows true'
+  end
+  returns code: :unprocessable_entity do
+    property :errors, array_of: String, desc: 'Description of why object invalid'
+    property :success, ['false'], desc: 'Success flag shows false'
+  end
+
   def create
-    if assessment_creation.success?
-      render json: success_response
+    if assessment_creation_service.success?
+      render json: assessment_creation_service
     else
-      render json: error_response, status: 422
+      render_unprocessable(assessment_creation_service.errors)
     end
   end
 
   private
 
-  def success_response
-    {
-      status: :ok,
-      assessment_id: assessment.id
-    }
-  end
-
-  def error_response
-    {
-      status: :error,
-      errors: assessment_creation.errors
-    }
-  end
-
-  def assessment
-    assessment_creation.assessment
-  end
-
-  def assessment_creation
-    @assessment_creation ||= AssessmentCreationService.new(request.remote_ip, request.raw_post)
+  def assessment_creation_service
+    @assessment_creation_service ||= AssessmentCreationService.call(request.remote_ip, request.raw_post)
   end
 end
