@@ -30,30 +30,31 @@ RSpec.describe ApplicantsController, type: :request do
         it 'returns expected response' do
           expect(parsed_response[:success]).to eq(true)
           expect(parsed_response[:errors]).to be_empty
-<<<<<<< HEAD
           expect(parsed_response[:objects].size).to eq 1
           expect(parsed_response[:objects].first[:date_of_birth]).to eq 20.years.ago.to_date.strftime('%Y-%m-%d')
           expect(parsed_response[:objects].first[:assessment_id]).to eq assessment.id
           expect(parsed_response[:objects].first[:involvement_type]).to eq 'Applicant'
           expect(parsed_response[:objects].first[:has_partner_opponent]).to be false
           expect(parsed_response[:objects].first[:receives_qualifying_benefit]).to be true
-=======
-          expect(parsed_response[:objects]).to eq([applicant])
->>>>>>> AP-766 fix spec
         end
       end
 
       context 'service returns failure' do
+        let(:future_date) { 4.years.from_now.to_date }
+        let(:future_date_string) { future_date.strftime('%Y-%m-%d') }
         let(:params) do
           {
             assessment_id: assessment.id,
             applicant: {
-              date_of_birth: 4.years.from_now.to_date,
+              date_of_birth: future_date,
               involvement_type: 'Applicant',
               has_partner_opponent: false,
               receives_qualifying_benefit: true
             }
           }
+        end
+        let(:expected_message) do
+          %(Invalid parameter 'date_of_birth' value "#{future_date_string}": Date must be parsable and in the past. For example: '2019-05-23')
         end
 
         it 'returns 422' do
@@ -62,7 +63,7 @@ RSpec.describe ApplicantsController, type: :request do
 
         it 'returns expected response' do
           expect(parsed_response[:success]).to eq(false)
-          expect(parsed_response[:errors]).to eq [%(Invalid parameter 'date_of_birth' value "#{4.years.from_now.to_date.strftime('%Y-%m-%d')}": Date must be parsable and in the past. For example: '2019-05-23')]
+          expect(parsed_response[:errors]).to eq [expected_message]
           expect(parsed_response[:objects]).to be_nil
         end
       end
