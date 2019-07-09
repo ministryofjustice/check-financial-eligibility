@@ -14,7 +14,7 @@ RSpec.describe DateValidator do
     end
 
     it 'returns false with an invalid date' do
-      ['10-Jon-2015', '26-26-2019', 'foo'].each do |input|
+      %w[10-Jon-2015 26-26-2019 foo].each do |input|
         expect(subject.validate(input)).to be_falsey
       end
     end

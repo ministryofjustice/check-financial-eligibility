@@ -75,7 +75,9 @@ jobs:
     - run:
         name: Database Setup
         command: |
+          echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> about to do rake db:setup <<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
           bundle exec rake db:setup
+          echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> about to do rake db:migrate <<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
           bundle exec rake db:migrate
     - run:
         name: Install NPM packages

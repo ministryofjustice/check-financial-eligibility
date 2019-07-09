@@ -1,6 +1,4 @@
 class ApplicantCreationService < BaseCreationService
-  SCHEMA_PATH = Rails.root.join('public/schemas/applicant.json').to_s
-
   attr_accessor :raw_post, :applicant
 
   def initialize(raw_post)
@@ -15,18 +13,9 @@ class ApplicantCreationService < BaseCreationService
   private
 
   def validate_and_create
-    validate_json
     create_applicant
   rescue CreationError => e
     self.errors = e.errors
-  end
-
-  def validate_json
-    raise CreationError, json_validator.errors unless json_validator.valid?
-  end
-
-  def json_validator
-    @json_validator ||= JsonSchemaValidator.new(raw_post, SCHEMA_PATH)
   end
 
   def create_applicant
