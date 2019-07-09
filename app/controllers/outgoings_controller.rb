@@ -10,7 +10,7 @@ class OutgoingsController < ApplicationController
   end
 
   returns code: :ok, desc: 'Successful response' do
-    property :objects, array_of: Outgoing
+    property :outgoings, array_of: Outgoing, desc: 'Array of created outgoing objects'
     property :success, ['true'], desc: 'Success flag shows true'
   end
   returns code: :unprocessable_entity do

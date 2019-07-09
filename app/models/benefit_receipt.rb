@@ -1,5 +1,8 @@
 class BenefitReceipt < ApplicationRecord
+  extend EnumHash
   belongs_to :assessment
+
+  enum benefit_name: enum_hash_for(:child_benefit, :jobseekers_allowance, :universal_credit)
 
   validate :payment_date_cannot_be_in_future
 

@@ -1,13 +1,8 @@
 # frozen_string_literal: true
 
 class Outgoing < ApplicationRecord
+  extend EnumHash
   belongs_to :assessment
 
-  enum outgoing_type: {
-    rent: 'rent',
-    mortgage: 'mortgage',
-    child_care: 'child_care',
-    maintenance: 'maintenance',
-    legal_aid: 'legal_aid'
-  }
+  enum outgoing_type: enum_hash_for(:rent, :mortgage, :child_care, :maintenance, :legal_aid)
 end

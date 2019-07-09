@@ -1,73 +1,49 @@
-class IncomeCreationService
-  SCHEMA_PATH = Rails.root.join('public/schemas/income.json').to_s
+class IncomeCreationService < BaseCreationService
+  attr_reader :assessment_id, :benefit_attributes, :wage_slip_attributes
 
-  def self.call(raw_post)
-    service = new(raw_post)
-    service.call
-  end
-
-  def initialize(raw_post)
-    @raw_post = raw_post
-    @payload = JSON.parse(@raw_post, symbolize_names: true)
-    @errors = []
+  def initialize(assessment_id:, benefits:, wage_slips:)
+    @assessment_id = assessment_id
+    @benefit_attributes = benefits
+    @wage_slip_attributes = wage_slips
   end
 
   def call
-    return success_response if json_valid? && assessment_exists? && create_income_records
-
-    error_response
+    build_objects && self
   end
 
-  private
-
-  def json_valid?
-    validator = JsonSchemaValidator.new(@raw_post, SCHEMA_PATH)
-    return true if validator.valid?
-
-    @errors = validator.errors
-    false
+  def as_json(_options = nil)
+    {
+      success: success?,
+      wage_slips: (wage_slips if success?),
+      benefits: (benefit_receipts if success?),
+      errors: errors
+    }
   end
 
-  def assessment_exists?
-    @assessment = Assessment.find_by(id: @payload[:assessment_id])
-    return true unless @assessment.nil?
-
-    @errors << 'No such assessment id'
-    false
-  end
-
-  def create_income_records
-    new_wage_slips
-    new_benefit_receipts
-    return true if @assessment.save
-
-    collect_model_errors
-    false
-  end
-
-  def new_wage_slips
-    @payload[:income][:wage_slips]&.each do |slip|
-      @assessment.wage_slips.new(slip)
+  def build_objects
+    WageSlip.transaction do
+      wage_slips
+      benefit_receipts
     end
   end
 
-  def new_benefit_receipts
-    @payload[:income][:benefits]&.each do |benefit_params|
-      @assessment.benefit_receipts.new(benefit_params)
+  def wage_slips
+    @wage_slips ||= wage_slip_attributes.map do |attributes|
+      assessment.wage_slips.create(attributes)
     end
   end
 
-  def collect_model_errors
-    @errors = @assessment.wage_slips.map { |ws| ws.errors.full_messages } +
-              @assessment.benefit_receipts.map { |br| br.errors.full_messages }
-    @errors.flatten!
+  def benefit_receipts
+    @benefit_receipts ||= benefit_attributes.map do |attributes|
+      assessment.benefit_receipts.create(attributes)
+    end
   end
 
-  def success_response
-    ApiResponse.success(@assessment.wage_slips + @assessment.benefit_receipts)
+  def errors
+    @errors ||= (wage_slips + benefit_receipts).map { |model| model.errors.full_messages }.flatten.compact
   end
 
-  def error_response
-    ApiResponse.error(@errors)
+  def assessment
+    @assessment ||= Assessment.find(assessment_id)
   end
 end
