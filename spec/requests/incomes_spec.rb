@@ -40,6 +40,18 @@ RSpec.describe IncomesController, type: :request do
       expect(parsed_response[:errors]).to be_empty
     end
 
+    it 'returns an array of wage_slips' do
+      subject
+      expect(parsed_response[:wage_slips].pluck(:id)).to include(WageSlip.order(:created_at).last.id)
+      expect(parsed_response[:wage_slips].pluck(:paye)).to contain_exactly(*wage_slips.pluck(:paye))
+    end
+
+    it 'returns an array of benefit receipts' do
+      subject
+      expect(parsed_response[:benefits].pluck(:id)).to include(BenefitReceipt.order(:created_at).last.id)
+      expect(parsed_response[:benefits].pluck(:amount)).to contain_exactly(*benefit_receipts.pluck(:amount))
+    end
+
     shared_examples 'an unprocessable entity' do |invalid_item|
       before { subject }
 
