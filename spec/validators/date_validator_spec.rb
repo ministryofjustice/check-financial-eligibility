@@ -42,7 +42,7 @@ RSpec.describe DateValidator do
       let(:option) { :unknown }
 
       it 'raises and error' do
-        expect { subject.validate(Date.today.to_s) }.to raise_error
+        expect { subject.validate(Date.today.to_s) }.to raise_error("date option 'unknown' not recognised")
       end
     end
   end

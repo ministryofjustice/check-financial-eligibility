@@ -1,7 +1,7 @@
 FactoryBot.define do
-  factory :outgoing do
+  factory :benefit_receipt do
     assessment
-    outgoing_type { Outgoing.outgoing_types.keys.sample }
+    benefit_name { BenefitReceipt.benefit_names.values.sample }
     payment_date { Faker::Date.backward(14) }
     amount { Faker::Number.decimal(3) }
   end
