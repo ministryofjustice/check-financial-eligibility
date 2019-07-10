@@ -105,10 +105,10 @@ describe JsonSchemaValidator do
         end
       end
 
-      context 'dependents' do
+      context 'dependants' do
         context 'none specified' do
           before do
-            assessment_hash[:applicant].delete(:dependents)
+            assessment_hash[:applicant].delete(:dependants)
           end
         end
 

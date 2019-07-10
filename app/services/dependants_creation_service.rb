@@ -1,7 +1,7 @@
-class DependentsCreationService < BaseCreationService
-  SCHEMA_PATH = Rails.root.join('public/schemas/dependent.json').to_s
+class DependantsCreationService < BaseCreationService
+  SCHEMA_PATH = Rails.root.join('public/schemas/dependant.json').to_s
 
-  attr_accessor :raw_post, :dependents
+  attr_accessor :raw_post, :dependants
 
   def initialize(raw_post)
     @raw_post = raw_post
@@ -16,7 +16,7 @@ class DependentsCreationService < BaseCreationService
 
   def validate_and_create
     validate_json
-    create_dependents
+    create_dependants
   rescue CreationError => e
     self.errors = e.errors
   end
@@ -29,8 +29,8 @@ class DependentsCreationService < BaseCreationService
     @json_validator ||= JsonSchemaValidator.new(@raw_post, SCHEMA_PATH)
   end
 
-  def create_dependents
-    self.dependents = assessment.dependents.create!(dependent_params)
+  def create_dependants
+    self.dependants = assessment.dependants.create!(dependant_params)
   rescue ActiveRecord::RecordInvalid => e
     raise CreationError, e.record.errors.full_messages
   end
@@ -43,10 +43,10 @@ class DependentsCreationService < BaseCreationService
     @payload ||= JSON.parse(@raw_post, symbolize_names: true)
   end
 
-  def dependent_params
-    payload[:dependents].map do |dependent|
-      dependent[:dependent_income_receipts_attributes] = dependent.delete(:income) if dependent[:income]
-      dependent
+  def dependant_params
+    payload[:dependants].map do |dependant|
+      dependant[:dependant_income_receipts_attributes] = dependant.delete(:income) if dependant[:income]
+      dependant
     end
   end
 end

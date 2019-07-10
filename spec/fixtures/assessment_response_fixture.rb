@@ -89,6 +89,6 @@ class AssessmentResponseFixture < BaseAssessmentFixture
   end
 end
 # include outgoings total
-# allowances  -> dependents, adult dependents, over 65, et
+# allowances  -> dependants, adult dependants, over 65, et
 
 # return any aggregate values and any allowances, and calculated sums that we have used.

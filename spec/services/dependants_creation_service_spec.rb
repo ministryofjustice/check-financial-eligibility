@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe DependentsCreationService do
+RSpec.describe DependantsCreationService do
   include Rails.application.routes.url_helpers
   let(:assessment) { create :assessment }
 
@@ -11,16 +11,16 @@ RSpec.describe DependentsCreationService do
   context 'valid payload without income' do
     let(:request_payload) { valid_payload_without_income }
 
-    it 'creates two dependent records for this assessment' do
-      expect { subject }.to change { Dependent.count }.by(2)
+    it 'creates two dependant records for this assessment' do
+      expect { subject }.to change { Dependant.count }.by(2)
 
-      dependent = assessment.dependents.order(:date_of_birth).first
-      expect(dependent.date_of_birth).to eq 12.years.ago.to_date
-      expect(dependent.in_full_time_education).to be false
+      dependant = assessment.dependants.order(:date_of_birth).first
+      expect(dependant.date_of_birth).to eq 12.years.ago.to_date
+      expect(dependant.in_full_time_education).to be false
 
-      dependent = assessment.dependents.order(:date_of_birth).last
-      expect(dependent.date_of_birth).to eq 6.years.ago.to_date
-      expect(dependent.in_full_time_education).to be true
+      dependant = assessment.dependants.order(:date_of_birth).last
+      expect(dependant.date_of_birth).to eq 6.years.ago.to_date
+      expect(dependant.in_full_time_education).to be true
     end
 
     describe '#success?' do
@@ -29,11 +29,11 @@ RSpec.describe DependentsCreationService do
       end
     end
 
-    describe '#dependents' do
-      it 'returns the created dependents' do
-        expect(subject.dependents.count).to eq(2)
-        expect(subject.dependents.first).to be_a(Dependent)
-        expect(subject.dependents.first.assessment.id).to eq(assessment.id)
+    describe '#dependants' do
+      it 'returns the created dependants' do
+        expect(subject.dependants.count).to eq(2)
+        expect(subject.dependants.first).to be_a(Dependant)
+        expect(subject.dependants.first.assessment.id).to eq(assessment.id)
       end
     end
   end
@@ -41,14 +41,14 @@ RSpec.describe DependentsCreationService do
   context 'valid payload with income' do
     let(:request_payload) { valid_payload_with_income }
     describe '#success?' do
-      it 'creates one dependent' do
-        expect { subject }.to change { Dependent.count }.by(1)
+      it 'creates one dependant' do
+        expect { subject }.to change { Dependant.count }.by(1)
       end
 
       it 'creates three income records' do
-        expect { subject }.to change { DependentIncomeReceipt.count }.by(3)
+        expect { subject }.to change { DependantIncomeReceipt.count }.by(3)
 
-        dirs = assessment.dependents.first.dependent_income_receipts.order(:date_of_payment)
+        dirs = assessment.dependants.first.dependant_income_receipts.order(:date_of_payment)
         expect(dirs.first.date_of_payment).to eq 60.days.ago.to_date
         expect(dirs.first.amount).to eq 66.66
 
@@ -72,19 +72,19 @@ RSpec.describe DependentsCreationService do
     it 'returns an error payload' do
       expect(subject.errors.size).to eq 6
       expect(subject.errors[0]).to match %r{The property '#/' contains additional properties \[\"extra_property\"\] }
-      expect(subject.errors[1]).to match %r{The property '#/dependents/0' did not contain a required property of 'in_full_time_education'}
-      expect(subject.errors[2]).to match %r{The property '#/dependents/0' contains additional properties \[\"extra_dependent_property\"\]}
-      expect(subject.errors[3]).to match %r{The property '#/dependents/0/date_of_birth' value \"not-a-valid-date\" did not match the regex}
-      expect(subject.errors[4]).to match %r{The property '#/dependents/1/income/0/date_of_payment' value \".+\" did not match the regex}
-      expect(subject.errors[5]).to match %r{The property '#/dependents/1/income/0' contains additional properties \[\"reason\"\]}
+      expect(subject.errors[1]).to match %r{The property '#/dependants/0' did not contain a required property of 'in_full_time_education'}
+      expect(subject.errors[2]).to match %r{The property '#/dependants/0' contains additional properties \[\"extra_dependant_property\"\]}
+      expect(subject.errors[3]).to match %r{The property '#/dependants/0/date_of_birth' value \"not-a-valid-date\" did not match the regex}
+      expect(subject.errors[4]).to match %r{The property '#/dependants/1/income/0/date_of_payment' value \".+\" did not match the regex}
+      expect(subject.errors[5]).to match %r{The property '#/dependants/1/income/0' contains additional properties \[\"reason\"\]}
     end
 
-    it 'does not create a Dependent record' do
-      expect { subject }.not_to change { Dependent.count }
+    it 'does not create a Dependant record' do
+      expect { subject }.not_to change { Dependant.count }
     end
 
-    it 'does not create any DependentIncomeReceipt records' do
-      expect { subject }.not_to change { DependentIncomeReceipt.count }
+    it 'does not create any DependantIncomeReceipt records' do
+      expect { subject }.not_to change { DependantIncomeReceipt.count }
     end
   end
 
@@ -95,19 +95,19 @@ RSpec.describe DependentsCreationService do
         expect(subject.success?).to be false
       end
 
-      it 'does not create a Dependent record' do
-        expect { subject }.not_to change { Dependent.count }
+      it 'does not create a Dependant record' do
+        expect { subject }.not_to change { Dependant.count }
       end
 
-      it 'does not create any DependentIncomeReceipt records' do
-        expect { subject }.not_to change { DependentIncomeReceipt.count }
+      it 'does not create any DependantIncomeReceipt records' do
+        expect { subject }.not_to change { DependantIncomeReceipt.count }
       end
     end
 
     describe 'errors' do
       it 'returns an error payload' do
         expect(subject.errors.size).to eq 2
-        expect(subject.errors).to include 'Dependent income receipts date of payment cannot be in the future'
+        expect(subject.errors).to include 'Dependant income receipts date of payment cannot be in the future'
         expect(subject.errors).to include 'Date of birth cannot be in future'
       end
     end
@@ -120,12 +120,12 @@ RSpec.describe DependentsCreationService do
         expect(subject.success?).to be false
       end
 
-      it 'does not create a Dependent record' do
-        expect { subject }.not_to change { Dependent.count }
+      it 'does not create a Dependant record' do
+        expect { subject }.not_to change { Dependant.count }
       end
 
-      it 'does not create any DependentIncomeReceipt records' do
-        expect { subject }.not_to change { DependentIncomeReceipt.count }
+      it 'does not create any DependantIncomeReceipt records' do
+        expect { subject }.not_to change { DependantIncomeReceipt.count }
       end
     end
 
@@ -140,7 +140,7 @@ RSpec.describe DependentsCreationService do
   let(:payload_with_invalid_id) do
     {
       assessment_id: '34e353e2-dedb-4314-a271-9ff579e19f45',
-      dependents: [
+      dependants: [
         {
           date_of_birth: 12.years.ago.to_date,
           in_full_time_education: false
@@ -157,9 +157,9 @@ RSpec.describe DependentsCreationService do
     {
       assessment_id: assessment.id,
       extra_property: 'this should not be here',
-      dependents: [
+      dependants: [
         {
-          extra_dependent_property: 'this should not be here',
+          extra_dependant_property: 'this should not be here',
           date_of_birth: 'not-a-valid-date'
         },
         {
@@ -178,7 +178,7 @@ RSpec.describe DependentsCreationService do
   let(:valid_payload_without_income) do
     {
       assessment_id: assessment.id,
-      dependents: [
+      dependants: [
         {
           date_of_birth: 12.years.ago.to_date,
           in_full_time_education: false
@@ -194,7 +194,7 @@ RSpec.describe DependentsCreationService do
   let(:valid_payload_with_income) do
     {
       assessment_id: assessment.id,
-      dependents: [
+      dependants: [
         {
           date_of_birth: 12.years.ago.to_date,
           in_full_time_education: false,
@@ -221,7 +221,7 @@ RSpec.describe DependentsCreationService do
   let(:payload_with_future_dates) do
     {
       assessment_id: assessment.id,
-      dependents: [
+      dependants: [
         {
           date_of_birth: 3.years.from_now.to_date,
           in_full_time_education: false,

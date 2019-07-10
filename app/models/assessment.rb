@@ -7,7 +7,7 @@ class Assessment < ApplicationRecord
 
   has_many :bank_accounts
   has_many :benefit_receipts
-  has_many :dependents
+  has_many :dependants
   has_many :non_liquid_assets
   has_many :outgoings
   has_many :properties

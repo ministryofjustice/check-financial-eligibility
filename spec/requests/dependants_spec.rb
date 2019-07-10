@@ -1,19 +1,19 @@
 require 'rails_helper'
 
-RSpec.describe DependentsController, type: :request do
-  describe 'POST dependents' do
+RSpec.describe DependantsController, type: :request do
+  describe 'POST dependants' do
     let(:assessment) { create :assessment }
-    let(:dependents) { create_list :dependent, 2, assessment: assessment }
+    let(:dependants) { create_list :dependant, 2, assessment: assessment }
     let(:request_payload) { { foo: :bar }.to_json }
 
-    subject { post assessment_dependents_path(assessment), params: request_payload }
+    subject { post assessment_dependants_path(assessment), params: request_payload }
 
     before { stub_call_to_json_schema }
 
     context 'valid payload' do
       before do
-        service = double DependentsCreationService, success?: true, dependents: dependents
-        expect(DependentsCreationService).to receive(:call).with(request_payload).and_return(service)
+        service = double DependantsCreationService, success?: true, dependants: dependants
+        expect(DependantsCreationService).to receive(:call).with(request_payload).and_return(service)
         subject
       end
 
@@ -25,14 +25,14 @@ RSpec.describe DependentsController, type: :request do
         expect(parsed_response[:success]).to eq(true)
         expect(parsed_response[:errors]).to be_empty
         expect(parsed_response[:objects]).not_to be_empty
-        expect(parsed_response[:objects].first[:id]).to eq(dependents.first.id)
+        expect(parsed_response[:objects].first[:id]).to eq(dependants.first.id)
       end
     end
 
     context 'invalid payload' do
       before do
-        service = double DependentsCreationService, success?: false, errors: %w[error_1 error_2]
-        expect(DependentsCreationService).to receive(:call).with(request_payload).and_return(service)
+        service = double DependantsCreationService, success?: false, errors: %w[error_1 error_2]
+        expect(DependantsCreationService).to receive(:call).with(request_payload).and_return(service)
         subject
       end
 
