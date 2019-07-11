@@ -1,9 +1,9 @@
-class DependentsController < ApplicationController
+class DependantsController < ApplicationController
   def create
     if creation_service_result.success?
       render json: {
         success: true,
-        objects: creation_service_result.dependents,
+        objects: creation_service_result.dependants,
         errors: []
       }
     else
@@ -18,6 +18,6 @@ class DependentsController < ApplicationController
   private
 
   def creation_service_result
-    @creation_service_result ||= DependentsCreationService.call(request.raw_post)
+    @creation_service_result ||= DependantsCreationService.call(request.raw_post)
   end
 end

@@ -1,7 +1,7 @@
 {
   "id": "http://localhost:3000/schemas/vehicles.json",
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "title": "Legal Aid Check Financial Eligibility create dependent payload schema",
+  "title": "Legal Aid Check Financial Eligibility create dependant payload schema",
   "description": "This schema defines the payload required to create one or more define vehicles owned by the applicant for the Legal Aid Check Financial Eligibility API",
   "definitions": {
     "vehicle": {

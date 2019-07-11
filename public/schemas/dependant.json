@@ -1,10 +1,10 @@
 {
-  "id": "http://localhost:3000/schemas/dependent.json",
+  "id": "http://localhost:3000/schemas/dependant.json",
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "title": "Legal Aid Check Financial Eligibility create dependent payload schema",
-  "description": "This schema defines the payload required to create one or more dependents and specify any income they may have  for the Legal Aid Check Financial Eligibility API",
+  "title": "Legal Aid Check Financial Eligibility create dependant payload schema",
+  "description": "This schema defines the payload required to create one or more dependants and specify any income they may have  for the Legal Aid Check Financial Eligibility API",
   "definitions": {
-    "dependent": {
+    "dependant": {
       "required": [
         "date_of_birth",
         "in_full_time_education"
@@ -12,24 +12,24 @@
       "additionalProperties": false,
       "properties": {
         "date_of_birth": {
-          "description": "The date of birth of the dependent",
+          "description": "The date of birth of the dependant",
           "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/date"
         },
         "in_full_time_education": {
-          "description": "Whether or not the dependent is in full time education",
+          "description": "Whether or not the dependant is in full time education",
           "type":  "boolean"
         },
         "income": {
-          "description": "An array of objects describing the dependent's income receipts during the calculation period",
+          "description": "An array of objects describing the dependant's income receipts during the calculation period",
           "type": "array",
           "items":{
-            "$ref": "#/definitions/dependent_income_receipt"
+            "$ref": "#/definitions/dependant_income_receipt"
           }
         }
       }
     },
-    "dependent_income_receipt": {
-      "description": "An object describing one income receipt by a dependent",
+    "dependant_income_receipt": {
+      "description": "An object describing one income receipt by a dependant",
       "type": "object",
       "required": [
         "date_of_payment",
@@ -37,7 +37,7 @@
       ],
       "properties": {
         "date_of_payment": {
-          "description": "The date the dependent received this income",
+          "description": "The date the dependant received this income",
           "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/date"
         },
         "amount": {
@@ -51,7 +51,7 @@
   "type": "object",
   "required":[
     "assessment_id",
-    "dependents"
+    "dependants"
   ],
   "additionalProperties": false,
   "properties": {
@@ -59,11 +59,11 @@
       "description": "The UUID of the assessment returned from the call to the assessment endpoint",
       "$ref": "http://localhost:3000/schemas/assessment_request.json#definitions/uuid"
     },
-    "dependents": {
-      "description": "An array of objects describing the applicant's dependents",
+    "dependants": {
+      "description": "An array of objects describing the applicant's dependants",
       "type": "array",
       "items": {
-        "$ref": "#/definitions/dependent"
+        "$ref": "#/definitions/dependant"
       }
     }
   }

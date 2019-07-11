@@ -1,7 +1,7 @@
-class Dependent < ApplicationRecord
+class Dependant < ApplicationRecord
   belongs_to :assessment
-  has_many :dependent_income_receipts
-  accepts_nested_attributes_for :dependent_income_receipts
+  has_many :dependant_income_receipts
+  accepts_nested_attributes_for :dependant_income_receipts
 
   validate :date_of_birth_in_past
 

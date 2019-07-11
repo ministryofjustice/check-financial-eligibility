@@ -9,7 +9,7 @@
     "involvement_type": "applicant",
     "has_partner_opponent": false,
     "receives_qualifying_benefit": false,
-    "dependents": [
+    "dependants": [
       {
         "date_of_birth": "1995-02-02",
         "in_full_time_education": false,

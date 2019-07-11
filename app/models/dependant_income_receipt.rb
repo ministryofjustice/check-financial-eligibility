@@ -1,5 +1,5 @@
-class DependentIncomeReceipt < ApplicationRecord
-  belongs_to :dependent
+class DependantIncomeReceipt < ApplicationRecord
+  belongs_to :dependant
 
   validate :date_of_payment_cannot_be_in_future
 
