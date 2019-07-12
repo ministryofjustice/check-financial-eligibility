@@ -8,25 +8,16 @@ class DependantsCreationService < BaseCreationService
   end
 
   def call
-    validate_and_create
+    create
     self
   end
 
   private
 
-  def validate_and_create
-    validate_json
+  def create
     create_dependants
   rescue CreationError => e
     self.errors = e.errors
-  end
-
-  def validate_json
-    raise CreationError, json_validator.errors unless json_validator.valid?
-  end
-
-  def json_validator
-    @json_validator ||= JsonSchemaValidator.new(@raw_post, SCHEMA_PATH)
   end
 
   def create_dependants
