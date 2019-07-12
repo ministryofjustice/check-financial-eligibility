@@ -61,33 +61,6 @@ RSpec.describe DependantsCreationService do
     end
   end
 
-  context 'payload fails JSON schema' do
-    let(:request_payload) { invalid_payload }
-    describe '#success?' do
-      it 'returns false' do
-        expect(subject.success?).to be false
-      end
-    end
-
-    it 'returns an error payload' do
-      expect(subject.errors.size).to eq 6
-      expect(subject.errors[0]).to match %r{The property '#/' contains additional properties \[\"extra_property\"\] }
-      expect(subject.errors[1]).to match %r{The property '#/dependants/0' did not contain a required property of 'in_full_time_education'}
-      expect(subject.errors[2]).to match %r{The property '#/dependants/0' contains additional properties \[\"extra_dependant_property\"\]}
-      expect(subject.errors[3]).to match %r{The property '#/dependants/0/date_of_birth' value \"not-a-valid-date\" did not match the regex}
-      expect(subject.errors[4]).to match %r{The property '#/dependants/1/income/0/date_of_payment' value \".+\" did not match the regex}
-      expect(subject.errors[5]).to match %r{The property '#/dependants/1/income/0' contains additional properties \[\"reason\"\]}
-    end
-
-    it 'does not create a Dependant record' do
-      expect { subject }.not_to change { Dependant.count }
-    end
-
-    it 'does not create any DependantIncomeReceipt records' do
-      expect { subject }.not_to change { DependantIncomeReceipt.count }
-    end
-  end
-
   context 'payload fails ActiveRecord validations' do
     let(:request_payload) { payload_with_future_dates }
     describe '#success?' do
@@ -148,28 +121,6 @@ RSpec.describe DependantsCreationService do
         {
           date_of_birth: 6.years.ago.to_date,
           in_full_time_education: true
-        }
-      ]
-    }.to_json
-  end
-
-  let(:invalid_payload) do
-    {
-      assessment_id: assessment.id,
-      extra_property: 'this should not be here',
-      dependants: [
-        {
-          extra_dependant_property: 'this should not be here',
-          date_of_birth: 'not-a-valid-date'
-        },
-        {
-          date_of_birth: '2016-02-03',
-          in_full_time_education: true,
-          income: [
-            date_of_payment: 2.days.ago,
-            amount: 44.00,
-            reason: 'extra property'
-          ]
         }
       ]
     }.to_json
