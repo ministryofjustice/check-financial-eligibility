@@ -3,63 +3,139 @@ require 'rails_helper'
 RSpec.describe CapitalsController, type: :request do
   describe 'POST capital' do
     let(:assessment) { create :assessment }
-    let(:capital) do
+    let(:params) do
       {
-        bank_accounts: attributes_for_list(:bank_account, 2),
-        non_liquid_assets: attributes_for_list(:non_liquid_asset, 2)
+        assessment_id: assessment.id,
+        liquid_capital: {
+          bank_accounts: attributes_for_list(:bank_account, 2)
+        },
+        non_liquid_capital: attributes_for_list(:non_liquid_asset, 2)
       }
     end
-    let(:params) { { foo: :bar }.to_json }
-
-    subject { post assessment_capitals_path(assessment), params: params }
-
-    before { stub_call_to_json_schema }
+    let(:headers) { { 'CONTENT_TYPE' => 'application/json' } }
 
     context 'valid payload' do
-      before do
-        service = double CapitalsCreationService, success?: true, capital: capital
-        expect(CapitalsCreationService).to receive(:call).with(params).and_return(service)
-        subject
+      context 'with both types of assets' do
+        before { post assessment_capitals_path(assessment), params: params.to_json, headers: headers }
+        it 'returns http success', :show_in_doc do
+          expect(response).to have_http_status(:success)
+        end
+
+        it 'generates a valid response' do
+          expect(parsed_response[:success]).to eq(true)
+          expect(parsed_response[:errors]).to be_empty
+          expect(parsed_response[:objects][:bank_accounts].size).to eq 2
+          expect(parsed_response[:objects][:non_liquid_assets].size).to eq 2
+        end
       end
 
-      it 'returns http success' do
-        expect(response).to have_http_status(:success)
+      context 'with only bank accounts' do
+        before do
+          params.delete(:non_liquid_capital)
+          post assessment_capitals_path(assessment), params: params.to_json, headers: headers
+        end
+
+        it 'returns http success' do
+          expect(response).to have_http_status(:success)
+        end
+
+        it 'generates a valid response' do
+          expect(parsed_response[:success]).to eq(true)
+          expect(parsed_response[:errors]).to be_empty
+          expect(parsed_response[:objects][:bank_accounts].size).to eq 2
+          expect(parsed_response[:objects][:non_liquid_assets]).to be_empty
+        end
       end
 
-      it 'generates a valid response' do
-        expect(parsed_response[:success]).to eq(true)
-        expect(parsed_response[:errors]).to be_empty
-        expect(parsed_response[:objects]).to eq(capital)
+      context 'with only non-liquid assets' do
+        before do
+          params.delete(:liquid_capital)
+          post assessment_capitals_path(assessment), params: params.to_json, headers: headers
+        end
+
+        it 'returns http success' do
+          expect(response).to have_http_status(:success)
+        end
+
+        it 'generates a valid response' do
+          expect(parsed_response[:success]).to eq(true)
+          expect(parsed_response[:errors]).to be_empty
+          expect(parsed_response[:objects][:bank_accounts]).to be_empty
+          expect(parsed_response[:objects][:non_liquid_assets].size).to eq 2
+        end
+      end
+
+      context 'empty payload' do
+        let(:params) { {} }
+
+        before { post assessment_capitals_path(assessment), params: params.to_json, headers: headers }
+
+        it 'returns http unprocessable entity' do
+          expect(response).to have_http_status(:success)
+        end
+
+        it 'returns error payload' do
+          expect(parsed_response[:success]).to eq(true)
+          expect(parsed_response[:errors]).to be_empty
+          expect(parsed_response[:objects][:bank_accounts]).to be_empty
+          expect(parsed_response[:objects][:non_liquid_assets]).to be_empty
+        end
+      end
+
+      context 'Active Record error' do
+        before do
+          params[:assessment_id] = SecureRandom.uuid
+          post assessment_capitals_path(assessment), params: params.to_json, headers: headers
+        end
+
+        it 'errors and is shown in apidocs', :show_in_doc do
+          expect(response).to have_http_status(422)
+        end
+
+        it_behaves_like 'it fails with message', 'No such assessment id'
       end
     end
 
     context 'invalid payload' do
-      before do
-        service = double CapitalsCreationService, success?: false, errors: %w[error_1 error_2]
-        expect(CapitalsCreationService).to receive(:call).with(params).and_return(service)
-        subject
+      context 'missing bank account on liquid capital' do
+        before do
+          params[:liquid_capital] = {}
+          post assessment_capitals_path(assessment), params: params.to_json, headers: headers
+        end
+
+        it_behaves_like 'it fails with message', 'Missing parameter bank_accounts'
       end
 
-      it 'returns http unprocessable entity' do
-        expect(response).to have_http_status(:unprocessable_entity)
+      context 'missing name on bank account' do
+        before do
+          params[:liquid_capital][:bank_accounts].first.delete(:name)
+          post assessment_capitals_path(assessment), params: params.to_json, headers: headers
+        end
+        it_behaves_like 'it fails with message', 'Missing parameter name'
       end
 
-      it 'returns error payload' do
-        expect(parsed_response[:success]).to eq(false)
-        expect(parsed_response[:objects]).to eq(nil)
-        expect(parsed_response[:errors]).to match_array(%w[error_1 error_2])
-      end
-    end
-
-    context 'empty payload' do
-      before { subject }
-
-      it 'returns http unprocessable entity' do
-        expect(response).to have_http_status(:unprocessable_entity)
+      context 'missing lowest balance on bank account' do
+        before do
+          params[:liquid_capital][:bank_accounts].first.delete(:lowest_balance)
+          post assessment_capitals_path(assessment), params: params.to_json, headers: headers
+        end
+        it_behaves_like 'it fails with message', 'Missing parameter lowest_balance'
       end
 
-      it 'returns error payload' do
-        expect(parsed_response[:errors]).not_to be_empty
+      context 'missing description on non_liquid capital' do
+        before do
+          params[:non_liquid_capital].first.delete(:description)
+          post assessment_capitals_path(assessment), params: params.to_json, headers: headers
+        end
+        it_behaves_like 'it fails with message', 'Missing parameter description'
+      end
+
+      context 'missing value on non-liquid capital' do
+        before do
+          params[:non_liquid_capital].first.delete(:value)
+          post assessment_capitals_path(assessment), params: params.to_json, headers: headers
+        end
+        it_behaves_like 'it fails with message', 'Missing parameter value'
       end
     end
   end

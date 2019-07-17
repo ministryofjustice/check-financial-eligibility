@@ -49,31 +49,6 @@ RSpec.describe CapitalsCreationService do
       end
     end
 
-    context 'with invalid JSON' do
-      let(:bank_accounts) { [{ name: 'hello', abc: 'def' }] }
-
-      describe '#success?' do
-        it 'returns false' do
-          expect(subject.success?).to be false
-        end
-      end
-
-      describe '#errors' do
-        it 'returns errors' do
-          expect(subject.errors[0]).to match %r{The property '#/liquid_capital/bank_accounts/0' did not contain a required property of 'lowest_balance'}
-          expect(subject.errors[1]).to match %r{The property '#/liquid_capital/bank_accounts/0' contains additional properties \[\"abc\"\]}
-        end
-      end
-
-      it 'does not createany bank account' do
-        expect { subject }.not_to change { BankAccount.count }
-      end
-
-      it 'does not create any non_liquid_asset' do
-        expect { subject }.not_to change { NonLiquidAsset.count }
-      end
-    end
-
     context 'no such assessment id' do
       let(:assessment_id) { SecureRandom.uuid }
 
