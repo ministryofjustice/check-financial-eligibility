@@ -5,7 +5,7 @@ class SalaryPatternGenerator
 
   attr_reader :period, :salary, :day_offset, :salary_offset, :start_at
 
-  def initialize(period:, salary:, day_offset: nil, salary_offset: nil, start_at: Time.now.utc)
+  def initialize(period:, salary: 100, day_offset: nil, salary_offset: nil, start_at: Time.now.utc)
     @period = period
     @salary = salary
     @salary_offset = salary_offset
@@ -15,6 +15,8 @@ class SalaryPatternGenerator
 
   def call
     case period
+    when :monthly_set_day
+      generate_monthly_set_day
     when :monthly
       generate_monthly
     when :weekly
@@ -26,17 +28,37 @@ class SalaryPatternGenerator
     end
   end
 
+  def generate_monthly_set_day
+    (0..2).each_with_object({}) do |offset, hash|
+      day = start_at.to_date << offset
+      time = weekend_offset(day.to_time)
+      hash[time] = sample_salary
+    end
+  end
+
+  def weekend_offset(day) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
+    return day unless day.wday > 5 && day_offset
+
+    case day_offset
+    when 1
+      day.saturday? ? day - 1.day : day + 1
+    when 2
+      day.saturday? ? day + 2.day : day + 1
+    else
+      day + day_offset.days
+    end
+  end
+
   def generate_monthly
     dates_for 0..2, :month
   end
 
   def generate_weekly(step = 1)
-    weeks = ((start_at_normalized - 3.months.ago) / 1.week).to_i
+    weeks = (3.months / 1.week).to_i
     dates_for (0..weeks).step(step), :week
   end
 
   def dates_for(points, method)
-    points.to_a
     points.each_with_object({}) do |n, h|
       time = sample_day(n.__send__(method).ago + start_offset)
       h[time] = sample_salary
