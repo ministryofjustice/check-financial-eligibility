@@ -46,7 +46,6 @@ RSpec.describe DependantsController, type: :request do
         expect(parsed_response[:success]).to eq(true)
         expect(parsed_response[:errors]).to be_empty
         expect(parsed_response[:objects]).not_to be_empty
-        # expect(parsed_response[:objects][:dependants].size).to eq 2
       end
     end
 
@@ -56,17 +55,17 @@ RSpec.describe DependantsController, type: :request do
       before { post assessment_dependants_path(assessment), params: request_payload.to_json, headers: headers }
 
       it 'returns http unprocessable entity' do
-       expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_entity)
       end
 
       it 'returns error payload' do
-       expect(parsed_response[:success]).to eq(false)
-       expect(parsed_response[:errors]).to_not be_empty
+        expect(parsed_response[:success]).to eq(false)
+        expect(parsed_response[:errors]).to contain_exactly('Missing parameter dependants')
       end
     end
 
     context 'invalid payload' do
-      let(:nil_full_time_education) { }
+      let(:nil_full_time_education) {}
       let(:request_payload) do
         {
           assessment_id: assessment.id,
@@ -74,23 +73,19 @@ RSpec.describe DependantsController, type: :request do
             {
               date_of_birth: 8.years.ago.to_date,
               in_full_time_education: nil_full_time_education
-            },
+            }
           ]
         }
       end
 
       before { post assessment_dependants_path(assessment), params: request_payload.to_json, headers: headers }
 
-      it 'returnsan error and is shown in apidocs', :show_in_doc do
-       expect(response).to have_http_status(:unprocessable_entity)
+      it 'returns an error and is shown in apidocs', :show_in_doc do
+        expect(response).to have_http_status(:unprocessable_entity)
       end
 
-      it 'returns error payload' do
-       expect(parsed_response[:success]).to eq(false)
-       expect(parsed_response[:errors]).to_not be_empty
-      end
-
-      it_behaves_like 'it fails with message', %(Invalid parameter 'in_full_time_education' value nil: Must be one of: <code>true</code>, <code>false</code>, <code>1</code>, <code>0</code>.)
+      it_behaves_like 'it fails with message',
+                      %(Invalid parameter 'in_full_time_education' value nil: Must be one of: <code>true</code>, <code>false</code>, <code>1</code>, <code>0</code>.)
     end
 
     context 'invalid assessment_id' do
@@ -102,7 +97,7 @@ RSpec.describe DependantsController, type: :request do
             {
               date_of_birth: 8.years.ago.to_date,
               in_full_time_education: true
-            },
+            }
           ]
         }
       end
@@ -110,16 +105,11 @@ RSpec.describe DependantsController, type: :request do
       before { post assessment_dependants_path(assessment), params: request_payload.to_json, headers: headers }
 
       it 'returns http unprocessable entity' do
-       expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_entity)
       end
 
       it 'errors and is shown in apidocs', :show_in_doc do
         expect(response).to have_http_status(422)
-      end
-
-      it 'returns error payload' do
-       expect(parsed_response[:success]).to eq(false)
-       expect(parsed_response[:errors]).to_not be_empty
       end
 
       it_behaves_like 'it fails with message', 'No such assessment id'

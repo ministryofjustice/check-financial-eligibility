@@ -24,7 +24,7 @@ class DependantsController < ApplicationController
     if creation_service_result.success?
       render json: {
         success: true,
-        objects: creation_service_result.dependants,
+        objects: creation_service_result.dependants.map { |dependant| DependantSerializer.new(dependant) },
         errors: []
       }
     else
