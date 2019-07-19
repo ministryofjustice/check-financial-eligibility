@@ -1,4 +1,18 @@
 class BaseCreationService
+  attr_writer :errors
+
+  def self.call(*args)
+    new(*args).call
+  end
+
+  def errors
+    @errors ||= []
+  end
+
+  def success?
+    errors.empty?
+  end
+
   class CreationError < StandardError
     attr_reader :errors
 
@@ -6,19 +20,5 @@ class BaseCreationService
       @errors = errors
       super
     end
-  end
-
-  attr_writer :errors
-
-  def errors
-    @errors ||= []
-  end
-
-  def self.call(*args)
-    new(*args).call
-  end
-
-  def success?
-    errors.empty?
   end
 end

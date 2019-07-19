@@ -1,75 +1,78 @@
 require 'rails_helper'
 
 RSpec.describe VehiclesController, type: :request do
-  let(:assessment) { create :assessment }
-  let(:vehicle_1) { create :vehicle, assessment: assessment }
-  let(:vehicle_2) { create :vehicle, assessment: assessment }
+  describe 'POST /assessments/:assessment_id/vehicles' do
+    let(:assessment) { create :assessment }
+    let(:vehicles) { attributes_for_list(:vehicle, 2) }
+    let(:headers) { { 'CONTENT_TYPE' => 'application/json' } }
+    let(:date_in_future) { 3.days.from_now.strftime('%Y-%m-%d') }
+    let(:params) { { vehicles: vehicles } }
 
-  let(:dummy_payload) do
-    {
-      assessment_id: assessment.id,
-      vehicles: []
-    }.to_json
-  end
+    subject { post assessment_vehicles_path(assessment), params: params.to_json, headers: headers }
 
-  let(:success_service_result) do
-    OpenStruct.new(
-      success: true,
-      vehicles: [vehicle_1, vehicle_2],
-      errors: []
-    )
-  end
-
-  let(:error_service_result) do
-    OpenStruct.new(
-      success: false,
-      vehicles: nil,
-      errors: [
-        'first error',
-        'second error'
-      ]
-    )
-  end
-
-  describe 'POST assessments/:id/vehicles' do
-    context 'valid payload' do
-      before do
-        service = double(VehicleCreationService, call: success_service_result)
-        expect(VehicleCreationService).to receive(:new).with(dummy_payload).and_return(service)
-        post assessment_vehicles_path(assessment), params: dummy_payload
-      end
-
-      it 'returns https status 200' do
-        expect(response).to have_http_status(:success)
-      end
-
-      it 'serializes the response' do
-        expect(response.body).to eq successful_response
-      end
+    it 'returns http success', :show_in_doc do
+      subject
+      expect(response).to have_http_status(:success)
     end
 
-    context 'invalid_payload' do
-      before do
-        service = double(VehicleCreationService, call: error_service_result)
-        expect(VehicleCreationService).to receive(:new).with(dummy_payload).and_return(service)
-        post assessment_vehicles_path(assessment), params: dummy_payload
-      end
+    it 'creates vehicles' do
+      expect { subject }.to change { assessment.vehicles.count }.by(2)
+    end
 
-      it 'returns https status 422' do
+    it 'sets success flag to true' do
+      subject
+      expect(parsed_response[:success]).to be true
+    end
+
+    it 'returns blank errors' do
+      subject
+      expect(parsed_response[:errors]).to be_empty
+    end
+
+    shared_examples 'an unprocessable entity' do |invalid_item|
+      before { subject }
+
+      it 'returns unprocessable' do
         expect(response).to have_http_status(:unprocessable_entity)
       end
 
-      it 'serializes the response' do
-        expect(response.body).to eq error_service_result.to_h.to_json
+      it 'returns error information' do
+        expect(parsed_response[:errors].join).to match(/Invalid.*#{invalid_item}/)
+      end
+
+      it 'sets success flag to false' do
+        expect(parsed_response[:success]).to be false
       end
     end
-  end
 
-  def successful_response
-    {
-      success: true,
-      vehicles: [vehicle_1, vehicle_2],
-      errors: []
-    }.to_json
+    context 'with an invalid id' do
+      let(:assessment) { 33 }
+
+      it 'returns unprocessable', :show_in_doc do
+        subject
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it_behaves_like 'an unprocessable entity', 'assessment_id'
+    end
+
+    context 'with invalid input' do
+      let(:vehicles) { :invalid }
+
+      it_behaves_like 'an unprocessable entity', 'vehicles'
+    end
+
+    context 'with a future wage slip' do
+      let(:vehicles) { [attributes_for(:vehicle, date_of_purchase: date_in_future)] }
+
+      it_behaves_like 'an unprocessable entity', 'date_of_purchase'
+    end
+
+    context 'with service returning error' do
+      let(:error) { double 'success?' => false, errors: ['Invalid: foo'] }
+      before { allow(VehicleCreationService).to receive(:call).and_return(error) }
+
+      it_behaves_like 'an unprocessable entity', 'foo'
+    end
   end
 end
