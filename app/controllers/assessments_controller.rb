@@ -3,7 +3,7 @@ class AssessmentsController < ApplicationController
   formats ['json']
   param :client_reference_id, String, "The client's reference number for this application"
   param :submission_date, Date, date_option: :today_or_older, required: true, desc: 'The date of the original submission'
-  param :matter_proceeding_type, ['domestic abuse'], required: true, desc: 'The matter type of the case'
+  param :matter_proceeding_type, ['domestic_abuse'], required: true, desc: 'The matter type of the case'
 
   returns code: :ok, desc: 'Successful response' do
     property :objects, array_of: Assessment

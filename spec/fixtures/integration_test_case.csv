@@ -1,0 +1,35 @@
+"Test number 1","Test of test",,,
+,HEADING,SUB HEADING,VALUE,
+Global,submission date,,29/5/2019,
+,proceeding type,,Non-Molestation Order,
+Applicant,DOB,,29/3/1974,
+,involvement type,,Defendant,
+Dependants,DOB,,2/2/2005,
+,in_full_time education,,FALSE,
+,DOB,,5/2/2008,
+,in_full_time education,,TRUE,
+applicant_capital,property,main_home,TRUE,
+,,value,200000,
+,,main_home,FALSE,
+,,value,100000,
+,liquid capital bank accts,name,Bank acct 1,
+,,lowest balance,5000,notes
+,,name,bank acct 2,
+,,lowest balance,0,
+,valuable items,description,expensive painting,
+,,value,3000,
+,,description,stamp collection,
+,,value,2000,
+,vehicles,value,3000,
+,,purchase date,2/2/2005,
+,,value,4000,
+,,purchase date,2/2/2000,3000
+Expected Results,Gross Income Limit,,2657,
+,applicant gross income,,2800,Fail
+,Disposable Income Limit,,733,
+,applicant disposable income,,2172.02,Fail
+,Disposable Capital Limit,,8000,
+,applicant disposable capital,,5000,Pass
+,Overall result,,ineligible,
+Expected Fixed Allowances,Allowance type,Employment Allowance,45,
+,,Dependant Allowance,582.98,291.49 x 2

@@ -10,7 +10,7 @@ RSpec.describe ApplicantsController, type: :request do
         assessment_id: assessment.id,
         applicant: {
           date_of_birth: 20.years.ago.to_date,
-          involvement_type: 'Applicant',
+          involvement_type: 'applicant',
           has_partner_opponent: false,
           receives_qualifying_benefit: true
         }
@@ -33,7 +33,7 @@ RSpec.describe ApplicantsController, type: :request do
           expect(parsed_response[:objects].size).to eq 1
           expect(parsed_response[:objects].first[:date_of_birth]).to eq 20.years.ago.to_date.strftime('%Y-%m-%d')
           expect(parsed_response[:objects].first[:assessment_id]).to eq assessment.id
-          expect(parsed_response[:objects].first[:involvement_type]).to eq 'Applicant'
+          expect(parsed_response[:objects].first[:involvement_type]).to eq 'applicant'
           expect(parsed_response[:objects].first[:has_partner_opponent]).to be false
           expect(parsed_response[:objects].first[:receives_qualifying_benefit]).to be true
         end
@@ -47,7 +47,7 @@ RSpec.describe ApplicantsController, type: :request do
             assessment_id: assessment.id,
             applicant: {
               date_of_birth: future_date,
-              involvement_type: 'Applicant',
+              involvement_type: 'applicant',
               has_partner_opponent: false,
               receives_qualifying_benefit: true
             }
@@ -117,7 +117,7 @@ RSpec.describe ApplicantsController, type: :request do
           post assessment_applicant_path(assessment.id), params: params.to_json, headers: headers
         end
 
-        it_behaves_like 'it fails with message', %(Invalid parameter 'involvement_type' value "Witness": Must be one of: <code>Applicant</code>.)
+        it_behaves_like 'it fails with message', %(Invalid parameter 'involvement_type' value "Witness": Must be one of: <code>applicant</code>.)
       end
 
       context 'has_partner_opponent not a boolean' do

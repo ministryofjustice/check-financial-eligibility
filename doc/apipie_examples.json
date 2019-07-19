@@ -11,7 +11,7 @@
         "assessment_id": "ab59b380-2cbb-43e1-a26c-3984b95bffc8",
         "applicant": {
           "date_of_birth": "1999-07-18",
-          "involvement_type": "Applicant",
+          "involvement_type": "applicant",
           "has_partner_opponent": false,
           "receives_qualifying_benefit": true
         }
@@ -23,7 +23,7 @@
             "id": "942d2563-b464-4b14-9aed-7d0e8495af0f",
             "assessment_id": "ab59b380-2cbb-43e1-a26c-3984b95bffc8",
             "date_of_birth": "1999-07-18",
-            "involvement_type": "Applicant",
+            "involvement_type": "applicant",
             "has_partner_opponent": false,
             "receives_qualifying_benefit": true,
             "created_at": "2019-07-18T12:06:21.403Z",
@@ -49,7 +49,7 @@
         "assessment_id": "6e75eb3e-f839-4675-8a93-62f5fff0b69e",
         "applicant": {
           "date_of_birth": "1999-07-18",
-          "involvement_type": "Applicant",
+          "involvement_type": "applicant",
           "has_partner_opponent": false,
           "receives_qualifying_benefit": "yes"
         }
@@ -76,7 +76,7 @@
       "request_data": {
         "client_reference_id": "psr-123",
         "submission_date": "2019-06-06",
-        "matter_proceeding_type": "domestic abuse"
+        "matter_proceeding_type": "domestic_abuse"
       },
       "response_data": {
         "success": true,
@@ -92,7 +92,7 @@
             "created_at": "2019-07-18T12:06:21.432Z",
             "updated_at": "2019-07-18T12:06:21.432Z",
             "submission_date": "2019-06-06",
-            "matter_proceeding_type": "domestic abuse"
+            "matter_proceeding_type": "domestic_abuse"
           }
         ],
         "errors": [
@@ -113,7 +113,7 @@
       "request_data": {
         "client_reference_id": "psr-123",
         "submission_date": "2019-06-06",
-        "matter_proceeding_type": "domestic abuse"
+        "matter_proceeding_type": "domestic_abuse"
       },
       "response_data": {
         "success": true,
@@ -129,7 +129,7 @@
             "created_at": "2019-07-18T12:06:21.449Z",
             "updated_at": "2019-07-18T12:06:21.449Z",
             "submission_date": "2019-06-06",
-            "matter_proceeding_type": "domestic abuse"
+            "matter_proceeding_type": "domestic_abuse"
           }
         ],
         "errors": [
@@ -150,7 +150,7 @@
       "request_data": {
         "client_reference_id": "psr-123",
         "submission_date": "2019-06-06",
-        "matter_proceeding_type": "domestic abuse"
+        "matter_proceeding_type": "domestic_abuse"
       },
       "response_data": {
         "errors": [
