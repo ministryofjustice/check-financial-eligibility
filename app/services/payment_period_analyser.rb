@@ -6,6 +6,15 @@ class PaymentPeriodAnalyser
     @data = data
   end
 
+  def period_pattern
+    return :monthly if monthly?
+    return :weekly if weekly?
+    return :two_weekly if two_weekly?
+    return :four_weekly if four_weekly?
+
+    :unknown
+  end
+
   def monthly?
     return false if dates.size > 4
     return false if days_between_dates.median < 28.5
