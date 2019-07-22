@@ -1,6 +1,6 @@
 class WorkflowManager
-  def initialize(particulars, workflow)
-    @particulars = particulars
+  def initialize(assessment_id, workflow)
+    @assessment = Assessment.find assessment_id
     @workflow = workflow
     @workflow_terminated = false
   end
@@ -21,7 +21,7 @@ class WorkflowManager
 
   def process_service(step_config:)
     service_class = step_config[:klass]
-    result = service_class.new(@particulars).call
+    result = service_class.new(@assessment).call
     next_step = step_config["#{result}_step".to_sym]
     process_step(step_config: @workflow[next_step], step_name: next_step)
   end
