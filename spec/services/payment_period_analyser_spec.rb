@@ -172,6 +172,7 @@ RSpec.describe PaymentPeriodAnalyser do
       expect_all(fortnightlies, to_be: false, with_method: :four_weekly?)
     end
 
+    # TODO: fix this test so that it doesn't randomly fail on CircleCI
     xit 'returns true for each four weekly' do
       expect_all(four_weeklies, to_be: true, with_method: :four_weekly?)
     end
