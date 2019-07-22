@@ -28,3 +28,5 @@
 # Ignore all .orig files
 *.orig
 
+.DS_Store
+

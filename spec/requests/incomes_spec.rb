@@ -30,7 +30,7 @@ RSpec.describe IncomesController, type: :request do
       expect { subject }.to change { assessment.benefit_receipts.count }.by(2)
     end
 
-    it 'sets success flag to false' do
+    it 'sets success flag to true' do
       subject
       expect(parsed_response[:success]).to be true
     end
