@@ -2,19 +2,18 @@ require 'rails_helper'
 
 module WorkflowPredicate
   RSpec.describe DeterminePassported do
-    let(:assessment) { create :assessment }
-    let(:particulars) { AssessmentParticulars.new(assessment) }
-    let(:service) { described_class.new(particulars) }
+    let(:service) { described_class.new(applicant.assessment) }
 
-    xcontext 'does not receive qualifying benefit' do
+    context 'does not receive qualifying benefit' do
+      let(:applicant) { create :applicant, :without_qualifying_benefit }
       it 'returns false' do
         expect(service.call).to be false
       end
     end
 
-    xcontext 'receives qualifying benefit' do
-      it 'returs true' do
-        allow(particulars.request.applicant).to receive(:receives_qualifying_benefit).and_return true
+    context 'receives qualifying benefit' do
+      let(:applicant) { create :applicant, :with_qualifying_benefit }
+      it 'returns true' do
         expect(service.call).to be true
       end
     end
