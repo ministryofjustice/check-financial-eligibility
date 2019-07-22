@@ -2,7 +2,8 @@ require 'rails_helper'
 require Rails.root.join 'spec/fixtures/test_workflow.rb'
 
 RSpec.describe WorkflowManager do
-  let(:manager) { described_class.new(particulars, workflow) }
+  let(:assessment) { create :assessment }
+  let(:manager) { described_class.new(assessment.id, workflow) }
   let(:particulars) { double 'particulars' }
   let(:workflow) { TestWorkflow.workflow }
 
@@ -23,6 +24,6 @@ RSpec.describe WorkflowManager do
   end
 
   def expect_service_result(klass, result)
-    expect(klass).to receive(:new).with(particulars).and_return(double(klass, call: result))
+    expect(klass).to receive(:new).with(assessment).and_return(double(klass, call: result))
   end
 end
