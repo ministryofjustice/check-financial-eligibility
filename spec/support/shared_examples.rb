@@ -9,6 +9,10 @@ RSpec.shared_examples 'it fails with message' do |message|
     expect(parsed_response[:object]).to be_nil
   end
 
+  it 'checks that success is false' do
+    expect(parsed_response[:success]).to eq(false)
+  end
+
   def expect_message_match(message)
     expect(parsed_response[:errors].first).to match message
   end
