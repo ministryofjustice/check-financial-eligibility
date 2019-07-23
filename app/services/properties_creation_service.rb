@@ -1,6 +1,4 @@
 class PropertiesCreationService < BaseCreationService
-  SCHEMA_PATH = Rails.root.join('public/schemas/properties.json').to_s
-
   attr_accessor :raw_post, :properties
 
   def initialize(raw_post)
@@ -9,25 +7,16 @@ class PropertiesCreationService < BaseCreationService
   end
 
   def call
-    validate_and_create
+    create
     self
   end
 
   private
 
-  def validate_and_create
-    validate_json
+  def create
     create_properties
   rescue CreationError => e
     self.errors = e.errors
-  end
-
-  def validate_json
-    raise CreationError, json_validator.errors unless json_validator.valid?
-  end
-
-  def json_validator
-    @json_validator ||= JsonSchemaValidator.new(@raw_post, schema_path)
   end
 
   def create_properties
@@ -48,10 +37,6 @@ class PropertiesCreationService < BaseCreationService
   def new_property(attrs, main_home)
     attrs[:main_home] = main_home
     @properties << assessment.properties.create!(attrs)
-  end
-
-  def schema_path
-    SCHEMA_PATH
   end
 
   def assessment
