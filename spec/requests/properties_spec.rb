@@ -44,7 +44,6 @@ RSpec.describe PropertiesController, type: :request do
         end
 
         it 'returns the expected success response payload' do
-          ap parsed_response
           expect(parsed_response[:success]).to eq(true)
           expect(parsed_response[:errors]).to be_empty
           expect(parsed_response[:objects].size).to eq 3
