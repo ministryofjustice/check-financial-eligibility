@@ -13,6 +13,10 @@ class PaymentPeriodAnalyser
   LARGE_VARIANCE = 10
   VERY_LARGE_VARIANCE = 19
 
+  def self.pattern_for(data)
+    new(data).period_pattern
+  end
+
   attr_reader :data
 
   def initialize(data)

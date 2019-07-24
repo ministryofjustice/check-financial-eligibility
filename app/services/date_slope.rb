@@ -60,7 +60,7 @@ class DateSlope
   end
 
   def sum_x
-    coordinates.sum(&:first)
+    @sum_x ||= coordinates.sum(&:first)
   end
 
   def sum_y
