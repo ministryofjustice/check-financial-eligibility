@@ -72,6 +72,8 @@ class PaymentPeriodAnalyser
     false
   end
 
+  # Factors of 7 have a particular significance when analysing weekly sequences of data. Which means patterns
+  # around the numbers 7, 14, 21, and 28 can be used to identify the likely sequence type.
   def around_28(number)
     number.between?(24, 30)
   end

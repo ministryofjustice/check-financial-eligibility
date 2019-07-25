@@ -1,4 +1,7 @@
 class DateSlope
+  MONTH_START_CUTOFF = 10 # Days lower than this are at start of month and suitable for bumping to previous month
+  BEST_MATCH_VARIANCE = 10 # If there is low variance in the range of dates, it is unlikely that they span month end
+
   def self.call(dates)
     new(dates).slope
   end
@@ -22,7 +25,7 @@ class DateSlope
   end
 
   def best_match_days
-    return days if days.range < 10
+    return days if days.range < BEST_MATCH_VARIANCE
 
     if days.standard_deviation <= normalized_days.standard_deviation
       days
@@ -38,7 +41,7 @@ class DateSlope
   def days_at_beginning_bump_to_previous_month
     dates.map do |date|
       day = date.day
-      if day > 10
+      if day > MONTH_START_CUTOFF
         day
       else
         previous_month_length = (date.beginning_of_month - 1.day).day
