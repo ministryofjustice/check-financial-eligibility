@@ -1,5 +1,8 @@
 class BenefitReceipt < ApplicationRecord
   extend EnumHash
+  extend PaymentPatternConcern
+  define_payment_pattern
+
   belongs_to :assessment
 
   enum benefit_name: enum_hash_for(:child_benefit, :jobseekers_allowance, :universal_credit)

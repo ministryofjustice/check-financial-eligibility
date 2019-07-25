@@ -57,13 +57,17 @@ RSpec.describe PaymentPeriodAnalyser do
   let(:midweek_four_weely_with_variance) { generator.call period: :four_weekly, start_at: (Time.now.beginning_of_week + 2.days), day_offset: 1 }
   let(:incomplete_four_weekly) { every_fourth_monday.to_a.sample(3).to_h }
   let(:four_weekly_near_month_end) { generator.call period: :four_weekly, start_at: (Time.now.end_of_month - 1.day) }
+  let(:four_weely_across_month_end) { from_sequence '1-May-2019', '30-May-2019', '25-Jun-2019', '24-Jul-2019' }
+  let(:incomplte_four_weekly_accross_month_end) { from_sequence '2-May-2019', '25-Jun-2019', '25-Jul-2019' }
 
   let(:four_weeklies) do
     {
       every_fourth_monday: every_fourth_monday,
       midweek_four_weely_with_variance: midweek_four_weely_with_variance,
       incomplete_four_weekly: incomplete_four_weekly,
-      four_weekly_near_month_end: four_weekly_near_month_end
+      four_weekly_near_month_end: four_weekly_near_month_end,
+      four_weely_across_month_end: four_weely_across_month_end,
+      incomplte_four_weekly_accross_month_end: incomplte_four_weekly_accross_month_end
     }
   end
 
@@ -100,7 +104,16 @@ RSpec.describe PaymentPeriodAnalyser do
     end
   end
 
-  describe '.monthly?' do
+  describe '#period_pattern' do
+    let(:time_series) { first_day_of_month }
+    subject { described_class.new(time_series).period_pattern }
+
+    it 'returns matching label' do
+      expect(subject).to eq(:monthly)
+    end
+  end
+
+  describe '#monthly?' do
     it 'returns true for each monthly' do
       expect_all(monthlies, to_be: true, with_method: :monthly?)
     end
@@ -118,7 +131,7 @@ RSpec.describe PaymentPeriodAnalyser do
     end
   end
 
-  describe '.weekly?' do
+  describe '#weekly?' do
     it 'returns false for each monthly' do
       expect_all(monthlies, to_be: false, with_method: :weekly?)
     end
@@ -140,7 +153,7 @@ RSpec.describe PaymentPeriodAnalyser do
     end
   end
 
-  describe '.two_weekly?' do
+  describe '#two_weekly?' do
     it 'returns false for each monthly' do
       expect_all(monthlies, to_be: false, with_method: :two_weekly?)
     end
@@ -158,7 +171,7 @@ RSpec.describe PaymentPeriodAnalyser do
     end
   end
 
-  describe '.four_weekly?' do
+  describe '#four_weekly?' do
     it 'returns false for each monthly' do
       expect_all(monthlies, to_be: false, with_method: :four_weekly?)
     end
