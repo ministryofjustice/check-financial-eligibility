@@ -3,7 +3,7 @@ require 'rails_helper'
 module WorkflowService
   RSpec.describe LiquidCapitalAssessment do
     let(:assessment) { create :assessment }
-    let(:service) { described_class.new(assessment.id) }
+    let(:service) { described_class.new(assessment) }
 
     context 'all positive supplied' do
       it 'adds them all together' do

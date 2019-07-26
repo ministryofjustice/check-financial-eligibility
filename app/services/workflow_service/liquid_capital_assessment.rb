@@ -1,7 +1,7 @@
 module WorkflowService
   class LiquidCapitalAssessment
-    def initialize(assessment_id)
-      @assessment = Assessment.find assessment_id
+    def initialize(assessment)
+      @assessment = assessment
     end
 
     def call
