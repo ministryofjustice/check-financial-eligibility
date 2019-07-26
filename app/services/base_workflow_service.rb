@@ -20,4 +20,12 @@ class BaseWorkflowService
   def result
     @result ||= @assessment.result
   end
+
+  def main_home
+    @main_home ||= @assessment.properties.find_by(main_home: true)
+  end
+
+  def additional_properties
+    @additional_properties ||= @assessment.properties.where(main_home: false)
+  end
 end

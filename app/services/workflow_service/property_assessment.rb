@@ -1,35 +1,27 @@
 module WorkflowService
-  class PropertyAssessment
-    def initialize(request, submission_date)
-      @submission_date = submission_date
-      @main_home = request.main_home
-      @additional_properties = request.additional_properties
-      @remaining_mortgage_allowance = Threshold.value_for(:property_maximum_mortgage_allowance, at: submission_date)
-      @response = DatedStruct.new(main_home: DatedStruct.new, additional_properties: [])
-    end
-
+  class PropertyAssessment < BaseWorkflowService
     def call
       calculate_property
-      @response
+      response
     end
 
     private
 
     def calculate_property
-      calculate_additional_properties
-      @response.main_home = calculate_main_home(property: @main_home)
+      calculate_additional_properties unless additional_properties.nil?
+      response.main_home = calculate_main_home(property: main_home) unless main_home.nil?
     end
 
     def calculate_additional_properties
-      @additional_properties.each do |additional_property|
-        assessment = DatedStruct.new(AssessmentParticulars.initial_property_details)
+      additional_properties.each do |additional_property|
+        assessment = DatedStruct.new(additional_property.as_json)
         calculate_individual_property(property: additional_property, assessment: assessment, property_type: :additional_property)
-        @response.additional_properties << assessment
+        response.additional_properties << assessment
       end
     end
 
     def calculate_main_home(property:)
-      assessment = DatedStruct.new(AssessmentParticulars.initial_property_details)
+      assessment = DatedStruct.new(main_home.as_json)
       calculate_individual_property(property: property, assessment: assessment, property_type: :main_home)
       assessment
     end
@@ -67,8 +59,8 @@ module WorkflowService
     end
 
     def allowable_mortgage_deduction(outstanding_mortgage)
-      if outstanding_mortgage > @remaining_mortgage_allowance
-        result = @remaining_mortgage_allowance
+      if outstanding_mortgage > remaining_mortgage_allowance
+        result = remaining_mortgage_allowance
         @remaining_mortgage_allowance = 0
       else
         result = outstanding_mortgage
@@ -79,6 +71,14 @@ module WorkflowService
 
     def property_disregard(property_type)
       Threshold.value_for(:property_disregard, at: @submission_date)[property_type]
+    end
+
+    def remaining_mortgage_allowance
+      @remaining_mortgage_allowance ||= Threshold.value_for(:property_maximum_mortgage_allowance, at: @submission_date)
+    end
+
+    def response
+      @response ||= DatedStruct.new(main_home: [], additional_properties: [])
     end
   end
 end
