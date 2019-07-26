@@ -13,6 +13,10 @@ class BaseWorkflowService
     @bank_accounts ||= @assessment.bank_accounts
   end
 
+  def non_liquid_assets
+    @non_liquid_assets ||= @assessment.non_liquid_assets
+  end
+
   def result
     @result ||= @assessment.result
   end
