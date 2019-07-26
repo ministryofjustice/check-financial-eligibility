@@ -23,6 +23,23 @@ RSpec.describe AssessmentCreationService do
       expect { subject.success? }.to change { Assessment.count }.by(1)
     end
 
+    it 'creates a Result record' do
+      expect { subject.success? }.to change { Result.count }.by(1)
+    end
+
+    context 'result record' do
+      before { subject.success? }
+      let(:result) { Result.first }
+
+      it 'creates a pending Result record' do
+        expect(result.state).to eq 'pending'
+      end
+
+      it 'creates an empty details hash' do
+        expect(result.details).to eq({})
+      end
+    end
+
     it 'has no errors' do
       expect(subject.errors).to be_empty
     end
