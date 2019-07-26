@@ -37,7 +37,10 @@ gem 'apipie-rails'
 # Adds Statistical methods to objects such as arrays
 gem 'descriptive_statistics', require: 'descriptive_statistics/safe'
 
+gem 'google_drive'
+
 group :development, :test do
+  gem 'dotenv-rails'
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'awesome_print'
@@ -57,10 +60,12 @@ group :development do
 end
 
 group :test do
+  gem 'climate_control' # Allows environment variables to be modified within specs
   gem 'shoulda-matchers'
   gem 'database_cleaner'
   gem 'simplecov', require: false
   gem 'simplecov-rcov'
+  gem 'vcr'
   gem 'webmock'
 end
 

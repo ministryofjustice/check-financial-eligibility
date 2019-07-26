@@ -30,3 +30,7 @@
 
 .DS_Store
 
+# dotenv
+# Ignore environment variables
+.env.*
+.env

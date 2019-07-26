@@ -6,7 +6,7 @@ RSpec.describe AssessmentsController, type: :request do
       {
         client_reference_id: 'psr-123',
         submission_date: '2019-06-06',
-        matter_proceeding_type: 'domestic abuse'
+        matter_proceeding_type: 'domestic_abuse'
       }
     end
     let(:headers) { { 'CONTENT_TYPE' => 'application/json' } }
@@ -56,13 +56,13 @@ RSpec.describe AssessmentsController, type: :request do
       context 'invalid matter proceeding type' do
         let(:params) { { matter_proceeding_type: 'xxx', submission_date: '2019-07-01' } }
 
-        it_behaves_like 'it fails with message', %(Invalid parameter 'matter_proceeding_type' value "xxx": Must be one of: <code>domestic abuse</code>.)
+        it_behaves_like 'it fails with message', %(Invalid parameter 'matter_proceeding_type' value "xxx": Must be one of: <code>domestic_abuse</code>.)
       end
 
       context 'missing submission date' do
         let(:params) do
           {
-            matter_proceeding_type: 'domestic abuse',
+            matter_proceeding_type: 'domestic_abuse',
             client_reference_id: 'psr-123'
           }
         end
