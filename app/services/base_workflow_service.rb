@@ -8,4 +8,8 @@ class BaseWorkflowService
   def applicant
     @applicant ||= @assessment.applicant
   end
+
+  def bank_accounts
+    @bank_accounts ||= @assessment.bank_accounts
+  end
 end
