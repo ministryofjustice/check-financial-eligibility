@@ -10,6 +10,7 @@ disposable_income_upper: 50000
 capital_lower: 1
 capital_upper: 30000
 pensioner_capital_disregard:
+  minimum_age_in_years: 60
   passported: 100_000
   # capital to disregard if monthly disposable income (excluding income derived from capital) is below these figures
   monthly_income_values:
