@@ -18,9 +18,9 @@ RSpec.describe CapitalsCreationService do
   before { stub_call_to_json_schema }
 
   describe '.call' do
+    # TODO: This test fails randomly.  Needs to be rewritten to fix this
     it 'creates bank accounts for this assessment' do
       expect { subject }.to change { assessment.bank_accounts.count }.by(bank_accounts.count)
-
       bank_accounts.each do |bank_account|
         expect(assessment.bank_accounts.find_by!(name: bank_account[:name])[:lowest_balance].to_f).to eq(bank_account[:lowest_balance])
       end

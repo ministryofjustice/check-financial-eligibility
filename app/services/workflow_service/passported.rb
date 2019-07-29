@@ -1,5 +1,5 @@
 module WorkflowService
-  class Passported < BaseWorkflowService
+  class Passported < LegacyBaseWorkflowService
     def call
       true
     end

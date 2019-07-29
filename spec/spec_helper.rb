@@ -8,7 +8,7 @@ SimpleCov.minimum_coverage 100
 SimpleCov.start do
   add_filter 'app/services/workflow_service/'
   add_filter 'app/services/workflow_predicate/'
-  add_filter 'app/services/base_workflow_service.rb'
+  add_filter 'app/services/legacy_base_workflow_service.rb'
 end
 
 unless ENV['NOCOVERAGE']
