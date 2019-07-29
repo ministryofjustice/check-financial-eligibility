@@ -13,4 +13,5 @@ class Assessment < ApplicationRecord
   has_many :properties
   has_many :vehicles
   has_many :wage_slips
+  has_one :result
 end
