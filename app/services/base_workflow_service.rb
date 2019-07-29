@@ -12,4 +12,8 @@ class BaseWorkflowService
   def bank_accounts
     @bank_accounts ||= @assessment.bank_accounts
   end
+
+  def result
+    @result ||= @assessment.result
+  end
 end

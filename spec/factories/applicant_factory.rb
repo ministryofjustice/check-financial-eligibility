@@ -9,5 +9,13 @@ FactoryBot.define do
     trait :with_qualifying_benfits do
       receives_qualifying_benefit { true }
     end
+
+    trait :under_pensionable_age do
+      date_of_birth { 59.years.ago.to_date }
+    end
+
+    trait :over_pensionable_age do
+      date_of_birth { 61.years.ago.to_date }
+    end
   end
 end

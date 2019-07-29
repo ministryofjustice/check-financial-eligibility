@@ -2,16 +2,13 @@ require 'rails_helper'
 
 module WorkflowService
   RSpec.describe PensionerCapitalDisregard do
-    let(:service) { described_class.new(particulars) }
+    let(:service) { described_class.new(assessment) }
     let(:request_hash) { AssessmentRequestFixture.ruby_hash }
-    let(:assessment) { create :assessment, request_payload: request_hash.to_json }
-    let(:particulars) { AssessmentParticulars.new(assessment) }
+    let(:assessment) { create :assessment, applicant: applicant }
 
-    xdescribe '#value' do
+    describe '#value' do
       context 'not a pensioner' do
-        before do
-          particulars.request.applicant.date_of_birth = 59.years.ago.to_date
-        end
+        let(:applicant) { create :applicant, :under_pensionable_age }
         it 'returns zero' do
           expect(service.value).to eq 0.0
         end
@@ -19,65 +16,52 @@ module WorkflowService
 
       context 'a pensioner' do
         context 'passported' do
-          before do
-            particulars.request.applicant.receives_qualifying_benefit = true
-          end
+          let(:applicant) { create :applicant, :with_qualifying_benfits, :over_pensionable_age }
           it 'returns the passported value' do
             expect(service.value).to eq 100_000.0
           end
         end
 
         context 'un-passported' do
-          before do
-            particulars.request.applicant.receives_qualifying_benefit = false
-          end
+          let(:applicant) { create :applicant, :over_pensionable_age }
 
           context 'monthly income above 315' do
-            before do
-              particulars.response.details.income.monthly_disposable_income = 315.01
-            end
+            let!(:result) { create :result, assessment: assessment, disposable_monthly_income: 315.01 }
             it 'returns zero' do
               expect(service.value).to eq 0
             end
           end
 
           context 'monthly income 315' do
-            before do
-              particulars.response.details.income.monthly_disposable_income = 315.0
-            end
+            let!(:result) { create :result, assessment: assessment, disposable_monthly_income: 315.0 }
             it 'returns 10_000' do
               expect(service.value).to eq 10_000
             end
           end
 
           context 'monthly_income 314.99' do
-            before do
-              particulars.response.details.income.monthly_disposable_income = 314.99
-            end
-            it 'returns 20_000' do
+            let!(:result) { create :result, assessment: assessment, disposable_monthly_income: 314.99 }
+            it 'returns 10_000' do
               expect(service.value).to eq 10_000
             end
           end
 
           context 'monthly_income 52' do
-            before do
-              particulars.response.details.income.monthly_disposable_income = 52
-            end
+            let!(:result) { create :result, assessment: assessment, disposable_monthly_income: 52 }
             it 'returns 80_000' do
               expect(service.value).to eq 80_000
             end
           end
 
           context 'monthly_income 0' do
+            let!(:result) { create :result, assessment: assessment, disposable_monthly_income: 0 }
             it 'returns 100_000' do
               expect(service.value).to eq 100_000
             end
           end
 
           context 'monthly income not set' do
-            before do
-              particulars.response.details.income.delete_field(:monthly_disposable_income)
-            end
+            let!(:result) { create :result, assessment: assessment }
             it 'raises' do
               expect {
                 service.value
