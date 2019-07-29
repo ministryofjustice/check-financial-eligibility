@@ -17,9 +17,6 @@ module WorkflowService
       context 'a pensioner' do
         context 'passported' do
           let(:applicant) { create :applicant, :with_qualifying_benfits, :over_pensionable_age }
-          # before do
-          #   particulars.request.applicant.receives_qualifying_benefit = true
-          # end
           it 'returns the passported value' do
             expect(service.value).to eq 100_000.0
           end
