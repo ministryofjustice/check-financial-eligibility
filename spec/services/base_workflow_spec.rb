@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe BaseWorkflowService do
+describe LegacyBaseWorkflowService do
   let(:service) { described_class.new(particulars) }
   let(:request_hash) { AssessmentRequestFixture.ruby_hash }
   let(:assessment) { create :assessment, request_payload: request_hash.to_json }

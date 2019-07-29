@@ -1,5 +1,5 @@
 module WorkflowPredicate
-  class BelowLowerCapitalThresholdPredicate < BaseWorkflowService
+  class BelowLowerCapitalThresholdPredicate < LegacyBaseWorkflowService
     def call
       raise 'Disposable Capital Assessment has not been calculated' if response_capital.disposable_capital_assessment.nil?
 

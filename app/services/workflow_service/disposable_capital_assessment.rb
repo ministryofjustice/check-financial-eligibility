@@ -1,5 +1,5 @@
 module WorkflowService
-  class DisposableCapitalAssessment < BaseWorkflowService
+  class DisposableCapitalAssessment < LegacyBaseWorkflowService
     def call # rubocop:disable Metrics/AbcSize
       response_capital.liquid_capital_assessment = calculate_liquid_capital
       response_capital.property = calculate_property

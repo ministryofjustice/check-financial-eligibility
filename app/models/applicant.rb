@@ -1,5 +1,5 @@
 class Applicant < ApplicationRecord
-  belongs_to :assessment
+  belongs_to :assessment, optional: true
 
   validate :date_of_birth_in_past
 
