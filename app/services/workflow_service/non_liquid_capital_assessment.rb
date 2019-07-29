@@ -1,12 +1,8 @@
 module WorkflowService
-  class NonLiquidCapitalAssessment
-    def initialize(request)
-      @request = request
-    end
-
+  class NonLiquidCapitalAssessment < BaseWorkflowService
     def call
       total_value = 0.0
-      @request&.each do |item|
+      non_liquid_assets.each do |item|
         total_value += item.value
       end
       total_value.round(2)

@@ -13,9 +13,12 @@ class DatedStruct < OpenStruct
     end
   end
 
+  # TODO: remove this method (or even the whole class) once all reference to it has been removed from other services
+  # :nocov:
   def []=(name, value)
     modifiable?[new_ostruct_member!(name)] = value_or_time(value)
   end
+  # :nocov:
 
   # OpenStruct will normally serialize to JSON with an intermediate key 'table'.
   # DatedStruct will only do it if created with option {serialize_as_open_struct: true}
