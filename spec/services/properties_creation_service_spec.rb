@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe PropertiesCreationService do
-  before { stub_call_to_json_schema }
-
   let(:assessment) { create :assessment }
   let(:payload) { valid_payload }
 
@@ -44,78 +42,6 @@ RSpec.describe PropertiesCreationService do
       end
     end
 
-    context 'invalid json' do
-      let(:payload)  { invalid_json_payload }
-
-      context 'additional or missing properties' do
-        describe '#errors' do
-          it 'returns errors' do
-            expect(subject.errors[0]).to match %r{The property '#/' did not contain a required property of 'assessment_id'}
-            expect(subject.errors[1]).to match %r{The property '#/' contains additional properties \["extra_root_attr"\]}
-            expect(subject.errors[2]).to match %r{The property '#/properties/main_home' did not contain a required property of 'percentage_owned'}
-            expect(subject.errors[3]).to match %r{The property '#/properties/main_home' contains additional properties \["extra_main_home_attr"\]}
-            expect(subject.errors[4]).to match %r{The property '#/properties/additional_properties/0' contains additional properties \["extra_main_home_attr"\]}
-          end
-        end
-
-        describe '#success?' do
-          it 'returns false' do
-            expect(subject.success?).to be false
-          end
-        end
-
-        describe '#properties' do
-          it 'returns empty array' do
-            expect(subject.properties).to be_empty
-          end
-        end
-
-        it 'does not create any property records' do
-          expect {
-            described_class.call(payload)
-          }.not_to change { Property.count }
-        end
-      end
-
-      context 'invalid property values' do
-        let(:payload) { valid_payload_hash }
-        before do
-          payload[:properties][:main_home][:value] = 0
-          payload[:properties][:main_home][:outstanding_mortgage] = -10
-          payload[:properties][:main_home][:percentage_owned] = 120
-          payload[:properties][:main_home][:shared_with_housing_assoc] = ''
-        end
-
-        describe '#errors' do
-          it 'returns errors' do
-            expect(subject.errors.size).to be 4
-            expect(subject.errors[0]).to match %r{The property '#/properties/main_home/value' did not have a minimum value of 0.0, exclusively}
-            expect(subject.errors[1]).to match %r{The property '#/properties/main_home/outstanding_mortgage' did not have a minimum value of 0.0}
-            expect(subject.errors[2]).to match %r{The property '#/properties/main_home/percentage_owned' did not have a maximum value of 100.0}
-            expect(subject.errors[3]).to match %r{The property '#/properties/main_home/shared_with_housing_assoc' of type string did not match the following type: boolean}
-          end
-        end
-
-        describe '#success?' do
-          it 'returns false' do
-            expect(subject.success?).to be false
-          end
-        end
-
-        describe '#properties' do
-          it 'returns empty array' do
-            expect(subject.properties).to be_empty
-          end
-        end
-
-        it 'does not create any property records' do
-          expect {
-            described_class.call(payload)
-          }.not_to change { Property.count }
-        end
-      end
-    end
-
     context 'invalid assessment id' do
       let(:payload) { invalid_assessment_payload }
 
@@ -136,16 +62,6 @@ RSpec.describe PropertiesCreationService do
         }.not_to change { Property.count }
       end
     end
-  end
-
-  def invalid_json_payload
-    payload = valid_payload_hash.dup
-    payload[:extra_root_attr] = 1
-    payload.delete(:assessment_id)
-    payload[:properties][:main_home][:extra_main_home_attr] = 3
-    payload[:properties][:additional_properties].first[:extra_main_home_attr] = 3
-    payload[:properties][:main_home].delete(:percentage_owned)
-    payload.to_json
   end
 
   def invalid_assessment_payload
