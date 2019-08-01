@@ -18,7 +18,6 @@ RSpec.describe CapitalsCreationService do
   before { stub_call_to_json_schema }
 
   describe '.call' do
-    # TODO: This test fails randomly.  Needs to be rewritten to fix this
     it 'creates bank accounts for this assessment' do
       expect { subject }.to change { assessment.bank_accounts.count }.by(bank_accounts.count)
       bank_accounts.each do |bank_account|
