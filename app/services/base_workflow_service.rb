@@ -28,4 +28,8 @@ class BaseWorkflowService
   def additional_properties
     @additional_properties ||= @assessment.properties.where(main_home: false)
   end
+
+  def vehicles
+    @vehicles ||= @assessment.vehicles
+  end
 end

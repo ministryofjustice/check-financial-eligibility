@@ -1,23 +1,21 @@
 module WorkflowService
-  class VehicleAssessment
-    def initialize(vehicles, submission_date)
-      @vehicles = vehicles
-      @submission_date = submission_date
-      @response = []
-    end
-
+  class VehicleAssessment < BaseWorkflowService
     def call
-      @vehicles.each { |v| assess(v) }
+      vehicles.each { |v| assess(v) }
       @response
     end
 
     private
 
+    def response
+      @response ||= []
+    end
+
     def assess(vehicle)
-      result = DatedStruct.new(AssessmentParticulars.initial_vehicle_details)
+      result = DatedStruct.new(vehicle.as_json)
       copy_request_details_to_result(vehicle, result)
       result.assessed_value = assessed_value(vehicle)
-      @response << result
+      response << result
     end
 
     def vehicle_disregard
