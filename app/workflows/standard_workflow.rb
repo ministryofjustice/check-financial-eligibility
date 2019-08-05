@@ -13,7 +13,7 @@ WORKFLOW = {
     true_step: :compare_lower_capital_threshold_step
   },
   compare_lower_capital_threshold_step: {
-    klass: BelowLowerCapitalThresholdPredicate,
+    klass: WorkflowPredicate::BelowLowerCapitalThresholdPredicate,
     true_step: :end_step,
     false_step: :end_step
   },

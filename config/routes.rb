@@ -9,4 +9,5 @@ Rails.application.routes.draw do
     resources :properties, only: [:create]
     resources :vehicles, only: :create
   end
+  resources :status, only: [:index]
 end
