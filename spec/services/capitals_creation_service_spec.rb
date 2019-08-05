@@ -5,17 +5,14 @@ RSpec.describe CapitalsCreationService do
   let(:assessment_id) { assessment.id }
   let(:bank_accounts) { attributes_for_list :bank_account, 2 }
   let(:non_liquid_assets) { attributes_for_list :non_liquid_asset, 2 }
-  let(:request_payload) do
-    {
+
+  subject do
+    described_class.call(
       assessment_id: assessment_id,
-      liquid_capital: { bank_accounts: bank_accounts },
-      non_liquid_capital: non_liquid_assets
-    }.to_json
+      bank_accounts_attributes: bank_accounts,
+      non_liquid_capitals_attributes: non_liquid_assets
+    )
   end
-
-  subject { described_class.call(request_payload) }
-
-  before { stub_call_to_json_schema }
 
   describe '.call' do
     it 'creates bank accounts for this assessment' do

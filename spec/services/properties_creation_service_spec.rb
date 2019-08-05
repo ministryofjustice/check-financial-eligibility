@@ -2,11 +2,38 @@ require 'rails_helper'
 
 RSpec.describe PropertiesCreationService do
   let(:assessment) { create :assessment }
-  let(:payload) { valid_payload }
+  let(:assessment_id) { assessment.id }
+  let(:main_home) do
+    {
+      value: 500_000,
+      outstanding_mortgage: 200,
+      percentage_owned: 15,
+      shared_with_housing_assoc: true
+    }
+  end
+  let(:additional_properties) do
+    [
+      {
+        value: 1_000,
+        outstanding_mortgage: 0,
+        percentage_owned: 99,
+        shared_with_housing_assoc: false
+      },
+      {
+        value: 10_000,
+        outstanding_mortgage: 40,
+        percentage_owned: 80,
+        shared_with_housing_assoc: true
+      }
+    ]
+  end
 
-  subject { described_class.call(payload) }
-
-  shared_examples 'error response' do
+  subject do
+    described_class.call(
+      assessment_id: assessment_id,
+      main_home_attributes: main_home,
+      additional_properties_attributes: additional_properties
+    )
   end
 
   describe '.call' do
@@ -43,7 +70,7 @@ RSpec.describe PropertiesCreationService do
     end
 
     context 'invalid assessment id' do
-      let(:payload) { invalid_assessment_payload }
+      let(:assessment_id) { SecureRandom.uuid }
 
       describe '#success?' do
         it 'returns false' do
@@ -57,48 +84,8 @@ RSpec.describe PropertiesCreationService do
       end
 
       it 'does not create any property records' do
-        expect {
-          described_class.call(payload)
-        }.not_to change { Property.count }
+        expect { subject }.not_to change { Property.count }
       end
     end
-  end
-
-  def invalid_assessment_payload
-    payload = valid_payload_hash.dup
-    payload[:assessment_id] = SecureRandom.uuid
-    payload.to_json
-  end
-
-  def valid_payload_hash
-    {
-      assessment_id: assessment.id,
-      properties: {
-        main_home: {
-          value: 500_000,
-          outstanding_mortgage: 200,
-          percentage_owned: 15,
-          shared_with_housing_assoc: true
-        },
-        additional_properties: [
-          {
-            value: 1_000,
-            outstanding_mortgage: 0,
-            percentage_owned: 99,
-            shared_with_housing_assoc: false
-          },
-          {
-            value: 10_000,
-            outstanding_mortgage: 40,
-            percentage_owned: 80,
-            shared_with_housing_assoc: true
-          }
-        ]
-      }
-    }
-  end
-
-  def valid_payload
-    valid_payload_hash.to_json
   end
 end

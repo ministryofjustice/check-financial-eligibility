@@ -19,24 +19,23 @@ class ApplicantsController < ApplicationController
   end
 
   def create
-    if creation_service_result.success?
-      render json: {
-        success: true,
-        objects: [creation_service_result.applicant],
-        errors: []
-      }
+    if creation_service.success?
+      render_success objects: [creation_service.applicant]
     else
-      render json: {
-        success: false,
-        objects: nil,
-        errors: creation_service_result.errors
-      }, status: 422
+      render_unprocessable(creation_service.errors)
     end
   end
 
   private
 
-  def creation_service_result
-    @creation_service_result ||= ApplicantCreationService.call(request.raw_post)
+  def creation_service
+    @creation_service ||= ApplicantCreationService.call(
+      assessment_id: params[:assessment_id],
+      applicant_attributes: input[:applicant]
+    )
+  end
+
+  def input
+    @input ||= JSON.parse(request.raw_post, symbolize_names: true)
   end
 end

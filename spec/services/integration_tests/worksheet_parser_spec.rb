@@ -26,11 +26,11 @@ RSpec.describe IntegrationTests::WorksheetParser do
 
     it 'parses dependants' do
       expect(subject[:dependants].first[:dob]).to eq('2/2/2005')
-      expect(subject[:dependants].second[:in_full_time_education]).to eq('TRUE')
+      expect(subject[:dependants].second[:in_full_time_education]).to eq(true)
     end
 
     it 'parses applicant_capital property' do
-      expect(subject[:applicant_capital][:property].first[:main_home]).to eq('TRUE')
+      expect(subject[:applicant_capital][:property].first[:main_home]).to eq(true)
       expect(subject[:applicant_capital][:property].second[:value]).to eq('100000')
     end
 

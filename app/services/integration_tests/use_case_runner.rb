@@ -36,35 +36,23 @@ module IntegrationTests
     end
 
     def applicant
-      client.create_applicant(
-        assessment_id,
-        assessment_id: assessment_id,
-        applicant: payload[:applicant]
-      )
+      client.create_applicant(assessment_id, payload.slice(:applicant))
     end
 
     def dependants
-      client.create_dependants(
-        assessment_id,
-        assessment_id: assessment_id,
-        dependants: payload[:dependants]
-      )
+      client.create_dependants(assessment_id, payload.slice(:dependants))
     end
 
     def capital
-      client.create_capital(assessment_id, payload[:capital].merge(assessment_id: assessment_id))
+      client.create_capital(assessment_id, payload[:capital])
     end
 
     def vehicles
-      client.create_vehicles(assessment_id, vehicles: payload[:vehicles])
+      client.create_vehicles(assessment_id, payload.slice(:vehicles))
     end
 
     def properties
-      client.create_properties(
-        assessment_id,
-        assessment_id: assessment_id,
-        properties: payload[:properties]
-      )
+      client.create_properties(assessment_id, payload.slice(:properties))
     end
 
     def income
@@ -72,7 +60,7 @@ module IntegrationTests
     end
 
     def outgoings
-      client.create_outgoings(assessment_id, outgoings: payload[:outgoings])
+      client.create_outgoings(assessment_id, payload.slice(:outgoings))
     end
 
     def client

@@ -47,11 +47,11 @@ module IntegrationTests
       request['Content-Type'] = 'application/json'
       request.body = payload.to_json
       response = http.request(request)
-      parse_response(response)
+      parse_response(path, response)
     end
 
-    def parse_response(response)
-      raise "Request Failed: #{response.message} (#{response.code}) #{response.body}" unless response.is_a?(Net::HTTPOK)
+    def parse_response(path, response)
+      raise "Request to '#{path}' Failed: #{response.message} (#{response.code}) #{response.body}" unless response.is_a?(Net::HTTPOK)
 
       JSON.parse(response.body, symbolize_names: true)
     end

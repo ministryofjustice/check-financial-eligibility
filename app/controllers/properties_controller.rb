@@ -28,24 +28,24 @@ class PropertiesController < ApplicationController
   end
 
   def create
-    if creation_service_result.success?
-      render json: {
-        success: true,
-        objects: creation_service_result.properties,
-        errors: []
-      }
+    if creation_service.success?
+      render_success objects: creation_service.properties
     else
-      render json: {
-        success: false,
-        objects: nil,
-        errors: creation_service_result.errors
-      }, status: 422
+      render_unprocessable(creation_service.errors)
     end
   end
 
   private
 
-  def creation_service_result
-    @creation_service_result ||= PropertiesCreationService.call(request.raw_post)
+  def creation_service
+    @creation_service ||= PropertiesCreationService.call(
+      assessment_id: params[:assessment_id],
+      main_home_attributes: input.dig(:properties, :main_home),
+      additional_properties_attributes: input.dig(:properties, :additional_properties)
+    )
+  end
+
+  def input
+    @input ||= JSON.parse(request.raw_post, symbolize_names: true)
   end
 end

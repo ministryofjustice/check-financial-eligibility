@@ -9,8 +9,8 @@ RSpec.describe IncomeCreationService do
     subject do
       described_class.call(
         assessment_id: assessment.id,
-        benefits: benefit_receipts,
-        wage_slips: wage_slips
+        benefits_attributes: benefit_receipts,
+        wage_slips_attributes: wage_slips
       )
     end
 

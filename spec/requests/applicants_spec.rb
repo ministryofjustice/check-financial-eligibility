@@ -7,7 +7,6 @@ RSpec.describe ApplicantsController, type: :request do
     let(:headers) { { 'CONTENT_TYPE' => 'application/json' } }
     let(:params) do
       {
-        assessment_id: assessment.id,
         applicant: {
           date_of_birth: 20.years.ago.to_date,
           involvement_type: 'applicant',
