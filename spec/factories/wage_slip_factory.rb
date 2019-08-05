@@ -1,9 +1,9 @@
 FactoryBot.define do
   factory :wage_slip do
     assessment
-    payment_date { Faker::Date.backward(14) }
-    gross_pay { Faker::Number.decimal(5) }
-    paye { Faker::Number.decimal(4) }
-    nic { Faker::Number.decimal(3) }
+    payment_date { Faker::Date.backward(days: 14) }
+    gross_pay { Faker::Number.decimal(l_digits: 5, r_digits: 2) }
+    paye { Faker::Number.decimal(l_digits: 4, r_digits: 2) }
+    nic { Faker::Number.decimal(l_digits: 3, r_digits: 2) }
   end
 end

@@ -62,7 +62,7 @@ describe TimeSeriesCalculator do
   end
 
   describe '#latest_value' do
-    let(:latest_value) { Faker::Number.normal(50, 10) }
+    let(:latest_value) { Faker::Number.normal(mean: 50, standard_deviation: 10) }
     let(:variance) { { 1.week.from_now => latest_value } }
     it 'returns that latest value' do
       expect(subject.latest_value).to eq(latest_value)
