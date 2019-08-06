@@ -20,19 +20,12 @@ class DependantsCreationService < BaseCreationService
   end
 
   def create_dependants
-    self.dependants = assessment.dependants.create!(dependant_params)
+    self.dependants = assessment.dependants.create!(dependants_attributes)
   rescue ActiveRecord::RecordInvalid => e
     raise CreationError, e.record.errors.full_messages
   end
 
   def assessment
     @assessment ||= Assessment.find_by(id: assessment_id) || (raise CreationError, ['No such assessment id'])
-  end
-
-  def dependant_params
-    dependants_attributes.map do |dependant|
-      dependant[:dependant_income_receipts_attributes] = dependant.delete(:income) if dependant[:income]
-      dependant
-    end
   end
 end

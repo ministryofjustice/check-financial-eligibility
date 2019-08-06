@@ -4,10 +4,9 @@ class DependantsController < ApplicationController
   param :dependants, Array, required: true, desc: 'An Array of Objects describing a dependant' do
     param :date_of_birth, Date, date_option: :today_or_older, required: true, desc: 'The date of birth of the dependant'
     param :in_full_time_education, :boolean, required: true, desc: 'Whether or not the dependant is in full time education'
-    param :income, Array, required: false, desc: "An array of objects describing the dependent's income receipts during the calculation period" do
-      param :date_of_payment, Date, required: true, desc: 'The date the dependent received this income'
-      param :amount, :currency, required: true, desc: 'The amount of income received'
-    end
+    param :relationship, %w[child_relative adult_relative], required: true, desc: "What is the dependant's relationship to the applicant"
+    param :monthly_income, :currency, required: false, desc: 'What is the monthly income of the dependant'
+    param :assets_value, :currency, required: false, desc: 'What is the total assets value of the dependant'
   end
 
   returns code: :ok, desc: 'Successful response' do
@@ -22,7 +21,7 @@ class DependantsController < ApplicationController
 
   def create
     if creation_service.success?
-      render_success objects: creation_service.dependants.map { |dependant| DependantSerializer.new(dependant) }
+      render_success objects: creation_service.dependants
     else
       render_unprocessable(creation_service.errors)
     end

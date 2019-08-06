@@ -4,40 +4,19 @@ RSpec.describe DependantsController, type: :request do
   describe 'POST dependants' do
     let(:assessment) { create :assessment }
     let(:assessment_id) { assessment.id }
-    let(:dependants) { create_list :dependant, 2, assessment: assessment }
+    let(:dependants_attributes) { attributes_for_list(:dependant, 2) }
     let(:headers) { { 'CONTENT_TYPE' => 'application/json' } }
     let(:request_payload) do
       {
-        dependants: [
-          {
-            date_of_birth: 12.years.ago.to_date,
-            in_full_time_education: true
-          },
-          {
-            date_of_birth: 20.years.ago.to_date,
-            in_full_time_education: false,
-            income: [
-              {
-                date_of_payment: 60.days.ago.to_date,
-                amount: 66.66
-              },
-              {
-                date_of_payment: 40.days.ago.to_date,
-                amount: 44.44
-              },
-              {
-                date_of_payment: 20.days.ago.to_date,
-                amount: 22.22
-              }
-            ]
-          }
-        ]
+        dependants: dependants_attributes
       }
     end
 
-    context 'valid payload' do
-      before { post assessment_dependants_path(assessment), params: request_payload.to_json, headers: headers }
+    subject { post assessment_dependants_path(assessment_id), params: request_payload.to_json, headers: headers }
 
+    before { subject }
+
+    context 'valid payload' do
       it 'returns http success', :show_in_doc do
         expect(response).to have_http_status(:success)
       end
@@ -52,8 +31,6 @@ RSpec.describe DependantsController, type: :request do
     context 'empty payload' do
       let(:request_payload) { {} }
 
-      before { post assessment_dependants_path(assessment), params: request_payload.to_json, headers: headers }
-
       it 'returns http unprocessable entity' do
         expect(response).to have_http_status(:unprocessable_entity)
       end
@@ -65,19 +42,7 @@ RSpec.describe DependantsController, type: :request do
     end
 
     context 'invalid payload' do
-      let(:nil_full_time_education) {}
-      let(:request_payload) do
-        {
-          dependants: [
-            {
-              date_of_birth: 8.years.ago.to_date,
-              in_full_time_education: nil_full_time_education
-            }
-          ]
-        }
-      end
-
-      before { post assessment_dependants_path(assessment), params: request_payload.to_json, headers: headers }
+      let(:dependants_attributes) { attributes_for_list(:dependant, 2, in_full_time_education: nil) }
 
       it 'returns an error and is shown in apidocs', :show_in_doc do
         expect(response).to have_http_status(:unprocessable_entity)
@@ -89,18 +54,6 @@ RSpec.describe DependantsController, type: :request do
 
     context 'invalid assessment_id' do
       let(:assessment_id) { SecureRandom.uuid }
-      let(:request_payload) do
-        {
-          dependants: [
-            {
-              date_of_birth: 8.years.ago.to_date,
-              in_full_time_education: true
-            }
-          ]
-        }
-      end
-
-      before { post assessment_dependants_path(assessment_id), params: request_payload.to_json, headers: headers }
 
       it 'returns http unprocessable entity' do
         expect(response).to have_http_status(:unprocessable_entity)

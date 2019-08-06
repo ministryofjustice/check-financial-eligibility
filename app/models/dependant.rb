@@ -1,7 +1,10 @@
 class Dependant < ApplicationRecord
   belongs_to :assessment
-  has_many :dependant_income_receipts
-  accepts_nested_attributes_for :dependant_income_receipts
+
+  enum relationship: {
+    child_relative: 'child_relative'.freeze,
+    adult_relative: 'adult_relative'.freeze
+  }
 
   validate :date_of_birth_in_past
 
