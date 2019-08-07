@@ -23,7 +23,7 @@ Several use cases and their expected results can be found in a test google sprea
 
 A rake task can be run to test that the service is working as expected (work in progress):
 
-`bin/rails integration_test:run_use_case WORKSHEET="Passported - Test 1"`
+`bin/rails integration_test:run_use_case['Passported - Test 1']`
 
 This task and its associated unit tests require a google service account and several environment variables to be set.
 
