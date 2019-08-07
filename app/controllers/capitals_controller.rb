@@ -24,24 +24,24 @@ class CapitalsController < ApplicationController
   end
 
   def create
-    if creation_service_result.success?
-      render json: {
-        success: true,
-        objects: creation_service_result.capital,
-        errors: []
-      }
+    if creation_service.success?
+      render_success objects: creation_service.capital
     else
-      render json: {
-        success: false,
-        objects: nil,
-        errors: creation_service_result.errors
-      }, status: 422
+      render_unprocessable(creation_service.errors)
     end
   end
 
   private
 
-  def creation_service_result
-    @creation_service_result ||= CapitalsCreationService.call(request.raw_post)
+  def creation_service
+    @creation_service ||= CapitalsCreationService.call(
+      assessment_id: params[:assessment_id],
+      bank_accounts_attributes: input.dig(:liquid_capital, :bank_accounts),
+      non_liquid_capitals_attributes: input[:non_liquid_capital]
+    )
+  end
+
+  def input
+    @input ||= JSON.parse(request.raw_post, symbolize_names: true)
   end
 end

@@ -3,13 +3,12 @@ require 'rails_helper'
 RSpec.describe DependantsCreationService do
   include Rails.application.routes.url_helpers
   let(:assessment) { create :assessment }
+  let(:assessment_id) { assessment.id }
 
-  subject { described_class.call(request_payload) }
-
-  before { stub_call_to_json_schema }
+  subject { described_class.call(assessment_id: assessment_id, dependants_attributes: dependants_attributes) }
 
   context 'valid payload without income' do
-    let(:request_payload) { valid_payload_without_income }
+    let(:dependants_attributes) { valid_payload_without_income }
 
     it 'creates two dependant records for this assessment' do
       expect { subject }.to change { Dependant.count }.by(2)
@@ -39,7 +38,8 @@ RSpec.describe DependantsCreationService do
   end
 
   context 'valid payload with income' do
-    let(:request_payload) { valid_payload_with_income }
+    let(:dependants_attributes) { valid_payload_with_income }
+
     describe '#success?' do
       it 'creates one dependant' do
         expect { subject }.to change { Dependant.count }.by(1)
@@ -62,7 +62,8 @@ RSpec.describe DependantsCreationService do
   end
 
   context 'payload fails ActiveRecord validations' do
-    let(:request_payload) { payload_with_future_dates }
+    let(:dependants_attributes) { payload_with_future_dates }
+
     describe '#success?' do
       it 'returns false' do
         expect(subject.success?).to be false
@@ -87,7 +88,9 @@ RSpec.describe DependantsCreationService do
   end
 
   context 'no such assessment id' do
-    let(:request_payload) { payload_with_invalid_id }
+    let(:assessment_id) { 'hello' }
+    let(:dependants_attributes) { valid_payload_without_income }
+
     describe '#success?' do
       it 'returns false' do
         expect(subject.success?).to be false
@@ -110,89 +113,63 @@ RSpec.describe DependantsCreationService do
     end
   end
 
-  let(:payload_with_invalid_id) do
-    {
-      assessment_id: '34e353e2-dedb-4314-a271-9ff579e19f45',
-      dependants: [
-        {
-          date_of_birth: 12.years.ago.to_date,
-          in_full_time_education: false
-        },
-        {
-          date_of_birth: 6.years.ago.to_date,
-          in_full_time_education: true
-        }
-      ]
-    }.to_json
-  end
-
   let(:valid_payload_without_income) do
-    {
-      assessment_id: assessment.id,
-      dependants: [
-        {
-          date_of_birth: 12.years.ago.to_date,
-          in_full_time_education: false
-        },
-        {
-          date_of_birth: 6.years.ago.to_date,
-          in_full_time_education: true
-        }
-      ]
-    }.to_json
+    [
+      {
+        date_of_birth: 12.years.ago.to_date,
+        in_full_time_education: false
+      },
+      {
+        date_of_birth: 6.years.ago.to_date,
+        in_full_time_education: true
+      }
+    ]
   end
 
   let(:valid_payload_with_income) do
-    {
-      assessment_id: assessment.id,
-      dependants: [
-        {
-          date_of_birth: 12.years.ago.to_date,
-          in_full_time_education: false,
-          income: [
-            {
-              date_of_payment: 60.days.ago.to_date,
-              amount: 66.66
-            },
-            {
-              date_of_payment: 40.days.ago.to_date,
-              amount: 44.44
-            },
-            {
-              date_of_payment: 20.days.ago.to_date,
-              amount: 22.22
-            }
-          ]
-        }
+    [
+      {
+        date_of_birth: 12.years.ago.to_date,
+        in_full_time_education: false,
+        income: [
+          {
+            date_of_payment: 60.days.ago.to_date,
+            amount: 66.66
+          },
+          {
+            date_of_payment: 40.days.ago.to_date,
+            amount: 44.44
+          },
+          {
+            date_of_payment: 20.days.ago.to_date,
+            amount: 22.22
+          }
+        ]
+      }
 
-      ]
-    }.to_json
+    ]
   end
 
   let(:payload_with_future_dates) do
-    {
-      assessment_id: assessment.id,
-      dependants: [
-        {
-          date_of_birth: 3.years.from_now.to_date,
-          in_full_time_education: false,
-          income: [
-            {
-              date_of_payment: Date.tomorrow,
-              amount: 66.66
-            },
-            {
-              date_of_payment: 40.days.ago.to_date,
-              amount: 44.44
-            },
-            {
-              date_of_payment: 20.days.ago.to_date,
-              amount: 22.22
-            }
-          ]
-        }
-
-      ]
-    }.to_json
+    [
+      {
+        date_of_birth: 3.years.from_now.to_date,
+        in_full_time_education: false,
+        income: [
+          {
+            date_of_payment: Date.tomorrow,
+            amount: 66.66
+          },
+          {
+            date_of_payment: 40.days.ago.to_date,
+            amount: 44.44
+          },
+          {
+            date_of_payment: 20.days.ago.to_date,
+            amount: 22.22
+          }
+        ]
+      }
+    ]
   end
 end

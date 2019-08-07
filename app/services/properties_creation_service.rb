@@ -1,8 +1,10 @@
 class PropertiesCreationService < BaseCreationService
-  attr_accessor :raw_post, :properties
+  attr_accessor :assessment_id, :main_home_attributes, :additional_properties_attributes, :properties
 
-  def initialize(raw_post)
-    @raw_post = raw_post
+  def initialize(assessment_id:, main_home_attributes: nil, additional_properties_attributes: [])
+    @assessment_id = assessment_id
+    @main_home_attributes = main_home_attributes
+    @additional_properties_attributes = additional_properties_attributes
     @properties = []
   end
 
@@ -25,11 +27,11 @@ class PropertiesCreationService < BaseCreationService
   end
 
   def new_main_home
-    new_property(payload[:properties][:main_home], true) if payload[:properties][:main_home]
+    new_property(main_home_attributes, true) if main_home_attributes
   end
 
   def new_additional_properties
-    @payload[:properties][:additional_properties]&.each do |attrs|
+    additional_properties_attributes&.each do |attrs|
       new_property(attrs, false)
     end
   end
@@ -40,10 +42,6 @@ class PropertiesCreationService < BaseCreationService
   end
 
   def assessment
-    @assessment ||= Assessment.find_by(id: payload[:assessment_id]) || (raise CreationError, ['No such assessment id'])
-  end
-
-  def payload
-    @payload ||= JSON.parse(@raw_post, symbolize_names: true)
+    @assessment ||= Assessment.find_by(id: assessment_id) || (raise CreationError, ['No such assessment id'])
   end
 end

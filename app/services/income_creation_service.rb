@@ -1,10 +1,10 @@
 class IncomeCreationService < BaseCreationService
-  attr_reader :assessment_id, :benefit_attributes, :wage_slip_attributes
+  attr_reader :assessment_id, :benefits_attributes, :wage_slips_attributes
 
-  def initialize(assessment_id:, benefits:, wage_slips:)
+  def initialize(assessment_id:, benefits_attributes:, wage_slips_attributes:)
     @assessment_id = assessment_id
-    @benefit_attributes = benefits
-    @wage_slip_attributes = wage_slips
+    @benefits_attributes = benefits_attributes
+    @wage_slips_attributes = wage_slips_attributes
   end
 
   def call
@@ -28,13 +28,13 @@ class IncomeCreationService < BaseCreationService
   end
 
   def wage_slips
-    @wage_slips ||= wage_slip_attributes.map do |attributes|
+    @wage_slips ||= wage_slips_attributes.map do |attributes|
       assessment.wage_slips.create(attributes)
     end
   end
 
   def benefit_receipts
-    @benefit_receipts ||= benefit_attributes.map do |attributes|
+    @benefit_receipts ||= benefits_attributes.map do |attributes|
       assessment.benefit_receipts.create(attributes)
     end
   end

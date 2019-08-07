@@ -1,10 +1,9 @@
 class DependantsCreationService < BaseCreationService
-  SCHEMA_PATH = Rails.root.join('public/schemas/dependant.json').to_s
+  attr_accessor :assessment_id, :dependants_attributes, :dependants
 
-  attr_accessor :raw_post, :dependants
-
-  def initialize(raw_post)
-    @raw_post = raw_post
+  def initialize(assessment_id:, dependants_attributes:)
+    @assessment_id = assessment_id
+    @dependants_attributes = dependants_attributes
   end
 
   def call
@@ -27,15 +26,11 @@ class DependantsCreationService < BaseCreationService
   end
 
   def assessment
-    @assessment ||= Assessment.find_by(id: payload[:assessment_id]) || (raise CreationError, ['No such assessment id'])
-  end
-
-  def payload
-    @payload ||= JSON.parse(@raw_post, symbolize_names: true)
+    @assessment ||= Assessment.find_by(id: assessment_id) || (raise CreationError, ['No such assessment id'])
   end
 
   def dependant_params
-    payload[:dependants].map do |dependant|
+    dependants_attributes.map do |dependant|
       dependant[:dependant_income_receipts_attributes] = dependant.delete(:income) if dependant[:income]
       dependant
     end

@@ -3,11 +3,11 @@ require 'rails_helper'
 RSpec.describe PropertiesController, type: :request do
   describe 'POST /assessments/:assessment_id/properties' do
     let(:assessment) { create :assessment }
+    let(:assessment_id) { assessment.id }
     let(:property) { create :property, assessment: assessment }
     let(:headers) { { 'CONTENT_TYPE' => 'application/json' } }
     let(:request_payload) do
       {
-        assessment_id: assessment.id,
         properties: {
           main_home: {
             value: 500_000,
@@ -35,7 +35,7 @@ RSpec.describe PropertiesController, type: :request do
 
     context 'valid payload' do
       before do
-        post assessment_properties_path(assessment.id), params: request_payload.to_json, headers: headers
+        post assessment_properties_path(assessment_id), params: request_payload.to_json, headers: headers
       end
 
       context 'service returns success' do
@@ -55,20 +55,7 @@ RSpec.describe PropertiesController, type: :request do
       end
 
       context 'Invalid assessment ID causes service to return failure' do
-        let(:non_existent_assessment_id) { SecureRandom.uuid }
-        let(:request_payload) do
-          {
-            assessment_id: non_existent_assessment_id,
-            properties: {
-              main_home: {
-                value: 123_456,
-                outstanding_mortgage: 3000,
-                percentage_owned: 20,
-                shared_with_housing_assoc: true
-              }
-            }
-          }
-        end
+        let(:assessment_id) { SecureRandom.uuid }
 
         it 'returns expected error response', :show_in_doc do
           expect(parsed_response[:success]).to eq(false)

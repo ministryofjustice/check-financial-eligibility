@@ -48,8 +48,8 @@ class IncomesController < ApplicationController
   def income_creation_service
     @income_creation_service ||= IncomeCreationService.call(
       assessment_id: params[:assessment_id],
-      benefits: input[:benefits],
-      wage_slips: input[:wage_slips]
+      benefits_attributes: input[:benefits],
+      wage_slips_attributes: input[:wage_slips]
     )
   end
 

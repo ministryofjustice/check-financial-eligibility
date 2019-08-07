@@ -1,9 +1,9 @@
 class VehicleCreationService < BaseCreationService
-  attr_accessor :assessment_id, :vehicle_attributes, :vehicles
+  attr_accessor :assessment_id, :vehicles_attributes, :vehicles
 
-  def initialize(assessment_id:, vehicle_attributes:)
+  def initialize(assessment_id:, vehicles_attributes:)
     @assessment_id = assessment_id
-    @vehicle_attributes = vehicle_attributes
+    @vehicles_attributes = vehicles_attributes
   end
 
   def call
@@ -20,7 +20,7 @@ class VehicleCreationService < BaseCreationService
   end
 
   def create_vehicles
-    self.vehicles = assessment.vehicles.create!(vehicle_attributes)
+    self.vehicles = assessment.vehicles.create!(vehicles_attributes)
   rescue ActiveRecord::RecordInvalid => e
     raise CreationError, e.record.errors.full_messages
   end
