@@ -21,24 +21,23 @@ class DependantsController < ApplicationController
   end
 
   def create
-    if creation_service_result.success?
-      render json: {
-        success: true,
-        objects: creation_service_result.dependants.map { |dependant| DependantSerializer.new(dependant) },
-        errors: []
-      }
+    if creation_service.success?
+      render_success objects: creation_service.dependants.map { |dependant| DependantSerializer.new(dependant) }
     else
-      render json: {
-        success: false,
-        objects: nil,
-        errors: creation_service_result.errors
-      }, status: 422
+      render_unprocessable(creation_service.errors)
     end
   end
 
   private
 
-  def creation_service_result
-    @creation_service_result ||= DependantsCreationService.call(request.raw_post)
+  def creation_service
+    @creation_service ||= DependantsCreationService.call(
+      assessment_id: params[:assessment_id],
+      dependants_attributes: input[:dependants]
+    )
+  end
+
+  def input
+    @input ||= JSON.parse(request.raw_post, symbolize_names: true)
   end
 end

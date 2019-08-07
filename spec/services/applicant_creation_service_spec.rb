@@ -3,25 +3,21 @@ require 'rails_helper'
 RSpec.describe ApplicantCreationService do
   describe 'POST applicant' do
     let(:assessment) { create :assessment }
+    let(:assessment_id) { assessment.id }
+    let(:date_of_birth) { Faker::Date.backward }
+    let(:applicant_attributes) do
+      {
+        date_of_birth: date_of_birth,
+        involvement_type: 'applicant',
+        has_partner_opponent: true,
+        receives_qualifying_benefit: true
+      }
+    end
 
-    subject { described_class.call(request_payload) }
+    subject { described_class.call(assessment_id: assessment_id, applicant_attributes: applicant_attributes) }
 
     describe '.call' do
       context 'valid payload' do
-        let(:valid_payload) do
-          {
-            assessment_id: assessment.id,
-            applicant: {
-              date_of_birth: '2010-04-04',
-              involvement_type: 'applicant',
-              has_partner_opponent: true,
-              receives_qualifying_benefit: true
-            }
-          }.to_json
-        end
-
-        let(:request_payload) { valid_payload }
-
         describe '#success?' do
           it 'returns true' do
             expect(subject.success?).to be true
@@ -46,21 +42,6 @@ RSpec.describe ApplicantCreationService do
       end
 
       context 'ActiveRecord validation fails' do
-        let(:valid_payload) do
-          {
-            assessment_id: assessment_id,
-            applicant: {
-              date_of_birth: date_of_birth,
-              involvement_type: 'applicant',
-              has_partner_opponent: true,
-              receives_qualifying_benefit: true
-            }
-          }.to_json
-        end
-        let(:assessment_id) { assessment.id }
-        let(:date_of_birth) { Date.today.to_date }
-        let(:request_payload) { valid_payload }
-
         context 'date of birth cannot be in future' do
           let(:date_of_birth) { Date.tomorrow.to_date }
 
@@ -97,7 +78,8 @@ RSpec.describe ApplicantCreationService do
         end
 
         context 'applicant already exists' do
-          before { described_class.call(request_payload) }
+          before { create :applicant, assessment: assessment }
+
           describe '#success?' do
             it 'returns false' do
               expect(subject.success?).to be false
@@ -121,10 +103,6 @@ RSpec.describe ApplicantCreationService do
           end
         end
       end
-    end
-
-    def full_schema
-      File.read(Rails.root.join('public/schemas/assessment_request.json'))
     end
   end
 end

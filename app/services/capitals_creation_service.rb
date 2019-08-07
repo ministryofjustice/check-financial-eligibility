@@ -1,10 +1,10 @@
 class CapitalsCreationService < BaseCreationService
-  SCHEMA_PATH = Rails.root.join('public/schemas/capital.json').to_s
+  attr_accessor :assessment_id, :bank_accounts_attributes, :non_liquid_capitals_attributes, :capital
 
-  attr_accessor :raw_post, :capital
-
-  def initialize(raw_post)
-    @raw_post = raw_post
+  def initialize(assessment_id:, bank_accounts_attributes: nil, non_liquid_capitals_attributes: nil)
+    @assessment_id = assessment_id
+    @bank_accounts_attributes = bank_accounts_attributes
+    @non_liquid_capitals_attributes = non_liquid_capitals_attributes
   end
 
   def call
@@ -26,22 +26,18 @@ class CapitalsCreationService < BaseCreationService
   end
 
   def bank_accounts
-    return [] if payload[:liquid_capital].nil?
+    return [] if bank_accounts_attributes.blank?
 
-    assessment.bank_accounts.create!(payload[:liquid_capital][:bank_accounts])
+    assessment.bank_accounts.create!(bank_accounts_attributes)
   end
 
   def non_liquid_assets
-    return [] if payload[:non_liquid_capital].nil?
+    return [] if non_liquid_capitals_attributes.blank?
 
-    assessment.non_liquid_assets.create!(payload[:non_liquid_capital])
+    assessment.non_liquid_assets.create!(non_liquid_capitals_attributes)
   end
 
   def assessment
-    @assessment ||= Assessment.find_by(id: payload[:assessment_id]) || (raise CreationError, ['No such assessment id'])
-  end
-
-  def payload
-    @payload ||= JSON.parse(raw_post, symbolize_names: true)
+    @assessment ||= Assessment.find_by(id: assessment_id) || (raise CreationError, ['No such assessment id'])
   end
 end

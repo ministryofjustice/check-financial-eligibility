@@ -5,7 +5,7 @@ RSpec.describe YamlStore do
   let(:data) { YAML.load_file file_path }
 
   describe '#value' do
-    let(:threshold) { Faker::Number.number(4) }
+    let(:threshold) { Faker::Number.number(digits: 4) }
     let(:data) { { foo: threshold } }
     let(:threshold_store) { described_class.new(data) }
 

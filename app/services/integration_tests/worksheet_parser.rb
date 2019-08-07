@@ -115,11 +115,19 @@ module IntegrationTests
 
       def call
         create_object
-        object[attribute] = value
+        object[attribute] = parsed_value
         object["#{attribute}_notes"] = notes if notes.present?
       end
 
       private
+
+      def parsed_value
+        return false if value.to_s.casecmp('false').zero?
+
+        return true if value.to_s.casecmp('true').zero?
+
+        value
+      end
 
       def object
         @object ||= array? ? array_item : hash_receiver[object_name]

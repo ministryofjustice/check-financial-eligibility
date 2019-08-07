@@ -24,19 +24,19 @@ class VehiclesController < ApplicationController
   end
 
   def create
-    if income_creation_service.success?
-      render_success vehicles: income_creation_service.vehicles
+    if creation_service.success?
+      render_success vehicles: creation_service.vehicles
     else
-      render_unprocessable(income_creation_service.errors)
+      render_unprocessable(creation_service.errors)
     end
   end
 
   private
 
-  def income_creation_service
-    @income_creation_service ||= VehicleCreationService.call(
+  def creation_service
+    @creation_service ||= VehicleCreationService.call(
       assessment_id: params[:assessment_id],
-      vehicle_attributes: input[:vehicles]
+      vehicles_attributes: input[:vehicles]
     )
   end
 

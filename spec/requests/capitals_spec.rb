@@ -3,20 +3,23 @@ require 'rails_helper'
 RSpec.describe CapitalsController, type: :request do
   describe 'POST capital' do
     let(:assessment) { create :assessment }
+    let(:assessment_id) { assessment.id }
+    let(:bank_accounts) { attributes_for_list(:bank_account, 2) }
+    let(:non_liquid_capital) { attributes_for_list(:non_liquid_asset, 2) }
     let(:params) do
       {
-        assessment_id: assessment.id,
-        liquid_capital: {
-          bank_accounts: attributes_for_list(:bank_account, 2)
-        },
-        non_liquid_capital: attributes_for_list(:non_liquid_asset, 2)
+        liquid_capital: { bank_accounts: bank_accounts },
+        non_liquid_capital: non_liquid_capital
       }
     end
     let(:headers) { { 'CONTENT_TYPE' => 'application/json' } }
 
+    subject { post assessment_capitals_path(assessment_id), params: params.to_json, headers: headers }
+
+    before { subject }
+
     context 'valid payload' do
       context 'with both types of assets' do
-        before { post assessment_capitals_path(assessment), params: params.to_json, headers: headers }
         it 'returns http success', :show_in_doc do
           expect(response).to have_http_status(:success)
         end
@@ -30,9 +33,10 @@ RSpec.describe CapitalsController, type: :request do
       end
 
       context 'with only bank accounts' do
-        before do
-          params.delete(:non_liquid_capital)
-          post assessment_capitals_path(assessment), params: params.to_json, headers: headers
+        let(:params) do
+          {
+            liquid_capital: { bank_accounts: bank_accounts }
+          }
         end
 
         it 'returns http success' do
@@ -48,9 +52,10 @@ RSpec.describe CapitalsController, type: :request do
       end
 
       context 'with only non-liquid assets' do
-        before do
-          params.delete(:liquid_capital)
-          post assessment_capitals_path(assessment), params: params.to_json, headers: headers
+        let(:params) do
+          {
+            non_liquid_capital: non_liquid_capital
+          }
         end
 
         it 'returns http success' do
@@ -68,8 +73,6 @@ RSpec.describe CapitalsController, type: :request do
       context 'empty payload' do
         let(:params) { {} }
 
-        before { post assessment_capitals_path(assessment), params: params.to_json, headers: headers }
-
         it 'returns http unprocessable entity' do
           expect(response).to have_http_status(:success)
         end
@@ -83,10 +86,7 @@ RSpec.describe CapitalsController, type: :request do
       end
 
       context 'Active Record error' do
-        before do
-          params[:assessment_id] = SecureRandom.uuid
-          post assessment_capitals_path(assessment), params: params.to_json, headers: headers
-        end
+        let(:assessment_id) { SecureRandom.uuid }
 
         it 'errors and is shown in apidocs', :show_in_doc do
           expect(response).to have_http_status(422)
@@ -98,43 +98,32 @@ RSpec.describe CapitalsController, type: :request do
 
     context 'invalid payload' do
       context 'missing bank account on liquid capital' do
-        before do
-          params[:liquid_capital] = {}
-          post assessment_capitals_path(assessment), params: params.to_json, headers: headers
+        let(:params) do
+          {
+            liquid_capital: {}
+          }
         end
 
         it_behaves_like 'it fails with message', 'Missing parameter bank_accounts'
       end
 
       context 'missing name on bank account' do
-        before do
-          params[:liquid_capital][:bank_accounts].first.delete(:name)
-          post assessment_capitals_path(assessment), params: params.to_json, headers: headers
-        end
+        let(:bank_accounts) { attributes_for_list(:bank_account, 2).map { |account| account.tap { |item| item.delete(:name) } } }
         it_behaves_like 'it fails with message', 'Missing parameter name'
       end
 
       context 'missing lowest balance on bank account' do
-        before do
-          params[:liquid_capital][:bank_accounts].first.delete(:lowest_balance)
-          post assessment_capitals_path(assessment), params: params.to_json, headers: headers
-        end
+        let(:bank_accounts) { attributes_for_list(:bank_account, 2).map { |account| account.tap { |item| item.delete(:lowest_balance) } } }
         it_behaves_like 'it fails with message', 'Missing parameter lowest_balance'
       end
 
       context 'missing description on non_liquid capital' do
-        before do
-          params[:non_liquid_capital].first.delete(:description)
-          post assessment_capitals_path(assessment), params: params.to_json, headers: headers
-        end
+        let(:non_liquid_capital) { attributes_for_list(:non_liquid_asset, 2).map { |nlc| nlc.tap { |item| item.delete(:description) } } }
         it_behaves_like 'it fails with message', 'Missing parameter description'
       end
 
       context 'missing value on non-liquid capital' do
-        before do
-          params[:non_liquid_capital].first.delete(:value)
-          post assessment_capitals_path(assessment), params: params.to_json, headers: headers
-        end
+        let(:non_liquid_capital) { attributes_for_list(:non_liquid_asset, 2).map { |nlc| nlc.tap { |item| item.delete(:value) } } }
         it_behaves_like 'it fails with message', 'Missing parameter value'
       end
     end

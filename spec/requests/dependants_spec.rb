@@ -3,11 +3,11 @@ require 'rails_helper'
 RSpec.describe DependantsController, type: :request do
   describe 'POST dependants' do
     let(:assessment) { create :assessment }
+    let(:assessment_id) { assessment.id }
     let(:dependants) { create_list :dependant, 2, assessment: assessment }
     let(:headers) { { 'CONTENT_TYPE' => 'application/json' } }
     let(:request_payload) do
       {
-        assessment_id: assessment.id,
         dependants: [
           {
             date_of_birth: 12.years.ago.to_date,
@@ -68,7 +68,6 @@ RSpec.describe DependantsController, type: :request do
       let(:nil_full_time_education) {}
       let(:request_payload) do
         {
-          assessment_id: assessment.id,
           dependants: [
             {
               date_of_birth: 8.years.ago.to_date,
@@ -89,10 +88,9 @@ RSpec.describe DependantsController, type: :request do
     end
 
     context 'invalid assessment_id' do
-      let(:non_existent_assessment_id) { SecureRandom.uuid }
+      let(:assessment_id) { SecureRandom.uuid }
       let(:request_payload) do
         {
-          assessment_id: non_existent_assessment_id,
           dependants: [
             {
               date_of_birth: 8.years.ago.to_date,
@@ -102,7 +100,7 @@ RSpec.describe DependantsController, type: :request do
         }
       end
 
-      before { post assessment_dependants_path(assessment), params: request_payload.to_json, headers: headers }
+      before { post assessment_dependants_path(assessment_id), params: request_payload.to_json, headers: headers }
 
       it 'returns http unprocessable entity' do
         expect(response).to have_http_status(:unprocessable_entity)
