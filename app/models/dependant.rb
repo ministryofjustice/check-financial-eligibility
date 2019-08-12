@@ -1,10 +1,8 @@
 class Dependant < ApplicationRecord
+  extend EnumHash
   belongs_to :assessment
 
-  enum relationship: {
-    child_relative: 'child_relative'.freeze,
-    adult_relative: 'adult_relative'.freeze
-  }
+  enum relationship: enum_hash_for(:child_relative, :adult_relative)
 
   validate :date_of_birth_in_past
 
