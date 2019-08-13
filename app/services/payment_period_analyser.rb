@@ -39,6 +39,7 @@ class PaymentPeriodAnalyser
     return false if dates.size == SIZE_THRESHOLD_MONTHLY && date_slope < MONTHLY_SLOPE_LIMIT[:upper]
     return false if date_slope < MONTHLY_SLOPE_LIMIT[:lower]
     return false if days_between_dates.range > MONTHLY_RANGE_LIMIT
+    return false unless around_monthly(days_between_dates.median)
 
     true
   end
@@ -70,6 +71,10 @@ class PaymentPeriodAnalyser
     return true if days_between_dates.median > MONTHLY_MEDIAN_LIMIT && around_28(days_between_dates.range)
 
     false
+  end
+
+  def around_monthly(number)
+    number.between?(25, 33) || number.between?(55, 63)
   end
 
   # Factors of 7 have a particular significance when analysing weekly sequences of data. Which means patterns

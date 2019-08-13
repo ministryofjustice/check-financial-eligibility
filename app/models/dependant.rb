@@ -1,7 +1,8 @@
 class Dependant < ApplicationRecord
+  extend EnumHash
   belongs_to :assessment
-  has_many :dependant_income_receipts
-  accepts_nested_attributes_for :dependant_income_receipts
+
+  enum relationship: enum_hash_for(:child_relative, :adult_relative)
 
   validate :date_of_birth_in_past
 

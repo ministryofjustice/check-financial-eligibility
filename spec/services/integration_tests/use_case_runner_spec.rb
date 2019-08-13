@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe IntegrationTests::UseCaseRunner do
   let(:assessment) { attributes_for :assessment }
   let(:applicant) { attributes_for :applicant }
-  let(:dependants) { attributes_for_list(:dependant, 2, dependant_income_receipts: nil) }
+  let(:dependants) { attributes_for_list(:dependant, 2) }
   let(:bank_accounts) { attributes_for_list(:bank_account, 2) }
   let(:non_liquid_assets) { attributes_for_list(:non_liquid_asset, 2) }
   let(:vehicles) { attributes_for_list(:vehicle, 2) }
@@ -16,11 +16,7 @@ RSpec.describe IntegrationTests::UseCaseRunner do
     {
       assessment: assessment,
       applicant: applicant,
-      dependants: dependants.map do |dependant|
-        dependant.delete(:dependant_income_receipts)
-        dependant[:income] = attributes_for_list(:dependant_income_receipt, 2)
-        dependant
-      end,
+      dependants: dependants,
       capital: {
         liquid_capital: {
           bank_accounts: bank_accounts

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_29_103203) do
+ActiveRecord::Schema.define(version: 2019_08_06_151804) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -56,20 +56,15 @@ ActiveRecord::Schema.define(version: 2019_07_29_103203) do
     t.index ["assessment_id"], name: "index_benefit_receipts_on_assessment_id"
   end
 
-  create_table "dependant_income_receipts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "dependant_id"
-    t.date "date_of_payment"
-    t.decimal "amount"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "dependants", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "assessment_id"
     t.date "date_of_birth"
     t.boolean "in_full_time_education"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "relationship"
+    t.decimal "monthly_income"
+    t.decimal "assets_value"
   end
 
   create_table "non_liquid_assets", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
