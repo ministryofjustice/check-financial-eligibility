@@ -5,31 +5,31 @@ class BaseWorkflowService
     @calculation_period = CalculationPeriod.new(@submission_date)
   end
 
+  private
+
+  attr_reader :assessment
+
   def applicant
     @applicant ||= @assessment.applicant
   end
 
-  def bank_accounts
-    @bank_accounts ||= @assessment.bank_accounts
-  end
-
-  def non_liquid_assets
-    @non_liquid_assets ||= @assessment.non_liquid_assets
-  end
-
-  def result
-    @result ||= @assessment.result
+  def liquid_capital_items
+    @liquid_capital_items ||= capital_summary.liquid_capital_items
   end
 
   def main_home
-    @main_home ||= @assessment.properties.find_by(main_home: true)
+    @main_home ||= capital_summary.main_home
   end
 
   def additional_properties
-    @additional_properties ||= @assessment.properties.where(main_home: false)
+    @additional_properties ||= capital_summary.additional_properties
   end
 
   def vehicles
-    @vehicles ||= @assessment.vehicles
+    @vehicles ||= capital_summary.vehicles
+  end
+
+  def capital_summary
+    @capital_summary ||= @assessment.capital_summary
   end
 end

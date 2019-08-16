@@ -28,8 +28,8 @@ class AssessmentCreationService < BaseCreationService
 
   def new_assessment
     if @new_assessment.nil?
-      @new_assessment = Assessment.create(assessment_hash)
-      @new_assessment.result = Result.new(state: 'pending')
+      @new_assessment = Assessment.new(assessment_hash)
+      @capital_summary = @new_assessment.create_capital_summary! if @new_assessment.save
     end
     @new_assessment
   end

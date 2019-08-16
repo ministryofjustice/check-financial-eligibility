@@ -1,7 +1,9 @@
 module WorkflowService
-  class Passported < LegacyBaseWorkflowService
+  class Passported < BaseWorkflowService
     def call
-      true
+      return true if applicant.receives_qualifying_benefit?
+
+      raise 'Not yet implemented: Check Financial Eligibility cannot yet handle non-passported applicants'
     end
   end
 end

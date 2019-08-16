@@ -4,8 +4,8 @@ RSpec.describe IntegrationTests::UseCaseRunner do
   let(:assessment) { attributes_for :assessment }
   let(:applicant) { attributes_for :applicant }
   let(:dependants) { attributes_for_list(:dependant, 2) }
-  let(:bank_accounts) { attributes_for_list(:bank_account, 2) }
-  let(:non_liquid_assets) { attributes_for_list(:non_liquid_asset, 2) }
+  let(:bank_accounts) { attributes_for_list(:liquid_capital_item, 2) }
+  let(:non_liquid_assets) { attributes_for_list(:non_liquid_capital_item, 2) }
   let(:vehicles) { attributes_for_list(:vehicle, 2) }
   let(:additional_properties) { attributes_for_list(:property, 2) }
   let(:main_home) { attributes_for :property }

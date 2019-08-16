@@ -5,9 +5,7 @@ module WorkflowService
 
       return passported_value if passported?
 
-      raise 'No disposable income specified for non-passported applicant' if disposable_income.nil?
-
-      disregard_value(disposable_income)
+      raise 'Not implemented: PensionerCapitalDisregard for unpassported applicants'
     end
 
     def thresholds
@@ -38,18 +36,6 @@ module WorkflowService
 
     def passported_value
       thresholds[:passported]
-    end
-
-    def disposable_income
-      return nil if result.details['income'].nil?
-
-      result.details['income']['monthly_disposable_income']
-    end
-
-    def disregard_value(income)
-      income_vals = thresholds[:monthly_income_values]
-      threshold = income_vals.keys.select { |k| income >= k }.max
-      income_vals[threshold]
     end
   end
 end

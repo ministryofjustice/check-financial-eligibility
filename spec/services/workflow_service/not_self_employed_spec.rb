@@ -1,19 +1,11 @@
 require 'rails_helper'
 
 module WorkflowService
-  RSpec.xdescribe NotSelfEmployed do
-    let(:particulars) { double AssessmentParticulars }
-    let(:service) { described_class.new(particulars) }
+  RSpec.describe NotSelfEmployed do
+    let(:assessment) { create :assessment, :with_applicant }
+    let(:service) { described_class.new(assessment) }
 
     it 'returns true' do
-      # dummy this out until NotSelfEmployed acually has code
-      request_hash = {
-        meta_data: {
-          submission_date: Date.today
-        }
-      }
-      request = JSON.parse(request_hash.to_json, object_class: DatedStruct)
-      allow(particulars).to receive(:request).and_return(request)
       expect(service.call).to be true
     end
   end

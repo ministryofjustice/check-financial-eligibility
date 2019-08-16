@@ -1,3 +1,3 @@
 class Property < ApplicationRecord
-  belongs_to :assessment
+  belongs_to :capital_summary
 end

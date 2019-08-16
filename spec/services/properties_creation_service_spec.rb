@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe PropertiesCreationService do
   let(:assessment) { create :assessment }
+  let(:capital_summary) { assessment.capital_summary }
   let(:assessment_id) { assessment.id }
   let(:main_home) do
     {
@@ -49,10 +50,9 @@ RSpec.describe PropertiesCreationService do
           expect(subject.properties.size).to eq 3
           expect(subject.properties.map(&:class).uniq).to eq [Property]
         end
+
         it 'returns the ids of the new property records in the response' do
-          expect(subject.properties[0].id).to eq assessment.properties[0].id
-          expect(subject.properties[1].id).to eq assessment.properties[1].id
-          expect(subject.properties[2].id).to eq assessment.properties[2].id
+          expect(subject.properties.map(&:id)).to match_array capital_summary.properties.map(&:id)
         end
       end
 

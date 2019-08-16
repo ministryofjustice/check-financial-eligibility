@@ -12,29 +12,36 @@ class CapitalsCreationService < BaseCreationService
     self
   end
 
+  def capital_summary
+    assessment.capital_summary
+  end
+
   private
 
   def create
     ActiveRecord::Base.transaction do
-      self.capital = {
-        bank_accounts: bank_accounts,
-        non_liquid_assets: non_liquid_assets
-      }
+      assessment
+      create_liquid_assets
+      create_non_liquid_assets
+    rescue CreationError => e
+      self.errors = e.errors
     end
-  rescue CreationError => e
-    self.errors = e.errors
   end
 
-  def bank_accounts
-    return [] if bank_accounts_attributes.blank?
+  def create_liquid_assets
+    return if @bank_accounts_attributes.blank?
 
-    assessment.bank_accounts.create!(bank_accounts_attributes)
+    @bank_accounts_attributes.each do |attrs|
+      capital_summary.liquid_capital_items.create!(description: attrs[:description], value: attrs[:value])
+    end
   end
 
-  def non_liquid_assets
-    return [] if non_liquid_capitals_attributes.blank?
+  def create_non_liquid_assets
+    return if @non_liquid_capitals_attributes.blank?
 
-    assessment.non_liquid_assets.create!(non_liquid_capitals_attributes)
+    @non_liquid_capitals_attributes.each do |attrs|
+      capital_summary.non_liquid_capital_items.create!(description: attrs[:description], value: attrs[:value])
+    end
   end
 
   def assessment

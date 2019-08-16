@@ -1,7 +1,31 @@
 class AssessmentsController < ApplicationController
+  resource_description do
+    short 'Create a new assessment'
+    formats ['json']
+    description <<-END_OF_TEXT
+    == Description
+      This endpoint should be called first to create an Assessment. Then using the
+      assessment_id returned by this call, other resources should be called to build
+      up the complete set of data relating to the assessment:
+
+        POST /assessments/:assessment_id/applicant      # adds data about the applicant
+        POST /assessments/:assessment_id/capitals       # adds data about liquid assets (i.e. bank accounts) and
+                                                        # non-liquid assets (valuable items, trusts, etc)
+        POST /assessments/:assessment_id/properties     # adds data about properties owned by the applicant
+        POST /assessments/:assessment_id/vehicles       # adds data about vehicles owned by the applicant
+        POST /assessments/:assessment_id/dependants     # adds data about any dependents the applicant may have
+        POST /assessments/:assessment_id/incomes        # adds data about any income the applicant may have
+
+      Once all the above calls have been made to build up a complete picture of the applicant's assets and income
+      the followin call should be made to perform the assessment and get the result:
+
+        GET /assessment/:assessment_id
+
+    END_OF_TEXT
+  end
   api :POST, 'asssessments', 'Create asssessment'
   formats ['json']
-  param :client_reference_id, String, "The client's reference number for this application"
+  param :client_reference_id, String, "The client's reference number for this application (free text)"
   param :submission_date, Date, date_option: :today_or_older, required: true, desc: 'The date of the original submission'
   param :matter_proceeding_type, ['domestic_abuse'], required: true, desc: 'The matter type of the case'
 

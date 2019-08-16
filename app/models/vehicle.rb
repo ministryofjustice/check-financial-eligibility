@@ -1,5 +1,5 @@
 class Vehicle < ApplicationRecord
-  belongs_to :assessment
+  belongs_to :capital_summary
 
   validate :date_of_purchase_cannot_be_in_future
 

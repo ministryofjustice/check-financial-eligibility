@@ -1,0 +1,2 @@
+class LiquidCapitalItem < CapitalItem
+end
