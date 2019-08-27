@@ -4,7 +4,7 @@ RSpec.describe VehicleCreationService do
   let(:assessment) { create :assessment }
   let(:vehicles_attributes) { attributes_for_list(:vehicle, 2) }
 
-  describe `.call` do
+  describe '.call' do
     subject do
       described_class.call(
         assessment_id: assessment.id,
