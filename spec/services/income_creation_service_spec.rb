@@ -5,7 +5,7 @@ RSpec.describe IncomeCreationService do
   let(:benefit_receipts) { attributes_for_list(:benefit_receipt, 2) }
   let(:wage_slips) { attributes_for_list(:wage_slip, 2) }
 
-  describe `.call` do
+  describe '.call' do
     subject do
       described_class.call(
         assessment_id: assessment.id,
