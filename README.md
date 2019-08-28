@@ -19,22 +19,5 @@ The documentaion is automatically generated when tests are run with an environme
 This generates a JSON file `doc/apipie_examples.json` which is read and used when drilling down in the documentation available at '/apidocs'.
 
 ## Integration tests
-Several use cases and their expected results can be found in a test google spreadsheet.
-
-A rake task can be run to test that the service is working as expected (work in progress):
-
-`bin/rails integration_test:run_use_case['Passported - Test 1']`
-
-This task and its associated unit tests require a google service account and several environment variables to be set.
-
-Creating a google service account: https://github.com/gimite/google-drive-ruby/blob/master/doc/authorization.md#on-behalf-of-no-existing-users-service-account
-
-The spreadsheet needs to be shared with the service account.
-
-env variables:
-```
-GOOGLE_CLIENT_EMAIL # email of the service account
-GOOGLE_PRIVATE_KEY # private key of the service account
-TEST_SPREADSHEET_ID # ID of test spreadsheet. Can be found in the URL of the spreadsheet
-TEST_SERVICE_URL # URL of service to test. e.g. http://localhost:3000
-```
+Several use cases and their expected results can be found in the google spreadsheet https://docs.google.com/spreadsheets/d/16X7ORqVRpC0BMxgsXn8_NR9ul4MNPWUbYqmpeoBstIo .
+This online spreadsheet is copied inside the project (`spec/fixtures/integration_test_data.xlsx`) and a unit test (`spec/services/integration_tests/test_runner_spec.rb`) ensures that the service returns the expected results for the use cases of the spreadsheet

@@ -4,14 +4,13 @@ module IntegrationTests
 
     ARRAYS = %w[
       dependants
-      applicant_income
-      applicant_benefits
-      applicant_outgoings
-      property
-      liquid_capital_bank_accts
-      valuable_items
-      non_liquid_capital
+      wage_slips
+      benefits
+      outgoings
+      additional_properties
       vehicles
+      bank_accounts
+      non_liquid_capital
     ].freeze
 
     def self.call(worksheet)
@@ -24,8 +23,8 @@ module IntegrationTests
 
     def call
       parsed_rows.merge(
-        test_name: worksheet.rows.first.first,
-        test_description: worksheet.rows.first.second
+        test_name: rows.first.first,
+        test_description: rows.first.second
       )
     end
 
@@ -34,11 +33,14 @@ module IntegrationTests
     attr_reader :worksheet
     attr_accessor :previous_cell1, :previous_cell2
 
+    def rows
+      @rows ||= worksheet.to_a
+    end
+
     def parsed_rows
       self.previous_cell1 = nil
       self.previous_cell2 = nil
-      worksheet
-        .rows[SKIP_ROWS..-1]
+      rows[SKIP_ROWS..-1]
         .each_with_object({}) { |row, payload| parse_row(row, payload) }
         .deep_symbolize_keys
     end
@@ -55,8 +57,7 @@ module IntegrationTests
         hash_receiver: row_extractor.hash_receiver,
         object_name: row_extractor.object_name,
         attribute: row_extractor.attribute,
-        value: row_extractor.value,
-        notes: row_extractor.notes
+        value: row_extractor.value
       )
 
       self.previous_cell1 = row_extractor.cell1
@@ -64,16 +65,15 @@ module IntegrationTests
     end
 
     class RowExtractor
-      attr_accessor :payload, :cell1, :cell2, :cell3, :value, :notes
+      attr_accessor :payload, :cell1, :cell2, :cell3, :value
 
       def initialize(row:, previous_cell1:, previous_cell2:, payload:)
-        cell1, cell2, cell3, value, notes = row
-        @cell1 = cell1.parameterize.underscore.presence || previous_cell1
-        @cell2 = cell2.parameterize.underscore.presence || previous_cell2
-        @cell3 = cell3.parameterize.underscore
+        cell1, cell2, cell3, value = row
+        @cell1 = cell1.to_s.parameterize.underscore.presence || previous_cell1
+        @cell2 = cell2.to_s.parameterize.underscore.presence || previous_cell2
+        @cell3 = cell3.to_s.parameterize.underscore
         @payload = payload
         @value = value
-        @notes = notes
       end
 
       def hash_receiver
@@ -99,24 +99,22 @@ module IntegrationTests
     end
 
     class RowParser
-      attr_accessor :hash_receiver, :object_name, :attribute, :value, :notes
+      attr_accessor :hash_receiver, :object_name, :attribute, :value
 
       def self.call(*args)
         new(*args).call
       end
 
-      def initialize(hash_receiver:, object_name:, attribute:, value:, notes:)
+      def initialize(hash_receiver:, object_name:, attribute:, value:)
         @hash_receiver = hash_receiver
         @object_name = object_name
         @attribute = attribute
         @value = value
-        @notes = notes
       end
 
       def call
         create_object
         object[attribute] = parsed_value
-        object["#{attribute}_notes"] = notes if notes.present?
       end
 
       private

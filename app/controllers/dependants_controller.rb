@@ -4,7 +4,7 @@ class DependantsController < ApplicationController
   param :dependants, Array, required: true, desc: 'An Array of Objects describing a dependant' do
     param :date_of_birth, Date, date_option: :today_or_older, required: true, desc: 'The date of birth of the dependant'
     param :in_full_time_education, :boolean, required: true, desc: 'Whether or not the dependant is in full time education'
-    param :relationship, %w[child_relative adult_relative], required: true, desc: "What is the dependant's relationship to the applicant"
+    param :relationship, Dependant.relationships.values, required: true, desc: "What is the dependant's relationship to the applicant"
     param :monthly_income, :currency, required: false, desc: 'What is the monthly income of the dependant'
     param :assets_value, :currency, required: false, desc: 'What is the total assets value of the dependant'
   end

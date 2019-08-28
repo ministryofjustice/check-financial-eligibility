@@ -116,7 +116,7 @@ RSpec.describe ApplicantsController, type: :request do
           post assessment_applicant_path(assessment.id), params: params.to_json, headers: headers
         end
 
-        it_behaves_like 'it fails with message', %(Invalid parameter 'involvement_type' value "Witness": Must be one of: <code>applicant</code>.)
+        it_behaves_like 'it fails with message', %(Invalid parameter 'involvement_type' value "Witness": Must be one of: <code>applicant</code>, <code>defendant</code>.)
       end
 
       context 'has_partner_opponent not a boolean' do
