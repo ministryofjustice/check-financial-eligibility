@@ -20,7 +20,7 @@ class CapitalsController < ApplicationController
   api :POST, 'assessments/:assessment_id/capitals', 'Create capital declarations'
   formats ['json']
   param :assessment_id, :uuid, required: true
-  param :liquid_capital, Array, desc: 'Collection of bank accounts' do
+  param :bank_accounts, Array, desc: 'Collection of bank accounts' do
     param :description, String, required: true, desc: 'An identifying name for this bank account'
     param :value, :currency, required: true, desc: 'The lowest balance on this bank account during the calculation period'
   end

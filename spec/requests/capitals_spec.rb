@@ -6,7 +6,7 @@ RSpec.describe CapitalsController, type: :request do
     let(:assessment_id) { assessment.id }
     let(:params) do
       {
-        liquid_capital: bank_account_params,
+        bank_accounts: bank_account_params,
         non_liquid_capital: non_liquid_params
       }
     end
