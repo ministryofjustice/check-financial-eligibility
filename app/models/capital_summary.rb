@@ -25,7 +25,7 @@ class CapitalSummary < ApplicationRecord
 
   def assess_capital!
     apply_pensioner_disregard
-
+    self.assessed_capital = total_capital - pensioner_capital_disregard
     apply_thresholds
   end
 
@@ -33,10 +33,6 @@ class CapitalSummary < ApplicationRecord
 
   def apply_pensioner_disregard
     self.pensioner_capital_disregard = WorkflowService::PensionerCapitalDisregard.new(assessment).value
-  end
-
-  def calculate_assessed_capital
-    self.assessed_capital = total_capital - pensioner_capital_disregard
   end
 
   def apply_thresholds

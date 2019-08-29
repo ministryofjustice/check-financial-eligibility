@@ -13,9 +13,9 @@ FactoryBot.define do
     end
 
     trait :below_lower_threshold do
-      total_liquid { 350 }
-      total_capital { 350 }
-      assessed_capital { 350 }
+      total_liquid { Faker::Number.between(from: 1.0, to: 2999.99).round(2) }
+      total_capital { Faker::Number.between(from: 1.0, to: 2999.99).round(2) }
+      assessed_capital { Faker::Number.between(from: 1.0, to: 2999.99).round(2) }
     end
 
     trait :at_lower_threshold do
@@ -23,9 +23,9 @@ FactoryBot.define do
     end
 
     trait :above_lower_threshold do
-      total_liquid { 3_000.01 }
-      total_capital { 3_000.01 }
-      assessed_capital { 3_000.01 }
+      total_liquid { Faker::Number.between(from: 3_000.01, to: 999_999.99).round(2) }
+      total_capital { Faker::Number.between(from: 3_000.01, to: 999_999.99).round(2) }
+      assessed_capital { Faker::Number.between(from: 3_000.01, to: 999_999.99).round(2) }
     end
   end
 end
