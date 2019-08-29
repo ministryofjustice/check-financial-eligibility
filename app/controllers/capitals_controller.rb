@@ -8,7 +8,7 @@ class CapitalsController < ApplicationController
 
       There are two types of assets:
 
-        - liquid capital items: These are bank accounts.  The description should hold the Bank name and account
+        - bank_accounts:  The description should hold the Bank name and account
           number, and the value should hold the lowest balance during that calculation period (i.e. the
           month leading up to the submission date)
 

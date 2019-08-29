@@ -144,14 +144,25 @@ RSpec.describe CapitalsController, type: :request do
     def non_liquid_params
       [
         {
-          "description": Faker::Book.title,
+          "description": fake_asset_name,
           "value": Faker::Number.decimal(r_digits: 2)
         },
         {
-          "description": Faker::Book.title,
+          "description": fake_asset_name,
           "value": Faker::Number.decimal(r_digits: 2)
         }
       ]
+    end
+
+    def fake_asset_name
+      [
+        'R.J.Ewing Trust',
+        'Ming Vase',
+        'Van Gogh Sunflowers',
+        'Aramco shares',
+        'FTSE tracker unit trust',
+        'Life Endowment Policy'
+      ].sample
     end
   end
 end
