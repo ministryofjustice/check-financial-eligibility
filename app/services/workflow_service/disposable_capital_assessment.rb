@@ -2,9 +2,8 @@ module WorkflowService
   class DisposableCapitalAssessment < BaseWorkflowService
     def call
       calculate_capital_totals
-      sum_capital_totals
-      apply_pensioner_disregard
-      apply_thresholds
+      capital_summary.sum_totals!
+      capital_summary.assess_capital!
       capital_summary.summarised!
       capital_summary.save!
       true
@@ -34,23 +33,6 @@ module WorkflowService
 
     def calculate_vehicles
       VehicleAssessment.new(assessment).call
-    end
-
-    def sum_capital_totals
-      capital_summary.total_capital = capital_summary.total_liquid +
-                                      capital_summary.total_non_liquid +
-                                      capital_summary.total_vehicle +
-                                      capital_summary.total_property
-    end
-
-    def apply_pensioner_disregard
-      capital_summary.pensioner_capital_disregard = PensionerCapitalDisregard.new(assessment).value
-      capital_summary.assessed_capital = capital_summary.total_capital - capital_summary.pensioner_capital_disregard
-    end
-
-    def apply_thresholds
-      capital_summary.lower_threshold = Threshold.value_for(:capital_lower, at: @submission_date)
-      capital_summary.upper_threshold = Threshold.value_for(:capital_upper, at: @submission_date)
     end
   end
 end

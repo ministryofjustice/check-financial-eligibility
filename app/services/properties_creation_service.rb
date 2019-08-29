@@ -1,6 +1,8 @@
 class PropertiesCreationService < BaseCreationService
   attr_accessor :assessment_id, :main_home_attributes, :additional_properties_attributes, :properties
 
+  delegate :capital_summary, to: :assessment
+
   def initialize(assessment_id:, main_home_attributes: nil, additional_properties_attributes: [])
     @assessment_id = assessment_id
     @main_home_attributes = main_home_attributes
@@ -45,7 +47,7 @@ class PropertiesCreationService < BaseCreationService
     @assessment ||= Assessment.find_by(id: assessment_id) || (raise CreationError, ['No such assessment id'])
   end
 
-  def capital_summary
-    assessment.capital_summary
-  end
+  # def capital_summary
+  #   assessment.capital_summary
+  # end
 end
