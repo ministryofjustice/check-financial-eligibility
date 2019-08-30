@@ -8,7 +8,7 @@ class CapitalsController < ApplicationController
 
       There are two types of assets:
 
-        - bank_accounts:  The description should hold the Bank name and account
+        - bank_accounts  The description should hold the Bank name and account
           number, and the value should hold the lowest balance during that calculation period (i.e. the
           month leading up to the submission date)
 
@@ -52,7 +52,7 @@ class CapitalsController < ApplicationController
   def creation_service
     @creation_service ||= CapitalsCreationService.call(
       assessment_id: params[:assessment_id],
-      bank_accounts_attributes: input[:liquid_capital],
+      bank_accounts_attributes: input[:bank_accounts],
       non_liquid_capitals_attributes: input[:non_liquid_capital]
     )
   end

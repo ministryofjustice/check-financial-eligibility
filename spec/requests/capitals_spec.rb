@@ -33,10 +33,10 @@ RSpec.describe CapitalsController, type: :request do
         end
       end
 
-      context 'with only liquid_capital_items' do
+      context 'with only bank_accounts' do
         let(:params) do
           {
-            liquid_capital: bank_account_params
+            bank_accounts: bank_account_params
           }
         end
 
@@ -52,6 +52,10 @@ RSpec.describe CapitalsController, type: :request do
           #
           # expect(parsed_response[:objects][:liquid_capital_items].size).to eq 2
           # expect(parsed_response[:objects][:non_liquid_capital_items]).to be_empty
+        end
+
+        it 'creates two LiquidCapitalItem records' do
+          expect(assessment.capital_summary.liquid_capital_items.size).to eq 2
         end
       end
 
@@ -74,6 +78,10 @@ RSpec.describe CapitalsController, type: :request do
           #
           # expect(parsed_response[:objects][:liquid_capital_items]).to be_empty
           # expect(parsed_response[:objects][:non_liquid_capital_items].size).to eq 2
+        end
+
+        it 'creates 2 NonLiquidCapitalItem records' do
+          expect(assessment.capital_summary.non_liquid_capital_items.size).to eq 2
         end
       end
 
