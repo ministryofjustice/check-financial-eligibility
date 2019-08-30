@@ -1,41 +1,39 @@
 require 'rails_helper'
 
 module WorkflowPredicate
-  RSpec.xdescribe BelowLowerCapitalThresholdPredicate do
-    let(:predicate) { described_class.new(particulars) }
+  RSpec.describe BelowLowerCapitalThresholdPredicate do
+    let(:predicate) { described_class.new(assessment) }
     let(:request_hash) { AssessmentRequestFixture.ruby_hash }
-    let(:assessment) { create :assessment, request_payload: request_hash.to_json }
-    let(:particulars) { AssessmentParticulars.new(assessment) }
+    let(:assessment) { create :assessment }
+    let(:capital_summary) { assessment.capital_summary }
     let(:today) { Date.new(2019, 4, 2) }
 
-    xcontext 'unpopulated response' do
+    context 'unpopulated response' do
       it 'raises' do
+        expect(capital_summary.capital_assessment_result).to eq 'pending'
         expect {
           predicate.call
         }.to raise_error RuntimeError, 'Disposable Capital Assessment has not been calculated'
       end
     end
 
-    xcontext 'below threshold' do
+    context 'below threshold' do
+      let(:assessment) { create :assessment, :summarised_below_lower_threshold }
       it 'returns true' do
-        particulars.response.details.capital.total_capital_lower_threshold = 3_000.0
-        particulars.response.details.capital.disposable_capital_assessment = 2_999.99
         expect(predicate.call).to be true
       end
     end
 
     context 'equal to threshold' do
+      let(:assessment) { create :assessment, :summarised_at_lower_threshold }
       it 'returns false' do
-        particulars.response.details.capital.total_capital_lower_threshold = 3_000.0
-        particulars.response.details.capital.disposable_capital_assessment = 3_000.0
         expect(predicate.call).to be false
       end
     end
 
-    context 'above threshold' do
+    context 'above lower threshold' do
+      let(:assessment) { create :assessment, :summarised_above_lower_threshold }
       it 'returns false' do
-        particulars.response.details.capital.total_capital_lower_threshold = 3_000.0
-        particulars.response.details.capital.disposable_capital_assessment = 3_000.01
         expect(predicate.call).to be false
       end
     end

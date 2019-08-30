@@ -9,7 +9,8 @@ class SalaryPatternGenerator
     @period = period
     @salary = salary
     @salary_offset = salary_offset
-    @day_offset = day_offset
+    @offset = day_offset
+    @day_offset = @offset
     @start_at = start_at
   end
 

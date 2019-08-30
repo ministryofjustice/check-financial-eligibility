@@ -1,20 +1,24 @@
 require 'rails_helper'
 
 module WorkflowService
-  RSpec.xdescribe Passported do
-    let(:particulars) { double AssessmentParticulars }
-    let(:service) { described_class.new(particulars) }
+  RSpec.describe Passported do
+    let(:assessment) { create :assessment }
+    let(:service) { described_class.new(assessment) }
 
-    it 'returns true' do
-      # dummy this out until Passported acually has code
-      request_hash = {
-        meta_data: {
-          submission_date: Date.today
-        }
-      }
-      request = JSON.parse(request_hash.to_json, object_class: DatedStruct)
-      allow(particulars).to receive(:request).and_return(request)
-      expect(service.call).to be true
+    context 'applicant is passported' do
+      let!(:applicant) { create :applicant, :with_qualifying_benfits, assessment: assessment }
+      it 'returns true' do
+        expect(service.call).to be true
+      end
+    end
+
+    context 'applicant is not passported' do
+      let!(:applicant) { create :applicant, :without_qualifying_benefits, assessment: assessment }
+      it 'raises' do
+        expect {
+          service.call
+        }.to raise_error 'Not yet implemented: Check Financial Eligibility cannot yet handle non-passported applicants'
+      end
     end
   end
 end

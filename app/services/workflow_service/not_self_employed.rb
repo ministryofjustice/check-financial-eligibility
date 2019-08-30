@@ -1,5 +1,5 @@
 module WorkflowService
-  class NotSelfEmployed < LegacyBaseWorkflowService
+  class NotSelfEmployed < BaseWorkflowService
     def call
       true
     end

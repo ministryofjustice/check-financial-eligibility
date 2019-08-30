@@ -4,12 +4,10 @@ RSpec.describe CapitalsController, type: :request do
   describe 'POST capital' do
     let(:assessment) { create :assessment }
     let(:assessment_id) { assessment.id }
-    let(:bank_accounts) { attributes_for_list(:bank_account, 2) }
-    let(:non_liquid_capital) { attributes_for_list(:non_liquid_asset, 2) }
     let(:params) do
       {
-        liquid_capital: { bank_accounts: bank_accounts },
-        non_liquid_capital: non_liquid_capital
+        bank_accounts: bank_account_params,
+        non_liquid_capital: non_liquid_params
       }
     end
     let(:headers) { { 'CONTENT_TYPE' => 'application/json' } }
@@ -27,15 +25,18 @@ RSpec.describe CapitalsController, type: :request do
         it 'generates a valid response' do
           expect(parsed_response[:success]).to eq(true)
           expect(parsed_response[:errors]).to be_empty
-          expect(parsed_response[:objects][:bank_accounts].size).to eq 2
-          expect(parsed_response[:objects][:non_liquid_assets].size).to eq 2
+          # TODO: Agree on a way to represent CapitalSummary and associations in JSON and then check here
+          # that the right amount of liquid and non_liquid capital items have been created
+          #
+          # expect(parsed_response[:objects][:liquid_capital_items].size).to eq 2
+          # expect(parsed_response[:objects][:non_liquid_capital_items].size).to eq 2
         end
       end
 
-      context 'with only bank accounts' do
+      context 'with only bank_accounts' do
         let(:params) do
           {
-            liquid_capital: { bank_accounts: bank_accounts }
+            bank_accounts: bank_account_params
           }
         end
 
@@ -46,15 +47,22 @@ RSpec.describe CapitalsController, type: :request do
         it 'generates a valid response' do
           expect(parsed_response[:success]).to eq(true)
           expect(parsed_response[:errors]).to be_empty
-          expect(parsed_response[:objects][:bank_accounts].size).to eq 2
-          expect(parsed_response[:objects][:non_liquid_assets]).to be_empty
+          # TODO: Agree on a way to represent CapitalSummary and associations in JSON and then check here
+          # that the right amoutn of liquid and non_liquid capital items have been created
+          #
+          # expect(parsed_response[:objects][:liquid_capital_items].size).to eq 2
+          # expect(parsed_response[:objects][:non_liquid_capital_items]).to be_empty
+        end
+
+        it 'creates two LiquidCapitalItem records' do
+          expect(assessment.capital_summary.liquid_capital_items.size).to eq 2
         end
       end
 
       context 'with only non-liquid assets' do
         let(:params) do
           {
-            non_liquid_capital: non_liquid_capital
+            non_liquid_capital: non_liquid_params
           }
         end
 
@@ -65,8 +73,15 @@ RSpec.describe CapitalsController, type: :request do
         it 'generates a valid response' do
           expect(parsed_response[:success]).to eq(true)
           expect(parsed_response[:errors]).to be_empty
-          expect(parsed_response[:objects][:bank_accounts]).to be_empty
-          expect(parsed_response[:objects][:non_liquid_assets].size).to eq 2
+          # TODO: Agree on a way to represent CapitalSummary and associations in JSON and then check here
+          # that the right amoutn of liquid and non_liquid capital items have been created
+          #
+          # expect(parsed_response[:objects][:liquid_capital_items]).to be_empty
+          # expect(parsed_response[:objects][:non_liquid_capital_items].size).to eq 2
+        end
+
+        it 'creates 2 NonLiquidCapitalItem records' do
+          expect(assessment.capital_summary.non_liquid_capital_items.size).to eq 2
         end
       end
 
@@ -80,8 +95,11 @@ RSpec.describe CapitalsController, type: :request do
         it 'returns error payload' do
           expect(parsed_response[:success]).to eq(true)
           expect(parsed_response[:errors]).to be_empty
-          expect(parsed_response[:objects][:bank_accounts]).to be_empty
-          expect(parsed_response[:objects][:non_liquid_assets]).to be_empty
+          # TODO: Agree on a way to represent CapitalSummary and associations in JSON and then check here
+          # that the right amoutn of liquid and non_liquid capital items have been created
+          #
+          # expect(parsed_response[:objects][:liquid_capital_items]).to be_empty
+          # expect(parsed_response[:objects][:non_liquid_capital_items]).to be_empty
         end
       end
 
@@ -97,35 +115,62 @@ RSpec.describe CapitalsController, type: :request do
     end
 
     context 'invalid payload' do
-      context 'missing bank account on liquid capital' do
-        let(:params) do
-          {
-            liquid_capital: {}
-          }
-        end
-
-        it_behaves_like 'it fails with message', 'Missing parameter bank_accounts'
-      end
-
       context 'missing name on bank account' do
-        let(:bank_accounts) { attributes_for_list(:bank_account, 2).map { |account| account.tap { |item| item.delete(:name) } } }
-        it_behaves_like 'it fails with message', 'Missing parameter name'
+        let(:bank_account_params) { attributes_for_list(:liquid_capital_item, 2).map { |account| account.tap { |item| item.delete(:description) } } }
+        it_behaves_like 'it fails with message', 'Missing parameter description'
       end
 
       context 'missing lowest balance on bank account' do
-        let(:bank_accounts) { attributes_for_list(:bank_account, 2).map { |account| account.tap { |item| item.delete(:lowest_balance) } } }
-        it_behaves_like 'it fails with message', 'Missing parameter lowest_balance'
+        let(:bank_account_params) { attributes_for_list(:liquid_capital_item, 2).map { |account| account.tap { |item| item.delete(:value) } } }
+        it_behaves_like 'it fails with message', 'Missing parameter value'
       end
 
       context 'missing description on non_liquid capital' do
-        let(:non_liquid_capital) { attributes_for_list(:non_liquid_asset, 2).map { |nlc| nlc.tap { |item| item.delete(:description) } } }
+        let(:non_liquid_params) { attributes_for_list(:non_liquid_capital_item, 2).map { |nlc| nlc.tap { |item| item.delete(:description) } } }
         it_behaves_like 'it fails with message', 'Missing parameter description'
       end
 
       context 'missing value on non-liquid capital' do
-        let(:non_liquid_capital) { attributes_for_list(:non_liquid_asset, 2).map { |nlc| nlc.tap { |item| item.delete(:value) } } }
+        let(:non_liquid_params) { attributes_for_list(:non_liquid_capital_item, 2).map { |nlc| nlc.tap { |item| item.delete(:value) } } }
         it_behaves_like 'it fails with message', 'Missing parameter value'
       end
+    end
+
+    def bank_account_params
+      [
+        {
+          "description": "#{Faker::Bank.name} #{Faker::Bank.account_number(digits: 8)}",
+          "value": Faker::Number.decimal(r_digits: 2)
+        },
+        {
+          "description": "#{Faker::Bank.name} #{Faker::Bank.account_number(digits: 8)}",
+          "value": Faker::Number.decimal(r_digits: 2)
+        }
+      ]
+    end
+
+    def non_liquid_params
+      [
+        {
+          "description": fake_asset_name,
+          "value": Faker::Number.decimal(r_digits: 2)
+        },
+        {
+          "description": fake_asset_name,
+          "value": Faker::Number.decimal(r_digits: 2)
+        }
+      ]
+    end
+
+    def fake_asset_name
+      [
+        'R.J.Ewing Trust',
+        'Ming Vase',
+        'Van Gogh Sunflowers',
+        'Aramco shares',
+        'FTSE tracker unit trust',
+        'Life Endowment Policy'
+      ].sample
     end
   end
 end

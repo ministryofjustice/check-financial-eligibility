@@ -1,144 +1,109 @@
 require 'rails_helper'
 
-module WorkflowService # rubocop:disable Metrics/ModuleLength
+module WorkflowService
   RSpec.describe DisposableCapitalAssessment do
-    let(:service) { DisposableCapitalAssessment.new(particulars) }
+    let(:service) { DisposableCapitalAssessment.new(assessment) }
     let(:request_hash) { AssessmentRequestFixture.ruby_hash }
-    let(:assessment) { create :assessment, request_payload: request_hash.to_json }
-    let(:particulars) { AssessmentParticulars.new(assessment) }
+    let(:assessment) { create :assessment, :with_applicant }
+    let(:submission_date) { assessment.submission_date }
+    let(:capital_summary) { assessment.capital_summary }
     let(:today) { Date.new(2019, 4, 2) }
 
-    xdescribe '#call' do
+    describe '#call' do
       it 'always returns true' do
         expect(service.call).to be true
       end
 
       context 'liquid capital' do
-        it 'instantiates and calls the Liquid Capital Assessment service' do
-          lcas = double LiquidCapitalAssessment
-          expect(LiquidCapitalAssessment).to receive(:new)
-            .with(particulars.request.applicant_capital.liquid_capital)
-            .and_return(lcas)
-          expect(lcas).to receive(:call).and_return(156.26)
-          expect(particulars.response.details.capital).to receive(:liquid_capital_assessment=).with(156.26)
+        it 'calls LiquidCapitalAssessment and updates capital summary with the result' do
+          liquid_capital_service = double LiquidCapitalAssessment
+          expect(LiquidCapitalAssessment).to receive(:new).with(assessment).and_return(liquid_capital_service)
+          expect(liquid_capital_service).to receive(:call).and_return(145.83)
           service.call
+          expect(capital_summary.total_liquid).to eq 145.83
         end
       end
 
       context 'property_assessment' do
         it 'instantiates and calls the Property Assessment service' do
           property_service = double PropertyAssessment
-          property_details = particulars.request.applicant_capital.property
-          expect(PropertyAssessment).to receive(:new).with(property_details, today).and_return(property_service)
-          expect(property_service).to receive(:call).and_return(property_assessment_result)
+          expect(PropertyAssessment).to receive(:new).and_return(property_service)
+          expect(property_service).to receive(:call).and_return(23_000.0)
           service.call
-          expect(particulars.response.details.capital.property).to eq property_assessment_result
+          expect(capital_summary.total_property).to eq 23_000.0
         end
       end
 
       context 'vehicle assessment' do
         it 'instantiates and calls the Vehicle Assesment service' do
           vehicle_service = double VehicleAssessment
-          vehicle_details = particulars.request.applicant_capital.vehicles
-          expect(VehicleAssessment).to receive(:new).with(vehicle_details, today).and_return(vehicle_service)
-          expect(vehicle_service).to receive(:call).and_return('Vehicle Result')
+          expect(VehicleAssessment).to receive(:new).with(assessment).and_return(vehicle_service)
+          expect(vehicle_service).to receive(:call).and_return(2_500.0)
           service.call
-          expect(particulars.response.details.capital.vehicles).to eq 'Vehicle Result'
+          expect(capital_summary.total_vehicle).to eq 2_500.0
         end
       end
 
       context 'non_liquid_capital_assessment' do
         it 'instantiates and calls NonLiquidCapitalAssessment' do
           nlcas = double NonLiquidCapitalAssessment
-          expect(NonLiquidCapitalAssessment).to receive(:new)
-            .with(particulars.request.applicant_capital.non_liquid_capital)
-            .and_return(nlcas)
-          expect(nlcas).to receive(:call).and_return(26_733.77)
-          expect(particulars.response.details.capital).to receive(:non_liquid_capital_assessment=).with(26_733.77)
+          expect(NonLiquidCapitalAssessment).to receive(:new).with(assessment).and_return(nlcas)
+          expect(nlcas).to receive(:call).and_return(500)
           service.call
+          expect(capital_summary.total_non_liquid).to eq 500.0
         end
       end
 
       context 'pensioner disregard' do
         it 'instantiates and calls the PensionerCapitalDisregard service' do
           pcd = double PensionerCapitalDisregard
-          expect(PensionerCapitalDisregard)
-            .to receive(:new)
-            .with(particulars)
-            .and_return(pcd)
-          expect(pcd).to receive(:value).and_return(20_000.0)
+          expect(PensionerCapitalDisregard).to receive(:new).with(assessment).and_return(pcd)
+          expect(pcd).to receive(:value).and_return(100_000)
           service.call
-          expect(particulars.response.details.capital.pensioner_disregard).to eq 20_000
+          expect(capital_summary.pensioner_capital_disregard).to eq 100_000
         end
       end
 
-      context 'population of result_fields' do
-        it 'populates the result fields with the results of the calculation' do
+      context 'summarization of result_fields' do
+        it 'summarizes the results it gets from the subservices' do
+          liquid_capital_service = double LiquidCapitalAssessment
+          nlcas = double NonLiquidCapitalAssessment
+          vehicle_service = double VehicleAssessment
+          property_service = double PropertyAssessment
+          pcd = double PensionerCapitalDisregard
+
+          expect(LiquidCapitalAssessment).to receive(:new).with(assessment).and_return(liquid_capital_service)
+          expect(NonLiquidCapitalAssessment).to receive(:new).with(assessment).and_return(nlcas)
+          expect(VehicleAssessment).to receive(:new).with(assessment).and_return(vehicle_service)
+          expect(PropertyAssessment).to receive(:new).and_return(property_service)
+          expect(PensionerCapitalDisregard).to receive(:new).and_return(pcd)
+
+          expect(liquid_capital_service).to receive(:call).and_return(145.83)
+          expect(nlcas).to receive(:call).and_return(500)
+          expect(vehicle_service).to receive(:call).and_return(2_500.0)
+          expect(property_service).to receive(:call).and_return(23_000.0)
+          expect(pcd).to receive(:value).and_return(100_000)
+
           service.call
-          capital = particulars.response.details.capital
-          expect(capital.single_capital_assessment).to eq 700_828.87
-          expect(capital.pensioner_disregard).to eq 100_000
-          expect(capital.disposable_capital_assessment).to eq 600_828.87
-          expect(capital.total_capital_lower_threshold).to eq 3_000
-          expect(capital.total_capital_upper_threshold).to eq 8_000
+          expect(capital_summary.total_liquid).to eq 145.83
+          expect(capital_summary.total_non_liquid).to eq 500
+          expect(capital_summary.total_vehicle).to eq 2_500
+          expect(capital_summary.total_property).to eq 23_000
+          expect(capital_summary.total_mortgage_allowance).to eq 100_000
+          expect(capital_summary.total_capital).to eq 26_145.83
+          expect(capital_summary.pensioner_capital_disregard).to eq 100_000
+          expect(capital_summary.assessed_capital).to eq(-73_854.17)
+          expect(capital_summary.lower_threshold).to eq 3_000
+          expect(capital_summary.upper_threshold).to eq 8_000
         end
       end
-    end
 
-    def property_assessment_result
-      @property_assessment_result ||= JSON.parse(AssessmentResponseFixture.ruby_hash[:details][:capital][:property].to_json,
-                                                 object_class: DatedStruct)
-    end
-
-    def expected_property_result
-      open_structify(
-        main_home: {
-          notional_sale_costs_pctg: 3.0,
-          net_value_after_deduction: 452_925.01,
-          maximum_mortgage_allowance: 0,
-          net_value_after_mortgage: 452_925.01,
-          percentage_owned: 50,
-          net_equity_value: 226_462.51,
-          property_disregard: 100_000,
-          assessed_capital_value: 0
-        },
-        additional_properties: [
-          {
-            notional_sale_costs_pctg: 3.0,
-            net_value_after_deduction: 452_925.01,
-            maximum_mortgage_allowance: 100_000,
-            net_value_after_mortgage: 352_925.01,
-            percentage_owned: 100,
-            net_equity_value: 352_925.01,
-            property_disregard: 0.0,
-            assessed_capital_value: 352_925.01
-          },
-          {
-            notional_sale_costs_pctg: 3.0,
-            net_value_after_deduction: 452_925.01,
-            maximum_mortgage_allowance: 0,
-            net_value_after_mortgage: 452_925.01,
-            percentage_owned: 33.33,
-            net_equity_value: 150_959.91,
-            property_disregard: 0.0,
-            assessed_capital_value: 150_959.91
-          }
-        ]
-      )
-    end
-
-    def expected_vehicle_result
-      open_structify(
-        [
-          {
-            value: 9_500,
-            loan_amount_outstanding: 6_000,
-            date_of_purchase: Date.new(2015, 8, 13),
-            in_regular_use: true,
-            assessed_value: 0
-          }
-        ]
-      )
+      context 'capital_assessment_result' do
+        it 'sets the state to summarised' do
+          service.call
+          expect(capital_summary.capital_assessment_result).to eq 'summarised'
+        end
+      end
     end
   end
 end

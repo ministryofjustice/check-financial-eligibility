@@ -23,20 +23,32 @@ RSpec.describe AssessmentCreationService do
       expect { subject.success? }.to change { Assessment.count }.by(1)
     end
 
-    it 'creates a Result record' do
-      expect { subject.success? }.to change { Result.count }.by(1)
+    it 'creates a CapitalSummary record' do
+      expect { subject.success? }.to change { CapitalSummary.count }.by(1)
     end
 
-    context 'result record' do
+    context 'capital summary record' do
       before { subject.success? }
-      let(:result) { Result.first }
+      let(:capital_summary) { CapitalSummary.first }
 
       it 'creates a pending Result record' do
-        expect(result.state).to eq 'pending'
+        expect(capital_summary.capital_assessment_result).to eq 'pending'
       end
 
-      it 'creates an empty details hash' do
-        expect(result.details).to eq({})
+      it 'creates all fields as zero' do
+        expect(capital_summary.total_liquid).to eq 0.0
+        expect(capital_summary.total_non_liquid).to eq 0.0
+        expect(capital_summary.total_vehicle).to eq 0.0
+        expect(capital_summary.total_property).to eq 0.0
+        expect(capital_summary.total_mortgage_allowance).to eq 0.0
+        expect(capital_summary.pensioner_capital_disregard).to eq 0.0
+        expect(capital_summary.assessed_capital).to eq 0.0
+        expect(capital_summary.capital_contribution).to eq 0.0
+        expect(capital_summary.total_capital).to eq 0.0
+        expect(capital_summary.pensioner_capital_disregard).to eq 0.0
+        expect(capital_summary.lower_threshold).to eq 0.0
+        expect(capital_summary.assessed_capital).to eq 0.0
+        expect(capital_summary.upper_threshold).to eq 0.0
       end
     end
 

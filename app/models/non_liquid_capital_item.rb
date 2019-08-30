@@ -1,0 +1,2 @@
+class NonLiquidCapitalItem < CapitalItem
+end

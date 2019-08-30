@@ -1,35 +1,21 @@
 require 'rails_helper'
 require Rails.root.join('spec/fixtures/assessment_request_fixture.rb')
 
-RSpec.xdescribe Assessment, type: :model do
-  context 'saving request before result is known' do
-    let(:payload) { AssessmentRequestFixture.json }
+RSpec.describe Assessment, type: :model do
+  let(:payload) { AssessmentRequestFixture.json }
 
-    context 'all fields supplied' do
-      it 'saves ok' do
-        assessment = Assessment.create!(client_reference_id: 'client-ref-1',
-                                        remote_ip: '192.168.9.8',
-                                        request_payload: payload)
-        expect(assessment.request_payload).to eq payload
-      end
+  context 'missing ip address' do
+    let(:param_hash) do
+      {
+        client_reference_id: 'client-ref-1',
+        submission_date: Date.today,
+        matter_proceeding_type: 'domestic_abuse'
+      }
     end
-
-    context 'missing ip address' do
-      it 'raises' do
-        expect {
-          Assessment.create!(client_reference_id: 'client-ref-1',
-                             request_payload: payload)
-        }.to raise_error ActiveRecord::NotNullViolation, /null value in column "remote_ip"/
-      end
-    end
-
-    context 'missing request payload' do
-      it 'raises' do
-        expect {
-          Assessment.create!(client_reference_id: 'client-ref-1',
-                             remote_ip: '192.168.9.8')
-        }.to raise_error ActiveRecord::NotNullViolation, /null value in column "request_payload"/
-      end
+    it 'errors' do
+      assessment = Assessment.create param_hash
+      expect(assessment.valid?).to be false
+      expect(assessment.errors.full_messages).to include("Remote ip can't be blank")
     end
   end
 end

@@ -5,8 +5,8 @@ gross_income_upper:
     many: 7
 disposable_income_lower: 2000
 disposable_income_upper: 20000
-capital_lower: 5
-capital_upper: 20000
+capital_lower: 3_000
+capital_upper: 8_000
 pensioner_capital_disregard:
   minimum_age_in_years: 60
   passported: 100_000
@@ -30,8 +30,3 @@ property_disregard:
   additional_property: 0.0
 vehicle_disregard: 15_000
 vehicle_out_of_scope_months: 36
-vehicle_capital_value_pctg:
-  months:
-    12: 100
-    24: 80
-    36: 60

@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe VehicleCreationService do
   let(:assessment) { create :assessment }
+  let(:capital_summary) { assessment.capital_summary }
   let(:vehicles_attributes) { attributes_for_list(:vehicle, 2) }
 
   describe '.call' do

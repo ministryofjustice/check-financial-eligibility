@@ -32,8 +32,3 @@ property_disregard:
   additional_property: 0.0
 vehicle_disregard: 15_000
 vehicle_out_of_scope_months: 36
-vehicle_capital_value_pctg:
-    months:
-      12: 100
-      24: 80
-      36: 60
