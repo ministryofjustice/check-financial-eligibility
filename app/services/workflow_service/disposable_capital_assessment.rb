@@ -4,7 +4,6 @@ module WorkflowService
       calculate_capital_totals
       capital_summary.sum_totals!
       capital_summary.assess_capital!
-      capital_summary.summarised!
       capital_summary.save!
       true
     end

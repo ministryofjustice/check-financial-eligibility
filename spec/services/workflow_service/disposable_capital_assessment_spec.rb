@@ -101,7 +101,7 @@ module WorkflowService
       context 'capital_assessment_result' do
         it 'sets the state to summarised' do
           service.call
-          expect(capital_summary.capital_assessment_result).to eq 'summarised'
+          expect(capital_summary.capital_assessment_result).to eq 'eligible'
         end
       end
     end

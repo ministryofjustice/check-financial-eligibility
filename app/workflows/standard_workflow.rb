@@ -1,21 +1,12 @@
 WORKFLOW = {
   start_step: {
     klass: WorkflowPredicate::DeterminePassported,
-    true_step: :passported_step,
+    true_step: :calculate_disposable_capital_step,
     false_step: :non_passported_step
-  },
-  passported_step: {
-    klass: WorkflowService::Passported,
-    true_step: :calculate_disposable_capital_step
   },
   calculate_disposable_capital_step: {
     klass: WorkflowService::DisposableCapitalAssessment,
-    true_step: :compare_lower_capital_threshold_step
-  },
-  compare_lower_capital_threshold_step: {
-    klass: WorkflowPredicate::BelowLowerCapitalThresholdPredicate,
-    true_step: :end_step,
-    false_step: :end_step
+    true_step: :update_assessment_result_step,
   },
   non_passported_step: {
     klass: WorkflowPredicate::DetermineSelfEmployed,
@@ -26,8 +17,12 @@ WORKFLOW = {
     klass: WorkflowService::SelfEmployed,
     true_step: :end_step
   },
-  not_self_employed_service: {
+  not_self_employed_step: {
     klass: WorkflowService::NotSelfEmployed,
+    true_step: :end_step
+  },
+  update_assessment_result_step: {
+    klass: WorkflowService::UpdateAssessmentResult,
     true_step: :end_step
   },
   end_step: :end_workflow

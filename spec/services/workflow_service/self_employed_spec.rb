@@ -5,9 +5,10 @@ module WorkflowService
     let(:assessment) { create :assessment }
     let(:service) { described_class.new(assessment) }
 
-    it 'returns true' do
-      # always returns true for now
-      expect(service.call).to be true
+    it 'raises not implemented error' do
+      expect{
+        service.call
+      }.to raise_error 'Not Implemented: Check Financial Eligibility has not yet been implemented for self-employed applicants'
     end
   end
 end

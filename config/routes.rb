@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   apipie
-  resources :assessments, only: [:create] do
+  resources :assessments, only: [:create, :show] do
     resource :applicant, only: [:create]
     resources :capitals, only: [:create]
     resources :dependants, only: [:create]

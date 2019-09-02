@@ -71,4 +71,9 @@ RSpec.describe AssessmentsController, type: :request do
       end
     end
   end
+
+  describe 'SHOW assessments/:assessment_id' do
+    it 'calls the Workflow manager'
+    it 'returns a result'
+  end
 end

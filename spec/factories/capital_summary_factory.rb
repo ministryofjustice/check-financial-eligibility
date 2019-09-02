@@ -6,10 +6,16 @@ FactoryBot.define do
       capital_assessment_result { 'pending' }
     end
 
-    trait 'summarised' do
-      capital_assessment_result { 'summarised' }
-      lower_threshold { 3_000 }
-      upper_threshold { 8_000 }
+    trait :eligible do
+      capital_assessment_result { 'eligible' }
+    end
+
+    trait :not_eligible do
+      capital_assessment_result { 'not_eligible' }
+    end
+
+    trait :contribution_required do
+      capital_assessment_result { 'contribution_required' }
     end
 
     trait :below_lower_threshold do
@@ -26,6 +32,12 @@ FactoryBot.define do
       total_liquid { Faker::Number.between(from: 3_000.01, to: 999_999.99).round(2) }
       total_capital { Faker::Number.between(from: 3_000.01, to: 999_999.99).round(2) }
       assessed_capital { Faker::Number.between(from: 3_000.01, to: 999_999.99).round(2) }
+    end
+
+    trait :between_thresholds do
+      total_liquid { Faker::Number.between(from: 3_000.01, to: 7_999.99).round(2) }
+      total_capital { Faker::Number.between(from: 3_000.01, to: 7_999.99).round(2) }
+      assessed_capital { Faker::Number.between(from: 3_000.01, to: 7_999.99).round(2) }
     end
   end
 end

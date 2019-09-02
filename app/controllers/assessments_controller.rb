@@ -46,6 +46,12 @@ class AssessmentsController < ApplicationController
     end
   end
 
+  # performs the assessment and returns the result
+  def show
+    WorkflowManager.new(params[:id], StandardWorkflow.workflow).call
+    assessment = Assessment.find(params[:id])
+  end
+
   private
 
   def assessment_creation_service

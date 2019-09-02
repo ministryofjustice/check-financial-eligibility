@@ -10,7 +10,7 @@ class CapitalSummary < ApplicationRecord
   has_many :properties
   has_many :additional_properties, -> { where(main_home: false) }, class_name: 'Property'
 
-  enum capital_assessment_result: enum_hash_for(:pending, :summarised, :eligible, :not_eligible, :contribution_required), _prefix: false
+  enum capital_assessment_result: enum_hash_for(:pending, :eligible, :not_eligible, :contribution_required), _prefix: false
 
   def main_home
     properties.find_by(main_home: true)
@@ -27,6 +27,8 @@ class CapitalSummary < ApplicationRecord
     apply_pensioner_disregard
     self.assessed_capital = total_capital - pensioner_capital_disregard
     apply_thresholds
+    calculate_assessment_result
+    calculate_contribution
   end
 
   private
@@ -38,5 +40,19 @@ class CapitalSummary < ApplicationRecord
   def apply_thresholds
     self.lower_threshold = Threshold.value_for(:capital_lower, at: assessment.submission_date)
     self.upper_threshold = Threshold.value_for(:capital_upper, at: assessment.submission_date)
+  end
+
+  def calculate_assessment_result
+    if assessed_capital < lower_threshold
+      eligible!
+    elsif assessed_capital < upper_threshold
+      contribution_required!
+    else
+      not_eligible!
+    end
+  end
+
+  def calculate_contribution
+    self.capital_contribution = WorkflowService::CapitalContributionService.call(self) if contribution_required?
   end
 end

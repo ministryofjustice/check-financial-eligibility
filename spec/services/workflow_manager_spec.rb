@@ -1,26 +1,39 @@
 require 'rails_helper'
-require Rails.root.join 'spec/fixtures/test_workflow.rb'
 
 RSpec.describe WorkflowManager do
   let(:assessment) { create :assessment }
   let(:manager) { described_class.new(assessment.id, workflow) }
   let(:particulars) { double 'particulars' }
-  let(:workflow) { TestWorkflow.workflow }
+  let(:workflow) { StandardWorkflow.workflow }
 
-  it 'follows non-passported, self-employed flow' do
-    expect_service_result(WorkflowPredicate::DeterminePassported, false)
-    expect_service_result(WorkflowPredicate::DetermineSelfEmployed, true)
-    expect_service_result(WorkflowService::SelfEmployed, true)
-    expect(WorkflowService::Passported).not_to receive(:new)
-    manager.call
+  context 'non-passported self employed' do
+    it 'raises' do
+      expect_service_result(WorkflowPredicate::DeterminePassported, false)
+      expect_service_result(WorkflowPredicate::DetermineSelfEmployed, true)
+      expect(WorkflowService::SelfEmployed).to receive(:new).and_call_original
+      expect {
+        manager.call
+      }.to raise_error 'Not Implemented: Check Financial Eligibility has not yet been implemented for self-employed applicants'
+    end
   end
 
-  it 'follows the passported flow' do
-    expect_service_result(WorkflowPredicate::DeterminePassported, true)
-    expect_service_result(WorkflowService::Passported, true)
-    expect(WorkflowPredicate::DetermineSelfEmployed).not_to receive(:new)
-    expect(WorkflowService::SelfEmployed).not_to receive(:new)
-    manager.call
+  context 'non-passported, not self employed' do
+    it 'raises' do
+      expect_service_result(WorkflowPredicate::DeterminePassported, false)
+      expect_service_result(WorkflowPredicate::DetermineSelfEmployed, false)
+      expect{
+        manager.call
+      }.to raise_error 'Not Implemented: Check Financial Benefit has not yet been implemented for non-passported applicants'
+    end
+  end
+
+  context 'passported' do
+    it 'follows the passported flow' do
+      expect_service_result(WorkflowPredicate::DeterminePassported, true)
+      expect_service_result(WorkflowService::DisposableCapitalAssessment, true)
+      expect_service_result(WorkflowService::UpdateAssessmentResult, true)
+      manager.call
+    end
   end
 
   def expect_service_result(klass, result)
