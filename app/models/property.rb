@@ -14,6 +14,19 @@ class Property < ApplicationRecord
     save!
   end
 
+  def result
+    {
+      value: value.to_f,
+      transaction_allowance: transaction_allowance.to_f,
+      allowable_outstanding_mortgage: allowable_outstanding_mortgage.to_f,
+      net_value: net_value.to_f,
+      percentage_share: percentage_owned.to_f,
+      net_equity: net_equity.to_f,
+      main_home_equity_disregard: main_home_equity_disregard.to_f,
+      assessed_equity: assessed_equity.to_f
+    }
+  end
+
   private
 
   def calculate_property_transaction_allowance

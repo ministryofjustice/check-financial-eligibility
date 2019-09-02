@@ -1,6 +1,5 @@
 module WorkflowService
   class UpdateAssessmentResult < BaseWorkflowService
-
     # for now, only passported applicants are being processed, which means
     # there is only a capital assessment done and no income assessment, do
     # this just copies over the result

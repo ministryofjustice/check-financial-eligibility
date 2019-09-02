@@ -6,7 +6,7 @@ WORKFLOW = {
   },
   calculate_disposable_capital_step: {
     klass: WorkflowService::DisposableCapitalAssessment,
-    true_step: :update_assessment_result_step,
+    true_step: :update_assessment_result_step
   },
   non_passported_step: {
     klass: WorkflowPredicate::DetermineSelfEmployed,

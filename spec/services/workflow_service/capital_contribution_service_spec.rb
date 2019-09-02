@@ -5,7 +5,7 @@ module WorkflowService
     context 'not contribution required state' do
       it 'raises' do
         capital_summary = create :capital_summary, :not_eligible
-        expect{
+        expect {
           described_class.call(capital_summary)
         }.to raise_error 'Invalid capital assessment result for contribution calculation'
       end
@@ -19,4 +19,3 @@ module WorkflowService
     end
   end
 end
-

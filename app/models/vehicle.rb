@@ -11,6 +11,18 @@ class Vehicle < ApplicationRecord
     save!
   end
 
+  def result
+    {
+      date_purchased: date_of_purchase.to_date,
+      months_owned: vehicle_age_in_months,
+      estimated_value: value.to_f,
+      outstanding_loan: loan_amount_outstanding.to_f,
+      in_regular_use: in_regular_use,
+      included_in_assessment: included_in_assessment,
+      assessed_value: assessed_value.to_f
+    }
+  end
+
   private
 
   def date_of_purchase_cannot_be_in_future

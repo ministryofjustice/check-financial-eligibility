@@ -18,4 +18,15 @@ class Assessment < ApplicationRecord
   has_one :result
 
   enum assessment_result: enum_hash_for(:pending, :eligible, :not_eligible, :capital_contribution_required), _prefix: false
+
+  def result
+    {
+      assessment_result: assessment_result,
+      applicant: {
+        passported: applicant.receives_qualifying_benefit?,
+        age_in_years: applicant.age_in_years
+      },
+      capital: capital_summary.result
+    }
+  end
 end

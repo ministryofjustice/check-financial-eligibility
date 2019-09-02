@@ -17,7 +17,7 @@ class AssessmentsController < ApplicationController
         POST /assessments/:assessment_id/incomes        # adds data about any income the applicant may have
 
       Once all the above calls have been made to build up a complete picture of the applicant's assets and income
-      the followin call should be made to perform the assessment and get the result:
+      the following call should be made to perform the assessment and get the result:
 
         GET /assessment/:assessment_id
 
@@ -50,6 +50,7 @@ class AssessmentsController < ApplicationController
   def show
     WorkflowManager.new(params[:id], StandardWorkflow.workflow).call
     assessment = Assessment.find(params[:id])
+    render json: assessment.result
   end
 
   private

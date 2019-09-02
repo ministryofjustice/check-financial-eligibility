@@ -21,7 +21,7 @@ RSpec.describe WorkflowManager do
     it 'raises' do
       expect_service_result(WorkflowPredicate::DeterminePassported, false)
       expect_service_result(WorkflowPredicate::DetermineSelfEmployed, false)
-      expect{
+      expect {
         manager.call
       }.to raise_error 'Not Implemented: Check Financial Benefit has not yet been implemented for non-passported applicants'
     end

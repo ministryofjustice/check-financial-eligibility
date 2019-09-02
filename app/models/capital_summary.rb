@@ -31,6 +31,28 @@ class CapitalSummary < ApplicationRecord
     calculate_contribution
   end
 
+  def result # rubocop:disable Metrics/AbcSize
+    {
+      total_capital_assessment: total_capital,
+      pensioner_capital_disregard: pensioner_capital_disregard,
+      total_disposable_capital: assessed_capital,
+      total_capital_test: capital_assessment_result,
+      capital_contribution: capital_contribution,
+      total_liquid_capital: total_liquid,
+      liquid_capital_items: liquid_capital_items.map(&:result),
+      total_non_liquid_capital: total_non_liquid,
+      non_liquid_capital_items: non_liquid_capital_items.map(&:result),
+      property: {
+        total_property_assessment: total_property,
+        total_mortgage_allowance: total_mortgage_allowance,
+        additional_properties: additional_properties.map(&:result),
+        main_home: main_home&.result
+      },
+      total_vehicles_value: total_vehicle,
+      vehicles: vehicles.map(&:result)
+    }
+  end
+
   private
 
   def apply_pensioner_disregard
