@@ -14,4 +14,6 @@ class Assessment < ApplicationRecord
   has_many :capital_items, through: :capital_summary
   has_many :wage_slips
   has_one :result
+
+  delegate :capital_assessment_result, to: :capital_summary
 end

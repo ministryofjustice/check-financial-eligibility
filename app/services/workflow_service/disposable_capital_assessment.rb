@@ -15,7 +15,7 @@ module WorkflowService
       capital_summary.total_liquid = calculate_liquid_capital
       capital_summary.total_non_liquid = calculate_non_liquid_capital
       capital_summary.total_vehicle = calculate_vehicles
-      capital_summary.total_mortgage_allowance = Threshold.value_for(:property_maximum_mortgage_allowance, at: @submission_date)
+      capital_summary.total_mortgage_allowance = Threshold.value_for(:property_maximum_mortgage_allowance, at: submission_date)
       capital_summary.total_property = calculate_property
     end
 

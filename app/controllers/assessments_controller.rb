@@ -46,9 +46,19 @@ class AssessmentsController < ApplicationController
     end
   end
 
+  def show
+    WorkflowService::DisposableCapitalAssessment.call assessment
+
+    render json: { result: assessment.capital_assessment_result }
+  end
+
   private
 
   def assessment_creation_service
     @assessment_creation_service ||= AssessmentCreationService.call(request.remote_ip, request.raw_post)
+  end
+
+  def assessment
+    @assessment ||= Assessment.find(params[:id])
   end
 end
