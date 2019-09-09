@@ -9,7 +9,7 @@ WORKFLOW = {
     true_step: :calculate_disposable_capital_step
   },
   calculate_disposable_capital_step: {
-    klass: WorkflowService::DisposableCapitalAssessment,
+    klass: WorkflowService::CapitalCollator,
     true_step: :compare_lower_capital_threshold_step
   },
   compare_lower_capital_threshold_step: {

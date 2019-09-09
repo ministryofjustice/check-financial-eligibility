@@ -47,8 +47,8 @@ class AssessmentsController < ApplicationController
   end
 
   def show
-    WorkflowService::DisposableCapitalAssessment.call assessment
-
+    assessment.summarise!
+    assessment.determine_result!
     render json: { result: assessment.capital_assessment_result }
   end
 

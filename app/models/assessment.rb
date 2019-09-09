@@ -15,5 +15,5 @@ class Assessment < ApplicationRecord
   has_many :wage_slips
   has_one :result
 
-  delegate :capital_assessment_result, to: :capital_summary
+  delegate :capital_assessment_result, :summarise!, :determine_result!, to: :capital_summary
 end
