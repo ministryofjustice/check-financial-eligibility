@@ -33,22 +33,22 @@ class CapitalSummary < ApplicationRecord
 
   def result # rubocop:disable Metrics/AbcSize
     {
-      total_capital_assessment: total_capital,
-      pensioner_capital_disregard: pensioner_capital_disregard,
-      total_disposable_capital: assessed_capital,
-      total_capital_test: capital_assessment_result,
-      capital_contribution: capital_contribution,
-      total_liquid_capital: total_liquid,
+      total_capital_assessment: total_capital.to_f,
+      pensioner_capital_disregard: pensioner_capital_disregard.to_f,
+      total_disposable_capital: assessed_capital.to_f,
+      total_capital_test: capital_assessment_result.to_f,
+      capital_contribution: capital_contribution.to_f,
+      total_liquid_capital: total_liquid.to_f,
       liquid_capital_items: liquid_capital_items.map(&:result),
-      total_non_liquid_capital: total_non_liquid,
+      total_non_liquid_capital: total_non_liquid.to_f,
       non_liquid_capital_items: non_liquid_capital_items.map(&:result),
       property: {
-        total_property_assessment: total_property,
-        total_mortgage_allowance: total_mortgage_allowance,
+        total_property_assessment: total_property.to_f,
+        total_mortgage_allowance: total_mortgage_allowance.to_f,
         additional_properties: additional_properties.map(&:result),
         main_home: main_home&.result
       },
-      total_vehicles_value: total_vehicle,
+      total_vehicles_value: total_vehicle.to_f,
       vehicles: vehicles.map(&:result)
     }
   end

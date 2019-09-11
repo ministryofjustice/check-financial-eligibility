@@ -21,7 +21,7 @@ RSpec.describe AssessmentsController, type: :request do
           expect(response).to have_http_status(:success)
         end
 
-        it 'has a valid payload', :show_in_doc do
+        it 'has a valid payload' do
           expected_response = {
             success: true,
             objects: [Assessment.last],
@@ -72,8 +72,35 @@ RSpec.describe AssessmentsController, type: :request do
     end
   end
 
-  describe 'SHOW assessments/:assessment_id' do
-    it 'calls the Workflow manager'
-    it 'returns a result'
+  describe 'GET assessments/:assessment_id' do
+    let(:assessment) { create :assessment, :with_everything }
+    let(:manager) { double WorkflowManager }
+
+    it 'calls the Workflow manager' do
+      expect(WorkflowManager).to receive(:new).with(assessment.id, StandardWorkflow.workflow).and_return(manager)
+      expect(manager).to receive(:call)
+      get assessment_path(assessment.id)
+      expect(response).to be_successful
+    end
+
+    it 'returns a result', :show_in_doc do
+      get assessment_path(assessment.id)
+      response_hash = JSON.parse(response.body)
+
+      expect(response_hash['assessment_result']).to eq 'eligible'
+      expect(response_hash['applicant']['passported']).to be true
+      expect(response_hash['applicant']['age_in_years'] < 60).to be true
+
+      capital = response_hash['capital']
+      expect(capital['pensioner_capital_disregard']).to eq 0.0
+      expect(capital['liquid_capital_items'].size).to eq 1
+      expect(capital['total_non_liquid_capital']).to eq 0.0
+      expect(capital['non_liquid_capital_items']).to be_empty
+
+      property = capital['property']
+      expect(property['total_mortgage_allowance']).to eq 100_000.0
+      expect(property['additional_properties'].size).to eq 1
+      expect(property['main_home']['main_home_equity_disregard']).to eq 100_000.0
+    end
   end
 end

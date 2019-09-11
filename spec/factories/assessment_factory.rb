@@ -12,11 +12,11 @@ FactoryBot.define do
     end
 
     trait :with_applicant do
-      applicant { create :applicant, :under_pensionable_age }
+      applicant { create :applicant, :with_qualifying_benfits, :under_pensionable_age }
     end
 
     trait :with_applicant_over_pensionable_age do
-      applicant { create :applicant, :over_pensionable_age }
+      applicant { create :applicant, :with_qualifying_benfits, :over_pensionable_age }
     end
 
     trait :summarised_below_lower_threshold do
@@ -35,6 +35,38 @@ FactoryBot.define do
       transient do
         above_lower_threshold { true }
       end
+    end
+
+    trait :with_main_home do
+      after(:create) do | assessment |
+        create :property, :main_home, capital_summary: assessment.capital_summary
+      end
+    end
+
+    trait :with_additional_property do
+      after(:create) do | assessment |
+        create :property, :additional_property, capital_summary: assessment.capital_summary
+      end
+    end
+
+    trait :with_vehicle do
+      after(:create) do | assessment |
+        create :vehicle, capital_summary: assessment.capital_summary
+      end
+    end
+
+    trait :with_bank_account do
+      after(:create) do  | assessment |
+        create :liquid_capital_item, capital_summary: assessment.capital_summary
+      end
+    end
+
+    trait :with_everything do
+      with_applicant
+      with_main_home
+      with_additional_property
+      with_vehicle
+      with_bank_account
     end
 
     after(:create) do |assessment, evaluator|

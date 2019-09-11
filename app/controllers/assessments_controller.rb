@@ -23,7 +23,7 @@ class AssessmentsController < ApplicationController
 
     END_OF_TEXT
   end
-  api :POST, 'asssessments', 'Create asssessment'
+  api :POST, 'assessments', 'Create asssessment'
   formats ['json']
   param :client_reference_id, String, "The client's reference number for this application (free text)"
   param :submission_date, Date, date_option: :today_or_older, required: true, desc: 'The date of the original submission'
@@ -44,6 +44,12 @@ class AssessmentsController < ApplicationController
     else
       render_unprocessable(assessment_creation_service.errors)
     end
+  end
+
+  api :GET, 'assessments/:assessment_id', 'Perform assessment and return result'
+  formats ['json']
+  returns code: :ok, desc: 'Assessment result details' do
+    property :result, Hash
   end
 
   # performs the assessment and returns the result
