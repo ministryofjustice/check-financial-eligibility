@@ -14,7 +14,7 @@ class Property < ApplicationRecord
     save!
   end
 
-  def result
+  def result # rubocop:disable Metrics/AbcSize
     {
       value: value.to_f,
       transaction_allowance: transaction_allowance.to_f,

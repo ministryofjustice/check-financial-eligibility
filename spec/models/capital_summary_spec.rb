@@ -59,7 +59,7 @@ RSpec.describe CapitalSummary do
                                          value: 5_600,
                                          loan_amount_outstanding: 1_200,
                                          in_regular_use: true,
-                                         included_in_assessment: false,)
+                                         included_in_assessment: false)
     end
 
     it 'renders result as hash' do
@@ -87,7 +87,7 @@ RSpec.describe CapitalSummary do
                         allowable_outstanding_mortgage: 0.0,
                         net_value: 242_500.0,
                         percentage_share: 100.0,
-                        net_equity:242_500.0,
+                        net_equity: 242_500.0,
                         main_home_equity_disregard: 0.0,
                         assessed_equity: 242_500.0 }
                     ],
@@ -98,18 +98,17 @@ RSpec.describe CapitalSummary do
                                  percentage_share: 100.0,
                                  net_equity: 125_100.0,
                                  main_home_equity_disregard: 100_000.0,
-                                 assessed_equity: 25_100.0 }
-        },
+                                 assessed_equity: 25_100.0 } },
         total_vehicles_value: 0.0,
         vehicles: [
           {
-            :date_purchased => 2.years.ago.to_date,
-            :months_owned => 24,
-            :estimated_value => 5_600.0,
-            :outstanding_loan => 1_200.0,
-            :in_regular_use => true,
-            :included_in_assessment => false,
-            :assessed_value => 0.0,
+            date_purchased: 2.years.ago.to_date,
+            months_owned: 24,
+            estimated_value: 5_600.0,
+            outstanding_loan: 1_200.0,
+            in_regular_use: true,
+            included_in_assessment: false,
+            assessed_value: 0.0
           }
         ]
       }
