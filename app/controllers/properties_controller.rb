@@ -1,5 +1,5 @@
 class PropertiesController < ApplicationController
-  api :POST, 'assessments/:assessment_id/property', 'Create a property for the applicant'
+  api :POST, 'assessments/:assessment_id/properties', 'Create a property for the applicant'
   formats ['json']
   param :assessment_id, :uuid, required: true, desc: 'The assessment id to which this applicant relates'
   param :properties, Hash, required: true, desc: 'Describes information about the applicants property' do

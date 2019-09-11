@@ -1,5 +1,5 @@
 class IncomesController < ApplicationController
-  api :POST, 'assessments/:assessment_id/incomes', 'Create incomes'
+  api :POST, 'assessments/:assessment_id/income', 'Create incomes'
   formats ['json']
   param :assessment_id, :uuid, required: true
   param(

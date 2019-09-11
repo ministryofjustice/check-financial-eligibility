@@ -49,7 +49,7 @@ class AssessmentsController < ApplicationController
   def show
     assessment.summarise!
     assessment.determine_result!
-    render json: { result: assessment.capital_assessment_result }
+    render json: ResultDecorator.new(assessment)
   end
 
   private
