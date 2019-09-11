@@ -73,14 +73,19 @@ RSpec.describe AssessmentsController, type: :request do
 
     subject { get assessment_path(assessment) }
 
-    before { subject }
+    before do
+      assessment.summarise!
+      assessment.determine_result!
+      assessment.reload
+      subject
+    end
 
     it 'returns http success' do
       expect(response).to have_http_status(:success)
     end
 
-    it 'return eligible' do
-      expect(parsed_response[:result]).to eq('eligible')
+    it 'returns capital summary data as json' do
+      expect(parsed_response).to eq(JSON.parse(ResultDecorator.new(assessment).to_json, symbolize_names: true))
     end
   end
 end

@@ -11,8 +11,4 @@ class BaseWorkflowService
   def initialize(assessment)
     @assessment = assessment
   end
-
-  def calculation_period
-    @calculation_period ||= CalculationPeriod.new(submission_date)
-  end
 end

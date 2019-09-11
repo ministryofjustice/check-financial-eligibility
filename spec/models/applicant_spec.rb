@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe Applicant do
-
   describe '#age_at_submission' do
     let(:age) { 31 }
     let(:date_of_birth) { (age.years + 6.months).ago }

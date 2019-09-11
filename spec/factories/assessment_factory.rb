@@ -13,7 +13,7 @@ FactoryBot.define do
       applicant { create :applicant, :over_pensionable_age }
     end
 
-    after(:create) do |assessment, evaluator|
+    after(:create) do |assessment, _evaluator|
       create :capital_summary, assessment: assessment
     end
   end

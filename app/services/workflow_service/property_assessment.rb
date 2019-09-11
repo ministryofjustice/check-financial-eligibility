@@ -2,7 +2,7 @@ module WorkflowService
   class PropertyAssessment < BaseWorkflowService
     attr_writer :remaining_mortgage_allowance
 
-    def call      
+    def call
       calculate_property
       capital_summary.properties.sum(&:assessed_equity)
     end
