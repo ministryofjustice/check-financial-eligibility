@@ -10,10 +10,14 @@ RSpec.describe AssessmentsController, type: :request do
       }
     end
     let(:headers) { { 'CONTENT_TYPE' => 'application/json' } }
+    let(:before_request) { nil }
 
     subject { post assessments_path, params: params.to_json, headers: headers }
 
-    before { subject }
+    before do
+      before_request
+      subject
+    end
 
     it 'returns http success' do
       expect(response).to have_http_status(:success)
@@ -29,10 +33,9 @@ RSpec.describe AssessmentsController, type: :request do
     end
 
     context 'Active Record Error in service' do
-      before do
+      let(:before_request) do
         creation_service = double AssessmentCreationService, success?: false, errors: ['error creating record']
         allow(AssessmentCreationService).to receive(:call).and_return(creation_service)
-        post assessments_path, params: params.to_json, headers: headers
       end
 
       it 'returns http unprocessable_entity' do
@@ -70,6 +73,11 @@ RSpec.describe AssessmentsController, type: :request do
     let(:assessment) { create :assessment, :with_applicant }
     let(:option) { :below_lower_threshold }
     let!(:capital_summary) { create :capital_summary, option, assessment: assessment }
+    let!(:non_liquid_capital_item) { create :non_liquid_capital_item, capital_summary: capital_summary }
+    let!(:liquid_capital_item) { create :liquid_capital_item, capital_summary: capital_summary }
+    let!(:main_home) { create :property, :main_home, capital_summary: capital_summary }
+    let!(:property) { create :property, :additional_property, capital_summary: capital_summary }
+    let!(:vehicle) { create :vehicle, capital_summary: capital_summary }
 
     subject { get assessment_path(assessment) }
 
@@ -80,7 +88,7 @@ RSpec.describe AssessmentsController, type: :request do
       subject
     end
 
-    it 'returns http success' do
+    it 'returns http success', :show_in_doc do
       expect(response).to have_http_status(:success)
     end
 

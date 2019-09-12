@@ -1,29 +1,16 @@
 class AssessmentsController < ApplicationController
   resource_description do
-    short 'Create a new assessment'
+    short 'Assessment container'
     formats ['json']
-    description <<-END_OF_TEXT
-    == Description
-      This endpoint should be called first to create an Assessment. Then using the
-      assessment_id returned by this call, other resources should be called to build
-      up the complete set of data relating to the assessment:
+    description <<~END_OF_TEXT
+      The assessment is the container that holds the data used to make the assessment. Its `id` is used to identify the
+      current assessment in other endpoints.
 
-        POST /assessments/:assessment_id/applicant      # adds data about the applicant
-        POST /assessments/:assessment_id/capitals       # adds data about liquid assets (i.e. bank accounts) and
-                                                        # non-liquid assets (valuable items, trusts, etc)
-        POST /assessments/:assessment_id/properties     # adds data about properties owned by the applicant
-        POST /assessments/:assessment_id/vehicles       # adds data about vehicles owned by the applicant
-        POST /assessments/:assessment_id/dependants     # adds data about any dependents the applicant may have
-        POST /assessments/:assessment_id/incomes        # adds data about any income the applicant may have
-
-      Once all the above calls have been made to build up a complete picture of the applicant's assets and income
-      the followin call should be made to perform the assessment and get the result:
-
-        GET /assessment/:assessment_id
-
+      At the end of the process, the completed assessment will include the result.
     END_OF_TEXT
   end
-  api :POST, 'asssessments', 'Create asssessment'
+
+  api :POST, 'assessments', 'Create asssessment'
   formats ['json']
   param :client_reference_id, String, "The client's reference number for this application (free text)"
   param :submission_date, Date, date_option: :today_or_older, required: true, desc: 'The date of the original submission'
@@ -44,6 +31,18 @@ class AssessmentsController < ApplicationController
     else
       render_unprocessable(assessment_creation_service.errors)
     end
+  end
+
+  api :GET, 'assessments/:id', 'Get assessment result'
+  formats ['json']
+  param :id, :uuid, required: true
+
+  returns code: :ok, desc: 'Successful response - see example for detail' do
+    property :assessment_result, %w[eligible not_eligible contribution_required]
+    property :appliant, Hash, desc: 'Applicant data used for assessment'
+    property :capital, Hash, desc: 'Capital data used for assessment'
+    property :property, Hash, desc: 'Property data used for assessment'
+    property :vehicles, Hash, desc: 'Vehicle data used for assessment'
   end
 
   def show
