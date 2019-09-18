@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class Outgoing < ApplicationRecord
   extend EnumHash
   belongs_to :assessment

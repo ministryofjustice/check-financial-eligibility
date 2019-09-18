@@ -27,10 +27,10 @@ class AssessmentCreationService < BaseCreationService
   private
 
   def new_assessment
-    if @new_assessment.nil?
-      @new_assessment = Assessment.new(assessment_hash)
-      @capital_summary = @new_assessment.create_capital_summary! if @new_assessment.save
+    @new_assessment ||= begin
+      new_assessment = Assessment.new(assessment_hash)
+      new_assessment.create_capital_summary! if new_assessment.save
+      new_assessment
     end
-    @new_assessment
   end
 end

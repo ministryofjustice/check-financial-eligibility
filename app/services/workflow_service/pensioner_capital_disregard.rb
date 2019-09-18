@@ -9,7 +9,7 @@ module WorkflowService
     end
 
     def thresholds
-      @thresholds ||= Threshold.value_for(:pensioner_capital_disregard, at: @submission_date)
+      @thresholds ||= Threshold.value_for(:pensioner_capital_disregard, at: submission_date)
     end
 
     private
@@ -19,7 +19,7 @@ module WorkflowService
     end
 
     def earliest_dob_for_pensioner
-      @submission_date - minimum_pensioner_age.years
+      submission_date - minimum_pensioner_age.years
     end
 
     def minimum_pensioner_age
@@ -31,7 +31,7 @@ module WorkflowService
     end
 
     def passported?
-      WorkflowPredicate::DeterminePassported.new(@assessment).call
+      WorkflowPredicate::DeterminePassported.call(assessment)
     end
 
     def passported_value
