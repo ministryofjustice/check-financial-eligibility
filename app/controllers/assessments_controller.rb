@@ -39,7 +39,7 @@ class AssessmentsController < ApplicationController
 
   returns code: :ok, desc: 'Successful response - see example for detail' do
     property :assessment_result, %w[eligible not_eligible contribution_required]
-    property :appliant, Hash, desc: 'Applicant data used for assessment'
+    property :applicant, Hash, desc: 'Applicant data used for assessment'
     property :capital, Hash, desc: 'Capital data used for assessment'
     property :property, Hash, desc: 'Property data used for assessment'
     property :vehicles, Hash, desc: 'Vehicle data used for assessment'
