@@ -40,7 +40,7 @@ class Property < ApplicationRecord
   end
 
   def calculate_net_equity
-    self.net_equity = (net_value * shared_ownership_percentage).round(2)
+    self.net_equity = shared_with_housing_assoc ? (net_value - housing_association_share).round(2) : (net_value * shared_ownership_percentage).round(2)
   end
 
   def shared_ownership_percentage
@@ -56,6 +56,10 @@ class Property < ApplicationRecord
   end
 
   def calculate_assessed_equity
-    self.assessed_equity = net_equity - main_home_equity_disregard
+    self.assessed_equity = [net_equity - main_home_equity_disregard, 0].max
+  end
+
+  def housing_association_share
+    value * (1 - shared_ownership_percentage)
   end
 end
