@@ -39,6 +39,9 @@ gem 'descriptive_statistics', require: 'descriptive_statistics/safe'
 
 gem 'google_drive'
 
+# parse spreadsheets
+gem 'roo', '~> 2.8.0'
+
 group :development, :test do
   gem 'dotenv-rails'
   gem 'factory_bot_rails'

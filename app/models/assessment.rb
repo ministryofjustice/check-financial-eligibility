@@ -1,4 +1,6 @@
 class Assessment < ApplicationRecord
+  extend EnumHash
+
   validates :remote_ip,
             :submission_date,
             :matter_proceeding_type, presence: true
@@ -14,6 +16,8 @@ class Assessment < ApplicationRecord
   has_many :capital_items, through: :capital_summary
   has_many :wage_slips
   has_one :result
+
+  enum matter_proceeding_type: enum_hash_for(:domestic_abuse)
 
   delegate :capital_assessment_result, :summarise!, :determine_result!, to: :capital_summary
 end
