@@ -23,7 +23,12 @@ RSpec.describe IntegrationTests::TestRunner, type: :request do
       JSON.parse(response.body, symbolize_names: true)
     end
 
-    def verbose_output(result, payload, spreadsheet_name)
+    def verbose_output(test_pass, result, payload, spreadsheet_name)
+      puts commentary(result, payload, spreadsheet_name)
+      puts test_pass ? '**** Passed ****'.green : '**** Failed ****'.red
+    end
+
+    def commentary(result, payload, spreadsheet_name)
       <<-TEXT
       ---------
       #{spreadsheet_name}
@@ -36,17 +41,22 @@ RSpec.describe IntegrationTests::TestRunner, type: :request do
 
     def compare_result(assessment_id, payload, spreadsheet_name)
       result = fetch_result(assessment_id)
-
-      puts verbose_output(result, payload, spreadsheet_name) if ENV['VERBOSE'] == 'true'
+      test_pass = result_as_expected?(result, payload)
+      verbose_output(test_pass, result, payload, spreadsheet_name) if ENV['VERBOSE'] == 'true'
 
       # TODO: uncomment when fixed
-      # expect(result[:assessment_result]).to eq(payload[:expected_results][:overall_result])
-      # expect(result[:capital][:total_capital]).to eq(payload[:expected_results][:applicant_disposable_capital].to_s)
-      # expect(result[:capital][:capital_contribution]).to eq(payload[:contribution_results][:from_capital].to_s)
+      # expect(test_pass).to be true
+    end
+
+    def result_as_expected?(result, payload)
+      result[:assessment_result] == payload[:expected_results][:overall_result] &&
+        result[:capital][:total_capital] == payload[:expected_results][:applicant_disposable_capital].to_s &&
+        result[:capital][:capital_contribution] == payload[:contribution_results][:from_capital].to_s
     end
 
     def run_spreadsheet(spreadsheet_name)
       payload = IntegrationTests::WorksheetParser.call(spreadsheet.sheet(spreadsheet_name))
+
       assessment_id = create_assessment(payload)
       described_class.steps(assessment_id, payload).each do |step|
         post_resource(step.url, step.params) if step.params.present?

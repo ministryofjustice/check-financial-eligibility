@@ -13,8 +13,7 @@ RSpec.describe IntegrationTests::WorksheetParser do
       expect(subject[:test_description]).to eq('Description of test')
     end
 
-    it 'parses assesment' do
-      pp subject[:assessment]
+    it 'parses assessment' do
       expect(subject[:assessment][:submission_date].to_s).to eq('2019-05-29')
       expect(subject[:assessment][:matter_proceeding_type]).to eq('domestic_abuse')
     end
