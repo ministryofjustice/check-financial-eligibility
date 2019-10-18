@@ -43,9 +43,7 @@ RSpec.describe IntegrationTests::TestRunner, type: :request do
       result = fetch_result(assessment_id)
       test_pass = result_as_expected?(result, payload)
       verbose_output(test_pass, result, payload, spreadsheet_name) if ENV['VERBOSE'] == 'true'
-
-      # TODO: uncomment when fixed
-      # expect(test_pass).to be true
+      test_pass
     end
 
     def result_as_expected?(result, payload)
@@ -66,8 +64,8 @@ RSpec.describe IntegrationTests::TestRunner, type: :request do
 
     it 'process all worksheets and does not raise any error' do
       worksheet_names.each do |spreadsheet_name|
-        run_spreadsheet(spreadsheet_name)
-        # TODO: fetch result and make sure if matches what is expected
+        result = run_spreadsheet(spreadsheet_name)
+        expect(result).to be_truthy, 'Integration test fail: run `rake integration` to see details of results mismatch'
       end
     end
   end

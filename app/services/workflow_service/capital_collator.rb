@@ -59,7 +59,7 @@ module WorkflowService
     end
 
     def capital_contribution
-      assessed_capital - lower_threshold
+      [0, assessed_capital - lower_threshold].max
     end
   end
 end
