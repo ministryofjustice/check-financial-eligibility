@@ -48,7 +48,8 @@ class Property < ApplicationRecord
   end
 
   def calculate_main_home_disregard
-    self.main_home_equity_disregard = Threshold.value_for(:property_disregard, at: submission_date)[property_type]
+    disregard = self.main_home_equity_disregard = Threshold.value_for(:property_disregard, at: submission_date)[property_type]
+    [disregard, net_equity].min
   end
 
   def property_type

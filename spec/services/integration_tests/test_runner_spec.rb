@@ -63,10 +63,11 @@ RSpec.describe IntegrationTests::TestRunner, type: :request do
     end
 
     it 'process all worksheets and does not raise any error' do
+      results = []
       worksheet_names.each do |spreadsheet_name|
-        result = run_spreadsheet(spreadsheet_name)
-        expect(result).to be_truthy, 'Integration test fail: run `rake integration` to see details of results mismatch'
+        results << run_spreadsheet(spreadsheet_name)
       end
+      expect(results.uniq == [true]).to be_truthy, 'Integration test fail: run `rake integration` to see details of results mismatch'
     end
   end
 end
