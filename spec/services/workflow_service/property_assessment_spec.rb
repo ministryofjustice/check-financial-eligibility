@@ -109,9 +109,7 @@ module WorkflowService # rubocop:disable Metrics/ModuleLength
           end
         end
 
-        # TODO: There may be special rules for calculating assessed value for shares with housing associations
-        # leave this until it is clarified
-        xcontext '50% shared with housing association' do
+        context '50% shared with housing association' do
           let!(:main_home) do
             create :property,
                    :main_home,
@@ -121,15 +119,15 @@ module WorkflowService # rubocop:disable Metrics/ModuleLength
                    outstanding_mortgage: 70_000,
                    percentage_owned: 50.0
           end
-          it 'subtracts outstanding mortgage only from the share owned by applicant' do
+          it 'subtracts the housing association share as a %age of market value' do
             service.call
             main_home.reload
             expect(main_home.transaction_allowance).to eq 4_800.0 # 3% of 160,000
             expect(main_home.allowable_outstanding_mortgage).to eq 70_000.0
-            expect(main_home.net_value).to eq 415_726.77 # 466,993 - 14,009.79 - 37,256.45
-            expect(main_home.net_equity).to eq 277_123.46 # 66% of 415_726.77
+            expect(main_home.net_value).to eq 85_200.0 # 160,000 - 4,800 - 70,000
+            expect(main_home.net_equity).to eq 5_200.0 # 85,200.0 - (50% of 160,000)
             expect(main_home.main_home_equity_disregard).to eq 100_000.0
-            expect(main_home.assessed_equity).to eq 177_123.46
+            expect(main_home.assessed_equity).to eq 0
           end
         end
       end
