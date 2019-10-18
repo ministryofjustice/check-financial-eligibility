@@ -83,8 +83,8 @@ RSpec.describe CapitalSummary do
     context 'above upper threshold' do
       let(:capital_summary) { create :capital_summary, :above_upper_threshold }
 
-      it 'sets result to not eligible' do
-        expect(capital_summary).to be_not_eligible
+      it 'sets result to contribution_required' do
+        expect(capital_summary).to be_contribution_required
       end
     end
   end

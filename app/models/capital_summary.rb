@@ -31,7 +31,6 @@ class CapitalSummary < ApplicationRecord
 
   def result
     return :eligible if assessed_capital <= lower_threshold
-    return :not_eligible if assessed_capital > upper_threshold
 
     :contribution_required
   end
