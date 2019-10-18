@@ -11,7 +11,8 @@ module WorkflowService
         total_capital: total_capital,
         assessed_capital: assessed_capital,
         lower_threshold: lower_threshold,
-        upper_threshold: upper_threshold
+        upper_threshold: upper_threshold,
+        capital_contribution: capital_contribution
       }
     end
 
@@ -55,6 +56,10 @@ module WorkflowService
 
     def upper_threshold
       Threshold.value_for(:capital_upper, at: assessment.submission_date)
+    end
+
+    def capital_contribution
+      assessed_capital - lower_threshold
     end
   end
 end

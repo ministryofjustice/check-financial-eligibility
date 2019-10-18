@@ -48,6 +48,7 @@ class AssessmentsController < ApplicationController
   def show
     assessment.summarise!
     assessment.determine_result!
+
     render json: ResultDecorator.new(assessment)
   end
 
