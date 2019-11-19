@@ -7,6 +7,7 @@ class Assessment < ApplicationRecord
 
   has_one :applicant
   has_one :capital_summary
+  has_one :gross_income_summary
 
   has_many :benefit_receipts
   has_many :dependants
