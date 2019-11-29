@@ -41,6 +41,7 @@ RSpec.describe IntegrationTests::TestRunner, type: :request do
 
     def compare_result(assessment_id, payload, spreadsheet_name)
       result = fetch_result(assessment_id)
+      verbosely_log result, 'RESULT' if  ENV['VERBOSE'] == 'true'
       test_pass = result_as_expected?(result, payload)
       verbose_output(test_pass, result, payload, spreadsheet_name) if ENV['VERBOSE'] == 'true'
       test_pass
@@ -57,14 +58,21 @@ RSpec.describe IntegrationTests::TestRunner, type: :request do
 
       assessment_id = create_assessment(payload)
       described_class.steps(assessment_id, payload).each do |step|
+        verbosely_log step.params, step.step
         post_resource(step.url, step.params) if step.params.present?
       end
       compare_result(assessment_id, payload, spreadsheet_name)
     end
 
+    def verbosely_log(object, label)
+      puts "********* #{label} #{__FILE__}:#{__LINE__}*******\n"
+      ap object
+    end
+
     it 'process all worksheets and does not raise any error' do
       results = []
       worksheet_names.each do |spreadsheet_name|
+        next unless spreadsheet_name == 'Test - P3 - Test1'
         results << run_spreadsheet(spreadsheet_name)
       end
       expect(results.uniq == [true]).to be_truthy, 'Integration test fail: run `rake integration` to see details of results mismatch'

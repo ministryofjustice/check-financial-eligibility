@@ -104,6 +104,45 @@ RSpec.describe PaymentPeriodAnalyser do
     end
   end
 
+  context 'using dates from spreadsheet' do
+    it 'should match the expected result on all lines' do
+      require 'colorize'
+      puts "this is red".colorize(:red)
+      puts "and green".colorize(:green)
+      fixture_file = Rails.root.join('spec/fixtures/payment_periods.csv')
+      num_failed_tests = 0
+      CSV.read(fixture_file).each do |fields|
+        next if fields.first == 'Version number'
+        next if fields.first == 'Description'
+        next if fields.first =~ /^#/
+        test_name = fields.shift
+        expected_result = fields.shift
+        dates = fields.compact.map{ |d| Date.parse(d) }
+        date_salaries = dates.map{ |d| [d, nil] }.to_h
+        actual_result = described_class.new(date_salaries).period_pattern.to_s
+        positive_result = actual_result == expected_result
+        colour = positive_result ? :green : :red
+        result = result
+        num_failed_tests +=1 unless result
+        puts test_name.colorize(colour)
+        puts format('   expected: %<expected>12s, got: %<actual>s', expected: expected_result, actual: actual_result).colorize(colour)
+        puts "    #{dates.map{ |d| d.strftime('%Y-%m-%d') }.join(', ') } "  unless positive_result
+      end
+      expect(num_failed_tests).to be_zero
+    end
+  end
+
+  context 'individual tests' do
+    context 'Every two weeks on a Monday but paid on Friday before bank holiday (middle payment)' do
+      let(:string_dates) { '2019-03-18, 2019-03-25, 2019-04-08, 2019-04-19, 2019-05-06, 2019-05-20, 2019-06-03, 2019-06-17'.split(', ') }
+      let(:dates) { string_dates.map{ |d| [Date.parse(d), nil] }.to_h }
+
+      it 'returns two_weekly' do
+        expect(described_class.new(dates).period_pattern).to eq :two_weekly
+      end
+    end
+  end
+
   describe '#period_pattern' do
     let(:time_series) { first_day_of_month }
     subject { described_class.new(time_series).period_pattern }

@@ -46,6 +46,7 @@ gem 'google_drive'
 gem 'roo', '~> 2.8.0'
 
 group :development, :test do
+  gem 'colorize'
   gem 'dotenv-rails'
   gem 'factory_bot_rails'
   gem 'faker'
