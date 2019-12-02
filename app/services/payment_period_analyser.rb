@@ -38,8 +38,9 @@ class PaymentPeriodAnalyser
     # At size threshold, data is more likely to be four weekly so can move slope limit so easier to match to four weekly
     return false if dates.size == SIZE_THRESHOLD_MONTHLY && date_slope < MONTHLY_SLOPE_LIMIT[:upper]
     return false if date_slope < MONTHLY_SLOPE_LIMIT[:lower]
-    return false if days_between_dates.range > MONTHLY_RANGE_LIMIT
     return false unless around_monthly(days_between_dates.median)
+    return false if days_between_dates.range > MONTHLY_RANGE_LIMIT
+    # return false unless around_monthly(days_between_dates.median)
 
     true
   end
@@ -47,6 +48,7 @@ class PaymentPeriodAnalyser
   def weekly?
     return true if dates.size > SIZE_THRESHOLD_WEEKLY
     return false if around_28(days_between_dates.median) || around_28(days_between_dates.range)
+    return false if around_monthly(days_between_dates.mean)
     return true if days_between_dates.median > VERY_LARGE_VARIANCE &&
                    days_between_dates.range > VERY_LARGE_VARIANCE &&
                    days.range > LARGE_VARIANCE
@@ -56,7 +58,7 @@ class PaymentPeriodAnalyser
 
   def two_weekly?
     return false if dates.size > SIZE_THRESHOLD_WEEKLY
-    return true if around_14(days_between_dates.median) && days_between_dates.range < SMALL_VARIANCE
+    return true if around_14(days_between_dates.median) && days_between_dates.range <= SMALL_VARIANCE
     return true if around_28(days_between_dates.median) && around_28(days_between_dates.range)
     return true if around_7_or_14(days_between_dates.median) && around_14_or_21_or_28(days_between_dates.range)
     return true if around_14_or_21(days_between_dates.median) && around_7_or_14(days_between_dates.range)

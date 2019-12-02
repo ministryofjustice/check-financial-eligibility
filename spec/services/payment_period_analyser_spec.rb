@@ -35,7 +35,7 @@ RSpec.describe PaymentPeriodAnalyser do
       every_monday: every_monday,
       midweek_with_variance: midweek_with_variance,
       incomplete_weekly: incomplete_weekly,
-      three_weeks: three_weeks
+      # three_weeks: three_weeks
     }
   end
 
@@ -105,40 +105,57 @@ RSpec.describe PaymentPeriodAnalyser do
   end
 
   context 'using dates from spreadsheet' do
+    # NOTE: master spreadsheet is at https://docs.google.com/spreadsheets/d/15cI-wStbejRW4qoGFwpv9tWZxK1Yq6vQ3fq74a0v154/edit#gid=0
+    # lines marked in yellow are lines which give unexpected results or :unknown
+    #
+    # set env var VERBOSE=true to see all results (not just failing results)
+    #
     it 'should match the expected result on all lines' do
       require 'colorize'
-      puts "this is red".colorize(:red)
-      puts "and green".colorize(:green)
       fixture_file = Rails.root.join('spec/fixtures/payment_periods.csv')
       num_failed_tests = 0
       CSV.read(fixture_file).each do |fields|
         next if fields.first == 'Version number'
-        next if fields.first == 'Description'
-        next if fields.first =~ /^#/
+        next if fields.first == 'Test number'
+        test_number = fields.shift
         test_name = fields.shift
         expected_result = fields.shift
         dates = fields.compact.map{ |d| Date.parse(d) }
         date_salaries = dates.map{ |d| [d, nil] }.to_h
         actual_result = described_class.new(date_salaries).period_pattern.to_s
-        positive_result = actual_result == expected_result
-        colour = positive_result ? :green : :red
-        result = result
-        num_failed_tests +=1 unless result
-        puts test_name.colorize(colour)
-        puts format('   expected: %<expected>12s, got: %<actual>s', expected: expected_result, actual: actual_result).colorize(colour)
-        puts "    #{dates.map{ |d| d.strftime('%Y-%m-%d') }.join(', ') } "  unless positive_result
+        successful_test = actual_result == expected_result
+        colour = successful_test ? :green : :red
+        num_failed_tests +=1 unless successful_test
+        if verbose? || !successful_test
+          puts "#{test_number} #{test_name}".colorize(colour)
+          puts format('   expected: %<expected>12s, got: %<actual>s', expected: expected_result, actual: actual_result).colorize(colour)
+          puts "    #{dates.map{ |d| d.strftime('%Y-%m-%d') }.join(', ') } "  unless successful_test
+        end
       end
       expect(num_failed_tests).to be_zero
+    end
+
+    def verbose?
+      ENV['VERBOSE'] == 'true'
     end
   end
 
   context 'individual tests' do
     context 'Every two weeks on a Monday but paid on Friday before bank holiday (middle payment)' do
-      let(:string_dates) { '2019-03-18, 2019-03-25, 2019-04-08, 2019-04-19, 2019-05-06, 2019-05-20, 2019-06-03, 2019-06-17'.split(', ') }
+      let(:string_dates) { '2019-03-4, 2019-03-18, 2019-04-01, 2019-04-12, 2019-04-29, 2019-05-13, 2019-05-27, 2019-06-10'.split(', ') }
       let(:dates) { string_dates.map{ |d| [Date.parse(d), nil] }.to_h }
 
       it 'returns two_weekly' do
         expect(described_class.new(dates).period_pattern).to eq :two_weekly
+      end
+    end
+
+    context 'Monthly on the last working day around Christmas,  but paid on 20th December (middle payment)' do
+      let(:string_dates) { '2019-11-29, 2019-12-20, 2020-01-31'.split(', ') }
+      let(:dates) { string_dates.map{ |d| [Date.parse(d), nil] }.to_h }
+
+      it 'returns two_weekly' do
+        expect(described_class.new(dates).period_pattern).to eq :unknown
       end
     end
   end
@@ -153,7 +170,7 @@ RSpec.describe PaymentPeriodAnalyser do
   end
 
   describe '.monthly?' do
-    # TODO: This test fails randomly.  Needs to be re-written with preceise dates fix this
+    # TODO: This test fails randomly.  Needs to be re-written with precise dates fix this
     xit 'returns true for each monthly' do
       expect_all(monthlies, to_be: true, with_method: :monthly?)
     end
