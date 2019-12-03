@@ -69,7 +69,7 @@ class PaymentPeriodAnalyser
   def four_weekly?
     return false if monthly?
     return false if dates.size > SIZE_THRESHOLD_FOUR_WEEKLY
-    return true if around_28(days_between_dates.median) && days_between_dates.range < SMALL_VARIANCE
+    return true if around_28(days_between_dates.median) && days_between_dates.range <= SMALL_VARIANCE
     return true if days_between_dates.median > MONTHLY_MEDIAN_LIMIT && around_28(days_between_dates.range)
 
     false

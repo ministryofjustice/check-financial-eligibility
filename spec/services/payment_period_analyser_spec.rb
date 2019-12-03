@@ -110,32 +110,6 @@ RSpec.describe PaymentPeriodAnalyser do
     #
     # set env var VERBOSE=true to see all results (not just failing results)
     #
-    # it 'should match the expected result on all lines' do
-    #   require 'colorize'
-    #   fixture_file = Rails.root.join('spec/fixtures/payment_periods.csv')
-    #   num_failed_tests = 0
-    #   CSV.read(fixture_file).each do |fields|
-    #     next if fields.first == 'Version number'
-    #     next if fields.first == 'test_number'
-    #     test_number = fields.shift
-    #     expected_result = fields.shift
-    #     _period = fields.shift
-    #     test_name = fields.shift
-    #     _holiday_strategy = fields.shift
-    #     dates = fields.compact.map{ |d| Date.parse(d) }
-    #     date_salaries = dates.map{ |d| [d, nil] }.to_h
-    #     actual_result = described_class.new(date_salaries).period_pattern.to_s
-    #     successful_test = actual_result == expected_result
-    #     colour = successful_test ? :green : :red
-    #     num_failed_tests +=1 unless successful_test
-    #     if verbose? || !successful_test
-    #       puts "#{test_number} #{test_name}".colorize(colour)
-    #       puts format('   expected: %<expected>12s, got: %<actual>s', expected: expected_result, actual: actual_result).colorize(colour)
-    #       puts "    #{dates.map{ |d| d.strftime('%Y-%m-%d') }.join(', ') } "  unless successful_test
-    #     end
-    #   end
-    #   expect(num_failed_tests).to be_zero
-    # end
 
     it 'should pass all tests on the hand-written date spreadsheet' do
       filename = Rails.root.join('spec/fixtures/payment_periods.csv')
@@ -199,6 +173,16 @@ RSpec.describe PaymentPeriodAnalyser do
       let(:string_dates) { '2019-03-11, 2019-04-08, 2019-05-03, 2019-06-03'.split(', ') }
       it 'returns four_weekly' do
         expect(described_class.new(dates).period_pattern).to eq :four_weekly
+      end
+    end
+
+    context 'monthly falling on Easter Monday' do
+      # NOTE: This always returns monthly because there are 29 days between 21 Feb and 21 March, and also 28 days between
+      # 21 March and the day before Good Friday - 18th April
+      #
+      let(:string_dates) { '2019-02-21, 2019-03-21, 2019-04-18'.split(', ') }
+      xit 'returns monthly' do
+        expect(described_class.new(dates).period_pattern).to eq :monthly
       end
     end
   end

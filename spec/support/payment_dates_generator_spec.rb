@@ -60,11 +60,18 @@ describe PaymentDatesGenerator do
       context 'strategy: previous working day' do
         let(:strategy) { :previous_working_day }
 
-        context '2019-01-02, 2019-02-01, 2019-03-01' do
+        context 'starting 2019-01-02' do
           let(:date_text) { '2019-01-02' }
 
           it 'generates the series' do
             expect(subject).to eq(%w[2019-01-02 2019-02-01 2019-03-01])
+          end
+        end
+
+        context 'starting 2019-02-21' do
+          let(:date_text) { '2019-02-21' }
+          it 'generates the series avoiding Good Friday' do
+            expect(subject).to eq(%w[2019-02-21 2019-03-21 2019-04-18])
           end
         end
       end
