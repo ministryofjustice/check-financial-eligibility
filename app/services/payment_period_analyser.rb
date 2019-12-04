@@ -40,6 +40,7 @@ class PaymentPeriodAnalyser
     return false if date_slope < MONTHLY_SLOPE_LIMIT[:lower]
     return false unless around_monthly(days_between_dates.median)
     return false if days_between_dates.range > MONTHLY_RANGE_LIMIT
+
     # return false unless around_monthly(days_between_dates.median)
 
     true

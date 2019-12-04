@@ -1,11 +1,10 @@
 require 'rails_helper'
-require_relative 'payment_dates_generator'
+require_relative '../support/payment_dates_generator'
 
 describe PaymentDatesGenerator do
-
   describe 'private method #advance_one_month' do
     subject { described_class.new.__send__(:advance_one_month, date, desired_day).strftime('%Y-%m-%d') }
-    let(:date)  { Date.parse(date_string) }
+    let(:date) { Date.parse(date_string) }
     let(:desired_day) { date.day }
 
     context 'normal mid month date' do
@@ -87,7 +86,7 @@ describe PaymentDatesGenerator do
           let(:date_text) { '2019-03-11' }
 
           it 'generates the series' do
-            expect(subject).to eq(%w[2019-01-02 2019-02-01 2019-03-01])
+            expect(subject).to eq(%w[2019-03-11 2019-04-08 2019-05-03 2019-06-03])
           end
         end
       end

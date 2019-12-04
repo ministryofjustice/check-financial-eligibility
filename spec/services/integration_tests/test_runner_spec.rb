@@ -41,7 +41,8 @@ RSpec.describe IntegrationTests::TestRunner, type: :request do
 
     def compare_result(assessment_id, payload, spreadsheet_name)
       result = fetch_result(assessment_id)
-      verbosely_log result, 'RESULT' if  ENV['VERBOSE'] == 'true'
+      verbosely_log result, 'RESULT' if ENV['VERBOSE'] == 'true'
+
       test_pass = result_as_expected?(result, payload)
       verbose_output(test_pass, result, payload, spreadsheet_name) if ENV['VERBOSE'] == 'true'
       test_pass
@@ -53,12 +54,13 @@ RSpec.describe IntegrationTests::TestRunner, type: :request do
         result[:capital][:capital_contribution] == payload[:contribution_results][:from_capital].to_s
     end
 
-    def run_spreadsheet(spreadsheet_name)
+    def run_spreadsheet(spreadsheet_name) # rubocop:disable Metrics/AbcSize
       payload = IntegrationTests::WorksheetParser.call(spreadsheet.sheet(spreadsheet_name))
 
       assessment_id = create_assessment(payload)
       described_class.steps(assessment_id, payload).each do |step|
-        verbosely_log step.params, step.step
+        verbosely_log step.params, step.step if ENV['VERBOSE'] == 'true'
+
         post_resource(step.url, step.params) if step.params.present?
       end
       compare_result(assessment_id, payload, spreadsheet_name)
@@ -73,6 +75,7 @@ RSpec.describe IntegrationTests::TestRunner, type: :request do
       results = []
       worksheet_names.each do |spreadsheet_name|
         next unless spreadsheet_name == 'Test - P3 - Test1'
+
         results << run_spreadsheet(spreadsheet_name)
       end
       expect(results.uniq == [true]).to be_truthy, 'Integration test fail: run `rake integration` to see details of results mismatch'

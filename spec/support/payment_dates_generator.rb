@@ -15,7 +15,7 @@ class PaymentDatesGenerator
     end
 
     def to_a
-      [example_number, expected_result, period, description, strategy] + dates.map{|d| d.strftime('%Y-%m-%d') }
+      [example_number, expected_result, period, description, strategy] + dates.map { |d| d.strftime('%Y-%m-%d') }
     end
 
     def db_dates
@@ -23,19 +23,18 @@ class PaymentDatesGenerator
     end
 
     def description
-      "#{expected_result} #{strategy} starting #{dates.first.strftime("%Y-%m-%d")}"
+      "#{expected_result} #{strategy} starting #{dates.first.strftime('%Y-%m-%d')}"
     end
   end
 
-
-  BANK_HOLIDAYS = %w[2019-01-01 2019-04-19 2019-04-22 2019-05-06 2019-05-27 2019-08-26 2019-12-25 2019-12-26 2020-01-01]
+  BANK_HOLIDAYS = %w[2019-01-01 2019-04-19 2019-04-22 2019-05-06 2019-05-27 2019-08-26 2019-12-25 2019-12-26 2020-01-01].freeze
   RANGE_START = Date.new(2019, 1, 1)
   RANGE_END = Date.new(2019, 12, 31)
 
   attr_reader :results, :example_number
 
   def initialize
-    @bank_holidays = BANK_HOLIDAYS.map{ |bh| Date.parse(bh) }
+    @bank_holidays = BANK_HOLIDAYS.map { |bh| Date.parse(bh) }
     @example_number = 0
     @results = []
   end
@@ -55,12 +54,11 @@ class PaymentDatesGenerator
   end
 
   def to_csv
-    CSV.open(FIXTURE_FILE, "wb") do |csv|
+    CSV.open(FIXTURE_FILE, 'wb') do |csv|
       csv << %w[test_number expected_result period description holiday_strategy date date date date date date date date date date date date date date date date]
       to_a.each { |line_array| csv << line_array }
     end
   end
-
 
   private
 
@@ -72,6 +70,7 @@ class PaymentDatesGenerator
     result = []
     (RANGE_START..RANGE_END).to_a.each do |date|
       next if weekend_or_holiday?(date)
+
       result << date
     end
     result
@@ -94,7 +93,7 @@ class PaymentDatesGenerator
     calculation_period_end = start_date + 3.months
     dates = []
     current_date = start_date
-    while current_date < calculation_period_end do
+    while current_date < calculation_period_end
       adjusted_date = weekend_or_holiday?(current_date) ? adjust_date(current_date, holiday_strategy) : current_date
       dates << adjusted_date
       current_date = advance_date(current_date, period, desired_day)
@@ -118,7 +117,7 @@ class PaymentDatesGenerator
   def advance_one_month(current_date, desired_day)
     current_month = current_date.month
     current_year = current_date.year
-    new_month  = current_month == 12 ? 1 : current_month + 1
+    new_month = current_month == 12 ? 1 : current_month + 1
     new_year = current_month == 12 ? current_year + 1 : current_year
     new_day = desired_or_valid_day(new_year, new_month, desired_day)
     Date.new(new_year, new_month, new_day)
@@ -142,16 +141,12 @@ class PaymentDatesGenerator
   end
 
   def previous_working_day(date)
-    while weekend?(date) || bank_holiday?(date)
-      date -= 1
-    end
+    date -= 1 while weekend?(date) || bank_holiday?(date)
     date
   end
 
   def next_working_day(date)
-    while weekend?(date) || bank_holiday?(date)
-      date += 1
-    end
+    date += 1 while weekend?(date) || bank_holiday?(date)
     date
   end
 end
