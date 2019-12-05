@@ -30,6 +30,7 @@ class AssessmentCreationService < BaseCreationService
     @new_assessment ||= begin
       new_assessment = Assessment.new(assessment_hash)
       new_assessment.create_capital_summary! if new_assessment.save
+      new_assessment.create_gross_income_summary! if new_assessment.save
       new_assessment
     end
   end

@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     resources :outgoings, only: [:create]
     resources :properties, only: [:create]
     resources :vehicles, only: :create
+    resources :earned_incomes, only: [:create]
   end
   resources :status, only: [:index]
 end
