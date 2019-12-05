@@ -31,6 +31,9 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'json-schema'
 
+# Seeding tools
+gem 'dibber'
+
 # Api documentation
 gem 'apipie-rails'
 

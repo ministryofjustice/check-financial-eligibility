@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_20_105503) do
+ActiveRecord::Schema.define(version: 2019_12_02_153330) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -114,6 +114,14 @@ ActiveRecord::Schema.define(version: 2019_08_20_105503) do
     t.decimal "assessed_equity", default: "0.0", null: false
     t.decimal "main_home_equity_disregard", default: "0.0", null: false
     t.index ["capital_summary_id"], name: "index_properties_on_capital_summary_id"
+  end
+
+  create_table "state_benefit_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "label"
+    t.text "description"
+    t.boolean "exclude_from_gross_income"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "statuses", force: :cascade do |t|
