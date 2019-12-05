@@ -1,8 +1,8 @@
 ---
-gross_income_upper:
+gross_income_upper: 2657
 infinite_gross_income_upper: 999_999_999_999
-dependant_step:
-dependant_increase_starts_after:
+dependant_step: 222
+dependant_increase_starts_after: 4
 disposable_income_lower: 2000
 disposable_income_upper: 20000
 capital_lower: 3_000
