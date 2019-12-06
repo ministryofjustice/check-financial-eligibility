@@ -182,6 +182,7 @@ ActiveRecord::Schema.define(version: 2019_12_05_164153) do
     t.boolean "exclude_from_gross_income"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "results", force: :cascade do |t|
     t.uuid "assessment_id"
