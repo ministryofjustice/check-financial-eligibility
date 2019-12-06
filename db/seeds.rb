@@ -5,3 +5,11 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+Rails.logger.info 'Seeding started'
+Seeder = Dibber::Seeder
+
+Seeder.new(StateBenefitType, 'data/state_benefit_types.yml', name_method: :label).build
+
+puts Seeder.report
+Rails.logger.info Seeder.report.join("\n")
+Rails.logger.info 'Seeding completed'
