@@ -15,6 +15,7 @@ FactoryBot.define do
 
     after(:create) do |assessment, _evaluator|
       create :capital_summary, assessment: assessment
+      create :gross_income_summary, assessment: assessment
     end
   end
 end
