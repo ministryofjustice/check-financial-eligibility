@@ -176,21 +176,19 @@ ActiveRecord::Schema.define(version: 2019_12_05_164153) do
     t.index ["capital_summary_id"], name: "index_properties_on_capital_summary_id"
   end
 
-<<<<<<< HEAD
   create_table "state_benefit_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "label"
     t.text "description"
     t.boolean "exclude_from_gross_income"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-=======
+
   create_table "results", force: :cascade do |t|
     t.uuid "assessment_id"
     t.string "state"
     t.jsonb "details"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
->>>>>>> AP-1101 Add other_incomes endpoint
   end
 
   create_table "statuses", force: :cascade do |t|
