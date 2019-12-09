@@ -35,7 +35,6 @@ RSpec.describe PaymentPeriodAnalyser do
       every_monday: every_monday,
       midweek_with_variance: midweek_with_variance,
       incomplete_weekly: incomplete_weekly
-      # three_weeks: three_weeks
     }
   end
 
