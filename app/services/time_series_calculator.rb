@@ -41,7 +41,7 @@ class TimeSeriesCalculator
   end
 
   def dates
-    sorted_data.keys
+    sorted_data.keys.map(&:to_time)
   end
 
   def values
