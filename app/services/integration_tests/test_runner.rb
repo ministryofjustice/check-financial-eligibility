@@ -4,9 +4,11 @@ module IntegrationTests
       applicant: ->(assessment_id) { urls.assessment_applicant_path(assessment_id) },
       capital: ->(assessment_id) { urls.assessment_capitals_path(assessment_id) },
       vehicles: ->(assessment_id) { urls.assessment_vehicles_path(assessment_id) },
-      properties: ->(assessment_id) { urls.assessment_properties_path(assessment_id) }
+      properties: ->(assessment_id) { urls.assessment_properties_path(assessment_id) },
+      other_incomes: ->(assessment_id) { urls.assessment_other_incomes_path(assessment_id) }
       # TODO: uncomment when running non-passported test cases
-      # income: ->(assessment_id) { urls.assessment_income_path(assessment_id) }
+      # earned_income: ->(assessment_id) { urls.assessment_earned_income_path(assessment_id) }
+      # state_benefits: ->(assessment_id) { urls.assessment_state_benefits_path(assessment_id) }
       # outgoings: ->(assessment_id) { urls.assessment_outgoings_path(assessment_id) }
       # dependants: ->(assessment_id) { urls.assessment_dependants_path(assessment_id) },
     }.freeze
