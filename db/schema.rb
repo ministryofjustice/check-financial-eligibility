@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_02_153330) do
+ActiveRecord::Schema.define(version: 2019_12_05_164153) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -36,6 +36,24 @@ ActiveRecord::Schema.define(version: 2019_12_02_153330) do
     t.string "matter_proceeding_type", null: false
     t.string "assessment_result", default: "pending", null: false
     t.index ["client_reference_id"], name: "index_assessments_on_client_reference_id"
+  end
+
+  create_table "bank_accounts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "assessment_id", null: false
+    t.string "name"
+    t.decimal "lowest_balance"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["assessment_id"], name: "index_bank_accounts_on_assessment_id"
+  end
+
+  create_table "benefit_in_kinds", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "employment_id"
+    t.string "description", null: false
+    t.decimal "value", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["employment_id"], name: "index_benefit_in_kinds_on_employment_id"
   end
 
   create_table "benefit_receipts", force: :cascade do |t|
@@ -88,6 +106,48 @@ ActiveRecord::Schema.define(version: 2019_12_02_153330) do
     t.decimal "assets_value"
   end
 
+  create_table "employments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "gross_income_summary_id"
+    t.string "name", null: false
+    t.decimal "monthly_income"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["gross_income_summary_id"], name: "index_employments_on_gross_income_summary_id"
+  end
+
+  create_table "gross_income_summaries", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "assessment_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["assessment_id"], name: "index_gross_income_summaries_on_assessment_id"
+  end
+
+  create_table "non_liquid_assets", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "assessment_id", null: false
+    t.string "description"
+    t.decimal "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["assessment_id"], name: "index_non_liquid_assets_on_assessment_id"
+  end
+
+  create_table "other_income_payments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "other_income_source_id", null: false
+    t.date "payment_date", null: false
+    t.decimal "amount", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["other_income_source_id"], name: "index_other_income_payments_on_other_income_source_id"
+  end
+
+  create_table "other_income_sources", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "gross_income_summary_id", null: false
+    t.string "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["gross_income_summary_id"], name: "index_other_income_sources_on_gross_income_summary_id"
+  end
+
   create_table "outgoings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "outgoing_type"
     t.date "payment_date"
@@ -124,6 +184,14 @@ ActiveRecord::Schema.define(version: 2019_12_02_153330) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "results", force: :cascade do |t|
+    t.uuid "assessment_id"
+    t.string "state"
+    t.jsonb "details"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "statuses", force: :cascade do |t|
     t.string "response"
     t.datetime "created_at", null: false
@@ -143,6 +211,15 @@ ActiveRecord::Schema.define(version: 2019_12_02_153330) do
     t.index ["capital_summary_id"], name: "index_vehicles_on_capital_summary_id"
   end
 
+  create_table "wage_payments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "employment_id"
+    t.date "date", null: false
+    t.decimal "gross_payment", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["employment_id"], name: "index_wage_payments_on_employment_id"
+  end
+
   create_table "wage_slips", force: :cascade do |t|
     t.uuid "assessment_id", null: false
     t.date "payment_date"
@@ -155,11 +232,17 @@ ActiveRecord::Schema.define(version: 2019_12_02_153330) do
   end
 
   add_foreign_key "applicants", "assessments"
+  add_foreign_key "benefit_in_kinds", "employments"
   add_foreign_key "benefit_receipts", "assessments"
   add_foreign_key "capital_items", "capital_summaries"
   add_foreign_key "capital_summaries", "assessments"
+  add_foreign_key "employments", "gross_income_summaries"
+  add_foreign_key "gross_income_summaries", "assessments"
+  add_foreign_key "other_income_payments", "other_income_sources"
+  add_foreign_key "other_income_sources", "gross_income_summaries"
   add_foreign_key "outgoings", "assessments"
   add_foreign_key "properties", "capital_summaries"
   add_foreign_key "vehicles", "capital_summaries"
+  add_foreign_key "wage_payments", "employments"
   add_foreign_key "wage_slips", "assessments"
 end
