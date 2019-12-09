@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_06_141200) do
+ActiveRecord::Schema.define(version: 2019_12_11_161738) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -25,6 +25,14 @@ ActiveRecord::Schema.define(version: 2019_12_06_141200) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["assessment_id"], name: "index_applicants_on_assessment_id"
+  end
+
+  create_table "assessment_errors", force: :cascade do |t|
+    t.uuid "assessment_id", null: false
+    t.uuid "record_id"
+    t.string "record_type"
+    t.string "error_message"
+    t.index ["assessment_id"], name: "index_assessment_errors_on_assessment_id"
   end
 
   create_table "assessments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -120,6 +128,8 @@ ActiveRecord::Schema.define(version: 2019_12_06_141200) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.decimal "upper_threshold", default: "0.0", null: false
+    t.decimal "monthly_other_income"
+    t.boolean "assessment_error", default: false
     t.index ["assessment_id"], name: "index_gross_income_summaries_on_assessment_id"
   end
 
@@ -146,6 +156,8 @@ ActiveRecord::Schema.define(version: 2019_12_06_141200) do
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.decimal "monthly_income"
+    t.boolean "assessment_error", default: false
     t.index ["gross_income_summary_id"], name: "index_other_income_sources_on_gross_income_summary_id"
   end
 
@@ -177,20 +189,20 @@ ActiveRecord::Schema.define(version: 2019_12_06_141200) do
     t.index ["capital_summary_id"], name: "index_properties_on_capital_summary_id"
   end
 
-  create_table "state_benefit_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "label"
-    t.text "description"
-    t.boolean "exclude_from_gross_income"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "results", force: :cascade do |t|
     t.uuid "assessment_id"
     t.string "state"
     t.jsonb "details"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "state_benefit_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "label"
+    t.text "description"
+    t.boolean "exclude_from_gross_income"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "statuses", force: :cascade do |t|
@@ -221,18 +233,8 @@ ActiveRecord::Schema.define(version: 2019_12_06_141200) do
     t.index ["employment_id"], name: "index_wage_payments_on_employment_id"
   end
 
-  create_table "wage_slips", force: :cascade do |t|
-    t.uuid "assessment_id", null: false
-    t.date "payment_date"
-    t.decimal "gross_pay"
-    t.decimal "paye"
-    t.decimal "nic"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["assessment_id"], name: "index_wage_slips_on_assessment_id"
-  end
-
   add_foreign_key "applicants", "assessments"
+  add_foreign_key "assessment_errors", "assessments"
   add_foreign_key "benefit_in_kinds", "employments"
   add_foreign_key "benefit_receipts", "assessments"
   add_foreign_key "capital_items", "capital_summaries"
@@ -245,5 +247,4 @@ ActiveRecord::Schema.define(version: 2019_12_06_141200) do
   add_foreign_key "properties", "capital_summaries"
   add_foreign_key "vehicles", "capital_summaries"
   add_foreign_key "wage_payments", "employments"
-  add_foreign_key "wage_slips", "assessments"
 end
