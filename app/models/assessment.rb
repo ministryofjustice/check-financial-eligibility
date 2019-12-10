@@ -20,5 +20,5 @@ class Assessment < ApplicationRecord
 
   enum matter_proceeding_type: enum_hash_for(:domestic_abuse)
 
-  delegate :capital_assessment_result, :summarise!, :determine_result!, to: :capital_summary
+  delegate :capital_assessment_result, :determine_result!, to: :capital_summary
 end

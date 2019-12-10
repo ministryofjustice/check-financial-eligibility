@@ -82,7 +82,7 @@ RSpec.describe AssessmentsController, type: :request do
     subject { get assessment_path(assessment) }
 
     before do
-      assessment.summarise!
+      assessment.capital_summary.summarise!
       assessment.determine_result!
       assessment.reload
       subject

@@ -13,9 +13,20 @@ FactoryBot.define do
       applicant { create :applicant, :over_pensionable_age }
     end
 
-    after(:create) do |assessment, _evaluator|
+    # use :with_child_dependants: 2 to create 2 children for the assessment
+    transient do
+      with_child_dependants { 0 }
+    end
+
+    after(:create) do |assessment, evaluator|
       create :capital_summary, assessment: assessment
       create :gross_income_summary, assessment: assessment
+
+      if evaluator.with_child_dependants > 0
+        evaluator.with_child_dependants.times do
+          create :dependant, :child_relative, assessment: assessment
+        end
+      end
     end
   end
 end
