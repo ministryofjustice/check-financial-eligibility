@@ -4,6 +4,7 @@ class CreateOtherIncomePayments < ActiveRecord::Migration[6.0]
       t.belongs_to :other_income_source, foreign_key: true, null: false, type: :uuid
       t.date :payment_date, null: false
       t.decimal :amount, null: false
+      t.boolean :assessment_error, default: false
 
       t.timestamps
     end
