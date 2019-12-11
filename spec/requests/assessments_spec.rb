@@ -34,8 +34,8 @@ RSpec.describe AssessmentsController, type: :request do
 
     context 'Active Record Error in service' do
       let(:before_request) do
-        creation_service = double AssessmentCreationService, success?: false, errors: ['error creating record']
-        allow(AssessmentCreationService).to receive(:call).and_return(creation_service)
+        creation_service = double Creators::AssessmentCreator, success?: false, errors: ['error creating record']
+        allow(Creators::AssessmentCreator).to receive(:call).and_return(creation_service)
       end
 
       it 'returns http unprocessable_entity' do
@@ -93,7 +93,7 @@ RSpec.describe AssessmentsController, type: :request do
     end
 
     it 'returns capital summary data as json' do
-      expect(parsed_response).to eq(JSON.parse(ResultDecorator.new(assessment).to_json, symbolize_names: true))
+      expect(parsed_response).to eq(JSON.parse(Decorators::ResultDecorator.new(assessment).to_json, symbolize_names: true))
     end
   end
 end

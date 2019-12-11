@@ -13,7 +13,7 @@ class DatedStruct < OpenStruct
     end
   end
 
-  # TODO: remove this method (or even the whole class) once all reference to it has been removed from other services
+  # TODO: remove this method (or even the whole class) once all reference to it has been removed from other old_services
   # :nocov:
   def []=(name, value)
     modifiable?[new_ostruct_member!(name)] = value_or_time(value)

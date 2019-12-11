@@ -38,7 +38,7 @@ class PropertiesController < ApplicationController
   private
 
   def creation_service
-    @creation_service ||= PropertiesCreationService.call(
+    @creation_service ||= Creators::PropertiesCreator.call(
       assessment_id: params[:assessment_id],
       main_home_attributes: input.dig(:properties, :main_home),
       additional_properties_attributes: input.dig(:properties, :additional_properties)

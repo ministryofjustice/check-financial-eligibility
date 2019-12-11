@@ -50,13 +50,13 @@ class AssessmentsController < ApplicationController
     assessment.gross_income_summary.summarise!
     assessment.determine_result!
 
-    render json: ResultDecorator.new(assessment)
+    render json: Decorators::ResultDecorator.new(assessment)
   end
 
   private
 
   def assessment_creation_service
-    @assessment_creation_service ||= AssessmentCreationService.call(request.remote_ip, request.raw_post)
+    @assessment_creation_service ||= Creators::AssessmentCreator.call(request.remote_ip, request.raw_post)
   end
 
   def assessment

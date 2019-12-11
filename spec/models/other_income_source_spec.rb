@@ -6,14 +6,14 @@ RSpec.describe OtherIncomeSource, type: :model do
     let!(:payment1) { create :other_income_payment, other_income_source: source, payment_date: 3.months.ago.to_date, amount: 301.0 }
     let!(:payment2) { create :other_income_payment, other_income_source: source, payment_date: 2.months.ago.to_date, amount: 302.0 }
     let!(:payment3) { create :other_income_payment, other_income_source: source, payment_date: 1.months.ago.to_date, amount: 301.50 }
-    let(:analyser) { double PaymentPeriodAnalyser }
+    let(:analyser) { double Utilities::PaymentPeriodAnalyser }
 
     before do
-      expect(PaymentPeriodDataExtractor).to receive(:call)
+      expect(Utilities::PaymentPeriodDataExtractor).to receive(:call)
         .with(collection: source.other_income_payments,
               date_method: :payment_date,
               amount_method: :amount)
-      expect(PaymentPeriodAnalyser).to receive(:new).and_return(analyser)
+      expect(Utilities::PaymentPeriodAnalyser).to receive(:new).and_return(analyser)
     end
 
     subject { source.calculate_monthly_income! }

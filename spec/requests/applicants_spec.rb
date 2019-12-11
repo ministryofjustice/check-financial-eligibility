@@ -79,7 +79,7 @@ RSpec.describe ApplicantsController, type: :request do
     end
 
     context 'malformed JSON payload' do
-      before { expect(ApplicantCreationService).not_to receive(:call) }
+      before { expect(Creators::ApplicantCreator).not_to receive(:call) }
 
       context 'missing applicant' do
         before do

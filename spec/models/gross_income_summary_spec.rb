@@ -16,7 +16,7 @@ RSpec.describe GrossIncomeSummary do
     subject { gross_income_summary.summarise! }
 
     before do
-      allow(WorkflowService::GrossIncomeCollator).to receive(:call).with(assessment).and_return(data)
+      allow(Collators::GrossIncomeCollator).to receive(:call).with(assessment).and_return(data)
       subject
       gross_income_summary.reload
     end

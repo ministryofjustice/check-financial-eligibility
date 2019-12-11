@@ -34,7 +34,7 @@ class Vehicle < ApplicationRecord
   end
 
   def vehicle_age_in_months
-    VehicleAgeCalculator.new(date_of_purchase, submission_date).in_months
+    Calculators::VehicleAgeCalculator.new(date_of_purchase, submission_date).in_months
   end
 
   def vehicle_out_of_scope_age

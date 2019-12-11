@@ -19,7 +19,7 @@ class CapitalSummary < ApplicationRecord
   )
 
   def summarise!
-    data = WorkflowService::CapitalCollator.call(assessment)
+    data = Collators::CapitalCollator.call(assessment)
     update!(data) && summarised!
   end
 

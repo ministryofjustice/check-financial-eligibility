@@ -42,7 +42,7 @@ RSpec.describe CapitalSummary do
     subject { capital_summary.summarise! }
 
     before do
-      allow(WorkflowService::CapitalCollator).to receive(:call).with(assessment).and_return(data)
+      allow(Collators::CapitalCollator).to receive(:call).with(assessment).and_return(data)
       subject
       capital_summary.reload
     end
