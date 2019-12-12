@@ -20,21 +20,21 @@ Bundler/OrderedGems:
 # SupportedStyles: empty_lines, empty_lines_except_namespace, empty_lines_special, no_empty_lines, beginning_only, ending_only
 #Layout/EmptyLinesAroundClassBody:
 #  Exclude:
-#    - 'app/old_services/json_schema_validator.rb'
+#    - 'app/services/json_schema_validator.rb'
 
 # Offense count: 3
 # Cop supports --auto-correct.
 # Configuration parameters: AllowForAlignment, AllowBeforeTrailingComments, ForceEqualSignAlignment.
 #Layout/ExtraSpacing:
 #  Exclude:
-#    - 'spec/old_services/json_schema_validator_spec.rb'
+#    - 'spec/services/json_schema_validator_spec.rb'
 
 # Offense count: 1
 # Cop supports --auto-correct.
 # Configuration parameters: Width, IgnoredPatterns.
 #Layout/IndentationWidth:
 #  Exclude:
-#    - 'app/old_services/json_schema_validator.rb'
+#    - 'app/services/json_schema_validator.rb'
 
 # Offense count: 2
 # Cop supports --auto-correct.
@@ -48,7 +48,7 @@ Bundler/OrderedGems:
 # Offense count: 2
 #Lint/AmbiguousRegexpLiteral:
 #  Exclude:
-#    - 'spec/old_services/json_schema_validator_spec.rb'
+#    - 'spec/services/json_schema_validator_spec.rb'
 
 # Offense count: 1
 # Configuration parameters: ContextCreatingMethods, MethodCreatingMethods.
