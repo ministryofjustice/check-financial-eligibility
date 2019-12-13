@@ -11,7 +11,7 @@ module Assessors
         context 'capital summary pending' do
           let(:result) { 'pending' }
           it 'raises' do
-            expect{ subject }.to raise_error RuntimeError, 'Capital assessment not complete'
+            expect { subject }.to raise_error RuntimeError, 'Capital assessment not complete'
           end
         end
 

@@ -75,10 +75,10 @@ RSpec.describe IntegrationTests::TestRunner, type: :request do
       ap object
     end
 
-    it 'process all worksheets and does not raise any error',skip: 'work out what needs to be done to get the spreadsheets working' do
+    it 'process all worksheets and does not raise any error' do
       results = []
       worksheet_names.each do |spreadsheet_name|
-        # next unless spreadsheet_name == 'Test - P3 - Test1'
+        puts ">>>>>>>>> #{spreadsheet_name} #{__FILE__}:#{__LINE__} <<<<<<<<<<\n"
 
         results << run_spreadsheet(spreadsheet_name)
       end

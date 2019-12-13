@@ -17,5 +17,4 @@ class CapitalSummary < ApplicationRecord
     ),
     _prefix: false
   )
-
 end

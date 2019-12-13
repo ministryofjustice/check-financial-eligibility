@@ -10,7 +10,7 @@ module Workflows
     describe '.call' do
       subject { described_class.call(assessment) }
 
-        it 'calls Capital collator and updates capital summary record' do
+      it 'calls Capital collator and updates capital summary record' do
         expect(Collators::CapitalCollator).to receive(:call).with(assessment).and_return(capital_data)
         subject
         expect(capital_summary.reload).to have_matching_attributes(capital_data)

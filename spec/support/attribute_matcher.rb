@@ -1,16 +1,16 @@
 # returns true if all the attributes in expected hash have the same values in actual_model.
 # Does not care if there are extra attributees in the model which are not in the hash
 #
-RSpec::Matchers.define :have_matching_attributes do | expected_hash |
+RSpec::Matchers.define :have_matching_attributes do |expected_hash|
   match do |actual_model|
     actual_hash = actual_model.attributes.symbolize_keys
-    actual_hash.keep_if{ |key, vallue| expected_hash.key?(key) }
+    actual_hash.keep_if { |key, _vallue| expected_hash.key?(key) }
     actual_hash == expected_hash
   end
 
   failure_message do |actual_model|
     actual_hash = actual_model.attributes.symbolize_keys
-    actual_hash.keep_if{ |key, vallue| expected_hash.key?(key) }
+    actual_hash.keep_if { |key, _vallue| expected_hash.key?(key) }
     "Not all specified attributes match:\n#{actual_hash.inspect}\n#{expected_hash.inspect}"
   end
 end
