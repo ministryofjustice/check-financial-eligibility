@@ -46,7 +46,7 @@ RSpec.describe IntegrationTests::TestRunner, type: :request do
       verbosely_log result, 'RESULT' if ENV['VERBOSE'] == 'true'
 
       test_pass = result_as_expected?(result, payload)
-      verbose_output(test_pass, result, payload, spreadsheet_name) if ENV['VERBOSE'] == 'true'
+      verbose_output(test_pass, result, payload, spreadsheet_name)
       test_pass
     end
 
@@ -78,7 +78,7 @@ RSpec.describe IntegrationTests::TestRunner, type: :request do
     it 'process all worksheets and does not raise any error' do
       results = []
       worksheet_names.each do |spreadsheet_name|
-        next unless spreadsheet_name == 'Test - P3 - Test1'
+        # next unless spreadsheet_name == 'Test - P3 - Test1'
 
         results << run_spreadsheet(spreadsheet_name)
       end
