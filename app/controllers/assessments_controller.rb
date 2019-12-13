@@ -46,10 +46,8 @@ class AssessmentsController < ApplicationController
   end
 
   def show
-    assessment.capital_summary.summarise!
-    assessment.gross_income_summary.summarise!
-    assessment.determine_result!
-
+    Workflows::MainWorkflow.call(assessment)
+    Assessors::MainAssessor.call(assessment)
     render json: Decorators::ResultDecorator.new(assessment)
   end
 

@@ -13,25 +13,9 @@ class CapitalSummary < ApplicationRecord
 
   enum(
     capital_assessment_result: enum_hash_for(
-      :pending, :summarised, :eligible, :not_eligible, :contribution_required
+      :pending, :eligible, :not_eligible, :contribution_required
     ),
     _prefix: false
   )
 
-  def summarise!
-    data = Collators::CapitalCollator.call(assessment)
-    update!(data) && summarised!
-  end
-
-  def determine_result!
-    update!(capital_assessment_result: result)
-  end
-
-  private
-
-  def result
-    return :eligible if assessed_capital <= lower_threshold
-
-    :contribution_required
-  end
 end

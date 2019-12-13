@@ -6,7 +6,7 @@ FactoryBot.define do
     has_partner_opponent { false }
     receives_qualifying_benefit { false }
 
-    trait :with_qualifying_benfits do
+    trait :with_qualifying_benefits do
       receives_qualifying_benefit { true }
     end
 
