@@ -39,7 +39,7 @@ class StateBenefitsController < ApplicationController
   private
 
   def creation_service
-    @creation_service ||= StateBenefitsCreationService.call(
+    @creation_service ||= Creators::StateBenefitsCreator.call(
       assessment_id: params[:assessment_id],
       state_benefits: state_benefit_params
     )
