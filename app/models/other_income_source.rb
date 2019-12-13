@@ -16,17 +16,17 @@ class OtherIncomeSource < ApplicationRecord
   private
 
   def dates_and_amounts
-    PaymentPeriodDataExtractor.call(collection: other_income_payments,
-                                    date_method: :payment_date,
-                                    amount_method: :amount)
+    Utilities::PaymentPeriodDataExtractor.call(collection: other_income_payments,
+                                               date_method: :payment_date,
+                                               amount_method: :amount)
   end
 
   def frequency
-    PaymentPeriodAnalyser.new(dates_and_amounts).period_pattern
+    Utilities::PaymentPeriodAnalyser.new(dates_and_amounts).period_pattern
   end
 
   def converter
-    @converter ||= UnearnedIncomeMonthlyConversionService.new(frequency, payment_amounts)
+    @converter ||= Calculators::UnearnedIncomeMonthlyConvertor.new(frequency, payment_amounts)
   end
 
   def payment_amounts

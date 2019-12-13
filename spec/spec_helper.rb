@@ -3,12 +3,12 @@ require 'vcr'
 
 SimpleCov.minimum_coverage 100
 
-# TODO: Remove these filters once the refactoring is complete and the services are re-written
+# TODO: Remove these filters once the refactoring is complete and the old_services are re-written
 #       to take values from models rather than payload hash
 SimpleCov.start do
-  add_filter 'app/services/workflow_service/'
-  add_filter 'app/services/workflow_predicate/'
-  add_filter 'app/services/legacy_base_workflow_service.rb'
+  add_filter 'app/old_services/workflow_service/'
+  add_filter 'app/old_services/workflow_predicate/'
+  add_filter 'app/old_services/legacy_base_workflow_service.rb'
 end
 
 unless ENV['NOCOVERAGE']

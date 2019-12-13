@@ -5,7 +5,7 @@ module PaymentPatternConcern
     define_singleton_method(:payment_pattern) do
       return :no_data unless time_series.present?
 
-      PaymentPeriodAnalyser.pattern_for time_series
+      Utilities::PaymentPeriodAnalyser.pattern_for time_series
     end
   end
 end

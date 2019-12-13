@@ -39,7 +39,7 @@ class ApplicantsController < ApplicationController
   private
 
   def creation_service
-    @creation_service ||= ApplicantCreationService.call(
+    @creation_service ||= Creators::ApplicantCreator.call(
       assessment_id: params[:assessment_id],
       applicant_attributes: input[:applicant]
     )

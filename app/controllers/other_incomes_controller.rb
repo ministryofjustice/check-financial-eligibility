@@ -39,7 +39,7 @@ class OtherIncomesController < ApplicationController
   private
 
   def creation_service
-    @creation_service ||= OtherIncomesCreationService.call(
+    @creation_service ||= Creators::OtherIncomesCreator.call(
       assessment_id: params[:assessment_id],
       other_incomes: other_income_params
     )

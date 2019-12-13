@@ -34,7 +34,7 @@ class VehiclesController < ApplicationController
   private
 
   def creation_service
-    @creation_service ||= VehicleCreationService.call(
+    @creation_service ||= Creators::VehicleCreator.call(
       assessment_id: params[:assessment_id],
       vehicles_attributes: input[:vehicles]
     )

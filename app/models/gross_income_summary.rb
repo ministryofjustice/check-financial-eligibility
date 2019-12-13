@@ -4,7 +4,7 @@ class GrossIncomeSummary < ApplicationRecord
   has_many :other_income_sources
 
   def summarise!
-    data = WorkflowService::GrossIncomeCollator.call(assessment)
+    data = Collators::GrossIncomeCollator.call(assessment)
     update!(data)
   end
 end
