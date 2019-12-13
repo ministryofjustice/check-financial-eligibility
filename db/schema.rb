@@ -197,12 +197,31 @@ ActiveRecord::Schema.define(version: 2019_12_11_161738) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "state_benefit_payments", force: :cascade do |t|
+    t.uuid "state_benefit_id", null: false
+    t.date "payment_date", null: false
+    t.decimal "amount", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["state_benefit_id"], name: "index_state_benefit_payments_on_state_benefit_id"
+  end
+
   create_table "state_benefit_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "label"
-    t.text "description"
+    t.text "name"
     t.boolean "exclude_from_gross_income"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "state_benefits", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "gross_income_summary_id", null: false
+    t.uuid "state_benefit_type_id", null: false
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["gross_income_summary_id"], name: "index_state_benefits_on_gross_income_summary_id"
+    t.index ["state_benefit_type_id"], name: "index_state_benefits_on_state_benefit_type_id"
   end
 
   create_table "statuses", force: :cascade do |t|
@@ -245,6 +264,9 @@ ActiveRecord::Schema.define(version: 2019_12_11_161738) do
   add_foreign_key "other_income_sources", "gross_income_summaries"
   add_foreign_key "outgoings", "assessments"
   add_foreign_key "properties", "capital_summaries"
+  add_foreign_key "state_benefit_payments", "state_benefits"
+  add_foreign_key "state_benefits", "gross_income_summaries"
+  add_foreign_key "state_benefits", "state_benefit_types"
   add_foreign_key "vehicles", "capital_summaries"
   add_foreign_key "wage_payments", "employments"
 end
