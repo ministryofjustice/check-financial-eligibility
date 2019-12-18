@@ -2,6 +2,9 @@ require 'rails_helper'
 require Rails.root.join 'integration_tests/test_runner'
 require Rails.root.join 'integration_tests/worksheet_parser'
 
+# Integration test output can be seen by settting VERBOSE env var to 'true'
+# Detailed output can be seen by setting it to 'noisy'
+
 RSpec.describe IntegrationTests::TestRunner, type: :request do
   let(:spreadsheet_file) { Rails.root.join('spec/fixtures/integration_test_data.xlsx') }
   let(:spreadsheet) { Roo::Spreadsheet.open(spreadsheet_file.to_s) }
@@ -26,6 +29,7 @@ RSpec.describe IntegrationTests::TestRunner, type: :request do
     end
 
     def verbose_output(test_pass, result, payload, spreadsheet_name)
+      return unless verbose?
       puts commentary(result, payload, spreadsheet_name)
       puts test_pass ? '**** Passed ****'.green : '**** Failed ****'.red
     end
@@ -69,7 +73,7 @@ RSpec.describe IntegrationTests::TestRunner, type: :request do
     end
 
     def verbosely_log(object, label)
-      return unless ENV['VERBOSE'] == 'true'
+      return unless noisy?
 
       puts "********* #{label} #{__FILE__}:#{__LINE__}*******\n"
       ap object
@@ -78,11 +82,19 @@ RSpec.describe IntegrationTests::TestRunner, type: :request do
     it 'process all worksheets and does not raise any error' do
       results = []
       worksheet_names.each do |spreadsheet_name|
-        puts ">>>>>>>>> #{spreadsheet_name} #{__FILE__}:#{__LINE__} <<<<<<<<<<\n"
+        puts ">>>>>>>>> #{spreadsheet_name} #{__FILE__}:#{__LINE__} <<<<<<<<<<\n" if verbose?
 
         results << run_spreadsheet(spreadsheet_name)
       end
       expect(results.uniq == [true]).to be_truthy, 'Integration test fail: run `rake integration` to see details of results mismatch'
+    end
+
+    def verbose?
+      ENV['VERBOSE'].in? %w[true noisy]
+    end
+
+    def noisy?
+      ENV['VERBOSE'] == 'noisy'
     end
   end
 end
