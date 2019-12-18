@@ -30,6 +30,7 @@ RSpec.describe IntegrationTests::TestRunner, type: :request do
 
     def verbose_output(test_pass, result, payload, spreadsheet_name)
       return unless verbose?
+
       puts commentary(result, payload, spreadsheet_name)
       puts test_pass ? '**** Passed ****'.green : '**** Failed ****'.red
     end
