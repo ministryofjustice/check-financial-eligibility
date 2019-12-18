@@ -70,7 +70,7 @@ RSpec.describe AssessmentsController, type: :request do
   end
 
   describe 'GET /assessments/:id' do
-    let(:assessment) { create :assessment, :with_applicant }
+    let(:assessment) { create :assessment, applicant: applicant }
     let(:option) { :below_lower_threshold }
     let!(:capital_summary) { create :capital_summary, option, assessment: assessment }
     let!(:non_liquid_capital_item) { create :non_liquid_capital_item, capital_summary: capital_summary }
@@ -81,19 +81,24 @@ RSpec.describe AssessmentsController, type: :request do
 
     subject { get assessment_path(assessment) }
 
-    before do
-      assessment.capital_summary.summarise!
-      assessment.determine_result!
-      assessment.reload
-      subject
-    end
+    context 'passported' do
+      let(:applicant) { create :applicant, :with_qualifying_benefits }
 
-    it 'returns http success', :show_in_doc do
-      expect(response).to have_http_status(:success)
-    end
+      it 'returns http success', :show_in_doc do
+        subject
+        expect(response).to have_http_status(:success)
+      end
 
-    it 'returns capital summary data as json' do
-      expect(parsed_response).to eq(JSON.parse(Decorators::ResultDecorator.new(assessment).to_json, symbolize_names: true))
+      it 'returns capital summary data as json' do
+        subject
+        expect(parsed_response).to eq(JSON.parse(Decorators::ResultDecorator.new(assessment.reload).to_json, symbolize_names: true))
+      end
+
+      it 'has called the workflow and assessor' do
+        expect(Workflows::MainWorkflow).to receive(:call).with(assessment)
+        expect(Assessors::MainAssessor).to receive(:call).with(assessment)
+        subject
+      end
     end
   end
 end
