@@ -21,8 +21,4 @@ class BaseWorkflowService
   def initialize(assessment)
     @assessment = assessment
   end
-
-  def applicant
-    @applicant = assessment.applicant
-  end
 end

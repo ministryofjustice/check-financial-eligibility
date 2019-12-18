@@ -1,9 +1,11 @@
 module Collators
   class GrossIncomeCollator < BaseWorkflowService
     def call
-      {
-        upper_threshold: upper_threshold
-      }
+      gross_income_summary.update!(
+        upper_threshold: upper_threshold,
+        monthly_other_income: monthly_other_income,
+        assessment_result: 'summarised'
+      )
     end
 
     private
@@ -34,6 +36,14 @@ module Collators
       return 0 unless number_of_child_dependants > dependant_increase_starts_after
 
       (number_of_child_dependants - dependant_increase_starts_after) * dependant_step
+    end
+
+    def monthly_other_income
+      total = 0.0
+      gross_income_summary.other_income_sources.each do |source|
+        total += source.calculate_monthly_income!
+      end
+      total
     end
   end
 end
