@@ -51,7 +51,6 @@ module Assessors
           record.update!(monthly_other_income: income, upper_threshold: threshold, assessment_result: 'summarised')
         end
       end
-
     end
   end
 end

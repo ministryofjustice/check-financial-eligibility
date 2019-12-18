@@ -91,8 +91,6 @@ module Collators
             subject
             expect(gross_income_summary.reload.monthly_other_income).to eq 171.48
           end
-
-
         end
       end
     end
