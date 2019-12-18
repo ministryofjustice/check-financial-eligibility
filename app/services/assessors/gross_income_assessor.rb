@@ -11,7 +11,15 @@ module Assessors
     private
 
     def assessment_result
-      monthly_other_income
+      income < threshold ? 'eligible' : 'not_eligible'
+    end
+
+    def income
+      gross_income_summary.monthly_other_income
+    end
+
+    def threshold
+      gross_income_summary.upper_threshold
     end
   end
 end
