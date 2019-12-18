@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_18_113121) do
+ActiveRecord::Schema.define(version: 2019_12_18_115258) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 2019_12_18_113121) do
     t.boolean "receives_qualifying_benefit"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "self_employed", default: false
     t.index ["assessment_id"], name: "index_applicants_on_assessment_id"
   end
 
