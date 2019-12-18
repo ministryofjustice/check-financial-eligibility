@@ -147,7 +147,8 @@ module Utilities # rubocop:disable Metrics/ModuleLength
           _holiday_strategy = fields.shift
           dates = fields.compact.map { |d| Date.parse(d) }
           date_salaries = dates.map { |d| [d, nil] }.to_h
-          actual_result = described_class.new(date_salaries).period_pattern.to_s
+          puts ">>>>>>>>>>>>  #{__FILE__}:#{__LINE__} <<<<<<<<<<<<\n"
+          actual_result = described_class.pattern_for(date_salaries).to_s
           successful_test = actual_result == expected_result
           colour = successful_test ? :green : :red
           num_failed_tests += 1 unless successful_test
@@ -169,8 +170,12 @@ module Utilities # rubocop:disable Metrics/ModuleLength
       let(:dates) { string_dates.map { |d| [Date.parse(d), nil] }.to_h }
       context 'Every two weeks on a Monday but paid on Friday before bank holiday (middle payment)' do
         let(:string_dates) { '2019-03-4, 2019-03-18, 2019-04-01, 2019-04-12, 2019-04-29, 2019-05-13, 2019-05-27, 2019-06-10'.split(', ') }
-        it 'returns two_weekly' do
+        it 'returns two_weekly using #period_pattern' do
           expect(described_class.new(dates).period_pattern).to eq :two_weekly
+        end
+
+        it 'retursn two_weekly using .pattern_for' do
+          expect(described_class.pattern_for(dates)).to eq :two_weekly
         end
       end
 
