@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_13_112436) do
+ActiveRecord::Schema.define(version: 2019_12_18_115258) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 2019_12_13_112436) do
     t.boolean "receives_qualifying_benefit"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "self_employed", default: false
     t.index ["assessment_id"], name: "index_applicants_on_assessment_id"
   end
 
@@ -44,16 +45,6 @@ ActiveRecord::Schema.define(version: 2019_12_13_112436) do
     t.string "matter_proceeding_type", null: false
     t.string "assessment_result", default: "pending", null: false
     t.index ["client_reference_id"], name: "index_assessments_on_client_reference_id"
-  end
-
-  create_table "benefit_receipts", force: :cascade do |t|
-    t.uuid "assessment_id", null: false
-    t.string "benefit_name"
-    t.date "payment_date"
-    t.decimal "amount"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["assessment_id"], name: "index_benefit_receipts_on_assessment_id"
   end
 
   create_table "capital_items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -203,7 +194,6 @@ ActiveRecord::Schema.define(version: 2019_12_13_112436) do
 
   add_foreign_key "applicants", "assessments"
   add_foreign_key "assessment_errors", "assessments"
-  add_foreign_key "benefit_receipts", "assessments"
   add_foreign_key "capital_items", "capital_summaries"
   add_foreign_key "capital_summaries", "assessments"
   add_foreign_key "gross_income_summaries", "assessments"
