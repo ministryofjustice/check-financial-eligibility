@@ -196,6 +196,6 @@ winter_fuel_payment:
   :exclude_from_gross_income: false
   :dwp_code: WFP
 other:
-  :name: Other sate benefit
+  :name: Other state benefit
   :exclude_from_gross_income: false
   :dwp_code:
