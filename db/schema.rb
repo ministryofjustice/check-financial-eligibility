@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_19_113400) do
+ActiveRecord::Schema.define(version: 2019_12_20_085420) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -173,12 +173,6 @@ ActiveRecord::Schema.define(version: 2019_12_19_113400) do
     t.decimal "monthly_value", default: "0.0", null: false
     t.index ["gross_income_summary_id"], name: "index_state_benefits_on_gross_income_summary_id"
     t.index ["state_benefit_type_id"], name: "index_state_benefits_on_state_benefit_type_id"
-  end
-
-  create_table "statuses", force: :cascade do |t|
-    t.string "response"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "vehicles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
