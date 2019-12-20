@@ -8,7 +8,7 @@
 Rails.logger.info 'Seeding started'
 Seeder = Dibber::Seeder
 
-Seeder.new(StateBenefitType, 'data/state_benefit_types.yml', name_method: :label).build
+Seeder.new(StateBenefitType, 'data/state_benefit_types.yml', name_method: :label, overwrite: true).build
 
 puts Seeder.report
 Rails.logger.info Seeder.report.join("\n")

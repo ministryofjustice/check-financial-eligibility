@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_20_085420) do
+ActiveRecord::Schema.define(version: 2019_12_20_091038) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -162,6 +162,9 @@ ActiveRecord::Schema.define(version: 2019_12_20_085420) do
     t.boolean "exclude_from_gross_income"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "dwp_code"
+    t.index ["dwp_code"], name: "index_state_benefit_types_on_dwp_code", unique: true
+    t.index ["label"], name: "index_state_benefit_types_on_label", unique: true
   end
 
   create_table "state_benefits", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
