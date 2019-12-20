@@ -1,4 +1,6 @@
 class StateBenefit < ApplicationRecord
+  include MonthlyEquivalentCalculator
+
   belongs_to :gross_income_summary
   belongs_to :state_benefit_type
   has_many :state_benefit_payments
@@ -27,29 +29,7 @@ class StateBenefit < ApplicationRecord
   end
 
   def calculate_monthly_amount!
-    assessment.assessment_errors.create!(record_id: id, record_type: self.class, error_message: converter.error_message) if converter.error?
-
-    update!(monthly_value: converter.monthly_amount)
-    converter.monthly_amount
-  end
-
-  private
-
-  def dates_and_amounts
-    Utilities::PaymentPeriodDataExtractor.call(collection: state_benefit_payments,
-                                               date_method: :payment_date,
-                                               amount_method: :amount)
-  end
-
-  def frequency
-    Utilities::PaymentPeriodAnalyser.new(dates_and_amounts).period_pattern
-  end
-
-  def converter
-    @converter ||= Calculators::UnearnedIncomeMonthlyConvertor.new(frequency, payment_amounts)
-  end
-
-  def payment_amounts
-    state_benefit_payments.map(&:amount)
+    calculate_monthly_equivalent!(target_field: :monthly_value,
+                                  collection: state_benefit_payments)
   end
 end
