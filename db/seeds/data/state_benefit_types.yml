@@ -3,75 +3,199 @@
 # name for example, from "Housing benefit" to "Homes benefit", change the 
 # name, but leave the benefit_type#label as it is.
 ---
-attendance_allowance:
-  name: Attendance Allowance
-  exclude_from_gross_income: true
-budget_advances:
-  name: Budget Advances
-  exclude_from_gross_income: true
-care_in_the_community_direct_payment:
-  name: Care in the Community Direct Payment
-  exclude_from_gross_income: true
-carers_allowance:
-  name: Carers' Allowance
-  exclude_from_gross_income: true
-constant_attendance_allowance:
-  name: Constant Attendance Allowance
-  exclude_from_gross_income: true
-council_tax_benefit:
-  name: Council Tax Benefit
-  exclude_from_gross_income: true
-disability_living_allowance:
-  name: Disability Living Allowance
-  exclude_from_gross_income: true
-earnings_top_up:
-  name: Earnings Top Up
-  exclude_from_gross_income: true
-exceptionally_severe_disablement_allowance:
-  name: Exceptionally Severe Disablement Allowance
-  exclude_from_gross_income: true
-fostering_allowance:
-  name: Fostering Allowance (to the extent it exceeds dependents allowance)
-  exclude_from_gross_income: true
-housing_benefit:
-  name: Housing Benefit
-  exclude_from_gross_income: true
-independent_living_funds_payments:
-  name: Independent Living Funds payments
-  exclude_from_gross_income: true
-welsh_independent_living_grant:
-  name: Welsh Independent Living Grant
-  exclude_from_gross_income: true
-payments_on_account_of_benefit:
-  name: Payments on Account of Benefit
-  exclude_from_gross_income: true
-personal_independent_payments:
-  name: Personal Independent Payments
-  exclude_from_gross_income: true
+age_related_payment:
+  :name: Age Related Payment
+  :exclude_from_gross_income: false
+  :dwp_code: ARP
 armed_forces_independence_payment:
-  name: Armed Forces Independence Payment
-  exclude_from_gross_income: true
-severe_disablement_allowance:
-  name: Severe Disablement Allowance
-  exclude_from_gross_income: true
-social_fund_payments:
-  name: Social Fund Payments
-  exclude_from_gross_income: true
-special_education_needs:
-  name: Special Education Needs (SEN) Direct Payment
-  exclude_from_gross_income: true
-transfer_advances_of_universal_credit:
-  name: Transfer Advances of Universal Credit
-  exclude_from_gross_income: true
-lump_sum_payments_under_windows_pension:
-  name: Lump sum payments under Window's Pension
-  exclude_from_gross_income: true
-war_pension:
-  name: War Pension (Any)
-  exclude_from_gross_income: true
+  :name: Armed Forces Independence Payment
+  :exclude_from_gross_income: true
+  :dwp_code:
+attendance_allowance:
+  :name: Attendance Allowance
+  :exclude_from_gross_income: true
+  :dwp_code: AA
+bereavement_allowance:
+  :name: Bereavement Allowance
+  :exclude_from_gross_income: false
+  :dwp_code: BA
+bereavement_payment:
+  :name: Bereavement Payment
+  :exclude_from_gross_income: false
+  :dwp_code: BPT
+budget_advances:
+  :name: Budget Advances
+  :exclude_from_gross_income: true
+  :dwp_code:
+care_in_the_community_direct_payment:
+  :name: Care in the Community Direct Payment
+  :exclude_from_gross_income: true
+  :dwp_code:
+carers_allowance:
+  :name: Carers' Allowance
+  :exclude_from_gross_income: true
+  :dwp_code: CA
+child_maintenance:
+  :name: Child Maintenance
+  :exclude_from_gross_income: false
+  :dwp_code: CM
+christmas_bonus:
+  :name: Christmas Bonus
+  :exclude_from_gross_income: false
+  :dwp_code: XB
+cold_weather_payment:
+  :name: Cold Weather Payment
+  :exclude_from_gross_income: false
+  :dwp_code: CWP
+constant_attendance_allowance:
+  :name: Constant Attendance Allowance
+  :exclude_from_gross_income: true
+  :dwp_code:
+council_tax_benefit:
+  :name: Council Tax Benefit
+  :exclude_from_gross_income: true
+  :dwp_code:
+disability_living_allowance:
+  :name: Disability Living Allowance
+  :exclude_from_gross_income: true
+  :dwp_code: DLA
+earnings_top_up:
+  :name: Earnings Top Up
+  :exclude_from_gross_income: true
+  :dwp_code:
+employment_support_allowance:
+  :name: Employment Support Allowance
+  :exclude_from_gross_income: false
+  :dwp_code: ESA
+exceptionally_severe_disablement_allowance:
+  :name: Exceptionally Severe Disablement Allowance
+  :exclude_from_gross_income: true
+  :dwp_code:
+fostering_allowance:
+  :name: Fostering Allowance (to the extent it exceeds dependents allowance)
+  :exclude_from_gross_income: true
+  :dwp_code:
 grenfell_payments:
-  name: Grenfell Payments
-  exclude_from_gross_income: true
+  :name: Grenfell Payments
+  :exclude_from_gross_income: true
+  :dwp_code:
+housing_benefit:
+  :name: Housing Benefit
+  :exclude_from_gross_income: true
+  :dwp_code:
+incapacity_benefit:
+  :name: Incapacity Benefit
+  :exclude_from_gross_income: false
+  :dwp_code: IB
+income_support:
+  :name: Income Support
+  :exclude_from_gross_income: false
+  :dwp_code: IS
+independent_living_funds_payments:
+  :name: Independent Living Funds payments
+  :exclude_from_gross_income: true
+  :dwp_code:
+industrial_injuries_benefit:
+  :name: Industrial Injuries Benefit
+  :exclude_from_gross_income: false
+  :dwp_code: IIB
+industrial_injuries_disablement_benefit:
+  :name: Industrial Injuries Disablement Benefit
+  :exclude_from_gross_income: false
+  :dwp_code: IIDB
+jobseekers_allowance:
+  :name: Jobseeker’s Allowance
+  :exclude_from_gross_income: false
+  :dwp_code: JSA
+lump_sum_payments_under_windows_pension:
+  :name: Lump sum payments under Window's Pension
+  :exclude_from_gross_income: true
+  :dwp_code:
+maternity_allowance:
+  :name: Maternity Allowance
+  :exclude_from_gross_income: false
+  :dwp_code: MA
+minimum_income_guarantee:
+  :name: Minimum Income Guarantee
+  :exclude_from_gross_income: false
+  :dwp_code: MIG
+mortgage_interest_direct:
+  :name: Mortgage Interest Direct
+  :exclude_from_gross_income: false
+  :dwp_code: MID
+payments_on_account_of_benefit:
+  :name: Payments on Account of Benefit
+  :exclude_from_gross_income: true
+  :dwp_code:
+pension_credit:
+  :name: Pension Credit
+  :exclude_from_gross_income: false
+  :dwp_code: PC
+personal_independent_payments:
+  :name: Personal Independent Payments
+  :exclude_from_gross_income: true
+  :dwp_code: PIP
+reduced_earnings_allowance:
+  :name: Reduced Earnings Allowance
+  :exclude_from_gross_income: false
+  :dwp_code: REA
+severe_disablement_allowance:
+  :name: Severe Disablement Allowance
+  :exclude_from_gross_income: true
+  :dwp_code: SDA
+social_fund:
+  :name: Social Fund
+  :exclude_from_gross_income: false
+  :dwp_code: SF
+social_fund_payments:
+  :name: Social Fund Payments
+  :exclude_from_gross_income: true
+  :dwp_code:
+special_education_needs:
+  :name: Special Education Needs (SEN) Direct Payment
+  :exclude_from_gross_income: true
+  :dwp_code:
+state_pension:
+  :name: State Pension
+  :exclude_from_gross_income: false
+  :dwp_code: SP
+training_payment:
+  :name: Training Payment
+  :exclude_from_gross_income: false
+  :dwp_code: T/P
+transfer_advances_of_universal_credit:
+  :name: Transfer Advances of Universal Credit
+  :exclude_from_gross_income: true
+  :dwp_code:
+universal_credit:
+  :name: Universal Credit
+  :exclude_from_gross_income: false
+  :dwp_code: UC
+war_pension:
+  :name: War Pension (Any)
+  :exclude_from_gross_income: true
+  :dwp_code:
+welsh_independent_living_grant:
+  :name: Welsh Independent Living Grant
+  :exclude_from_gross_income: true
+  :dwp_code:
+widows_benefit:
+  :name: Widow’s Benefit
+  :exclude_from_gross_income: false
+  :dwp_code: WB
+widowed_mothers_allowance:
+  :name: Widowed Mother’s Allowance
+  :exclude_from_gross_income: false
+  :dwp_code: WMA
+widowed_parents_allowance:
+  :name: Widowed Parent’s Allowance
+  :exclude_from_gross_income: false
+  :dwp_code: WPA
+winter_fuel_payment:
+  :name: Winter Fuel Payment
+  :exclude_from_gross_income: false
+  :dwp_code: WFP
 other:
-  name: Other state benefit type
-  exclude_from_gross_income: false
+  :name: Other state benefit
+  :exclude_from_gross_income: false
+  :dwp_code:
