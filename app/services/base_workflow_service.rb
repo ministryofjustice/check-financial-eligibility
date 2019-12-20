@@ -9,7 +9,8 @@ class BaseWorkflowService
            :additional_properties,
            :vehicles, to: :capital_summary
 
-  delegate :upper_threshold, to: :gross_income_summary
+  delegate :upper_threshold,
+           :state_benefits, to: :gross_income_summary
 
   attr_reader :assessment
 
@@ -19,5 +20,9 @@ class BaseWorkflowService
 
   def initialize(assessment)
     @assessment = assessment
+  end
+
+  def applicant
+    @applicant = assessment.applicant
   end
 end
