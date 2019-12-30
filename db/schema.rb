@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_30_112428) do
+ActiveRecord::Schema.define(version: 2019_12_30_141019) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -98,7 +98,6 @@ ActiveRecord::Schema.define(version: 2019_12_30_112428) do
     t.decimal "lower_threshold", default: "0.0", null: false
     t.decimal "upper_threshold", default: "0.0", null: false
     t.string "assessment_result", default: "pending", null: false
-    t.string "housing_cost_type", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["assessment_id"], name: "index_disposable_income_summaries_on_assessment_id"
@@ -141,6 +140,7 @@ ActiveRecord::Schema.define(version: 2019_12_30_112428) do
     t.string "type", null: false
     t.date "payment_date", null: false
     t.decimal "amount", null: false
+    t.string "housing_cost_type"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["disposable_income_summary_id"], name: "index_outgoings_on_disposable_income_summary_id"

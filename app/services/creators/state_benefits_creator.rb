@@ -43,9 +43,5 @@ module Creators
       end
       state_benefit
     end
-
-    def assessment
-      @assessment ||= Assessment.find_by(id: assessment_id) || (raise CreationError, ['No such assessment id'])
-    end
   end
 end
