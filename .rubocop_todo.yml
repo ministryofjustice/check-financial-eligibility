@@ -9,7 +9,8 @@
 # Offense count: 1
 # Configuration parameters: CountComments.
 Metrics/ClassLength:
-  Max: 118
+  Exclude:
+    - spec/support/payment_dates_generator.rb
 
 # Offense count: 10
 # Configuration parameters: CountComments, ExcludedMethods.
