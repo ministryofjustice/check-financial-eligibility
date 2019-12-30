@@ -24,10 +24,6 @@ Metrics/BlockLength:
     - 'config/routes.rb'
     - 'spec/**/*'
 
-Metrics/MethodLength:
-  Exclude:
-    - 'db/migrate/*'
-
 Style/BlockDelimiters:
   EnforcedStyle: braces_for_chaining
 

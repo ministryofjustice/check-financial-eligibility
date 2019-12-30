@@ -12,8 +12,6 @@ Metrics/ClassLength:
   Exclude:
     - spec/support/payment_dates_generator.rb
 
-# Offense count: 10
-# Configuration parameters: CountComments, ExcludedMethods.
 Metrics/MethodLength:
-  Max: 86
   Exclude:
+    - 'db/migrate/*' # this should be moved back to .rubocop.yaml when the other exceptions are removed
