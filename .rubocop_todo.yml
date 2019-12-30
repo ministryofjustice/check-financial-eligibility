@@ -15,48 +15,6 @@ Bundler/OrderedGems:
     - 'Gemfile'
 
 # Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: empty_lines, empty_lines_except_namespace, empty_lines_special, no_empty_lines, beginning_only, ending_only
-#Layout/EmptyLinesAroundClassBody:
-#  Exclude:
-#    - 'app/services/json_schema_validator.rb'
-
-# Offense count: 3
-# Cop supports --auto-correct.
-# Configuration parameters: AllowForAlignment, AllowBeforeTrailingComments, ForceEqualSignAlignment.
-#Layout/ExtraSpacing:
-#  Exclude:
-#    - 'spec/services/json_schema_validator_spec.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: Width, IgnoredPatterns.
-#Layout/IndentationWidth:
-#  Exclude:
-#    - 'app/services/json_schema_validator.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, EnforcedStyleForEmptyBrackets.
-# SupportedStyles: space, no_space, compact
-# SupportedStylesForEmptyBrackets: space, no_space
-#Layout/SpaceInsideArrayLiteralBrackets:
-#  Exclude:
-#    - 'config/environments/production.rb'
-
-# Offense count: 2
-#Lint/AmbiguousRegexpLiteral:
-#  Exclude:
-#    - 'spec/services/json_schema_validator_spec.rb'
-
-# Offense count: 1
-# Configuration parameters: ContextCreatingMethods, MethodCreatingMethods.
-#Lint/UselessAccessModifier:
-#  Exclude:
-#    - 'app/controllers/api/statuses_controller.rb'
-
-# Offense count: 1
 # Configuration parameters: CountComments.
 Metrics/ClassLength:
   Max: 120
@@ -65,20 +23,6 @@ Metrics/ClassLength:
 # Configuration parameters: CountComments, ExcludedMethods.
 Metrics/MethodLength:
   Max: 118
-
-# Offense count: 1
-# Cop supports --auto-correct.
-#Style/BlockComments:
-#  Exclude:
-#    - 'spec/spec_helper.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: AutoCorrect, EnforcedStyle.
-# SupportedStyles: nested, compact
-#Style/ClassAndModuleChildren:
-#  Exclude:
-#    - 'test/test_helper.rb'
 
 # Offense count: 3
 # Cop supports --auto-correct.
@@ -100,35 +44,3 @@ Style/MixinUsage:
   Exclude:
     - 'bin/setup'
     - 'bin/update'
-
-# Offense count: 11
-# Cop supports --auto-correct.
-# Configuration parameters: Strict.
-#Style/NumericLiterals:
-#  MinDigits: 7
-
-# Offense count: 27
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, ConsistentQuotesInMultiline.
-# SupportedStyles: single_quotes, double_quotes
-#Style/StringLiterals:
-#  Exclude:
-#    - 'bin/spring'
-#    - 'config/application.rb'
-#    - 'config/environments/production.rb'
-#    - 'config/puma.rb'
-#    - 'spec/fixtures/assessment_fixture.rb'
-#    - 'spec/rails_helper.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: .
-# SupportedStyles: percent, brackets
-#Style/SymbolArray:
-#  EnforcedStyle: percent
-#  MinSize: 5
-
-# Offense count: 79
-# Cop supports --auto-correct.
-# Configuration parameters: AutoCorrect, AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, IgnoredPatterns.
-# URISchemes: http, https
