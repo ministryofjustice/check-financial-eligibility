@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_23_133811) do
+ActiveRecord::Schema.define(version: 2019_12_30_112428) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -76,15 +76,6 @@ ActiveRecord::Schema.define(version: 2019_12_23_133811) do
     t.index ["assessment_id"], name: "index_capital_summaries_on_assessment_id"
   end
 
-  create_table "childcare_outgoings", force: :cascade do |t|
-    t.uuid "disposable_income_summaries_id", null: false
-    t.date "payment_date", null: false
-    t.decimal "amount", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["disposable_income_summaries_id"], name: "index_childcare_outgoings_on_disposable_income_summaries_id"
-  end
-
   create_table "dependants", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "assessment_id"
     t.date "date_of_birth"
@@ -125,24 +116,6 @@ ActiveRecord::Schema.define(version: 2019_12_23_133811) do
     t.index ["assessment_id"], name: "index_gross_income_summaries_on_assessment_id"
   end
 
-  create_table "housing_cost_outgoings", force: :cascade do |t|
-    t.uuid "disposable_income_summaries_id", null: false
-    t.date "payment_date", null: false
-    t.decimal "amount", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["disposable_income_summaries_id"], name: "index_housing_cost_outgoings_on_disposable_income_summaries_id"
-  end
-
-  create_table "maintenance_outgoings", force: :cascade do |t|
-    t.uuid "disposable_income_summaries_id", null: false
-    t.date "payment_date", null: false
-    t.decimal "amount", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["disposable_income_summaries_id"], name: "index_maintenance_outgoings_on_disposable_income_summaries_id"
-  end
-
   create_table "other_income_payments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "other_income_source_id", null: false
     t.date "payment_date", null: false
@@ -163,14 +136,14 @@ ActiveRecord::Schema.define(version: 2019_12_23_133811) do
     t.index ["gross_income_summary_id"], name: "index_other_income_sources_on_gross_income_summary_id"
   end
 
-  create_table "outgoings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "outgoing_type"
-    t.date "payment_date"
-    t.decimal "amount"
-    t.uuid "assessment_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["assessment_id"], name: "index_outgoings_on_assessment_id"
+  create_table "outgoings", force: :cascade do |t|
+    t.uuid "disposable_income_summaries_id", null: false
+    t.string "type", null: false
+    t.date "payment_date", null: false
+    t.decimal "amount", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["disposable_income_summaries_id"], name: "index_outgoings_on_disposable_income_summaries_id"
   end
 
   create_table "properties", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -239,14 +212,11 @@ ActiveRecord::Schema.define(version: 2019_12_23_133811) do
   add_foreign_key "assessment_errors", "assessments"
   add_foreign_key "capital_items", "capital_summaries"
   add_foreign_key "capital_summaries", "assessments"
-  add_foreign_key "childcare_outgoings", "disposable_income_summaries", column: "disposable_income_summaries_id"
   add_foreign_key "disposable_income_summaries", "assessments"
   add_foreign_key "gross_income_summaries", "assessments"
-  add_foreign_key "housing_cost_outgoings", "disposable_income_summaries", column: "disposable_income_summaries_id"
-  add_foreign_key "maintenance_outgoings", "disposable_income_summaries", column: "disposable_income_summaries_id"
   add_foreign_key "other_income_payments", "other_income_sources"
   add_foreign_key "other_income_sources", "gross_income_summaries"
-  add_foreign_key "outgoings", "assessments"
+  add_foreign_key "outgoings", "disposable_income_summaries", column: "disposable_income_summaries_id"
   add_foreign_key "properties", "capital_summaries"
   add_foreign_key "state_benefit_payments", "state_benefits"
   add_foreign_key "state_benefits", "gross_income_summaries"

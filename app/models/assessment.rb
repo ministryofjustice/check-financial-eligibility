@@ -11,7 +11,6 @@ class Assessment < ApplicationRecord
   has_one :disposable_income_summary
 
   has_many :dependants
-  has_many :outgoings
   has_many :properties, through: :capital_summary
   has_many :vehicles, through: :capital_summary
   has_many :capital_items, through: :capital_summary
