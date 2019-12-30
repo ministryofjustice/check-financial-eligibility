@@ -15,3 +15,4 @@ Metrics/ClassLength:
 Metrics/MethodLength:
   Exclude:
     - 'db/migrate/*' # this should be moved back to .rubocop.yaml when the other exceptions are removed
+  ExcludedMethods: ['monthly_equivalent', 'call', 'property_hash', 'parse_row', 'other_income_params', 'state_benefit_params', 'read_and_check_results', 'capital_data', 'ruby_hash']

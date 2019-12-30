@@ -1,5 +1,5 @@
 class AssessmentRequestFixture < BaseAssessmentFixture # rubocop:disable Metrics/ClassLength
-  def self.ruby_hash # rubocop:disable Metrics/MethodLength
+  def self.ruby_hash
     {
       client_reference_id: 'my-eligibility-check-01',
       meta_data: {
