@@ -1,4 +1,4 @@
-Dir[File.join(__dir__, '../../app/validators', '*.rb')].each { |file| require file }
+Dir[File.join(__dir__, '../../app/validators', '*.rb')].sort.each { |file| require file }
 
 Apipie.configure do |config|
   config.app_name                = 'Check Financial Eligibility API'
