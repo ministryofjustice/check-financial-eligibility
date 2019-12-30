@@ -46,11 +46,11 @@ gem 'google_drive'
 gem 'roo', '~> 2.8.0'
 
 group :development, :test do
+  gem 'awesome_print'
   gem 'colorize'
   gem 'dotenv-rails'
   gem 'factory_bot_rails'
   gem 'faker'
-  gem 'awesome_print'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'pry-byebug'
@@ -68,8 +68,8 @@ end
 
 group :test do
   gem 'climate_control' # Allows environment variables to be modified within specs
-  gem 'shoulda-matchers'
   gem 'database_cleaner'
+  gem 'shoulda-matchers'
   gem 'simplecov', require: false
   gem 'simplecov-rcov'
   gem 'vcr'
