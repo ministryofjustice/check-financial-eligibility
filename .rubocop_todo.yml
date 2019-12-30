@@ -24,14 +24,6 @@ Metrics/ClassLength:
 Metrics/MethodLength:
   Max: 86
 
-# Offense count: 3
-# Cop supports --auto-correct.
-Style/ExpandPathArguments:
-  Exclude:
-    - 'bin/rails'
-    - 'bin/rake'
-    - 'spec/rails_helper.rb'
-
 # Offense count: 2
 Style/MixinUsage:
   Exclude:
