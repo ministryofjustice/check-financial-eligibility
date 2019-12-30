@@ -8,6 +8,9 @@ AllCops:
     - 'db/schema.rb'
     - 'vendor/**/*'
 
+Layout/LineLength:
+  Max: 180
+
 Lint/AmbiguousBlockAssociation:
   Exclude:
     - 'spec/**/*'
