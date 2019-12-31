@@ -15,7 +15,7 @@ class ApplicantsController < ApplicationController
   param :applicant, Hash, desc: 'Describes basic info about the applicant', required: true do
     param :date_of_birth, Date, date_option: :today_or_older, required: true, desc: "The applicant's date of birth"
     param :involvement_type, Applicant.involvement_types.values, required: true, desc: 'How the applicant is involved in the case'
-    param :has_partner_opponent, :boolean, require: true, desc: "Whether or not the applicant's partner is an opponent in the case"
+    param :has_partner_opponent, :boolean, required: true, desc: "Whether or not the applicant's partner is an opponent in the case"
     param :receives_qualifying_benefit, :boolean, required: true, desc: 'Whether or not the applicant receives a qualifying benefit'
   end
 
