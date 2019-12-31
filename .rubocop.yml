@@ -8,6 +8,9 @@ AllCops:
     - 'db/schema.rb'
     - 'vendor/**/*'
 
+Layout/LineLength:
+  Max: 180
+
 Lint/AmbiguousBlockAssociation:
   Exclude:
     - 'spec/**/*'
@@ -21,10 +24,6 @@ Metrics/BlockLength:
     - 'config/routes.rb'
     - 'spec/**/*'
 
-Metrics/MethodLength:
-  Exclude:
-    - 'db/migrate/*'
-
 Style/BlockDelimiters:
   EnforcedStyle: braces_for_chaining
 
@@ -37,3 +36,6 @@ Style/SymbolArray:
 
 Style/Lambda:
   EnforcedStyle: literal
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
