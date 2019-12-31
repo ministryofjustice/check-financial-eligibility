@@ -71,6 +71,20 @@ RSpec.describe OutgoingsController, type: :request do
       end
     end
 
+    context 'without housing costs or maintenance payments' do
+      let(:params) do
+        {
+          outgoings: outgoings_params.except(:housing_costs).except(:maintenance)
+        }
+      end
+      it 'create the childcare records but does not create any other records' do
+        expect { subject }.to change { Outgoings::BaseOutgoing.count }.by(2)
+        expect(disposable_income_summary.childcare_outgoings.count).to eq 2
+        expect(disposable_income_summary.housing_cost_outgoings.count).to eq 0
+        expect(disposable_income_summary.maintenance_outgoings.count).to eq 0
+      end
+    end
+
     context 'with a failure to save' do
       let(:service) { double 'success?' => false, errors: [:foo] }
       before do
