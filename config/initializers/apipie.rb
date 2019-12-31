@@ -8,6 +8,7 @@ Apipie.configure do |config|
   # where is your API defined?
   config.api_controllers_matcher = "#{Rails.root}/app/controllers/**/*.rb"
   config.translate = false
+  config.validate = true
   config.show_all_examples = true
   config.app_info = <<-END_OF_TEXT
     This API is used to determine financial eligibility for Legal Aid from the data passed in.

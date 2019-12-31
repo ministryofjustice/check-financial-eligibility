@@ -43,13 +43,5 @@ module Creators
       attrs[:main_home] = main_home
       @properties << capital_summary.properties.create!(attrs)
     end
-
-    def assessment
-      @assessment ||= Assessment.find_by(id: assessment_id) || (raise CreationError, ['No such assessment id'])
-    end
-
-    # def capital_summary
-    #   assessment.capital_summary
-    # end
   end
 end

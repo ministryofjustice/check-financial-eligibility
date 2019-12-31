@@ -42,9 +42,5 @@ module Creators
         capital_summary.non_liquid_capital_items.create!(description: attrs[:description], value: attrs[:value])
       end
     end
-
-    def assessment
-      @assessment ||= Assessment.find_by(id: assessment_id) || (raise CreationError, ['No such assessment id'])
-    end
   end
 end

@@ -5,6 +5,7 @@ class CreateNewOutgoings < ActiveRecord::Migration[6.0]
       t.string :type, null: false
       t.date :payment_date, null: false
       t.decimal :amount, null: false
+      t.string :housing_cost_type
 
       t.timestamps
     end
