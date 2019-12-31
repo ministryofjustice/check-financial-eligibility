@@ -18,6 +18,12 @@ FactoryBot.define do
       with_child_dependants { 0 }
     end
 
+    trait :with_disposable_income_summary do
+      after(:create) do |assessment|
+        create :disposable_income_summary, assessment: assessment
+      end
+    end
+
     after(:create) do |assessment, evaluator|
       create :capital_summary, assessment: assessment
       create :gross_income_summary, assessment: assessment
