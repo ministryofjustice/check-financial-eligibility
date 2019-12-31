@@ -25,9 +25,5 @@ module Creators
     rescue ActiveRecord::RecordInvalid => e
       raise CreationError, e.record.errors.full_messages
     end
-
-    def assessment
-      @assessment ||= Assessment.find_by(id: assessment_id) || (raise CreationError, ['No such assessment id'])
-    end
   end
 end

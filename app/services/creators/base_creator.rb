@@ -14,6 +14,10 @@ module Creators
       errors.empty?
     end
 
+    def assessment
+      @assessment ||= Assessment.find_by(id: @assessment_id) || (raise CreationError, ['No such assessment id'])
+    end
+
     class CreationError < StandardError
       attr_reader :errors
 
