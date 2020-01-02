@@ -9,6 +9,7 @@ FactoryBot.define do
     disposable_income_summary
     payment_date { Faker::Date.backward(days: 14) }
     amount { Faker::Number.decimal(l_digits: 3, r_digits: 2) }
+    housing_cost_type { 'rent' }
   end
 
   factory :maintenance_outgoing, class: Outgoings::Maintenance do

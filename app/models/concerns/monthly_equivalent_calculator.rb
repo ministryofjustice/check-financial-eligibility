@@ -9,12 +9,20 @@ module MonthlyEquivalentCalculator
   # * amount_method: The method to call on each record in the collection to retrieve the payment amount
   #
   def calculate_monthly_equivalent!(target_field:, collection:, date_method: :payment_date, amount_method: :amount)
+    monthly_amount = calculate_monthly_equivalent(collection: collection, date_method: date_method, amount_method: amount_method)
+
+    update!(target_field => monthly_amount)
+    monthly_amount
+  end
+
+  def calculate_monthly_equivalent(collection:, date_method: :payment_date, amount_method: :amount)
+    @converter = nil # reset the converter each time it's used
+    return 0.0 if collection.empty?
+
     @monthly_equivalent_calculator_collection = collection
     @monthly_equivalent_calculator_date_method = date_method
     @monthly_equivalent_calculator_amount_method = amount_method
     assessment.assessment_errors.create!(record_id: id, record_type: self.class, error_message: converter.error_message) if converter.error?
-
-    update!(target_field => converter.monthly_amount)
     converter.monthly_amount
   end
 
