@@ -85,6 +85,7 @@ ActiveRecord::Schema.define(version: 2020_01_03_151346) do
     t.string "relationship"
     t.decimal "monthly_income"
     t.decimal "assets_value"
+    t.decimal "dependant_allowance", default: "0.0"
   end
 
   create_table "disposable_income_summaries", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

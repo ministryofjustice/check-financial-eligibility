@@ -30,3 +30,10 @@ property_disregard:
   additional_property: 0.0
 vehicle_disregard: 15_000
 vehicle_out_of_scope_months: 36
+
+dependant_allowances:
+  child_under_15: 291.49
+  child_aged_15: 291.49
+  child_16_and_over: 291.49
+  adult: 291.49
+  adult_capital_threshold: 8_000
