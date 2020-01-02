@@ -63,6 +63,7 @@ jobs:
     <<: *build_container_config
     steps:
     - checkout
+    - *install_gems
     - setup_remote_docker:
         docker_layer_caching: true
     - run: sudo apt-get update
