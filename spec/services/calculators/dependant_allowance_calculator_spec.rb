@@ -4,6 +4,7 @@ module Calculators
   RSpec.describe DependantAllowanceCalculator do
     describe '#call' do
       subject { described_class.new(dependant).call }
+
       before do
         allow_any_instance_of(described_class).to receive(:child_under_15_allowance).and_return 111.11
         allow_any_instance_of(described_class).to receive(:child_aged_15_allowance).and_return 222.22
@@ -78,6 +79,36 @@ module Calculators
         let(:dependant) { create :dependant, :over_18, monthly_income: 250.00, assets_value: 8_100 }
         it 'returns the allowance of zero' do
           expect(subject).to eq 0.0
+        end
+      end
+    end
+
+    describe 'retrieving threshold values' do
+      let(:dependant) { create :dependant }
+
+      subject { described_class.new(dependant) }
+
+      describe 'child_under_15_allowance' do
+        it 'returns the threshold value' do
+          expect(subject.child_under_15_allowance).to eq 291.49
+        end
+      end
+
+      describe 'child_aged_15_allowance' do
+        it 'returns the threshold value' do
+          expect(subject.child_aged_15_allowance).to eq 291.49
+        end
+      end
+
+      describe 'child_16_and_over_allowance' do
+        it 'returns the threshold value' do
+          expect(subject.child_16_and_over_allowance).to eq 291.49
+        end
+      end
+
+      describe 'adult_allowance' do
+        it 'returns the threshold value' do
+          expect(subject.adult_allowance).to eq 291.49
         end
       end
     end
