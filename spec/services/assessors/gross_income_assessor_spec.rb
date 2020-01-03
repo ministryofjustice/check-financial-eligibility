@@ -50,6 +50,7 @@ module Assessors
         def set_gross_income_values(record, other_income, state_benefits, threshold)
           record.update!(monthly_other_income: other_income,
                          monthly_state_benefits: state_benefits,
+                         total_gross_income: other_income + state_benefits,
                          upper_threshold: threshold,
                          assessment_result: 'summarised')
         end
