@@ -8,6 +8,10 @@ class OtherIncomeSource < ApplicationRecord
 
   delegate :assessment, to: :gross_income_summary
 
+  def student_payment?
+    name.in? %w[student_grant student_loan]
+  end
+
   def calculate_monthly_income!
     calculate_monthly_equivalent!(target_field: :monthly_income,
                                   collection: other_income_payments)

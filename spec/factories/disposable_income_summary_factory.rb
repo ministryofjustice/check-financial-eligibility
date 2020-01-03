@@ -9,6 +9,5 @@ FactoryBot.define do
     lower_threshold { 0.0 }
     upper_threshold { 0.0 }
     assessment_result { 'pending' }
-    housing_cost_type { DisposableIncomeSummary.housing_cost_types.values.sample }
   end
 end

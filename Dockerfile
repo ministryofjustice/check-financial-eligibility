@@ -6,7 +6,12 @@ RUN mkdir /myapp
 WORKDIR /myapp
 COPY Gemfile /myapp/Gemfile
 COPY Gemfile.lock /myapp/Gemfile.lock
-RUN bundle install
+
+RUN gem install bundler -v 2.0.2 \
+&& bundle config --global without test:development \
+&& bundle config build.nokogiri --use-system-libraries \
+&& bundle install
+
 COPY . /myapp
 
 EXPOSE 3000
