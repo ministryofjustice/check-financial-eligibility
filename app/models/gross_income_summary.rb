@@ -16,4 +16,8 @@ class GrossIncomeSummary < ApplicationRecord
     data = Collators::GrossIncomeCollator.call(assessment)
     update!(data)
   end
+
+  def housing_benefit_payments
+    state_benefits.find_by(state_benefit_type_id: StateBenefitType.housing_benefit&.id)&.state_benefit_payments || []
+  end
 end
