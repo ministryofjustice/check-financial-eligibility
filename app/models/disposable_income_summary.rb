@@ -11,4 +11,9 @@ class DisposableIncomeSummary < ApplicationRecord
     calculate_monthly_equivalent!(target_field: :monthly_childcare,
                                   collection: childcare_outgoings)
   end
+
+  def calculate_monthly_maintenance_amount!
+    calculate_monthly_equivalent!(target_field: :monthly_maintenance,
+                                  collection: maintenance_outgoings)
+  end
 end
