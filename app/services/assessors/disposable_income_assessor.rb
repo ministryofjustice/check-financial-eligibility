@@ -18,7 +18,7 @@ module Assessors
     end
 
     def income_contribution
-      assessment_result == 'eligible_with_contribution' ? calculate_contribution : 0.0
+      assessment_result == 'contribution_required' ? calculate_contribution : 0.0
     end
 
     def calculate_contribution
@@ -29,7 +29,7 @@ module Assessors
       if total_disposable_income <= lower_threshold
         'eligible'
       elsif total_disposable_income < upper_threshold
-        'eligible_with_contribution'
+        'contribution_required'
       else
         'not_eligible'
       end
