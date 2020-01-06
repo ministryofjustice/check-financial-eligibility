@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe OtherIncomesController, type: :request do
   describe 'POST other_income' do
-    let(:assessment) { create :assessment }
+    let(:assessment) { create :assessment, :with_gross_income_summary }
     let(:assessment_id) { assessment.id }
     let(:gross_income_summary) { assessment.gross_income_summary }
     let(:params) { other_income_params  }

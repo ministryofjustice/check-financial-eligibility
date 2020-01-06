@@ -28,6 +28,10 @@ Metrics/BlockLength:
     - 'config/routes.rb'
     - 'spec/**/*'
 
+Metrics/ModuleLength:
+  Exclude:
+    - 'spec/**/*'
+
 Style/BlockDelimiters:
   EnforcedStyle: braces_for_chaining
 
@@ -42,4 +46,7 @@ Style/Lambda:
   EnforcedStyle: literal
 
 Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Naming/RescuedExceptionsVariableName:
   Enabled: false

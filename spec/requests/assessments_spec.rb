@@ -70,7 +70,7 @@ RSpec.describe AssessmentsController, type: :request do
   end
 
   describe 'GET /assessments/:id' do
-    let(:assessment) { create :assessment, applicant: applicant }
+    let(:assessment) { create :assessment, :with_gross_income_summary, applicant: applicant }
     let(:option) { :below_lower_threshold }
     let!(:capital_summary) { create :capital_summary, option, assessment: assessment }
     let!(:non_liquid_capital_item) { create :non_liquid_capital_item, capital_summary: capital_summary }

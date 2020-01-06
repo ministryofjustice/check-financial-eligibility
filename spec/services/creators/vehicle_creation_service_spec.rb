@@ -2,7 +2,7 @@ require 'rails_helper'
 
 module Creators
   RSpec.describe VehicleCreator do
-    let(:assessment) { create :assessment }
+    let(:assessment) { create :assessment, :with_capital_summary }
     let(:capital_summary) { assessment.capital_summary }
     let(:vehicles_attributes) { attributes_for_list(:vehicle, 2) }
 

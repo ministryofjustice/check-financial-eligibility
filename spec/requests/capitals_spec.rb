@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe CapitalsController, type: :request do
   describe 'POST capital' do
-    let(:assessment) { create :assessment }
+    let(:assessment) { create :assessment, :with_capital_summary }
     let(:assessment_id) { assessment.id }
     let(:params) do
       {

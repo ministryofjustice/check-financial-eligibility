@@ -12,7 +12,7 @@ class CapitalSummary < ApplicationRecord
   has_one :main_home, -> { main_home }, class_name: 'Property'
 
   enum(
-    capital_assessment_result: enum_hash_for(
+    assessment_result: enum_hash_for(
       :pending, :eligible, :not_eligible, :contribution_required
     ),
     _prefix: false
