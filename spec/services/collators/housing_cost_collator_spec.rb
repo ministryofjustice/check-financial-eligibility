@@ -12,9 +12,9 @@ module Collators
       context 'no housing cost outgoings' do
         it 'should record zero' do
           subject
-          expect(disposable_income_summary.monthly_gross_housing_costs).to eq 0.0
-          expect(disposable_income_summary.monthly_housing_benefit).to eq 0.0
-          expect(disposable_income_summary.monthly_net_housing_costs).to eq 0.0
+          expect(disposable_income_summary.gross_housing_costs).to eq 0.0
+          expect(disposable_income_summary.housing_benefit).to eq 0.0
+          expect(disposable_income_summary.net_housing_costs).to eq 0.0
         end
       end
 
@@ -29,9 +29,9 @@ module Collators
             let(:housing_cost_type) { 'board_and_lodging' }
             it 'should record half the monthly housing cost' do
               subject
-              expect(disposable_income_summary.monthly_gross_housing_costs).to eq 177.72
-              expect(disposable_income_summary.monthly_housing_benefit).to eq 0.0
-              expect(disposable_income_summary.monthly_net_housing_costs).to eq 177.72
+              expect(disposable_income_summary.gross_housing_costs).to eq 177.72
+              expect(disposable_income_summary.housing_benefit).to eq 0.0
+              expect(disposable_income_summary.net_housing_costs).to eq 177.72
             end
           end
 
@@ -39,9 +39,9 @@ module Collators
             let(:housing_cost_type) { 'rent' }
             it 'should record the full monthly housing costs' do
               subject
-              expect(disposable_income_summary.monthly_gross_housing_costs).to eq 355.44
-              expect(disposable_income_summary.monthly_housing_benefit).to eq 0.0
-              expect(disposable_income_summary.monthly_net_housing_costs).to eq 355.44
+              expect(disposable_income_summary.gross_housing_costs).to eq 355.44
+              expect(disposable_income_summary.housing_benefit).to eq 0.0
+              expect(disposable_income_summary.net_housing_costs).to eq 355.44
             end
           end
         end
@@ -59,9 +59,9 @@ module Collators
             let(:housing_cost_type) { 'board_and_lodging' }
             it 'should record half the housing cost less the housing benefit' do
               subject
-              expect(disposable_income_summary.monthly_gross_housing_costs).to eq 177.72
-              expect(disposable_income_summary.monthly_housing_benefit).to eq 101.02
-              expect(disposable_income_summary.monthly_net_housing_costs).to eq 76.70 # 177.72 - 101.02
+              expect(disposable_income_summary.gross_housing_costs).to eq 177.72
+              expect(disposable_income_summary.housing_benefit).to eq 101.02
+              expect(disposable_income_summary.net_housing_costs).to eq 76.70 # 177.72 - 101.02
             end
           end
 
@@ -69,9 +69,9 @@ module Collators
             let(:housing_cost_type) { 'mortgage' }
             it 'should record the full housing costs less the housing benefit' do
               subject
-              expect(disposable_income_summary.monthly_gross_housing_costs).to eq 355.44
-              expect(disposable_income_summary.monthly_housing_benefit).to eq 101.02
-              expect(disposable_income_summary.monthly_net_housing_costs).to eq 254.42 # 355.44 - 101.02
+              expect(disposable_income_summary.gross_housing_costs).to eq 355.44
+              expect(disposable_income_summary.housing_benefit).to eq 101.02
+              expect(disposable_income_summary.net_housing_costs).to eq 254.42 # 355.44 - 101.02
             end
           end
         end

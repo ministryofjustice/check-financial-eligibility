@@ -15,7 +15,7 @@ module Assessors
     end
 
     def income
-      gross_income_summary.monthly_other_income + gross_income_summary.monthly_state_benefits
+      gross_income_summary.total_gross_income
     end
 
     def threshold

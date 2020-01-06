@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_02_101936) do
+ActiveRecord::Schema.define(version: 2020_01_03_151346) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -89,19 +89,19 @@ ActiveRecord::Schema.define(version: 2020_01_02_101936) do
 
   create_table "disposable_income_summaries", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "assessment_id", null: false
-    t.decimal "monthly_childcare", default: "0.0", null: false
-    t.decimal "monthly_dependant_allowance", default: "0.0", null: false
-    t.decimal "monthly_maintenance", default: "0.0", null: false
-    t.decimal "monthly_gross_housing_costs", default: "0.0", null: false
-    t.decimal "total_monthly_outgoings", default: "0.0", null: false
+    t.decimal "childcare", default: "0.0", null: false
+    t.decimal "dependant_allowance", default: "0.0", null: false
+    t.decimal "maintenance", default: "0.0", null: false
+    t.decimal "gross_housing_costs", default: "0.0", null: false
+    t.decimal "total_outgoings_and_allowances", default: "0.0", null: false
     t.decimal "total_disposable_income", default: "0.0", null: false
     t.decimal "lower_threshold", default: "0.0", null: false
     t.decimal "upper_threshold", default: "0.0", null: false
     t.string "assessment_result", default: "pending", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.decimal "monthly_net_housing_costs", default: "0.0"
-    t.decimal "monthly_housing_benefit", default: "0.0"
+    t.decimal "net_housing_costs", default: "0.0"
+    t.decimal "housing_benefit", default: "0.0"
     t.index ["assessment_id"], name: "index_disposable_income_summaries_on_assessment_id"
   end
 
@@ -114,6 +114,7 @@ ActiveRecord::Schema.define(version: 2020_01_02_101936) do
     t.boolean "assessment_error", default: false
     t.string "assessment_result", default: "pending", null: false
     t.decimal "monthly_state_benefits", default: "0.0", null: false
+    t.decimal "total_gross_income", default: "0.0"
     t.index ["assessment_id"], name: "index_gross_income_summaries_on_assessment_id"
   end
 

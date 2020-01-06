@@ -4,6 +4,7 @@ module Collators
       gross_income_summary.update!(
         upper_threshold: upper_threshold,
         monthly_other_income: monthly_other_income,
+        total_gross_income: total_gross_income,
         assessment_result: 'summarised'
       )
     end
@@ -39,11 +40,19 @@ module Collators
     end
 
     def monthly_other_income
+      @monthly_other_income ||= collect_other_incomes
+    end
+
+    def collect_other_incomes
       total = 0.0
       gross_income_summary.other_income_sources.each do |source|
         total += source.calculate_monthly_income!
       end
       total
+    end
+
+    def total_gross_income
+      monthly_other_income + gross_income_summary.monthly_state_benefits
     end
   end
 end
