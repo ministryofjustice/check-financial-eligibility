@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_03_151346) do
+ActiveRecord::Schema.define(version: 2020_01_06_120428) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -102,6 +102,7 @@ ActiveRecord::Schema.define(version: 2020_01_03_151346) do
     t.datetime "updated_at", precision: 6, null: false
     t.decimal "net_housing_costs", default: "0.0"
     t.decimal "housing_benefit", default: "0.0"
+    t.decimal "income_contribution", default: "0.0"
     t.index ["assessment_id"], name: "index_disposable_income_summaries_on_assessment_id"
   end
 

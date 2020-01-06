@@ -30,3 +30,20 @@ property_disregard:
   additional_property: 0.0
 vehicle_disregard: 15_000
 vehicle_out_of_scope_months: 36
+
+disposable_income_contribution_bands:
+  band_a:
+    threshold: 316.0
+    disregard: 311.0
+    percentage: 35.0
+    base: 0
+  band_b:
+    threshold: 466
+    disregard: 465.99
+    percentage: 45.0
+    base: 53.90
+  band_c:
+    threshold: 617
+    disregard: 616.99
+    percentage: 70.0
+    base: 121.85
