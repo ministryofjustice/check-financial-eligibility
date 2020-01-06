@@ -11,13 +11,25 @@ module Calculators
     def call
       return child_under_15_allowance if under_15_years_old?
 
-      return child_aged_15_allowance - monthly_income if under_16_years_old?
+      return child_under_16_allowance if under_16_years_old?
 
-      return child_16_and_over_allowance - monthly_income if under_18_in_full_time_education?
+      return under_18_in_full_time_education_allowance if under_18_in_full_time_education?
 
       return 0.0 if capital_over_allowance?
 
-      adult_allowance - @dependant.monthly_income
+      positive_or_zero(adult_allowance - monthly_income)
+    end
+
+    def positive_or_zero(value)
+      [0, value].max
+    end
+
+    def child_under_16_allowance
+      positive_or_zero(child_aged_15_allowance - monthly_income)
+    end
+
+    def under_18_in_full_time_education_allowance
+      positive_or_zero(child_16_and_over_allowance - monthly_income)
     end
 
     def under_15_years_old?

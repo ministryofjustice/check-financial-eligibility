@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-module Utilities # rubocop:disable Metrics/ModuleLength
+module Utilities
   RSpec.describe PaymentPeriodAnalyser do
     let(:generator) { SalaryPatternGenerator }
 
