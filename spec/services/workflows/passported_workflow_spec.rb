@@ -20,7 +20,7 @@ module Workflows
         expect(Collators::CapitalCollator).to receive(:call).with(assessment).and_return(capital_data)
         expect(Assessors::CapitalAssessor).to receive(:call).with(assessment).and_call_original
         subject
-        expect(capital_summary.capital_assessment_result).to eq 'eligible'
+        expect(capital_summary.assessment_result).to eq 'eligible'
       end
 
       it 'sets GrossIncomeSummary record to not_applicable' do

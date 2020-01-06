@@ -3,7 +3,7 @@ require 'rails_helper'
 module Assessors
   RSpec.describe MainAssessor do
     describe '.call' do
-      let(:capital_summary) { create :capital_summary, capital_assessment_result: result }
+      let(:capital_summary) { create :capital_summary, assessment_result: result }
       let(:assessment) { capital_summary.assessment }
 
       subject { described_class.call(assessment) }

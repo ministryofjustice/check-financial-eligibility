@@ -33,7 +33,7 @@ module Creators
         let(:capital_summary) { CapitalSummary.first }
 
         it 'creates a pending Result record' do
-          expect(capital_summary.capital_assessment_result).to eq 'pending'
+          expect(capital_summary.assessment_result).to eq 'pending'
         end
 
         it 'creates all fields as zero' do
