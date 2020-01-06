@@ -41,7 +41,7 @@ module Assessors
 
         it 'is eligible with a contribution' do
           subject
-          expect(disposable_income_summary.assessment_result).to eq 'eligible_with_contribution'
+          expect(disposable_income_summary.assessment_result).to eq 'contribution_required'
         end
 
         it 'updates the contribution with the result from the Calculators::IncomeContributionCalculator' do
