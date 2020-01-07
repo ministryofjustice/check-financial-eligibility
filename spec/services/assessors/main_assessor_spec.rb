@@ -8,6 +8,7 @@ module Assessors
       let(:gross_income_summary) { assessment.gross_income_summary }
       let(:disposable_income_summary) { assessment.disposable_income_summary }
       let(:applicant) { assessment.applicant }
+      let(:random_result) { %w[eligible not_eligible contribution_required].sample }
 
       before do
         capital_summary.update!(assessment_result: capital_result)
@@ -56,11 +57,103 @@ module Assessors
           end
 
           context 'disposable income has a result' do
-            let(:disposable_income_result) {'eligible'}
-            let(:capital_result) {'eligible'}
+            let(:disposable_income_result) { random_result }
+            let(:capital_result) { random_result }
             it 'should raise' do
               expect{subject}.to raise_error RuntimeError, 'Invalid assessment status: for passported applicant'
             end
+          end
+        end
+
+        context 'gross income not pending' do
+          let(:gross_income_result) { random_result }
+          let(:disposable_income_result) { random_result }
+          let(:capital_result) { random_result }
+          it 'should raise' do
+            expect{subject}.to raise_error RuntimeError, 'Invalid assessment status: for passported applicant'
+          end
+        end
+      end
+
+      context 'not_passported' do
+        before { applicant.update!(receives_qualifying_benefit: false) }
+
+        context 'gross income eligible' do
+          context 'disposable income contribution required' do
+            context 'capital contribution required'
+            context 'capital eligible'
+            context 'capital not_eligible'
+            context 'capital pending'
+          end
+          context 'disposable income eligible' do
+            context 'capital contribution required'
+            context 'capital eligible'
+            context 'capital not_eligible'
+            context 'capital pending'
+          end
+          context 'disposable income not_eligible' do
+            context 'capital contribution required'
+            context 'capital eligible'
+            context 'capital not_eligible'
+            context 'capital pending'
+          end
+          context 'disposable income pending' do
+            context 'capital contribution required'
+            context 'capital eligible'
+            context 'capital not_eligible'
+            context 'capital pending'
+          end
+        end
+        context 'gross income not_eligible' do
+          context 'disposable income contribution required' do
+            context 'capital contribution required'
+            context 'capital eligible'
+            context 'capital not_eligible'
+            context 'capital pending'
+          end
+          context 'disposable income eligible' do
+            context 'capital contribution required'
+            context 'capital eligible'
+            context 'capital not_eligible'
+            context 'capital pending'
+          end
+          context 'disposable income not_eligible' do
+            context 'capital contribution required'
+            context 'capital eligible'
+            context 'capital not_eligible'
+            context 'capital pending'
+          end
+          context 'disposable income pending' do
+            context 'capital contribution required'
+            context 'capital eligible'
+            context 'capital not_eligible'
+            context 'capital pending'
+          end
+        end
+        context 'gross income pending' do
+          context 'disposable income contribution required' do
+            context 'capital contribution required'
+            context 'capital eligible'
+            context 'capital not_eligible'
+            context 'capital pending'
+          end
+          context 'disposable income eligible' do
+            context 'capital contribution required'
+            context 'capital eligible'
+            context 'capital not_eligible'
+            context 'capital pending'
+          end
+          context 'disposable income not_eligible' do
+            context 'capital contribution required'
+            context 'capital eligible'
+            context 'capital not_eligible'
+            context 'capital pending'
+          end
+          context 'disposable income pending' do
+            context 'capital contribution required'
+            context 'capital eligible'
+            context 'capital not_eligible'
+            context 'capital pending'
           end
         end
       end
