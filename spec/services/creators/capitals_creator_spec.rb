@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-module Creators # rubocop:disable Metrics/ModuleLength
+module Creators
   RSpec.describe CapitalsCreator do
     let(:assessment) { create :assessment, :with_capital_summary }
     let(:assessment_id) { assessment.id }

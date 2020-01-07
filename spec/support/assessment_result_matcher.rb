@@ -1,4 +1,4 @@
-RSpec::Matchers.define :have_main_assessment_result do | assessment, expected_main_assessment|
+RSpec::Matchers.define :have_main_assessment_result do |assessment, expected_main_assessment|
   match do |summary_assessments|
     gross_income_result, disposable_income_result, capital_result = summary_assessments
     assessment.gross_income_summary.update!(assessment_result: gross_income_result)
@@ -11,7 +11,7 @@ RSpec::Matchers.define :have_main_assessment_result do | assessment, expected_ma
 
   failure_message do |summary_assessments|
     gross_income_result, disposable_income_result, capital_result = summary_assessments
-    string = "Unexpected main assessment result"
+    string = 'Unexpected main assessment result'
     string += "\n   Gross income: #{gross_income_result}"
     string += "\n   Disposable income: #{disposable_income_result}"
     string += "\n   Capital income: #{capital_result}"
@@ -31,7 +31,7 @@ RSpec::Matchers.define :have_assessment_error do |assessment, message|
     begin
       Assessors::MainAssessor.call(assessment)
       false
-    rescue => @err
+    rescue StandardError => @err
       @error_raised = true
       @err.message == message
     end
@@ -39,19 +39,18 @@ RSpec::Matchers.define :have_assessment_error do |assessment, message|
 
   failure_message do |summary_assessments|
     gross_income_result, disposable_income_result, capital_result = summary_assessments
-    string = "Expected exception not raised"
+    string = 'Expected exception not raised'
     string += "\n   Gross income: #{gross_income_result}"
     string += "\n   Disposable income: #{disposable_income_result}"
     string += "\n   Capital income: #{capital_result}"
     string += "\n\nExpected AssessmentError with message '#{message}'"
 
-    if @error_raised
-      string += "\nGot #{@err.class} with message: '#{@err.message}'"
-    else
-      string += "\nNo exception raised"
-    end
+    string += if @error_raised
+                "\nGot #{@err.class} with message: '#{@err.message}'"
+              else
+                "\nNo exception raised"
+              end
 
     string
   end
-
 end
