@@ -15,13 +15,6 @@ module Assessors
         end
       end
 
-      context 'gross income is not available' do
-        it 'raises' do
-          allow(gross_income_summary).to receive(:assessment_result).and_return('not_applicable')
-          expect { subject }.to raise_error RuntimeError, 'Gross income summary marked as not applicable'
-        end
-      end
-
       context 'gross income has been summarised' do
         context 'monthly income below upper threshold' do
           it 'is eligible' do

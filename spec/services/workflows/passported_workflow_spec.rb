@@ -23,11 +23,6 @@ module Workflows
         expect(capital_summary.assessment_result).to eq 'eligible'
       end
 
-      it 'sets GrossIncomeSummary record to not_applicable' do
-        subject
-        expect(gross_income_summary.assessment_result).to eq 'not_applicable'
-      end
-
       def capital_data
         {
           total_liquid: 45.36,

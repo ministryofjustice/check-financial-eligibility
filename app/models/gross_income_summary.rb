@@ -7,7 +7,7 @@ class GrossIncomeSummary < ApplicationRecord
 
   enum(
     assessment_result: enum_hash_for(
-      :pending, :summarised, :eligible, :not_eligible, :not_applicable
+      :pending, :summarised, :eligible, :not_eligible
     ),
     _prefix: false
   )
