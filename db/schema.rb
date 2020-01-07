@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_06_120428) do
+ActiveRecord::Schema.define(version: 2020_01_06_165908) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -70,7 +70,7 @@ ActiveRecord::Schema.define(version: 2020_01_06_120428) do
     t.decimal "capital_contribution", default: "0.0", null: false
     t.decimal "lower_threshold", default: "0.0", null: false
     t.decimal "upper_threshold", default: "0.0", null: false
-    t.string "capital_assessment_result", default: "pending", null: false
+    t.string "assessment_result", default: "pending", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["assessment_id"], name: "index_capital_summaries_on_assessment_id"

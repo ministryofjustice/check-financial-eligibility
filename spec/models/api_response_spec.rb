@@ -23,7 +23,7 @@ RSpec.describe ApiResponse do
 
   describe '#as_json' do
     it 'returns a hash' do
-      assessment = create :assessment
+      assessment = create :assessment, :with_capital_summary
       assessment.capital_summary.liquid_capital_items << LiquidCapitalItem.new(description: 'sfdfdfd', value: 656.22)
       assessment.capital_summary.liquid_capital_items << LiquidCapitalItem.new(description: 'sfdfdfd', value: 656.22)
       response = ApiResponse.success assessment.capital_summary

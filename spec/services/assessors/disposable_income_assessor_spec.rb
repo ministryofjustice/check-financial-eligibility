@@ -38,7 +38,7 @@ module Assessors
         let(:disposable_income_summary) { create :disposable_income_summary, total_disposable_income: 340.20, lower_threshold: 316, upper_threshold: 733 }
 
         before { expect(Calculators::IncomeContributionCalculator).to receive(:call).and_return(125.94) }
-w
+
         it 'is eligible with a contribution' do
           subject
           expect(disposable_income_summary.assessment_result).to eq 'contribution_required'

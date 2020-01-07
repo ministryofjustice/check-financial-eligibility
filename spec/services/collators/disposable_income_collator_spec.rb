@@ -26,6 +26,8 @@ module Collators
              upper_threshold: 0.0
     end
 
+    let!(:gross_income_summary) { create :gross_income_summary, assessment: assessment }
+
     describe '.call' do
       subject { described_class.call(assessment) }
 

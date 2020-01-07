@@ -3,11 +3,14 @@ require 'rails_helper'
 module Assessors
   RSpec.describe MainAssessor do
     describe '.call' do
-      let(:capital_summary) { create :capital_summary, assessment_result: result }
-      let(:assessment) { capital_summary.assessment }
+      let!(:capital_summary) { create :capital_summary, assessment_result: result }
+      let!(:assessment) { capital_summary.assessment }
+      let!(:applicant) { create :applicant, assessment: assessment }
+      let!(:gross_income_summary) {}
 
       subject { described_class.call(assessment) }
-      context 'passported applicants' do
+
+      xcontext 'passported applicants' do
         context 'capital summary pending' do
           let(:result) { 'pending' }
           it 'raises' do

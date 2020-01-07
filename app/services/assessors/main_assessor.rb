@@ -11,7 +11,11 @@ module Assessors
     end
 
     def passported_assessment
-      capital_summary.capital_assessment_result
+      capital_summary.assessment_result
+    end
+
+    def passported?
+      applicant.receives_qualifying_benefit?
     end
 
     def gross_income_assessment

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 module Assessors # rubocop:disable Metrics/ModuleLength
   RSpec.describe PropertyAssessor do
-    let(:assessment) { create :assessment }
+    let(:assessment) { create :assessment, :with_capital_summary }
     let(:capital_summary) { assessment.capital_summary }
     let(:service) { PropertyAssessor.new(assessment) }
 

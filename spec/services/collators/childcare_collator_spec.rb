@@ -3,7 +3,7 @@ require 'rails_helper'
 module Collators
   RSpec.describe ChildcareCollator do
     describe '.call' do
-      let(:assessment) { create :assessment, :with_disposable_income_summary }
+      let(:assessment) { create :assessment, :with_disposable_income_summary, :with_gross_income_summary }
       let(:disposable_income_summary) { assessment.disposable_income_summary }
       let(:gross_income_summary) { assessment.gross_income_summary }
 

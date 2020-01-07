@@ -24,10 +24,19 @@ FactoryBot.define do
       end
     end
 
-    after(:create) do |assessment, evaluator|
-      create :capital_summary, assessment: assessment
-      create :gross_income_summary, assessment: assessment
+    trait :with_capital_summary do
+      after(:create) do |assessment|
+        create :capital_summary, assessment: assessment
+      end
+    end
 
+    trait :with_gross_income_summary do
+      after(:create) do |assessment|
+        create :gross_income_summary, assessment: assessment
+      end
+    end
+
+    after(:create) do |assessment, evaluator|
       if evaluator.with_child_dependants > 0
         evaluator.with_child_dependants.times do
           create :dependant, :child_relative, assessment: assessment
