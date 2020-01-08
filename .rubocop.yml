@@ -8,6 +8,10 @@ AllCops:
     - 'db/schema.rb'
     - 'vendor/**/*'
 
+Metrics/ModuleLength:
+  Exclude:
+    - 'spec/**/*'
+
 Layout/LineLength:
   Max: 180
 
