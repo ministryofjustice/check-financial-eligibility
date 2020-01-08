@@ -39,6 +39,11 @@ dependant_allowances:
   adult_capital_threshold: 8_000
 
 disposable_income_contribution_bands:
+  band_zero:
+    threshold: 0.0
+    disregard: 0.0
+    percentage: 0.0
+    base: 0.0
   band_a:
     threshold: 316.0
     disregard: 311.0
