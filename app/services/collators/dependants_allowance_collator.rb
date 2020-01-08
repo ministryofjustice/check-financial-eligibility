@@ -10,7 +10,7 @@ module Collators
     private
 
     def collate!
-      disposable_income_summary.update!(monthly_dependant_allowance: assessment.dependants.sum(&:dependant_allowance)) if assessment.dependants.any?
+      disposable_income_summary.update!(dependant_allowance: assessment.dependants.sum(&:dependant_allowance)) if assessment.dependants.any?
     end
   end
 end

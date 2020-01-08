@@ -12,7 +12,7 @@ module Collators
         it 'should leave the monthly dependants allowance as zero' do
           expect(assessment.dependants).to be_empty
           subject
-          expect(disposable_income_summary.monthly_dependant_allowance).to eq 0.0
+          expect(disposable_income_summary.dependant_allowance).to eq 0.0
         end
       end
 
@@ -30,7 +30,7 @@ module Collators
           subject
           expect(dependant1.reload.dependant_allowance).to eq 123.45
           expect(dependant2.reload.dependant_allowance).to eq 456.78
-          expect(disposable_income_summary.monthly_dependant_allowance).to eq(123.45 + 456.78)
+          expect(disposable_income_summary.dependant_allowance).to eq(123.45 + 456.78)
         end
       end
     end
