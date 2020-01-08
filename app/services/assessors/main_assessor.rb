@@ -47,9 +47,7 @@ module Assessors
 
       return 'contribution_required' if 'contribution_required'.in?(combined_result)
 
-      return 'eligible' if combined_result.uniq. == ['eligible']
-
-      raise "Unexpected result: #{combined_result.inspect}"
+      'eligible'
     end
 
     def combined_result
