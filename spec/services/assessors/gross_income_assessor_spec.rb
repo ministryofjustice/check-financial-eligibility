@@ -2,7 +2,7 @@ require 'rails_helper'
 
 module Assessors
   RSpec.describe GrossIncomeAssessor do
-    let(:assessment) { create :assessment }
+    let(:assessment) { create :assessment, :with_gross_income_summary }
     let(:gross_income_summary) { assessment.gross_income_summary }
 
     describe '.call' do
@@ -12,13 +12,6 @@ module Assessors
         it 'raises' do
           allow(gross_income_summary).to receive(:assessment_result).and_return('pending')
           expect { subject }.to raise_error RuntimeError, 'Gross income not summarised'
-        end
-      end
-
-      context 'gross income is not available' do
-        it 'raises' do
-          allow(gross_income_summary).to receive(:assessment_result).and_return('not_applicable')
-          expect { subject }.to raise_error RuntimeError, 'Gross income summary marked as not applicable'
         end
       end
 

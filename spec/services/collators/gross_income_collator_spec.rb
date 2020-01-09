@@ -2,7 +2,7 @@ require 'rails_helper'
 
 module Collators
   RSpec.describe GrossIncomeCollator do
-    let(:assessment) { create :assessment, :with_applicant }
+    let(:assessment) { create :assessment, :with_gross_income_summary, :with_applicant }
     let(:gross_income_summary) { assessment.gross_income_summary }
 
     describe '.call' do
@@ -17,7 +17,7 @@ module Collators
           end
 
           context 'with child dependants' do
-            let(:assessment) { create :assessment, :with_applicant, with_child_dependants: 5 }
+            let(:assessment) { create :assessment, :with_gross_income_summary, :with_applicant, with_child_dependants: 5 }
             it 'calculates the threshold correctly when there are dependants' do
               expect(gross_income_summary.reload.upper_threshold).to eq 999_999_999_999
             end
@@ -38,28 +38,28 @@ module Collators
         end
 
         context 'threshold applies, 2 child dependants' do
-          let(:assessment) { create :assessment, :with_applicant, with_child_dependants: 2 }
+          let(:assessment) { create :assessment, :with_gross_income_summary, :with_applicant, with_child_dependants: 2 }
           it 'calculates the threshold correctly' do
             expect(gross_income_summary.reload.upper_threshold).to eq 2_657
           end
         end
 
         context 'threshold applies, 5 child dependants' do
-          let(:assessment) { create :assessment, :with_applicant, with_child_dependants: 5 }
+          let(:assessment) { create :assessment, :with_gross_income_summary, :with_applicant, with_child_dependants: 5 }
           it 'calculates the threshold correctly' do
             expect(gross_income_summary.reload.upper_threshold).to eq 2_879
           end
         end
 
         context 'threshold applies, 8 child dependants' do
-          let(:assessment) { create :assessment, :with_applicant, with_child_dependants: 8 }
+          let(:assessment) { create :assessment, :with_gross_income_summary, :with_applicant, with_child_dependants: 8 }
           it 'calculates the threshold correctly' do
             expect(gross_income_summary.reload.upper_threshold).to eq 3_545
           end
         end
 
         context 'threshold applies, 10 child dependants' do
-          let(:assessment) { create :assessment, :with_applicant, with_child_dependants: 10 }
+          let(:assessment) { create :assessment, :with_gross_income_summary, :with_applicant, with_child_dependants: 10 }
           it 'calculates the threshold correctly' do
             expect(gross_income_summary.reload.upper_threshold).to eq 3_989
           end

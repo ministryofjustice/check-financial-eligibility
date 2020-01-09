@@ -3,7 +3,7 @@ module Assessors
     delegate :assessed_capital, :lower_threshold, to: :capital_summary
 
     def call
-      capital_summary.update!(capital_assessment_result: result)
+      capital_summary.update!(assessment_result: result)
     end
 
     private

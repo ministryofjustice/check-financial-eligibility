@@ -43,3 +43,6 @@ Style/Lambda:
 
 Style/FrozenStringLiteralComment:
   Enabled: false
+
+Naming/RescuedExceptionsVariableName:
+  Enabled: false

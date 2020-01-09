@@ -2,7 +2,7 @@ require 'rails_helper'
 
 module Creators
   RSpec.describe PropertiesCreator do
-    let(:assessment) { create :assessment }
+    let(:assessment) { create :assessment, :with_capital_summary }
     let(:capital_summary) { assessment.capital_summary }
     let(:assessment_id) { assessment.id }
     let(:main_home) do

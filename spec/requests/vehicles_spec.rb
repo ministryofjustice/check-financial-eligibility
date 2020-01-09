@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe VehiclesController, type: :request do
   describe 'POST /assessments/:assessment_id/vehicles' do
-    let(:assessment) { create :assessment }
+    let(:assessment) { create :assessment, :with_capital_summary }
     let(:vehicles) { attributes_for_list(:vehicle, 2) }
     let(:headers) { { 'CONTENT_TYPE' => 'application/json' } }
     let(:date_in_future) { 3.days.from_now.strftime('%Y-%m-%d') }

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe PropertiesController, type: :request do
   describe 'POST /assessments/:assessment_id/properties' do
-    let(:assessment) { create :assessment }
+    let(:assessment) { create :assessment, :with_capital_summary }
     let(:assessment_id) { assessment.id }
     let(:property) { create :property, assessment: assessment }
     let(:headers) { { 'CONTENT_TYPE' => 'application/json' } }

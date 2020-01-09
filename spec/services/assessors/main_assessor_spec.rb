@@ -2,42 +2,115 @@ require 'rails_helper'
 
 module Assessors
   RSpec.describe MainAssessor do
-    describe '.call' do
-      let(:capital_summary) { create :capital_summary, capital_assessment_result: result }
-      let(:assessment) { capital_summary.assessment }
+    let(:assessment) { create :assessment, :with_capital_summary, :with_gross_income_summary, :with_disposable_income_summary, :with_applicant }
 
-      subject { described_class.call(assessment) }
-      context 'passported applicants' do
-        context 'capital summary pending' do
-          let(:result) { 'pending' }
-          it 'raises' do
-            expect { subject }.to raise_error RuntimeError, 'Capital assessment not complete'
-          end
-        end
+    context 'passported' do
+      before { assessment.applicant.update!(receives_qualifying_benefit: true) }
 
-        context 'capital summary eligible' do
-          let(:result) { 'eligible' }
-          it 'raises' do
-            subject
-            expect(assessment.assessment_result).to eq 'eligible'
-          end
-        end
+      it 'gives the expected results' do
+        expect(%w[eligible contribution_required contribution_required]).to have_assessment_error(assessment, 'Invalid assessment status: for passported applicant')
+        expect(%w[eligible contribution_required eligible]).to have_assessment_error(assessment, 'Invalid assessment status: for passported applicant')
+        expect(%w[eligible contribution_required not_eligible]).to have_assessment_error(assessment, 'Invalid assessment status: for passported applicant')
+        expect(%w[eligible contribution_required pending]).to have_assessment_error(assessment, 'Assessment not complete: Capital assessment still pending')
+        expect(%w[eligible eligible contribution_required]).to have_assessment_error(assessment, 'Invalid assessment status: for passported applicant')
+        expect(%w[eligible eligible eligible]).to have_assessment_error(assessment, 'Invalid assessment status: for passported applicant')
+        expect(%w[eligible eligible not_eligible]).to have_assessment_error(assessment, 'Invalid assessment status: for passported applicant')
+        expect(%w[eligible eligible pending]).to have_assessment_error(assessment, 'Assessment not complete: Capital assessment still pending')
+        expect(%w[eligible not_eligible contribution_required]).to have_assessment_error(assessment, 'Invalid assessment status: for passported applicant')
+        expect(%w[eligible not_eligible eligible]).to have_assessment_error(assessment, 'Invalid assessment status: for passported applicant')
+        expect(%w[eligible not_eligible not_eligible]).to have_assessment_error(assessment, 'Invalid assessment status: for passported applicant')
+        expect(%w[eligible not_eligible pending]).to have_assessment_error(assessment, 'Assessment not complete: Capital assessment still pending')
+        expect(%w[eligible pending contribution_required]).to have_assessment_error(assessment, 'Invalid assessment status: for passported applicant')
+        expect(%w[eligible pending eligible]).to have_assessment_error(assessment, 'Invalid assessment status: for passported applicant')
+        expect(%w[eligible pending not_eligible]).to have_assessment_error(assessment, 'Invalid assessment status: for passported applicant')
+        expect(%w[eligible pending pending]).to have_assessment_error(assessment, 'Assessment not complete: Capital assessment still pending')
+        expect(%w[not_eligible contribution_required contribution_required]).to have_assessment_error(assessment, 'Invalid assessment status: for passported applicant')
+        expect(%w[not_eligible contribution_required eligible]).to have_assessment_error(assessment, 'Invalid assessment status: for passported applicant')
+        expect(%w[not_eligible contribution_required not_eligible]).to have_assessment_error(assessment, 'Invalid assessment status: for passported applicant')
+        expect(%w[not_eligible contribution_required pending]).to have_assessment_error(assessment, 'Assessment not complete: Capital assessment still pending')
+        expect(%w[not_eligible eligible contribution_required]).to have_assessment_error(assessment, 'Invalid assessment status: for passported applicant')
+        expect(%w[not_eligible eligible eligible]).to have_assessment_error(assessment, 'Invalid assessment status: for passported applicant')
+        expect(%w[not_eligible eligible not_eligible]).to have_assessment_error(assessment, 'Invalid assessment status: for passported applicant')
+        expect(%w[not_eligible eligible pending]).to have_assessment_error(assessment, 'Assessment not complete: Capital assessment still pending')
+        expect(%w[not_eligible not_eligible contribution_required]).to have_assessment_error(assessment, 'Invalid assessment status: for passported applicant')
+        expect(%w[not_eligible not_eligible eligible]).to have_assessment_error(assessment, 'Invalid assessment status: for passported applicant')
+        expect(%w[not_eligible not_eligible not_eligible]).to have_assessment_error(assessment, 'Invalid assessment status: for passported applicant')
+        expect(%w[not_eligible not_eligible pending]).to have_assessment_error(assessment, 'Assessment not complete: Capital assessment still pending')
+        expect(%w[not_eligible pending contribution_required]).to have_assessment_error(assessment, 'Invalid assessment status: for passported applicant')
+        expect(%w[not_eligible pending eligible]).to have_assessment_error(assessment, 'Invalid assessment status: for passported applicant')
+        expect(%w[not_eligible pending not_eligible]).to have_assessment_error(assessment, 'Invalid assessment status: for passported applicant')
+        expect(%w[not_eligible pending pending]).to have_assessment_error(assessment, 'Assessment not complete: Capital assessment still pending')
+        expect(%w[pending contribution_required contribution_required]).to have_assessment_error(assessment, 'Invalid assessment status: for passported applicant')
+        expect(%w[pending contribution_required eligible]).to have_assessment_error(assessment, 'Invalid assessment status: for passported applicant')
+        expect(%w[pending contribution_required not_eligible]).to have_assessment_error(assessment, 'Invalid assessment status: for passported applicant')
+        expect(%w[pending contribution_required pending]).to have_assessment_error(assessment, 'Assessment not complete: Capital assessment still pending')
+        expect(%w[pending eligible contribution_required]).to have_assessment_error(assessment, 'Invalid assessment status: for passported applicant')
+        expect(%w[pending eligible eligible]).to have_assessment_error(assessment, 'Invalid assessment status: for passported applicant')
+        expect(%w[pending eligible not_eligible]).to have_assessment_error(assessment, 'Invalid assessment status: for passported applicant')
+        expect(%w[pending eligible pending]).to have_assessment_error(assessment, 'Assessment not complete: Capital assessment still pending')
+        expect(%w[pending not_eligible contribution_required]).to have_assessment_error(assessment, 'Invalid assessment status: for passported applicant')
+        expect(%w[pending not_eligible eligible]).to have_assessment_error(assessment, 'Invalid assessment status: for passported applicant')
+        expect(%w[pending not_eligible not_eligible]).to have_assessment_error(assessment, 'Invalid assessment status: for passported applicant')
+        expect(%w[pending not_eligible pending]).to have_assessment_error(assessment, 'Assessment not complete: Capital assessment still pending')
+        expect(%w[pending pending contribution_required]).to have_main_assessment_result(assessment, 'contribution_required')
+        expect(%w[pending pending eligible]).to have_main_assessment_result(assessment, 'eligible')
+        expect(%w[pending pending not_eligible]).to have_main_assessment_result(assessment, 'not_eligible')
+        expect(%w[pending pending pending]).to have_assessment_error(assessment, 'Assessment not complete: Capital assessment still pending')
+      end
+    end
 
-        context 'capital summary not_eligible' do
-          let(:result) { 'not_eligible' }
-          it 'raises' do
-            subject
-            expect(assessment.assessment_result).to eq 'not_eligible'
-          end
-        end
+    context 'not passported' do
+      before { assessment.applicant.update!(receives_qualifying_benefit: false) }
 
-        context 'capital summary contribution_required' do
-          let(:result) { 'contribution_required' }
-          it 'raises' do
-            subject
-            expect(assessment.assessment_result).to eq 'contribution_required'
-          end
-        end
+      it 'gives the expected results' do
+        expect(%w[eligible contribution_required contribution_required]).to have_main_assessment_result(assessment, 'contribution_required')
+        expect(%w[eligible contribution_required eligible]).to have_main_assessment_result(assessment, 'contribution_required')
+        expect(%w[eligible contribution_required not_eligible]).to have_main_assessment_result(assessment, 'not_eligible')
+        expect(%w[eligible contribution_required pending]).to have_assessment_error(assessment, 'Assessment not complete: Capital assessment still pending')
+        expect(%w[eligible eligible contribution_required]).to have_main_assessment_result(assessment, 'contribution_required')
+        expect(%w[eligible eligible eligible]).to have_main_assessment_result(assessment, 'eligible')
+        expect(%w[eligible eligible not_eligible]).to have_main_assessment_result(assessment, 'not_eligible')
+        expect(%w[eligible eligible pending]).to have_assessment_error(assessment, 'Assessment not complete: Capital assessment still pending')
+        expect(%w[eligible not_eligible contribution_required]).to have_main_assessment_result(assessment, 'not_eligible')
+        expect(%w[eligible not_eligible eligible]).to have_main_assessment_result(assessment, 'not_eligible')
+        expect(%w[eligible not_eligible not_eligible]).to have_main_assessment_result(assessment, 'not_eligible')
+        expect(%w[eligible not_eligible pending]).to have_main_assessment_result(assessment, 'not_eligible')
+        expect(%w[eligible pending contribution_required]).to have_assessment_error(assessment, 'Assessment not complete: Disposable Income assessment still pending')
+        expect(%w[eligible pending eligible]).to have_assessment_error(assessment, 'Assessment not complete: Disposable Income assessment still pending')
+        expect(%w[eligible pending not_eligible]).to have_assessment_error(assessment, 'Assessment not complete: Disposable Income assessment still pending')
+        expect(%w[eligible pending pending]).to have_assessment_error(assessment, 'Assessment not complete: Disposable Income assessment still pending')
+        expect(%w[not_eligible contribution_required contribution_required]).to have_main_assessment_result(assessment, 'not_eligible')
+        expect(%w[not_eligible contribution_required eligible]).to have_main_assessment_result(assessment, 'not_eligible')
+        expect(%w[not_eligible contribution_required not_eligible]).to have_main_assessment_result(assessment, 'not_eligible')
+        expect(%w[not_eligible contribution_required pending]).to have_main_assessment_result(assessment, 'not_eligible')
+        expect(%w[not_eligible eligible contribution_required]).to have_main_assessment_result(assessment, 'not_eligible')
+        expect(%w[not_eligible eligible eligible]).to have_main_assessment_result(assessment, 'not_eligible')
+        expect(%w[not_eligible eligible not_eligible]).to have_main_assessment_result(assessment, 'not_eligible')
+        expect(%w[not_eligible eligible pending]).to have_main_assessment_result(assessment, 'not_eligible')
+        expect(%w[not_eligible not_eligible contribution_required]).to have_main_assessment_result(assessment, 'not_eligible')
+        expect(%w[not_eligible not_eligible eligible]).to have_main_assessment_result(assessment, 'not_eligible')
+        expect(%w[not_eligible not_eligible not_eligible]).to have_main_assessment_result(assessment, 'not_eligible')
+        expect(%w[not_eligible not_eligible pending]).to have_main_assessment_result(assessment, 'not_eligible')
+        expect(%w[not_eligible pending contribution_required]).to have_main_assessment_result(assessment, 'not_eligible')
+        expect(%w[not_eligible pending eligible]).to have_main_assessment_result(assessment, 'not_eligible')
+        expect(%w[not_eligible pending not_eligible]).to have_main_assessment_result(assessment, 'not_eligible')
+        expect(%w[not_eligible pending pending]).to have_main_assessment_result(assessment, 'not_eligible')
+        expect(%w[pending contribution_required contribution_required]).to have_assessment_error(assessment, 'Assessment not complete: Gross Income assessment still pending')
+        expect(%w[pending contribution_required eligible]).to have_assessment_error(assessment, 'Assessment not complete: Gross Income assessment still pending')
+        expect(%w[pending contribution_required not_eligible]).to have_assessment_error(assessment, 'Assessment not complete: Gross Income assessment still pending')
+        expect(%w[pending contribution_required pending]).to have_assessment_error(assessment, 'Assessment not complete: Gross Income assessment still pending')
+        expect(%w[pending eligible contribution_required]).to have_assessment_error(assessment, 'Assessment not complete: Gross Income assessment still pending')
+        expect(%w[pending eligible eligible]).to have_assessment_error(assessment, 'Assessment not complete: Gross Income assessment still pending')
+        expect(%w[pending eligible not_eligible]).to have_assessment_error(assessment, 'Assessment not complete: Gross Income assessment still pending')
+        expect(%w[pending eligible pending]).to have_assessment_error(assessment, 'Assessment not complete: Gross Income assessment still pending')
+        expect(%w[pending not_eligible contribution_required]).to have_assessment_error(assessment, 'Assessment not complete: Gross Income assessment still pending')
+        expect(%w[pending not_eligible eligible]).to have_assessment_error(assessment, 'Assessment not complete: Gross Income assessment still pending')
+        expect(%w[pending not_eligible not_eligible]).to have_assessment_error(assessment, 'Assessment not complete: Gross Income assessment still pending')
+        expect(%w[pending not_eligible pending]).to have_assessment_error(assessment, 'Assessment not complete: Gross Income assessment still pending')
+        expect(%w[pending pending contribution_required]).to have_assessment_error(assessment, 'Assessment not complete: Gross Income assessment still pending')
+        expect(%w[pending pending eligible]).to have_assessment_error(assessment, 'Assessment not complete: Gross Income assessment still pending')
+        expect(%w[pending pending not_eligible]).to have_assessment_error(assessment, 'Assessment not complete: Gross Income assessment still pending')
+        expect(%w[pending pending pending]).to have_assessment_error(assessment, 'Assessment not complete: Gross Income assessment still pending')
       end
     end
   end
