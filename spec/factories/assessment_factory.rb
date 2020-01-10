@@ -36,6 +36,15 @@ FactoryBot.define do
       end
     end
 
+    trait :with_everything do
+      with_applicant
+      after(:create) do |assessment|
+        create :gross_income_summary, :with_everything, assessment: assessment
+        create :disposable_income_summary, :with_everything, assessment: assessment
+        create :capital_summary, :with_everything, assessment: assessment
+      end
+    end
+
     after(:create) do |assessment, evaluator|
       if evaluator.with_child_dependants > 0
         evaluator.with_child_dependants.times do

@@ -46,12 +46,35 @@ class AssessmentsController < ApplicationController
   end
 
   def show
+    case determine_version
+    when '1'
+      show_v1
+    when '2'
+      show_v2
+    else
+      raise 'Unsupported version specified in AcceptHeader'
+    end
+  end
+
+  private
+
+  def show_v1
     Workflows::MainWorkflow.call(assessment)
     Assessors::MainAssessor.call(assessment)
     render json: Decorators::ResultDecorator.new(assessment)
   end
 
-  private
+  def show_v2
+    render json: Decorators::AssessmentDecorator.new(assessment).as_json
+  end
+
+  def determine_version
+    parts = request.headers['Accept'].split(';')
+    parts.each do |part|
+      return Regexp.last_match(1) if part =~ /^version=(\d)$/
+    end
+    '1'
+  end
 
   def assessment_creation_service
     @assessment_creation_service ||= Creators::AssessmentCreator.call(request.remote_ip, request.raw_post)

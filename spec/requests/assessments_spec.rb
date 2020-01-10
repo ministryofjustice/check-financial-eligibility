@@ -78,11 +78,33 @@ RSpec.describe AssessmentsController, type: :request do
     let!(:main_home) { create :property, :main_home, capital_summary: capital_summary }
     let!(:property) { create :property, :additional_property, capital_summary: capital_summary }
     let!(:vehicle) { create :vehicle, capital_summary: capital_summary }
+    let(:applicant) { create :applicant, :with_qualifying_benefits }
 
-    subject { get assessment_path(assessment) }
+    subject { get assessment_path(assessment), headers: headers }
 
-    context 'passported' do
-      let(:applicant) { create :applicant, :with_qualifying_benefits }
+    context 'no version specified' do
+      let(:headers) { { 'Accept' => 'application/json' } }
+      context 'passported' do
+        it 'returns http success', :show_in_doc do
+          subject
+          expect(response).to have_http_status(:success)
+        end
+
+        it 'returns capital summary data as json' do
+          subject
+          expect(parsed_response).to eq(JSON.parse(Decorators::ResultDecorator.new(assessment.reload).to_json, symbolize_names: true))
+        end
+
+        it 'has called the workflow and assessor' do
+          expect(Workflows::MainWorkflow).to receive(:call).with(assessment)
+          expect(Assessors::MainAssessor).to receive(:call).with(assessment)
+          subject
+        end
+      end
+    end
+
+    context 'version 1 specifified in the header' do
+      let(:headers) { { 'Accept' => 'application/json;version=1' } }
 
       it 'returns http success', :show_in_doc do
         subject
@@ -93,11 +115,28 @@ RSpec.describe AssessmentsController, type: :request do
         subject
         expect(parsed_response).to eq(JSON.parse(Decorators::ResultDecorator.new(assessment.reload).to_json, symbolize_names: true))
       end
+    end
 
-      it 'has called the workflow and assessor' do
-        expect(Workflows::MainWorkflow).to receive(:call).with(assessment)
-        expect(Assessors::MainAssessor).to receive(:call).with(assessment)
+    context 'version 2 specifified in the header' do
+      let(:assessment) { create :assessment, :with_everything }
+      let(:headers) { { 'Accept' => 'application/json;version=2' } }
+
+      it 'returns http success', :show_in_doc do
         subject
+        expect(response).to have_http_status(:success)
+      end
+
+      it 'returns capital summary data as json' do
+        subject
+        expected_response = Decorators::AssessmentDecorator.new(assessment.reload).as_json.to_json
+        expect(parsed_response).to eq(JSON.parse(expected_response, symbolize_names: true))
+      end
+    end
+
+    context 'unknown version' do
+      let(:headers) { { 'Accept' => 'application/json;version=9' } }
+      it 'raises' do
+        expect { subject }.to raise_error RuntimeError, 'Unsupported version specified in AcceptHeader'
       end
     end
   end
