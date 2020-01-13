@@ -1,5 +1,4 @@
 class AssessmentsController < ApplicationController
-
   resource_description do
     short 'Assessment container'
     formats ['json']
@@ -35,11 +34,11 @@ class AssessmentsController < ApplicationController
   end
 
   def self.documentation_for_get
-    %Q[Get assessment result<br/>
+    %(Get assessment result<br/>
        Note that there are two versions of this api.  The version is specified by the Accept header, for example</br>
        <tt>&nbsp;&nbsp;&nbsp;&nbsp;Accept:application/json;version=2</tt><br/>
        If the version part of the Accept header is not specified, version 1 is assumed<br/<br/>
-       In the given examples, the first two examples are version 1, the third example is version 2.<br/>]
+       In the given examples, the first two examples are version 1, the third example is version 2.<br/>)
   end
 
   api :GET, 'assessments/:id', AssessmentsController.documentation_for_get
@@ -92,6 +91,4 @@ class AssessmentsController < ApplicationController
   def assessment
     @assessment ||= Assessment.find(params[:id])
   end
-
-
 end
