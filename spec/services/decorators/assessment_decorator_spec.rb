@@ -32,7 +32,7 @@ module Decorators
           disposable_income
           capital
         ]
-        expect(subject.keys).to eq [:assessment]
+        expect(subject.keys).to eq %i[version timestamp assessment]
         expect(subject[:assessment].keys).to eq expected_keys
       end
 

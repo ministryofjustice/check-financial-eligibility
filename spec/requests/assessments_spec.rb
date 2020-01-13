@@ -103,7 +103,7 @@ RSpec.describe AssessmentsController, type: :request do
       end
     end
 
-    context 'version 1 specifified in the header' do
+    context 'version 1 specified in the header' do
       let(:headers) { { 'Accept' => 'application/json;version=1' } }
 
       it 'returns http success', :show_in_doc do
@@ -127,9 +127,11 @@ RSpec.describe AssessmentsController, type: :request do
       end
 
       it 'returns capital summary data as json' do
-        subject
-        expected_response = Decorators::AssessmentDecorator.new(assessment.reload).as_json.to_json
-        expect(parsed_response).to eq(JSON.parse(expected_response, symbolize_names: true))
+        Timecop.freeze do
+          subject
+          expected_response = Decorators::AssessmentDecorator.new(assessment.reload).as_json.to_json
+          expect(parsed_response).to eq(JSON.parse(expected_response, symbolize_names: true))
+        end
       end
     end
 

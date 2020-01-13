@@ -12,6 +12,8 @@ module Decorators
 
     def as_json # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       {
+        version: '2',
+        timestamp: Time.now,
         assessment: {
           id: assessment.id,
           client_reference_id: assessment.client_reference_id,

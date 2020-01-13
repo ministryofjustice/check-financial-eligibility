@@ -1,4 +1,5 @@
 class AssessmentsController < ApplicationController
+
   resource_description do
     short 'Assessment container'
     formats ['json']
@@ -10,7 +11,7 @@ class AssessmentsController < ApplicationController
     END_OF_TEXT
   end
 
-  api :POST, 'assessments', 'Create asssessment'
+  api :POST, 'assessments', 'Create assessment'
   formats ['json']
   param :client_reference_id, String, "The client's reference number for this application (free text)"
   param :submission_date, Date, date_option: :today_or_older, required: true, desc: 'The date of the original submission'
@@ -33,7 +34,15 @@ class AssessmentsController < ApplicationController
     end
   end
 
-  api :GET, 'assessments/:id', 'Get assessment result'
+  def self.documentation_for_get
+    %Q[Get assessment result<br/>
+       Note that there are two versions of this api.  The version is specified by the Accept header, for example</br>
+       <tt>&nbsp;&nbsp;&nbsp;&nbsp;Accept:application/json;version=2</tt><br/>
+       If the version part of the Accept header is not specified, version 1 is assumed<br/<br/>
+       In the given examples, the first two examples are version 1, the third example is version 2.<br/>]
+  end
+
+  api :GET, 'assessments/:id', AssessmentsController.documentation_for_get
   formats ['json']
   param :id, :uuid, required: true
 
@@ -83,4 +92,6 @@ class AssessmentsController < ApplicationController
   def assessment
     @assessment ||= Assessment.find(params[:id])
   end
+
+
 end

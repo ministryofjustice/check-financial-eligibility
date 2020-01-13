@@ -57,6 +57,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.9'
   gem 'rubocop', require: false
   gem 'rubocop-performance'
+  gem 'timecop'
 end
 
 group :development do
