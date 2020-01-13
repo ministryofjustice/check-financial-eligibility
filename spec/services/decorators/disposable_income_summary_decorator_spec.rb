@@ -17,9 +17,9 @@ module Decorators
         it 'has the expected keysin the response structure' do
           expected_keys = %i[
             outgoings
-            childcare
+            childcare_allowance
             dependant_allowance
-            maintenance
+            maintenance_allowance
             gross_housing_costs
             housing_benefit
             net_housing_costs
@@ -31,7 +31,7 @@ module Decorators
             income_contribution
           ]
           expect(subject.keys).to eq expected_keys
-          outgoings_keys = %i[childcare housing_costs maintenance]
+          outgoings_keys = %i[childcare_costs housing_costs maintenance_costs]
           expect(subject[:outgoings].keys).to eq outgoings_keys
         end
 

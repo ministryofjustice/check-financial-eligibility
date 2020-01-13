@@ -11,13 +11,13 @@ module Decorators
 
       {
         outgoings: {
-          childcare: @record.childcare_outgoings.map { |co| PaymentDecorator.new(co).as_json },
+          childcare_costs: @record.childcare_outgoings.map { |co| PaymentDecorator.new(co).as_json },
           housing_costs: @record.housing_cost_outgoings.map { |hc| PaymentDecorator.new(hc).as_json },
-          maintenance: @record.maintenance_outgoings.map { |mo| PaymentDecorator.new(mo).as_json }
+          maintenance_costs: @record.maintenance_outgoings.map { |mo| PaymentDecorator.new(mo).as_json }
         },
-        childcare: @record.childcare,
+        childcare_allowance: @record.childcare,
         dependant_allowance: @record.dependant_allowance,
-        maintenance: @record.maintenance,
+        maintenance_allowance: @record.maintenance,
         gross_housing_costs: @record.gross_housing_costs,
         housing_benefit: @record.housing_benefit,
         net_housing_costs: @record.net_housing_costs,
