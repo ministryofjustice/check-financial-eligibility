@@ -11,13 +11,6 @@ module Decorators
     end
 
     describe '#as_json' do
-      # before do
-      #   allow(ApplicantDecorator).to receive(:new).and_return(double 'ad', as_json: nil)
-      #   allow(GrossIncomeSummaryDecorator).to receive(:new).and_return(double 'gisd', as_json: nil)
-      #   allow(DisposableIncomeSummaryDecorator).to receive(:new).and_return(double 'disd', as_json: nil)
-      #   allow(CapitalSummaryDecorator).to receive(:new).and_return(double 'csd', as_json: nil)
-      # end
-
       subject { AssessmentDecorator.new(assessment).as_json }
 
       it 'has the required keys in the returned hash' do

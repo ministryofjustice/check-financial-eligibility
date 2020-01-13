@@ -4,6 +4,7 @@ module Decorators
   RSpec.describe StateBenefitDecorator do
     describe '#as_json' do
       let(:record) { create :state_benefit, :with_monthly_payments, name: 'Childcare allowance' }
+      let(:excluded) { record.state_benefit_type.exclude_from_gross_income }
 
       subject { described_class.new(record).as_json }
 
@@ -11,6 +12,7 @@ module Decorators
         expected_hash = {
           name: 'Childcare allowance',
           monthly_value: 0.0,
+          excluded_from_income_assessment: excluded,
           state_benefit_payments:
             [
               { payment_date: Date.today, amount: 75.0 },

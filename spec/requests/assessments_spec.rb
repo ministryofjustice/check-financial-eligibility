@@ -70,21 +70,23 @@ RSpec.describe AssessmentsController, type: :request do
   end
 
   describe 'GET /assessments/:id' do
-    let(:assessment) { create :assessment, :with_gross_income_summary, applicant: applicant }
+    #let(:assessment) { create :assessment, :with_gross_income_summary, applicant: applicant }
     let(:option) { :below_lower_threshold }
-    let!(:capital_summary) { create :capital_summary, option, assessment: assessment }
-    let!(:non_liquid_capital_item) { create :non_liquid_capital_item, capital_summary: capital_summary }
-    let!(:liquid_capital_item) { create :liquid_capital_item, capital_summary: capital_summary }
-    let!(:main_home) { create :property, :main_home, capital_summary: capital_summary }
-    let!(:property) { create :property, :additional_property, capital_summary: capital_summary }
-    let!(:vehicle) { create :vehicle, capital_summary: capital_summary }
-    let(:applicant) { create :applicant, :with_qualifying_benefits }
+    #let!(:capital_summary) { create :capital_summary, option, assessment: assessment }
+    #let!(:non_liquid_capital_item) { create :non_liquid_capital_item, capital_summary: capital_summary }
+    #let!(:liquid_capital_item) { create :liquid_capital_item, capital_summary: capital_summary }
+    #let!(:main_home) { create :property, :main_home, capital_summary: capital_summary }
+    #let!(:property) { create :property, :additional_property, capital_summary: capital_summary }
+    #let!(:vehicle) { create :vehicle, capital_summary: capital_summary }
+    #let(:applicant) { create :applicant, :with_qualifying_benefits }
 
     subject { get assessment_path(assessment), headers: headers }
 
     context 'no version specified' do
       let(:headers) { { 'Accept' => 'application/json' } }
       context 'passported' do
+        let(:assessment) { create :assessment, :passported }
+
         it 'returns http success', :show_in_doc do
           subject
           expect(response).to have_http_status(:success)
@@ -99,6 +101,14 @@ RSpec.describe AssessmentsController, type: :request do
           expect(Workflows::MainWorkflow).to receive(:call).with(assessment)
           expect(Assessors::MainAssessor).to receive(:call).with(assessment)
           subject
+        end
+      end
+
+      context 'non-passported' do
+        let(:assessment) { create :assessment, :with_everything }
+        it 'returns failure' do
+          subject
+          expect(response).to have_http_status(:success)
         end
       end
     end
