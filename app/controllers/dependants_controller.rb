@@ -1,5 +1,5 @@
 class DependantsController < ApplicationController
-  api :POST, '/assessments/:assessment_id/dependants', 'Create dependants'
+  api :POST, 'assessments/:assessment_id/dependants', 'Create dependants'
   formats ['json']
   param :dependants, Array, required: true, desc: 'An Array of Objects describing a dependant' do
     param :date_of_birth, Date, date_option: :today_or_older, required: true, desc: 'The date of birth of the dependant'
