@@ -1,0 +1,2 @@
+class CheckFinancialEligibilityError < StandardError
+end

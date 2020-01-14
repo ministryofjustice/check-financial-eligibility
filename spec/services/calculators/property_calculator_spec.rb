@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-module Assessors
-  RSpec.describe PropertyAssessor do
+module Calculators
+  RSpec.describe PropertyCalculator do
     let(:assessment) { create :assessment, :with_capital_summary }
     let(:capital_summary) { assessment.capital_summary }
-    let(:service) { PropertyAssessor.new(assessment) }
+    let(:service) { described_class.new(assessment) }
 
     describe '#call' do
       context 'no properties' do

@@ -37,7 +37,7 @@ class SalaryPatternGenerator
     end
   end
 
-  def weekend_offset(day) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
+  def weekend_offset(day) # rubocop:disable Metrics/CyclomaticComplexity
     return day unless day.wday > 5 && day_offset
 
     case day_offset

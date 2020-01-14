@@ -28,11 +28,17 @@ module Creators
     private
 
     def new_assessment
-      @new_assessment ||= begin
-        new_assessment = Assessment.new(assessment_hash)
-        new_assessment.create_capital_summary! if new_assessment.save
-        new_assessment.create_gross_income_summary! if new_assessment.save
-        new_assessment
+      @new_assessment ||= create_new_assessment_and_summary_records
+    end
+
+    def create_new_assessment_and_summary_records
+      Assessment.transaction do
+        assessment_record = Assessment.new(assessment_hash)
+        assessment_record.build_capital_summary
+        assessment_record.build_gross_income_summary
+        assessment_record.build_disposable_income_summary
+        assessment_record.save
+        assessment_record
       end
     end
   end

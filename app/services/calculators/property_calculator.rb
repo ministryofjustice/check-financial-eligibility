@@ -1,5 +1,5 @@
-module Assessors
-  class PropertyAssessor < BaseWorkflowService
+module Calculators
+  class PropertyCalculator < BaseWorkflowService
     attr_writer :remaining_mortgage_allowance
 
     def call

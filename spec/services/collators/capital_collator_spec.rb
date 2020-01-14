@@ -26,8 +26,8 @@ module Collators
 
       context 'property_assessment' do
         it 'instantiates and calls the Property Assessment service' do
-          property_service = double Assessors::PropertyAssessor
-          expect(Assessors::PropertyAssessor).to receive(:new).and_return(property_service)
+          property_service = double Calculators::PropertyCalculator
+          expect(Calculators::PropertyCalculator).to receive(:new).and_return(property_service)
           expect(property_service).to receive(:call).and_return(23_000.0)
           subject
           expect(subject[:total_property]).to eq 23_000.0
@@ -69,13 +69,13 @@ module Collators
           liquid_capital_service = double Assessors::LiquidCapitalAssessor
           nlcas = double Assessors::NonLiquidCapitalAssessor
           vehicle_service = double Assessors::VehicleAssessor
-          property_service = double Assessors::PropertyAssessor
+          property_service = double Calculators::PropertyCalculator
           pcd = double Calculators::PensionerCapitalDisregardCalculator
 
           expect(Assessors::LiquidCapitalAssessor).to receive(:new).with(assessment).and_return(liquid_capital_service)
           expect(Assessors::NonLiquidCapitalAssessor).to receive(:new).with(assessment).and_return(nlcas)
           expect(Assessors::VehicleAssessor).to receive(:new).with(assessment).and_return(vehicle_service)
-          expect(Assessors::PropertyAssessor).to receive(:new).and_return(property_service)
+          expect(Calculators::PropertyCalculator).to receive(:new).and_return(property_service)
           expect(Calculators::PensionerCapitalDisregardCalculator).to receive(:new).and_return(pcd)
 
           expect(liquid_capital_service).to receive(:call).and_return(145.83)
@@ -94,7 +94,7 @@ module Collators
           expect(subject[:pensioner_capital_disregard]).to eq 100_000
           expect(subject[:assessed_capital]).to eq(-73_854.17)
           expect(subject[:lower_threshold]).to eq 3_000
-          expect(subject[:upper_threshold]).to eq 8_000
+          expect(subject[:upper_threshold]).to eq 999_999_999_999
         end
       end
     end

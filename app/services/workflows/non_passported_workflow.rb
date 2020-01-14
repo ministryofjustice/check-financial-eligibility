@@ -6,6 +6,8 @@ module Workflows
       collate_and_assess_gross_income
 
       disposable_income_assessment if gross_income_summary.eligible?
+
+      collate_and_assess_capital if disposable_income_summary.eligible? || disposable_income_summary.contribution_required?
     end
 
     private
@@ -17,7 +19,14 @@ module Workflows
 
     def disposable_income_assessment
       Collators::OutgoingsCollator.call(assessment)
+      Collators::DisposableIncomeCollator.call(assessment)
       Assessors::DisposableIncomeAssessor.call(assessment)
+    end
+
+    def collate_and_assess_capital
+      data = Collators::CapitalCollator.call(assessment)
+      capital_summary.update!(data)
+      Assessors::CapitalAssessor.call(assessment)
     end
   end
 end

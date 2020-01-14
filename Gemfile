@@ -29,6 +29,8 @@ gem 'bootsnap', '>= 1.1.0', require: false
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
 
+gem 'colorize'
+
 gem 'json-schema'
 
 # Seeding tools
@@ -47,7 +49,6 @@ gem 'roo', '~> 2.8.0'
 
 group :development, :test do
   gem 'awesome_print'
-  gem 'colorize'
   gem 'dotenv-rails'
   gem 'factory_bot_rails'
   gem 'faker'

@@ -80,7 +80,7 @@ module Utilities
       }
     end
 
-    def message(name, analyser) # rubocop:disable Metrics/AbcSize
+    def message(name, analyser)
       insight = {
         days_between_dates: analyser.days_between_dates,
         size: analyser.dates.size,
@@ -134,7 +134,7 @@ module Utilities
         expect(num_failed_tests).to be_zero, "#{num_failed_tests} failing tests using CSV data from #{filename}"
       end
 
-      def read_and_check_results(fixture_file) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+      def read_and_check_results(fixture_file) # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
         num_failed_tests = 0
         CSV.read(fixture_file).each do |fields|
           next if fields.first == 'Version number'
@@ -168,6 +168,7 @@ module Utilities
 
     context 'individual tests' do
       let(:dates) { string_dates.map { |d| [Date.parse(d), nil] }.to_h }
+
       context 'Every two weeks on a Monday but paid on Friday before bank holiday (middle payment)' do
         let(:string_dates) { '2019-03-4, 2019-03-18, 2019-04-01, 2019-04-12, 2019-04-29, 2019-05-13, 2019-05-27, 2019-06-10'.split(', ') }
         it 'returns two_weekly using #period_pattern' do
@@ -200,6 +201,13 @@ module Utilities
         let(:string_dates) { '2019-02-21, 2019-03-21, 2019-04-18'.split(', ') }
         it 'returns monthly', skip: 'Skipped because the test data is generated randomly, and sometimes PaymentPeriodAnalyser is unable to correctly get the correct period' do
           expect(described_class.new(dates).period_pattern).to eq :monthly
+        end
+      end
+
+      context 'every two weeks' do
+        let(:string_dates) { '2019-05-15, 2019-05-01, 2019-04-17, 2019-04-03'.split(', ') }
+        it 'returns two-weekly' do
+          expect(described_class.new(dates).period_pattern).to eq :two_weekly
         end
       end
     end

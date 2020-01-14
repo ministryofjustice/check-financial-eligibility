@@ -1,4 +1,4 @@
-class AssessmentRequestFixture < BaseAssessmentFixture # rubocop:disable Metrics/ClassLength
+class AssessmentRequestFixture < BaseAssessmentFixture
   def self.ruby_hash
     {
       client_reference_id: 'my-eligibility-check-01',

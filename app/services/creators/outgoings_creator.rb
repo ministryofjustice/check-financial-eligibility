@@ -13,7 +13,7 @@ module Creators
 
     def call
       ActiveRecord::Base.transaction do
-        @outgoings.keys.each { |key| create_outgoing_collection(key) }
+        @outgoings.each { |outgoing| create_outgoing_collection(outgoing) }
       end
       self
     end
@@ -24,9 +24,9 @@ module Creators
 
     private
 
-    def create_outgoing_collection(key)
-      payments = @outgoings[key]
-      klass = OUTGOING_KLASSES[key]
+    def create_outgoing_collection(outgoing)
+      klass = OUTGOING_KLASSES[outgoing[:name].to_sym]
+      payments = outgoing[:payments]
       payments.each do |payment_params|
         klass.create! payment_params.merge(disposable_income_summary: disposable_income_summary)
       end

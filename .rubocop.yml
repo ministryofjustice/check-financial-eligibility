@@ -13,10 +13,20 @@ Metrics/ModuleLength:
     - 'spec/**/*'
     - 'db/migrate/*'
 
+Metrics/ClassLength:
+  Exclude:
+    - 'lib/integration_helpers/*'
+    - 'spec/**/*'
+
 Metrics/MethodLength:
   Exclude:
     - 'spec/**/*'
+    - 'lib/integration_helpers/*'
     - 'db/migrate/*'
+
+Metrics/ParameterLists:
+  Exclude:
+    - 'spec/**/*'
 
 Layout/LineLength:
   Max: 180
@@ -28,6 +38,7 @@ Lint/AmbiguousBlockAssociation:
 Metrics/AbcSize:
   Exclude:
     - 'db/migrate/*'
+    - 'spec/**/*'
 
 Metrics/BlockLength:
   Exclude:

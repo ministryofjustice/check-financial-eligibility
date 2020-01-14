@@ -38,21 +38,10 @@ RSpec.describe OtherIncomeSource, type: :model do
     context 'unknown payment frequency' do
       before { expect(analyser).to receive(:period_pattern).and_return(:unknown) }
 
-      it 'does not updates the monthly_income field' do
-        subject
-        expect(source.reload.monthly_income).to eq nil
-      end
-
-      it 'returns nil' do
-        expect(subject).to be_nil
-      end
-
-      it 'writes an assessment_error_record' do
-        expect { subject }.to change { AssessmentError.count }.by(1)
-        assessment_error = source.assessment.assessment_errors.first
-        expect(assessment_error.record_id).to eq source.id
-        expect(assessment_error.record_type).to eq source.class.to_s
-        expect(assessment_error.error_message).to eq 'unknown_payment_frequency'
+      it 'raises an exception' do
+        expect {
+          subject
+        }.to raise_error RuntimeError, /Unable to calculate payment frequency for OtherIncomeSource with payment dates \[.*\]/
       end
     end
   end

@@ -23,7 +23,7 @@ module Collators
     end
 
     def disposable_income
-      total_gross_income - total_outgoings_and_allowances
+      [0, total_gross_income - total_outgoings_and_allowances].max
     end
 
     def lower_threshold

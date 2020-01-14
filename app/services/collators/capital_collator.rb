@@ -35,7 +35,7 @@ module Collators
     end
 
     def property
-      @property ||= Assessors::PropertyAssessor.call(assessment)
+      @property ||= Calculators::PropertyCalculator.call(assessment)
     end
 
     def vehicles
@@ -55,11 +55,17 @@ module Collators
     end
 
     def upper_threshold
+      return infinite_threshold if assessment.matter_proceeding_type == 'domestic_abuse' && assessment.applicant.involvement_type == 'applicant'
+
       Threshold.value_for(:capital_upper, at: assessment.submission_date)
     end
 
     def capital_contribution
       [0, assessed_capital - lower_threshold].max
+    end
+
+    def infinite_threshold
+      @infinite_threshold ||= Threshold.value_for(:infinite_gross_income_upper, at: assessment.submission_date)
     end
   end
 end
