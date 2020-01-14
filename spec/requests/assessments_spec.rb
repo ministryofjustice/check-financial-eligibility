@@ -70,15 +70,7 @@ RSpec.describe AssessmentsController, type: :request do
   end
 
   describe 'GET /assessments/:id' do
-    #let(:assessment) { create :assessment, :with_gross_income_summary, applicant: applicant }
     let(:option) { :below_lower_threshold }
-    #let!(:capital_summary) { create :capital_summary, option, assessment: assessment }
-    #let!(:non_liquid_capital_item) { create :non_liquid_capital_item, capital_summary: capital_summary }
-    #let!(:liquid_capital_item) { create :liquid_capital_item, capital_summary: capital_summary }
-    #let!(:main_home) { create :property, :main_home, capital_summary: capital_summary }
-    #let!(:property) { create :property, :additional_property, capital_summary: capital_summary }
-    #let!(:vehicle) { create :vehicle, capital_summary: capital_summary }
-    #let(:applicant) { create :applicant, :with_qualifying_benefits }
 
     subject { get assessment_path(assessment), headers: headers }
 
@@ -106,15 +98,22 @@ RSpec.describe AssessmentsController, type: :request do
 
       context 'non-passported' do
         let(:assessment) { create :assessment, :with_everything }
-        it 'returns failure' do
+        it 'returns unprocessable entity' do
           subject
-          expect(response).to have_http_status(:success)
+          expect(response).to have_http_status(:unprocessable_entity)
+        end
+
+        it 'returns errors struct with message' do
+          subject
+          expect(parsed_response[:success]).to be false
+          expect(parsed_response[:errors]).to eq ['Version 1 of the API is not able to process un-passported applications']
         end
       end
     end
 
     context 'version 1 specified in the header' do
       let(:headers) { { 'Accept' => 'application/json;version=1' } }
+      let(:assessment) { create :assessment, :passported }
 
       it 'returns http success', :show_in_doc do
         subject
@@ -128,28 +127,79 @@ RSpec.describe AssessmentsController, type: :request do
     end
 
     context 'version 2 specifified in the header' do
-      let(:assessment) { create :assessment, :with_everything }
       let(:headers) { { 'Accept' => 'application/json;version=2' } }
 
-      it 'returns http success', :show_in_doc do
-        subject
-        expect(response).to have_http_status(:success)
+      context 'non-passported application' do
+        let(:assessment) { create :assessment, :with_everything }
+
+        it 'returns http success', :show_in_doc do
+          subject
+          expect(response).to have_http_status(:success)
+        end
+
+        it 'returns capital summary data as json' do
+          Timecop.freeze do
+            subject
+            expected_response = Decorators::AssessmentDecorator.new(assessment.reload).as_json.to_json
+            expect(parsed_response).to eq(JSON.parse(expected_response, symbolize_names: true))
+          end
+        end
       end
 
-      it 'returns capital summary data as json' do
-        Timecop.freeze do
+      context 'passported application' do
+        let(:assessment) { create :assessment, :passported }
+
+        it 'returns http success' do
           subject
-          expected_response = Decorators::AssessmentDecorator.new(assessment.reload).as_json.to_json
-          expect(parsed_response).to eq(JSON.parse(expected_response, symbolize_names: true))
+          expect(response).to have_http_status(:success)
+        end
+
+        it 'returns a structure with expected keys' do
+          subject
+          expect(parsed_response.keys).to eq expected_response_keys
+          expect(parsed_response[:assessment].keys).to eq expected_assessment_keys
+        end
+
+        it 'returns nil for the income elements of the response' do
+          subject
+          expect(parsed_response[:assessment][:gross_income]).to be_nil
+          expect(parsed_response[:assessment][:disposable_income]).to be_nil
         end
       end
     end
 
     context 'unknown version' do
       let(:headers) { { 'Accept' => 'application/json;version=9' } }
-      it 'raises' do
-        expect { subject }.to raise_error RuntimeError, 'Unsupported version specified in AcceptHeader'
+      let(:assessment) { create :assessment }
+
+      it 'returns unprocessable entity' do
+        subject
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it 'returns errors struct with message' do
+        subject
+        expect(parsed_response[:success]).to be false
+        expect(parsed_response[:errors]).to eq ['Unsupported version specified in AcceptHeader']
       end
     end
+  end
+
+  def expected_response_keys
+    %i[version timestamp assessment]
+  end
+
+  def expected_assessment_keys
+    %i[
+      id
+      client_reference_id
+      submission_date
+      matter_proceeding_type
+      assessment_result
+      applicant
+      gross_income
+      disposable_income
+      capital
+    ]
   end
 end

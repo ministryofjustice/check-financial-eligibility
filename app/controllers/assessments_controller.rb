@@ -60,16 +60,20 @@ class AssessmentsController < ApplicationController
     when '2'
       show_v2
     else
-      raise 'Unsupported version specified in AcceptHeader'
+      render json: Decorators::ErrorDecorator.new('Unsupported version specified in AcceptHeader').as_json, status: :unprocessable_entity
     end
   end
 
   private
 
   def show_v1
-    Workflows::MainWorkflow.call(assessment)
-    Assessors::MainAssessor.call(assessment)
-    render json: Decorators::ResultDecorator.new(assessment)
+    if applicant_passported?
+      Workflows::MainWorkflow.call(assessment)
+      Assessors::MainAssessor.call(assessment)
+      render json: Decorators::ResultDecorator.new(assessment)
+    else
+      render json: Decorators::ErrorDecorator.new('Version 1 of the API is not able to process un-passported applications').as_json, status: :unprocessable_entity
+    end
   end
 
   def show_v2
@@ -90,5 +94,9 @@ class AssessmentsController < ApplicationController
 
   def assessment
     @assessment ||= Assessment.find(params[:id])
+  end
+
+  def applicant_passported?
+    assessment.applicant.receives_qualifying_benefit?
   end
 end

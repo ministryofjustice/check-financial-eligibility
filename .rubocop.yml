@@ -11,6 +11,12 @@ AllCops:
 Metrics/ModuleLength:
   Exclude:
     - 'spec/**/*'
+    - 'db/migrate/*'
+
+Metrics/MethodLength:
+  Exclude:
+    - 'spec/**/*'
+    - 'db/migrate/*'
 
 Layout/LineLength:
   Max: 180
