@@ -37,5 +37,15 @@ FactoryBot.define do
       lower_threshold { Faker::Number.between(from: 1.0, to: 3_000).round(2) }
       upper_threshold { Faker::Number.between(from: 6_000, to: 10_000).round(2) }
     end
+
+    trait :with_everything do
+      after(:create) do |record|
+        create :non_liquid_capital_item, capital_summary: record
+        create :liquid_capital_item, capital_summary: record
+        create :vehicle, capital_summary: record
+        create :property, :main_home, capital_summary: record
+        create :property, :additional_property, capital_summary: record
+      end
+    end
   end
 end

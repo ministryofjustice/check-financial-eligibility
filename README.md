@@ -10,6 +10,14 @@ The API is documented at /apidocs
 The documentation and input validation is maintained via
 [APIPIE](https://github.com/Apipie/apipie-rails).
 
+## API Versioning
+
+The API version is specified through the accept header, as follows:
+
+    ``` Accept:application/json;version=2```
+
+Acceptable versions are 1 and 2.  If no version is specified, version1 is assumed.
+
 
 ## Generation of API documentation
 The documentaion is automatically generated when tests are run with an environment variable set.

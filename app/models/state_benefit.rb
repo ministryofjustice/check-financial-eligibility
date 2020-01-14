@@ -32,4 +32,8 @@ class StateBenefit < ApplicationRecord
     calculate_monthly_equivalent!(target_field: :monthly_value,
                                   collection: state_benefit_payments)
   end
+
+  def state_benefit_name
+    name.nil? ? state_benefit_type.name : name
+  end
 end

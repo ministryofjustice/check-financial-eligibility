@@ -10,7 +10,7 @@ class AssessmentsController < ApplicationController
     END_OF_TEXT
   end
 
-  api :POST, 'assessments', 'Create asssessment'
+  api :POST, 'assessments', 'Create assessment'
   formats ['json']
   param :client_reference_id, String, "The client's reference number for this application (free text)"
   param :submission_date, Date, date_option: :today_or_older, required: true, desc: 'The date of the original submission'
@@ -33,7 +33,15 @@ class AssessmentsController < ApplicationController
     end
   end
 
-  api :GET, 'assessments/:id', 'Get assessment result'
+  def self.documentation_for_get
+    %(Get assessment result<br/>
+       Note that there are two versions of this api.  The version is specified by the Accept header, for example</br>
+       <tt>&nbsp;&nbsp;&nbsp;&nbsp;Accept:application/json;version=2</tt><br/>
+       If the version part of the Accept header is not specified, version 1 is assumed<br/<br/>
+       In the given examples, the first two examples are version 1, the third example is version 2.<br/>)
+  end
+
+  api :GET, 'assessments/:id', AssessmentsController.documentation_for_get
   formats ['json']
   param :id, :uuid, required: true
 
@@ -46,12 +54,39 @@ class AssessmentsController < ApplicationController
   end
 
   def show
-    Workflows::MainWorkflow.call(assessment)
-    Assessors::MainAssessor.call(assessment)
-    render json: Decorators::ResultDecorator.new(assessment)
+    case determine_version
+    when '1'
+      show_v1
+    when '2'
+      show_v2
+    else
+      render json: Decorators::ErrorDecorator.new('Unsupported version specified in AcceptHeader').as_json, status: :unprocessable_entity
+    end
   end
 
   private
+
+  def show_v1
+    if applicant_passported?
+      Workflows::MainWorkflow.call(assessment)
+      Assessors::MainAssessor.call(assessment)
+      render json: Decorators::ResultDecorator.new(assessment)
+    else
+      render json: Decorators::ErrorDecorator.new('Version 1 of the API is not able to process un-passported applications').as_json, status: :unprocessable_entity
+    end
+  end
+
+  def show_v2
+    render json: Decorators::AssessmentDecorator.new(assessment).as_json
+  end
+
+  def determine_version
+    parts = request.headers['Accept'].split(';')
+    parts.each do |part|
+      return Regexp.last_match(1) if part =~ /^version=(\d)$/
+    end
+    '1'
+  end
 
   def assessment_creation_service
     @assessment_creation_service ||= Creators::AssessmentCreator.call(request.remote_ip, request.raw_post)
@@ -59,5 +94,9 @@ class AssessmentsController < ApplicationController
 
   def assessment
     @assessment ||= Assessment.find(params[:id])
+  end
+
+  def applicant_passported?
+    assessment.applicant.receives_qualifying_benefit?
   end
 end

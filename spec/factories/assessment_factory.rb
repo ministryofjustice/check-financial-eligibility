@@ -9,6 +9,14 @@ FactoryBot.define do
       applicant { create :applicant, :under_pensionable_age }
     end
 
+    trait :with_passported_applicant do
+      applicant { create :applicant, :with_qualifying_benefits }
+    end
+
+    trait :with_non_passported_applicant do
+      applicant { create :applicant, :without_qualifying_benefits }
+    end
+
     trait :with_applicant_over_pensionable_age do
       applicant { create :applicant, :over_pensionable_age }
     end
@@ -33,6 +41,22 @@ FactoryBot.define do
     trait :with_gross_income_summary do
       after(:create) do |assessment|
         create :gross_income_summary, assessment: assessment
+      end
+    end
+
+    trait :with_everything do
+      with_non_passported_applicant
+      after(:create) do |assessment|
+        create :gross_income_summary, :with_everything, assessment: assessment, assessment_result: 'eligible'
+        create :disposable_income_summary, :with_everything, assessment: assessment, assessment_result: 'eligible'
+        create :capital_summary, :with_everything, assessment: assessment, assessment_result: 'eligible'
+      end
+    end
+
+    trait :passported do
+      with_passported_applicant
+      after(:create) do |assessment|
+        create :capital_summary, :with_everything, assessment: assessment
       end
     end
 

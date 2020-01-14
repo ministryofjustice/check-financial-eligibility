@@ -5,5 +5,13 @@ FactoryBot.define do
     gross_income_summary
     name { Faker::OtherIncomeSource.name }
     monthly_income { nil }
+
+    trait :with_monthly_payments do
+      after(:create) do |record|
+        [Date.today, 1.month.ago, 2.month.ago].each do |date|
+          create :other_income_payment, other_income_source: record, amount: 75.0, payment_date: date
+        end
+      end
+    end
   end
 end
