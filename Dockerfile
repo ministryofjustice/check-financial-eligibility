@@ -19,6 +19,15 @@ EXPOSE 3000
 RUN adduser --disabled-password apply -u 1001 && \
     chown -R apply:apply /myapp
 
+# expect ping environment variables
+ARG BUILD_DATE
+ARG BUILD_TAG
+ARG APP_BRANCH
+# set ping environment variables
+ENV BUILD_DATE=${BUILD_DATE}
+ENV BUILD_TAG=${BUILD_TAG}
+ENV APP_BRANCH=${APP_BRANCH}
+
 USER 1001
 
 CMD ["docker/run"]
