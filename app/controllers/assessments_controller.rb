@@ -46,7 +46,7 @@ class AssessmentsController < ApplicationController
   param :id, :uuid, required: true
 
   returns code: :ok, desc: 'Successful response - see example for detail' do
-    property :assessment_result, %w[eligible not_eligible contribution_required manual_check_required]
+    property :assessment_result, %w[eligible ineligible contribution_required]
     property :applicant, Hash, desc: 'Applicant data used for assessment'
     property :capital, Hash, desc: 'Capital data used for assessment'
     property :property, Hash, desc: 'Property data used for assessment'
