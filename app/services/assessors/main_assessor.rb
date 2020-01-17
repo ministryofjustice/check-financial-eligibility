@@ -27,7 +27,7 @@ module Assessors
     def gross_income_assessment
       raise AssessmentError, 'Assessment not complete: Gross Income assessment still pending' if gross_income_result == 'pending'
 
-      return 'not_eligible' if gross_income_result == 'not_eligible'
+      return 'ineligible' if gross_income_result == 'ineligible'
 
       disposable_income_assessment
     end
@@ -35,7 +35,7 @@ module Assessors
     def disposable_income_assessment
       raise AssessmentError, 'Assessment not complete: Disposable Income assessment still pending' if disposable_income_result == 'pending'
 
-      return 'not_eligible' if disposable_income_result == 'not_eligible'
+      return 'ineligible' if disposable_income_result == 'ineligible'
 
       capital_assessment
     end
@@ -43,7 +43,7 @@ module Assessors
     def capital_assessment
       raise AssessmentError, 'Assessment not complete: Capital assessment still pending' if capital_result == 'pending'
 
-      return 'not_eligible' if capital_result == 'not_eligible'
+      return 'ineligible' if capital_result == 'ineligible'
 
       return 'contribution_required' if 'contribution_required'.in?(combined_result)
 

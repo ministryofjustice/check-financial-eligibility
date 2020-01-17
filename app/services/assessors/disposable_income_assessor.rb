@@ -31,7 +31,7 @@ module Assessors
       elsif total_disposable_income < upper_threshold
         'contribution_required'
       else
-        'not_eligible'
+        'ineligible'
       end
     end
   end

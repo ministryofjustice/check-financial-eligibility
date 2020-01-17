@@ -19,7 +19,7 @@ module Workflows
       context 'not employed, not self_employed, Gross income exceeds threshold' do
         let(:applicant) { create :applicant, self_employed: false }
 
-        before { assessment.gross_income_summary.update! assessment_result: 'not_eligible' }
+        before { assessment.gross_income_summary.update! assessment_result: 'ineligible' }
 
         it 'collates and assesses gross income but not disposable' do
           expect(Collators::GrossIncomeCollator).to receive(:call).with(assessment)
