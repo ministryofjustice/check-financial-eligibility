@@ -54,7 +54,7 @@ module Assessors
         let(:disposable_income_summary) { create :disposable_income_summary, total_disposable_income: 733.0, lower_threshold: 316, upper_threshold: 733 }
         it 'is ineligible' do
           subject
-          expect(disposable_income_summary.assessment_result).to eq 'not_eligible'
+          expect(disposable_income_summary.assessment_result).to eq 'ineligible'
         end
 
         it 'does not call the income contribution calculator' do
@@ -68,7 +68,7 @@ module Assessors
         let(:disposable_income_summary) { create :disposable_income_summary, total_disposable_income: 734, lower_threshold: 316, upper_threshold: 733 }
         it 'is ineligible' do
           subject
-          expect(disposable_income_summary.assessment_result).to eq 'not_eligible'
+          expect(disposable_income_summary.assessment_result).to eq 'ineligible'
         end
 
         it 'does not call the income contribution calculator' do

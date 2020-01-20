@@ -17,7 +17,7 @@
       "type": "string",
       "enum": [
         "eligible",
-        "not_eligible",
+        "ineligible",
         "contribution_required",
         "out_of_scope",
         "invalid_request"
@@ -268,7 +268,7 @@
       "type": "string"
     },
     "result": {
-      "description": "The result of the eligibility check as  follows:\neligible: Eligible for legal aid\nnot_eligible: Not eligible for legal aid\ncontribution_required: The applicant is eligible for legal aid, but a monthly contribution and/or a capital contribution as specified in the details is required\nout_of_scope: This applicant is out of scope for automatic determination of eligibility",
+      "description": "The result of the eligibility check as  follows:\neligible: Eligible for legal aid\nineligible: Not eligible for legal aid\ncontribution_required: The applicant is eligible for legal aid, but a monthly contribution and/or a capital contribution as specified in the details is required\nout_of_scope: This applicant is out of scope for automatic determination of eligibility",
       "$ref": "#/definitions/assessment_result"
     },
     "details": {

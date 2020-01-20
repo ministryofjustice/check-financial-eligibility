@@ -9,7 +9,7 @@ module Assessors
     private
 
     def assessment_result
-      income < threshold ? 'eligible' : 'not_eligible'
+      income < threshold ? 'eligible' : 'ineligible'
     end
 
     def income

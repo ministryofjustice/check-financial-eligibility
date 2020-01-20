@@ -28,7 +28,7 @@ module Assessors
           it 'is not eligible' do
             set_gross_income_values gross_income_summary, 2_000, 567, 2_567
             subject
-            expect(gross_income_summary.assessment_result).to eq 'not_eligible'
+            expect(gross_income_summary.assessment_result).to eq 'ineligible'
           end
         end
 
@@ -36,7 +36,7 @@ module Assessors
           it 'is not eligible' do
             set_gross_income_values gross_income_summary, 2_100.0, 500.2, 2_567
             subject
-            expect(gross_income_summary.assessment_result).to eq 'not_eligible'
+            expect(gross_income_summary.assessment_result).to eq 'ineligible'
           end
         end
 

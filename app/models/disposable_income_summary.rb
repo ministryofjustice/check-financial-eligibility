@@ -10,7 +10,7 @@ class DisposableIncomeSummary < ApplicationRecord
 
   enum(
     assessment_result: enum_hash_for(
-      :pending, :eligible, :not_eligible, :contribution_required
+      :pending, :eligible, :ineligible, :contribution_required
     ),
     _prefix: false
   )
