@@ -70,7 +70,7 @@ GEM
     bootsnap (1.4.5)
       msgpack (~> 1.0)
     builder (3.2.4)
-    byebug (11.0.1)
+    byebug (11.1.0)
     case_transform (0.2)
       activesupport
     climate_control (0.2.0)
