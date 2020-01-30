@@ -64,11 +64,13 @@ class ExpectedResult
     ENV['VERBOSE'].in? %w[true noisy]
   end
 
+  # :nocov:
   def all_values_equal
     methods.each do |method|
       return false if __send__(method).to_s != @actual_result.__send__(method)
     end
   end
+  # :nocov:
 
   def display_differences
     results = []
@@ -90,10 +92,12 @@ class ExpectedResult
     result = true
     expected_value = __send__(method).to_s
     actual_value = @actual_result.__send__(method)
+    # :nocov:
     if expected_value != actual_value
       result = false
       color = :red
     end
+    # :nocov:
     puts format(difference_pattern, method.to_s, expected_value, actual_value).colorize(color) if verbose?
     result
   end
@@ -112,10 +116,6 @@ class ExpectedResult
 
   def gross_income
     @expected_result[:gross_income_summary]
-  end
-
-  def gross_income_result
-    gross_income[:assessment_result]
   end
 
   def other_income
@@ -140,18 +140,6 @@ class ExpectedResult
 
   def disposable_income_assessment_result
     disposable_income[:assessment_result]
-  end
-
-  def childcare
-    disposable_income[:childcare]
-  end
-
-  def dependant_allowance
-    disposable_income[:dependant_allowance]
-  end
-
-  def maintenance
-    disposable_income[:maintenance]
   end
 
   def total_outgoings_and_allowances

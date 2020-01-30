@@ -1,7 +1,5 @@
 require_relative 'endpoint_data_extractor'
-# require_relative 'payload_poster'
 require_relative 'payload_generator'
-require_relative 'assessment_poster'
 
 class DatasetGenerator
   attr_reader :result, :logs
@@ -37,10 +35,5 @@ class DatasetGenerator
 
   def test_active?
     @headers['Test active'] == true
-  end
-
-  def log_message(message)
-    @logs << message
-    true
   end
 end

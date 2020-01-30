@@ -12,10 +12,6 @@ module Collators
 
     private
 
-    def housing_cost_records
-      disposable_income_summary.housing_cost_outgoings
-    end
-
     def housing_benefit_records
       gross_income_summary.housing_benefit_payments
     end

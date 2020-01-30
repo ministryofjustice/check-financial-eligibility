@@ -3,11 +3,20 @@ require Rails.root.join 'lib/integration_helpers/property_payload_generator.rb'
 
 RSpec.describe PropertyPayloadGenerator do
   describe '#run' do
-    let(:rows) { rows_in }
     let(:generator) { described_class.new(rows) }
 
-    it 'generates the expected payload' do
-      expect(generator.run).to eq expected_payload
+    context 'rows in expected order' do
+      let(:rows) { rows_in }
+      it 'generates the expected payload' do
+        expect(generator.run).to eq expected_payload
+      end
+    end
+
+    context 'first row not main_home or additional_property' do
+      let(:rows) { rows_in.slice(1,999) }
+      it 'raises if first line not main_home' do
+        expect { generator.run }.to raise_error RuntimeError, 'First row of property not main_home or additional_properties'
+      end
     end
   end
 
