@@ -81,11 +81,13 @@ class ExpectedResult
     result
   end
 
+  # :nocov:
   def display_differences_header
     header_pattern = '%40s  %-22s %-22s'
     puts format(header_pattern, '', 'Expected', 'Actual')
     puts format(header_pattern, '', '=========', '=========')
   end
+  # :nocov:
 
   def display_differences_for(method)
     color = :green
@@ -102,6 +104,7 @@ class ExpectedResult
     result
   end
 
+  # :nocov:
   def display_differences_footer(result)
     result == true ? puts('SUCCESS'.colorize(:green)) : puts('FAIL'.colorize(:red))
   end
@@ -109,7 +112,8 @@ class ExpectedResult
   def difference_pattern
     @difference_pattern ||= '%40s: %-22s %-22s'.freeze
   end
-
+  # :nocov:
+  #
   def assessment_result
     @expected_result[:assessment][:assessment_result]
   end
