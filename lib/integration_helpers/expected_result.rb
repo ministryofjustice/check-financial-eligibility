@@ -113,7 +113,7 @@ class ExpectedResult
     @difference_pattern ||= '%40s: %-22s %-22s'.freeze
   end
   # :nocov:
-  #
+
   def assessment_result
     @expected_result[:assessment][:assessment_result]
   end
