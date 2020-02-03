@@ -77,23 +77,6 @@ module Creators
           }
         ]
       end
-
-      # def outgoings_params
-      #  {
-      #    childcare: [
-      #      { payment_date: '2019-12-09', amount: 266.95 },
-      #      { payment_date: '2019-11-09', amount: 584.31 }
-      #    ],
-      #    maintenance: [
-      #      { payment_date: '2019-12-06', amount: 193.47 },
-      #      { payment_date: '2019-11-06', amount: 506.78 }
-      #    ],
-      #    housing_costs: [
-      #      { payment_date: '2019-12-01', amount: 299.38, housing_cost_type: housing_cost_type_rent },
-      #      { payment_date: '2019-11-01', amount: 810.38, housing_cost_type: housing_cost_type_mortgage }
-      #    ]
-      #  }
-      # end
     end
   end
 end
