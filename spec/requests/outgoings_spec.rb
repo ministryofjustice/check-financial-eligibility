@@ -74,7 +74,7 @@ RSpec.describe OutgoingsController, type: :request do
     context 'without housing costs or maintenance payments' do
       let(:params) do
         {
-          outgoings: outgoings_params.except(:housing_costs).except(:maintenance)
+          outgoings: outgoings_params.select { |p| p[:name] == 'childcare' }
         }
       end
       it 'create the childcare records but does not create any other records' do
@@ -106,41 +106,49 @@ RSpec.describe OutgoingsController, type: :request do
     end
 
     def outgoings_params
-      {
-        childcare: [
-          {
-            payment_date: payment_date,
-            amount: Faker::Number.decimal(l_digits: 3, r_digits: 2)
-          },
-          {
-            payment_date: payment_date,
-            amount: Faker::Number.decimal(l_digits: 3, r_digits: 2)
-          }
-        ],
-        maintenance: [
-          {
-            payment_date: payment_date,
-            amount: Faker::Number.decimal(l_digits: 3, r_digits: 2)
-          },
-          {
-            payment_date: payment_date,
-            amount: Faker::Number.decimal(l_digits: 3, r_digits: 2)
-          }
-        ],
-        housing_costs: [
-          {
-            payment_date: payment_date,
-            amount: Faker::Number.decimal(l_digits: 3, r_digits: 2),
-            housing_cost_type: housing_cost_type
-          },
-          {
-            payment_date: payment_date,
-            amount: Faker::Number.decimal(l_digits: 3, r_digits: 2),
-            housing_cost_type: housing_cost_type
-
-          }
-        ]
-      }
+      [
+        {
+          name: 'childcare',
+          payments: [
+            {
+              payment_date: payment_date,
+              amount: Faker::Number.decimal(l_digits: 3, r_digits: 2)
+            },
+            {
+              payment_date: payment_date,
+              amount: Faker::Number.decimal(l_digits: 3, r_digits: 2)
+            }
+          ]
+        },
+        {
+          name: 'maintenance',
+          payments: [
+            {
+              payment_date: payment_date,
+              amount: Faker::Number.decimal(l_digits: 3, r_digits: 2)
+            },
+            {
+              payment_date: payment_date,
+              amount: Faker::Number.decimal(l_digits: 3, r_digits: 2)
+            }
+          ]
+        },
+        {
+          name: 'housing_costs',
+          payments: [
+            {
+              payment_date: payment_date,
+              amount: Faker::Number.decimal(l_digits: 3, r_digits: 2),
+              housing_cost_type: housing_cost_type
+            },
+            {
+              payment_date: payment_date,
+              amount: Faker::Number.decimal(l_digits: 3, r_digits: 2),
+              housing_cost_type: housing_cost_type
+            }
+          ]
+        }
+      ]
     end
   end
 end

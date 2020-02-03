@@ -35,14 +35,20 @@ module MonthlyEquivalentCalculator
   end
 
   def frequency
-    Utilities::PaymentPeriodAnalyser.new(dates_and_amounts).period_pattern
+    @frequency ||= Utilities::PaymentPeriodAnalyser.new(dates_and_amounts).period_pattern
   end
 
   def converter
+    raise "Unable to calculate payment frequency for #{self.class} with payment dates #{payment_dates.inspect}" if frequency == :unknown
+
     @converter ||= Calculators::UnearnedIncomeMonthlyConvertor.new(frequency, payment_amounts)
   end
 
   def payment_amounts
     @monthly_equivalent_calculator_collection.map(&@monthly_equivalent_calculator_amount_method)
+  end
+
+  def payment_dates
+    @monthly_equivalent_calculator_collection.map(&@monthly_equivalent_calculator_date_method)
   end
 end

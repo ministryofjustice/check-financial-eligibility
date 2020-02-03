@@ -28,10 +28,8 @@ module Calculators
 
     context 'unpassported' do
       let(:applicant) { create :applicant, :without_qualifying_benefits, :over_pensionable_age }
-      it 'raises' do
-        expect {
-          service.value
-        }.to raise_error 'Not implemented: PensionerCapitalDisregard for unpassported applicants'
+      it 'returns the passported value' do
+        expect(service.value).to eq 100_000.0
       end
     end
   end

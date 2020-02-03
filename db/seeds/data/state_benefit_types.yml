@@ -1,6 +1,6 @@
 # Note the labels (primary keys in this file) are used to track the benefit type
 # across updates. If you change a label, a duplicate may result. If a benefit changes
-# name for example, from "Housing benefit" to "Homes benefit", change the 
+# name for example, from "Housing benefit" to "Homes benefit", change the
 # name, but leave the benefit_type#label as it is.
 ---
 age_related_payment:
@@ -72,7 +72,7 @@ exceptionally_severe_disablement_allowance:
   :exclude_from_gross_income: true
   :dwp_code:
 fostering_allowance:
-  :name: Fostering Allowance (to the extent it exceeds dependents allowance)
+  :name: Fostering Allowance (to the extent it exceeds dependants allowance)
   :exclude_from_gross_income: true
   :dwp_code:
 grenfell_payments:

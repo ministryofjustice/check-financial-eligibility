@@ -4,21 +4,12 @@ class OutgoingsController < ApplicationController
   formats ['json']
   param :assessment_id, :uuid, required: true
 
-  param :outgoings, Hash, required: true do
-    param :childcare, Array, desc: 'Collection of childcare payments made', required: false do
-      param :payment_date, Date, date_option: :today_or_older, required: true, desc: 'The date the childcare payment was made'
-      param :amount, :currency, required: true, desc: 'The monetary amount paid for the childcare'
-    end
-
-    param :maintenance, Array, desc: 'Collection of maintenance payments made', required: false do
-      param :payment_date, Date, date_option: :today_or_older, required: true, desc: 'The date the maintenance payment was made'
-      param :amount, :currency, required: true, desc: 'The monetary value of the maintenance payment'
-    end
-
-    param :housing_costs, Array, desc: 'Collection of housing cost payment', required: false do
-      param :payment_date, Date, date_option: :today_or_older, required: true, desc: 'The date the housing cost payment was made'
-      param :amount, :currency, required: true, desc: 'The monetary amount paid for the housing cost'
-      param :housing_cost_type, String, required: true, desc: 'Type of housing cost, one of: rent, mortgage, board_and_lodging'
+  param :outgoings, Array, desc: 'Collection of other outgoing types' do
+    param :name, %w[childcare housing_costs maintenance], required: true, desc: 'The type of outgoing'
+    param :payments, Array, desc: 'Collection of payment dates and amounts' do
+      param :payment_date, Date, date_option: :today_or_older, required: true, desc: 'The date payment made'
+      param :housing_costs_type, %w[rent mortgage board_and_lodging], required: false, desc: 'The type of housing cost (omit for non-housing cost outgoings)'
+      param :amount, :currency, 'Amount of payment'
     end
   end
 

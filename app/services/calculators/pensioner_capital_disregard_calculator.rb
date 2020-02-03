@@ -5,9 +5,7 @@ module Calculators
     def value
       return 0 unless pensioner?
 
-      return passported_value if passported?
-
-      raise 'Not implemented: PensionerCapitalDisregard for unpassported applicants'
+      passported? ? passported_value : non_passported_value
     end
 
     def thresholds
@@ -38,6 +36,10 @@ module Calculators
 
     def passported_value
       thresholds[:passported]
+    end
+
+    def non_passported_value
+      thresholds[:non_passported]
     end
   end
 end

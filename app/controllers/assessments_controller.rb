@@ -54,17 +54,23 @@ class AssessmentsController < ApplicationController
   end
 
   def show
+    determine_version_and_process
+  rescue StandardError => err
+    render json: Decorators::ErrorDecorator.new(err).as_json, status: :unprocessable_entity
+  end
+
+  private
+
+  def determine_version_and_process
     case determine_version
     when '1'
       show_v1
     when '2'
       show_v2
     else
-      render json: Decorators::ErrorDecorator.new('Unsupported version specified in AcceptHeader').as_json, status: :unprocessable_entity
+      raise CheckFinancialEligibilityError, 'Unsupported version specified in AcceptHeader'
     end
   end
-
-  private
 
   def show_v1
     if applicant_passported?
@@ -77,6 +83,8 @@ class AssessmentsController < ApplicationController
   end
 
   def show_v2
+    Workflows::MainWorkflow.call(assessment)
+    Assessors::MainAssessor.call(assessment)
     render json: Decorators::AssessmentDecorator.new(assessment).as_json
   end
 

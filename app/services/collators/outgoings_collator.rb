@@ -2,7 +2,6 @@ module Collators
   class OutgoingsCollator < BaseWorkflowService
     def call
       collate_costs_and_allowances
-      Calculators::DisposableIncomeCalculator.call(assessment)
     end
 
     private

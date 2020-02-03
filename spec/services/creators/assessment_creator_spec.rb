@@ -73,11 +73,11 @@ module Creators
     context 'invalid request' do
       let(:remote_ip) { nil }
 
-      it 'is successful' do
-        expect(subject.success?).to eq false
+      it 'is not successful' do
+        expect(subject.success?).to be false
       end
 
-      it 'does notcreates an Assessment record' do
+      it 'does not create an Assessment record' do
         expect { subject.success? }.not_to change { Assessment.count }
       end
 

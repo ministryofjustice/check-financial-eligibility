@@ -14,6 +14,7 @@ module Decorators
       {
         version: '2',
         timestamp: Time.now,
+        success: true,
         assessment: {
           id: assessment.id,
           client_reference_id: assessment.client_reference_id,

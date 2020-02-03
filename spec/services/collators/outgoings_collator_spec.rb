@@ -12,7 +12,6 @@ module Collators
         expect(Collators::DependantsAllowanceCollator).to receive(:call).with(assessment).exactly(1)
         expect(Collators::MaintenanceCollator).to receive(:call).with(assessment).exactly(1)
         expect(Collators::HousingCostsCollator).to receive(:call).with(assessment).exactly(1)
-        expect(Calculators::DisposableIncomeCalculator).to receive(:call).with(assessment).exactly(1)
         subject
       end
     end

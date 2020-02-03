@@ -2,7 +2,7 @@ require 'rails_helper'
 
 module Workflows
   RSpec.describe NonPassportedWorkflow do
-    let(:assessment) { create :assessment, :with_gross_income_summary, applicant: applicant }
+    let(:assessment) { create :assessment, :with_everything, applicant: applicant }
 
     describe '.call' do
       subject { described_class.call(assessment) }
