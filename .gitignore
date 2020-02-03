@@ -32,6 +32,7 @@
 *.orig
 
 .DS_Store
+.idea/
 
 # dotenv
 # Ignore environment variables

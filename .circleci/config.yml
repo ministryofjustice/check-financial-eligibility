@@ -52,6 +52,14 @@ references:
         sudo pip3 install awscli
         $(aws ecr get-login --no-include-email)
 
+  setup_uat_kubectl: &setup_uat_kubectl
+    run:
+      name: Kubectl deployment setup UAT
+      command: |
+        $(aws ecr get-login --region eu-west-2 --no-include-email)
+        setup-kube-auth
+        kubectl config use-context uat
+
   push_to_ecr: &push_to_ecr
     run:
       name: Push image to ecr repo
@@ -196,6 +204,17 @@ jobs:
         name: Delete old images from ecr repo
         command: |
           ./bin/clean_up_ecr
+
+  delete_uat:
+    <<: *deploy_container_config
+    steps:
+      - checkout
+      - setup_remote_docker
+      - *setup_uat_kubectl
+      - run:
+          name: Delete UAT release
+          command: |
+            ./bin/delete_uat_release
 
 workflows:
   version: 2
