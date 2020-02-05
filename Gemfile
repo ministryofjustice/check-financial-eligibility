@@ -45,7 +45,7 @@ gem 'descriptive_statistics', require: 'descriptive_statistics/safe'
 gem 'google_drive'
 
 # parse spreadsheets
-gem 'roo', '~> 2.8.0'
+gem 'roo', '~> 2.8.3'
 
 group :development, :test do
   gem 'awesome_print'
