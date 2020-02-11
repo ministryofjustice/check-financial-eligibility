@@ -29,16 +29,13 @@ This generates a JSON file `doc/apipie_examples.json` which is read and used whe
 ## Integration tests
 Several use cases and their expected results can be found in the google spreadsheet https://docs.google.com/spreadsheets/d/16X7ORqVRpC0BMxgsXn8_NR9ul4MNPWUbYqmpeoBstIo .
 
-This online spreadsheet is exported as an `.xlsx` file, and copied inside the project (`spec/fixtures/integration_test_data.xlsx`) and a unit test (`spec/services/integration_tests/test_runner_spec.rb`) ensures that the service returns the expected results for the use cases of the spreadsheet.  Ensure that if the master Google spreadsheet is edited, it is exported as an `.xlsx` and copied into the above location in the project.
+This online spreadsheet is exported as an `.xlsx` file, and copied inside the project (`spec/fixtures/integration_test_data.xlsx`) and a unit test (`spec/integration/test_runner_spec.rb`) ensures that the service returns the expected results for the use cases of the spreadsheet.  Ensure that if the master Google spreadsheet is edited, it is exported as an `.xlsx` and copied into the above location in the project.
 
 To run just the integration tests and see detailed output, run: 
    
-   ```VERBOSE=true bundle exec rspec spec/services/integration_tests/test_runner_spec.rb```
+   ```VERBOSE=true bundle exec rspec spec/integration/new_test_runner_spec.rb```
 
 or more simply:
 
-   ```rake integration```
-
-
-
-    
+* ```rake integration``` to run verbose, or
+* ```rake integration[silent]``` to run in silent mode
