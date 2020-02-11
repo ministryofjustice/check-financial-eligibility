@@ -1,9 +1,7 @@
 module Calculators
   class HousingCostsCalculator < BaseWorkflowService
-    delegate :disposable_income_summary, to: :assessment
+    delegate :disposable_income_summary, :submission_date, :dependants, :applicant, to: :assessment
     delegate :housing_cost_outgoings, to: :disposable_income_summary
-    delegate :submission_date, :dependants, to: :assessment
-    delegate :applicant, to: :assessment
 
     def call
       monthly_actual_housing_costs = disposable_income_summary.calculate_monthly_equivalent(collection: housing_cost_outgoings, amount_method: :allowable_amount)
