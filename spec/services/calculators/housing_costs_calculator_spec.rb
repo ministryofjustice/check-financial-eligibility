@@ -16,14 +16,14 @@ module Calculators
       end
     end
 
-    subject { described_class.call(assessment) }
+    subject(:calculator) { described_class.new(assessment) }
 
     context 'applicant has dependants' do
       let(:housing_cost_amount) { housing_cost_above_cap }
       before { create :dependant, assessment: assessment }
       context 'actual housing costs higher than cap' do
         it 'returns the uncapped value' do
-          expect(subject).to eq housing_cost_above_cap
+          expect(calculator.net_housing_costs).to eq housing_cost_above_cap
         end
       end
     end
@@ -32,14 +32,17 @@ module Calculators
       context 'actual housing costs lower than cap' do
         let(:housing_cost_amount) { housing_cost_below_cap }
         it 'returns the actual housing costs' do
-          expect(subject).to eq housing_cost_below_cap
+          expect(calculator.net_housing_costs).to eq housing_cost_below_cap
         end
       end
 
       context 'actual housing costs higher than cap' do
         let(:housing_cost_amount) { housing_cost_above_cap }
-        it 'returns the capped value' do
-          expect(subject).to eq housing_cost_cap
+        it 'returns the same value' do
+          expect(calculator.monthly_actual_housing_costs).to eq housing_cost_above_cap
+        end
+        it 'net cost returns the capped value' do
+          expect(calculator.net_housing_costs).to eq housing_cost_cap
         end
       end
     end

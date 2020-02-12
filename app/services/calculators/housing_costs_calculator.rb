@@ -3,9 +3,12 @@ module Calculators
     delegate :disposable_income_summary, :submission_date, :dependants, :applicant, to: :assessment
     delegate :housing_cost_outgoings, to: :disposable_income_summary
 
-    def call
-      monthly_actual_housing_costs = disposable_income_summary.calculate_monthly_equivalent(collection: housing_cost_outgoings, amount_method: :allowable_amount)
-      housing_costs_cap_apply? ? [monthly_actual_housing_costs, single_monthly_housing_costs_cap].min : monthly_actual_housing_costs
+    def net_housing_costs
+      housing_costs_cap_apply? ? [monthly_actual_housing_costs, single_monthly_housing_costs_cap].min.to_f : monthly_actual_housing_costs
+    end
+
+    def monthly_actual_housing_costs
+      @monthly_actual_housing_costs ||= disposable_income_summary.calculate_monthly_equivalent(collection: housing_cost_outgoings, amount_method: :allowable_amount)
     end
 
     private
