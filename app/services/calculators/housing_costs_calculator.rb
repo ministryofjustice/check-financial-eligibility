@@ -11,7 +11,15 @@ module Calculators
       @monthly_actual_housing_costs ||= disposable_income_summary.calculate_monthly_equivalent(collection: housing_cost_outgoings, amount_method: :allowable_amount)
     end
 
+    def monthly_housing_benefit
+      disposable_income_summary.calculate_monthly_equivalent(collection: housing_benefit_records)
+    end
+
     private
+
+    def housing_benefit_records
+      gross_income_summary.housing_benefit_payments
+    end
 
     def single_monthly_housing_costs_cap
       Threshold.value_for(:single_monthly_housing_costs_cap, at: submission_date)
