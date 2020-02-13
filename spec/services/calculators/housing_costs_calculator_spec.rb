@@ -39,7 +39,7 @@ module Calculators
       context 'actual housing costs higher than cap' do
         let(:housing_cost_amount) { housing_cost_above_cap }
         it 'returns the same value' do
-          expect(calculator.monthly_actual_housing_costs).to eq housing_cost_above_cap
+          expect(calculator.gross_housing_costs).to eq housing_cost_above_cap
         end
         it 'net cost returns the capped value' do
           expect(calculator.net_housing_costs).to eq housing_cost_cap
