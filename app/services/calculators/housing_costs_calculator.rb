@@ -34,7 +34,7 @@ module Calculators
     end
 
     def housing_benefit_records
-      gross_income_summary.housing_benefit_payments
+      gross_income_summary&.housing_benefit_payments
     end
 
     def all_board_and_lodging?

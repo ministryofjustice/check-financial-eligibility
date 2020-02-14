@@ -2,7 +2,7 @@ require 'rails_helper'
 
 module Calculators
   RSpec.describe HousingCostsCalculator do
-    let(:assessment) { create :assessment, :with_disposable_income_summary }
+    let(:assessment) { create :assessment, :with_disposable_income_summary, :with_gross_income_summary }
     let(:housing_cost_above_cap) { 600.00 }
     let(:housing_cost_below_cap) { 530.00 }
     let(:housing_cost_cap) { 545.00 }
