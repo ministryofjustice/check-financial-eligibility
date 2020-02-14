@@ -27,31 +27,67 @@ module Collators
           context 'board and lodging' do
             let(:housing_cost_type) { 'board_and_lodging' }
             let(:housing_cost_amount) { 1500.00 }
-            it 'should record half the monthly housing cost' do
+
+            it 'should cap the return' do
               subject
               expect(disposable_income_summary.gross_housing_costs).to eq 750.00
               expect(disposable_income_summary.housing_benefit).to eq 0.0
-              expect(disposable_income_summary.net_housing_costs).to eq 545.00
+              expect(disposable_income_summary.net_housing_costs).to eq 545.00 # Cap applied
+            end
+
+            context 'when 50% of monthly outgoing is below the cap' do
+              let(:housing_cost_amount) { 1040.00 }
+
+              it 'should return the gross cost as net' do
+                subject
+                expect(disposable_income_summary.gross_housing_costs).to eq 520.00
+                expect(disposable_income_summary.housing_benefit).to eq 0.0
+                expect(disposable_income_summary.net_housing_costs).to eq 520.00
+              end
             end
           end
 
           context 'rent' do
             let(:housing_cost_type) { 'rent' }
-            it 'should record the full monthly housing costs' do
+
+            it 'should cap the return' do
               subject
               expect(disposable_income_summary.gross_housing_costs).to eq 1200.00
               expect(disposable_income_summary.housing_benefit).to eq 0.0
               expect(disposable_income_summary.net_housing_costs).to eq 545.00 # Cap applied
             end
+
+            context 'when net cost is below housing cap' do
+              let(:housing_cost_amount) { 520.00 }
+
+              it 'should return the net cost' do
+                subject
+                expect(disposable_income_summary.gross_housing_costs).to eq 520.00
+                expect(disposable_income_summary.housing_benefit).to eq 0.0
+                expect(disposable_income_summary.net_housing_costs).to eq 520.00
+              end
+            end
           end
 
           context 'mortgage' do
             let(:housing_cost_type) { 'mortgage' }
-            it 'should record the full monthly housing costs' do
+
+            it 'should cap the return' do
               subject
               expect(disposable_income_summary.gross_housing_costs).to eq 1200.00
               expect(disposable_income_summary.housing_benefit).to eq 0.0
               expect(disposable_income_summary.net_housing_costs).to eq 545.00 # Cap applied
+            end
+
+            context 'when net cost is below housing cap' do
+              let(:housing_cost_amount) { 520.00 }
+
+              it 'should return the net cost' do
+                subject
+                expect(disposable_income_summary.gross_housing_costs).to eq 520.00
+                expect(disposable_income_summary.housing_benefit).to eq 0.0
+                expect(disposable_income_summary.net_housing_costs).to eq 520.00
+              end
             end
           end
         end
@@ -65,7 +101,7 @@ module Collators
             let(:housing_cost_amount) { 1500.00 }
             let(:housing_benefit_amount) { 100.00 }
 
-            it 'should record half the housing cost less the housing benefit' do
+            it 'should cap the return' do
               subject
               expect(disposable_income_summary.gross_housing_costs).to eq 750.00
               expect(disposable_income_summary.housing_benefit).to eq 100.00
@@ -76,22 +112,46 @@ module Collators
           context 'rent' do
             let(:housing_cost_type) { 'rent' }
 
-            it 'should record the full monthly housing costs' do
+            it 'should cap the return' do
               subject
               expect(disposable_income_summary.gross_housing_costs).to eq 1200.00
               expect(disposable_income_summary.housing_benefit).to eq 500.0
               expect(disposable_income_summary.net_housing_costs).to eq 545.00 # Cap applied
+            end
+
+            context 'when net amount will be below the cap' do
+              let(:housing_cost_amount) { 1200.00 }
+              let(:housing_benefit_amount) { 500.00 }
+
+              it 'should cap the return' do
+                subject
+                expect(disposable_income_summary.gross_housing_costs).to eq 1200.00
+                expect(disposable_income_summary.housing_benefit).to eq 500.0
+                expect(disposable_income_summary.net_housing_costs).to eq 545.00 # Cap applied
+              end
             end
           end
 
           context 'mortgage' do
             let(:housing_cost_type) { 'mortgage' }
 
-            it 'should record the full housing costs less the housing benefit' do
+            it 'should cap the return' do
               subject
               expect(disposable_income_summary.gross_housing_costs).to eq 1200.00
               expect(disposable_income_summary.housing_benefit).to eq 500.00
               expect(disposable_income_summary.net_housing_costs).to eq 545.00 # Cap applied
+            end
+
+            context 'when net amount will be below the cap' do
+              let(:housing_cost_amount) { 600.00 }
+              let(:housing_benefit_amount) { 200.00 }
+
+              it 'should return net as gross_cost minus housing_benefit' do
+                subject
+                expect(disposable_income_summary.gross_housing_costs).to eq 600.00
+                expect(disposable_income_summary.housing_benefit).to eq 200.0
+                expect(disposable_income_summary.net_housing_costs).to eq 400.00
+              end
             end
           end
         end
@@ -106,11 +166,23 @@ module Collators
           context 'board and lodging' do
             let(:housing_cost_type) { 'board_and_lodging' }
             let(:housing_cost_amount) { 1500.00 }
+
             it 'should record half the monthly housing cost' do
               subject
               expect(disposable_income_summary.gross_housing_costs).to eq 750.00
               expect(disposable_income_summary.housing_benefit).to eq 0.0
               expect(disposable_income_summary.net_housing_costs).to eq 750.00
+            end
+
+            context 'when net cost is below housing cap' do
+              let(:housing_cost_amount) { 900.00 }
+
+              it 'should return half the monthly housing cost' do
+                subject
+                expect(disposable_income_summary.gross_housing_costs).to eq 450.00
+                expect(disposable_income_summary.housing_benefit).to eq 0.0
+                expect(disposable_income_summary.net_housing_costs).to eq 450.00
+              end
             end
           end
 
@@ -122,6 +194,17 @@ module Collators
               expect(disposable_income_summary.housing_benefit).to eq 0.0
               expect(disposable_income_summary.net_housing_costs).to eq 1200.00
             end
+
+            context 'when net cost is below housing cap' do
+              let(:housing_cost_amount) { 520.00 }
+
+              it 'should return the net cost' do
+                subject
+                expect(disposable_income_summary.gross_housing_costs).to eq 520.00
+                expect(disposable_income_summary.housing_benefit).to eq 0.0
+                expect(disposable_income_summary.net_housing_costs).to eq 520.00
+              end
+            end
           end
 
           context 'mortgage' do
@@ -131,6 +214,17 @@ module Collators
               expect(disposable_income_summary.gross_housing_costs).to eq 1200.00
               expect(disposable_income_summary.housing_benefit).to eq 0.0
               expect(disposable_income_summary.net_housing_costs).to eq 1200.00
+            end
+
+            context 'when net cost is below housing cap' do
+              let(:housing_cost_amount) { 520.00 }
+
+              it 'should return the gross cost as net' do
+                subject
+                expect(disposable_income_summary.gross_housing_costs).to eq 520.00
+                expect(disposable_income_summary.housing_benefit).to eq 0.0
+                expect(disposable_income_summary.net_housing_costs).to eq 520.00
+              end
             end
           end
         end
@@ -144,7 +238,7 @@ module Collators
             let(:housing_cost_amount) { 1200.00 }
             let(:housing_benefit_amount) { 100.00 }
 
-            it 'should record half the housing cost less the housing benefit' do
+            it 'should record half the monthly outgoing less the housing benefit' do
               subject
               expect(disposable_income_summary.gross_housing_costs).to eq 600.00
               expect(disposable_income_summary.housing_benefit).to eq 100.000
@@ -152,7 +246,7 @@ module Collators
             end
           end
 
-          context 'board and lodging II' do
+          context 'board and lodging different values' do
             let(:housing_cost_type) { 'board_and_lodging' }
             let(:housing_cost_amount) { 1500.00 }
             let(:housing_benefit_amount) { 100.00 }
@@ -174,6 +268,18 @@ module Collators
               expect(disposable_income_summary.housing_benefit).to eq 500.0
               expect(disposable_income_summary.net_housing_costs).to eq 700.00
             end
+
+            context 'when net cost is below housing cap' do
+              let(:housing_cost_amount) { 600.00 }
+              let(:housing_benefit_amount) { 200.00 }
+
+              it 'should return net as gross_cost minus housing_benefit' do
+                subject
+                expect(disposable_income_summary.gross_housing_costs).to eq 600.00
+                expect(disposable_income_summary.housing_benefit).to eq 200.0
+                expect(disposable_income_summary.net_housing_costs).to eq 400.00
+              end
+            end
           end
 
           context 'mortgage' do
@@ -184,6 +290,18 @@ module Collators
               expect(disposable_income_summary.gross_housing_costs).to eq 1200.00
               expect(disposable_income_summary.housing_benefit).to eq 500.00
               expect(disposable_income_summary.net_housing_costs).to eq 700.00
+            end
+
+            context 'when net cost is below housing cap' do
+              let(:housing_cost_amount) { 600.00 }
+              let(:housing_benefit_amount) { 200.00 }
+
+              it 'should return net as gross_cost minus housing_benefit' do
+                subject
+                expect(disposable_income_summary.gross_housing_costs).to eq 600.00
+                expect(disposable_income_summary.housing_benefit).to eq 200.0
+                expect(disposable_income_summary.net_housing_costs).to eq 400.00
+              end
             end
           end
         end
