@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-module Collators
-  RSpec.describe StateBenefitCollator do
+module Calculators
+  RSpec.describe StateBenefitsCalculator do
     let(:assessment) { create :assessment, :with_gross_income_summary }
     let(:gross_income_summary) { assessment.gross_income_summary }
     subject { described_class.call(assessment) }
@@ -22,9 +22,8 @@ module Collators
                state_benefit_type: state_benefit_type_included
       end
       context 'weekly payments' do
-        it 'updates gross income summary' do
-          subject
-          expect(gross_income_summary.reload.monthly_state_benefits).to eq 216.67
+        it 'returns correct total monthly state benefits' do
+          expect(subject).to eq 216.67
         end
       end
 
@@ -36,9 +35,8 @@ module Collators
                  gross_income_summary: gross_income_summary,
                  state_benefit_type: another_state_benefit_type_included
         end
-        it 'updates gross income summary with the sum of both monthly and weekly benefits' do
-          subject
-          expect(gross_income_summary.reload.monthly_state_benefits).to eq(216.67 + 75)
+        it 'returns correct sum of both monthly and weekly benefits' do
+          expect(subject).to eq(216.67 + 75)
         end
       end
       context 'mixture of included and excluded benefits' do
@@ -49,9 +47,8 @@ module Collators
                  gross_income_summary: gross_income_summary,
                  state_benefit_type: state_benefit_type_excluded
         end
-        it 'updates gross income summary with the sum amounts of only included benefits' do
-          subject
-          expect(gross_income_summary.reload.monthly_state_benefits).to eq(216.67)
+        it 'returns correct sum amounts of only included benefits' do
+          expect(subject).to eq(216.67)
         end
       end
     end

@@ -45,21 +45,13 @@ module Collators
     end
 
     def monthly_state_benefits
-      @monthly_state_benefits ||= collect_state_benefits
+      @monthly_state_benefits ||= Calculators::StateBenefitsCalculator.call(assessment)
     end
 
     def collect_other_incomes
       total = 0.0
       gross_income_summary.other_income_sources.each do |source|
         total += source.calculate_monthly_income!
-      end
-      total
-    end
-
-    def collect_state_benefits
-      total = 0.0
-      gross_income_summary.state_benefits.each do |state_benefit|
-        total += state_benefit.calculate_monthly_amount!
       end
       total
     end

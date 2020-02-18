@@ -288,7 +288,7 @@ RSpec.describe AssessmentsController, type: :request do
     create :other_income_payment, other_income_source: ois, payment_date: Date.parse('31/3/2019'), amount: 1415
     create :other_income_payment, other_income_source: ois, payment_date: Date.parse('30/4/2019'), amount: 1415
 
-    sbt = create :state_benefit_type, label: 'child_benefit', name: 'Child Benefit'
+    sbt = create :state_benefit_type, label: 'child_benefit', name: 'Child Benefit', exclude_from_gross_income: false
     sb = create :state_benefit, state_benefit_type: sbt, gross_income_summary: gis
     create :state_benefit_payment, state_benefit: sb, payment_date: Date.parse('1/2/2019'), amount: 200
     create :state_benefit_payment, state_benefit: sb, payment_date: Date.parse('1/3/2019'), amount: 200

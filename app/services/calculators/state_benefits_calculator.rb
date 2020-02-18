@@ -1,9 +1,7 @@
-module Collators
-  class StateBenefitCollator < BaseWorkflowService
+module Calculators
+  class StateBenefitsCalculator < BaseWorkflowService
     def call
-      gross_income_summary.update!(
-        monthly_state_benefits: total_monthly_state_benefits
-      )
+      total_monthly_state_benefits
     end
 
     private
