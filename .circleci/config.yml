@@ -111,7 +111,7 @@ jobs:
     - *setup_aws_cli
     - *push_to_ecr
 
-  deploy_uat:
+  deploy_uat: &deploy_uat
     <<: *deploy_container_config
     steps:
     - checkout
@@ -142,6 +142,9 @@ jobs:
                         --set image.repository="$IMG_REPO" \
                         --set image.tag="$CIRCLE_SHA1" \
                         --set ingress.hosts="{$RELEASE_HOST}"
+
+  auto-deploy-uat:
+    <<: *deploy_uat
 
   deploy_staging:
     <<: *deploy_container_config
@@ -225,6 +228,13 @@ workflows:
         type: approval
         requires:
         - build_and_test
+    - auto-deploy-uat:
+        requires:
+          - build_and_test
+        filters:
+          branches:
+            only:
+              - /dependabot.*/
     - deploy_uat:
         requires:
         - hold_uat
