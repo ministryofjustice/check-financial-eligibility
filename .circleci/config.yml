@@ -228,6 +228,10 @@ workflows:
         type: approval
         requires:
         - build_and_test
+        filters:
+          branches:
+            ignore:
+              - /dependabot.*/
     - auto-deploy-uat:
         requires:
           - build_and_test
@@ -238,6 +242,10 @@ workflows:
     - deploy_uat:
         requires:
         - hold_uat
+        filters:
+          branches:
+            ignore:
+              - /dependabot.*/
     - hold_staging:
         type: approval
         requires:
