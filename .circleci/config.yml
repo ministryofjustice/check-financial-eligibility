@@ -231,21 +231,21 @@ workflows:
         filters:
           branches:
             ignore:
-              - /dependabot.*/
+              - /dependabot\/bundler\/.*/
     - auto-deploy-uat:
         requires:
           - build_and_test
         filters:
           branches:
             only:
-              - /dependabot.*/
+              - /dependabot\/bundler\/.*/
     - deploy_uat:
         requires:
         - hold_uat
         filters:
           branches:
             ignore:
-              - /dependabot.*/
+              - /dependabot\/bundler\/.*/
     - hold_staging:
         type: approval
         requires:
