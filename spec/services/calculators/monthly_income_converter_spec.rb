@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 module Calculators
-  RSpec.describe UnearnedIncomeMonthlyConvertor do
+  RSpec.describe MonthlyIncomeConverter do
     subject { described_class.new(frequency, payments) }
 
     let(:payments) { [203.44, 205.00, 205.00] }

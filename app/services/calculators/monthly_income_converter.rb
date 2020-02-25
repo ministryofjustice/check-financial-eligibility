@@ -1,5 +1,5 @@
 module Calculators
-  class UnearnedIncomeMonthlyConvertor
+  class MonthlyIncomeConverter
     VALID_FREQUENCIES = %i[monthly four_weekly two_weekly weekly unknown].freeze
 
     attr_reader :monthly_amount, :error_message
