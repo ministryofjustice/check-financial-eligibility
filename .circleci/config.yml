@@ -128,7 +128,7 @@ jobs:
         name: Helm deployment to UAT
         command: |
           IMG_REPO="$ECR_ENDPOINT/laa-apply-for-legal-aid/check-financial-eligibility-service"
-          RELEASE_NAME=$(echo $CIRCLE_BRANCH | sed 's:^\w*\/::' | tr -s ' _/[]()' '-' | cut -c1-30 | sed 's/-$//')
+          RELEASE_NAME=$(echo $CIRCLE_BRANCH | sed 's:^\w*\/::' | tr -s ' _/[]().' '-' | cut -c1-30 | sed 's/-$//')
           RELEASE_HOST="$RELEASE_NAME-check-financial-uat.apps.live-1.cloud-platform.service.justice.gov.uk"
 
           echo "Deploying CIRCLE_SHA1: $CIRCLE_SHA1 under release name: '$RELEASE_NAME'..."
