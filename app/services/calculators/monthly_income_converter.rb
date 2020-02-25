@@ -42,9 +42,7 @@ module Calculators
     end
 
     def process_unknown
-      @error = true
-      @error_message = :unknown_payment_frequency
-      nil
+      payment_average.round(2)
     end
 
     def payment_average
