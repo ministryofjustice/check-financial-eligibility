@@ -64,6 +64,26 @@ module Collators
         end
       end
 
+      describe 'upper_threshold' do
+        context 'when the matter_proceeding_type is `domestic_abuse`' do
+          it 'returns the infinite_threshold' do
+            subject
+            expect(subject[:upper_threshold]).to eq 999_999_999_999
+          end
+        end
+
+        context 'when the matter_proceeding_type is not `domestic_abuse`' do
+          before do
+            allow(assessment).to receive(:matter_proceeding_type).and_return 'not_domestic_abuse'
+          end
+
+          it 'returns a lower threshold' do
+            subject
+            expect(subject[:upper_threshold]).to eq 8000
+          end
+        end
+      end
+
       context 'summarization of result_fields' do
         it 'summarizes the results it gets from the subservices' do
           liquid_capital_service = double Assessors::LiquidCapitalAssessor
