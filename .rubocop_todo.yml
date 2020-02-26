@@ -11,10 +11,3 @@
 Metrics/ClassLength:
   Exclude:
     - spec/support/payment_dates_generator.rb
-
-Metrics/MethodLength:
-  Exclude:
-    - 'db/migrate/*' # this should be moved back to .rubocop.yaml when the other exceptions are removed
-  ExcludedMethods: [
-    'property_hash'
-  ]
