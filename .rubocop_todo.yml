@@ -18,12 +18,5 @@ Metrics/MethodLength:
   ExcludedMethods: [
     'monthly_equivalent',
     'call',
-    'property_hash',
-    'parse_row',
-    'other_income_params',
-    'state_benefit_params',
-    'read_and_check_results',
-    'capital_data',
-    'ruby_hash',
-    'outgoings_params'
+    'property_hash'
   ]
