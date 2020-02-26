@@ -57,9 +57,7 @@ module Collators
     def upper_threshold
       return infinite_threshold if assessment.matter_proceeding_type == 'domestic_abuse' && assessment.applicant.involvement_type == 'applicant'
 
-      # :nocov:
       Threshold.value_for(:capital_upper, at: assessment.submission_date)
-      # :nocov:
     end
 
     def capital_contribution
