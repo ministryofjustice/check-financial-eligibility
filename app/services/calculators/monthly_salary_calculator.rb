@@ -16,14 +16,9 @@ module Calculators
     end
 
     def monthly_equivalent
-      case period_type.to_sym
-      when :weekly
-        for_weekly
-      when :two_weekly
-        for_two_weekly
-      when :four_weekly
-        for_four_weekly
-      when :monthly
+      if period_type.to_s.ends_with?('weekly')
+        send("for_#{period_type}")
+      elsif period_type.eql?(:monthly)
         normalize_monthly
       else
         raise PeriodError, "Period type :#{period_type} not recognised. Use one of :weekly, :two_weekly, :four_weekly, :monthly"
