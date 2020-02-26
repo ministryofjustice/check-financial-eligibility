@@ -232,6 +232,7 @@ workflows:
           branches:
             ignore:
               - /dependabot\/bundler\/.*/
+              - master
     - auto-deploy-uat:
         requires:
           - build_and_test
@@ -239,6 +240,7 @@ workflows:
           branches:
             only:
               - /dependabot\/bundler\/.*/
+              - master
     - deploy_uat:
         requires:
         - hold_uat
@@ -246,6 +248,7 @@ workflows:
           branches:
             ignore:
               - /dependabot\/bundler\/.*/
+              - master
     - hold_staging:
         type: approval
         requires:
