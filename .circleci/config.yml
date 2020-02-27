@@ -217,13 +217,25 @@ jobs:
       - run:
           name: Delete UAT release
           command: |
-            ./bin/delete_uat_release
+            ./bin/delete_uat_release.sh
 
 workflows:
   version: 2
   build_and_deploy:
     jobs:
     - build_and_test
+    - delete_uat:
+        filters:
+          branches:
+            only: master
+    - auto-deploy-uat:
+        requires:
+          - build_and_test
+        filters:
+          branches:
+            only:
+              - /dependabot\/bundler\/.*/
+              - master
     - hold_uat:
         type: approval
         requires:
@@ -232,13 +244,7 @@ workflows:
           branches:
             ignore:
               - /dependabot\/bundler\/.*/
-    - auto-deploy-uat:
-        requires:
-          - build_and_test
-        filters:
-          branches:
-            only:
-              - /dependabot\/bundler\/.*/
+              - master
     - deploy_uat:
         requires:
         - hold_uat
@@ -246,6 +252,7 @@ workflows:
           branches:
             ignore:
               - /dependabot\/bundler\/.*/
+              - master
     - hold_staging:
         type: approval
         requires:
