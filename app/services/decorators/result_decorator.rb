@@ -33,7 +33,7 @@ module Decorators
       )
     end
 
-    def property_hash
+    def property_hash # rubocop:disable Metrics/MethodLength
       main_property_attrs = %i[value transaction_allowance allowable_outstanding_mortgage percentage_owned assessed_equity]
       capital_summary.as_json(
         only: %i[total_property total_mortgage_allowance],

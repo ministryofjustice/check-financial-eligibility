@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 module Calculators
-  RSpec.describe UnearnedIncomeMonthlyConvertor do
+  RSpec.describe MonthlyIncomeConverter do
     subject { described_class.new(frequency, payments) }
 
     let(:payments) { [203.44, 205.00, 205.00] }
@@ -72,23 +72,17 @@ module Calculators
 
     context 'unknown' do
       let(:frequency) { :unknown }
+      let(:payments) { [203.44, 205.00, 205.00, 178.77, 290.12] }
       describe 'error?' do
-        it 'returns true' do
-          expect(subject.error?).to be true
-        end
-      end
-
-      describe 'error_message' do
-        it 'returns error message' do
-          subject.error?
-          expect(subject.error_message).to eq :unknown_payment_frequency
+        it 'returns false' do
+          expect(subject.error?).to be false
         end
       end
 
       describe 'monthly_amount' do
         it 'returns nil' do
           subject.error?
-          expect(subject.monthly_amount).to be_nil
+          expect(subject.monthly_amount).to eq 216.47
         end
       end
     end
