@@ -35,11 +35,16 @@ module Calculators
     end
 
     def passported_value
-      thresholds[:passported]
+      income = assessment.disposable_income_summary&.total_disposable_income.to_f
+      thresholds[:monthly_income_values].each { |value_bands, banding| return banding if income_threshold_applies(income, value_bands) }
     end
 
     def non_passported_value
       thresholds[:non_passported]
+    end
+
+    def income_threshold_applies(income, key_array)
+      key_array.count.eql?(1) && income >= key_array[0] || income >= key_array[0] && income <= key_array[1]
     end
   end
 end
