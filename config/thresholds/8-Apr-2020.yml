@@ -48,17 +48,17 @@ disposable_income_contribution_bands:
     percentage: 0.0
     base: 0.0
   band_a:
-    threshold: 316.0
+    threshold: 315.0
     disregard: 311.0
     percentage: 35.0
     base: 0
   band_b:
     threshold: 466
-    disregard: 465.99
+    disregard: 465
     percentage: 45.0
     base: 53.90
   band_c:
     threshold: 617
-    disregard: 616.99
+    disregard: 616
     percentage: 70.0
     base: 121.85
