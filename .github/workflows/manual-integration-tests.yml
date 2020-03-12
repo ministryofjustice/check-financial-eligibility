@@ -1,0 +1,21 @@
+name: manual-integration-tests
+
+on:
+  repository_dispatch:
+    types: manual-trigger
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Ruby 2.6
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: 2.6.x
+    - name: Build and test with Rake
+      run: |
+        gem install bundler
+        bundle install --jobs 4 --retry 3
+        VERBOSE=true bundle exec rspec spec/integration/test_runner_spec.rb
