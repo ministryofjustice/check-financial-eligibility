@@ -1,7 +1,7 @@
 require 'simplecov'
 require 'vcr'
 
-SimpleCov.minimum_coverage 100
+SimpleCov.minimum_coverage 100 unless ENV['SKIP_COVERAGE']
 
 unless ENV['NOCOVERAGE']
   SimpleCov.start do
