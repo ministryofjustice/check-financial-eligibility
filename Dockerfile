@@ -1,4 +1,4 @@
-FROM ruby:2.6.3
+FROM ruby:2.6.5
 MAINTAINER apply for legal aid team
 ENV RAILS_ENV production
 RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
