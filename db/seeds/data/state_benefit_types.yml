@@ -69,7 +69,7 @@ cold_weather_payment:
   :dwp_code: CWP
 constant_attendance_allowance:
   :name: Constant Attendance Allowance
-  :exclude_from_gross_income: false #changed to false as it is not marked as green on the spreadsheet
+  :exclude_from_gross_income: false
   :dwp_code: CAA
 contribution_to_maintenance:
   :name: Contribution to Maintenance
