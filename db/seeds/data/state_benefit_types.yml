@@ -7,10 +7,14 @@ age_related_payment:
   :name: Age Related Payment
   :exclude_from_gross_income: false
   :dwp_code: ARP
+all_work_related_requirements:
+  :name: All Work Related Requirements
+  :exclude_from_gross_income: false
+  :dwp_code: AWRR
 armed_forces_independence_payment:
   :name: Armed Forces Independence Payment
   :exclude_from_gross_income: true
-  :dwp_code:
+  :dwp_code: AFIP
 attendance_allowance:
   :name: Attendance Allowance
   :exclude_from_gross_income: true
@@ -35,10 +39,26 @@ carers_allowance:
   :name: Carers' Allowance
   :exclude_from_gross_income: true
   :dwp_code: CA
+child_benefit:
+  :name: Child Benefit
+  :exclude_from_gross_income: false
+  :dwp_code: CHB
 child_maintenance:
   :name: Child Maintenance
   :exclude_from_gross_income: false
   :dwp_code: CM
+child_maintenance_deduction:
+  :name: Child Maintenance Deduction
+  :exclude_from_gross_income: false
+  :dwp_code: CMD
+child_support_maintenance:
+  :name: Child Support Maintenance
+  :exclude_from_gross_income: false
+  :dwp_code: CSM
+child_tax_credit:
+  :name: Child Tax Credit
+  :exclude_from_gross_income: false
+  :dwp_code: CTC
 christmas_bonus:
   :name: Christmas Bonus
   :exclude_from_gross_income: false
@@ -49,12 +69,20 @@ cold_weather_payment:
   :dwp_code: CWP
 constant_attendance_allowance:
   :name: Constant Attendance Allowance
-  :exclude_from_gross_income: true
-  :dwp_code:
+  :exclude_from_gross_income: false #changed to false as it is not marked as green on the spreadsheet
+  :dwp_code: CAA
+contribution_to_maintenance:
+  :name: Contribution to Maintenance
+  :exclude_from_gross_income: false
+  :dwp_code: CTM
 council_tax_benefit:
   :name: Council Tax Benefit
   :exclude_from_gross_income: true
-  :dwp_code:
+  :dwp_code: CTB
+direct_credit_transfer:
+  :name: Direct Credit Transfer
+  :exclude_from_gross_income: false
+  :dwp_code: DCT
 disability_living_allowance:
   :name: Disability Living Allowance
   :exclude_from_gross_income: true
@@ -67,14 +95,38 @@ employment_support_allowance:
   :name: Employment Support Allowance
   :exclude_from_gross_income: false
   :dwp_code: ESA
+enhanced_disability_premium:
+  :name: Enhanced Disability Premium
+  :exclude_from_gross_income: false
+  :dwp_code: EDP
 exceptionally_severe_disablement_allowance:
   :name: Exceptionally Severe Disablement Allowance
   :exclude_from_gross_income: true
-  :dwp_code:
+  :dwp_code: ESDA
+financial_assistance_scheme:
+  :name: Financial Assistance Scheme
+  :exclude_from_gross_income: false
+  :dwp_code: FAS
+flat_rate_maintenance:
+  :name: Flat Rate Maintenance
+  :exclude_from_gross_income: false
+  :dwp_code: FRM
 fostering_allowance:
   :name: Fostering Allowance (to the extent it exceeds dependants allowance)
   :exclude_from_gross_income: true
   :dwp_code:
+guardians_allowance:
+  :name: Guardians Allowance
+  :exclude_from_gross_income: false
+  :dwp_code: GA
+guaranteed_minimum_pension:
+  :name: Guaranteed Minimum Pension
+  :exclude_from_gross_income: false
+  :dwp_code: GMP
+graduated_retirement_benefit:
+  :name: Graduated Retirement Benefit
+  :exclude_from_gross_income: false
+  :dwp_code: GRB
 grenfell_payments:
   :name: Grenfell Payments
   :exclude_from_gross_income: true
@@ -82,7 +134,15 @@ grenfell_payments:
 housing_benefit:
   :name: Housing Benefit
   :exclude_from_gross_income: true
-  :dwp_code:
+  :dwp_code: HB
+housing_costs_contribution:
+  :name: Housing Costs Contribution
+  :exclude_from_gross_income: true
+  :dwp_code: HCC
+housing_costs_element:
+  :name: Housing Costs Element
+  :exclude_from_gross_income: true
+  :dwp_code: HCE
 incapacity_benefit:
   :name: Incapacity Benefit
   :exclude_from_gross_income: false
@@ -95,6 +155,10 @@ independent_living_funds_payments:
   :name: Independent Living Funds payments
   :exclude_from_gross_income: true
   :dwp_code:
+industrial_death_benefit:
+  :name: Industrial Death Benefit
+  :exclude_from_gross_income: false
+  :dwp_code: IDB
 industrial_injuries_benefit:
   :name: Industrial Injuries Benefit
   :exclude_from_gross_income: false
@@ -126,7 +190,7 @@ mortgage_interest_direct:
 payments_on_account_of_benefit:
   :name: Payments on Account of Benefit
   :exclude_from_gross_income: true
-  :dwp_code:
+  :dwp_code: POAOB
 pension_credit:
   :name: Pension Credit
   :exclude_from_gross_income: false
@@ -135,6 +199,10 @@ personal_independent_payments:
   :name: Personal Independent Payments
   :exclude_from_gross_income: true
   :dwp_code: PIP
+retirement_allowance:
+  :name: Retirement Allowance
+  :exclude_from_gross_income: false
+  :dwp_code: RA
 reduced_earnings_allowance:
   :name: Reduced Earnings Allowance
   :exclude_from_gross_income: false
@@ -143,10 +211,18 @@ severe_disablement_allowance:
   :name: Severe Disablement Allowance
   :exclude_from_gross_income: true
   :dwp_code: SDA
+severe_disability_premium:
+  :name: Severe Disability Premium
+  :exclude_from_gross_income: false
+  :dwp_code: SDP
 social_fund:
   :name: Social Fund
-  :exclude_from_gross_income: false
+  :exclude_from_gross_income: true
   :dwp_code: SF
+social_fund_funderal_payment:
+  :name: Social Fund Funderal Payment
+  :exclude_from_gross_income: true
+  :dwp_code: SFFP
 social_fund_payments:
   :name: Social Fund Payments
   :exclude_from_gross_income: true
@@ -159,6 +235,30 @@ state_pension:
   :name: State Pension
   :exclude_from_gross_income: false
   :dwp_code: SP
+state_pension_credit:
+  :name: State Pension Credit
+  :exclude_from_gross_income: false
+  :dwp_code: SPC
+state_second_pension:
+  :name: State Second Pension
+  :exclude_from_gross_income: false
+  :dwp_code: S2P
+statutory_maternity_pay:
+  :name: Statutory Maternity Pay
+  :exclude_from_gross_income: false
+  :dwp_code: SMP
+statutory_sick_pay:
+  :name: Statutory Sick Pay
+  :exclude_from_gross_income: false
+  :dwp_code: SSP
+sure_start_maternity_grant:
+  :name: Sure Start Maternity Grant
+  :exclude_from_gross_income: false
+  :dwp_code: SSMG
+tax_credit:
+  :name: Tax Credit
+  :exclude_from_gross_income: false
+  :dwp_code: TC
 training_payment:
   :name: Training Payment
   :exclude_from_gross_income: false
@@ -167,6 +267,10 @@ transfer_advances_of_universal_credit:
   :name: Transfer Advances of Universal Credit
   :exclude_from_gross_income: true
   :dwp_code:
+unemployability_supplement:
+  :name: Unemployability Supplement
+  :exclude_from_gross_income: false
+  :dwp_code: US
 universal_credit:
   :name: Universal Credit
   :exclude_from_gross_income: false
@@ -175,6 +279,10 @@ war_pension:
   :name: War Pension (Any)
   :exclude_from_gross_income: true
   :dwp_code:
+war_widows_pension:
+  :name: War Widows Pension
+  :exclude_from_gross_income: true
+  :dwp_code: WWP
 welsh_independent_living_grant:
   :name: Welsh Independent Living Grant
   :exclude_from_gross_income: true
@@ -191,10 +299,22 @@ widowed_parents_allowance:
   :name: Widowed Parent’s Allowance
   :exclude_from_gross_income: false
   :dwp_code: WPA
+widows_pension:
+  :name: Widows Pension
+  :exclude_from_gross_income: true
+  :dwp_code: WP
 winter_fuel_payment:
   :name: Winter Fuel Payment
   :exclude_from_gross_income: false
   :dwp_code: WFP
+work_related_activity_component:
+  :name: Work–related activity component
+  :exclude_from_gross_income: false
+  :dwp_code: WRAC
+working_tax_credit:
+  :name: Working Tax Credit
+  :exclude_from_gross_income: false
+  :dwp_code: WTC
 other:
   :name: Other state benefit
   :exclude_from_gross_income: false
