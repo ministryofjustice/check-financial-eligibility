@@ -7,7 +7,7 @@ age_related_payment:
   :name: Age Related Payment
   :exclude_from_gross_income: false
   :dwp_code: ARP
-all_work_related_requirements:
+all_work_related_reqs:
   :name: All Work Related Requirements
   :exclude_from_gross_income: false
   :dwp_code: AWRR
@@ -51,7 +51,7 @@ child_maintenance_deduction:
   :name: Child Maintenance Deduction
   :exclude_from_gross_income: false
   :dwp_code: CMD
-child_support_maintenance:
+child_supp_maintenance:
   :name: Child Support Maintenance
   :exclude_from_gross_income: false
   :dwp_code: CSM
@@ -71,7 +71,7 @@ constant_attendance_allowance:
   :name: Constant Attendance Allowance
   :exclude_from_gross_income: false
   :dwp_code: CAA
-contribution_to_maintenance:
+cont_to_maintenance:
   :name: Contribution to Maintenance
   :exclude_from_gross_income: false
   :dwp_code: CTM
@@ -119,7 +119,7 @@ guardians_allowance:
   :name: Guardians Allowance
   :exclude_from_gross_income: false
   :dwp_code: GA
-guaranteed_minimum_pension:
+guaranteed_min_pension:
   :name: Guaranteed Minimum Pension
   :exclude_from_gross_income: false
   :dwp_code: GMP
@@ -135,7 +135,7 @@ housing_benefit:
   :name: Housing Benefit
   :exclude_from_gross_income: true
   :dwp_code: HB
-housing_costs_contribution:
+housing_costs_cont:
   :name: Housing Costs Contribution
   :exclude_from_gross_income: true
   :dwp_code: HCC
@@ -251,7 +251,7 @@ statutory_sick_pay:
   :name: Statutory Sick Pay
   :exclude_from_gross_income: false
   :dwp_code: SSP
-sure_start_maternity_grant:
+sure_start_mat_grant:
   :name: Sure Start Maternity Grant
   :exclude_from_gross_income: false
   :dwp_code: SSMG
@@ -267,7 +267,7 @@ transfer_advances_of_universal_credit:
   :name: Transfer Advances of Universal Credit
   :exclude_from_gross_income: true
   :dwp_code:
-unemployability_supplement:
+unemploy_supplement:
   :name: Unemployability Supplement
   :exclude_from_gross_income: false
   :dwp_code: US
@@ -307,8 +307,8 @@ winter_fuel_payment:
   :name: Winter Fuel Payment
   :exclude_from_gross_income: false
   :dwp_code: WFP
-work_related_activity_component:
-  :name: Work–related activity component
+work_related_act_comp:
+  :name: Work related activity component
   :exclude_from_gross_income: false
   :dwp_code: WRAC
 working_tax_credit:
