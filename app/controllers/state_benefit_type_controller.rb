@@ -12,7 +12,6 @@ class StateBenefitTypeController < ApplicationController
   formats ['json']
 
   def index
-    column_names = %w[name label dwp_code]
-    render json: StateBenefitType.pluck(column_names).map { |n, l, d| { name: n, label: l, dwp_code: d } }
+    render json: StateBenefitType.as_cfe_json
   end
 end
