@@ -5,7 +5,7 @@ FactoryBot.define do
     end
     # the name passed in is the same as the label in the state benefit type table except for seeded data
     name { label }
-
+    dwp_code { [nil, ('A'..'Z').to_a.sample(2).join].sample }
     exclude_from_gross_income { [true, false].sample }
 
     trait :other do
