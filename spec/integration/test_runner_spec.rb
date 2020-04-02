@@ -12,15 +12,44 @@ Dir[Rails.root.join('lib/integration_helpers/*.rb')].sort.each { |f| require f }
 #
 
 RSpec.describe 'IntegrationTests::TestRunner', type: :request do
-  let(:spreadsheet_file) { Rails.root.join('spec/fixtures/integration_test_data.xlsx') }
+  let(:spreadsheet_file) { Rails.root.join('tmp/integration_test_data.xlsx') }
   let(:spreadsheet) { Roo::Spreadsheet.open(spreadsheet_file.to_s) }
   let(:worksheet_names) { spreadsheet.sheets }
   let(:headers) { { 'CONTENT_TYPE' => 'application/json', 'Accept' => 'application/json;version=2' } }
   let(:target_worksheet) { ENV['TARGET_WORKSHEET'] }
-  # let(:target_worksheet) { 'NPE9-2' }
+
+  # rubocop:disable Style/StringLiterals
+  def google_secret
+    {
+      "type": 'service_account',
+      "project_id": 'laa-apply-for-legal-aid',
+      "private_key_id": ENV['PRIVATE_KEY_ID'],
+      "private_key": ENV['PRIVATE_KEY'].gsub("\\n", "\n"),
+      "client_email": ENV['CLIENT_EMAIL'],
+      "client_id": ENV['CLIENT_ID'],
+      "auth_uri": 'https://accounts.google.com/o/oauth2/auth',
+      "token_uri": 'https://oauth2.googleapis.com/token',
+      "auth_provider_x509_cert_url": 'https://www.googleapis.com/oauth2/v1/certs',
+      "client_x509_cert_url": 'https://www.googleapis.com/robot/v1/metadata/x509/laa-apply-service%40laa-apply-for-legal-aid.iam.gserviceaccount.com'
+    }
+  end
+  # rubocop:enable Style/StringLiterals
+
+  def local_spreadsheet_needs_replacing?(local, remote)
+    return true unless File.exist?(local)
+
+    remote.modified_time > File.mtime(local)
+  end
 
   before do
     Dibber::Seeder.new(StateBenefitType, 'data/state_benefit_types.yml', name_method: :label, overwrite: true).build
+
+    secret_file = StringIO.new(google_secret.to_json)
+    session = GoogleDrive::Session.from_service_account_key(secret_file)
+    google_sheet = session.spreadsheet_by_title('New means assessment test data')
+    if local_spreadsheet_needs_replacing?(spreadsheet_file, google_sheet)
+      google_sheet.export_as_file('tmp/integration_test_data.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    end
   end
 
   OBJECT_GENERATORS = {
