@@ -77,7 +77,6 @@ jobs:
     <<: *build_container_config
     steps:
     - checkout
-    - *install_gems
     - setup_remote_docker:
         docker_layer_caching: true
     - run: sudo apt-get update
@@ -85,10 +84,7 @@ jobs:
         keys:
           - check-financial-eligibility-{{ checksum "Gemfile.lock" }}
           - check-financial-eligibility
-    - run:
-        name: Bundle Install
-        command: bundle check --path vendor/bundle || bundle install --path vendor/bundle
-      # Store bundle cache
+    - *install_gems
     - save_cache:
         key: check-financial-eligibility-{{ checksum "Gemfile.lock" }}
         paths:
