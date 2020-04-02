@@ -26,10 +26,24 @@ The documentaion is automatically generated when tests are run with an environme
 
 This generates a JSON file `doc/apipie_examples.json` which is read and used when drilling down in the documentation available at '/apidocs'.
 
+## Setting the env vars
+To run the integration tests you will need to set up a `.env` file in the root folder.  
+
+It should contain the following values:
+```shell script
+PRIVATE_KEY_ID
+PRIVATE_KEY
+CLIENT_EMAIL
+CLIENT_ID
+``` 
+A copy of the `.env` file including the current values can be found in the `Shared-LAA` section of LastPass
+
 ## Integration tests
 Several use cases and their expected results can be found in the google spreadsheet https://docs.google.com/spreadsheets/d/16X7ORqVRpC0BMxgsXn8_NR9ul4MNPWUbYqmpeoBstIo .
 
-This online spreadsheet is exported as an `.xlsx` file, and copied inside the project (`spec/fixtures/integration_test_data.xlsx`) and a unit test (`spec/integration/test_runner_spec.rb`) ensures that the service returns the expected results for the use cases of the spreadsheet.  Ensure that if the master Google spreadsheet is edited, it is exported as an `.xlsx` and copied into the above location in the project.
+Once the master Google spreadsheet is edited, the next time the unit test (`spec/integration/test_runner_spec.rb`) is started it will export the file to (`tmp/integration_test_data.xlsx`) and it will over-write any existing copy in the same location.
+
+This ensures that the service returns the expected results for the use cases of the spreadsheet.
 
 To run just the integration tests and see detailed output, run: 
    

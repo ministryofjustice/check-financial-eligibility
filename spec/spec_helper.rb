@@ -18,6 +18,7 @@ VCR.configure do |vcr_config|
     record: vcr_record_mode,
     match_requests_on: [:method, VCR.request_matchers.uri_without_param(:key)]
   }
+  vcr_config.ignore_hosts 'www.googleapis.com'
   vcr_config.configure_rspec_metadata!
   vcr_config.debug_logger = STDOUT if vcr_debug
   vcr_config.filter_sensitive_data('<GOOGLE_CLIENT_EMAIL>') { ENV['GOOGLE_CLIENT_EMAIL'] }
