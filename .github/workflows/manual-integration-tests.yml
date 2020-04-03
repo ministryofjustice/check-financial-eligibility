@@ -48,5 +48,9 @@ jobs:
           RAILS_ENV: test
           SKIP_COVERAGE: true
           VERBOSE: true
+          CLIENT_EMAIL: ${{ secrets.CLIENT_EMAIL }}
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+          PRIVATE_KEY_ID: ${{ secrets.PRIVATE_KEY_ID }}
         run: |
           bundle exec rspec spec/integration/test_runner_spec.rb
