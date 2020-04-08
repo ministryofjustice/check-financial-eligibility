@@ -131,27 +131,63 @@ module Calculators
 
       subject { described_class.new(dependant) }
 
-      describe 'child_under_15_allowance' do
-        it 'returns the threshold value' do
-          expect(subject.child_under_15_allowance).to eq 291.49
+      context 'before new allowances date' do
+        before do
+          dependant.assessment.submission_date = 'Sun, 05 Apr 2020'
+        end
+
+        describe 'child_under_15_allowance' do
+          it 'returns the threshold value' do
+            expect(subject.child_under_15_allowance).to eq 291.49
+          end
+        end
+
+        describe 'child_aged_15_allowance' do
+          it 'returns the threshold value' do
+            expect(subject.child_aged_15_allowance).to eq 291.49
+          end
+        end
+
+        describe 'child_16_and_over_allowance' do
+          it 'returns the threshold value' do
+            expect(subject.child_16_and_over_allowance).to eq 291.49
+          end
+        end
+
+        describe 'adult_allowance' do
+          it 'returns the threshold value' do
+            expect(subject.adult_allowance).to eq 291.49
+          end
         end
       end
 
-      describe 'child_aged_15_allowance' do
-        it 'returns the threshold value' do
-          expect(subject.child_aged_15_allowance).to eq 291.49
+      context 'after new allowances date' do
+        before do
+          dependant.assessment.submission_date = 'Mon, 07 Apr 2020'
         end
-      end
 
-      describe 'child_16_and_over_allowance' do
-        it 'returns the threshold value' do
-          expect(subject.child_16_and_over_allowance).to eq 291.49
+        describe 'child_under_15_allowance' do
+          it 'returns the threshold value' do
+            expect(subject.child_under_15_allowance).to eq 296.65
+          end
         end
-      end
 
-      describe 'adult_allowance' do
-        it 'returns the threshold value' do
-          expect(subject.adult_allowance).to eq 291.49
+        describe 'child_aged_15_allowance' do
+          it 'returns the threshold value' do
+            expect(subject.child_aged_15_allowance).to eq 296.65
+          end
+        end
+
+        describe 'child_16_and_over_allowance' do
+          it 'returns the threshold value' do
+            expect(subject.child_16_and_over_allowance).to eq 296.65
+          end
+        end
+
+        describe 'adult_allowance' do
+          it 'returns the threshold value' do
+            expect(subject.adult_allowance).to eq 296.65
+          end
         end
       end
     end
