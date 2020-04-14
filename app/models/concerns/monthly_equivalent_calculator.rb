@@ -39,8 +39,6 @@ module MonthlyEquivalentCalculator
   end
 
   def converter
-    raise "Unable to calculate payment frequency for #{self.class} with payment dates #{payment_dates.inspect}" if frequency == :unknown
-
     @converter ||= Calculators::MonthlyIncomeConverter.new(frequency, payment_amounts)
   end
 

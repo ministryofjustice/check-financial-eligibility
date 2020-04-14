@@ -38,10 +38,12 @@ RSpec.describe OtherIncomeSource, type: :model do
     context 'unknown payment frequency' do
       before { expect(analyser).to receive(:period_pattern).and_return(:unknown) }
 
-      it 'raises an exception' do
-        expect {
-          subject
-        }.to raise_error RuntimeError, /Unable to calculate payment frequency for OtherIncomeSource with payment dates \[.*\]/
+      let!(:payment1) { create :other_income_payment, other_income_source: source, payment_date: 1.day.ago.to_date, amount: 301.0 }
+      let!(:payment2) { create :other_income_payment, other_income_source: source, payment_date: 5.days.ago.to_date, amount: 123.45 }
+      let!(:payment3) { create :other_income_payment, other_income_source: source, payment_date: 45.days.ago.to_date, amount: 87.10 }
+
+      it 'returns the average of the payments' do
+        expect(subject).to eq 170.52
       end
     end
   end
