@@ -80,9 +80,9 @@ module Calculators
       end
 
       describe 'monthly_amount' do
-        it 'returns nil' do
+        it 'returns the sum of payments divided by 3' do
           subject.error?
-          expect(subject.monthly_amount).to eq 216.47
+          expect(subject.monthly_amount).to eq 360.78
         end
       end
     end

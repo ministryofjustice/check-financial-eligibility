@@ -41,9 +41,10 @@ RSpec.describe OtherIncomeSource, type: :model do
       let!(:payment1) { create :other_income_payment, other_income_source: source, payment_date: 1.day.ago.to_date, amount: 301.0 }
       let!(:payment2) { create :other_income_payment, other_income_source: source, payment_date: 5.days.ago.to_date, amount: 123.45 }
       let!(:payment3) { create :other_income_payment, other_income_source: source, payment_date: 45.days.ago.to_date, amount: 87.10 }
+      let!(:payment4) { create :other_income_payment, other_income_source: source, payment_date: 45.days.ago.to_date, amount: 30.0 }
 
-      it 'returns the average of the payments' do
-        expect(subject).to eq 170.52
+      it 'returns the average monthly payment over three months' do
+        expect(subject).to eq 180.52
       end
     end
   end
