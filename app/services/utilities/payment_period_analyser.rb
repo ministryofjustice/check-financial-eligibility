@@ -25,6 +25,7 @@ module Utilities
     end
 
     def period_pattern
+      return :unknown if dates.size < 2
       return :monthly if monthly?
       return :weekly if weekly?
       return :two_weekly if two_weekly?
