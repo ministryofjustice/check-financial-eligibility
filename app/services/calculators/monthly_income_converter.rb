@@ -1,6 +1,7 @@
 module Calculators
   class MonthlyIncomeConverter
     VALID_FREQUENCIES = %i[monthly four_weekly two_weekly weekly unknown].freeze
+    NUMBER_OF_MONTHS_TO_AVERAGE = 3
 
     attr_reader :monthly_amount, :error_message
 
@@ -42,7 +43,7 @@ module Calculators
     end
 
     def process_unknown
-      payment_average.round(2)
+      (@payments.sum.to_f / NUMBER_OF_MONTHS_TO_AVERAGE).round(2)
     end
 
     def payment_average
