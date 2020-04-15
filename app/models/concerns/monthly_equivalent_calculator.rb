@@ -45,8 +45,4 @@ module MonthlyEquivalentCalculator
   def payment_amounts
     @monthly_equivalent_calculator_collection.map(&@monthly_equivalent_calculator_amount_method)
   end
-
-  def payment_dates
-    @monthly_equivalent_calculator_collection.map(&@monthly_equivalent_calculator_date_method)
-  end
 end

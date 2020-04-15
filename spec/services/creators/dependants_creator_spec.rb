@@ -15,7 +15,7 @@ module Creators
 
         dependants_attributes.each do |dependant_attributes|
           dependant = assessment.dependants.find_by!(date_of_birth: dependant_attributes[:date_of_birth])
-          dependant_attributes.keys.each do |key|
+          dependant_attributes.each_key do |key|
             expect(dependant[key].to_s).to eq(dependant_attributes[key].to_s)
           end
         end

@@ -85,7 +85,7 @@ RSpec.describe 'IntegrationTests::TestRunner', type: :request do
         next if datasets.nil?
 
         assessment_id = post_assessment(datasets)
-        datasets.keys.each do |object_name|
+        datasets.each_key do |object_name|
           post_object(assessment_id, datasets, object_name)
         end
         get assessment_path(assessment_id), headers: headers

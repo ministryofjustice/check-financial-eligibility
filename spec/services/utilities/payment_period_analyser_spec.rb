@@ -214,14 +214,14 @@ module Utilities
       context 'irregular payments' do
         context 'just one payment' do
           let(:string_dates) { ['2019-05-15'] }
-          it 'returns two-weekly' do
+          it 'returns unknown' do
             expect(described_class.new(dates).period_pattern).to eq :unknown
           end
         end
 
         context 'two payments 10 days apart' do
           let(:string_dates) { '2019-05-15, 2019-05-25'.split(', ') }
-          it 'returns two-weekly' do
+          it 'returns unknown' do
             expect(described_class.new(dates).period_pattern).to eq :unknown
           end
         end
