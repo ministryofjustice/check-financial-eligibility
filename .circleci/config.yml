@@ -23,7 +23,7 @@ references:
 
   build_container_config: &build_container_config
     docker:
-    - image: circleci/ruby:2.6.5-node-browsers
+    - image: circleci/ruby:2.6.6-node-browsers
       environment:
         - RAILS_ENV=test
         - PGHOST=localhost
