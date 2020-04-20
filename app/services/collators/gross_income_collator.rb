@@ -5,6 +5,10 @@ module Collators
         upper_threshold: upper_threshold,
         monthly_other_income: monthly_other_income,
         monthly_state_benefits: monthly_state_benefits,
+        friends_or_family: 0,
+        maintenance_in: 0,
+        property_or_lodger: 0,
+        student_loan: 0,
         total_gross_income: total_gross_income,
         assessment_result: 'summarised'
       )
