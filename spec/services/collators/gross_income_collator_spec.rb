@@ -76,10 +76,10 @@ module Collators
 
         context 'monthly_other_income_sources_exist' do
           before do
-            source1 = create :other_income_source, gross_income_summary: gross_income_summary
-            source2 = create :other_income_source, gross_income_summary: gross_income_summary
-            create :other_income_payment, other_income_source: source1, payment_date: Date.today, amount: 105.03
-            create :other_income_payment, other_income_source: source1, payment_date: 1.month.ago.to_date, amount: 105.03
+            source1 = create :other_income_source, gross_income_summary: gross_income_summary, name: 'friends_or_family'
+            source2 = create :other_income_source, gross_income_summary: gross_income_summary, name: 'property_or_lodger'
+            create :other_income_payment, other_income_source: source1, payment_date: Date.today, amount: 105.13
+            create :other_income_payment, other_income_source: source1, payment_date: 1.month.ago.to_date, amount: 105.23
             create :other_income_payment, other_income_source: source1, payment_date: 1.month.ago.to_date, amount: 105.03
 
             create :other_income_payment, other_income_source: source2, payment_date: Date.today, amount: 66.45
@@ -89,7 +89,14 @@ module Collators
 
           it 'updates the gross income record with the total monthly income' do
             subject
-            expect(gross_income_summary.reload.monthly_other_income).to eq 171.48
+            gross_income_summary.reload
+            expect(gross_income_summary.monthly_state_benefits).to be_zero
+            expect(gross_income_summary.maintenance_in).to be_zero
+            expect(gross_income_summary.student_loan).to be_zero
+            expect(gross_income_summary.pension).to be_zero
+            expect(gross_income_summary.friends_or_family).to eq 105.13
+            expect(gross_income_summary.property_or_lodger).to eq 66.45
+            expect(gross_income_summary.monthly_other_income).to eq 171.58
           end
         end
       end

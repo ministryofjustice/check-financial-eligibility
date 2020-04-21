@@ -121,6 +121,7 @@ ActiveRecord::Schema.define(version: 2020_04_20_132900) do
     t.decimal "maintenance_in", default: "0.0"
     t.decimal "property_or_lodger", default: "0.0"
     t.decimal "student_loan", default: "0.0"
+    t.decimal "pension", default: "0.0"
     t.index ["assessment_id"], name: "index_gross_income_summaries_on_assessment_id"
   end
 
