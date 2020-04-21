@@ -93,7 +93,7 @@ module Collators
           end
 
           context 'not in receipt of Student grant' do
-            before { create :other_income_source, gross_income_summary: gross_income_summary, name: 'family_help' }
+            before { create :other_income_source, gross_income_summary: gross_income_summary, name: 'friends_or_family' }
             it 'does not update the childcare value on the disposable income summary' do
               subject
               expect(disposable_income_summary.childcare).to eq 0.0
