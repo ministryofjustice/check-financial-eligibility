@@ -1,6 +1,6 @@
 class OtherIncomesController < ApplicationController
-
-  VALID_OTHER_INCOME_TYPES = ["friends_or_family", "maintenance_in", "property_or_lodger", "student_loan", "pension"].freeze
+  OTHER_INCOME_TYPES = %w[friends_or_family maintenance_in property_or_lodger student_loan pension].freeze
+  VALID_OTHER_INCOME_TYPES = (OTHER_INCOME_TYPES.map(&:humanize) + OTHER_INCOME_TYPES).freeze
 
   resource_description do
     short 'Add other types of income details to an assessment'

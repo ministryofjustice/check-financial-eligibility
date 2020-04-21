@@ -1,6 +1,6 @@
 module Collators
   class GrossIncomeCollator < BaseWorkflowService
-    def call
+    def call # rubocop:disable Metrics/MethodLength
       gross_income_summary.update!(
         upper_threshold: upper_threshold,
         monthly_other_income: monthly_other_income,
