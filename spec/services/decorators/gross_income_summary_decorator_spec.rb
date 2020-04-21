@@ -21,9 +21,19 @@ module Decorators
                              total_gross_income
                              upper_threshold
                              assessment_result
+                             monthly_income_equivalents
                              state_benefits
                              other_income]
           expect(subject.keys).to eq expected_keys
+        end
+
+        it 'returns expected keys for monthly_income_equivalents' do
+          expected_keys = %i[friends_or_family
+                             maintenance_in
+                             property_or_lodger
+                             student_loan
+                             pension]
+          expect(subject[:monthly_income_equivalents].keys).to match expected_keys
         end
 
         it 'calls StateBenefitDecorator for each state benefit' do

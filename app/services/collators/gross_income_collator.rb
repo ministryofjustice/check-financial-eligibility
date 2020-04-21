@@ -1,6 +1,6 @@
 module Collators
   class GrossIncomeCollator < BaseWorkflowService
-    def call # rubocop:disable Metrics/MethodLength
+    def call # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       gross_income_summary.update!(
         upper_threshold: upper_threshold,
         monthly_other_income: categorised_income[:total],
@@ -8,7 +8,7 @@ module Collators
         friends_or_family: categorised_income[:friends_or_family],
         maintenance_in: categorised_income[:maintenance_in],
         property_or_lodger: categorised_income[:property_or_lodger],
-        student_loan:categorised_income[:student_loan],
+        student_loan: categorised_income[:student_loan],
         pension: categorised_income[:pension],
         total_gross_income: total_gross_income,
         assessment_result: 'summarised'
@@ -62,7 +62,6 @@ module Collators
       end
       result
     end
-
 
     def total_gross_income
       categorised_income[:total] + monthly_state_benefits

@@ -1,7 +1,7 @@
 class OtherIncomeSource < ApplicationRecord
   include MonthlyEquivalentCalculator
 
-  VALID_INCOME_SOURCES =  %w[friends_or_family maintenance_in property_or_lodger student_loan pension].freeze
+  VALID_INCOME_SOURCES = %w[friends_or_family maintenance_in property_or_lodger student_loan pension].freeze
 
   belongs_to :gross_income_summary
   has_many :other_income_payments

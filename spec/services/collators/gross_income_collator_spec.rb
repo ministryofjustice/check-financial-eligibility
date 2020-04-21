@@ -87,7 +87,7 @@ module Collators
             create :other_income_payment, other_income_source: source2, payment_date: 1.month.ago.to_date, amount: 66.45
           end
 
-          it 'updates the gross income record with the total monthly income' do
+          it 'updates the gross income record with categorised monthly incomes' do
             subject
             gross_income_summary.reload
             expect(gross_income_summary.monthly_state_benefits).to be_zero
