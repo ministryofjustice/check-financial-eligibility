@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_06_165908) do
+ActiveRecord::Schema.define(version: 2020_04_20_132900) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -117,6 +117,11 @@ ActiveRecord::Schema.define(version: 2020_01_06_165908) do
     t.string "assessment_result", default: "pending", null: false
     t.decimal "monthly_state_benefits", default: "0.0", null: false
     t.decimal "total_gross_income", default: "0.0"
+    t.decimal "friends_or_family", default: "0.0"
+    t.decimal "maintenance_in", default: "0.0"
+    t.decimal "property_or_lodger", default: "0.0"
+    t.decimal "student_loan", default: "0.0"
+    t.decimal "pension", default: "0.0"
     t.index ["assessment_id"], name: "index_gross_income_summaries_on_assessment_id"
   end
 

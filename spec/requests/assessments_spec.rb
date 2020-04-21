@@ -283,7 +283,7 @@ RSpec.describe AssessmentsController, type: :request do
     create_dependant(assessment, '5/2/1987', false, 'adult_relative')
 
     gis = create :gross_income_summary, assessment: assessment
-    ois = create :other_income_source, gross_income_summary: gis, name: 'Help friends family'
+    ois = create :other_income_source, gross_income_summary: gis, name: 'friends_or_family'
     create :other_income_payment, other_income_source: ois, payment_date: Date.parse('28/2/2019'), amount: 1415
     create :other_income_payment, other_income_source: ois, payment_date: Date.parse('31/3/2019'), amount: 1415
     create :other_income_payment, other_income_source: ois, payment_date: Date.parse('30/4/2019'), amount: 1415

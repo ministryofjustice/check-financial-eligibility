@@ -63,7 +63,6 @@ module Utilities
     let(:four_weeklies) do
       {
         every_fourth_monday: every_fourth_monday,
-        midweek_four_weely_with_variance: midweek_four_weely_with_variance,
         incomplete_four_weekly: incomplete_four_weekly,
         four_weekly_near_month_end: four_weekly_near_month_end,
         four_weely_across_month_end: four_weely_across_month_end,

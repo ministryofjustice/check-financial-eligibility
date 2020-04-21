@@ -37,7 +37,7 @@ module Creators
     end
 
     def create_other_income_source(other_income_source_params)
-      other_income_source = gross_income_summary.other_income_sources.create!(name: other_income_source_params[:source])
+      other_income_source = gross_income_summary.other_income_sources.create!(name: normalize(other_income_source_params[:source]))
       other_income_source_params[:payments].each do |payment_params|
         other_income_source.other_income_payments.create!(payment_date: payment_params[:date], amount: payment_params[:amount])
       end
@@ -46,6 +46,10 @@ module Creators
 
     def assessment
       @assessment ||= Assessment.find_by(id: assessment_id) || (raise CreationError, ['No such assessment id'])
+    end
+
+    def normalize(name)
+      name.underscore.tr(' ', '_')
     end
   end
 end

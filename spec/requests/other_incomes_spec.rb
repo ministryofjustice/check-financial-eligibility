@@ -20,8 +20,8 @@ RSpec.describe OtherIncomesController, type: :request do
         it 'creates two other income source records' do
           expect { subject }.to change { gross_income_summary.other_income_sources.count }.by(2)
           sources = gross_income_summary.other_income_sources.order(:name)
-          expect(sources.first.name).to eq 'Help from family'
-          expect(sources.last.name).to eq 'Student grant'
+          expect(sources.first.name).to eq 'friends_or_family'
+          expect(sources.last.name).to eq 'student_loan'
         end
 
         it 'creates the required number of OtherIncomePayment record for each source' do
@@ -46,15 +46,15 @@ RSpec.describe OtherIncomesController, type: :request do
           expect(parsed_response[:errors]).to be_empty
           expect(parsed_response[:success]).to eq true
 
-          source = gross_income_summary.other_income_sources.find_by(name: 'Student grant')
+          source = gross_income_summary.other_income_sources.find_by(name: 'student_loan')
           expect(parsed_response[:objects].first[:id]).to eq source.id
           expect(parsed_response[:objects].first[:gross_income_summary_id]).to eq gross_income_summary.id
-          expect(parsed_response[:objects].first[:name]).to eq 'Student grant'
+          expect(parsed_response[:objects].first[:name]).to eq 'student_loan'
 
-          source = gross_income_summary.other_income_sources.find_by(name: 'Help from family')
+          source = gross_income_summary.other_income_sources.find_by(name: 'friends_or_family')
           expect(parsed_response[:objects].last[:id]).to eq source.id
           expect(parsed_response[:objects].last[:gross_income_summary_id]).to eq gross_income_summary.id
-          expect(parsed_response[:objects].last[:name]).to eq 'Help from family'
+          expect(parsed_response[:objects].last[:name]).to eq 'friends_or_family'
         end
       end
     end
@@ -85,6 +85,37 @@ RSpec.describe OtherIncomesController, type: :request do
           expect { subject }.not_to change { OtherIncomePayment.count }
         end
       end
+
+      context 'invalid source' do
+        let(:params) do
+          new_hash = other_income_params
+          new_hash[:other_incomes].last[:source] = 'imagined_source'
+          new_hash
+        end
+
+        it 'returns unsuccessful' do
+          subject
+          expect(response.status).to eq 422
+        end
+
+        it 'contains success false in the response body' do
+          subject
+          expect(parsed_response[:success]).to be false
+        end
+
+        it 'contains an error message' do
+          subject
+          expect(parsed_response[:errors].first).to match(/Invalid parameter 'source'/)
+        end
+
+        it 'does not create any other income source records' do
+          expect { subject }.not_to change { OtherIncomeSource.count }
+        end
+
+        it 'does not create any other income payment records' do
+          expect { subject }.not_to change { OtherIncomePayment.count }
+        end
+      end
     end
 
     context 'invalid_assessment_id' do
@@ -105,7 +136,7 @@ RSpec.describe OtherIncomesController, type: :request do
       {
         other_incomes: [
           {
-            "source": 'Student grant',
+            "source": 'student_loan',
             "payments": [
               {
                 "date": '2019-11-01',
@@ -122,7 +153,7 @@ RSpec.describe OtherIncomesController, type: :request do
             ]
           },
           {
-            "source": 'Help from family',
+            "source": 'friends_or_family',
             "payments": [
               {
                 "date": '2019-11-01',

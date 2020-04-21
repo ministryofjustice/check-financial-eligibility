@@ -6,7 +6,7 @@ module Decorators
       @record = gross_income_summary
     end
 
-    def as_json
+    def as_json # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       return nil if @record.nil?
 
       {
@@ -15,6 +15,7 @@ module Decorators
         total_gross_income: @record.total_gross_income,
         upper_threshold: @record.upper_threshold,
         assessment_result: @record.assessment_result,
+        monthly_income_equivalents: MonthlyIncomeEquivalentDecorator.new(@record).as_json,
         state_benefits: @record.state_benefits.map { |sb| StateBenefitDecorator.new(sb).as_json },
         other_income: @record.other_income_sources.map { |oi| OtherIncomeSourceDecorator.new(oi).as_json }
       }

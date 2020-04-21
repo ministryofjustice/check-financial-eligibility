@@ -15,9 +15,9 @@ module Decorators
           excluded_from_income_assessment: excluded,
           state_benefit_payments:
             [
-              { payment_date: Date.today, amount: 75.0 },
-              { payment_date: 1.month.ago.to_date, amount: 75.0 },
-              { payment_date: 2.months.ago.to_date, amount: 75.0 }
+              { payment_date: Date.today, amount: 88.30 },
+              { payment_date: 1.month.ago.to_date, amount: 88.3 },
+              { payment_date: 2.months.ago.to_date, amount: 88.3 }
             ]
         }
         expect(subject).to eq expected_hash
