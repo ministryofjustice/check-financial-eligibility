@@ -10,11 +10,7 @@ module Decorators
       return nil if @record.nil?
 
       {
-        outgoings: {
-          childcare_costs: @record.childcare_outgoings.map { |co| PaymentDecorator.new(co).as_json },
-          housing_costs: @record.housing_cost_outgoings.map { |hc| PaymentDecorator.new(hc).as_json },
-          maintenance_costs: @record.maintenance_outgoings.map { |mo| PaymentDecorator.new(mo).as_json }
-        },
+        monthly_outgoing_equivalents: MonthlyOutgoingEquivalentDecorator.new(@record).as_json,
         childcare_allowance: @record.childcare,
         dependant_allowance: @record.dependant_allowance,
         maintenance_allowance: @record.maintenance,

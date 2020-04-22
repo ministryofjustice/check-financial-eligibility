@@ -17,4 +17,10 @@ FactoryBot.define do
     payment_date { Faker::Date.backward(days: 14) }
     amount { Faker::Number.decimal(l_digits: 3, r_digits: 2) }
   end
+
+  factory :legal_aid_outgoing, class: Outgoings::LegalAid do
+    disposable_income_summary
+    payment_date { Faker::Date.backward(days: 14) }
+    amount { Faker::Number.decimal(l_digits: 3, r_digits: 2) }
+  end
 end

@@ -11,6 +11,7 @@ module Collators
       Collators::DependantsAllowanceCollator.call(assessment)
       Collators::MaintenanceCollator.call(assessment)
       Collators::HousingCostsCollator.call(assessment)
+      Collators::LegalAidCollator.call(assessment)
     end
   end
 end

@@ -2,6 +2,8 @@ FactoryBot.define do
   factory :disposable_income_summary do
     assessment
     childcare { 0.0 }
+    maintenance { 0.0 }
+    legal_aid { 0.0 }
     dependant_allowance { 0.0 }
     gross_housing_costs { 0.0 }
     net_housing_costs { 0.0 }
@@ -18,6 +20,7 @@ FactoryBot.define do
           create :childcare_outgoing, disposable_income_summary: rec, payment_date: date, amount: 100
           create :maintenance_outgoing, disposable_income_summary: rec, payment_date: date, amount: 50
           create :housing_cost_outgoing, disposable_income_summary: rec, payment_date: date, amount: 125
+          create :legal_aid_outgoing, disposable_income_summary: rec, payment_date: date, amount: 363
         end
       end
     end

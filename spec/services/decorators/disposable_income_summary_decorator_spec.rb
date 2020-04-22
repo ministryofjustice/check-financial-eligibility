@@ -14,9 +14,9 @@ module Decorators
 
       context 'disposable income summary exists' do
         let(:disposable_income_summary) { create :disposable_income_summary, :with_everything }
-        it 'has the expected keysin the response structure' do
+        it 'has the expected keys in the response structure' do
           expected_keys = %i[
-            outgoings
+            monthly_outgoing_equivalents
             childcare_allowance
             dependant_allowance
             maintenance_allowance
@@ -31,14 +31,8 @@ module Decorators
             income_contribution
           ]
           expect(subject.keys).to eq expected_keys
-          outgoings_keys = %i[childcare_costs housing_costs maintenance_costs]
-          expect(subject[:outgoings].keys).to eq outgoings_keys
-        end
-
-        it 'calls payment decorator once for each outgoing' do
-          expected_count = disposable_income_summary.outgoings.count
-          expect(PaymentDecorator).to receive(:new).and_return(double('outgoing_payent')).exactly(expected_count).times
-          subject
+          outgoings_keys = %i[child_care maintenance_out rent_or_mortgage legal_aid]
+          expect(subject[:monthly_outgoing_equivalents].keys).to eq outgoings_keys
         end
       end
     end
