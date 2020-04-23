@@ -40,7 +40,8 @@ class ExpectedResult
     capital_contribution
   ].freeze
 
-  def initialize(expected_result_hash)
+  def initialize(worksheet_name, expected_result_hash)
+    @worksheet_name = worksheet_name
     @expected_result = expected_result_hash
     @actual_result = nil
   end
@@ -84,7 +85,7 @@ class ExpectedResult
   # :nocov:
   def display_differences_header
     header_pattern = '%40s  %-22s %-22s'
-    puts format(header_pattern, '', 'Expected', 'Actual')
+    puts format(header_pattern, @worksheet_name, 'Expected', 'Actual')
     puts format(header_pattern, '', '=========', '=========')
   end
   # :nocov:

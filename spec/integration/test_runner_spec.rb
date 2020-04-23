@@ -90,15 +90,15 @@ RSpec.describe 'IntegrationTests::TestRunner', type: :request do
         end
         get assessment_path(assessment_id), headers: headers
         expected_results = ExpectedResultsExtractor.new(spreadsheet, worksheet_name).run
-        results[worksheet_name] = compare_results(parsed_response, expected_results)
+        results[worksheet_name] = compare_results(worksheet_name, parsed_response, expected_results)
       end
       expect(results).to show_all_integration_tests_passed
     end
 
-    def compare_results(actual_results_hash, expected_results_hash)
+    def compare_results(worksheet_name, actual_results_hash, expected_results_hash)
       actual_result = ActualResult.new(actual_results_hash)
       noisy_pp actual_result, 'ASSESSMENT RESULT'
-      expected_result = ExpectedResult.new(expected_results_hash)
+      expected_result = ExpectedResult.new(worksheet_name, expected_results_hash)
       expected_result == actual_result
     end
 
