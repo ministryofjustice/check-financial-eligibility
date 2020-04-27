@@ -26,6 +26,3 @@ module Decorators
     end
   end
 end
-
-####################################
-# create a disposbale income summary and update factories
