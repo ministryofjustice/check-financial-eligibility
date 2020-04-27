@@ -4,6 +4,7 @@ module Workflows
       return SelfEmployedWorkflow.call(assessment) if applicant.self_employed?
 
       collate_and_assess_gross_income
+      collate_outgoings
 
       disposable_income_assessment if gross_income_summary.eligible?
 
@@ -17,8 +18,11 @@ module Workflows
       Assessors::GrossIncomeAssessor.call(assessment)
     end
 
-    def disposable_income_assessment
+    def collate_outgoings
       Collators::OutgoingsCollator.call(assessment)
+    end
+
+    def disposable_income_assessment
       Collators::DisposableIncomeCollator.call(assessment)
       Assessors::DisposableIncomeAssessor.call(assessment)
     end

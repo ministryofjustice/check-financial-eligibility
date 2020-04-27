@@ -74,9 +74,10 @@ RSpec.describe OutgoingsController, type: :request do
     context 'without housing costs or maintenance payments' do
       let(:params) do
         {
-          outgoings: outgoings_params.select { |p| p[:name] == 'childcare' }
+          outgoings: outgoings_params.select { |p| p[:name] == 'child_care' }
         }
       end
+
       it 'create the childcare records but does not create any other records' do
         expect { subject }.to change { Outgoings::BaseOutgoing.count }.by(2)
         expect(disposable_income_summary.childcare_outgoings.count).to eq 2
@@ -108,7 +109,7 @@ RSpec.describe OutgoingsController, type: :request do
     def outgoings_params
       [
         {
-          name: 'childcare',
+          name: 'child_care',
           payments: [
             {
               payment_date: payment_date,
@@ -121,7 +122,7 @@ RSpec.describe OutgoingsController, type: :request do
           ]
         },
         {
-          name: 'maintenance',
+          name: 'maintenance_out',
           payments: [
             {
               payment_date: payment_date,
@@ -134,7 +135,7 @@ RSpec.describe OutgoingsController, type: :request do
           ]
         },
         {
-          name: 'housing_costs',
+          name: 'rent_or_mortgage',
           payments: [
             {
               payment_date: payment_date,

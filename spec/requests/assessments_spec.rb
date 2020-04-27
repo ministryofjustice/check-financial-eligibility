@@ -132,7 +132,7 @@ RSpec.describe AssessmentsController, type: :request do
       context 'non-passported application' do
         let(:assessment) { create :assessment, :with_everything }
 
-        it 'returns http success', :show_in_doc do
+        it 'returns http success' do
           subject
           expect(response).to have_http_status(:success)
         end
@@ -187,6 +187,22 @@ RSpec.describe AssessmentsController, type: :request do
         expect(results[:total_gross_income]).to eq 1631.67.to_s
       end
 
+      it 'returns expected monthly_income_equivalents' do
+        mie = parsed_response[:assessment][:gross_income][:monthly_income_equivalents]
+        expect(mie[:friends_or_family]).to eq 1415.0.to_s
+        expect(mie[:maintenance_in]).to eq 0.0.to_s
+        expect(mie[:property_or_lodger]).to eq 0.0.to_s
+        expect(mie[:student_loan]).to eq 0.0.to_s
+      end
+
+      it 'returns expected monthly_outgoing_equivalents' do
+        moe = parsed_response[:assessment][:gross_income][:monthly_outgoing_equivalents]
+        expect(moe[:child_care]).to eq 0.0.to_s
+        expect(moe[:maintenance_out]).to eq 0.0.to_s
+        expect(moe[:rent_or_mortgage]).to eq 50.0.to_s
+        expect(moe[:legal_aid]).to eq 0.0.to_s
+      end
+
       it 'returns expected disposable income results' do
         results = parsed_response[:assessment][:disposable_income]
         expect(results[:childcare_allowance]).to eq 0.0.to_s
@@ -203,7 +219,7 @@ RSpec.describe AssessmentsController, type: :request do
         expect(results[:income_contribution]).to eq 0.0.to_s
       end
 
-      it 'returns expected capital results' do
+      it 'returns expected capital results', show_in_doc: true do
         results = parsed_response[:assessment][:capital]
         main_home = results[:capital_items][:properties][:main_home]
         expect(main_home[:value]).to eq 500_000.0.to_s

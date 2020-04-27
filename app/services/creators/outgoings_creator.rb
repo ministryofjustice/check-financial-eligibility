@@ -1,10 +1,16 @@
 module Creators
   class OutgoingsCreator < BaseCreator
     OUTGOING_KLASSES = {
-      childcare: Outgoings::Childcare,
-      housing_costs: Outgoings::HousingCost,
-      maintenance: Outgoings::Maintenance
+      child_care: Outgoings::Childcare,
+      childcare: Outgoings::Childcare, # retained for compatibility with earlier versions of integration test spreadsheet
+      rent_or_mortgage: Outgoings::HousingCost,
+      housing_costs: Outgoings::HousingCost, # retained for compatibility with earlier versions of integration test spreadsheet
+      maintenance_out: Outgoings::Maintenance,
+      maintenance: Outgoings::Maintenance, # retained for compatibility with earlier versions of integration test spreadsheet
+      legal_aid: Outgoings::LegalAid
     }.freeze
+
+    VALID_OUTGOING_TYPES = OUTGOING_KLASSES.keys.map(&:to_s).freeze
 
     def initialize(assessment_id:, outgoings:)
       @assessment_id = assessment_id

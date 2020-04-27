@@ -13,6 +13,8 @@ module Decorators
       end
 
       context 'record exists' do
+        before { create :disposable_income_summary, :with_everything, assessment: gross_income_summary.assessment }
+
         let(:gross_income_summary) { create :gross_income_summary, :with_everything }
 
         it 'returns a hash with the expected keys' do
@@ -22,6 +24,7 @@ module Decorators
                              upper_threshold
                              assessment_result
                              monthly_income_equivalents
+                             monthly_outgoing_equivalents
                              state_benefits
                              other_income]
           expect(subject.keys).to eq expected_keys

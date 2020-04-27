@@ -1,6 +1,9 @@
 module Decorators
   class GrossIncomeSummaryDecorator
-    attr_reader :assessment
+    attr_reader :record
+
+    delegate :assessment, to: :record
+    delegate :disposable_income_summary, to: :assessment
 
     def initialize(gross_income_summary)
       @record = gross_income_summary
@@ -16,6 +19,7 @@ module Decorators
         upper_threshold: @record.upper_threshold,
         assessment_result: @record.assessment_result,
         monthly_income_equivalents: MonthlyIncomeEquivalentDecorator.new(@record).as_json,
+        monthly_outgoing_equivalents: MonthlyOutgoingEquivalentDecorator.new(disposable_income_summary).as_json,
         state_benefits: @record.state_benefits.map { |sb| StateBenefitDecorator.new(sb).as_json },
         other_income: @record.other_income_sources.map { |oi| OtherIncomeSourceDecorator.new(oi).as_json }
       }
