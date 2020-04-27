@@ -226,7 +226,7 @@ RSpec.describe AssessmentsController, type: :request do
         expect(main_home[:outstanding_mortgage]).to eq 150_000.0.to_s
         expect(main_home[:percentage_owned]).to eq 50.0.to_s
         expect(main_home[:shared_with_housing_assoc]).to be false
-        expect(main_home[:transaction_allowance]).to eq 15_000.0.to_
+        expect(main_home[:transaction_allowance]).to eq 15_000.0.to_s
         expect(main_home[:allowable_outstanding_mortgage]).to eq 100_000.0.to_s
         expect(main_home[:net_value]).to eq 385_000.0.to_s
         expect(main_home[:net_equity]).to eq 192_500.0.to_s
