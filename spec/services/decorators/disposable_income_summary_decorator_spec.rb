@@ -18,6 +18,7 @@ module Decorators
           expected_keys = %i[
             monthly_outgoing_equivalents
             childcare_allowance
+            deductions
             dependant_allowance
             maintenance_allowance
             gross_housing_costs
