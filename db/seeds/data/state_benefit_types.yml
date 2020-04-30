@@ -7,315 +7,394 @@ age_related_payment:
   :name: Age Related Payment
   :exclude_from_gross_income: false
   :dwp_code: ARP
+  :category:
 all_work_related_reqs:
   :name: All Work Related Requirements
   :exclude_from_gross_income: false
   :dwp_code: AWRR
+  :category:
 armed_forces_independence_payment:
   :name: Armed Forces Independence Payment
   :exclude_from_gross_income: true
   :dwp_code: AFIP
+  :category: other
 attendance_allowance:
   :name: Attendance Allowance
   :exclude_from_gross_income: true
   :dwp_code: AA
+  :category: carer_disability
 bereavement_allowance:
   :name: Bereavement Allowance
   :exclude_from_gross_income: false
   :dwp_code: BA
+  :category:
 bereavement_payment:
   :name: Bereavement Payment
   :exclude_from_gross_income: false
   :dwp_code: BPT
+  :category:
 budget_advances:
   :name: Budget Advances
   :exclude_from_gross_income: true
   :dwp_code:
+  :category:
 care_in_the_community_direct_payment:
   :name: Care in the Community Direct Payment
   :exclude_from_gross_income: true
   :dwp_code:
+  :category:
 carers_allowance:
   :name: Carers' Allowance
   :exclude_from_gross_income: true
   :dwp_code: CA
+  :category: carer_disability
 child_benefit:
   :name: Child Benefit
   :exclude_from_gross_income: false
   :dwp_code: CHB
+  :category:
 child_maintenance:
   :name: Child Maintenance
   :exclude_from_gross_income: false
   :dwp_code: CM
+  :category:
 child_maintenance_deduction:
   :name: Child Maintenance Deduction
   :exclude_from_gross_income: false
   :dwp_code: CMD
+  :category:
 child_supp_maintenance:
   :name: Child Support Maintenance
   :exclude_from_gross_income: false
   :dwp_code: CSM
+  :category:
 child_tax_credit:
   :name: Child Tax Credit
   :exclude_from_gross_income: false
   :dwp_code: CTC
+  :category:
 christmas_bonus:
   :name: Christmas Bonus
   :exclude_from_gross_income: false
   :dwp_code: XB
+  :category:
 cold_weather_payment:
   :name: Cold Weather Payment
   :exclude_from_gross_income: false
   :dwp_code: CWP
+  :category:
 constant_attendance_allowance:
   :name: Constant Attendance Allowance
   :exclude_from_gross_income: false
   :dwp_code: CAA
+  :category: carer_disability
 cont_to_maintenance:
   :name: Contribution to Maintenance
   :exclude_from_gross_income: false
   :dwp_code: CTM
+  :category:
 council_tax_benefit:
   :name: Council Tax Benefit
   :exclude_from_gross_income: true
   :dwp_code: CTB
+  :category:
 direct_credit_transfer:
   :name: Direct Credit Transfer
   :exclude_from_gross_income: false
   :dwp_code: DCT
+  :category:
 disability_living_allowance:
   :name: Disability Living Allowance
   :exclude_from_gross_income: true
   :dwp_code: DLA
+  :category: carer_disability
 earnings_top_up:
   :name: Earnings Top Up
   :exclude_from_gross_income: true
   :dwp_code:
+  :category:
 employment_support_allowance:
   :name: Employment Support Allowance
   :exclude_from_gross_income: false
   :dwp_code: ESA
+  :category: carer_disability
 enhanced_disability_premium:
   :name: Enhanced Disability Premium
   :exclude_from_gross_income: false
   :dwp_code: EDP
+  :category:
 exceptionally_severe_disablement_allowance:
   :name: Exceptionally Severe Disablement Allowance
   :exclude_from_gross_income: true
   :dwp_code: ESDA
+  :category: carer_disability
 financial_assistance_scheme:
   :name: Financial Assistance Scheme
   :exclude_from_gross_income: false
   :dwp_code: FAS
+  :category:
 flat_rate_maintenance:
   :name: Flat Rate Maintenance
   :exclude_from_gross_income: false
   :dwp_code: FRM
+  :category:
 fostering_allowance:
   :name: Fostering Allowance (to the extent it exceeds dependants allowance)
   :exclude_from_gross_income: true
   :dwp_code:
+  :category: other
 guardians_allowance:
   :name: Guardians Allowance
   :exclude_from_gross_income: false
   :dwp_code: GA
+  :category:
 guaranteed_min_pension:
   :name: Guaranteed Minimum Pension
   :exclude_from_gross_income: false
   :dwp_code: GMP
+  :category:
 graduated_retirement_benefit:
   :name: Graduated Retirement Benefit
   :exclude_from_gross_income: false
   :dwp_code: GRB
+  :category:
 grenfell_payments:
   :name: Grenfell Payments
   :exclude_from_gross_income: true
   :dwp_code:
+  :category: other
 housing_benefit:
   :name: Housing Benefit
   :exclude_from_gross_income: true
   :dwp_code: HB
+  :category: low_income
 housing_costs_cont:
   :name: Housing Costs Contribution
   :exclude_from_gross_income: true
   :dwp_code: HCC
+  :category:
 housing_costs_element:
   :name: Housing Costs Element
   :exclude_from_gross_income: true
   :dwp_code: HCE
+  :category:
 incapacity_benefit:
   :name: Incapacity Benefit
   :exclude_from_gross_income: false
   :dwp_code: IB
+  :category:
 income_support:
   :name: Income Support
   :exclude_from_gross_income: false
   :dwp_code: IS
+  :category:
 independent_living_funds_payments:
   :name: Independent Living Funds payments
   :exclude_from_gross_income: true
   :dwp_code:
+  :category:
 industrial_death_benefit:
   :name: Industrial Death Benefit
   :exclude_from_gross_income: false
   :dwp_code: IDB
+  :category:
 industrial_injuries_benefit:
   :name: Industrial Injuries Benefit
   :exclude_from_gross_income: false
   :dwp_code: IIB
+  :category:
 industrial_injuries_disablement_benefit:
   :name: Industrial Injuries Disablement Benefit
   :exclude_from_gross_income: false
   :dwp_code: IIDB
+  :category:
 jobseekers_allowance:
   :name: Jobseeker’s Allowance
   :exclude_from_gross_income: false
   :dwp_code: JSA
+  :category:
 lump_sum_payments_under_windows_pension:
   :name: Lump sum payments under Window's Pension
   :exclude_from_gross_income: true
   :dwp_code:
+  :category:
 maternity_allowance:
   :name: Maternity Allowance
   :exclude_from_gross_income: false
   :dwp_code: MA
+  :category:
 minimum_income_guarantee:
   :name: Minimum Income Guarantee
   :exclude_from_gross_income: false
   :dwp_code: MIG
+  :category:
 mortgage_interest_direct:
   :name: Mortgage Interest Direct
   :exclude_from_gross_income: false
   :dwp_code: MID
+  :category:
 payments_on_account_of_benefit:
   :name: Payments on Account of Benefit
   :exclude_from_gross_income: true
   :dwp_code: POAOB
+  :category:
 pension_credit:
   :name: Pension Credit
   :exclude_from_gross_income: false
   :dwp_code: PC
+  :category:
 personal_independent_payments:
   :name: Personal Independent Payments
   :exclude_from_gross_income: true
   :dwp_code: PIP
+  :category: carer_disability
 retirement_allowance:
   :name: Retirement Allowance
   :exclude_from_gross_income: false
   :dwp_code: RA
+  :category:
 reduced_earnings_allowance:
   :name: Reduced Earnings Allowance
   :exclude_from_gross_income: false
   :dwp_code: REA
+  :category:
 severe_disablement_allowance:
   :name: Severe Disablement Allowance
   :exclude_from_gross_income: true
   :dwp_code: SDA
+  :category:
 severe_disability_premium:
   :name: Severe Disability Premium
   :exclude_from_gross_income: false
   :dwp_code: SDP
+  :category:
 social_fund:
   :name: Social Fund
   :exclude_from_gross_income: true
   :dwp_code: SF
+  :category: low_income
 social_fund_funderal_payment:
   :name: Social Fund Funderal Payment
   :exclude_from_gross_income: true
   :dwp_code: SFFP
+  :category:
 social_fund_payments:
   :name: Social Fund Payments
   :exclude_from_gross_income: true
   :dwp_code:
+  :category: low_income
 special_education_needs:
   :name: Special Education Needs (SEN) Direct Payment
   :exclude_from_gross_income: true
   :dwp_code:
+  :category: carer_disability
 state_pension:
   :name: State Pension
   :exclude_from_gross_income: false
   :dwp_code: SP
+  :category:
 state_pension_credit:
   :name: State Pension Credit
   :exclude_from_gross_income: false
   :dwp_code: SPC
+  :category:
 state_second_pension:
   :name: State Second Pension
   :exclude_from_gross_income: false
   :dwp_code: S2P
+  :category:
 statutory_maternity_pay:
   :name: Statutory Maternity Pay
   :exclude_from_gross_income: false
   :dwp_code: SMP
+  :category:
 statutory_sick_pay:
   :name: Statutory Sick Pay
   :exclude_from_gross_income: false
   :dwp_code: SSP
+  :category:
 sure_start_mat_grant:
   :name: Sure Start Maternity Grant
   :exclude_from_gross_income: false
   :dwp_code: SSMG
+  :category:
 tax_credit:
   :name: Tax Credit
   :exclude_from_gross_income: false
   :dwp_code: TC
+  :category:
 training_payment:
   :name: Training Payment
   :exclude_from_gross_income: false
   :dwp_code: T/P
+  :category:
 transfer_advances_of_universal_credit:
   :name: Transfer Advances of Universal Credit
   :exclude_from_gross_income: true
   :dwp_code:
+  :category:
 unemploy_supplement:
   :name: Unemployability Supplement
   :exclude_from_gross_income: false
   :dwp_code: US
+  :category:
 universal_credit:
   :name: Universal Credit
   :exclude_from_gross_income: false
   :dwp_code: UC
+  :category:
 war_pension:
   :name: War Pension (Any)
   :exclude_from_gross_income: true
   :dwp_code:
+  :category:
 war_widows_pension:
   :name: War Widows Pension
   :exclude_from_gross_income: true
   :dwp_code: WWP
+  :category:
 welsh_independent_living_grant:
   :name: Welsh Independent Living Grant
   :exclude_from_gross_income: true
   :dwp_code:
+  :category: carer_disability
 widows_benefit:
   :name: Widow’s Benefit
   :exclude_from_gross_income: false
   :dwp_code: WB
+  :category:
 widowed_mothers_allowance:
   :name: Widowed Mother’s Allowance
   :exclude_from_gross_income: false
   :dwp_code: WMA
+  :category:
 widowed_parents_allowance:
   :name: Widowed Parent’s Allowance
   :exclude_from_gross_income: false
   :dwp_code: WPA
+  :category:
 widows_pension:
   :name: Widows Pension
   :exclude_from_gross_income: true
   :dwp_code: WP
+  :category:
 winter_fuel_payment:
   :name: Winter Fuel Payment
   :exclude_from_gross_income: false
   :dwp_code: WFP
+  :category:
 work_related_act_comp:
   :name: Work related activity component
   :exclude_from_gross_income: false
   :dwp_code: WRAC
+  :category:
 working_tax_credit:
   :name: Working Tax Credit
   :exclude_from_gross_income: false
   :dwp_code: WTC
+  :category:
 other:
   :name: Other state benefit
   :exclude_from_gross_income: false
   :dwp_code:
+  :category:
