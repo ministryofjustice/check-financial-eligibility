@@ -7,6 +7,7 @@ FactoryBot.define do
     name { label }
     dwp_code { [nil, ('A'..'Z').to_a.sample(2).join].sample }
     exclude_from_gross_income { [true, false].sample }
+    category { (%w[carer_disability low_income other uncategorised] + [nil]).sample }
 
     trait :other do
       label { 'other' }
