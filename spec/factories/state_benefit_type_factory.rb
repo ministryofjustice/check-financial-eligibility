@@ -14,5 +14,13 @@ FactoryBot.define do
       name { 'Other state benefit type' }
       exclude_from_gross_income { false }
     end
+
+    trait :benefit_excluded do
+      exclude_from_gross_income { true }
+    end
+
+    trait :benefit_included do
+      exclude_from_gross_income { false }
+    end
   end
 end

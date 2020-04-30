@@ -14,6 +14,7 @@ module Decorators
 
       context 'disposable income summary exists' do
         let(:disposable_income_summary) { create :disposable_income_summary, :with_everything }
+        let!(:gross_income_summary) { create :gross_income_summary, assessment: disposable_income_summary.assessment }
         it 'has the expected keys in the response structure' do
           expected_keys = %i[
             monthly_outgoing_equivalents

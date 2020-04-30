@@ -5,11 +5,12 @@ module Decorators
     describe '#as_json' do
       subject { described_class.new(record).as_json }
 
-      let(:record) { create :liquid_capital_item, value: 1283.66, description: 'Ming vase' }
+      let(:record) { create :disposable_income_summary, dependant_allowance: 1283.66 }
       it 'returns expected hash' do
+        expect(Calculators::DisregardedStateBenefitsCalculator).to receive(:call).with(record).and_return(587.00)
         expected_hash = {
-          description: 'Ming vase',
-          value: 1283.66
+          dependants_allowance: 1283.66,
+          disregarded_state_benefits: 587.00
         }
         expect(subject).to eq expected_hash
       end

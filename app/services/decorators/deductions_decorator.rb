@@ -7,7 +7,7 @@ module Decorators
     def as_json
       {
         dependants_allowance: @record.dependant_allowance,
-        disregarded_state_benefits: DisregardedStateBenefitsCalculator.call(@record)
+        disregarded_state_benefits: Calculators::DisregardedStateBenefitsCalculator.call(@record)
       }
     end
   end

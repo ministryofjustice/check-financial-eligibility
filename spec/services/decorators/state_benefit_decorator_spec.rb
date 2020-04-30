@@ -11,7 +11,7 @@ module Decorators
       it 'returns the expected hash' do
         expected_hash = {
           name: 'Childcare allowance',
-          monthly_value: 0.0,
+          monthly_value: 88.3,
           excluded_from_income_assessment: excluded,
           state_benefit_payments:
             [
