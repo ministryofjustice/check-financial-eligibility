@@ -23,6 +23,11 @@ attendance_allowance:
   :exclude_from_gross_income: true
   :dwp_code: AA
   :category: carer_disability
+benefit_transfer_advance:
+  :name: Benefit Transfer Advance (Universal Credit)
+  :exclude_from_gross_income: true
+  :dwp_code:
+  :category: low_income
 bereavement_allowance:
   :name: Bereavement Allowance
   :exclude_from_gross_income: false
@@ -34,17 +39,17 @@ bereavement_payment:
   :dwp_code: BPT
   :category:
 budget_advances:
-  :name: Budget Advances
+  :name: Budgeting Advance
   :exclude_from_gross_income: true
   :dwp_code:
-  :category:
-care_in_the_community_direct_payment:
-  :name: Care in the Community Direct Payment
-  :exclude_from_gross_income: true
+  :category: low_income
+budgeting_loans:
+  :name: Budgeting Loans
+  :exclude_from_gross_income: false
   :dwp_code:
   :category:
 carers_allowance:
-  :name: Carers' Allowance
+  :name: Carer's Allowance
   :exclude_from_gross_income: true
   :dwp_code: CA
   :category: carer_disability
@@ -64,12 +69,12 @@ child_maintenance_deduction:
   :dwp_code: CMD
   :category:
 child_supp_maintenance:
-  :name: Child Support Maintenance
+  :name: Child support maintenance
   :exclude_from_gross_income: false
   :dwp_code: CSM
   :category:
 child_tax_credit:
-  :name: Child Tax Credit
+  :name: Child tax credit
   :exclude_from_gross_income: false
   :dwp_code: CTC
   :category:
@@ -83,9 +88,14 @@ cold_weather_payment:
   :exclude_from_gross_income: false
   :dwp_code: CWP
   :category:
+community_care_dp:
+  :name: Community Care Direct Payments
+  :exclude_from_gross_income: true
+  :dwp_code:
+  :category: carer_disability
 constant_attendance_allowance:
   :name: Constant Attendance Allowance
-  :exclude_from_gross_income: false
+  :exclude_from_gross_income: true
   :dwp_code: CAA
   :category: carer_disability
 cont_to_maintenance:
@@ -94,10 +104,10 @@ cont_to_maintenance:
   :dwp_code: CTM
   :category:
 council_tax_benefit:
-  :name: Council Tax Benefit
+  :name: Council Tax Reduction
   :exclude_from_gross_income: true
   :dwp_code: CTB
-  :category:
+  :category: low_income
 direct_credit_transfer:
   :name: Direct Credit Transfer
   :exclude_from_gross_income: false
@@ -109,15 +119,15 @@ disability_living_allowance:
   :dwp_code: DLA
   :category: carer_disability
 earnings_top_up:
-  :name: Earnings Top Up
+  :name: Earnings top-up (ETU)
   :exclude_from_gross_income: true
   :dwp_code:
-  :category:
+  :category: low_income
 employment_support_allowance:
-  :name: Employment Support Allowance
+  :name: Employment and Support Allowance (ESA)
   :exclude_from_gross_income: false
   :dwp_code: ESA
-  :category: carer_disability
+  :category:
 enhanced_disability_premium:
   :name: Enhanced Disability Premium
   :exclude_from_gross_income: false
@@ -139,30 +149,30 @@ flat_rate_maintenance:
   :dwp_code: FRM
   :category:
 fostering_allowance:
-  :name: Fostering Allowance (to the extent it exceeds dependants allowance)
+  :name: Foster Carers' allowance
   :exclude_from_gross_income: true
   :dwp_code:
   :category: other
-guardians_allowance:
-  :name: Guardians Allowance
+graduated_retirement_benefit:
+  :name: Graduated Retirement Benefit 
   :exclude_from_gross_income: false
-  :dwp_code: GA
+  :dwp_code: GRB
   :category:
+grenfell_payments:
+  :name: Grenfell Tower fire victims payments 
+  :exclude_from_gross_income: true
+  :dwp_code:
+  :category: other
 guaranteed_min_pension:
   :name: Guaranteed Minimum Pension
   :exclude_from_gross_income: false
   :dwp_code: GMP
   :category:
-graduated_retirement_benefit:
-  :name: Graduated Retirement Benefit
+guardians_allowance:
+  :name: Guardian's Allowance
   :exclude_from_gross_income: false
-  :dwp_code: GRB
+  :dwp_code: GA
   :category:
-grenfell_payments:
-  :name: Grenfell Payments
-  :exclude_from_gross_income: true
-  :dwp_code:
-  :category: other
 housing_benefit:
   :name: Housing Benefit
   :exclude_from_gross_income: true
@@ -170,12 +180,12 @@ housing_benefit:
   :category: low_income
 housing_costs_cont:
   :name: Housing Costs Contribution
-  :exclude_from_gross_income: true
+  :exclude_from_gross_income: false
   :dwp_code: HCC
   :category:
 housing_costs_element:
   :name: Housing Costs Element
-  :exclude_from_gross_income: true
+  :exclude_from_gross_income: false
   :dwp_code: HCE
   :category:
 incapacity_benefit:
@@ -192,7 +202,7 @@ independent_living_funds_payments:
   :name: Independent Living Funds payments
   :exclude_from_gross_income: true
   :dwp_code:
-  :category:
+  :category: carer_disability
 industrial_death_benefit:
   :name: Industrial Death Benefit
   :exclude_from_gross_income: false
@@ -213,11 +223,6 @@ jobseekers_allowance:
   :exclude_from_gross_income: false
   :dwp_code: JSA
   :category:
-lump_sum_payments_under_windows_pension:
-  :name: Lump sum payments under Window's Pension
-  :exclude_from_gross_income: true
-  :dwp_code:
-  :category:
 maternity_allowance:
   :name: Maternity Allowance
   :exclude_from_gross_income: false
@@ -234,10 +239,10 @@ mortgage_interest_direct:
   :dwp_code: MID
   :category:
 payments_on_account_of_benefit:
-  :name: Payments on Account of Benefit
+  :name: Payments on account of benefit
   :exclude_from_gross_income: true
   :dwp_code: POAOB
-  :category:
+  :category: carer_disability
 pension_credit:
   :name: Pension Credit
   :exclude_from_gross_income: false
@@ -248,43 +253,38 @@ personal_independent_payments:
   :exclude_from_gross_income: true
   :dwp_code: PIP
   :category: carer_disability
-retirement_allowance:
-  :name: Retirement Allowance
-  :exclude_from_gross_income: false
-  :dwp_code: RA
-  :category:
 reduced_earnings_allowance:
   :name: Reduced Earnings Allowance
   :exclude_from_gross_income: false
   :dwp_code: REA
   :category:
-severe_disablement_allowance:
-  :name: Severe Disablement Allowance
-  :exclude_from_gross_income: true
-  :dwp_code: SDA
+retirement_allowance:
+  :name: Retirement Allowance
+  :exclude_from_gross_income: false
+  :dwp_code: RA
   :category:
 severe_disability_premium:
   :name: Severe Disability Premium
   :exclude_from_gross_income: false
   :dwp_code: SDP
   :category:
-social_fund:
-  :name: Social Fund
+severe_disablement_allowance:
+  :name: Severe Disablement Allowance
+  :exclude_from_gross_income: true
+  :dwp_code: SDA
+  :category:
+social_fund_funeral_payment:
+  :name: Social Fund Funeral Payment
+  :exclude_from_gross_income: true
+  :dwp_code: SFFP
+  :category: low_income
+social_fund_payments:
+  :name: Social Fund payments
   :exclude_from_gross_income: true
   :dwp_code: SF
   :category: low_income
-social_fund_funderal_payment:
-  :name: Social Fund Funderal Payment
-  :exclude_from_gross_income: true
-  :dwp_code: SFFP
-  :category:
-social_fund_payments:
-  :name: Social Fund Payments
-  :exclude_from_gross_income: true
-  :dwp_code:
-  :category: low_income
 special_education_needs:
-  :name: Special Education Needs (SEN) Direct Payment
+  :name: Special Education Needs (SEN) direct payment
   :exclude_from_gross_income: true
   :dwp_code:
   :category: carer_disability
@@ -328,11 +328,6 @@ training_payment:
   :exclude_from_gross_income: false
   :dwp_code: T/P
   :category:
-transfer_advances_of_universal_credit:
-  :name: Transfer Advances of Universal Credit
-  :exclude_from_gross_income: true
-  :dwp_code:
-  :category:
 unemploy_supplement:
   :name: Unemployability Supplement
   :exclude_from_gross_income: false
@@ -344,15 +339,15 @@ universal_credit:
   :dwp_code: UC
   :category:
 war_pension:
-  :name: War Pension (Any)
+  :name: War Pensions Scheme payments
   :exclude_from_gross_income: true
   :dwp_code:
-  :category:
+  :category: other
 war_widows_pension:
-  :name: War Widows Pension
+  :name: War Widow(er) Pension
   :exclude_from_gross_income: true
   :dwp_code: WWP
-  :category:
+  :category: other
 welsh_independent_living_grant:
   :name: Welsh Independent Living Grant
   :exclude_from_gross_income: true
@@ -363,6 +358,11 @@ widows_benefit:
   :exclude_from_gross_income: false
   :dwp_code: WB
   :category:
+widows_pension_lump_sum:
+  :name: Widow’s Pension lump sum payments
+  :exclude_from_gross_income: true
+  :dwp_code:
+  :category: other
 widowed_mothers_allowance:
   :name: Widowed Mother’s Allowance
   :exclude_from_gross_income: false
@@ -373,11 +373,11 @@ widowed_parents_allowance:
   :exclude_from_gross_income: false
   :dwp_code: WPA
   :category:
-widows_pension:
-  :name: Widows Pension
+windrush:
+  :name: Windrush Compensation Scheme payments
   :exclude_from_gross_income: true
-  :dwp_code: WP
-  :category:
+  :dwp_code:
+  :category: other
 winter_fuel_payment:
   :name: Winter Fuel Payment
   :exclude_from_gross_income: false
