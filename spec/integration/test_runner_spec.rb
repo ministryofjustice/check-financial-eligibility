@@ -99,6 +99,11 @@ RSpec.describe 'IntegrationTests::TestRunner', type: :request do
       actual_result = ActualResult.new(actual_results_hash)
       noisy_pp actual_result, 'ASSESSMENT RESULT'
       expected_result = ExpectedResult.new(worksheet_name, expected_results_hash)
+      puts ">>>>>>>>>>>>  #{__FILE__}:#{__LINE__} <<<<<<<<<<<<\n"
+      pp actual_result
+      puts ">>>>>>>>>>>> expected_result #{__FILE__}:#{__LINE__} <<<<<<<<<<<<\n"
+      pp expected_result
+      exit
       expected_result == actual_result
     end
 
