@@ -8,6 +8,17 @@
 Rails.logger.info 'Seeding started'
 Seeder = Dibber::Seeder
 
+DELETED_STATE_BENEFITS = %w[
+  transfer_advances_of_universal_credit
+  care_in_the_community_direct_payment
+  widows_pension
+  social_fund
+  social_fund_funderal_payment
+  lump_sum_payments_under_windows_pension
+].freeze
+
+StateBenefitType.where(label: DELETED_STATE_BENEFITS).map(&:destroy!)
+
 Seeder.new(StateBenefitType, 'data/state_benefit_types.yml', name_method: :label, overwrite: true).build
 
 puts Seeder.report
