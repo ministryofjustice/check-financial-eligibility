@@ -51,6 +51,20 @@ class ExpectedResult
     ded_disregarded_state_benefits
   ].freeze
 
+  IGNORE_IF_NIL = %i[
+    mie_friends_or_family
+    mie_maintenance_in
+    mie_property_or_lodger
+    mie_student_loan
+    mie_pension
+    moe_maintenance_out
+    moe_child_care
+    moe_rent_or_mortgage
+    moe_legal_aid
+    ded_dependants_allowance
+    ded_disregarded_state_benefits
+  ].freeze
+
   def initialize(worksheet_name, expected_result_hash)
     @worksheet_name = worksheet_name
     @expected_result = expected_result_hash
@@ -77,11 +91,11 @@ class ExpectedResult
   end
 
   # :nocov:
-  def all_values_equal
-    methods.each do |method|
-      return false if __send__(method).to_s != @actual_result.__send__(method)
-    end
-  end
+  # def all_values_equal
+  #   methods.each do |method|
+  #     return false if __send__(method).to_s != @actual_result.__send__(method)
+  #   end
+  # end
   # :nocov:
 
   def display_differences
@@ -101,13 +115,17 @@ class ExpectedResult
   end
   # :nocov:
 
-  def display_differences_for(method)
+  def display_differences_for(method) # rubocop:disable Metrics/AbcSize
     color = :green
     result = true
     expected_value = __send__(method).to_s
     actual_value = @actual_result.__send__(method)
+
     # :nocov:
-    if expected_value != actual_value
+    if method.in?(IGNORE_IF_NIL) && (expected_value.blank? || actual_value.blank?)
+      result = true
+      color = :light_blue
+    elsif expected_value != actual_value
       result = false
       color = :red
     end
@@ -227,7 +245,7 @@ class ExpectedResult
   end
 
   def mie
-    @expected_result[:monthly_income_equivalents]
+    @expected_result[:monthly_income_equivalents] || {}
   end
 
   def mie_friends_or_family
@@ -251,7 +269,7 @@ class ExpectedResult
   end
 
   def moe
-    @expected_result[:monthly_outgoings_equivalents]
+    @expected_result[:monthly_outgoings_equivalents] || {}
   end
 
   def moe_maintenance_out
@@ -271,7 +289,7 @@ class ExpectedResult
   end
 
   def deductions
-    @expected_result[:deductions]
+    @expected_result[:deductions] || {}
   end
 
   def ded_dependants_allowance

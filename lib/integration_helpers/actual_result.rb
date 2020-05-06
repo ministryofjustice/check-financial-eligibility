@@ -128,7 +128,7 @@ class ActualResult
   end
 
   def moe
-    gross_income[:monthly_outgoings_equivalents]
+    gross_income[:monthly_outgoing_equivalents]
   end
 
   def moe_maintenance_out
@@ -148,7 +148,7 @@ class ActualResult
   end
 
   def deductions
-    gross_income[:deductions]
+    gross_income[:deductions] || {}
   end
 
   def ded_dependants_allowance
