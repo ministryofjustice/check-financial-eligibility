@@ -269,7 +269,7 @@ class ExpectedResult
   end
 
   def moe
-    @expected_result[:monthly_outgoings_equivalents] || {}
+    @expected_result[:monthly_outgoing_equivalents] || {}
   end
 
   def moe_maintenance_out
