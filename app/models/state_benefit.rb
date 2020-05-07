@@ -5,7 +5,7 @@ class StateBenefit < ApplicationRecord
   belongs_to :state_benefit_type
   has_many :state_benefit_payments
 
-  delegate :exclude_from_gross_income, to: :state_benefit_type
+  delegate :exclude_from_gross_income, :exclude_from_gross_income?, to: :state_benefit_type
   delegate :assessment, to: :gross_income_summary
 
   validates :gross_income_summary_id, :state_benefit_type, presence: true
