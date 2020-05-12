@@ -47,7 +47,7 @@ This ensures that the service returns the expected results for the use cases of 
 
 To run just the integration tests and see detailed output, run: 
    
-   ```VERBOSE=true bundle exec rspec spec/integration/new_test_runner_spec.rb```
+   ```VERBOSE=true bundle exec rspec spec/integration/test_runner_spec.rb```
 
 or more simply:
 

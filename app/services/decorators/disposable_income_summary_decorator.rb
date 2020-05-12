@@ -12,6 +12,7 @@ module Decorators
       {
         monthly_outgoing_equivalents: MonthlyOutgoingEquivalentDecorator.new(@record).as_json,
         childcare_allowance: @record.childcare,
+        deductions: DeductionsDecorator.new(@record).as_json,
         dependant_allowance: @record.dependant_allowance,
         maintenance_allowance: @record.maintenance,
         gross_housing_costs: @record.gross_housing_costs,

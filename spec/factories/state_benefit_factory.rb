@@ -6,6 +6,7 @@ FactoryBot.define do
     name { nil }
 
     trait :with_monthly_payments do
+      monthly_value { 88.3 }
       after(:create) do |record|
         [Date.today, 1.month.ago, 2.month.ago].each do |date|
           create :state_benefit_payment, state_benefit: record, amount: 88.30, payment_date: date
