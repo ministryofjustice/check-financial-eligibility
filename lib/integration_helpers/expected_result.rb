@@ -90,14 +90,6 @@ class ExpectedResult
     ENV['VERBOSE'].in? %w[true noisy]
   end
 
-  # :nocov:
-  # def all_values_equal
-  #   methods.each do |method|
-  #     return false if __send__(method).to_s != @actual_result.__send__(method)
-  #   end
-  # end
-  # :nocov:
-
   def display_differences
     results = []
     display_differences_header if verbose?
