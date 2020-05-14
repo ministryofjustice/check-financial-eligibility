@@ -23,7 +23,7 @@ RSpec.describe Remarks do
       context 'multiple ids' do
         it 'returns a hash with just multiple id' do
           remarks.add(:other_income, :unknown_frequency, 'abc', 'def')
-          expect(remarks.remarks_hash).to eq({ other_income: { unknown_frequency: ['abc', 'def'] } })
+          expect(remarks.remarks_hash).to eq({ other_income: { unknown_frequency: %w[abc def] } })
         end
       end
     end
@@ -37,7 +37,7 @@ RSpec.describe Remarks do
           expected_hash = {
             other_income: {
               unknown_frequency: ['abc'],
-              amount_variation: ['def', 'ghi']
+              amount_variation: %w[def ghi]
             }
           }
           expect(remarks.remarks_hash).to eq expected_hash
@@ -46,13 +46,13 @@ RSpec.describe Remarks do
 
       context 'addint a new type' do
         it 'adds the new type' do
-          remarks.add(:state_benefit, :amount_variation, 'def', 'ghi')
+          remarks.add(:state_benefits, :amount_variation, 'def', 'ghi')
           expected_hash = {
             other_income: {
               unknown_frequency: ['abc']
             },
-            state_benefit: {
-              amount_variation: ['def', 'ghi']
+            state_benefits: {
+              amount_variation: %w[def ghi]
             }
           }
           expect(remarks.remarks_hash).to eq expected_hash

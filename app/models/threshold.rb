@@ -25,6 +25,7 @@ class Threshold
   data_folder 'config/thresholds'.freeze
 
   attr_reader :path
+
   delegate :value, to: :store
 
   def initialize(path)

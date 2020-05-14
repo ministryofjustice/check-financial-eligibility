@@ -1,8 +1,8 @@
 class Remarks
   attr_reader :remarks_hash
 
-  VALID_TYPES = %i[ other_income state_benfits outgoings ]
-  VALID_ISSUES = %i[ unknown_frequency amount_variation ]
+  VALID_TYPES = %i[other_income state_benefits outgoings].freeze
+  VALID_ISSUES = %i[unknown_frequency amount_variation].freeze
 
   def initialize
     @remarks_hash = {}

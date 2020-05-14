@@ -1,6 +1,7 @@
 module Decorators
   class AssessmentDecorator
     attr_reader :assessment
+
     delegate :applicant,
              :capital_summary,
              :gross_income_summary,
