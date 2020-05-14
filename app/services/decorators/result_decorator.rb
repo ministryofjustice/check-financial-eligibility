@@ -1,6 +1,7 @@
 module Decorators
   class ResultDecorator
     attr_reader :assessment
+
     delegate :applicant, :capital_summary, to: :assessment
 
     def initialize(assessment)

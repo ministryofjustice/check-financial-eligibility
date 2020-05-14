@@ -28,6 +28,8 @@ Metrics/ParameterLists:
   Exclude:
     - 'spec/**/*'
 
+Layout/EmptyLinesAroundAttributeAccessor:
+  Enabled: true
 
 Layout/SpaceAroundMethodCallOperator:
   Enabled: true
@@ -86,3 +88,5 @@ Style/HashTransformValues:
 Style/ExponentialNotation:
   Enabled: true
 
+Style/SlicingWithRange:
+  Enabled: true
