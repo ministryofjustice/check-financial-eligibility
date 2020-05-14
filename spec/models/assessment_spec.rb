@@ -31,8 +31,8 @@ RSpec.describe Assessment, type: :model do
     context 'saving and reloading' do
       let(:remarks) do
         r = Remarks.new
-        r.add(:other_income, :unknown_frequency, 'abc', 'def')
-        r.add(:other_income, :amount_variation, 'ghu', 'jkl')
+        r.add(:other_income_payment, :unknown_frequency, %w[abc def])
+        r.add(:other_income_payment, :amount_variation, %w[ghu jkl])
         r
       end
 

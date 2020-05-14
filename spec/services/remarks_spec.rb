@@ -15,27 +15,27 @@ RSpec.describe Remarks do
     context 'empty remarks hash' do
       context 'single id' do
         it 'returns a hash with just one id' do
-          remarks.add(:other_income, :unknown_frequency, 'abc')
-          expect(remarks.remarks_hash).to eq({ other_income: { unknown_frequency: ['abc'] } })
+          remarks.add(:other_income_payment, :unknown_frequency, ['abc'])
+          expect(remarks.remarks_hash).to eq({ other_income_payment: { unknown_frequency: ['abc'] } })
         end
       end
 
       context 'multiple ids' do
         it 'returns a hash with just multiple id' do
-          remarks.add(:other_income, :unknown_frequency, 'abc', 'def')
-          expect(remarks.remarks_hash).to eq({ other_income: { unknown_frequency: %w[abc def] } })
+          remarks.add(:other_income_payment, :unknown_frequency, %w[abc def])
+          expect(remarks.remarks_hash).to eq({ other_income_payment: { unknown_frequency: %w[abc def] } })
         end
       end
     end
 
     context 'with an existing remarks hash' do
-      before { remarks.add(:other_income, :unknown_frequency, 'abc') }
+      before { remarks.add(:other_income_payment, :unknown_frequency, ['abc']) }
 
       context 'adding another issue to an existing type' do
         it 'adds the new issue' do
-          remarks.add(:other_income, :amount_variation, 'def', 'ghi')
+          remarks.add(:other_income_payment, :amount_variation, %w[def ghi])
           expected_hash = {
-            other_income: {
+            other_income_payment: {
               unknown_frequency: ['abc'],
               amount_variation: %w[def ghi]
             }
@@ -46,12 +46,12 @@ RSpec.describe Remarks do
 
       context 'adding a new type' do
         it 'adds the new type' do
-          remarks.add(:state_benefits, :amount_variation, 'def', 'ghi')
+          remarks.add(:state_benefit_payment, :amount_variation, %w[def ghi])
           expected_hash = {
-            other_income: {
+            other_income_payment: {
               unknown_frequency: ['abc']
             },
-            state_benefits: {
+            state_benefit_payment: {
               amount_variation: %w[def ghi]
             }
           }
@@ -71,7 +71,7 @@ RSpec.describe Remarks do
     context 'invalid issue' do
       it 'raises' do
         expect {
-          remarks.add(:other_income, :wrong_dates, 'aaa')
+          remarks.add(:other_income_payment, :wrong_dates, 'aaa')
         }.to raise_error ArgumentError, 'Invalid issue: wrong_dates'
       end
     end
@@ -79,7 +79,7 @@ RSpec.describe Remarks do
 
   describe '#as_json' do
     it 'returns the @remarks_hash' do
-      remarks.add(:other_income, :unknown_frequency, 'abc')
+      remarks.add(:other_income_payment, :unknown_frequency, ['abc'])
       expect(remarks.as_json).to eq remarks.remarks_hash
     end
   end
