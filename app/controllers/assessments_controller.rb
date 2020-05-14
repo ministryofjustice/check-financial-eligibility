@@ -49,6 +49,7 @@ class AssessmentsController < ApplicationController
     property :assessment_result, %w[eligible ineligible contribution_required]
     property :applicant, Hash, desc: 'Applicant data used for assessment'
     property :capital, Hash, desc: 'Capital data used for assessment'
+    property :other_incomes, Hash, desc: 'Other income data used for assessment'
     property :property, Hash, desc: 'Property data used for assessment'
     property :vehicles, Hash, desc: 'Vehicle data used for assessment'
   end

@@ -24,6 +24,7 @@ module Decorators
           gross_income
           disposable_income
           capital
+          remarks
         ]
         expect(subject.keys).to eq %i[version timestamp success assessment]
         expect(subject[:assessment].keys).to eq expected_keys
@@ -34,6 +35,11 @@ module Decorators
         expect(GrossIncomeSummaryDecorator).to receive(:new).and_return(double('gisd', as_json: nil))
         expect(DisposableIncomeSummaryDecorator).to receive(:new).and_return(double('disd', as_json: nil))
         expect(CapitalSummaryDecorator).to receive(:new).and_return(double('csd', as_json: nil))
+        subject
+      end
+
+      it 'calls #as_json on the remarks object' do
+        expect_any_instance_of(Remarks).to receive(:as_json)
         subject
       end
     end

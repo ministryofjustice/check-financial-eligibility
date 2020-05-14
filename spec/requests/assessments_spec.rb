@@ -284,6 +284,7 @@ RSpec.describe AssessmentsController, type: :request do
       gross_income
       disposable_income
       capital
+      remarks
     ]
   end
 
