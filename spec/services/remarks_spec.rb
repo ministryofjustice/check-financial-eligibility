@@ -44,7 +44,7 @@ RSpec.describe Remarks do
         end
       end
 
-      context 'addint a new type' do
+      context 'adding a new type' do
         it 'adds the new type' do
           remarks.add(:state_benefits, :amount_variation, 'def', 'ghi')
           expected_hash = {
