@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_30_145529) do
+ActiveRecord::Schema.define(version: 2020_05_14_131226) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 2020_04_30_145529) do
     t.date "submission_date", null: false
     t.string "matter_proceeding_type", null: false
     t.string "assessment_result", default: "pending", null: false
+    t.text "remarks"
     t.index ["client_reference_id"], name: "index_assessments_on_client_reference_id"
   end
 

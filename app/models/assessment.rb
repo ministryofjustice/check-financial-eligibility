@@ -1,6 +1,8 @@
 class Assessment < ApplicationRecord
   extend EnumHash
 
+  serialize :remarks
+
   validates :remote_ip,
             :submission_date,
             :matter_proceeding_type, presence: true
@@ -22,5 +24,10 @@ class Assessment < ApplicationRecord
 
   def capital_assessment_result
     capital_summary.assessment_result
+  end
+
+  # Always instanitate a new Remarks object from a nil value
+  def remarks
+    attributes['remarks'] || Remarks.new
   end
 end
