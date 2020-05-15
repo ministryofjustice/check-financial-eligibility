@@ -13,13 +13,8 @@ module MigrationHelpers
       new.run
     end
 
-    # def initialize
-    #   @seed_data = YAML.load_file(SEED_FILENAME)
-    # end
-
     def run
       StateBenefitType.where(label: DELETED_STATE_BENEFITS).map(&:destroy!)
-      # Seeder = Dibber::Seeder
       Dibber::Seeder.new(StateBenefitType, 'data/state_benefit_types.yml', name_method: :label, overwrite: true).build
 
       puts Dibber::Seeder.report

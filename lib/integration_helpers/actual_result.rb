@@ -102,4 +102,60 @@ class ActualResult
   def capital_contribution
     capital[:capital_contribution]
   end
+
+  def mie
+    gross_income[:monthly_income_equivalents]
+  end
+
+  def mie_friends_or_family
+    mie[:friends_or_family]
+  end
+
+  def mie_maintenance_in
+    mie[:maintenance_in]
+  end
+
+  def mie_property_or_lodger
+    mie[:property_or_lodger]
+  end
+
+  def mie_student_loan
+    mie[:student_loan]
+  end
+
+  def mie_pension
+    mie[:pension]
+  end
+
+  def moe
+    gross_income[:monthly_outgoing_equivalents]
+  end
+
+  def moe_maintenance_out
+    moe[:maintenance_out]
+  end
+
+  def moe_child_care
+    moe[:child_care]
+  end
+
+  def moe_rent_or_mortgage
+    moe[:rent_or_mortgage]
+  end
+
+  def moe_legal_aid
+    moe[:legal_aid]
+  end
+
+  def deductions
+    gross_income[:deductions] || {}
+  end
+
+  def ded_dependants_allowance
+    deductions[:dependants_allowance]
+  end
+
+  def ded_disregarded_state_benefits
+    deductions[:disregarded_state_benefits]
+  end
 end
