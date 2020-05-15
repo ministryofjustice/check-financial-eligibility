@@ -38,6 +38,8 @@ RSpec.describe 'IntegrationTests::TestRunner', type: :request do
   def local_spreadsheet_needs_replacing?(local, remote)
     return true unless File.exist?(local)
 
+    return true if ENV['REFRESH'] == 'true'
+
     remote.modified_time > File.mtime(local)
   end
 
