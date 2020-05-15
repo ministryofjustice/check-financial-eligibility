@@ -37,7 +37,6 @@ RSpec.describe OtherIncomesController, type: :request do
           expect(payments[0].amount).to eq 250.00
           expect(payments[0].client_id).to eq 'OtherIncomePayment:2019-09-01:250.0'
 
-
           expect(payments[1].payment_date).to eq Date.new(2019, 10, 1)
           expect(payments[1].amount).to eq 266.02
 
