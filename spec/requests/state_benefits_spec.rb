@@ -7,6 +7,7 @@ RSpec.describe StateBenefitsController, type: :request do
     let(:gross_income_summary) { assessment.gross_income_summary }
     let(:params) { state_benefit_params }
     let(:headers) { { 'CONTENT_TYPE' => 'application/json' } }
+    let(:client_ids) { [SecureRandom.uuid, SecureRandom.uuid, SecureRandom.uuid] }
 
     let!(:state_benefit_type_1) { create :state_benefit_type }
     let!(:state_benefit_type_2) { create :state_benefit_type }
@@ -35,6 +36,20 @@ RSpec.describe StateBenefitsController, type: :request do
           state_benefit = gross_income_summary.state_benefits.detect { |sb| sb.state_benefit_type == state_benefit_type_1 }
           payments = state_benefit.state_benefit_payments.order(:payment_date)
           expect(payments.first.payment_date).to eq Date.parse('2019-09-01')
+        end
+
+        it 'stores the given client id if provided in the params' do
+          subject
+          state_benefit = gross_income_summary.state_benefits.detect { |sb| sb.state_benefit_type == state_benefit_type_1 }
+          expect(state_benefit.state_benefit_payments.map(&:client_id)).to match client_ids
+        end
+
+        it 'creates default client id if not specified' do
+          subject
+          state_benefit = gross_income_summary.state_benefits.detect { |sb| sb.state_benefit_type == state_benefit_type_2 }
+          state_benefit.state_benefit_payments.each do |payment|
+            expect(payment.client_id).to match(/^StateBenefitPayment:\d\d\d\d-\d\d-\d\d:\d{1,5}\.\d{1,2}$/)
+          end
         end
       end
     end
@@ -85,36 +100,39 @@ RSpec.describe StateBenefitsController, type: :request do
       {
         state_benefits: [
           {
-            "name": state_benefit_type_1.label,
-            "payments": [
+            name: state_benefit_type_1.label,
+            payments: [
               {
-                "date": '2019-11-01',
-                "amount": 1046.44
+                date: '2019-11-01',
+                amount: 1046.44,
+                client_id: client_ids[0]
               },
               {
-                "date": '2019-10-01',
-                "amount": 1034.33
+                date: '2019-10-01',
+                amount: 1034.33,
+                client_id: client_ids[1]
               },
               {
-                "date": '2019-09-01',
-                "amount": 1033.44
+                date: '2019-09-01',
+                amount: 1033.44,
+                client_id: client_ids[2]
               }
             ]
           },
           {
-            "name": state_benefit_type_2.label,
-            "payments": [
+            name: state_benefit_type_2.label,
+            payments: [
               {
-                "date": '2019-11-01',
-                "amount": 250.00
+                date: '2019-11-01',
+                amount: 250.00
               },
               {
-                "date": '2019-10-01',
-                "amount": 266.02
+                date: '2019-10-01',
+                amount: 266.02
               },
               {
-                "date": '2019-09-01',
-                "amount": 250.00
+                date: '2019-09-01',
+                amount: 250.00
               }
             ]
           }

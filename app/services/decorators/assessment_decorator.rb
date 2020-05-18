@@ -25,7 +25,8 @@ module Decorators
           applicant: ApplicantDecorator.new(applicant).as_json,
           gross_income: GrossIncomeSummaryDecorator.new(gross_income_summary).as_json,
           disposable_income: DisposableIncomeSummaryDecorator.new(disposable_income_summary).as_json,
-          capital: CapitalSummaryDecorator.new(capital_summary).as_json
+          capital: CapitalSummaryDecorator.new(capital_summary).as_json,
+          remarks: assessment.remarks.as_json
         }
       }
     end

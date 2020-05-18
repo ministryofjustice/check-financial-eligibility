@@ -7,6 +7,7 @@ RSpec.describe OutgoingsController, type: :request do
     let(:payment_date) { 3.weeks.ago.strftime('%Y-%m-%d') }
     let(:housing_cost_type) { Outgoings::HousingCost.housing_cost_types.values.sample }
     let(:headers) { { 'CONTENT_TYPE' => 'application/json' } }
+    let(:client_ids) { [SecureRandom.uuid, SecureRandom.uuid] }
 
     let(:params) do
       {
@@ -33,6 +34,18 @@ RSpec.describe OutgoingsController, type: :request do
     it 'returns blank errors' do
       subject
       expect(parsed_response[:errors]).to be_empty
+    end
+
+    it 'creates default client ids when none present in params' do
+      subject
+      Outgoings::Maintenance.all.each do |outgoing|
+        expect(outgoing.client_id).to match(/^Outgoings::Maintenance:\d\d\d\d-\d\d-\d\d:\d{1,5}\.\d{1,2}$/)
+      end
+    end
+
+    it 'stores the provided client id when given in params' do
+      subject
+      expect(Outgoings::Childcare.all.map(&:client_id)).to match_array(client_ids)
     end
 
     context 'with an invalid id' do
@@ -113,11 +126,13 @@ RSpec.describe OutgoingsController, type: :request do
           payments: [
             {
               payment_date: payment_date,
-              amount: Faker::Number.decimal(l_digits: 3, r_digits: 2)
+              amount: Faker::Number.decimal(l_digits: 3, r_digits: 2),
+              client_id: client_ids.first
             },
             {
               payment_date: payment_date,
-              amount: Faker::Number.decimal(l_digits: 3, r_digits: 2)
+              amount: Faker::Number.decimal(l_digits: 3, r_digits: 2),
+              client_id: client_ids.last
             }
           ]
         },

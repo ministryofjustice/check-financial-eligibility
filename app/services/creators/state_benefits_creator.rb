@@ -39,7 +39,11 @@ module Creators
     def create_state_benefit(state_benefit_params)
       state_benefit = StateBenefit.generate!(gross_income_summary, state_benefit_params[:name])
       state_benefit_params[:payments].each do |payment_params|
-        state_benefit.state_benefit_payments.create!(payment_date: payment_params[:date], amount: payment_params[:amount])
+        state_benefit.state_benefit_payments.create!(
+          payment_date: payment_params[:date],
+          amount: payment_params[:amount],
+          client_id: payment_params[:client_id]
+        )
       end
       state_benefit
     end

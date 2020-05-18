@@ -39,7 +39,11 @@ module Creators
     def create_other_income_source(other_income_source_params)
       other_income_source = gross_income_summary.other_income_sources.create!(name: normalize(other_income_source_params[:source]))
       other_income_source_params[:payments].each do |payment_params|
-        other_income_source.other_income_payments.create!(payment_date: payment_params[:date], amount: payment_params[:amount])
+        other_income_source.other_income_payments.create!(
+          payment_date: payment_params[:date],
+          amount: payment_params[:amount],
+          client_id: payment_params[:client_id]
+        )
       end
       other_income_source
     end
