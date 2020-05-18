@@ -86,5 +86,13 @@ module Calculators
         end
       end
     end
+
+    context 'Unrecognized frequency' do
+      let(:frequency) { :abcd }
+
+      it 'raises an error' do
+        expect { subject.error? }.to raise_error('Unrecognized frequency')
+      end
+    end
   end
 end

@@ -24,6 +24,7 @@ module Creators
         assessment
         create_other_income
       rescue CreationError => e
+        Raven.capture_exception(e)
         self.errors = e.errors
       end
     end

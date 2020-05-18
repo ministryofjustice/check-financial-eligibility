@@ -103,6 +103,11 @@ RSpec.describe AssessmentsController, type: :request do
           expect(response).to have_http_status(:unprocessable_entity)
         end
 
+        it 'captures error' do
+          expect(Raven).to receive(:capture_exception).with(message_contains('Version 1 of the API is not able to process un-passported applications'))
+          subject
+        end
+
         it 'returns errors struct with message' do
           subject
           expect(parsed_response[:success]).to be false
@@ -259,6 +264,11 @@ RSpec.describe AssessmentsController, type: :request do
       it 'returns unprocessable entity' do
         subject
         expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it 'captures error' do
+        expect(Raven).to receive(:capture_exception).with(message_contains('Unsupported version specified in AcceptHeader'))
+        subject
       end
 
       it 'returns errors struct with message' do

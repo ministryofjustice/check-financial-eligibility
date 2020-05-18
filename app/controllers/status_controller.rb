@@ -3,7 +3,6 @@ class StatusController < ApplicationController
     checks = {
       database: database_alive?
     }
-
     status = :bad_gateway unless checks.values.all?
     render status: status, json: { checks: checks }
   end
