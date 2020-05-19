@@ -6,6 +6,7 @@ module Workflows
       else
         NonPassportedWorkflow.call(assessment)
       end
+      RemarkGenerators::Orchestrator.call(assessment)
       Assessors::MainAssessor.call(assessment)
     end
 
