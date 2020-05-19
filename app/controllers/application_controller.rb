@@ -4,6 +4,7 @@ class ApplicationController < ActionController::API
   end
 
   def render_unprocessable(message)
+    Raven.capture_exception(message)
     render json: { errors: message, success: false }, status: :unprocessable_entity
   end
 

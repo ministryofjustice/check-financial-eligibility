@@ -65,6 +65,11 @@ module Creators
               end
             end
 
+            it 'captures error' do
+              expect(Raven).to receive(:capture_exception).with(message_contains('Date of birth cannot be in future'))
+              subject
+            end
+
             it 'does not create an applicant' do
               expect { subject }.not_to change { Applicant.count }
             end
@@ -75,6 +80,11 @@ module Creators
 
             it 'returns an error' do
               expect(subject.errors).to eq ['No such assessment id']
+            end
+
+            it 'captures error' do
+              expect(Raven).to receive(:capture_exception).with(message_contains('No such assessment id'))
+              subject
             end
           end
 
@@ -100,6 +110,11 @@ module Creators
             describe '#errors' do
               it 'returns error' do
                 expect(subject.errors[0]).to eq 'There is already an applicant for this assesssment'
+              end
+
+              it 'captures error' do
+                expect(Raven).to receive(:capture_exception).with(message_contains('There is already an applicant for this assesssment'))
+                subject
               end
             end
           end

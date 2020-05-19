@@ -57,6 +57,7 @@ class AssessmentsController < ApplicationController
   def show
     determine_version_and_process
   rescue StandardError => err
+    Raven.capture_exception(err)
     render json: Decorators::ErrorDecorator.new(err).as_json, status: :unprocessable_entity
   end
 
@@ -74,13 +75,11 @@ class AssessmentsController < ApplicationController
   end
 
   def show_v1
-    if applicant_passported?
-      Workflows::MainWorkflow.call(assessment)
-      Assessors::MainAssessor.call(assessment)
-      render json: Decorators::ResultDecorator.new(assessment)
-    else
-      render json: Decorators::ErrorDecorator.new('Version 1 of the API is not able to process un-passported applications').as_json, status: :unprocessable_entity
-    end
+    raise CheckFinancialEligibilityError, 'Version 1 of the API is not able to process un-passported applications' unless applicant_passported?
+
+    Workflows::MainWorkflow.call(assessment)
+    Assessors::MainAssessor.call(assessment)
+    render json: Decorators::ResultDecorator.new(assessment)
   end
 
   def show_v2

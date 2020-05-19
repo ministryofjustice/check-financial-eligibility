@@ -54,6 +54,23 @@ module Creators
         end
       end
 
+      context 'invalid assessment id' do
+        let(:other_income_params) { humanized_params }
+        let(:params) do
+          {
+            assessment_id: 'abcd',
+            other_incomes: {
+              other_incomes: other_income_params
+            }
+          }
+        end
+
+        it 'captures an error' do
+          expect(Raven).to receive(:capture_exception).with(message_contains('No such assessment id'))
+          subject
+        end
+      end
+
       def expected_dates
         [
           Date.parse('2019-11-01'),
