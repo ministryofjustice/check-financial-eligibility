@@ -1,0 +1,96 @@
+version: 2.1
+
+orbs:
+  slack: circleci/slack@3.4.2
+
+references:
+  build_container_config: &build_container_config
+    docker:
+      - image: circleci/ruby:2.6.3-node-browsers
+        environment:
+          GITHUB_TEAM_NAME_SLUG: laa-apply-for-legal-aid
+      - image: circleci/postgres:10.5
+      - image: circleci/redis:5.0
+      - image: 754256621582.dkr.ecr.eu-west-2.amazonaws.com/laa-apply-for-legal-aid/clamav:1.0.2
+
+  setup_aws_login: &setup_aws_login
+    run:
+      name: Setup aws login
+      command: |
+        sudo apt-get update
+        sudo apt-get install -y python3-pip
+        sudo pip3 install awscli
+        $(aws ecr get-login --region eu-west-2 --no-include-email)
+  restore_gems_cache: &restore_gems_cache
+    restore_cache:
+      keys:
+        - check-financial-eligibility-{{ checksum "Gemfile.lock" }}
+        - check-financial-eligibility
+  install_gems: &install_gems
+    run:
+      name: Install ruby gems
+      command: |
+        gem install bundler -v 2.0.2
+        bundle install --path=vendor/bundle --jobs=4 && bundle clean
+  save_gems_cache: &save_gems_cache
+    save_cache:
+      key: check-financial-eligibility-{{ checksum "Gemfile.lock" }}
+      paths:
+        - vendor/bundle
+
+
+commands:
+
+jobs:
+  lint_checks:
+    <<: *build_container_config
+    steps:
+      - checkout
+      - *restore_gems_cache
+      - *install_gems
+      - *save_gems_cache
+      - run:
+          name: Run Rubocop
+          command:  bin/rails rubocop
+
+  clean_up_ecr:
+    <<: *build_container_config
+    steps:
+      - checkout
+      - setup_remote_docker
+      - *setup_aws_login
+      - run:
+          name: Delete old images from ecr repo
+          command: |
+            ./bin/clean_up_ecr
+
+workflows:
+  version: 2
+  open_pr:
+    jobs:
+      - lint_checks:
+          filters:
+            branches:
+              ignore: master
+      - build_and_push:
+          requires:
+            - lint_checks
+      - auto_deploy_uat:
+          requires:
+            - build_and_push
+      - unit_tests:
+          requires:
+            - lint_checks
+      - integration_tests:
+          requires:
+            - lint_checks
+
+  nightly:
+    triggers:
+      - schedule:
+          cron: "0 2 * * *"
+          filters:
+            branches:
+              only: master
+    jobs:
+      - clean_up_ecr
