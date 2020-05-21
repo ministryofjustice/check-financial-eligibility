@@ -28,6 +28,7 @@ references:
         - RAILS_ENV=test
         - PGHOST=localhost
         - PGUSER=user
+        - TZ: "Europe/London"
     - image: postgres:10.5
       environment:
         - POSTGRES_USER=user
