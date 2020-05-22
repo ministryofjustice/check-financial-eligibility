@@ -50,7 +50,7 @@ class OutgoingsPayloadGenerator
   def process_row(row)
     _object, _outgoing_type, attribute, value = row
     @payment_hash[attribute.to_sym] = value
-    @payment_hash[:client_id] = 'integration tests' unless @payment_hash.key?(:client_id) || @payment_hash[:client_id].present?
+    @payment_hash[:client_id] = SecureRandom.uuid unless @payment_hash.key?(:client_id) || @payment_hash[:client_id].present?
   end
 
   def save_current_outgoing_type

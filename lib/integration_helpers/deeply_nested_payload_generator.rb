@@ -28,6 +28,8 @@ class DeeplyNestedPayloadGenerator
     }
   }.freeze
 
+  FAKE_CLIENT_ID = 'A uuid or unique string from client'.freeze
+
   def initialize(rows, payload_type)
     @rows = rows
     @payload_type = payload_type
@@ -152,8 +154,8 @@ class DeeplyNestedPayloadGenerator
     @payment_hash[client_id_method] = value
   end
 
-  # TODO: Remove #create_client_id method when integration tests spreadsheet passes in client_id with payments
+  # TODO: Remove #create_client_id method when integration tests spreadsheet passess in client_id with payments
   def create_client_id(_row)
-    @payment_hash[client_id_method] = SecureRandom.uuid
+    @payment_hash[client_id_method] = FAKE_CLIENT_ID
   end
 end
