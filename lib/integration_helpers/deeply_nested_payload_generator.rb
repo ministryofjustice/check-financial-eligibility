@@ -28,7 +28,7 @@ class DeeplyNestedPayloadGenerator
     }
   }.freeze
 
-  FAKE_CLIENT_ID = 'A uuid or unique string from client'.freeze
+  FAKE_CLIENT_ID = SecureRandom.uuid.freeze
 
   def initialize(rows, payload_type)
     @rows = rows
