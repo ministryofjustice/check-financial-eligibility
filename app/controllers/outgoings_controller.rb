@@ -10,7 +10,7 @@ class OutgoingsController < ApplicationController
       param :payment_date, Date, date_option: :today_or_older, required: true, desc: 'The date payment made'
       param :housing_costs_type, %w[rent mortgage board_and_lodging], required: false, desc: 'The type of housing cost (omit for non-housing cost outgoings)'
       param :amount, :currency, reqired: true, desc: 'Amount of payment'
-      param :client_id, String, required: false, desc: 'Uniquely identifying string from client'
+      param :client_id, String, required: true, desc: 'Uniquely identifying string from client'
     end
   end
 
