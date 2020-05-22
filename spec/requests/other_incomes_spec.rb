@@ -11,7 +11,6 @@ RSpec.describe OtherIncomesController, type: :request do
     subject { post assessment_other_incomes_path(assessment_id), params: params.to_json, headers: headers }
 
     UUID_REGEX = /^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$/.freeze
-    GENERATED_CLIENT_ID_REGEX = /^OtherIncomePayment:\d\d\d\d-\d\d-\d\d:\d\d\d\.\d{1,2}$/.freeze
 
     context 'valid payload' do
       context 'with two sources' do
@@ -35,21 +34,15 @@ RSpec.describe OtherIncomesController, type: :request do
 
           expect(payments[0].payment_date).to eq Date.new(2019, 9, 1)
           expect(payments[0].amount).to eq 250.00
-          expect(payments[0].client_id).to eq 'OtherIncomePayment:2019-09-01:250.0'
+          expect(payments[0].client_id).to match UUID_REGEX
 
           expect(payments[1].payment_date).to eq Date.new(2019, 10, 1)
           expect(payments[1].amount).to eq 266.02
+          expect(payments[1].client_id).to match UUID_REGEX
 
           expect(payments[2].payment_date).to eq Date.new(2019, 11, 1)
           expect(payments[2].amount).to eq 250.00
-        end
-
-        it 'creates records with default client id where not specified' do
-          subject
-          source = gross_income_summary.other_income_sources.order(:name).first
-          source.other_income_payments.each do |rec|
-            expect(rec.client_id).to match GENERATED_CLIENT_ID_REGEX
-          end
+          expect(payments[2].client_id).to match UUID_REGEX
         end
 
         it 'creates records with client id where specified' do
@@ -106,6 +99,32 @@ RSpec.describe OtherIncomesController, type: :request do
         end
       end
 
+      context 'missing required parameter client_id' do
+        let(:params) do
+          new_hash = other_income_params
+          new_hash[:other_incomes].last[:payments].first.delete(:client_id)
+          new_hash
+        end
+
+        it 'returns unsuccessful' do
+          subject
+          expect(response.status).to eq 422
+        end
+
+        it 'contains success false in the response body' do
+          subject
+          expect(parsed_response).to eq(errors: ['Missing parameter client_id'], success: false)
+        end
+
+        it 'does not create any other income source records' do
+          expect { subject }.not_to change { OtherIncomeSource.count }
+        end
+
+        it 'does not create any other income payment records' do
+          expect { subject }.not_to change { OtherIncomePayment.count }
+        end
+      end
+
       context 'invalid source' do
         let(:params) do
           new_hash = other_income_params
@@ -126,14 +145,6 @@ RSpec.describe OtherIncomesController, type: :request do
         it 'contains an error message' do
           subject
           expect(parsed_response[:errors].first).to match(/Invalid parameter 'source'/)
-        end
-
-        it 'does not create any other income source records' do
-          expect { subject }.not_to change { OtherIncomeSource.count }
-        end
-
-        it 'does not create any other income payment records' do
-          expect { subject }.not_to change { OtherIncomePayment.count }
         end
       end
     end
@@ -180,15 +191,18 @@ RSpec.describe OtherIncomesController, type: :request do
             payments: [
               {
                 date: '2019-11-01',
-                amount: 250.00
+                amount: 250.00,
+                client_id: SecureRandom.uuid
               },
               {
                 date: '2019-10-01',
-                amount: 266.02
+                amount: 266.02,
+                client_id: SecureRandom.uuid
               },
               {
                 date: '2019-09-01',
-                amount: 250.00
+                amount: 250.00,
+                client_id: SecureRandom.uuid
               }
             ]
           }

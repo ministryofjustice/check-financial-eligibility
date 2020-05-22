@@ -9,7 +9,7 @@ FactoryBot.define do
     trait :with_monthly_payments do
       after(:create) do |record|
         [Date.today, 1.month.ago, 2.month.ago].each do |date|
-          create :other_income_payment, other_income_source: record, amount: 75.0, payment_date: date
+          create :other_income_payment, other_income_source: record, amount: 75.0, payment_date: date, client_id: SecureRandom.uuid
         end
       end
     end

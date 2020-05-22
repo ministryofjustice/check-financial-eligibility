@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Full Assessment with remarks' do
+  let(:client_id) { 'uuid or any unique string' }
+
   before do
     Dibber::Seeder.new(StateBenefitType,
                        'data/state_benefit_types.yml',
@@ -144,15 +146,18 @@ RSpec.describe 'Full Assessment with remarks' do
           payments: [
             {
               date: '2019-11-01',
-              amount: 250.00
+              amount: 250.00,
+              client_id: client_id
             },
             {
               date: '2019-10-24',
-              amount: 266.02
+              amount: 266.02,
+              client_id: client_id
             },
             {
               date: '2019-09-06',
-              amount: 250.00
+              amount: 250.00,
+              client_id: client_id
             }
           ]
         }
@@ -168,15 +173,18 @@ RSpec.describe 'Full Assessment with remarks' do
           payments: [
             {
               payment_date: '2019-11-01',
-              amount: 256.00
+              amount: 256.00,
+              client_id: client_id
             },
             {
               payment_date: '2019-10-01',
-              amount: 256.00
+              amount: 256.00,
+              client_id: client_id
             },
             {
               payment_date: '2019-09-01',
-              amount: 256.00
+              amount: 256.00,
+              client_id: client_id
             }
           ]
         },
@@ -185,15 +193,18 @@ RSpec.describe 'Full Assessment with remarks' do
           payments: [
             {
               payment_date: '2019-11-03',
-              amount: 202.45
+              amount: 202.45,
+              client_id: client_id
             },
             {
               payment_date: '2019-11-01',
-              amount: 202.45
+              amount: 202.45,
+              client_id: client_id
             },
             {
               payment_date: '2019-09-12',
-              amount: 202.45
+              amount: 202.45,
+              client_id: client_id
             }
           ]
         },
@@ -203,17 +214,20 @@ RSpec.describe 'Full Assessment with remarks' do
             {
               payment_date: '2019-11-03',
               amount: 1203.45,
-              housing_cost_type: 'mortgage'
+              housing_cost_type: 'mortgage',
+              client_id: client_id
             },
             {
               payment_date: '2019-10-03',
               amount: 1203.45,
-              housing_cost_type: 'mortgage'
+              housing_cost_type: 'mortgage',
+              client_id: client_id
             },
             {
               payment_date: '2019-09-03',
               amount: 1203.65,
-              housing_cost_type: 'mortgage'
+              housing_cost_type: 'mortgage',
+              client_id: client_id
             }
           ]
         }
@@ -249,15 +263,18 @@ RSpec.describe 'Full Assessment with remarks' do
           payments: [
             {
               date: '2019-11-01',
-              amount: 250.00
+              amount: 250.00,
+              client_id: client_id
             },
             {
               date: '2019-10-01',
-              amount: 250.00
+              amount: 250.00,
+              client_id: client_id
             },
             {
               date: '2019-09-01',
-              amount: 250.00
+              amount: 250.00,
+              client_id: client_id
             }
           ]
         }
@@ -275,28 +292,28 @@ RSpec.describe 'Full Assessment with remarks' do
           'OISL-001',
           'OISL-002',
           'OISL-003',
-          'OtherIncomePayment:2019-11-01:250.0',
-          'OtherIncomePayment:2019-10-24:266.02',
-          'OtherIncomePayment:2019-09-06:250.0'
+          client_id,
+          client_id,
+          client_id
         ],
         unknown_frequency: [
-          'OtherIncomePayment:2019-11-01:250.0',
-          'OtherIncomePayment:2019-10-24:266.02',
-          'OtherIncomePayment:2019-09-06:250.0'
+          client_id,
+          client_id,
+          client_id
         ]
       },
       outgoings_housing_cost: {
         amount_variation: [
-          'Outgoings::HousingCost:2019-11-03:1203.45',
-          'Outgoings::HousingCost:2019-10-03:1203.45',
-          'Outgoings::HousingCost:2019-09-03:1203.65'
+          client_id,
+          client_id,
+          client_id
         ]
       },
       outgoings_maintenance: {
         unknown_frequency: [
-          'Outgoings::Maintenance:2019-11-03:202.45',
-          'Outgoings::Maintenance:2019-11-01:202.45',
-          'Outgoings::Maintenance:2019-09-12:202.45'
+          client_id,
+          client_id,
+          client_id
         ]
       }
     }

@@ -43,14 +43,6 @@ RSpec.describe StateBenefitsController, type: :request do
           state_benefit = gross_income_summary.state_benefits.detect { |sb| sb.state_benefit_type == state_benefit_type_1 }
           expect(state_benefit.state_benefit_payments.map(&:client_id)).to match client_ids
         end
-
-        it 'creates default client id if not specified' do
-          subject
-          state_benefit = gross_income_summary.state_benefits.detect { |sb| sb.state_benefit_type == state_benefit_type_2 }
-          state_benefit.state_benefit_payments.each do |payment|
-            expect(payment.client_id).to match(/^StateBenefitPayment:\d\d\d\d-\d\d-\d\d:\d{1,5}\.\d{1,2}$/)
-          end
-        end
       end
     end
 
@@ -78,6 +70,32 @@ RSpec.describe StateBenefitsController, type: :request do
 
         it 'does not create any state benefit records' do
           expect { subject }.not_to change { StateBenefitPayment.count }
+        end
+      end
+
+      context 'missing required parameter client_id' do
+        let(:params) do
+          new_hash = state_benefit_params
+          new_hash[:state_benefits].last[:payments].first.delete(:client_id)
+          new_hash
+        end
+
+        it 'returns unsuccessful' do
+          subject
+          expect(response.status).to eq 422
+        end
+
+        it 'contains success false in the response body' do
+          subject
+          expect(parsed_response).to eq(errors: ['Missing parameter client_id'], success: false)
+        end
+
+        it 'does not create any other income source records' do
+          expect { subject }.not_to change { OtherIncomeSource.count }
+        end
+
+        it 'does not create any other income payment records' do
+          expect { subject }.not_to change { OtherIncomePayment.count }
         end
       end
     end
@@ -124,15 +142,18 @@ RSpec.describe StateBenefitsController, type: :request do
             payments: [
               {
                 date: '2019-11-01',
-                amount: 250.00
+                amount: 250.00,
+                client_id: client_ids[0]
               },
               {
                 date: '2019-10-01',
-                amount: 266.02
+                amount: 266.02,
+                client_id: client_ids[1]
               },
               {
                 date: '2019-09-01',
-                amount: 250.00
+                amount: 250.00,
+                client_id: client_ids[2]
               }
             ]
           }
