@@ -152,6 +152,7 @@ class DeeplyNestedPayloadGenerator
     @payment_hash[client_id_method] = value
   end
 
+  # TODO: Remove #create_client_id method when integration tests spreadsheet passes in client_id with payments
   def create_client_id(_row)
     @payment_hash[client_id_method] = SecureRandom.uuid
   end
