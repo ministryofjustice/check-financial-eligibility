@@ -4,6 +4,7 @@ module Creators
   RSpec.describe OtherIncomesCreator do
     let(:gross_income_summary) { create :gross_income_summary }
     let(:assessment) { gross_income_summary.assessment }
+    let(:client_id) { [SecureRandom.uuid, SecureRandom.uuid].sample }
     let(:params) do
       {
         assessment_id: assessment.id,
@@ -93,15 +94,18 @@ module Creators
             payments: [
               {
                 date: '2019-11-01',
-                amount: 1046.44
+                amount: 1046.44,
+                client_id: client_id
               },
               {
                 date: '2019-10-01',
-                amount: 1034.33
+                amount: 1034.33,
+                client_id: client_id
               },
               {
                 date: '2019-09-01',
-                amount: 1033.44
+                amount: 1033.44,
+                client_id: client_id
               }
             ]
           },
@@ -110,15 +114,18 @@ module Creators
             payments: [
               {
                 date: '2019-11-01',
-                amount: 250.0
+                amount: 250.0,
+                client_id: client_id
               },
               {
                 date: '2019-10-01',
-                amount: 266.02
+                amount: 266.02,
+                client_id: client_id
               },
               {
                 date: '2019-09-01',
-                amount: 250.0
+                amount: 250.0,
+                client_id: client_id
               }
             ]
           }
@@ -132,11 +139,13 @@ module Creators
             payments: [
               {
                 date: '2019-11-12',
-                amount: 1200.0
+                amount: 1200.0,
+                client_id: client_id
               },
               {
                 date: '2019-10-09',
-                amount: 1200.01
+                amount: 1200.01,
+                client_id: client_id
               }
             ]
           }

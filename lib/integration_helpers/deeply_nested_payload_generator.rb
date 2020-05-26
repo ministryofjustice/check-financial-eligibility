@@ -7,23 +7,28 @@ class DeeplyNestedPayloadGenerator
       second_level_name: :source,
       second_level_collection: :payments,
       date_method: :date,
-      amount_method: :amount
+      amount_method: :amount,
+      client_id_method: :client_id
     },
     state_benefits: {
       top_level_name: :state_benefits,
       second_level_name: :name,
       second_level_collection: :payments,
       date_method: :date,
-      amount_method: :amount
+      amount_method: :amount,
+      client_id_method: :client_id
     },
     outgoings: {
       top_level_name: :outgoings,
       second_level_name: :name,
       second_level_collection: :payments,
       date_method: :payment_date,
-      amount_method: :amount
+      amount_method: :amount,
+      client_id_method: :client_id
     }
   }.freeze
+
+  FAKE_CLIENT_ID = SecureRandom.uuid.freeze
 
   def initialize(rows, payload_type)
     @rows = rows
@@ -42,6 +47,8 @@ class DeeplyNestedPayloadGenerator
       change_date(row) if new_date?(row)
 
       store_amount(row) if amount?(row)
+
+      client_id?(row) ? store_client_id(row) : create_client_id(row)
     end
     store_payment_source
     { top_level_name => @payload }
@@ -78,6 +85,10 @@ class DeeplyNestedPayloadGenerator
     CUSTOMIZATION[@payload_type][:amount_method]
   end
 
+  def client_id_method
+    CUSTOMIZATION[@payload_type][:client_id_method]
+  end
+
   def new_source?(row)
     _object, source, _attr, _value = row
     source.present? && source != @current_source
@@ -91,6 +102,11 @@ class DeeplyNestedPayloadGenerator
   def amount?(row)
     _object, _source, attr, _value = row
     attr == 'amount'
+  end
+
+  def client_id?(row)
+    _object, _source, attr, _value = row
+    attr == 'client_id'
   end
 
   def initialize_new_date(row)
@@ -131,5 +147,15 @@ class DeeplyNestedPayloadGenerator
   def store_amount(row)
     _object, _source, _attr, value = row
     @payment_hash[amount_method] = value
+  end
+
+  def store_client_id(row)
+    _object, _source, _attr, value = row
+    @payment_hash[client_id_method] = value
+  end
+
+  # TODO: Remove #create_client_id method when integration tests spreadsheet passess in client_id with payments
+  def create_client_id(_row)
+    @payment_hash[client_id_method] = FAKE_CLIENT_ID
   end
 end

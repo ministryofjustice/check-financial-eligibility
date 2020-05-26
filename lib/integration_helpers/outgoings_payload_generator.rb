@@ -6,7 +6,7 @@ class OutgoingsPayloadGenerator
     @current_outgoing_type = nil # name of the current source
     # @source_hash = {} # the hash containing source and payments array
     @payments_array = [] # an array of @current_payment_hashes
-    @payment_hash = {} # a hash of date and value
+    @payment_hash = {} # a hash of date, value and client_id (if no client_id exists then it will generate one)
   end
 
   def run
@@ -50,6 +50,7 @@ class OutgoingsPayloadGenerator
   def process_row(row)
     _object, _outgoing_type, attribute, value = row
     @payment_hash[attribute.to_sym] = value
+    @payment_hash[:client_id] = SecureRandom.uuid unless @payment_hash.key?(:client_id) || @payment_hash[:client_id].present?
   end
 
   def save_current_outgoing_type

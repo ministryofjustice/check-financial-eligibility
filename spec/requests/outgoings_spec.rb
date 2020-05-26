@@ -36,13 +36,6 @@ RSpec.describe OutgoingsController, type: :request do
       expect(parsed_response[:errors]).to be_empty
     end
 
-    it 'creates default client ids when none present in params' do
-      subject
-      Outgoings::Maintenance.all.each do |outgoing|
-        expect(outgoing.client_id).to match(/^Outgoings::Maintenance:\d\d\d\d-\d\d-\d\d:\d{1,5}\.\d{1,2}$/)
-      end
-    end
-
     it 'stores the provided client id when given in params' do
       subject
       expect(Outgoings::Childcare.all.map(&:client_id)).to match_array(client_ids)
@@ -81,6 +74,29 @@ RSpec.describe OutgoingsController, type: :request do
 
       it 'sets success flag to false' do
         expect(parsed_response[:success]).to be false
+      end
+    end
+
+    context 'missing required parameter client_id' do
+      let(:params) do
+        new_hash = outgoings_params
+        new_hash.last[:payments].first.delete(:client_id)
+        {
+          outgoings: new_hash
+        }
+      end
+      it 'returns unsuccessful' do
+        subject
+        expect(response.status).to eq 422
+      end
+
+      it 'contains success false in the response body' do
+        subject
+        expect(parsed_response).to eq(errors: ['Missing parameter client_id'], success: false)
+      end
+
+      it 'does not create outgoing records' do
+        expect { subject }.not_to change { Outgoings::BaseOutgoing.count }
       end
     end
 
@@ -141,11 +157,13 @@ RSpec.describe OutgoingsController, type: :request do
           payments: [
             {
               payment_date: payment_date,
-              amount: Faker::Number.decimal(l_digits: 3, r_digits: 2)
+              amount: Faker::Number.decimal(l_digits: 3, r_digits: 2),
+              client_id: client_ids.first
             },
             {
               payment_date: payment_date,
-              amount: Faker::Number.decimal(l_digits: 3, r_digits: 2)
+              amount: Faker::Number.decimal(l_digits: 3, r_digits: 2),
+              client_id: client_ids.last
             }
           ]
         },
@@ -155,12 +173,14 @@ RSpec.describe OutgoingsController, type: :request do
             {
               payment_date: payment_date,
               amount: Faker::Number.decimal(l_digits: 3, r_digits: 2),
-              housing_cost_type: housing_cost_type
+              housing_cost_type: housing_cost_type,
+              client_id: client_ids.first
             },
             {
               payment_date: payment_date,
               amount: Faker::Number.decimal(l_digits: 3, r_digits: 2),
-              housing_cost_type: housing_cost_type
+              housing_cost_type: housing_cost_type,
+              client_id: client_ids.last
             }
           ]
         }

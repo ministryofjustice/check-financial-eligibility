@@ -16,7 +16,7 @@ class StateBenefitsController < ApplicationController
     param :payments, Array, desc: 'Collection of payment dates and amounts' do
       param :date, Date, date_option: :today_or_older, required: true, desc: 'The date payment received'
       param :amount, :currency, required: true, desc: 'Amount of payment'
-      param :client_id, String, required: false, desc: 'Uniquely identifying string from client'
+      param :client_id, String, required: true, desc: 'Uniquely identifying string from client'
     end
   end
 
