@@ -53,21 +53,10 @@ RSpec.describe OtherIncomesController, type: :request do
           end
         end
 
-        it 'returns a JSON representation of the other income records' do
+        it 'generates a valid response' do
           subject
-          expect(parsed_response[:objects].size).to eq 2
-          expect(parsed_response[:errors]).to be_empty
           expect(parsed_response[:success]).to eq true
-
-          source = gross_income_summary.other_income_sources.find_by(name: 'student_loan')
-          expect(parsed_response[:objects].first[:id]).to eq source.id
-          expect(parsed_response[:objects].first[:gross_income_summary_id]).to eq gross_income_summary.id
-          expect(parsed_response[:objects].first[:name]).to eq 'student_loan'
-
-          source = gross_income_summary.other_income_sources.find_by(name: 'friends_or_family')
-          expect(parsed_response[:objects].last[:id]).to eq source.id
-          expect(parsed_response[:objects].last[:gross_income_summary_id]).to eq gross_income_summary.id
-          expect(parsed_response[:objects].last[:name]).to eq 'friends_or_family'
+          expect(parsed_response[:errors]).to be_empty
         end
       end
     end

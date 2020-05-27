@@ -63,6 +63,7 @@ module Creators
           expected_response = {
             success: true,
             objects: [Assessment.last],
+            assessment_id: Assessment.last.id,
             errors: []
           }
           expect(subject.as_json).to eq expected_response

@@ -17,12 +17,14 @@ class AssessmentsController < ApplicationController
   param :matter_proceeding_type, Assessment.matter_proceeding_types.values, required: true, desc: 'The matter type of the case'
 
   returns code: :ok, desc: 'Successful response' do
-    property :objects, array_of: Assessment
     property :success, ['true'], desc: 'Success flag shows true'
+    property :objects, array_of: Assessment
+    property :assessment_id, :uuid
+    property :errors, [], desc: 'Empty array of error messages'
   end
   returns code: :unprocessable_entity do
-    property :errors, array_of: String, desc: 'Description of why object invalid'
     property :success, ['false'], desc: 'Success flag shows false'
+    property :errors, array_of: String, desc: 'Description of why object invalid'
   end
 
   def create

@@ -20,17 +20,17 @@ class ApplicantsController < ApplicationController
   end
 
   returns code: :ok, desc: 'Successful response' do
-    property :objects, array_of: Applicant
     property :success, ['true'], desc: 'Success flag shows true'
+    property :errors, [], desc: 'Empty array of error messages'
   end
   returns code: :unprocessable_entity do
-    property :errors, array_of: String, desc: 'Description of why object invalid'
     property :success, ['false'], desc: 'Success flag shows false'
+    property :errors, array_of: String, desc: 'Description of why object invalid'
   end
 
   def create
     if creation_service.success?
-      render_success objects: [creation_service.applicant]
+      render_success
     else
       render_unprocessable(creation_service.errors)
     end

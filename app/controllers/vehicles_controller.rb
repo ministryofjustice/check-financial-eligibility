@@ -15,17 +15,17 @@ class VehiclesController < ApplicationController
   end
 
   returns code: :ok, desc: 'Successful response' do
-    property :vehicles, array_of: Vehicle
     property :success, ['true'], desc: 'Success flag shows true'
+    property :errors, [], desc: 'Empty array of error messages'
   end
   returns code: :unprocessable_entity do
-    property :errors, array_of: String, desc: 'Description of why object invalid'
     property :success, ['false'], desc: 'Success flag shows false'
+    property :errors, array_of: String, desc: 'Description of why object invalid'
   end
 
   def create
     if creation_service.success?
-      render_success vehicles: creation_service.vehicles
+      render_success
     else
       render_unprocessable(creation_service.errors)
     end

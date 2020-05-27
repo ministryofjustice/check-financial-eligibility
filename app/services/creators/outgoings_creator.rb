@@ -24,10 +24,6 @@ module Creators
       self
     end
 
-    def outgoings
-      disposable_income_summary.outgoings
-    end
-
     private
 
     def create_outgoing_collection(outgoing)
