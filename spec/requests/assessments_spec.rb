@@ -27,6 +27,7 @@ RSpec.describe AssessmentsController, type: :request do
       expected_response = {
         success: true,
         objects: [Assessment.last],
+        assessment_id: Assessment.last.id,
         errors: []
       }.to_json
       expect(parsed_response).to eq JSON.parse(expected_response, symbolize_names: true)

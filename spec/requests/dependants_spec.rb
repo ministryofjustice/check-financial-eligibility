@@ -24,7 +24,6 @@ RSpec.describe DependantsController, type: :request do
       it 'generates a valid response' do
         expect(parsed_response[:success]).to eq(true)
         expect(parsed_response[:errors]).to be_empty
-        expect(parsed_response[:objects]).not_to be_empty
       end
     end
 

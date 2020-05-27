@@ -25,11 +25,6 @@ RSpec.describe CapitalsController, type: :request do
         it 'generates a valid response' do
           expect(parsed_response[:success]).to eq(true)
           expect(parsed_response[:errors]).to be_empty
-          # TODO: Agree on a way to represent CapitalSummary and associations in JSON and then check here
-          # that the right amount of liquid and non_liquid capital items have been created
-          #
-          # expect(parsed_response[:objects][:liquid_capital_items].size).to eq 2
-          # expect(parsed_response[:objects][:non_liquid_capital_items].size).to eq 2
         end
       end
 
@@ -47,11 +42,6 @@ RSpec.describe CapitalsController, type: :request do
         it 'generates a valid response' do
           expect(parsed_response[:success]).to eq(true)
           expect(parsed_response[:errors]).to be_empty
-          # TODO: Agree on a way to represent CapitalSummary and associations in JSON and then check here
-          # that the right amoutn of liquid and non_liquid capital items have been created
-          #
-          # expect(parsed_response[:objects][:liquid_capital_items].size).to eq 2
-          # expect(parsed_response[:objects][:non_liquid_capital_items]).to be_empty
         end
 
         it 'creates two LiquidCapitalItem records' do
@@ -73,11 +63,6 @@ RSpec.describe CapitalsController, type: :request do
         it 'generates a valid response' do
           expect(parsed_response[:success]).to eq(true)
           expect(parsed_response[:errors]).to be_empty
-          # TODO: Agree on a way to represent CapitalSummary and associations in JSON and then check here
-          # that the right amoutn of liquid and non_liquid capital items have been created
-          #
-          # expect(parsed_response[:objects][:liquid_capital_items]).to be_empty
-          # expect(parsed_response[:objects][:non_liquid_capital_items].size).to eq 2
         end
 
         it 'creates 2 NonLiquidCapitalItem records' do
@@ -95,11 +80,6 @@ RSpec.describe CapitalsController, type: :request do
         it 'returns error payload' do
           expect(parsed_response[:success]).to eq(true)
           expect(parsed_response[:errors]).to be_empty
-          # TODO: Agree on a way to represent CapitalSummary and associations in JSON and then check here
-          # that the right amoutn of liquid and non_liquid capital items have been created
-          #
-          # expect(parsed_response[:objects][:liquid_capital_items]).to be_empty
-          # expect(parsed_response[:objects][:non_liquid_capital_items]).to be_empty
         end
       end
 

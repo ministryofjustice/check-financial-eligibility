@@ -43,15 +43,9 @@ RSpec.describe PropertiesController, type: :request do
           expect(response).to have_http_status(:success)
         end
 
-        it 'returns the expected success response payload' do
-          expect(parsed_response[:success]).to eq(true)
+        it 'generates a valid response' do
+          expect(parsed_response[:success]).to eq true
           expect(parsed_response[:errors]).to be_empty
-          expect(parsed_response[:objects].size).to eq 3
-          # TODO: decide how to represent objects in the response and rework this piece
-          # expect(parsed_response[:objects].first[:assessment_id]).to eq assessment.id
-          # expect(parsed_response[:objects].first[:shared_with_housing_assoc]).to be true
-          # expect(parsed_response[:objects].last[:main_home]).to be false
-          # expect(parsed_response[:objects].last[:shared_with_housing_assoc]).to be true
         end
       end
 
@@ -61,7 +55,6 @@ RSpec.describe PropertiesController, type: :request do
         it 'returns expected error response', :show_in_doc do
           expect(parsed_response[:success]).to eq(false)
           expect(parsed_response[:errors]).to eq [%(No such assessment id)]
-          expect(parsed_response[:objects]).to be_nil
         end
 
         it 'returns 422' do

@@ -21,6 +21,12 @@ RSpec.describe StateBenefitsController, type: :request do
           expect(response).to have_http_status(:success)
         end
 
+        it 'generates a valid response' do
+          subject
+          expect(parsed_response[:success]).to eq true
+          expect(parsed_response[:errors]).to be_empty
+        end
+
         it 'creates two state benefit records' do
           expect { subject }.to change { gross_income_summary.state_benefits.count }.by(2)
           state_benefit_types = gross_income_summary.state_benefits.map(&:state_benefit_type)
