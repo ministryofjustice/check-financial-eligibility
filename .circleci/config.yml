@@ -181,7 +181,7 @@ jobs:
           name: Helm deployment to UAT
           command: |
             ./bin/uat_deploy
-  delete_uat:
+  delete_uat_branch:
     <<: *cloud_platform_container_config
     steps:
       - checkout
@@ -281,10 +281,10 @@ workflows:
       - build_and_push:
           requires:
             - lint_checks
-      - deploy_uat:
+      - deploy_master_uat:
           requires:
             - build_and_push
-      - delete_uat:
+      - delete_uat_branch:
           requires:
             - deploy_uat
       - deploy_staging:
@@ -297,7 +297,7 @@ workflows:
       - hold_production:
           type: approval
           requires:
-            - delete_uat
+            - delete_uat_branch
       - deploy_production:
           requires:
             - hold_production_notification
