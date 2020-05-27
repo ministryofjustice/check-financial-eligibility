@@ -15,22 +15,17 @@ class OutgoingsController < ApplicationController
   end
 
   returns code: :ok, desc: 'Successful response' do
-    property :outgoings, array_of: Outgoings::BaseOutgoing, desc: 'Array of created outgoing objects'
     property :success, ['true'], desc: 'Success flag shows true'
+    property :errors, [], desc: 'Empty array of error messages'
   end
-
   returns code: :unprocessable_entity do
-    property :errors, array_of: String, desc: 'Description of why object invalid'
     property :success, ['false'], desc: 'Success flag shows false'
+    property :errors, array_of: String, desc: 'Description of why object invalid'
   end
 
   def create
     if outgoing_creation_service.success?
-      render json: {
-        outgoings: outgoing_creation_service.outgoings,
-        success: true,
-        errors: []
-      }
+      render_success
     else
       render_unprocessable(outgoing_creation_service.errors)
     end
