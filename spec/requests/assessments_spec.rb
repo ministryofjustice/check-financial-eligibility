@@ -26,7 +26,6 @@ RSpec.describe AssessmentsController, type: :request do
     it 'has a valid payload' do
       expected_response = {
         success: true,
-        objects: [Assessment.last],
         assessment_id: Assessment.last.id,
         errors: []
       }.to_json
@@ -45,8 +44,8 @@ RSpec.describe AssessmentsController, type: :request do
 
       it 'returns error json payload', :show_in_doc do
         expected_response = {
+          success: false,
           errors: ['error creating record'],
-          success: false
         }
         expect(parsed_response).to eq expected_response
       end

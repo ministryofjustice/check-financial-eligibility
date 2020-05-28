@@ -18,7 +18,6 @@ class AssessmentsController < ApplicationController
 
   returns code: :ok, desc: 'Successful response' do
     property :success, ['true'], desc: 'Success flag shows true'
-    property :objects, array_of: Assessment
     property :assessment_id, :uuid
     property :errors, [], desc: 'Empty array of error messages'
   end
