@@ -23,7 +23,7 @@ RSpec.describe AssessmentsController, type: :request do
       expect(response).to have_http_status(:success)
     end
 
-    it 'has a valid payload', :show_in_doc do
+    it 'has a valid payload' do
       expected_response = {
         success: true,
         objects: [Assessment.last],
@@ -72,6 +72,7 @@ RSpec.describe AssessmentsController, type: :request do
 
   describe 'GET /assessments/:id' do
     let(:option) { :below_lower_threshold }
+    let(:now) { Time.now }
 
     subject { get assessment_path(assessment), headers: headers }
 
@@ -86,8 +87,11 @@ RSpec.describe AssessmentsController, type: :request do
         end
 
         it 'returns capital summary data as json' do
-          subject
-          expect(parsed_response).to eq(JSON.parse(Decorators::ResultDecorator.new(assessment.reload).to_json, symbolize_names: true))
+          Timecop.freeze(now) do # freeze time so we don't have to worry about time differences between actual and expected results
+            subject
+            expected_response = Decorators::AssessmentDecorator.new(assessment.reload).as_json.to_json
+            expect(parsed_response).to eq(JSON.parse(expected_response, symbolize_names: true))
+          end
         end
 
         it 'has called the workflow and assessor' do
@@ -95,24 +99,26 @@ RSpec.describe AssessmentsController, type: :request do
           expect(Assessors::MainAssessor).to receive(:call).with(assessment)
           subject
         end
+
+        it 'has defaulted to using version 2' do
+          subject
+          expect(parsed_response[:version]).to eq '2'
+        end
       end
 
       context 'non-passported' do
         let(:assessment) { create :assessment, :with_everything }
-        it 'returns unprocessable entity' do
+        it 'returns success' do
           subject
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:success)
         end
 
-        it 'captures error' do
-          expect(Raven).to receive(:capture_exception).with(message_contains('Version 1 of the API is not able to process un-passported applications'))
-          subject
-        end
-
-        it 'returns errors struct with message' do
-          subject
-          expect(parsed_response[:success]).to be false
-          expect(parsed_response[:errors]).to eq ['Version 1 of the API is not able to process un-passported applications']
+        it 'returns capital summary data as json' do
+          Timecop.freeze(now) do # freeze time so we don't have to worry about time differences between actual and expected results
+            subject
+            expected_response = Decorators::AssessmentDecorator.new(assessment.reload).as_json.to_json
+            expect(parsed_response).to eq(JSON.parse(expected_response, symbolize_names: true))
+          end
         end
       end
     end
@@ -121,18 +127,14 @@ RSpec.describe AssessmentsController, type: :request do
       let(:headers) { { 'Accept' => 'application/json;version=1' } }
       let(:assessment) { create :assessment, :passported }
 
-      it 'returns http success', :show_in_doc do
+      it 'returns http success' do
         subject
-        expect(response).to have_http_status(:success)
-      end
-
-      it 'returns capital summary data as json' do
-        subject
-        expect(parsed_response).to eq(JSON.parse(Decorators::ResultDecorator.new(assessment.reload).to_json, symbolize_names: true))
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(parsed_response[:errors]).to eq ['Unsupported version specified in AcceptHeader']
       end
     end
 
-    context 'version 2 specifified in the header' do
+    context 'version 2 specified in the header' do
       let(:headers) { { 'Accept' => 'application/json;version=2' } }
 
       context 'non-passported application' do
@@ -189,8 +191,8 @@ RSpec.describe AssessmentsController, type: :request do
         expect(results[:assessment_result]).to eq 'eligible'
         expect(results[:upper_threshold]).to eq 999_999_999_999.0.to_s
         expect(results[:monthly_other_income]).to eq 1415.0.to_s
-        expect(results[:monthly_state_benefits]).to eq 216.67.to_s
-        expect(results[:total_gross_income]).to eq 1631.67.to_s
+        expect(results[:monthly_state_benefits]).to eq 200.0.to_s
+        expect(results[:total_gross_income]).to eq 1615.0.to_s
       end
 
       it 'returns expected monthly_income_equivalents' do
@@ -218,7 +220,7 @@ RSpec.describe AssessmentsController, type: :request do
         expect(results[:housing_benefit]).to eq 0.0.to_s
         expect(results[:net_housing_costs]).to eq 50.0.to_s
         expect(results[:total_outgoings_and_allowances]).to eq 1507.45.to_s
-        expect(results[:total_disposable_income]).to eq 124.22.to_s
+        expect(results[:total_disposable_income]).to eq 107.55.to_s
         expect(results[:lower_threshold]).to eq 315.0.to_s
         expect(results[:upper_threshold]).to eq 999_999_999_999.0.to_s
         expect(results[:assessment_result]).to eq 'eligible'
@@ -312,15 +314,15 @@ RSpec.describe AssessmentsController, type: :request do
 
     gis = create :gross_income_summary, assessment: assessment
     ois = create :other_income_source, gross_income_summary: gis, name: 'friends_or_family'
-    create :other_income_payment, other_income_source: ois, payment_date: Date.parse('28/2/2019'), amount: 1415
-    create :other_income_payment, other_income_source: ois, payment_date: Date.parse('31/3/2019'), amount: 1415
-    create :other_income_payment, other_income_source: ois, payment_date: Date.parse('30/4/2019'), amount: 1415
+    create :other_income_payment, other_income_source: ois, payment_date: Date.parse('28/2/2019'), amount: 1415, client_id: SecureRandom.uuid
+    create :other_income_payment, other_income_source: ois, payment_date: Date.parse('31/3/2019'), amount: 1415, client_id: SecureRandom.uuid
+    create :other_income_payment, other_income_source: ois, payment_date: Date.parse('30/4/2019'), amount: 1415, client_id: SecureRandom.uuid
 
     sbt = create :state_benefit_type, label: 'child_benefit', name: 'Child Benefit', exclude_from_gross_income: false
     sb = create :state_benefit, state_benefit_type: sbt, gross_income_summary: gis
-    create :state_benefit_payment, state_benefit: sb, payment_date: Date.parse('1/2/2019'), amount: 200
-    create :state_benefit_payment, state_benefit: sb, payment_date: Date.parse('1/3/2019'), amount: 200
-    create :state_benefit_payment, state_benefit: sb, payment_date: Date.parse('29/3/2019'), amount: 200
+    create :state_benefit_payment, state_benefit: sb, payment_date: Date.parse('1/2/2019'), amount: 200, client_id: SecureRandom.uuid
+    create :state_benefit_payment, state_benefit: sb, payment_date: Date.parse('10/3/2019'), amount: 202, client_id: SecureRandom.uuid
+    create :state_benefit_payment, state_benefit: sb, payment_date: Date.parse('29/3/2019'), amount: 198, client_id: SecureRandom.uuid
 
     dis = create :disposable_income_summary, assessment: assessment
     create_mortgage_payment dis, '15/3/2019', 50

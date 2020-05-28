@@ -37,10 +37,10 @@ class AssessmentsController < ApplicationController
 
   def self.documentation_for_get
     %(Get assessment result<br/>
-       Note that there are two versions of this api.  The version is specified by the Accept header, for example</br>
+       Only version 2 of this api is currently valid.  The version is specified by the Accept header, for example</br>
        <tt>&nbsp;&nbsp;&nbsp;&nbsp;Accept:application/json;version=2</tt><br/>
-       If the version part of the Accept header is not specified, version 1 is assumed<br/<br/>
-       In the given examples, the first two examples are version 1, the third example is version 2.<br/>)
+       If the version part of the Accept header is not specified, version 2 is assumed<br/<br/>
+     )
   end
 
   api :GET, 'assessments/:id', AssessmentsController.documentation_for_get
@@ -67,21 +67,11 @@ class AssessmentsController < ApplicationController
 
   def determine_version_and_process
     case determine_version
-    when '1'
-      show_v1
     when '2'
       show_v2
     else
       raise CheckFinancialEligibilityError, 'Unsupported version specified in AcceptHeader'
     end
-  end
-
-  def show_v1
-    raise CheckFinancialEligibilityError, 'Version 1 of the API is not able to process un-passported applications' unless applicant_passported?
-
-    Workflows::MainWorkflow.call(assessment)
-    Assessors::MainAssessor.call(assessment)
-    render json: Decorators::ResultDecorator.new(assessment)
   end
 
   def show_v2
@@ -95,7 +85,7 @@ class AssessmentsController < ApplicationController
     parts.each do |part|
       return Regexp.last_match(1) if part =~ /^version=(\d)$/
     end
-    '1'
+    '2'
   end
 
   def assessment_creation_service
@@ -104,9 +94,5 @@ class AssessmentsController < ApplicationController
 
   def assessment
     @assessment ||= Assessment.find(params[:id])
-  end
-
-  def applicant_passported?
-    assessment.applicant.receives_qualifying_benefit?
   end
 end
