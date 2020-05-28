@@ -2,14 +2,14 @@
   "applicants#create": [
     {
       "verb": "POST",
-      "path": "/assessments/c5ed531f-268b-46a3-b875-8b0bfaff1872/applicant",
+      "path": "/assessments/65c8e1d1-d20e-4bf0-bb46-d61d46c20a70/applicant",
       "versions": [
         "1.0"
       ],
       "query": null,
       "request_data": {
         "applicant": {
-          "date_of_birth": "2000-05-29",
+          "date_of_birth": "2000-05-28",
           "involvement_type": "applicant",
           "has_partner_opponent": false,
           "receives_qualifying_benefit": "yes"
@@ -27,14 +27,14 @@
     },
     {
       "verb": "POST",
-      "path": "/assessments/213bd222-232c-47df-97f7-9a337754ac83/applicant",
+      "path": "/assessments/c886136a-69e0-4da1-9d55-653568832718/applicant",
       "versions": [
         "1.0"
       ],
       "query": null,
       "request_data": {
         "applicant": {
-          "date_of_birth": "2000-05-29",
+          "date_of_birth": "2000-05-28",
           "involvement_type": "applicant",
           "has_partner_opponent": false,
           "receives_qualifying_benefit": true
@@ -42,6 +42,31 @@
       },
       "response_data": {
         "success": true,
+        "errors": [
+
+        ]
+      },
+      "code": 200,
+      "show_in_doc": 1,
+      "recorded": true
+    }
+  ],
+  "assessments#create": [
+    {
+      "verb": "POST",
+      "path": "/assessments",
+      "versions": [
+        "1.0"
+      ],
+      "query": null,
+      "request_data": {
+        "client_reference_id": "psr-123",
+        "submission_date": "2019-06-06",
+        "matter_proceeding_type": "domestic_abuse"
+      },
+      "response_data": {
+        "success": true,
+        "assessment_id": "d0827487-b4dd-4035-a010-825e2734694e",
         "errors": [
 
         ]
@@ -78,7 +103,155 @@
   "assessments#show": [
     {
       "verb": "GET",
-      "path": "/assessments/a5b5abb2-3f65-4b96-9b34-42c4b95a8340",
+      "path": "/assessments/0b2aa7e5-36b3-4888-92ca-2b6e7f76da3b",
+      "versions": [
+        "1.0"
+      ],
+      "query": null,
+      "request_data": null,
+      "response_data": {
+        "assessment_result": "contribution_required",
+        "applicant": {
+          "receives_qualifying_benefit": true,
+          "age_at_submission": 50
+        },
+        "capital": {
+          "total_liquid": "9346.68",
+          "total_non_liquid": "5764.83",
+          "pensioner_capital_disregard": "0.0",
+          "total_capital": "15111.51",
+          "capital_contribution": "12111.51",
+          "liquid_capital_items": [
+            {
+              "description": "Laboriosam est voluptatum et.",
+              "value": "9346.68"
+            }
+          ],
+          "non_liquid_capital_items": [
+            {
+              "description": "Quidem ea inventore a.",
+              "value": "5764.83"
+            }
+          ]
+        },
+        "property": {
+          "total_mortgage_allowance": "100000.0",
+          "total_property": "0.0",
+          "main_home": {
+            "value": "4389.64",
+            "transaction_allowance": "131.69",
+            "allowable_outstanding_mortgage": "8806.17",
+            "shared_with_housing_assoc": true,
+            "percentage_owned": "6.27",
+            "net_equity": "-8662.63",
+            "main_home_equity_disregard": "100000.0",
+            "assessed_equity": "0.0"
+          },
+          "additional_properties": [
+            {
+              "value": "2949.15",
+              "transaction_allowance": "88.47",
+              "allowable_outstanding_mortgage": "4166.92",
+              "percentage_owned": "7.67",
+              "assessed_equity": "0.0"
+            }
+          ]
+        },
+        "vehicles": {
+          "total_vehicle": "0.0",
+          "vehicles": [
+            {
+              "in_regular_use": true,
+              "value": "9764.06",
+              "loan_amount_outstanding": "8561.38",
+              "date_of_purchase": "2019-02-28",
+              "included_in_assessment": false,
+              "assessed_value": "0.0"
+            }
+          ]
+        }
+      },
+      "code": 200,
+      "show_in_doc": 1,
+      "recorded": true
+    },
+    {
+      "verb": "GET",
+      "path": "/assessments/a9dbe0fa-e082-409a-8be4-97c38e4b6dfa",
+      "versions": [
+        "1.0"
+      ],
+      "query": null,
+      "request_data": null,
+      "response_data": {
+        "assessment_result": "contribution_required",
+        "applicant": {
+          "receives_qualifying_benefit": true,
+          "age_at_submission": 58
+        },
+        "capital": {
+          "total_liquid": "9873.99",
+          "total_non_liquid": "2348.57",
+          "pensioner_capital_disregard": "0.0",
+          "total_capital": "15895.28",
+          "capital_contribution": "12895.28",
+          "liquid_capital_items": [
+            {
+              "description": "Est sequi tempora esse.",
+              "value": "9873.99"
+            }
+          ],
+          "non_liquid_capital_items": [
+            {
+              "description": "Debitis quasi magnam quidem.",
+              "value": "2348.57"
+            }
+          ]
+        },
+        "property": {
+          "total_mortgage_allowance": "100000.0",
+          "total_property": "0.0",
+          "main_home": {
+            "value": "4839.37",
+            "transaction_allowance": "145.18",
+            "allowable_outstanding_mortgage": "3514.49",
+            "shared_with_housing_assoc": false,
+            "percentage_owned": "9.29",
+            "net_equity": "109.59",
+            "main_home_equity_disregard": "100000.0",
+            "assessed_equity": "0.0"
+          },
+          "additional_properties": [
+            {
+              "value": "7961.88",
+              "transaction_allowance": "238.86",
+              "allowable_outstanding_mortgage": "1447.98",
+              "percentage_owned": "5.84",
+              "assessed_equity": "0.0"
+            }
+          ]
+        },
+        "vehicles": {
+          "total_vehicle": "3672.72",
+          "vehicles": [
+            {
+              "in_regular_use": false,
+              "included_in_assessment": true,
+              "value": "3672.72",
+              "assessed_value": "3672.72",
+              "date_of_purchase": "2019-02-27",
+              "loan_amount_outstanding": "5609.27"
+            }
+          ]
+        }
+      },
+      "code": 200,
+      "show_in_doc": 1,
+      "recorded": true
+    },
+    {
+      "verb": "GET",
+      "path": "/assessments/cd3d14b3-591f-4a39-af4c-c2b2e2594741",
       "versions": [
         "1.0"
       ],
@@ -86,10 +259,10 @@
       "request_data": null,
       "response_data": {
         "version": "2",
-        "timestamp": "2020-05-29T10:32:08.619+01:00",
+        "timestamp": "2020-05-28T11:38:14.626+01:00",
         "success": true,
         "assessment": {
-          "id": "a5b5abb2-3f65-4b96-9b34-42c4b95a8340",
+          "id": "cd3d14b3-591f-4a39-af4c-c2b2e2594741",
           "client_reference_id": "NPE6-1",
           "submission_date": "2019-05-29",
           "matter_proceeding_type": "domestic_abuse",
@@ -266,115 +439,12 @@
       "code": 200,
       "show_in_doc": 1,
       "recorded": true
-    },
-    {
-      "verb": "GET",
-      "path": "/assessments/399227bc-445e-49a0-bbce-86055a581474",
-      "versions": [
-        "1.0"
-      ],
-      "query": null,
-      "request_data": null,
-      "response_data": {
-        "version": "2",
-        "timestamp": "2020-05-29T10:32:08.697+01:00",
-        "success": true,
-        "assessment": {
-          "id": "399227bc-445e-49a0-bbce-86055a581474",
-          "client_reference_id": "CLIENT-REF-0006",
-          "submission_date": "2020-05-29",
-          "matter_proceeding_type": "domestic_abuse",
-          "assessment_result": "contribution_required",
-          "applicant": {
-            "date_of_birth": "1978-03-13",
-            "involvement_type": "applicant",
-            "has_partner_opponent": false,
-            "receives_qualifying_benefit": true,
-            "self_employed": false
-          },
-          "gross_income": null,
-          "disposable_income": null,
-          "capital": {
-            "capital_items": {
-              "liquid": [
-                {
-                  "description": "Doloremque sed at ducimus.",
-                  "value": "7256.03"
-                }
-              ],
-              "non_liquid": [
-                {
-                  "description": "Quos assumenda consequatur dolor.",
-                  "value": "4902.37"
-                }
-              ],
-              "vehicles": [
-                {
-                  "value": "7737.47",
-                  "loan_amount_outstanding": "1974.89",
-                  "date_of_purchase": "2018-04-01",
-                  "in_regular_use": true,
-                  "included_in_assessment": false,
-                  "assessed_value": "0.0"
-                }
-              ],
-              "properties": {
-                "main_home": {
-                  "value": "9035.34",
-                  "outstanding_mortgage": "6407.04",
-                  "percentage_owned": "9.25",
-                  "main_home": true,
-                  "shared_with_housing_assoc": true,
-                  "transaction_allowance": "271.06",
-                  "allowable_outstanding_mortgage": "6407.04",
-                  "net_value": "2357.24",
-                  "net_equity": "-5842.33",
-                  "main_home_equity_disregard": "100000.0",
-                  "assessed_equity": "0.0"
-                },
-                "additional_properties": [
-                  {
-                    "value": "6057.91",
-                    "outstanding_mortgage": "5205.25",
-                    "percentage_owned": "7.65",
-                    "main_home": false,
-                    "shared_with_housing_assoc": true,
-                    "transaction_allowance": "181.74",
-                    "allowable_outstanding_mortgage": "5205.25",
-                    "net_value": "670.92",
-                    "net_equity": "-4923.56",
-                    "main_home_equity_disregard": "0.0",
-                    "assessed_equity": "0.0"
-                  }
-                ]
-              }
-            },
-            "total_liquid": "7256.03",
-            "total_non_liquid": "4902.37",
-            "total_vehicle": "0.0",
-            "total_property": "0.0",
-            "total_mortgage_allowance": "100000.0",
-            "total_capital": "12158.4",
-            "pensioner_capital_disregard": "0.0",
-            "assessed_capital": "12158.4",
-            "lower_threshold": "3000.0",
-            "upper_threshold": "999999999999.0",
-            "assessment_result": "contribution_required",
-            "capital_contribution": "9158.4"
-          },
-          "remarks": {
-          }
-        }
-      },
-      "code": 200,
-      "show_in_doc": 1,
-      "recorded": true
     }
   ],
   "capitals#create": [
     {
       "verb": "POST",
-      "path": "/assessments/62ffddba-e848-4e1f-856b-07ce5025cf0b/capitals",
+      "path": "/assessments/1cea453b-935e-40e4-a4f6-fec9558e4332/capitals",
       "versions": [
         "1.0"
       ],
@@ -382,22 +452,22 @@
       "request_data": {
         "bank_accounts": [
           {
-            "description": "ABINGWORTH MANAGEMENT LIMITED 93827310",
-            "value": 35019.37
+            "description": "ALKEN ASSET MANAGEMENT 16358148",
+            "value": 37209.48
           },
           {
-            "description": "OTKRITIE SECURITIES LIMITED 30743001",
-            "value": 11097.87
+            "description": "ABN AMRO HOARE GOVETT SECURITIES 03177336",
+            "value": 89467.33
           }
         ],
         "non_liquid_capital": [
           {
-            "description": "Life Endowment Policy",
-            "value": 57492.01
+            "description": "Aramco shares",
+            "value": 72716.79
           },
           {
-            "description": "Ming Vase",
-            "value": 18343.98
+            "description": "FTSE tracker unit trust",
+            "value": 47970.94
           }
         ]
       },
@@ -413,7 +483,7 @@
     },
     {
       "verb": "POST",
-      "path": "/assessments/bf28ffb8-4a6c-48c5-9459-6375855db068/capitals",
+      "path": "/assessments/4d35fc7c-01e5-4b9a-83fc-fe8c06830eb3/capitals",
       "versions": [
         "1.0"
       ],
@@ -421,22 +491,22 @@
       "request_data": {
         "bank_accounts": [
           {
-            "description": "OTKRITIE SECURITIES LIMITED 33250556",
-            "value": 18297.53
+            "description": "ABN AMRO QUOTED INVESTMENTS (UK) LIMITED 99564200",
+            "value": 99947.89
           },
           {
-            "description": "ABU DHABI ISLAMIC BANK 75497239",
-            "value": 94160.32
+            "description": "ABC INTERNATIONAL BANK PLC 19589477",
+            "value": 60243.22
           }
         ],
         "non_liquid_capital": [
           {
             "description": "Ming Vase",
-            "value": 77414.82
+            "value": 61881.93
           },
           {
-            "description": "Ming Vase",
-            "value": 66475.24
+            "description": "Van Gogh Sunflowers",
+            "value": 89087.14
           }
         ]
       },
@@ -454,7 +524,7 @@
   "dependants#create": [
     {
       "verb": "POST",
-      "path": "/assessments/b74cbb51-f7f3-42f5-8dab-e16aad89a198/dependants",
+      "path": "/assessments/f044d8dc-71c9-47ed-8746-35d04b799a3a/dependants",
       "versions": [
         "1.0"
       ],
@@ -462,52 +532,17 @@
       "request_data": {
         "dependants": [
           {
-            "date_of_birth": "1997-04-30",
-            "in_full_time_education": true,
+            "date_of_birth": "1983-04-24",
+            "in_full_time_education": null,
             "relationship": "adult_relative",
-            "monthly_income": 5375.22,
+            "monthly_income": 9856.17,
             "assets_value": 0.0
           },
           {
-            "date_of_birth": "1991-03-06",
-            "in_full_time_education": false,
-            "relationship": "adult_relative",
-            "monthly_income": 3521.48,
-            "assets_value": 0.0
-          }
-        ]
-      },
-      "response_data": {
-        "success": false,
-        "errors": [
-          "No such assessment id"
-        ]
-      },
-      "code": 422,
-      "show_in_doc": 1,
-      "recorded": true
-    },
-    {
-      "verb": "POST",
-      "path": "/assessments/425cc999-591d-4520-acba-e2949bc6b10a/dependants",
-      "versions": [
-        "1.0"
-      ],
-      "query": null,
-      "request_data": {
-        "dependants": [
-          {
-            "date_of_birth": "1968-04-09",
+            "date_of_birth": "1979-03-05",
             "in_full_time_education": null,
             "relationship": "adult_relative",
-            "monthly_income": 180.06,
-            "assets_value": 0.0
-          },
-          {
-            "date_of_birth": "1990-07-18",
-            "in_full_time_education": null,
-            "relationship": "child_relative",
-            "monthly_income": 8486.24,
+            "monthly_income": 1226.92,
             "assets_value": 0.0
           }
         ]
@@ -524,7 +559,7 @@
     },
     {
       "verb": "POST",
-      "path": "/assessments/fa4bbc2a-4839-4e3b-b23e-d21376ef3420/dependants",
+      "path": "/assessments/1ff44c3b-6da6-4016-b1d4-5e8b3b65696a/dependants",
       "versions": [
         "1.0"
       ],
@@ -532,17 +567,17 @@
       "request_data": {
         "dependants": [
           {
-            "date_of_birth": "1960-02-08",
+            "date_of_birth": "1971-12-23",
             "in_full_time_education": true,
-            "relationship": "child_relative",
-            "monthly_income": 7046.64,
+            "relationship": "adult_relative",
+            "monthly_income": 1397.81,
             "assets_value": 0.0
           },
           {
-            "date_of_birth": "1997-03-30",
-            "in_full_time_education": false,
+            "date_of_birth": "1964-07-20",
+            "in_full_time_education": true,
             "relationship": "child_relative",
-            "monthly_income": 609.65,
+            "monthly_income": 4706.95,
             "assets_value": 0.0
           }
         ]
@@ -556,12 +591,47 @@
       "code": 200,
       "show_in_doc": 1,
       "recorded": true
+    },
+    {
+      "verb": "POST",
+      "path": "/assessments/59266948-ba3c-4d00-b353-71e881ce3d68/dependants",
+      "versions": [
+        "1.0"
+      ],
+      "query": null,
+      "request_data": {
+        "dependants": [
+          {
+            "date_of_birth": "1962-12-19",
+            "in_full_time_education": false,
+            "relationship": "child_relative",
+            "monthly_income": 7913.16,
+            "assets_value": 0.0
+          },
+          {
+            "date_of_birth": "1966-03-01",
+            "in_full_time_education": false,
+            "relationship": "adult_relative",
+            "monthly_income": 3993.22,
+            "assets_value": 0.0
+          }
+        ]
+      },
+      "response_data": {
+        "success": false,
+        "errors": [
+          "No such assessment id"
+        ]
+      },
+      "code": 422,
+      "show_in_doc": 1,
+      "recorded": true
     }
   ],
   "other_incomes#create": [
     {
       "verb": "POST",
-      "path": "/assessments/612fa5c2-c55f-41a3-bf0f-9cd8af9323bd/other_incomes",
+      "path": "/assessments/5b0018c5-8c2c-4fdb-a29c-cc9d17679abc/other_incomes",
       "versions": [
         "1.0"
       ],
@@ -574,17 +644,17 @@
               {
                 "date": "2019-11-01",
                 "amount": 1046.44,
-                "client_id": "a9f6cc6c-104c-4298-89ae-effca44c59fd"
+                "client_id": "4d86eb0c-8dea-4d6a-a7bf-885f91f9422e"
               },
               {
                 "date": "2019-10-01",
                 "amount": 1034.33,
-                "client_id": "5848fa7c-9381-41ec-9497-0a687949f1ab"
+                "client_id": "ca7f2f82-0aa3-45d1-8b55-4e9a28182c67"
               },
               {
                 "date": "2019-09-01",
                 "amount": 1033.44,
-                "client_id": "2acf6848-2b0d-417d-93db-ec056a18ff50"
+                "client_id": "fe445358-247f-42c8-8ee7-bde1ed7eec61"
               }
             ]
           },
@@ -594,17 +664,17 @@
               {
                 "date": "2019-11-01",
                 "amount": 250.0,
-                "client_id": "3b4a505c-2380-4c76-831c-54c877b78ff3"
+                "client_id": "25e3df63-3b03-44c6-9ca6-ae9940556027"
               },
               {
                 "date": "2019-10-01",
                 "amount": 266.02,
-                "client_id": "e3368ec9-b0db-40e2-acd1-ef02913b4755"
+                "client_id": "2f18daf7-203e-4593-8e7c-66592fb14b2e"
               },
               {
                 "date": "2019-09-01",
                 "amount": 250.0,
-                "client_id": "e50a4d8f-29a6-479b-8c48-48dfac75d3ec"
+                "client_id": "c6c6a740-267b-4b2a-9137-66278ee923de"
               }
             ]
           }
@@ -624,7 +694,7 @@
   "outgoings#create": [
     {
       "verb": "POST",
-      "path": "/assessments/046ec500-06aa-48b4-9232-f9838056674d/outgoings",
+      "path": "/assessments/825e55cf-c1ea-4a5e-8205-61ab744334e4/outgoings",
       "versions": [
         "1.0"
       ],
@@ -635,14 +705,14 @@
             "name": "child_care",
             "payments": [
               {
-                "payment_date": "2020-05-08",
-                "amount": 347.94,
-                "client_id": "eb831043-4289-438f-a800-a53b7fc2ef9e"
+                "payment_date": "2020-05-07",
+                "amount": 696.97,
+                "client_id": "dadbe455-2d70-413f-a209-6fad3fe73446"
               },
               {
-                "payment_date": "2020-05-08",
-                "amount": 533.05,
-                "client_id": "a166c54d-0f2f-4b34-bace-a4df326325c2"
+                "payment_date": "2020-05-07",
+                "amount": 891.81,
+                "client_id": "74be478c-95b7-426a-98c1-8cb0e7a2925d"
               }
             ]
           },
@@ -650,14 +720,14 @@
             "name": "maintenance_out",
             "payments": [
               {
-                "payment_date": "2020-05-08",
-                "amount": 946.64,
-                "client_id": "eb831043-4289-438f-a800-a53b7fc2ef9e"
+                "payment_date": "2020-05-07",
+                "amount": 613.52,
+                "client_id": "dadbe455-2d70-413f-a209-6fad3fe73446"
               },
               {
-                "payment_date": "2020-05-08",
-                "amount": 142.32,
-                "client_id": "a166c54d-0f2f-4b34-bace-a4df326325c2"
+                "payment_date": "2020-05-07",
+                "amount": 173.86,
+                "client_id": "74be478c-95b7-426a-98c1-8cb0e7a2925d"
               }
             ]
           },
@@ -665,16 +735,16 @@
             "name": "rent_or_mortgage",
             "payments": [
               {
-                "payment_date": "2020-05-08",
-                "amount": 757.02,
-                "housing_cost_type": "board_and_lodging",
-                "client_id": "eb831043-4289-438f-a800-a53b7fc2ef9e"
+                "payment_date": "2020-05-07",
+                "amount": 913.47,
+                "housing_cost_type": "mortgage",
+                "client_id": "dadbe455-2d70-413f-a209-6fad3fe73446"
               },
               {
-                "payment_date": "2020-05-08",
-                "amount": 339.95,
-                "housing_cost_type": "board_and_lodging",
-                "client_id": "a166c54d-0f2f-4b34-bace-a4df326325c2"
+                "payment_date": "2020-05-07",
+                "amount": 748.18,
+                "housing_cost_type": "mortgage",
+                "client_id": "74be478c-95b7-426a-98c1-8cb0e7a2925d"
               }
             ]
           }
@@ -703,14 +773,14 @@
             "name": "child_care",
             "payments": [
               {
-                "payment_date": "2020-05-08",
-                "amount": 224.28,
-                "client_id": "de965618-cc1c-4329-bb1f-3fb705f59eb3"
+                "payment_date": "2020-05-07",
+                "amount": 684.98,
+                "client_id": "ea95eb4a-e017-4ec3-84f7-6d4f1f808818"
               },
               {
-                "payment_date": "2020-05-08",
-                "amount": 941.94,
-                "client_id": "db05b3b2-a575-4ccb-ad3d-afb4e1617ced"
+                "payment_date": "2020-05-07",
+                "amount": 759.02,
+                "client_id": "fac370e8-d4e3-43dd-a016-f4b03d23ec5c"
               }
             ]
           },
@@ -718,14 +788,14 @@
             "name": "maintenance_out",
             "payments": [
               {
-                "payment_date": "2020-05-08",
-                "amount": 137.05,
-                "client_id": "de965618-cc1c-4329-bb1f-3fb705f59eb3"
+                "payment_date": "2020-05-07",
+                "amount": 936.67,
+                "client_id": "ea95eb4a-e017-4ec3-84f7-6d4f1f808818"
               },
               {
-                "payment_date": "2020-05-08",
-                "amount": 556.19,
-                "client_id": "db05b3b2-a575-4ccb-ad3d-afb4e1617ced"
+                "payment_date": "2020-05-07",
+                "amount": 186.13,
+                "client_id": "fac370e8-d4e3-43dd-a016-f4b03d23ec5c"
               }
             ]
           },
@@ -733,16 +803,16 @@
             "name": "rent_or_mortgage",
             "payments": [
               {
-                "payment_date": "2020-05-08",
-                "amount": 803.15,
-                "housing_cost_type": "rent",
-                "client_id": "de965618-cc1c-4329-bb1f-3fb705f59eb3"
+                "payment_date": "2020-05-07",
+                "amount": 261.05,
+                "housing_cost_type": "mortgage",
+                "client_id": "ea95eb4a-e017-4ec3-84f7-6d4f1f808818"
               },
               {
-                "payment_date": "2020-05-08",
-                "amount": 911.01,
-                "housing_cost_type": "rent",
-                "client_id": "db05b3b2-a575-4ccb-ad3d-afb4e1617ced"
+                "payment_date": "2020-05-07",
+                "amount": 784.33,
+                "housing_cost_type": "mortgage",
+                "client_id": "fac370e8-d4e3-43dd-a016-f4b03d23ec5c"
               }
             ]
           }
@@ -762,7 +832,7 @@
   "properties#create": [
     {
       "verb": "POST",
-      "path": "/assessments/25c0e876-d011-4c1f-bc3a-0c37552dbc80/properties",
+      "path": "/assessments/05f4a220-5b7e-4e6f-ad16-f68d186bb754/properties",
       "versions": [
         "1.0"
       ],
@@ -803,7 +873,7 @@
     },
     {
       "verb": "POST",
-      "path": "/assessments/13d41a1d-235c-4f27-b435-6ceb48088fe4/properties",
+      "path": "/assessments/33dca04d-a134-4a78-9e00-ee792767c8bb/properties",
       "versions": [
         "1.0"
       ],
@@ -854,39 +924,11 @@
       "request_data": null,
       "response_data": [
         {
-          "label": "age_related_payment",
-          "name": "Age Related Payment",
+          "label": "benefit_type_1",
+          "name": "benefit_type_1",
           "exclude_from_gross_income": false,
-          "dwp_code": "ARP",
-          "category": null
-        },
-        {
-          "label": "all_work_related_reqs",
-          "name": "All Work Related Requirements",
-          "exclude_from_gross_income": false,
-          "dwp_code": "AWRR",
-          "category": null
-        },
-        {
-          "label": "armed_forces_independence_payment",
-          "name": "Armed Forces Independence Payment",
-          "exclude_from_gross_income": true,
-          "dwp_code": "AFIP",
-          "category": "other"
-        },
-        {
-          "label": "attendance_allowance",
-          "name": "Attendance Allowance",
-          "exclude_from_gross_income": true,
-          "dwp_code": "AA",
+          "dwp_code": "GP",
           "category": "carer_disability"
-        },
-        {
-          "label": "benefit_transfer_advance",
-          "name": "Benefit Transfer Advance (Universal Credit)",
-          "exclude_from_gross_income": true,
-          "dwp_code": null,
-          "category": "low_income"
         },
         {
           "label": "bereavement_allowance",
@@ -948,463 +990,8 @@
           "label": "child_supp_maintenance",
           "name": "Child support maintenance",
           "exclude_from_gross_income": false,
-          "dwp_code": "CSM",
-          "category": null
-        },
-        {
-          "label": "child_tax_credit",
-          "name": "Child tax credit",
-          "exclude_from_gross_income": false,
-          "dwp_code": "CTC",
-          "category": null
-        },
-        {
-          "label": "christmas_bonus",
-          "name": "Christmas Bonus",
-          "exclude_from_gross_income": false,
-          "dwp_code": "XB",
-          "category": null
-        },
-        {
-          "label": "cold_weather_payment",
-          "name": "Cold Weather Payment",
-          "exclude_from_gross_income": false,
-          "dwp_code": "CWP",
-          "category": null
-        },
-        {
-          "label": "community_care_dp",
-          "name": "Community Care Direct Payments",
-          "exclude_from_gross_income": true,
-          "dwp_code": null,
-          "category": "carer_disability"
-        },
-        {
-          "label": "constant_attendance_allowance",
-          "name": "Constant Attendance Allowance",
-          "exclude_from_gross_income": true,
-          "dwp_code": "CAA",
-          "category": "carer_disability"
-        },
-        {
-          "label": "cont_to_maintenance",
-          "name": "Contribution to Maintenance",
-          "exclude_from_gross_income": false,
-          "dwp_code": "CTM",
-          "category": null
-        },
-        {
-          "label": "council_tax_benefit",
-          "name": "Council Tax Reduction",
-          "exclude_from_gross_income": true,
-          "dwp_code": "CTB",
-          "category": "low_income"
-        },
-        {
-          "label": "direct_credit_transfer",
-          "name": "Direct Credit Transfer",
-          "exclude_from_gross_income": false,
-          "dwp_code": "DCT",
-          "category": null
-        },
-        {
-          "label": "disability_living_allowance",
-          "name": "Disability Living Allowance",
-          "exclude_from_gross_income": true,
-          "dwp_code": "DLA",
-          "category": "carer_disability"
-        },
-        {
-          "label": "earnings_top_up",
-          "name": "Earnings top-up (ETU)",
-          "exclude_from_gross_income": true,
-          "dwp_code": null,
-          "category": "low_income"
-        },
-        {
-          "label": "employment_support_allowance",
-          "name": "Employment and Support Allowance (ESA)",
-          "exclude_from_gross_income": false,
-          "dwp_code": "ESA",
-          "category": null
-        },
-        {
-          "label": "enhanced_disability_premium",
-          "name": "Enhanced Disability Premium",
-          "exclude_from_gross_income": false,
-          "dwp_code": "EDP",
-          "category": null
-        },
-        {
-          "label": "exceptionally_severe_disablement_allowance",
-          "name": "Exceptionally Severe Disablement Allowance",
-          "exclude_from_gross_income": true,
-          "dwp_code": "ESDA",
-          "category": "carer_disability"
-        },
-        {
-          "label": "financial_assistance_scheme",
-          "name": "Financial Assistance Scheme",
-          "exclude_from_gross_income": false,
-          "dwp_code": "FAS",
-          "category": null
-        },
-        {
-          "label": "flat_rate_maintenance",
-          "name": "Flat Rate Maintenance",
-          "exclude_from_gross_income": false,
-          "dwp_code": "FRM",
-          "category": null
-        },
-        {
-          "label": "fostering_allowance",
-          "name": "Foster Carers' allowance",
-          "exclude_from_gross_income": true,
-          "dwp_code": null,
+          "dwp_code": "AT",
           "category": "other"
-        },
-        {
-          "label": "graduated_retirement_benefit",
-          "name": "Graduated Retirement Benefit ",
-          "exclude_from_gross_income": false,
-          "dwp_code": "GRB",
-          "category": null
-        },
-        {
-          "label": "grenfell_payments",
-          "name": "Grenfell Tower fire victims payments ",
-          "exclude_from_gross_income": true,
-          "dwp_code": null,
-          "category": "other"
-        },
-        {
-          "label": "guaranteed_min_pension",
-          "name": "Guaranteed Minimum Pension",
-          "exclude_from_gross_income": false,
-          "dwp_code": "GMP",
-          "category": null
-        },
-        {
-          "label": "guardians_allowance",
-          "name": "Guardian's Allowance",
-          "exclude_from_gross_income": false,
-          "dwp_code": "GA",
-          "category": null
-        },
-        {
-          "label": "housing_benefit",
-          "name": "Housing Benefit",
-          "exclude_from_gross_income": true,
-          "dwp_code": "HB",
-          "category": "low_income"
-        },
-        {
-          "label": "housing_costs_cont",
-          "name": "Housing Costs Contribution",
-          "exclude_from_gross_income": false,
-          "dwp_code": "HCC",
-          "category": null
-        },
-        {
-          "label": "housing_costs_element",
-          "name": "Housing Costs Element",
-          "exclude_from_gross_income": false,
-          "dwp_code": "HCE",
-          "category": null
-        },
-        {
-          "label": "incapacity_benefit",
-          "name": "Incapacity Benefit",
-          "exclude_from_gross_income": false,
-          "dwp_code": "IB",
-          "category": null
-        },
-        {
-          "label": "income_support",
-          "name": "Income Support",
-          "exclude_from_gross_income": false,
-          "dwp_code": "IS",
-          "category": null
-        },
-        {
-          "label": "independent_living_funds_payments",
-          "name": "Independent Living Funds payments",
-          "exclude_from_gross_income": true,
-          "dwp_code": null,
-          "category": "carer_disability"
-        },
-        {
-          "label": "industrial_death_benefit",
-          "name": "Industrial Death Benefit",
-          "exclude_from_gross_income": false,
-          "dwp_code": "IDB",
-          "category": null
-        },
-        {
-          "label": "industrial_injuries_benefit",
-          "name": "Industrial Injuries Benefit",
-          "exclude_from_gross_income": false,
-          "dwp_code": "IIB",
-          "category": null
-        },
-        {
-          "label": "industrial_injuries_disablement_benefit",
-          "name": "Industrial Injuries Disablement Benefit",
-          "exclude_from_gross_income": false,
-          "dwp_code": "IIDB",
-          "category": null
-        },
-        {
-          "label": "jobseekers_allowance",
-          "name": "Jobseeker’s Allowance",
-          "exclude_from_gross_income": false,
-          "dwp_code": "JSA",
-          "category": null
-        },
-        {
-          "label": "maternity_allowance",
-          "name": "Maternity Allowance",
-          "exclude_from_gross_income": false,
-          "dwp_code": "MA",
-          "category": null
-        },
-        {
-          "label": "minimum_income_guarantee",
-          "name": "Minimum Income Guarantee",
-          "exclude_from_gross_income": false,
-          "dwp_code": "MIG",
-          "category": null
-        },
-        {
-          "label": "mortgage_interest_direct",
-          "name": "Mortgage Interest Direct",
-          "exclude_from_gross_income": false,
-          "dwp_code": "MID",
-          "category": null
-        },
-        {
-          "label": "payments_on_account_of_benefit",
-          "name": "Payments on account of benefit",
-          "exclude_from_gross_income": true,
-          "dwp_code": "POAOB",
-          "category": "carer_disability"
-        },
-        {
-          "label": "pension_credit",
-          "name": "Pension Credit",
-          "exclude_from_gross_income": false,
-          "dwp_code": "PC",
-          "category": null
-        },
-        {
-          "label": "personal_independent_payments",
-          "name": "Personal Independent Payments",
-          "exclude_from_gross_income": true,
-          "dwp_code": "PIP",
-          "category": "carer_disability"
-        },
-        {
-          "label": "reduced_earnings_allowance",
-          "name": "Reduced Earnings Allowance",
-          "exclude_from_gross_income": false,
-          "dwp_code": "REA",
-          "category": null
-        },
-        {
-          "label": "retirement_allowance",
-          "name": "Retirement Allowance",
-          "exclude_from_gross_income": false,
-          "dwp_code": "RA",
-          "category": null
-        },
-        {
-          "label": "severe_disability_premium",
-          "name": "Severe Disability Premium",
-          "exclude_from_gross_income": false,
-          "dwp_code": "SDP",
-          "category": null
-        },
-        {
-          "label": "severe_disablement_allowance",
-          "name": "Severe Disablement Allowance",
-          "exclude_from_gross_income": true,
-          "dwp_code": "SDA",
-          "category": null
-        },
-        {
-          "label": "social_fund_funeral_payment",
-          "name": "Social Fund Funeral Payment",
-          "exclude_from_gross_income": true,
-          "dwp_code": "SFFP",
-          "category": "low_income"
-        },
-        {
-          "label": "social_fund_payments",
-          "name": "Social Fund payments",
-          "exclude_from_gross_income": true,
-          "dwp_code": "SF",
-          "category": "low_income"
-        },
-        {
-          "label": "special_education_needs",
-          "name": "Special Education Needs (SEN) direct payment",
-          "exclude_from_gross_income": true,
-          "dwp_code": null,
-          "category": "carer_disability"
-        },
-        {
-          "label": "state_pension",
-          "name": "State Pension",
-          "exclude_from_gross_income": false,
-          "dwp_code": "SP",
-          "category": null
-        },
-        {
-          "label": "state_pension_credit",
-          "name": "State Pension Credit",
-          "exclude_from_gross_income": false,
-          "dwp_code": "SPC",
-          "category": null
-        },
-        {
-          "label": "state_second_pension",
-          "name": "State Second Pension",
-          "exclude_from_gross_income": false,
-          "dwp_code": "S2P",
-          "category": null
-        },
-        {
-          "label": "statutory_maternity_pay",
-          "name": "Statutory Maternity Pay",
-          "exclude_from_gross_income": false,
-          "dwp_code": "SMP",
-          "category": null
-        },
-        {
-          "label": "statutory_sick_pay",
-          "name": "Statutory Sick Pay",
-          "exclude_from_gross_income": false,
-          "dwp_code": "SSP",
-          "category": null
-        },
-        {
-          "label": "sure_start_mat_grant",
-          "name": "Sure Start Maternity Grant",
-          "exclude_from_gross_income": false,
-          "dwp_code": "SSMG",
-          "category": null
-        },
-        {
-          "label": "tax_credit",
-          "name": "Tax Credit",
-          "exclude_from_gross_income": false,
-          "dwp_code": "TC",
-          "category": null
-        },
-        {
-          "label": "training_payment",
-          "name": "Training Payment",
-          "exclude_from_gross_income": false,
-          "dwp_code": "T/P",
-          "category": null
-        },
-        {
-          "label": "unemploy_supplement",
-          "name": "Unemployability Supplement",
-          "exclude_from_gross_income": false,
-          "dwp_code": "US",
-          "category": null
-        },
-        {
-          "label": "universal_credit",
-          "name": "Universal Credit",
-          "exclude_from_gross_income": false,
-          "dwp_code": "UC",
-          "category": null
-        },
-        {
-          "label": "war_pension",
-          "name": "War Pensions Scheme payments",
-          "exclude_from_gross_income": true,
-          "dwp_code": null,
-          "category": "other"
-        },
-        {
-          "label": "war_widows_pension",
-          "name": "War Widow(er) Pension",
-          "exclude_from_gross_income": true,
-          "dwp_code": "WWP",
-          "category": "other"
-        },
-        {
-          "label": "welsh_independent_living_grant",
-          "name": "Welsh Independent Living Grant",
-          "exclude_from_gross_income": true,
-          "dwp_code": null,
-          "category": "carer_disability"
-        },
-        {
-          "label": "widows_benefit",
-          "name": "Widow’s Benefit",
-          "exclude_from_gross_income": false,
-          "dwp_code": "WB",
-          "category": null
-        },
-        {
-          "label": "widows_pension_lump_sum",
-          "name": "Widow’s Pension lump sum payments",
-          "exclude_from_gross_income": true,
-          "dwp_code": null,
-          "category": "other"
-        },
-        {
-          "label": "widowed_mothers_allowance",
-          "name": "Widowed Mother’s Allowance",
-          "exclude_from_gross_income": false,
-          "dwp_code": "WMA",
-          "category": null
-        },
-        {
-          "label": "widowed_parents_allowance",
-          "name": "Widowed Parent’s Allowance",
-          "exclude_from_gross_income": false,
-          "dwp_code": "WPA",
-          "category": null
-        },
-        {
-          "label": "windrush",
-          "name": "Windrush Compensation Scheme payments",
-          "exclude_from_gross_income": true,
-          "dwp_code": null,
-          "category": "other"
-        },
-        {
-          "label": "winter_fuel_payment",
-          "name": "Winter Fuel Payment",
-          "exclude_from_gross_income": false,
-          "dwp_code": "WFP",
-          "category": null
-        },
-        {
-          "label": "work_related_act_comp",
-          "name": "Work related activity component",
-          "exclude_from_gross_income": false,
-          "dwp_code": "WRAC",
-          "category": null
-        },
-        {
-          "label": "working_tax_credit",
-          "name": "Working Tax Credit",
-          "exclude_from_gross_income": false,
-          "dwp_code": "WTC",
-          "category": null
-        },
-        {
-          "label": "other",
-          "name": "Other state benefit",
-          "exclude_from_gross_income": false,
-          "dwp_code": null,
-          "category": null
         }
       ],
       "code": 200,
@@ -1415,7 +1002,7 @@
   "state_benefits#create": [
     {
       "verb": "POST",
-      "path": "/assessments/fee43da4-f6f5-4f25-a0da-f2149b623fe2/state_benefits",
+      "path": "/assessments/29820550-2d6f-4736-8d99-5cd3d5bc5d81/state_benefits",
       "versions": [
         "1.0"
       ],
@@ -1428,17 +1015,17 @@
               {
                 "date": "2019-11-01",
                 "amount": 1046.44,
-                "client_id": "0e73de78-604c-4fa5-aeaa-1a6bb90537fe"
+                "client_id": "c443cb43-3090-4f32-8732-e7a10d683088"
               },
               {
                 "date": "2019-10-01",
                 "amount": 1034.33,
-                "client_id": "4220dd4a-1126-436f-953b-eb3096fd1c30"
+                "client_id": "c91a5994-3a08-462f-a771-ae5ce37d296c"
               },
               {
                 "date": "2019-09-01",
                 "amount": 1033.44,
-                "client_id": "93a1276e-bb01-4c33-86a2-e5ebe424f429"
+                "client_id": "91fd03a8-6011-45e2-8138-52d07db08143"
               }
             ]
           },
@@ -1447,17 +1034,17 @@
               {
                 "date": "2019-11-01",
                 "amount": 250.0,
-                "client_id": "0e73de78-604c-4fa5-aeaa-1a6bb90537fe"
+                "client_id": "c443cb43-3090-4f32-8732-e7a10d683088"
               },
               {
                 "date": "2019-10-01",
                 "amount": 266.02,
-                "client_id": "4220dd4a-1126-436f-953b-eb3096fd1c30"
+                "client_id": "c91a5994-3a08-462f-a771-ae5ce37d296c"
               },
               {
                 "date": "2019-09-01",
                 "amount": 250.0,
-                "client_id": "93a1276e-bb01-4c33-86a2-e5ebe424f429"
+                "client_id": "91fd03a8-6011-45e2-8138-52d07db08143"
               }
             ]
           }
@@ -1475,7 +1062,7 @@
     },
     {
       "verb": "POST",
-      "path": "/assessments/a81bb9fe-19a3-48c5-80e6-d0f7eff6ac71/state_benefits",
+      "path": "/assessments/40cca011-05a7-4d25-b552-159eded51b07/state_benefits",
       "versions": [
         "1.0"
       ],
@@ -1488,37 +1075,37 @@
               {
                 "date": "2019-11-01",
                 "amount": 1046.44,
-                "client_id": "aca900dc-f3be-4383-887c-66d30ebf1530"
+                "client_id": "0b968ee9-95ff-4a6e-b84b-70bec2cefaf7"
               },
               {
                 "date": "2019-10-01",
                 "amount": 1034.33,
-                "client_id": "030c14a4-f08a-4cdb-93b0-1ba38ac54090"
+                "client_id": "798ddcb6-f9a8-4d0d-a6f0-9d582d0db144"
               },
               {
                 "date": "2019-09-01",
                 "amount": 1033.44,
-                "client_id": "36b6bec1-1612-4797-9bf7-9ced4a58ebde"
+                "client_id": "ccbc3ba9-4411-4c65-9276-982e50a5a8f1"
               }
             ]
           },
           {
-            "name": "benefit_type_4",
+            "name": "benefit_type_6",
             "payments": [
               {
                 "date": "2019-11-01",
                 "amount": 250.0,
-                "client_id": "aca900dc-f3be-4383-887c-66d30ebf1530"
+                "client_id": "0b968ee9-95ff-4a6e-b84b-70bec2cefaf7"
               },
               {
                 "date": "2019-10-01",
                 "amount": 266.02,
-                "client_id": "030c14a4-f08a-4cdb-93b0-1ba38ac54090"
+                "client_id": "798ddcb6-f9a8-4d0d-a6f0-9d582d0db144"
               },
               {
                 "date": "2019-09-01",
                 "amount": 250.0,
-                "client_id": "36b6bec1-1612-4797-9bf7-9ced4a58ebde"
+                "client_id": "ccbc3ba9-4411-4c65-9276-982e50a5a8f1"
               }
             ]
           }
@@ -1538,7 +1125,7 @@
   "vehicles#create": [
     {
       "verb": "POST",
-      "path": "/assessments/19a83c7f-39b8-4183-9299-28375dbc0d5a/vehicles",
+      "path": "/assessments/74fef83c-a5b8-45ef-89a5-4966220a8d45/vehicles",
       "versions": [
         "1.0"
       ],
@@ -1546,15 +1133,15 @@
       "request_data": {
         "vehicles": [
           {
-            "value": 7442.21,
-            "loan_amount_outstanding": 9638.43,
-            "date_of_purchase": "2019-02-13",
-            "in_regular_use": true
+            "value": 8763.26,
+            "loan_amount_outstanding": 1853.36,
+            "date_of_purchase": "2014-06-13",
+            "in_regular_use": false
           },
           {
-            "value": 4260.76,
-            "loan_amount_outstanding": 1277.49,
-            "date_of_purchase": "2018-08-03",
+            "value": 2118.65,
+            "loan_amount_outstanding": 8701.79,
+            "date_of_purchase": "2014-09-07",
             "in_regular_use": false
           }
         ]
@@ -1579,16 +1166,16 @@
       "request_data": {
         "vehicles": [
           {
-            "value": 3643.21,
-            "loan_amount_outstanding": 8564.34,
-            "date_of_purchase": "2014-09-23",
-            "in_regular_use": false
+            "value": 7942.99,
+            "loan_amount_outstanding": 5556.72,
+            "date_of_purchase": "2015-09-15",
+            "in_regular_use": true
           },
           {
-            "value": 5779.07,
-            "loan_amount_outstanding": 4631.98,
-            "date_of_purchase": "2017-05-19",
-            "in_regular_use": true
+            "value": 4334.15,
+            "loan_amount_outstanding": 7611.17,
+            "date_of_purchase": "2019-02-09",
+            "in_regular_use": false
           }
         ]
       },
