@@ -8,7 +8,7 @@ class StateBenefitsController < ApplicationController
     END_OF_TEXT
   end
 
-  api :POST, 'assessments/:assessment_id/state_benefit', 'Create state benefit'
+  api :POST, 'assessments/:assessment_id/state_benefits', 'Create state benefit'
   formats ['json']
   param :assessment_id, :uuid, required: true
   param :state_benefits, Array, desc: 'Collection of state benefits' do

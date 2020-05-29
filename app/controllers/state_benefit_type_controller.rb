@@ -4,7 +4,7 @@ class StateBenefitTypeController < ApplicationController
     formats ['json']
     description <<-END_OF_TEXT
     == Description
-      Returns all state benefit types' name, label and dwpcode.
+      Returns all state benefit types' name, label and DWP code.
     END_OF_TEXT
   end
 
