@@ -62,7 +62,6 @@ module Creators
           subject.success?
           expected_response = {
             success: true,
-            objects: [Assessment.last],
             assessment_id: Assessment.last.id,
             errors: []
           }

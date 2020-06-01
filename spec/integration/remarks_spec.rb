@@ -28,7 +28,7 @@ RSpec.describe 'Full Assessment with remarks' do
   def post_assessment
     post assessments_path, params: assessment_params, headers: headers
     output_response(:post, :assessment)
-    parsed_response[:objects].first[:id]
+    parsed_response[:assessment_id]
   end
 
   def post_applicant(assessment_id)
