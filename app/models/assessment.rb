@@ -22,10 +22,6 @@ class Assessment < ApplicationRecord
 
   delegate :determine_result!, to: :capital_summary
 
-  def capital_assessment_result
-    capital_summary.assessment_result
-  end
-
   # Always instanitate a new Remarks object from a nil value
   def remarks
     attributes['remarks'] || Remarks.new

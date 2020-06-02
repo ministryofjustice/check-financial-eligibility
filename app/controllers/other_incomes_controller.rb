@@ -10,7 +10,7 @@ class OtherIncomesController < ApplicationController
     END_OF_TEXT
   end
 
-  api :POST, 'assessments/:assessment_id/other_income', 'Create other income'
+  api :POST, 'assessments/:assessment_id/other_incomes', 'Create other income'
   formats ['json']
   param :assessment_id, :uuid, required: true
   param :other_incomes, Array, desc: 'Collection of other regular income sources' do

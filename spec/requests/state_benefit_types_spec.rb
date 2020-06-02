@@ -15,7 +15,7 @@ RSpec.describe StateBenefitTypeController, type: :request do
       subject
     end
 
-    it 'returns http success', :show_in_doc do
+    it 'returns http success' do
       expect(response).to have_http_status(:success)
     end
 
@@ -28,6 +28,15 @@ RSpec.describe StateBenefitTypeController, type: :request do
         category: category
       }.stringify_keys
       expect(JSON.parse(response.body).first).to include(expected_values)
+    end
+  end
+
+  context 'full list for documentation' do
+    it 'returns http success', :show_in_doc do
+      StateBenefitType.delete_all
+      Dibber::Seeder.new(StateBenefitType, 'data/state_benefit_types.yml', name_method: :label, overwrite: true).build
+      get state_benefit_type_index_path
+      expect(response).to have_http_status(:success)
     end
   end
 end

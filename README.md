@@ -16,7 +16,7 @@ The API version is specified through the accept header, as follows:
 
     ``` Accept:application/json;version=2```
 
-Acceptable versions are 1 and 2.  If no version is specified, version1 is assumed.
+The only currently acceptable version is 2.  If no version is specified, version 2 is assumed.
 
 
 ## Generation of API documentation
