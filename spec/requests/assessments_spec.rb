@@ -23,10 +23,9 @@ RSpec.describe AssessmentsController, type: :request do
       expect(response).to have_http_status(:success)
     end
 
-    it 'has a valid payload' do
+    it 'has a valid payload', :show_in_doc do
       expected_response = {
         success: true,
-        objects: [Assessment.last],
         assessment_id: Assessment.last.id,
         errors: []
       }.to_json
@@ -45,8 +44,8 @@ RSpec.describe AssessmentsController, type: :request do
 
       it 'returns error json payload', :show_in_doc do
         expected_response = {
-          errors: ['error creating record'],
-          success: false
+          success: false,
+          errors: ['error creating record']
         }
         expect(parsed_response).to eq expected_response
       end

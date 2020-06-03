@@ -16,7 +16,6 @@ module Creators
     def as_json(_options = nil)
       {
         success: success?,
-        objects: ([new_assessment] if success?), # TODO: Remove this when Apply app is no longer requiring this
         assessment_id: new_assessment.id,
         errors: errors
       }

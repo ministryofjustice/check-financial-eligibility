@@ -113,7 +113,7 @@ RSpec.describe 'IntegrationTests::TestRunner', type: :request do
         exit
       end
       datasets.delete('assessment')
-      parsed_response[:objects].first[:id]
+      parsed_response[:assessment_id]
     end
 
     def post_object(assessment_id, datasets, object_name)
