@@ -23,7 +23,7 @@ RSpec.describe AssessmentsController, type: :request do
       expect(response).to have_http_status(:success)
     end
 
-    it 'has a valid payload' do
+    it 'has a valid payload', :show_in_doc do
       expected_response = {
         success: true,
         assessment_id: Assessment.last.id,
