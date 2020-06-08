@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::API
-  rescue_from Apipie::ParamError do |e|
+  rescue_from StandardError do |e|
     render_unprocessable([e.message])
+    Raven.capture_exception(e)
   end
 
   def render_unprocessable(message)
