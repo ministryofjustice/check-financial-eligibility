@@ -65,11 +65,6 @@ module Creators
             }
           }
         end
-
-        it 'captures an error' do
-          expect(Raven).to receive(:capture_exception).with(message_contains('No such assessment id'))
-          subject
-        end
       end
 
       def expected_dates
