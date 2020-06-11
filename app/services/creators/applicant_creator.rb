@@ -17,7 +17,6 @@ module Creators
     def create
       create_applicant
     rescue CreationError => e
-      Raven.capture_exception(e)
       self.errors = e.errors
     end
 
