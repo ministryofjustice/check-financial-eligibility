@@ -3,7 +3,8 @@ module Collators
     delegate :net_housing_costs,
              :childcare,
              :maintenance,
-             :dependant_allowance, to: :disposable_income_summary
+             :dependant_allowance,
+             :legal_aid, to: :disposable_income_summary
 
     delegate :total_gross_income, to: :gross_income_summary
 
@@ -19,7 +20,7 @@ module Collators
     private
 
     def total_outgoings_and_allowances
-      net_housing_costs + childcare + maintenance + dependant_allowance
+      net_housing_costs + childcare + maintenance + dependant_allowance + legal_aid
     end
 
     def disposable_income
