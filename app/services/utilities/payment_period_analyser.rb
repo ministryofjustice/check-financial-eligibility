@@ -47,12 +47,8 @@ module Utilities
     end
 
     def weekly?
-      return true if dates.size > SIZE_THRESHOLD_WEEKLY
-      return false if around_28(days_between_dates.median) || around_28(days_between_dates.range)
-      return false if around_monthly(days_between_dates.mean)
-      return true if days_between_dates.median > VERY_LARGE_VARIANCE &&
-                     days_between_dates.range > VERY_LARGE_VARIANCE &&
-                     days.range > LARGE_VARIANCE
+      return false if dates.size < SIZE_THRESHOLD_WEEKLY
+      return true if around_7(days_between_dates.median)
 
       false
     end
