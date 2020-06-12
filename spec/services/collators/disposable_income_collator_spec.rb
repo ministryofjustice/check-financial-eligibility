@@ -17,8 +17,8 @@ module Collators
       create :disposable_income_summary,
              childcare: childcare,
              maintenance: maintenance,
-             legal_aid: legal_aid,
              gross_housing_costs: gross_housing,
+             legal_aid: legal_aid,
              housing_benefit: housing_benefit,
              net_housing_costs: net_housing,
              total_outgoings_and_allowances: 0.0,
@@ -35,6 +35,7 @@ module Collators
 
       context 'total_monthly_outgoings' do
         it 'sums childcare, legal_aid, maintenance and housing costs' do
+          subject
           expect(disposable_income_summary.reload.total_outgoings_and_allowances).to eq total_outgoings
         end
       end
