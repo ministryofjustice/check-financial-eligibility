@@ -168,13 +168,20 @@ module Utilities
     context 'individual tests' do
       let(:dates) { string_dates.map { |d| [Date.parse(d), nil] }.to_h }
 
+      context 'odd results from ap-1367' do
+        let(:string_dates) { '2020-04-22, 2020-05-19, 2020-06-10'.split(', ') }
+        it 'returns four weekly' do
+          expect(described_class.new(dates).period_pattern).to eq :four_weekly
+        end
+      end
+
       context 'Every two weeks on a Monday but paid on Friday before bank holiday (middle payment)' do
         let(:string_dates) { '2019-03-4, 2019-03-18, 2019-04-01, 2019-04-12, 2019-04-29, 2019-05-13, 2019-05-27, 2019-06-10'.split(', ') }
         it 'returns two_weekly using #period_pattern' do
           expect(described_class.new(dates).period_pattern).to eq :two_weekly
         end
 
-        it 'retursn two_weekly using .pattern_for' do
+        it 'returns two_weekly using .pattern_for' do
           expect(described_class.pattern_for(dates)).to eq :two_weekly
         end
       end
