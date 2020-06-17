@@ -6,9 +6,10 @@ module Collators
     let(:childcare) { Faker::Number.decimal(l_digits: 3, r_digits: 2).to_d }
     let(:maintenance) { Faker::Number.decimal(l_digits: 3, r_digits: 2).to_d }
     let(:gross_housing) { Faker::Number.decimal(l_digits: 3, r_digits: 2).to_d }
+    let(:legal_aid) { Faker::Number.decimal(l_digits: 3, r_digits: 2).to_d }
     let(:housing_benefit) { Faker::Number.between(from: 1.25, to: gross_housing / 2).round(2) }
     let(:net_housing) { gross_housing - housing_benefit }
-    let(:total_outgoings) { childcare + maintenance + net_housing + dependant_allowance }
+    let(:total_outgoings) { childcare + maintenance + net_housing + dependant_allowance + legal_aid }
 
     let(:dependant_allowance) { 582.98 }
 
@@ -17,6 +18,7 @@ module Collators
              childcare: childcare,
              maintenance: maintenance,
              gross_housing_costs: gross_housing,
+             legal_aid: legal_aid,
              housing_benefit: housing_benefit,
              net_housing_costs: net_housing,
              total_outgoings_and_allowances: 0.0,
@@ -32,7 +34,7 @@ module Collators
       subject { described_class.call(assessment) }
 
       context 'total_monthly_outgoings' do
-        it 'sums childcare, maintenance and housing costs' do
+        it 'sums childcare, legal_aid, maintenance and housing costs' do
           subject
           expect(disposable_income_summary.reload.total_outgoings_and_allowances).to eq total_outgoings
         end
@@ -57,7 +59,7 @@ module Collators
 
       context 'upper threshold' do
         context 'domestic abuse' do
-          it 'populates it with infintiy' do
+          it 'populates it with infinity' do
             subject
             expect(disposable_income_summary.upper_threshold).to eq 999_999_999_999.0
           end
