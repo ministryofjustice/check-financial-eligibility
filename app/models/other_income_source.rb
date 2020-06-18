@@ -2,6 +2,7 @@ class OtherIncomeSource < ApplicationRecord
   include MonthlyEquivalentCalculator
 
   VALID_INCOME_SOURCES = %w[friends_or_family maintenance_in property_or_lodger student_loan pension].freeze
+  STUDENT_LOAN = ['student_loan'].freeze
 
   belongs_to :gross_income_summary
   has_many :other_income_payments
@@ -12,7 +13,7 @@ class OtherIncomeSource < ApplicationRecord
   delegate :assessment, to: :gross_income_summary
 
   def student_payment?
-    name.in? %w[student_grant student_loan]
+    name.in? STUDENT_LOAN
   end
 
   def calculate_monthly_income!
