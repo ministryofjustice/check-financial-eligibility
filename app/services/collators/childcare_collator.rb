@@ -3,7 +3,7 @@ module Collators
     def call
       return unless applicant_has_dependent_child?
 
-      collate! if applicant_employed? || applicant_has_student_grant_or_loan?
+      collate! if applicant_employed? || applicant_has_student_loan?
     end
 
     private
@@ -21,10 +21,14 @@ module Collators
       false
     end
 
-    def applicant_has_student_grant_or_loan?
+    # TODO: remove using other income sources for student learn and instead use irregular_income_payments
+    # once other income sources no longer stores student_loan
+    def applicant_has_student_loan?
       other_income_sources.each do |source|
         return true if source.student_payment?
       end
+      return true if irregular_income_payments&.present?
+
       false
     end
 
