@@ -4,6 +4,7 @@ class GrossIncomeSummary < ApplicationRecord
   belongs_to :assessment
   has_many :state_benefits
   has_many :other_income_sources
+  has_many :irregular_income_payments
 
   enum(
     assessment_result: enum_hash_for(
