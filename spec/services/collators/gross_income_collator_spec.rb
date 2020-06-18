@@ -97,6 +97,35 @@ module Collators
             expect(gross_income_summary.friends_or_family).to eq 105.13
             expect(gross_income_summary.property_or_lodger).to eq 66.45
             expect(gross_income_summary.monthly_other_income).to eq 171.58
+            expect(gross_income_summary.monthly_student_loan).to eq 0.0
+          end
+        end
+      end
+
+      context 'monthly_student_loan' do
+        context 'there are no irregular income payments' do
+          it 'set monthly student loan to zero' do
+            subject
+            expect(gross_income_summary.reload.monthly_student_loan).to eq 0.0
+          end
+        end
+
+        context 'monthly_student_loan exists' do
+          let!(:irregular_income_payments) do
+            create :irregular_income_payment, gross_income_summary: gross_income_summary, amount: 12_000
+          end
+
+          it 'updates the gross income record with categorised monthly incomes' do
+            subject
+            gross_income_summary.reload
+            expect(gross_income_summary.monthly_state_benefits).to be_zero
+            expect(gross_income_summary.maintenance_in).to be_zero
+            expect(gross_income_summary.student_loan).to be_zero
+            expect(gross_income_summary.pension).to be_zero
+            expect(gross_income_summary.friends_or_family).to eq 0.0
+            expect(gross_income_summary.property_or_lodger).to eq 0.0
+            expect(gross_income_summary.monthly_other_income).to eq 0.0
+            expect(gross_income_summary.monthly_student_loan).to eq 12_000 / 12
           end
         end
       end
