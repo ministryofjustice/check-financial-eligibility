@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     resources :properties, only: [:create]
     resources :vehicles, only: :create
     resources :other_incomes, only: [:create]
+    resource :irregular_income, only: [:create]
     resources :state_benefits, only: [:create]
   end
   resources :state_benefit_type, only: [:index]

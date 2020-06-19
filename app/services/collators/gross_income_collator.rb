@@ -5,6 +5,7 @@ module Collators
         upper_threshold: upper_threshold,
         monthly_other_income: categorised_income[:total],
         monthly_state_benefits: monthly_state_benefits,
+        monthly_student_loan: monthly_student_loan,
         friends_or_family: categorised_income[:friends_or_family],
         maintenance_in: categorised_income[:maintenance_in],
         property_or_lodger: categorised_income[:property_or_lodger],
@@ -49,6 +50,22 @@ module Collators
       @monthly_state_benefits ||= Calculators::StateBenefitsCalculator.call(assessment)
     end
 
+    def monthly_student_loan
+      @monthly_student_loan ||= calculate_monthly_student_loan
+    end
+
+    def calculate_monthly_student_loan
+      if gross_income_summary.irregular_income_payments.exists?
+        total = 0
+        gross_income_summary.irregular_income_payments.each do |payment|
+          total += (payment.amount / 12)
+        end
+        total
+      else
+        0.0
+      end
+    end
+
     def categorised_income
       @categorised_income ||= categorise_income
     end
@@ -64,7 +81,7 @@ module Collators
     end
 
     def total_gross_income
-      categorised_income[:total] + monthly_state_benefits
+      categorised_income[:total] + monthly_state_benefits + monthly_student_loan
     end
   end
 end

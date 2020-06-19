@@ -22,7 +22,7 @@ RSpec.describe 'Full Assessment with remarks' do
 
     get assessment_path(assessment_id), headers: v2_headers
     output_response(:get, :assessment)
-    expect(parsed_response[:assessment][:remarks]).to eq expected_remarks
+    expect(parsed_response[:assessment][:remarks]).to match_array(expected_remarks)
   end
 
   def post_assessment

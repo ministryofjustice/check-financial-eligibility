@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_14_152255) do
+ActiveRecord::Schema.define(version: 2020_06_12_123146) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -124,7 +124,19 @@ ActiveRecord::Schema.define(version: 2020_05_14_152255) do
     t.decimal "property_or_lodger", default: "0.0"
     t.decimal "student_loan", default: "0.0"
     t.decimal "pension", default: "0.0"
+    t.decimal "monthly_student_loan"
     t.index ["assessment_id"], name: "index_gross_income_summaries_on_assessment_id"
+  end
+
+  create_table "irregular_income_payments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "gross_income_summary_id", null: false
+    t.string "income_type", null: false
+    t.string "frequency", null: false
+    t.decimal "amount", default: "0.0"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["gross_income_summary_id", "income_type"], name: "irregular_income_payments_unique", unique: true
+    t.index ["gross_income_summary_id"], name: "index_irregular_income_payments_on_gross_income_summary_id"
   end
 
   create_table "other_income_payments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -230,6 +242,7 @@ ActiveRecord::Schema.define(version: 2020_05_14_152255) do
   add_foreign_key "capital_summaries", "assessments"
   add_foreign_key "disposable_income_summaries", "assessments"
   add_foreign_key "gross_income_summaries", "assessments"
+  add_foreign_key "irregular_income_payments", "gross_income_summaries"
   add_foreign_key "other_income_payments", "other_income_sources"
   add_foreign_key "other_income_sources", "gross_income_summaries"
   add_foreign_key "outgoings", "disposable_income_summaries"
