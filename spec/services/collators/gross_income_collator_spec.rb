@@ -98,6 +98,7 @@ module Collators
             expect(gross_income_summary.property_or_lodger).to eq 66.45
             expect(gross_income_summary.monthly_other_income).to eq 171.58
             expect(gross_income_summary.monthly_student_loan).to eq 0.0
+            expect(gross_income_summary.total_gross_income).to eq 171.58
           end
         end
       end
@@ -122,10 +123,36 @@ module Collators
             expect(gross_income_summary.maintenance_in).to be_zero
             expect(gross_income_summary.student_loan).to be_zero
             expect(gross_income_summary.pension).to be_zero
-            expect(gross_income_summary.friends_or_family).to eq 0.0
-            expect(gross_income_summary.property_or_lodger).to eq 0.0
             expect(gross_income_summary.monthly_other_income).to eq 0.0
             expect(gross_income_summary.monthly_student_loan).to eq 12_000 / 12
+            expect(gross_income_summary.total_gross_income).to eq 12_000 / 12
+          end
+
+          context 'other income student loan exists' do
+            let!(:irregular_income_payments) do
+              create :irregular_income_payment, gross_income_summary: gross_income_summary, amount: 12_000
+            end
+
+            before do
+              source1 = create :other_income_source, gross_income_summary: gross_income_summary, name: 'student_loan'
+              create :other_income_payment, other_income_source: source1, payment_date: Date.today, amount: 105.13
+              create :other_income_payment, other_income_source: source1, payment_date: 1.month.ago.to_date, amount: 105.23
+              create :other_income_payment, other_income_source: source1, payment_date: 1.month.ago.to_date, amount: 105.03
+            end
+
+            it 'updates the gross income record without monthly student loan' do
+              subject
+              gross_income_summary.reload
+              expect(gross_income_summary.monthly_state_benefits).to be_zero
+              expect(gross_income_summary.maintenance_in).to be_zero
+              expect(gross_income_summary.pension).to be_zero
+              expect(gross_income_summary.friends_or_family).to eq 0.0
+              expect(gross_income_summary.property_or_lodger).to eq 0.0
+              expect(gross_income_summary.student_loan).to eq 105.13
+              expect(gross_income_summary.monthly_other_income).to eq 105.13
+              expect(gross_income_summary.monthly_student_loan).to eq 0.0
+              expect(gross_income_summary.total_gross_income).to eq 105.13
+            end
           end
         end
       end
