@@ -55,6 +55,8 @@ module Collators
     end
 
     def calculate_monthly_student_loan
+      return 0.0 if categorised_income.key?(:student_loan)
+
       if gross_income_summary.irregular_income_payments.exists?
         total = 0
         gross_income_summary.irregular_income_payments.each do |payment|
