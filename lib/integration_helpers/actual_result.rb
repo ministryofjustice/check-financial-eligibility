@@ -15,6 +15,10 @@ class ActualResult
     gross_income[:monthly_other_income]
   end
 
+  def irregular_income
+    gross_income[:monthly_student_loan]
+  end
+
   def state_benefits
     gross_income[:monthly_state_benefits]
   end
