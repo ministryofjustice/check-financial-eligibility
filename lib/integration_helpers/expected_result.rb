@@ -18,6 +18,7 @@ class ExpectedResult
   NON_PASSPORTED_METHODS = %i[
     assessment_result
     other_income
+    irregular_income
     state_benefits
     total_gross_income
     gross_income_upper_threshold
@@ -52,6 +53,7 @@ class ExpectedResult
   ].freeze
 
   IGNORE_IF_NIL = %i[
+    irregular_income
     mie_friends_or_family
     mie_maintenance_in
     mie_property_or_lodger
@@ -142,6 +144,10 @@ class ExpectedResult
 
   def gross_income
     @expected_result[:gross_income_summary]
+  end
+
+  def irregular_income
+    gross_income[:monthly_student_loan]
   end
 
   def other_income
