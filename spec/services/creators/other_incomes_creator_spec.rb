@@ -24,9 +24,9 @@ module Creators
           expect { subject }.to change { OtherIncomeSource.count }.by(2)
         end
 
-        it 'creates a student loan source with three payments' do
+        it 'creates a maintenance_in source with three payments' do
           subject
-          source_record = OtherIncomeSource.find_by(gross_income_summary_id: gross_income_summary.id, name: 'student_loan')
+          source_record = OtherIncomeSource.find_by(gross_income_summary_id: gross_income_summary.id, name: 'pension')
           expect(source_record.other_income_payments.count).to eq 3
           expect(source_record.other_income_payments.map(&:amount)).to match_array([1046.44, 1034.33, 1033.44])
           expect(source_record.other_income_payments.map(&:payment_date)).to match_array(expected_dates)
@@ -85,7 +85,7 @@ module Creators
       def standard_params
         [
           {
-            source: 'student_loan',
+            source: 'pension',
             payments: [
               {
                 date: '2019-11-01',

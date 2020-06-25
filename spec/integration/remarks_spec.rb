@@ -122,7 +122,7 @@ RSpec.describe 'Full Assessment with remarks' do
     {
       other_incomes: [
         {
-          source: 'student_loan', # varying amounts
+          source: 'maintenance_in', # varying amounts
           payments: [
             {
               date: '2019-11-01',
