@@ -21,12 +21,7 @@ module Collators
       false
     end
 
-    # TODO: remove using other income sources for student learn and instead use irregular_income_payments
-    # once other income sources no longer stores student_loan
     def applicant_has_student_loan?
-      other_income_sources.each do |source|
-        return true if source.student_payment?
-      end
       return true if irregular_income_payments&.present?
 
       false
