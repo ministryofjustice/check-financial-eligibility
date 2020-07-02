@@ -72,7 +72,7 @@ RSpec.describe 'IntegrationTests::TestRunner', type: :request do
     vehicles: ->(assessment_id) { Rails.application.routes.url_helpers.assessment_vehicles_path(assessment_id) },
     properties: ->(assessment_id) { Rails.application.routes.url_helpers.assessment_properties_path(assessment_id) },
     other_incomes: ->(assessment_id) { Rails.application.routes.url_helpers.assessment_other_incomes_path(assessment_id) },
-    irregular_income: ->(assessment_id) { Rails.application.routes.url_helpers.assessment_irregular_income_path(assessment_id) },
+    irregular_income: ->(assessment_id) { Rails.application.routes.url_helpers.assessment_irregular_incomes_path(assessment_id) },
     earned_income: ->(assessment_id) { Rails.application.routes.url_helpers.assessment_earned_income_path(assessment_id) },
     state_benefits: ->(assessment_id) { Rails.application.routes.url_helpers.assessment_state_benefits_path(assessment_id) },
     outgoings: ->(assessment_id) { Rails.application.routes.url_helpers.assessment_outgoings_path(assessment_id) },
