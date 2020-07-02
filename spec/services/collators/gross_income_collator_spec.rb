@@ -2,6 +2,8 @@ require 'rails_helper'
 
 module Collators
   RSpec.describe GrossIncomeCollator do
+    before { create :bank_holiday }
+
     let(:assessment) { create :assessment, :with_gross_income_summary, :with_applicant }
     let(:gross_income_summary) { assessment.gross_income_summary }
 

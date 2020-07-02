@@ -48,6 +48,12 @@ ActiveRecord::Schema.define(version: 2020_10_19_103924) do
     t.index ["client_reference_id"], name: "index_assessments_on_client_reference_id"
   end
 
+  create_table "bank_holidays", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.text "dates"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "capital_items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "capital_summary_id"
     t.string "type", null: false

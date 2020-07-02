@@ -10,6 +10,7 @@ RSpec.describe 'Full Assessment with remarks' do
                        overwrite: true).build
 
     ENV['VERBOSE'] = 'false'
+    create :bank_holiday
   end
 
   it 'returns the expected payload with remarks' do
@@ -285,7 +286,8 @@ RSpec.describe 'Full Assessment with remarks' do
   def expected_remarks
     {
       state_benefit_payment: {
-        amount_variation: %w[CHB001 CHB002 CHB003]
+        amount_variation: %w[CHB001 CHB002 CHB003],
+        unknown_frequency: %w[CHB001 CHB002 CHB003]
       },
       other_income_payment: {
         amount_variation: [

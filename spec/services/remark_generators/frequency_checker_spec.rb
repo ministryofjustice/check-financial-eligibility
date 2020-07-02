@@ -2,6 +2,8 @@ require 'rails_helper'
 
 module RemarkGenerators
   RSpec.describe FrequencyChecker do
+    before { create :bank_holiday }
+
     context 'state benefit payments' do
       let(:amount) { 123.45 }
       let(:dates) { [Date.today, 1.month.ago, 2.month.ago] }

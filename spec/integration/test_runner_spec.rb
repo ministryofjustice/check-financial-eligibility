@@ -69,6 +69,7 @@ RSpec.describe 'IntegrationTests::TestRunner', type: :request do
   end
 
   before do
+    create :bank_holiday
     Dibber::Seeder.new(StateBenefitType, 'data/state_benefit_types.yml', name_method: :label, overwrite: true).build
 
     secret_file = StringIO.new(google_secret.to_json)
