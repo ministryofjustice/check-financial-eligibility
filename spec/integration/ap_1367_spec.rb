@@ -156,18 +156,7 @@ RSpec.describe 'Full Assessment with remarks' do
               'client_id' => 'TX-other-income-property-2' },
             { 'date' => '2020-06-11',
               'amount' => 50.0,
-              'client_id' => 'TX-other-income-property-3' }] },
-        { 'source' => 'Student loan',
-          'payments' =>
-           [{ 'date' => '2020-04-04',
-              'amount' => 25.0,
-              'client_id' => 'TX-other-student-loan-1' },
-            { 'date' => '2020-05-11',
-              'amount' => 50.0,
-              'client_id' => 'TX-other-student-loan-1' },
-            { 'date' => '2020-06-06',
-              'amount' => 346.35,
-              'client_id' => 'TX-other-student-loan-1' }] }] }
+              'client_id' => 'TX-other-income-property-3' }] }] }
       .to_json
   end
 
@@ -248,19 +237,13 @@ RSpec.describe 'Full Assessment with remarks' do
                                                    TX-other-income-pension-3
                                                    TX-other-income-property-1
                                                    TX-other-income-property-2
-                                                   TX-other-income-property-3
-                                                   TX-other-student-loan-1
-                                                   TX-other-student-loan-1
-                                                   TX-other-student-loan-1],
+                                                   TX-other-income-property-3],
                               unknown_frequency: %w[TX-other-income-maintenance-in-1
                                                     TX-other-income-maintenance-in-2
                                                     TX-other-income-maintenance-in-3
                                                     TX-other-income-property-1
                                                     TX-other-income-property-2
-                                                    TX-other-income-property-3
-                                                    TX-other-student-loan-1
-                                                    TX-other-student-loan-1
-                                                    TX-other-student-loan-1] },
+                                                    TX-other-income-property-3] },
       outgoings_maintenance: { amount_variation: %w[TX-outgoing-maintenance-1
                                                     TX-outgoing-maintenance-2
                                                     TX-outgoing-maintenance-3] },

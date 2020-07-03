@@ -23,7 +23,7 @@ RSpec.describe OtherIncomesController, type: :request do
           expect { subject }.to change { gross_income_summary.other_income_sources.count }.by(2)
           sources = gross_income_summary.other_income_sources.order(:name)
           expect(sources.first.name).to eq 'friends_or_family'
-          expect(sources.last.name).to eq 'student_loan'
+          expect(sources.last.name).to eq 'maintenance_in'
         end
 
         it 'creates the required number of OtherIncomePayment record for each source' do
@@ -156,7 +156,7 @@ RSpec.describe OtherIncomesController, type: :request do
       {
         other_incomes: [
           {
-            source: 'student_loan',
+            source: 'maintenance_in',
             payments: [
               {
                 date: '2019-11-01',
