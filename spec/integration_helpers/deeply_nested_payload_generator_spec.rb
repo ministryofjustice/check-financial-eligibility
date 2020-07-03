@@ -2,7 +2,7 @@ require 'rails_helper'
 require Rails.root.join 'lib/integration_helpers/deeply_nested_payload_generator.rb'
 
 RSpec.describe DeeplyNestedPayloadGenerator do
-  let(:client_id) { DeeplyNestedPayloadGenerator::FAKE_CLIENT_ID }
+  let(:client_id) { 'fake_client_id' }
 
   describe '#run' do
     let(:type) { :other_incomes }
@@ -18,6 +18,7 @@ RSpec.describe DeeplyNestedPayloadGenerator do
     [
       %w[other_incomes friends_or_family],
       [nil, nil, 'date', Date.parse('2020-02-07')],
+      [nil, nil, 'client_id', client_id],
       [nil, nil, 'amount', 250.0],
       [nil, nil, 'date', Date.parse('2020-02-08')],
       [nil, nil, 'client_id', client_id],
@@ -32,9 +33,6 @@ RSpec.describe DeeplyNestedPayloadGenerator do
     { other_incomes: [
       { source: 'friends_or_family',
         payments: [
-          {
-            client_id: client_id
-          },
           {
             date: Date.parse('2020-02-07'),
             client_id: client_id,

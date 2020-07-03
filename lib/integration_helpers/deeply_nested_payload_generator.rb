@@ -28,8 +28,6 @@ class DeeplyNestedPayloadGenerator
     }
   }.freeze
 
-  FAKE_CLIENT_ID = SecureRandom.uuid.freeze
-
   def initialize(rows, payload_type)
     @rows = rows
     @payload_type = payload_type
@@ -48,7 +46,7 @@ class DeeplyNestedPayloadGenerator
 
       store_amount(row) if amount?(row)
 
-      client_id?(row) ? store_client_id(row) : create_client_id(row)
+      store_client_id(row) if client_id?(row)
     end
     store_payment_source
     { top_level_name => @payload }
@@ -152,10 +150,5 @@ class DeeplyNestedPayloadGenerator
   def store_client_id(row)
     _object, _source, _attr, value = row
     @payment_hash[client_id_method] = value
-  end
-
-  # TODO: Remove #create_client_id method when integration tests spreadsheet passess in client_id with payments
-  def create_client_id(_row)
-    @payment_hash[client_id_method] = FAKE_CLIENT_ID
   end
 end
