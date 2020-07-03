@@ -3,7 +3,7 @@ class IrregularIncomesController < ApplicationController
   VALID_IRREGULAR_INCOME_FREQUENCIES = IrregularIncomePayment::VALID_IRREGULAR_INCOME_FREQUENCIES.freeze
 
   resource_description do
-    name 'Irregular income'
+    name 'Irregular incomes'
     short 'Add irregular types of income details to an assessment'
     formats ['json']
     description <<-END_OF_TEXT
@@ -12,7 +12,7 @@ class IrregularIncomesController < ApplicationController
     END_OF_TEXT
   end
 
-  api :POST, 'assessments/:assessment_id/irregular_income', 'Create irregular income'
+  api :POST, 'assessments/:assessment_id/irregular_incomes', 'Create irregular incomes'
   formats ['json']
   param :assessment_id, :uuid, required: true
   param :payments, Array, of: Hash, desc: 'Collection of payment types, frequencies and amounts' do
