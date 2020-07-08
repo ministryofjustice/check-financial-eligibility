@@ -39,7 +39,7 @@ module MonthlyEquivalentCalculator
   end
 
   def frequency
-    @frequency ||= Utilities::NewPaymentPeriodAnalyser.new(dates).period_pattern
+    @frequency ||= Utilities::PaymentPeriodAnalyser.new(dates).period_pattern
   end
 
   def converter

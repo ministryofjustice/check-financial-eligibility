@@ -9,7 +9,7 @@ module RemarkGenerators
     private
 
     def unknown_frequency?
-      Utilities::NewPaymentPeriodAnalyser.new(dates).period_pattern == :unknown
+      Utilities::PaymentPeriodAnalyser.new(dates).period_pattern == :unknown
     end
 
     def dates_and_amounts

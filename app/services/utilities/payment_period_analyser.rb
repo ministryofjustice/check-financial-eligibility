@@ -1,5 +1,5 @@
 module Utilities
-  class NewPaymentPeriodAnalyser
+  class PaymentPeriodAnalyser
     def initialize(dates)
       @dates = dates.sort
     end

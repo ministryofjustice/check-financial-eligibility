@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 module Utilities
-  RSpec.describe NewPaymentPeriodAnalyser do
+  RSpec.describe PaymentPeriodAnalyser do
     describe '.call' do
       let(:dates) { %w[dummy_date_1 dummy_date_2 dummy_date_3] }
 
