@@ -109,7 +109,7 @@ class ExpectedResult
   end
   # :nocov:
 
-  def display_differences_for(method) # rubocop:disable Metrics/AbcSize
+  def display_differences_for(method)
     color = :green
     result = true
     expected_value = __send__(method).to_s

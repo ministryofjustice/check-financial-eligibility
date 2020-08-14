@@ -13,7 +13,7 @@ module Utilities
       @dates = dates
     end
 
-    def slope # rubocop:disable Metrics/AbcSize
+    def slope
       1.0 * ((size * sum_xy) - (sum_x * sum_y)) / ((size * sum_xx) - (sum_x * sum_x))
     end
 
