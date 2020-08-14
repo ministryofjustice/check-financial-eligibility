@@ -11,3 +11,7 @@
 Metrics/CyclomaticComplexity:
   IgnoredMethods:
     - 'check_amount_variations' # ['app/services/remark_generators/orchestrator.rb']
+
+Lint/BinaryOperatorWithIdenticalOperands:
+  Enabled: false
+# disabled as this is flagging basic maths functions :/

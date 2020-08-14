@@ -5,6 +5,7 @@ module Creators
     attr_reader :assessment_hash, :raw_post
 
     def initialize(remote_ip, raw_post)
+      super()
       @raw_post = raw_post
       @assessment_hash = JSON.parse(raw_post).merge(remote_ip: remote_ip)
     end

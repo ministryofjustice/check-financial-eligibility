@@ -7,6 +7,7 @@ module Creators
     attr_reader :irregular_income_payments
 
     def initialize(assessment_id:, irregular_income: [])
+      super()
       @assessment_id = assessment_id
       @irregular_income_payments = irregular_income[:payments]
     end

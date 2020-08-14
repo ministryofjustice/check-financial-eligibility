@@ -21,7 +21,7 @@ VCR.configure do |vcr_config|
   }
   vcr_config.ignore_hosts 'www.googleapis.com'
   vcr_config.configure_rspec_metadata!
-  vcr_config.debug_logger = STDOUT if vcr_debug
+  vcr_config.debug_logger = $stdout if vcr_debug
   vcr_config.filter_sensitive_data('<GOOGLE_CLIENT_EMAIL>') { ENV['GOOGLE_CLIENT_EMAIL'] }
   vcr_config.filter_sensitive_data('<GOOGLE_PRIVATE_KEY>') { ENV['GOOGLE_PRIVATE_KEY'] }
 end

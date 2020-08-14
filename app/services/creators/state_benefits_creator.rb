@@ -7,6 +7,7 @@ module Creators
     attr_reader :result
 
     def initialize(assessment_id:, state_benefits: [])
+      super()
       @assessment_id = assessment_id
       @state_benefits = state_benefits[:state_benefits]
       @result = []

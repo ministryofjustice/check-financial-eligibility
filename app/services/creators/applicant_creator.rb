@@ -3,6 +3,7 @@ module Creators
     attr_accessor :assessment_id, :applicant_attributes, :applicant
 
     def initialize(assessment_id:, applicant_attributes:)
+      super()
       @assessment_id = assessment_id
       @applicant_attributes = applicant_attributes
     end

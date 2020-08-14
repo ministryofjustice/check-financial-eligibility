@@ -13,6 +13,7 @@ module Creators
     VALID_OUTGOING_TYPES = OUTGOING_KLASSES.keys.map(&:to_s).freeze
 
     def initialize(assessment_id:, outgoings:)
+      super()
       @assessment_id = assessment_id
       @outgoings = outgoings
     end
