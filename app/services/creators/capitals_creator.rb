@@ -5,6 +5,7 @@ module Creators
     delegate :capital_summary, to: :assessment
 
     def initialize(assessment_id:, bank_accounts_attributes: nil, non_liquid_capitals_attributes: nil)
+      super()
       @assessment_id = assessment_id
       @bank_accounts_attributes = bank_accounts_attributes
       @non_liquid_capitals_attributes = non_liquid_capitals_attributes

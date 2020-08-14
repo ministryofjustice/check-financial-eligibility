@@ -5,6 +5,7 @@ module Creators
     delegate :capital_summary, to: :assessment
 
     def initialize(assessment_id:, main_home_attributes: nil, additional_properties_attributes: [])
+      super()
       @assessment_id = assessment_id
       @main_home_attributes = main_home_attributes
       @additional_properties_attributes = additional_properties_attributes

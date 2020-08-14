@@ -7,6 +7,7 @@ module Creators
     attr_reader :other_income_sources
 
     def initialize(assessment_id:, other_incomes: [])
+      super()
       @assessment_id = assessment_id
       @other_incomes = other_incomes[:other_incomes]
       @other_income_sources = []
