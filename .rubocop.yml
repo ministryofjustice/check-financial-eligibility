@@ -157,9 +157,6 @@ Performance/Squeeze:
 Performance/StringInclude:
   Enabled: true
 
-Lint/BinaryOperatorWithIdenticalOperands:
-  Enabled: true
-
 Lint/DuplicateRescueException:
   Enabled: true
 
