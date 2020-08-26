@@ -21,6 +21,7 @@ module RemarkGenerators
 
       check_amount_variations
       check_frequencies
+      check_residual_balances
     end
 
     private
@@ -41,6 +42,10 @@ module RemarkGenerators
       outgoings.group_by(&:type).each do |_type, collection|
         FrequencyChecker.call(@assessment, collection)
       end
+    end
+
+    def check_residual_balances
+      ResidualBalanceChecker.call(@assessment)
     end
 
     def state_benefits
