@@ -15,8 +15,9 @@ class Remarks
     outgoings_maintenance_out
     outgoings_housing_cost
     outgoings_rent_or_mortgage
+    current_account_balance
   ].freeze
-  VALID_ISSUES = %i[unknown_frequency amount_variation].freeze
+  VALID_ISSUES = %i[unknown_frequency amount_variation residual_balance].freeze
 
   def initialize
     @remarks_hash = {}

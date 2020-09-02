@@ -24,6 +24,7 @@ module RemarkGenerators
       expect(AmountVariationChecker).to receive(:call).with(assessment, maintenance_outgoings)
       expect(AmountVariationChecker).to receive(:call).with(assessment, housing_outgoings)
       expect(AmountVariationChecker).to receive(:call).with(assessment, legal_aid_outgoings)
+      expect(ResidualBalanceChecker).to receive(:call).with(assessment)
 
       described_class.call(assessment)
     end
