@@ -5,7 +5,7 @@ ruby '2.6.6'
 
 gem 'active_model_serializers', '~> 0.10.10'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0.3'
+gem 'rails', '~> 6.0.3', '>= 6.0.3.3'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
@@ -38,7 +38,7 @@ gem 'json-schema'
 gem 'dibber'
 
 # Api documentation
-gem 'apipie-rails'
+gem 'apipie-rails', '>= 0.5.18'
 
 # Adds Statistical methods to objects such as arrays
 gem 'descriptive_statistics', require: 'descriptive_statistics/safe'
@@ -50,13 +50,13 @@ gem 'roo', '~> 2.8.3'
 
 group :development, :test do
   gem 'awesome_print'
-  gem 'dotenv-rails'
-  gem 'factory_bot_rails'
+  gem 'dotenv-rails', '>= 2.7.6'
+  gem 'factory_bot_rails', '>= 6.1.0'
   gem 'faker'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'pry-byebug'
-  gem 'rspec-rails', '~> 4.0'
+  gem 'rspec-rails', '~> 4.0', '>= 4.0.1'
   gem 'rubocop', require: false
   gem 'rubocop-performance'
   gem 'timecop'
