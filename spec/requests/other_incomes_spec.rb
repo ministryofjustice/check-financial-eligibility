@@ -10,7 +10,7 @@ RSpec.describe OtherIncomesController, type: :request do
 
     subject { post assessment_other_incomes_path(assessment_id), params: params.to_json, headers: headers }
 
-    UUID_REGEX = /^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$/.freeze
+    uuid_regex = /^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$/.freeze
 
     context 'valid payload' do
       context 'with two sources' do
@@ -34,22 +34,22 @@ RSpec.describe OtherIncomesController, type: :request do
 
           expect(payments[0].payment_date).to eq Date.new(2019, 9, 1)
           expect(payments[0].amount).to eq 250.00
-          expect(payments[0].client_id).to match UUID_REGEX
+          expect(payments[0].client_id).to match uuid_regex
 
           expect(payments[1].payment_date).to eq Date.new(2019, 10, 1)
           expect(payments[1].amount).to eq 266.02
-          expect(payments[1].client_id).to match UUID_REGEX
+          expect(payments[1].client_id).to match uuid_regex
 
           expect(payments[2].payment_date).to eq Date.new(2019, 11, 1)
           expect(payments[2].amount).to eq 250.00
-          expect(payments[2].client_id).to match UUID_REGEX
+          expect(payments[2].client_id).to match uuid_regex
         end
 
         it 'creates records with client id where specified' do
           subject
           source = gross_income_summary.other_income_sources.order(:name).last
           source.other_income_payments.each do |rec|
-            expect(rec.client_id).to match UUID_REGEX
+            expect(rec.client_id).to match uuid_regex
           end
         end
 

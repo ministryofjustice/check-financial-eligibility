@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe ApplicationController, type: :request do
+  # rubocop:disable Lint/ConstantDefinitionInBlock
   class TestController < ::ApplicationController
     def show
       if params[:raise_error]
@@ -10,6 +11,7 @@ RSpec.describe ApplicationController, type: :request do
       end
     end
   end
+  # rubocop:enable Lint/ConstantDefinitionInBlock
 
   before do
     Rails.application.routes.draw do

@@ -54,6 +54,7 @@ RSpec.describe 'IntegrationTests::TestRunner', type: :request do
     end
   end
 
+  # rubocop:disable Lint/ConstantDefinitionInBlock
   OBJECT_GENERATORS = {
     applicant: ->(dataset) { PayloadGenerator.new(dataset, :applicant).run },
     dependants: ->(dataset) { ArrayPayloadGenerator.new(dataset, 'dependants', 5).run },
@@ -78,6 +79,7 @@ RSpec.describe 'IntegrationTests::TestRunner', type: :request do
     outgoings: ->(assessment_id) { Rails.application.routes.url_helpers.assessment_outgoings_path(assessment_id) },
     dependants: ->(assessment_id) { Rails.application.routes.url_helpers.assessment_dependants_path(assessment_id) }
   }.freeze
+  # rubocop:enable Lint/ConstantDefinitionInBlock
 
   describe 'run integration_tests' do
     it 'passes all tests' do
