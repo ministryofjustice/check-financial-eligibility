@@ -1,6 +1,31 @@
 require 'rails_helper'
 Dir[Rails.root.join('lib/integration_helpers/*.rb')].sort.each { |f| require f }
 
+OBJECT_GENERATORS = {
+  applicant: ->(dataset) { PayloadGenerator.new(dataset, :applicant).run },
+  dependants: ->(dataset) { ArrayPayloadGenerator.new(dataset, 'dependants', 5).run },
+  other_incomes: ->(dataset) { DeeplyNestedPayloadGenerator.new(dataset, :other_incomes).run },
+  irregular_income: ->(dataset) { IrregularIncomePayloadGenerator.new(dataset).run },
+  state_benefits: ->(dataset) { DeeplyNestedPayloadGenerator.new(dataset, :state_benefits).run },
+  outgoings: ->(dataset) { OutgoingsPayloadGenerator.new(dataset).run },
+  capitals: ->(dataset) { CapitalsPayloadGenerator.new(dataset).run },
+  properties: ->(dataset) { PropertyPayloadGenerator.new(dataset).run },
+  vehicles: ->(dataset) { ArrayPayloadGenerator.new(dataset, 'vehicles', 4).run }
+}.freeze
+
+URLS = {
+  applicant: ->(assessment_id) { Rails.application.routes.url_helpers.assessment_applicant_path(assessment_id) },
+  capitals: ->(assessment_id) { Rails.application.routes.url_helpers.assessment_capitals_path(assessment_id) },
+  vehicles: ->(assessment_id) { Rails.application.routes.url_helpers.assessment_vehicles_path(assessment_id) },
+  properties: ->(assessment_id) { Rails.application.routes.url_helpers.assessment_properties_path(assessment_id) },
+  other_incomes: ->(assessment_id) { Rails.application.routes.url_helpers.assessment_other_incomes_path(assessment_id) },
+  irregular_income: ->(assessment_id) { Rails.application.routes.url_helpers.assessment_irregular_incomes_path(assessment_id) },
+  earned_income: ->(assessment_id) { Rails.application.routes.url_helpers.assessment_earned_income_path(assessment_id) },
+  state_benefits: ->(assessment_id) { Rails.application.routes.url_helpers.assessment_state_benefits_path(assessment_id) },
+  outgoings: ->(assessment_id) { Rails.application.routes.url_helpers.assessment_outgoings_path(assessment_id) },
+  dependants: ->(assessment_id) { Rails.application.routes.url_helpers.assessment_dependants_path(assessment_id) }
+}.freeze
+
 # NOTE 1:
 # Use the VERBOSE environment variable to control how much output is displayed:
 # * not_set: no output
@@ -53,33 +78,6 @@ RSpec.describe 'IntegrationTests::TestRunner', type: :request do
       google_sheet.export_as_file('tmp/integration_test_data.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     end
   end
-
-  # rubocop:disable Lint/ConstantDefinitionInBlock
-  OBJECT_GENERATORS = {
-    applicant: ->(dataset) { PayloadGenerator.new(dataset, :applicant).run },
-    dependants: ->(dataset) { ArrayPayloadGenerator.new(dataset, 'dependants', 5).run },
-    other_incomes: ->(dataset) { DeeplyNestedPayloadGenerator.new(dataset, :other_incomes).run },
-    irregular_income: ->(dataset) { IrregularIncomePayloadGenerator.new(dataset).run },
-    state_benefits: ->(dataset) { DeeplyNestedPayloadGenerator.new(dataset, :state_benefits).run },
-    outgoings: ->(dataset) { OutgoingsPayloadGenerator.new(dataset).run },
-    capitals: ->(dataset) { CapitalsPayloadGenerator.new(dataset).run },
-    properties: ->(dataset) { PropertyPayloadGenerator.new(dataset).run },
-    vehicles: ->(dataset) { ArrayPayloadGenerator.new(dataset, 'vehicles', 4).run }
-  }.freeze
-
-  URLS = {
-    applicant: ->(assessment_id) { Rails.application.routes.url_helpers.assessment_applicant_path(assessment_id) },
-    capitals: ->(assessment_id) { Rails.application.routes.url_helpers.assessment_capitals_path(assessment_id) },
-    vehicles: ->(assessment_id) { Rails.application.routes.url_helpers.assessment_vehicles_path(assessment_id) },
-    properties: ->(assessment_id) { Rails.application.routes.url_helpers.assessment_properties_path(assessment_id) },
-    other_incomes: ->(assessment_id) { Rails.application.routes.url_helpers.assessment_other_incomes_path(assessment_id) },
-    irregular_income: ->(assessment_id) { Rails.application.routes.url_helpers.assessment_irregular_incomes_path(assessment_id) },
-    earned_income: ->(assessment_id) { Rails.application.routes.url_helpers.assessment_earned_income_path(assessment_id) },
-    state_benefits: ->(assessment_id) { Rails.application.routes.url_helpers.assessment_state_benefits_path(assessment_id) },
-    outgoings: ->(assessment_id) { Rails.application.routes.url_helpers.assessment_outgoings_path(assessment_id) },
-    dependants: ->(assessment_id) { Rails.application.routes.url_helpers.assessment_dependants_path(assessment_id) }
-  }.freeze
-  # rubocop:enable Lint/ConstantDefinitionInBlock
 
   describe 'run integration_tests' do
     it 'passes all tests' do
