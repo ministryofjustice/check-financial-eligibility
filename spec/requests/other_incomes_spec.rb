@@ -1,5 +1,7 @@
 require 'rails_helper'
 
+UUID_REGEX = /^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$/.freeze
+
 RSpec.describe OtherIncomesController, type: :request do
   describe 'POST other_income' do
     let(:assessment) { create :assessment, :with_gross_income_summary }
@@ -9,8 +11,6 @@ RSpec.describe OtherIncomesController, type: :request do
     let(:headers) { { 'CONTENT_TYPE' => 'application/json' } }
 
     subject { post assessment_other_incomes_path(assessment_id), params: params.to_json, headers: headers }
-
-    UUID_REGEX = /^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$/.freeze
 
     context 'valid payload' do
       context 'with two sources' do
