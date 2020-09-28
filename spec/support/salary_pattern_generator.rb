@@ -1,6 +1,6 @@
 class SalaryPatternGenerator
-  def self.call(*args)
-    new(*args).call
+  def self.call(**args)
+    new(**args).call
   end
 
   attr_reader :period, :salary, :day_offset, :salary_offset, :start_at
