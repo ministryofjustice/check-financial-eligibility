@@ -271,6 +271,7 @@ GEM
       rubocop-ast (>= 0.4.0)
     ruby-progressbar (1.10.1)
     rubyzip (2.3.0)
+    secure_headers (6.3.1)
     sentry-raven (3.1.1)
       faraday (>= 1.0)
     shellany (0.0.1)
@@ -346,6 +347,7 @@ DEPENDENCIES
   rspec-rails (~> 4.0, >= 4.0.1)
   rubocop
   rubocop-performance
+  secure_headers
   sentry-raven
   shoulda-matchers
   simplecov
