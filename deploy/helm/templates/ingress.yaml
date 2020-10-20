@@ -3,8 +3,6 @@ apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: {{ $fullName }}
-  annotations:
-    nginx.org/server-tokens: off
   labels:
     app: {{ template "app.name" . }}
     chart: {{ template "app.chart" . }}
@@ -26,3 +24,13 @@ spec:
               serviceName: {{ $fullName }}
               servicePort: http
   {{- end }}
+---
+kind: ConfigMap
+apiVersion: networking.k8s.io/v1beta1
+metadata:
+  name: ingress-nginx-controller
+  namespace: laa-apply-for-legalaid-uat
+data:
+  proxy-connect-timeout: "10"
+  proxy-read-timeout: "120"
+  proxy-send-timeout: "120"
