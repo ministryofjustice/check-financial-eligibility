@@ -48,6 +48,9 @@ gem 'google_drive'
 # parse spreadsheets
 gem 'roo', '~> 2.8.3'
 
+# Manage security headers
+gem 'secure_headers'
+
 group :development, :test do
   gem 'awesome_print'
   gem 'dotenv-rails', '>= 2.7.6'
