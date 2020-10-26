@@ -18,6 +18,7 @@ module RemarkGenerators
     end
 
     it 'calls the checkers with each collection' do
+      expect(MultiBenefitChecker).to receive(:call).with(assessment, state_benefit_payments)
       expect(AmountVariationChecker).to receive(:call).with(assessment, state_benefit_payments)
       expect(AmountVariationChecker).to receive(:call).with(assessment, other_income_payments)
       expect(AmountVariationChecker).to receive(:call).with(assessment, childcare_outgoings)
