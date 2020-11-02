@@ -43,10 +43,17 @@ module Creators
         state_benefit.state_benefit_payments.create!(
           payment_date: payment_params[:date],
           amount: payment_params[:amount],
-          client_id: payment_params[:client_id]
+          client_id: payment_params[:client_id],
+          flags: generate_flags(payment_params)
         )
       end
       state_benefit
+    end
+
+    def generate_flags(hash)
+      return false unless hash[:flags].present?
+
+      hash[:flags].map { |k, v| k if v.eql?(true) }.compact
     end
   end
 end

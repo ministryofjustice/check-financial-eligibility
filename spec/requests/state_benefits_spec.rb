@@ -49,6 +49,14 @@ RSpec.describe StateBenefitsController, type: :request do
           state_benefit = gross_income_summary.state_benefits.detect { |sb| sb.state_benefit_type == state_benefit_type_1 }
           expect(state_benefit.state_benefit_payments.map(&:client_id)).to match client_ids
         end
+
+        context 'when the flags field contains multi_benefit' do
+          it 'sets the multi_benefit flag' do
+            subject
+            state_benefit = gross_income_summary.state_benefits.detect { |sb| sb.state_benefit_type == state_benefit_type_2 }
+            expect(state_benefit.state_benefit_payments.map(&:flags)).to match [false, false, ['multi_benefit']]
+          end
+        end
       end
     end
 
@@ -159,7 +167,10 @@ RSpec.describe StateBenefitsController, type: :request do
               {
                 date: '2019-09-01',
                 amount: 250.00,
-                client_id: client_ids[2]
+                client_id: client_ids[2],
+                flags: {
+                  multi_benefit: true
+                }
               }
             ]
           }

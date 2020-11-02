@@ -22,6 +22,7 @@ module RemarkGenerators
       check_amount_variations
       check_frequencies
       check_residual_balances
+      check_flags
     end
 
     private
@@ -46,6 +47,10 @@ module RemarkGenerators
 
     def check_residual_balances
       ResidualBalanceChecker.call(@assessment)
+    end
+
+    def check_flags
+      state_benefits&.each { |sb| MultiBenefitChecker.call(@assessment, sb.state_benefit_payments) }
     end
 
     def state_benefits
