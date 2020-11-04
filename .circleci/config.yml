@@ -8,7 +8,7 @@ executors:
       - image: cimg/base:2020.01
   cloud-platform-executor:
     docker:
-      - image: ${ECR_ENDPOINT}/cloud-platform/tools:circleci
+      - image: ministryofjustice/cloud-platform-tools:1.23
         environment:
           GITHUB_TEAM_NAME_SLUG: laa-apply-for-legal-aid
   linting-executor:
@@ -217,7 +217,6 @@ jobs:
           command: |
             helm upgrade check-financial-eligibility ./deploy/helm/. \
                           --install --wait \
-                          --tiller-namespace=${KUBE_ENV_STAGING_NAMESPACE} \
                           --namespace=${KUBE_ENV_STAGING_NAMESPACE} \
                           --values ./deploy/helm/values-staging.yaml \
                           --set image.repository="$ECR_ENDPOINT/laa-apply-for-legal-aid/check-financial-eligibility-service" \
@@ -243,7 +242,6 @@ jobs:
           command: |
             helm upgrade check-financial-eligibility ./deploy/helm/. \
                         --install --wait \
-                        --tiller-namespace=${KUBE_ENV_PRODUCTION_NAMESPACE} \
                         --namespace=${KUBE_ENV_PRODUCTION_NAMESPACE} \
                         --values ./deploy/helm/values-production.yaml \
                         --set image.repository="$ECR_ENDPOINT/laa-apply-for-legal-aid/check-financial-eligibility-service" \
