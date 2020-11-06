@@ -9,7 +9,6 @@ deploy() {
 
   helm upgrade $RELEASE_NAME ./deploy/helm/. \
                 --install --force --wait \
-                --tiller-namespace=${KUBE_ENV_UAT_NAMESPACE} \
                 --namespace=${KUBE_ENV_UAT_NAMESPACE} \
                 --values ./deploy/helm/values-uat.yaml \
                 --set deploy.host="$RELEASE_HOST" \
