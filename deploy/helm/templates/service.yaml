@@ -17,5 +17,3 @@ spec:
   selector:
     app: {{ template "app.name" . }}
     release: {{ .Release.Name }}
-
-
