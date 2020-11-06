@@ -8,12 +8,14 @@ metadata:
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
-  type: {{ .Values.service.type }}
+  type: {{ .Values.spec.type }}
   ports:
-    - port: {{ .Values.service.port }}
+    - port: {{ .Values.spec.port }}
       targetPort: http
       protocol: TCP
       name: http
   selector:
     app: {{ template "app.name" . }}
     release: {{ .Release.Name }}
+
+
