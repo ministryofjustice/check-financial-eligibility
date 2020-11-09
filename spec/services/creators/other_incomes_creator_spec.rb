@@ -5,14 +5,6 @@ module Creators
     let(:gross_income_summary) { create :gross_income_summary }
     let(:assessment) { gross_income_summary.assessment }
     let(:client_id) { [SecureRandom.uuid, SecureRandom.uuid].sample }
-    let(:params) do
-      {
-        assessment_id: assessment.id,
-        other_incomes: {
-          other_incomes: other_income_params
-        }
-      }
-    end
 
     subject do
       described_class.call(
