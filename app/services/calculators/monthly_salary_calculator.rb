@@ -3,8 +3,8 @@ module Calculators
     PeriodError = Class.new(StandardError)
     NORMAL_VARIANCE_THRESHOLD = 60
 
-    def self.call(*args)
-      new(*args).monthly_equivalent
+    def self.call(**args)
+      new(**args).monthly_equivalent
     end
 
     attr_reader :time_series, :period_type
