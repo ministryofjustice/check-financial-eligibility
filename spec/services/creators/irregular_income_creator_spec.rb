@@ -6,14 +6,11 @@ module Creators
     let(:assessment) { gross_income_summary.assessment }
     let(:frequency) { 'annual' }
     let(:student_loan) { 'student_loan' }
-    let(:params) do
-      {
-        assessment_id: assessment.id,
-        irregular_income: irregular_income_params
-      }
-    end
+    let(:assessment_id) { assessment.id }
+    let(:irregular_income) { irregular_income_params }
+
     subject { post assessment_irregular_income_path(assessment_id), params: params.to_json, headers: headers }
-    subject { described_class.call(params) }
+    subject { described_class.call(assessment_id: assessment_id, irregular_income: irregular_income) }
 
     describe '.call' do
       context 'payload' do
@@ -31,26 +28,16 @@ module Creators
       end
 
       context 'empty payload' do
-        let(:params) do
-          {
-            assessment_id: assessment.id,
-            irregular_income: {
-              payments: []
-            }
-          }
-        end
+        let(:irregular_income) { { payments: [] } }
+
         it 'does not create any records' do
           expect { subject }.not_to change { IrregularIncomePayment.count }
         end
       end
 
       context 'invalid assessment id' do
-        let(:params) do
-          {
-            assessment_id: 'abcd',
-            irregular_income: irregular_income_params
-          }
-        end
+        let(:assessment_id) { 'abcd' }
+
         it 'returns an error' do
           expect(subject.errors).to eq ['No such assessment id']
         end
