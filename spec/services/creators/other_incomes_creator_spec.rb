@@ -14,7 +14,14 @@ module Creators
       }
     end
 
-    subject { described_class.call(params) }
+    subject do
+      described_class.call(
+        assessment_id: assessment.id,
+        other_incomes: {
+          other_incomes: other_income_params
+        }
+      )
+    end
 
     describe '.call' do
       context 'payload with two sources' do
