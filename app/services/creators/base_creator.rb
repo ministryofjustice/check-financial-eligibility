@@ -2,8 +2,8 @@ module Creators
   class BaseCreator
     attr_writer :errors
 
-    def self.call(*args)
-      new(*args).call
+    def self.call(**args)
+      new(**args).call
     end
 
     def errors
