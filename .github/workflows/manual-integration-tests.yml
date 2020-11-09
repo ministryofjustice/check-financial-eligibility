@@ -27,10 +27,10 @@ jobs:
       - name: Run started by ${{ github.event.client_payload.user }}
         run: echo Run started by ${{ github.event.client_payload.user }}
       - uses: actions/checkout@v2
-      - name: Set up Ruby 2.6
+      - name: Set up Ruby 2.7
         uses: actions/setup-ruby@v1
         with:
-          ruby-version: 2.6.x
+          ruby-version: 2.7.x
       - uses: actions/cache@v2
         with:
           path: vendor/bundle
