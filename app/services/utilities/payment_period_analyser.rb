@@ -48,17 +48,17 @@ module Utilities
 
     def weekly?
       return false if dates.size < SIZE_THRESHOLD_WEEKLY
-      return true if around_7(days_between_dates.median)
+      return true if around7(days_between_dates.median)
 
       false
     end
 
     def two_weekly?
       return false if dates.size > SIZE_THRESHOLD_WEEKLY
-      return true if around_14(days_between_dates.median) && days_between_dates.range <= SMALL_VARIANCE
-      return true if around_28(days_between_dates.median) && around_28(days_between_dates.range)
-      return true if around_7_or_14(days_between_dates.median) && around_14_or_21_or_28(days_between_dates.range)
-      return true if around_14_or_21(days_between_dates.median) && around_7_or_14(days_between_dates.range)
+      return true if around14(days_between_dates.median) && days_between_dates.range <= SMALL_VARIANCE
+      return true if around28(days_between_dates.median) && around28(days_between_dates.range)
+      return true if around7or14(days_between_dates.median) && around14or21or28(days_between_dates.range)
+      return true if around14or21(days_between_dates.median) && around7or14(days_between_dates.range)
 
       false
     end
@@ -66,8 +66,8 @@ module Utilities
     def four_weekly?
       return false if monthly?
       return false if dates.size > SIZE_THRESHOLD_FOUR_WEEKLY
-      return true if around_28(days_between_dates.median) && days_between_dates.range <= SMALL_VARIANCE
-      return true if days_between_dates.median > MONTHLY_MEDIAN_LIMIT && around_28(days_between_dates.range)
+      return true if around28(days_between_dates.median) && days_between_dates.range <= SMALL_VARIANCE
+      return true if days_between_dates.median > MONTHLY_MEDIAN_LIMIT && around28(days_between_dates.range)
 
       false
     end
@@ -78,34 +78,34 @@ module Utilities
 
     # Factors of 7 have a particular significance when analysing weekly sequences of data. Which means patterns
     # around the numbers 7, 14, 21, and 28 can be used to identify the likely sequence type.
-    def around_28(number)
+    def around28(number)
       number.between?(24, 30)
     end
 
-    def around_21(number)
+    def around21(number)
       number.between?(20, 22)
     end
 
-    def around_14(number)
+    def around14(number)
       number.between?(12, 16)
     end
 
-    def around_7(number)
+    def around7(number)
       number.between?(6, 8)
     end
 
-    def around_14_or_21(number)
-      around_14(number) || around_21(number)
+    def around14or21(number)
+      around14(number) || around21(number)
     end
 
-    def around_7_or_14(number)
-      around_7(number) || around_14(number)
+    def around7or14(number)
+      around7(number) || around14(number)
     end
 
     # :nocov:
     # Some combinations of test data lead to this check being skipped
-    def around_14_or_21_or_28(number)
-      around_14(number) || around_21(number) || around_28(number)
+    def around14or21or28(number)
+      around14(number) || around21(number) || around28(number)
     end
     # :nocov:
 

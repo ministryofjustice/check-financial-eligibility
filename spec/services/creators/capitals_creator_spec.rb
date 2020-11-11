@@ -7,11 +7,11 @@ module Creators
     let(:capital_summary) { assessment.capital_summary }
     let(:bank_accounts) { [] }
     let(:non_liquid_assets) { [] }
-    let(:bank_name_1)  { "#{Faker::Bank.name} #{Faker::Bank.account_number(digits: 8)}" }
-    let(:bank_name_2)  { "#{Faker::Bank.name} #{Faker::Bank.account_number(digits: 8)}" }
-    let(:item_1) { Faker::Appliance.equipment }
-    let(:value_1) { BigDecimal(Faker::Number.decimal(r_digits: 2), 2) }
-    let(:value_2) { BigDecimal(Faker::Number.decimal(r_digits: 2), 2) }
+    let(:bank_name1)  { "#{Faker::Bank.name} #{Faker::Bank.account_number(digits: 8)}" }
+    let(:bank_name2)  { "#{Faker::Bank.name} #{Faker::Bank.account_number(digits: 8)}" }
+    let(:item1) { Faker::Appliance.equipment }
+    let(:value1) { BigDecimal(Faker::Number.decimal(r_digits: 2), 2) }
+    let(:value2) { BigDecimal(Faker::Number.decimal(r_digits: 2), 2) }
 
     subject do
       described_class.call(
@@ -41,10 +41,10 @@ module Creators
           expect(capital_summary.liquid_capital_items.size).to eq 2
           items = capital_summary.liquid_capital_items.order(:created_at)
 
-          expect(items.first.description).to eq bank_name_1
-          expect(items.first.value).to eq value_1
-          expect(items.last.description).to eq bank_name_2
-          expect(items.last.value).to eq value_2
+          expect(items.first.description).to eq bank_name1
+          expect(items.first.value).to eq value1
+          expect(items.last.description).to eq bank_name2
+          expect(items.last.value).to eq value2
         end
 
         it 'does not create non-liquid capital items' do
@@ -59,8 +59,8 @@ module Creators
 
         it 'creates non liquid capital items' do
           expect(capital_summary.non_liquid_capital_items.size).to eq 1
-          expect(capital_summary.non_liquid_capital_items.first.description).to eq item_1
-          expect(capital_summary.non_liquid_capital_items.first.value).to eq value_1
+          expect(capital_summary.non_liquid_capital_items.first.description).to eq item1
+          expect(capital_summary.non_liquid_capital_items.first.value).to eq value1
         end
       end
     end
@@ -84,12 +84,12 @@ module Creators
     def liquid_assets_hash
       [
         {
-          description: bank_name_1,
-          value: value_1
+          description: bank_name1,
+          value: value1
         },
         {
-          description: bank_name_2,
-          value: value_2
+          description: bank_name2,
+          value: value2
         }
       ]
     end
@@ -97,8 +97,8 @@ module Creators
     def non_liquid_assets_hash
       [
         {
-          description: item_1,
-          value: value_1
+          description: item1,
+          value: value1
         }
       ]
     end

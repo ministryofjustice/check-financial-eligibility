@@ -1,13 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe StateBenefitTypeController, type: :request do
-  let!(:state_benefit_type_1) { create :state_benefit_type }
-  let!(:state_benefit_type_2) { create :state_benefit_type }
-  let(:name) { state_benefit_type_1.name }
-  let(:label) { state_benefit_type_1.label }
-  let(:dwp_code) { state_benefit_type_1.dwp_code }
-  let(:exclude) { state_benefit_type_1.exclude_from_gross_income }
-  let(:category) { state_benefit_type_1.category }
+  let!(:state_benefit_type1) { create :state_benefit_type }
+  let!(:state_benefit_type2) { create :state_benefit_type }
+  let(:name) { state_benefit_type1.name }
+  let(:label) { state_benefit_type1.label }
+  let(:dwp_code) { state_benefit_type1.dwp_code }
+  let(:exclude) { state_benefit_type1.exclude_from_gross_income }
+  let(:category) { state_benefit_type1.category }
 
   describe 'GET state benefit types' do
     subject { get state_benefit_type_index_path }

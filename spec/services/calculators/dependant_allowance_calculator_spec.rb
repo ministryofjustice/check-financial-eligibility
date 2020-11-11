@@ -14,14 +14,14 @@ module Calculators
 
       context 'under 15' do
         context 'with income' do
-          let(:dependant) { create :dependant, :under_15, monthly_income: 25.00 }
+          let(:dependant) { create :dependant, :under15, monthly_income: 25.00 }
           it 'returns the child under 15 allowance and does not subtract the income' do
             expect(subject).to eq 111.11
           end
         end
 
         context 'without income' do
-          let(:dependant) { create :dependant, :under_15, monthly_income: 0.0 }
+          let(:dependant) { create :dependant, :under15, monthly_income: 0.0 }
           it 'returns the child under 15 allowance' do
             expect(subject).to eq 111.11
           end
@@ -30,21 +30,21 @@ module Calculators
 
       context '15 years old' do
         context 'with income' do
-          let(:dependant) { create :dependant, :aged_15, monthly_income: 25.50 }
+          let(:dependant) { create :dependant, :aged15, monthly_income: 25.50 }
           it 'returns the aged 15 allowance less the monthly income' do
             expect(subject).to eq(222.22 - 25.50)
           end
         end
 
         context 'with income greater than the allowance' do
-          let(:dependant) { create :dependant, :aged_15, monthly_income: 250.00 }
+          let(:dependant) { create :dependant, :aged15, monthly_income: 250.00 }
           it 'returns zero' do
             expect(subject).to be_zero
           end
         end
 
         context 'without income' do
-          let(:dependant) { create :dependant, :aged_15, monthly_income: 30.55 }
+          let(:dependant) { create :dependant, :aged15, monthly_income: 30.55 }
           it 'returns the aged 15 allowance less the monthly income' do
             expect(subject).to eq(222.22 - 30.55)
           end
@@ -54,20 +54,20 @@ module Calculators
       context '16 or 17 years old' do
         context 'in full time education' do
           context 'with  no income' do
-            let(:dependant) { create :dependant, :aged_16_or_17, monthly_income: 0.0, in_full_time_education: true }
+            let(:dependant) { create :dependant, :aged16or17, monthly_income: 0.0, in_full_time_education: true }
             it 'returns the child 16 or over allowance with no income deduction' do
               expect(subject).to eq 333.33
             end
           end
           context 'with income' do
-            let(:dependant) { create :dependant, :aged_16_or_17, monthly_income: 100.01, in_full_time_education: true }
+            let(:dependant) { create :dependant, :aged16or17, monthly_income: 100.01, in_full_time_education: true }
             it 'returns the child 16 or over with no income deduction' do
               expect(subject).to eq(333.33 - 100.01)
             end
           end
 
           context 'with income greater than the allowance' do
-            let(:dependant) { create :dependant, :aged_16_or_17, monthly_income: 350.00, in_full_time_education: true }
+            let(:dependant) { create :dependant, :aged16or17, monthly_income: 350.00, in_full_time_education: true }
             it 'returns zero' do
               expect(subject).to be_zero
             end
@@ -76,14 +76,14 @@ module Calculators
 
         context 'not in full time education' do
           context 'with  no income' do
-            let(:dependant) { create :dependant, :aged_16_or_17, monthly_income: 0.0, in_full_time_education: false }
+            let(:dependant) { create :dependant, :aged16or17, monthly_income: 0.0, in_full_time_education: false }
             it 'returns the adult allowance with no income deduction' do
               expect(subject).to eq 444.44
             end
           end
 
           context 'with income' do
-            let(:dependant) { create :dependant, :aged_16_or_17, monthly_income: 100.22, in_full_time_education: false }
+            let(:dependant) { create :dependant, :aged16or17, monthly_income: 100.22, in_full_time_education: false }
             it 'returns the adult allowance with no income deduction' do
               expect(subject).to eq(444.44 - 100.22)
             end
@@ -94,14 +94,14 @@ module Calculators
       context 'over 18 years old' do
         context 'with no income' do
           context 'with capital assets < 8000' do
-            let(:dependant) { create :dependant, :over_18, monthly_income: 0.0, assets_value: 4_470 }
+            let(:dependant) { create :dependant, :over18, monthly_income: 0.0, assets_value: 4_470 }
             it 'returns the adult allowance with no deduction' do
               expect(subject).to eq 444.44
             end
           end
 
           context 'with capital assets > 8000' do
-            let(:dependant) { create :dependant, :over_18, monthly_income: 0.0, assets_value: 8_100 }
+            let(:dependant) { create :dependant, :over18, monthly_income: 0.0, assets_value: 8_100 }
             it 'returns the allowance of zero' do
               expect(subject).to be_zero
             end
@@ -110,7 +110,7 @@ module Calculators
 
         context 'with income' do
           context 'with capital assets > 8000' do
-            let(:dependant) { create :dependant, :over_18, monthly_income: 0.0, assets_value: 8_100 }
+            let(:dependant) { create :dependant, :over18, monthly_income: 0.0, assets_value: 8_100 }
             it 'returns the allowance of zero' do
               expect(subject).to eq 0.0
             end
@@ -118,7 +118,7 @@ module Calculators
         end
 
         context 'with capital assets < 8000' do
-          let(:dependant) { create :dependant, :over_18, monthly_income: 203.37, assets_value: 5_000 }
+          let(:dependant) { create :dependant, :over18, monthly_income: 203.37, assets_value: 5_000 }
           it 'returns the adult allowance with income deducted' do
             expect(subject).to eq(444.44 - 203.37)
           end

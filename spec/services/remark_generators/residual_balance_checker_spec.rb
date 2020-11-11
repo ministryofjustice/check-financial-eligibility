@@ -53,8 +53,8 @@ module RemarkGenerators
 
     context 'with multiple current accounts' do
       context 'when there is a residual_balance in any account' do
-        let!(:current_account_1) { create :liquid_capital_item, description: 'Current accounts', value: 100, capital_summary: capital_summary }
-        let!(:current_account_2) { create :liquid_capital_item, description: 'Current accounts', value: -200, capital_summary: capital_summary }
+        let!(:current_account1) { create :liquid_capital_item, description: 'Current accounts', value: 100, capital_summary: capital_summary }
+        let!(:current_account2) { create :liquid_capital_item, description: 'Current accounts', value: -200, capital_summary: capital_summary }
 
         it 'adds the remark when a residual balance exists' do
           expect_any_instance_of(Remarks).to receive(:add).with(:current_account_balance, :residual_balance, [])
@@ -63,8 +63,8 @@ module RemarkGenerators
       end
 
       context 'when there is no residual_balance in any account' do
-        let!(:current_account_1) { create :liquid_capital_item, description: 'Current accounts', value: 0, capital_summary: capital_summary }
-        let!(:current_account_2) { create :liquid_capital_item, description: 'Current accounts', value: -100, capital_summary: capital_summary }
+        let!(:current_account1) { create :liquid_capital_item, description: 'Current accounts', value: 0, capital_summary: capital_summary }
+        let!(:current_account2) { create :liquid_capital_item, description: 'Current accounts', value: -100, capital_summary: capital_summary }
 
         it 'does not update the remarks class' do
           original_remarks = assessment.remarks.as_json

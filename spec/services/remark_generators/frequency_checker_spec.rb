@@ -7,10 +7,10 @@ module RemarkGenerators
       let(:dates) { [Date.today, 1.month.ago, 2.month.ago] }
       let(:state_benefit) { create :state_benefit }
       let(:assessment) { state_benefit.gross_income_summary.assessment }
-      let(:payment_1) { create :state_benefit_payment, state_benefit: state_benefit, amount: amount, payment_date: dates[0] }
-      let(:payment_2) { create :state_benefit_payment, state_benefit: state_benefit, amount: amount, payment_date: dates[1] }
-      let(:payment_3) { create :state_benefit_payment, state_benefit: state_benefit, amount: amount, payment_date: dates[2] }
-      let(:collection) { [payment_1, payment_2, payment_3] }
+      let(:payment1) { create :state_benefit_payment, state_benefit: state_benefit, amount: amount, payment_date: dates[0] }
+      let(:payment2) { create :state_benefit_payment, state_benefit: state_benefit, amount: amount, payment_date: dates[1] }
+      let(:payment3) { create :state_benefit_payment, state_benefit: state_benefit, amount: amount, payment_date: dates[2] }
+      let(:collection) { [payment1, payment2, payment3] }
 
       context 'regular payments' do
         let(:dates) { [Date.today, 1.month.ago, 2.month.ago] }
