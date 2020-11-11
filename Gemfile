@@ -51,6 +51,8 @@ gem 'roo', '~> 2.8.3'
 # Manage security headers
 gem 'secure_headers'
 
+gem 'webpacker', '~> 5'
+
 group :development, :test do
   gem 'awesome_print'
   gem 'dotenv-rails', '>= 2.7.6'
