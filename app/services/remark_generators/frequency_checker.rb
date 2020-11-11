@@ -10,7 +10,7 @@ module RemarkGenerators
     end
 
     def call
-      populate_remarks if unknown_frequency?
+      populate_remarks if unknown_frequency? && !exempt_from_checking
     end
 
     private
@@ -31,6 +31,18 @@ module RemarkGenerators
 
     def record_type
       @collection.first.class.to_s.underscore.tr('/', '_').to_sym
+    end
+
+    def exempt_from_checking
+      childcare_payment? && childcare_disallowed?
+    end
+
+    def childcare_payment?
+      record_type == :outgoings_childcare
+    end
+
+    def childcare_disallowed?
+      @assessment.disposable_income_summary.childcare.zero?
     end
   end
 end
