@@ -1,9 +1,14 @@
 FROM ruby:2.7.2
 MAINTAINER apply for legal aid team
 ENV RAILS_ENV production
-RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+RUN apt-get update -qq && apt-get install -y nodejs yarn postgresql-client
 RUN mkdir /myapp
 WORKDIR /myapp
+
+RUN adduser --disabled-password apply -u 1001
+
 COPY Gemfile /myapp/Gemfile
 COPY Gemfile.lock /myapp/Gemfile.lock
 
@@ -14,10 +19,13 @@ RUN gem install bundler -v 2.0.2 \
 
 COPY . /myapp
 
+RUN yarn --prod
+
+RUN bundle exec rake assets:precompile SECRET_KEY_BASE=a-real-secret-key-is-not-needed-here
+
 EXPOSE 3000
 
-RUN adduser --disabled-password apply -u 1001 && \
-    chown -R apply:apply /myapp
+RUN chown -R apply:apply /myapp
 
 # expect ping environment variables
 ARG BUILD_DATE
