@@ -176,7 +176,7 @@ RSpec.describe AssessmentsController, type: :request do
     end
 
     context 'test assessment NPE6-1' do
-      let(:assessment) { create_assessment_npe6_1 }
+      let(:assessment) { create_assessment_npe61 }
       let(:headers) { { 'Accept' => 'application/json;version=2' } }
 
       before { subject }
@@ -300,7 +300,7 @@ RSpec.describe AssessmentsController, type: :request do
     ]
   end
 
-  def create_assessment_npe6_1
+  def create_assessment_npe61
     assessment = create :assessment,
                         client_reference_id: 'NPE6-1',
                         submission_date: Date.parse('29/5/2019')

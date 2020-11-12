@@ -9,8 +9,8 @@ RSpec.describe StateBenefitsController, type: :request do
     let(:headers) { { 'CONTENT_TYPE' => 'application/json' } }
     let(:client_ids) { [SecureRandom.uuid, SecureRandom.uuid, SecureRandom.uuid] }
 
-    let!(:state_benefit_type_1) { create :state_benefit_type }
-    let!(:state_benefit_type_2) { create :state_benefit_type }
+    let!(:state_benefit_type1) { create :state_benefit_type }
+    let!(:state_benefit_type2) { create :state_benefit_type }
 
     subject { post assessment_state_benefits_path(assessment_id), params: params.to_json, headers: headers }
 
@@ -30,7 +30,7 @@ RSpec.describe StateBenefitsController, type: :request do
         it 'creates two state benefit records' do
           expect { subject }.to change { gross_income_summary.state_benefits.count }.by(2)
           state_benefit_types = gross_income_summary.state_benefits.map(&:state_benefit_type)
-          expect(state_benefit_types).to match_array([state_benefit_type_1, state_benefit_type_2])
+          expect(state_benefit_types).to match_array([state_benefit_type1, state_benefit_type2])
         end
 
         it 'creates state benefit payment records' do
@@ -39,21 +39,21 @@ RSpec.describe StateBenefitsController, type: :request do
 
         it 'creates payment records with correct values' do
           subject
-          state_benefit = gross_income_summary.state_benefits.detect { |sb| sb.state_benefit_type == state_benefit_type_1 }
+          state_benefit = gross_income_summary.state_benefits.detect { |sb| sb.state_benefit_type == state_benefit_type1 }
           payments = state_benefit.state_benefit_payments.order(:payment_date)
           expect(payments.first.payment_date).to eq Date.parse('2019-09-01')
         end
 
         it 'stores the given client id if provided in the params' do
           subject
-          state_benefit = gross_income_summary.state_benefits.detect { |sb| sb.state_benefit_type == state_benefit_type_1 }
+          state_benefit = gross_income_summary.state_benefits.detect { |sb| sb.state_benefit_type == state_benefit_type1 }
           expect(state_benefit.state_benefit_payments.map(&:client_id)).to match client_ids
         end
 
         context 'when the flags field contains multi_benefit' do
           it 'sets the multi_benefit flag' do
             subject
-            state_benefit = gross_income_summary.state_benefits.detect { |sb| sb.state_benefit_type == state_benefit_type_2 }
+            state_benefit = gross_income_summary.state_benefits.detect { |sb| sb.state_benefit_type == state_benefit_type2 }
             expect(state_benefit.state_benefit_payments.map(&:flags)).to match [false, false, ['multi_benefit']]
           end
         end
@@ -132,7 +132,7 @@ RSpec.describe StateBenefitsController, type: :request do
       {
         state_benefits: [
           {
-            name: state_benefit_type_1.label,
+            name: state_benefit_type1.label,
             payments: [
               {
                 date: '2019-11-01',
@@ -152,7 +152,7 @@ RSpec.describe StateBenefitsController, type: :request do
             ]
           },
           {
-            name: state_benefit_type_2.label,
+            name: state_benefit_type2.label,
             payments: [
               {
                 date: '2019-11-01',

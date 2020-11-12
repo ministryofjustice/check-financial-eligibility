@@ -27,19 +27,19 @@ RSpec.describe IrregularIncomePayment, type: :model do
       let(:payment) { create :irregular_income_payment, gross_income_summary: gross_income_summary }
 
       context 'one student loan per assessment' do
-        let(:gross_income_summary_2) { create :gross_income_summary }
-        let(:payment_2) { build :irregular_income_payment, gross_income_summary: gross_income_summary_2 }
+        let(:gross_income_summary2) { create :gross_income_summary }
+        let(:payment2) { build :irregular_income_payment, gross_income_summary: gross_income_summary2 }
 
         it 'is valid' do
-          expect { payment_2.save! }.not_to raise_error
+          expect { payment2.save! }.not_to raise_error
         end
       end
 
       context 'multiple student loans per assessment' do
-        let(:payment_2) { build :irregular_income_payment, gross_income_summary: gross_income_summary }
+        let(:payment2) { build :irregular_income_payment, gross_income_summary: gross_income_summary }
 
         it 'is valid' do
-          expect { payment_2.save! }.to raise_error(ActiveRecord::RecordNotUnique)
+          expect { payment2.save! }.to raise_error(ActiveRecord::RecordNotUnique)
         end
       end
     end
