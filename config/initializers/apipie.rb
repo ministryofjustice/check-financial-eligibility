@@ -10,6 +10,7 @@ Apipie.configure do |config|
   config.translate = false
   config.validate = true
   config.show_all_examples = true
+  config.layout = 'apipie_override'
   config.app_info = <<-END_OF_TEXT
 
 
