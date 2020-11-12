@@ -22,9 +22,9 @@
   <hr>
   <footer><%= yield :apipie_footer %></footer>
 </div>
-<script type='text/javascript' src='/apidocs/javascripts/bundled/jquery.js'></script>
+<%= javascript_pack_tag 'application' %>
 <script type='text/javascript' src='/apidocs/javascripts/bundled/bootstrap-collapse.js'></script>
 <script type='text/javascript' src='/apidocs/javascripts/bundled/prettify.js'></script>
-<%= javascript_pack_tag 'application' %>
+<script type='text/javascript' src='/apidocs/javascripts/apipie.js'></script>
 </body>
 </html>
