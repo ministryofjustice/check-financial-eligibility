@@ -20,6 +20,7 @@ RSpec.describe 'Full Assessment with remarks' do
     post_outgoings(assessment_id)
     post_state_benefits(assessment_id)
     post_other_incomes(assessment_id)
+    post_irregular_income(assessment_id)
 
     get assessment_path(assessment_id), headers: v2_headers
     output_response(:get, :assessment)
@@ -60,6 +61,11 @@ RSpec.describe 'Full Assessment with remarks' do
   def post_state_benefits(assessment_id)
     post assessment_state_benefits_path(assessment_id), params: state_benefit_params, headers: headers
     output_response(:post, :state_benefits)
+  end
+
+  def post_irregular_income(assessment_id)
+    post assessment_irregular_incomes_path(assessment_id), params: student_loan_params, headers: headers
+    output_response(:post, :irregular_income)
   end
 
   def output_response(method, object)
@@ -221,6 +227,13 @@ RSpec.describe 'Full Assessment with remarks' do
             { 'date' => '2020-06-06',
               'amount' => 22.42,
               'client_id' => 'TX-state-benefits-3' }] }] }.to_json
+  end
+
+  def student_loan_params
+    { 'payments' =>
+           [{ 'income_type' => 'student_loan',
+              'frequency' => 'annual',
+              'amount' => 100.0 }] }.to_json
   end
 
   def expected_remarks

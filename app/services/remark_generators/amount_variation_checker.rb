@@ -1,16 +1,9 @@
 module RemarkGenerators
-  class AmountVariationChecker
-    def self.call(assessment, collection)
-      new(assessment, collection).call
-    end
-
-    def initialize(assessment, collection)
-      @assessment = assessment
-      @collection = collection
-    end
+  class AmountVariationChecker < BaseChecker
+    include Exemptable
 
     def call
-      populate_remarks unless unique_amounts
+      populate_remarks unless unique_amounts || exempt_from_checking
     end
 
     private
@@ -23,10 +16,6 @@ module RemarkGenerators
       my_remarks = @assessment.remarks
       my_remarks.add(record_type, :amount_variation, @collection.map(&:client_id))
       @assessment.update!(remarks: my_remarks)
-    end
-
-    def record_type
-      @collection.first.class.to_s.underscore.tr('/', '_').to_sym
     end
   end
 end

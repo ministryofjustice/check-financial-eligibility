@@ -73,6 +73,38 @@ module RemarkGenerators
           described_class.call(assessment, collection)
           expect(assessment.reload.remarks.as_json).not_to eq original_remarks
         end
+
+        context 'when childcare costs with an amount variation are declared' do
+          let(:collection) do
+            [
+              create(:childcare_outgoing, disposable_income_summary: disposable_income_summary, payment_date: dates[0], amount: amount),
+              create(:childcare_outgoing, disposable_income_summary: disposable_income_summary, payment_date: dates[1], amount: amount + 0.01),
+              create(:childcare_outgoing, disposable_income_summary: disposable_income_summary, payment_date: dates[2], amount: amount)
+            ]
+          end
+          context 'if the childcare costs are allowed as an outgoing' do
+            before { disposable_income_summary.childcare = 1 }
+
+            it 'adds the remark' do
+              expect_any_instance_of(Remarks).to receive(:add).with(:outgoings_childcare, :unknown_frequency, collection.map(&:client_id))
+              described_class.call(assessment, collection)
+            end
+
+            it 'stores the changed the remarks class on the assessment' do
+              original_remarks = assessment.remarks.as_json
+              described_class.call(assessment, collection)
+              expect(assessment.reload.remarks.as_json).not_to eq original_remarks
+            end
+          end
+
+          context 'if the childcare costs are not allowed as an outgoing' do
+            it 'does not update the remarks class' do
+              original_remarks = assessment.remarks.as_json
+              described_class.call(assessment, collection)
+              expect(assessment.reload.remarks.as_json).to eq original_remarks
+            end
+          end
+        end
       end
     end
   end
