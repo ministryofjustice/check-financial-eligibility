@@ -26,13 +26,13 @@ URLS = {
   dependants: ->(assessment_id) { Rails.application.routes.url_helpers.assessment_dependants_path(assessment_id) }
 }.freeze
 
-# NOTE 1:
+# NOTE: 1
 # Use the VERBOSE environment variable to control how much output is displayed:
 # * not_set: no output
 # * true: outputs the test name and expected vs. actual results
 # * noisy: as for true, but with all request and response payloads as well
 #
-# NOTE 2:
+# NOTE: 2
 # To test just one worksheet rather than all, set TARGET_WORKSHEET env var to the name of the worksheet.
 #
 
