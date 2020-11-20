@@ -99,7 +99,7 @@ references:
       name: Install ruby gems
       command: |
         gem install bundler -v 2.0.2
-        bundle install --path=vendor/bundle --jobs=4 && bundle clean
+        bundle install --without development --path=vendor/bundle --jobs=4 && bundle clean
   save_gems_cache: &save_gems_cache
     save_cache:
       key: check-financial-eligibility-{{ checksum "Gemfile.lock" }}
