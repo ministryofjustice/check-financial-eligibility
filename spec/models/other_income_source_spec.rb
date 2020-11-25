@@ -13,6 +13,7 @@ RSpec.describe OtherIncomeSource, type: :model do
         .with(collection: source.other_income_payments,
               date_method: :payment_date,
               amount_method: :amount)
+        .and_return([%i[dummy_date1 dummy_amount1], %i[dummy_date2 dummy_amount2]])
       expect(Utilities::PaymentPeriodAnalyser).to receive(:new).and_return(analyser)
     end
 

@@ -10,6 +10,7 @@ RSpec.describe 'Full Assessment with remarks' do
                        overwrite: true).build
 
     ENV['VERBOSE'] = 'false'
+    create :bank_holiday
   end
 
   it 'returns the expected payload with remarks' do
@@ -24,6 +25,15 @@ RSpec.describe 'Full Assessment with remarks' do
 
     get assessment_path(assessment_id), headers: v2_headers
     output_response(:get, :assessment)
+
+    remarks = parsed_response[:assessment][:remarks]
+    expect(remarks[:state_benefit_payment]).to eq expected_remarks[:state_benefit_payment]
+    expect(remarks[:other_income_payment]).to eq expected_remarks[:other_income_payment]
+    expect(remarks[:outgoings_maintenance]).to eq expected_remarks[:outgoings_maintenance]
+    expect(remarks[:outgoings_housing_cost]).to eq expected_remarks[:outgoings_housing_cost]
+    expect(remarks[:outgoings_childcare]).to eq expected_remarks[:outgoings_childcare]
+    expect(remarks[:outgoings_legal_aid]).to eq expected_remarks[:outgoings_legal_aid]
+
     expect(parsed_response[:assessment][:remarks]).to match expected_remarks
   end
 
@@ -251,15 +261,24 @@ RSpec.describe 'Full Assessment with remarks' do
                                                    TX-other-income-property-1
                                                    TX-other-income-property-2
                                                    TX-other-income-property-3],
-                              unknown_frequency: %w[TX-other-income-maintenance-in-1
+                              unknown_frequency: %w[TX-other-income-friends-family-1
+                                                    TX-other-income-friends-family-2
+                                                    TX-other-income-friends-family-3
+                                                    TX-other-income-maintenance-in-1
                                                     TX-other-income-maintenance-in-2
                                                     TX-other-income-maintenance-in-3
+                                                    TX-other-income-pension-1
+                                                    TX-other-income-pension-2
+                                                    TX-other-income-pension-3
                                                     TX-other-income-property-1
                                                     TX-other-income-property-2
                                                     TX-other-income-property-3] },
       outgoings_maintenance: { amount_variation: %w[TX-outgoing-maintenance-1
                                                     TX-outgoing-maintenance-2
-                                                    TX-outgoing-maintenance-3] },
+                                                    TX-outgoing-maintenance-3],
+                               unknown_frequency: %w[TX-outgoing-maintenance-1
+                                                     TX-outgoing-maintenance-2
+                                                     TX-outgoing-maintenance-3] },
       outgoings_housing_cost: { amount_variation: %w[TX-outgoing-rent-mortgage-1
                                                      TX-outgoing-rent-mortgage-2
                                                      TX-outgoing-rent-mortgage-3],

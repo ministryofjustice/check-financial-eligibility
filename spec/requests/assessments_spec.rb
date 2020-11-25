@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe AssessmentsController, type: :request do
+  before { create :bank_holiday }
   describe 'POST assessments' do
     let(:params) do
       {

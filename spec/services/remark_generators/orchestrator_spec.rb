@@ -15,6 +15,7 @@ module RemarkGenerators
     before do
       create :disposable_income_summary, :with_everything, assessment: assessment
       create :gross_income_summary, :with_everything, assessment: assessment
+      create :bank_holiday
     end
 
     it 'calls the checkers with each collection' do

@@ -34,8 +34,12 @@ module MonthlyEquivalentCalculator
                                                amount_method: @monthly_equivalent_calculator_amount_method)
   end
 
+  def dates
+    dates_and_amounts.map(&:first)
+  end
+
   def frequency
-    @frequency ||= Utilities::PaymentPeriodAnalyser.new(dates_and_amounts).period_pattern
+    @frequency ||= Utilities::PaymentPeriodAnalyser.new(dates).period_pattern
   end
 
   def converter

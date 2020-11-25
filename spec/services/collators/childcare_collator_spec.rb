@@ -10,6 +10,7 @@ module Collators
       subject { described_class.call(assessment) }
 
       before do
+        create :bank_holiday
         create :childcare_outgoing, disposable_income_summary: disposable_income_summary, payment_date: Date.yesterday, amount: 155.63
         create :childcare_outgoing, disposable_income_summary: disposable_income_summary, payment_date: 1.month.ago, amount: 155.63
         create :childcare_outgoing, disposable_income_summary: disposable_income_summary, payment_date: 2.months.ago, amount: 155.63

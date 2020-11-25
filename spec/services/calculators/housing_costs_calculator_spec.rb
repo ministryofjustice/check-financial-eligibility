@@ -6,6 +6,7 @@ module Calculators
     let(:children) { 0 }
 
     before do
+      create :bank_holiday
       [2.months.ago, 1.month.ago, Date.today].each do |date|
         create :housing_cost_outgoing,
                disposable_income_summary: assessment.disposable_income_summary,
