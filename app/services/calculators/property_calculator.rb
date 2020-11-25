@@ -8,6 +8,9 @@ module Calculators
     end
 
     def remaining_mortgage_allowance
+      # TODO: remove remaining_mortgage_allowance on 8/1/2021
+      return 0 unless Time.current.before?(Time.zone.parse('2021-01-08'))
+
       @remaining_mortgage_allowance ||= Threshold.value_for(:property_maximum_mortgage_allowance, at: submission_date)
     end
 
@@ -17,7 +20,8 @@ module Calculators
       Property.transaction do
         capital_summary.additional_properties.each do |property|
           property.assess_equity!(remaining_mortgage_allowance)
-          self.remaining_mortgage_allowance -= property.allowable_outstanding_mortgage
+          # TODO: remove -= (property.allowable_outstanding_mortgage || 0) on 8/1/2021
+          self.remaining_mortgage_allowance -= (property.allowable_outstanding_mortgage || 0)
         end
         capital_summary.main_home&.assess_equity!(remaining_mortgage_allowance)
       end

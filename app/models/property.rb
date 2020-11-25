@@ -28,19 +28,26 @@ class Property < ApplicationRecord
   end
 
   def calculate_outstanding_mortgage(remaining_mortgage_allowance)
+    # TODO: remove this method on 08/01/2021
     self.allowable_outstanding_mortgage = allowable_mortgage_deduction(remaining_mortgage_allowance)
   end
 
   def allowable_mortgage_deduction(remaining_mortgage_allowance)
+    # TODO: remove this method on 08/01/2021
+    return 0 unless Time.current.before?(Time.zone.parse('2021-01-08'))
+
     outstanding_mortgage > remaining_mortgage_allowance ? remaining_mortgage_allowance : outstanding_mortgage
   end
 
   def calculate_net_value
+    # TODO: refactor to not use allowable_outstanding_mortgage from 08/01/2021
     self.net_value = value - transaction_allowance - allowable_outstanding_mortgage
   end
 
   def calculate_net_equity
+    # TODO: refactor this method on 08/01/2021
     self.net_equity = shared_with_housing_assoc ? (net_value - housing_association_share).round(2) : (net_value * shared_ownership_percentage).round(2)
+    self.net_equity -= outstanding_mortgage unless Time.current.before?(Time.zone.parse('2021-01-08'))
   end
 
   def shared_ownership_percentage

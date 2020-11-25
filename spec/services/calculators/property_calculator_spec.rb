@@ -2,7 +2,8 @@ require 'rails_helper'
 
 module Calculators
   RSpec.describe PropertyCalculator do
-    let(:assessment) { create :assessment, :with_capital_summary }
+    let(:assessment) { create :assessment, :with_capital_summary, submission_date: submission_date }
+    let(:submission_date) { Date.today }
     let(:capital_summary) { assessment.capital_summary }
     let(:service) { described_class.new(assessment) }
 
@@ -37,6 +38,36 @@ module Calculators
               expect(main_home.net_equity).to eq 352_983.21
               expect(main_home.main_home_equity_disregard).to eq 100_000.0
               expect(main_home.assessed_equity).to eq 252_983.21
+            end
+
+            context 'date on or after 8th january 2021' do
+              let!(:main_home) do
+                create :property,
+                       :main_home,
+                       :not_shared_ownership,
+                       capital_summary: capital_summary,
+                       value: 225_000,
+                       outstanding_mortgage: 210_000,
+                       percentage_owned: 100.0
+              end
+              context 'no mortgage cap' do
+                let(:submission_date) { Time.zone.local(2021, 1, 10, 0, 0, 0) }
+
+                it 'deducts outstanding mortgage from net value of property' do
+                  day = [8, 10].sample
+                  Timecop.freeze(Time.zone.local(2021, 1, day, 0, 0, 0)) do
+                    service.call
+                    main_home.reload
+                    expect(main_home.transaction_allowance).to eq 6750.0 # 3% of 225_000
+                    expect(main_home.allowable_outstanding_mortgage).to eq 0
+                    expect(main_home.outstanding_mortgage).to eq 210_000
+                    expect(main_home.net_value).to eq 218_250.0 # 225_000 - 6750.0
+                    expect(main_home.net_equity).to eq 8_250 # 218_250.0 - 210_000
+                    expect(main_home.main_home_equity_disregard).to eq 100_000.0
+                    expect(main_home.assessed_equity).to eq 0
+                  end
+                end
+              end
             end
           end
 

@@ -1,10 +1,12 @@
 module Collators
   class CapitalCollator < BaseWorkflowService
-    RETURN_VALUES = {
+    PREPEND_VALUES = {
       total_liquid: 'liquid_capital',
       total_non_liquid: 'non_liquid_capital',
-      total_vehicle: 'vehicles',
-      total_mortgage_allowance: 'property_maximum_mortgage_allowance_threshold',
+      total_vehicle: 'vehicles'
+    }.freeze
+
+    APPEND_VALUES = {
       total_property: 'property',
       pensioner_capital_disregard: 'pensioner_capital_disregard',
       total_capital: 'total_capital',
@@ -15,10 +17,23 @@ module Collators
     }.freeze
 
     def call
-      RETURN_VALUES.deep_transform_values { |value| send(value) }
+      # TODO: refactor this because total mortgage allowance will be removed on or after 8/1/2021
+      return_values = PREPEND_VALUES.merge(total_mortgage_allowance).merge(APPEND_VALUES)
+
+      return_values.deep_transform_values do |value|
+        send(value)
+      end
     end
 
     private
+
+    def total_mortgage_allowance
+      if Time.current.before?(Time.zone.parse('2021-01-08'))
+        { total_mortgage_allowance: 'property_maximum_mortgage_allowance_threshold' }
+      else
+        {}
+      end
+    end
 
     def assessed_capital
       total_capital - pensioner_capital_disregard
