@@ -1,9 +1,15 @@
+[![CircleCI](https://circleci.com/gh/ministryofjustice/check-financial-eligibility/tree/master.svg?style=svg)](https://circleci.com/gh/ministryofjustice/check-financial-eligibility/tree/master)
+
 # Ministry of Justice
+
 ## Legal Aid Financial Eligibility check API
 
 An API for checking financial eligibility for legal aid
 
-[![CircleCI](https://circleci.com/gh/ministryofjustice/check-financial-eligibility/tree/master.svg?style=svg)](https://circleci.com/gh/ministryofjustice/check-financial-eligibility/tree/master)
+## Architecture Diagram
+
+View the [architecture diagram](https://structurizr.com/share/55246/diagrams#cfe-container) for this project.
+It's defined as code and [can be edited](https://github.com/ministryofjustice/laa-architecture-as-code/blob/main/src/main/kotlin/model/CFE.kt) by anyone.
 
 ## Documentation
 
@@ -29,7 +35,7 @@ The documentaion is automatically generated when tests are run with an environme
 This generates a JSON file `doc/apipie_examples.json` which is read and used when drilling down in the documentation available at '/apidocs'.
 
 ## Setting the env vars
-To run the integration tests you will need to set up a `.env` file in the root folder.  
+To run the integration tests you will need to set up a `.env` file in the root folder.
 
 It should contain the following values:
 ```shell script
