@@ -32,6 +32,9 @@ module CheckFinancialEligibility
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
 
+    # Allow future submission date for integration testing
+    config.x.application.allow_future_submission_date = ENV['ALLOW_FUTURE_SUBMISSION_DATE']
+
     config.autoload_paths += %W[#{config.root}/app/validators]
   end
 end

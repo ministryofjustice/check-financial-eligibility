@@ -38,6 +38,34 @@ RSpec.describe DateValidator do
       end
     end
 
+    context ':submission_date_today_or_older' do
+      let(:option) { :submission_date_today_or_older }
+
+      it 'returns true for today' do
+        input = Date.today.to_s
+        expect(subject.validate(input)).to be_truthy
+      end
+
+      it 'returns true for date in past' do
+        input = 2.days.ago.to_s
+        expect(subject.validate(input)).to be_truthy
+      end
+
+      it 'returns false for date in future' do
+        input = 2.days.from_now.to_s
+        expect(subject.validate(input)).to be_falsey
+      end
+
+      context 'override for integration testing' do
+        before { allow(Rails.configuration.x.application).to receive(:allow_future_submission_date).and_return(true) }
+
+        it 'returns true for date in future' do
+          input = 2.days.from_now.to_s
+          expect(subject.validate(input)).to be_truthy
+        end
+      end
+    end
+
     context 'with unknown option' do
       let(:option) { :unknown }
 
