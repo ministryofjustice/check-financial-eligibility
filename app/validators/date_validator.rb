@@ -21,12 +21,20 @@ class DateValidator < Apipie::Validator::BaseValidator
     validate_options(option, date)
   end
 
+  def description
+    text = ['Date must be parsable']
+    text << 'in the past' if option == :today_or_older
+    "#{text.to_sentence}. For example: '2019-05-23'"
+  end
+
+  private
+  
   def validate_options(option, date)
     case option
     when :today_or_older
       return true if date <= Date.today
     when :submission_date_today_or_older
-      return true if (date <= Date.today || allow_future_submission_date?)
+      return true if date <= Date.today || allow_future_submission_date?
     else
       raise "date option '#{option}' not recognised"
     end
@@ -35,14 +43,6 @@ class DateValidator < Apipie::Validator::BaseValidator
   def allow_future_submission_date?
     Rails.configuration.x.application.allow_future_submission_date
   end
-
-  def description
-    text = ['Date must be parsable']
-    text << 'in the past' if option == :today_or_older
-    "#{text.to_sentence}. For example: '2019-05-23'"
-  end
-
-  private
 
   def date_parsable?(string)
     date_hash = Date._parse(string)
