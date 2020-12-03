@@ -357,7 +357,7 @@ DEPENDENCIES
   dotenv-rails (>= 2.7.6)
   factory_bot_rails (>= 6.1.0)
   faker
-  google_drive
+  google_drive (>= 3.0.6)
   guard
   guard-rspec
   guard-rubocop
@@ -368,9 +368,9 @@ DEPENDENCIES
   pry-rescue
   pry-stack_explorer
   puma (~> 5.1)
-  rails (~> 6.0.3)
+  rails (~> 6.0.3, >= 6.0.3.4)
   roo (~> 2.8.3)
-  rspec-rails (~> 4.0)
+  rspec-rails (~> 4.0, >= 4.0.2)
   rubocop
   rubocop-performance
   secure_headers
@@ -384,7 +384,7 @@ DEPENDENCIES
   tzinfo-data
   vcr
   webmock
-  webpacker (~> 5)
+  webpacker (~> 5, >= 5.2.1)
 
 RUBY VERSION
    ruby 2.7.2p137
