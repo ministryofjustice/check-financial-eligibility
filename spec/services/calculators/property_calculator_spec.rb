@@ -151,9 +151,9 @@ module Calculators
               expect(main_home.transaction_allowance).to eq 14_009.79 # 3% of 466,993
               expect(main_home.allowable_outstanding_mortgage).to eq 266_000.0
               expect(main_home.net_value).to eq 186_983.21 # 466,993 - 14,009.79 - 266_000.0
-              expect(main_home.net_equity).to eq 124643.01 # 66.66% of 186_983.21
+              expect(main_home.net_equity).to eq 124_643.01 # 66.66% of 186_983.21
               expect(main_home.main_home_equity_disregard).to eq 100_000.0
-              expect(main_home.assessed_equity).to eq 24643.01
+              expect(main_home.assessed_equity).to eq 24_643.01
             end
           end
         end
@@ -197,9 +197,9 @@ module Calculators
               expect(main_home.transaction_allowance).to eq 14_009.79 # 3% of 466,993
               expect(main_home.allowable_outstanding_mortgage).to eq 266_000.0
               expect(main_home.net_value).to eq 186_983.21 # 466,993 - 14,009.79 - 266_000.0
-              expect(main_home.net_equity).to eq 124643.01 # 66.66% of 186_983.21
+              expect(main_home.net_equity).to eq 124_643.01 # 66.66% of 186_983.21
               expect(main_home.main_home_equity_disregard).to eq 100_000.0
-              expect(main_home.assessed_equity).to eq 24643.01
+              expect(main_home.assessed_equity).to eq 24_643.01
             end
           end
         end
@@ -289,8 +289,8 @@ module Calculators
               main_home.reload
               expect(main_home.transaction_allowance).to eq 6_600.0
               expect(main_home.allowable_outstanding_mortgage).to eq 35_000.0
-              expect(main_home.net_value).to eq 178400.0
-              expect(main_home.net_equity).to eq 178400.0
+              expect(main_home.net_value).to eq 178_400.0
+              expect(main_home.net_equity).to eq 178_400.0
               expect(main_home.main_home_equity_disregard).to eq 100_000.0
               expect(main_home.assessed_equity).to eq 78_400.0
             end
@@ -326,12 +326,12 @@ module Calculators
           let(:submission_date) { Time.local(2021, 1, day) }
           let!(:additional_property) do
             create :property,
-                  :additional_property,
-                  :not_shared_ownership,
-                  capital_summary: capital_summary,
-                  value: 350_000,
-                  outstanding_mortgage: 200_000,
-                  percentage_owned: 100.0
+                   :additional_property,
+                   :not_shared_ownership,
+                   capital_summary: capital_summary,
+                   value: 350_000,
+                   outstanding_mortgage: 200_000,
+                   percentage_owned: 100.0
           end
 
           it 'deducts outstanding_mortgage instead of mortgage cap' do
@@ -357,7 +357,7 @@ module Calculators
       context 'submission date on or after 28/1/2021' do
         let(:day) { [28, 30].sample }
         let(:submission_date) { Time.local(2021, 1, day) }
-        
+
         it 'returns 999_999_999_999' do
           expect(service.remaining_mortgage_allowance).to eq 999_999_999_999
         end

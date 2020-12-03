@@ -28,7 +28,7 @@ class DateValidator < Apipie::Validator::BaseValidator
   end
 
   private
-  
+
   def validate_options(option, date)
     case option
     when :today_or_older
