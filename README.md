@@ -62,6 +62,18 @@ false for production.
 This allows the insertion of test data on an arbitrary date specified in the `values.yml` file to be used 
 for testing new thresholds before they come into affect on production
 
+## Running tests
+
+The full rspec test suite can be run with
+```
+bundle exec rspec
+```
+
+The repo also includes `pry-rescue`, a gem to allow faster debugging. Running
+```
+bundle exec rescue rspec
+```
+will cause any failing tests or unhandled exceptions to automatically open a `pry` prompt for immediate investigation.
 
 ## Integration tests
 Several use cases and their expected results can be found in the google spreadsheet https://docs.google.com/spreadsheets/d/1tgZUPtamZnpI-dibN8Q78miqZSfEYBnwBhaXFyFZ8no.
@@ -94,4 +106,4 @@ on a local machine
 3) Start a CFE server locally on port 4000, and add breakpoints at the required places
 
 4) Run the rake task `rake replay`: this will read the `tmp/api_payloads.yml` file and 
-   replay the original API calls and payloads enabling you to re-create the conditions.s 
+   replay the original API calls and payloads enabling you to re-create the conditions.
