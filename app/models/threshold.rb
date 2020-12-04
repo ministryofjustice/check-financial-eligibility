@@ -16,7 +16,7 @@ class Threshold
     end
 
     def value_for(item, at: Time.now)
-      key = data.keys.select { |time| time < at }.max || data.keys.min
+      key = data.keys.select { |time| time <= at }.max || data.keys.min
       threshold = data[key]
       threshold.value(item.to_sym)
     end

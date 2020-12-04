@@ -43,7 +43,11 @@ PRIVATE_KEY_ID
 PRIVATE_KEY
 CLIENT_EMAIL
 CLIENT_ID
+ALLOW_FUTURE_SUBMISSION_DATE
 ```
+
+Set ALLOW_FUTURE_SUBMISSION_DATE to true to allow integration tests to run with submission dates that are in the future
+
 A copy of the `.env` file including the current values can be found in the `Shared-LAA` section of LastPass
 
 ## Integration tests
