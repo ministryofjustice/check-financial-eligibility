@@ -1,3 +1,4 @@
+e
 [![CircleCI](https://circleci.com/gh/ministryofjustice/check-financial-eligibility/tree/master.svg?style=svg)](https://circleci.com/gh/ministryofjustice/check-financial-eligibility/tree/master)
 
 # Ministry of Justice
@@ -65,3 +66,20 @@ or more simply:
 
 * ```rake integration``` to run verbose, or
 * ```rake integration[silent]``` to run in silent mode
+
+## Replaying live API interactions for debugging purposes
+
+In the event that you need to investigate why a CFE result was produced on live, there is 
+a way to replay the API calls of the original application and debug the assessment process
+on a local machine
+
+1) Record the original api payloads and calls on the Apply system
+   Run the rake task `rake cfe:record_payloads`.  This will print to the screen a YAML 
+   representation of the calls to the API with the actual payloads
+   
+2) Copy and paste that output to the file `tmp/api_payloads.yml` in this repo
+
+3) Start a CFE server locally on port 4000, and add breakpoints at the required places
+
+4) Run the rake task `rake replay`: this will read the `tmp/api_payloads.yml` file and 
+   replay the original API calls and payloads enabling you to re-create the conditions.s 
