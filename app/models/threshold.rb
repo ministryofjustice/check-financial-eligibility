@@ -32,7 +32,7 @@ class Threshold
     def threshold_loadable?(hash)
       return true unless hash.key?(:test_only)
 
-      HostEnv.environment != :production
+      ENV['USE_TEST_THRESHOLD_DATA'] == 'true'
     end
   end
 end

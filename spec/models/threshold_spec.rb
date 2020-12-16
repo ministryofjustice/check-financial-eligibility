@@ -29,7 +29,13 @@ RSpec.describe Threshold do
     end
 
     context 'file is marked as test_only: true' do
-      context 'not in production' do
+      context "ENV['USE_TEST_THRESHOLD_DATA'] is set to 'true'" do
+        around do |example|
+          ENV['USE_TEST_THRESHOLD_DATA'] = 'true'
+          example.run
+          ENV['USE_TEST_THRESHOLD_DATA'] = nil
+        end
+
         context 'date before date of test only file' do
           let(:time) { Time.parse('1-Dec-2020 12:33') }
           it 'returns value from the April 2020 file' do
@@ -52,8 +58,7 @@ RSpec.describe Threshold do
         end
       end
 
-      context 'production' do
-        before { allow(HostEnv).to receive(:environment).and_return(:production) }
+      context "ENV['USE_TEST_THRESHOLD_DATA'] is absent" do
         context 'date before date of test only file' do
           let(:time) { Time.parse('1-Dec-2020 12:33') }
           it 'returns value from the April 2020 file' do
