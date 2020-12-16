@@ -1,57 +1,80 @@
 require 'rails_helper'
 
 RSpec.describe Threshold do
-  subject do
-    # Cloning the class so data file path can be customized - so not using product data in tests
-    klass = Class.new(Threshold)
-    klass.data_folder data_file_path('thresholds')
-    klass
-  end
-
-  let(:path) { data_file_path('thresholds/8-Apr-2019.yml') }
-  let(:threshold) { subject.new(path) }
-  let(:data) { YAML.load_file(path).deep_symbolize_keys }
-
-  describe '.data' do
-    let('file_dates') { %w[8-Apr-2018 8-Apr-2019 8-Apr-2020] }
-
-    it 'has datetime keys based on file name' do
-      keys = file_dates.map { |d| Time.parse("#{d} 00:00") }
-      expect(subject.data.keys).to contain_exactly(*keys)
-    end
-
-    it 'has instances as values' do
-      expect(subject.data.values.all? { |v| v.is_a?(described_class) }).to be true
-      expect(subject.data.values.map(&:name)).to contain_exactly(*file_dates)
-    end
-  end
+  let(:threshold_test_data_folder) { Rails.root.join('spec/data/thresholds') }
 
   describe '.value_for' do
+    around do |example|
+      Threshold.data_folder_path = threshold_test_data_folder
+      example.run
+      Threshold.data_folder_path = nil
+    end
+
     let(:time) { Time.parse('9-June-2019 12:35') }
+    let(:test_data_file) { "#{threshold_test_data_folder}/8-Apr-2019.yml" }
+    let(:data) { YAML.load_file(test_data_file).deep_symbolize_keys }
 
     it 'returns the expected value' do
-      expect(subject.value_for(:capital_lower, at: time)).to eq(data[:capital_lower])
+      expect(Threshold.value_for(:capital_lower, at: time)).to eq(data[:capital_lower])
     end
 
     context 'for dates before oldest' do
       let(:time) { Time.parse('9-June-2001 12:35') }
       let(:path) { data_file_path('thresholds/8-Apr-2018.yml') }
+      let(:data) { YAML.load_file("#{threshold_test_data_folder}/8-Apr-2018.yml").deep_symbolize_keys }
 
       it 'returns the value from oldest file' do
-        expect(subject.value_for(:capital_lower, at: time)).to eq(data[:capital_lower])
+        expect(Threshold.value_for(:capital_lower, at: time)).to eq(data[:capital_lower])
       end
     end
-  end
 
-  describe '#start_at' do
-    it 'derived from the file name' do
-      expect(threshold.start_at).to eq(Time.parse('8-Apr-2019'))
-    end
-  end
+    context 'file is marked as test_only: true' do
+      context 'not in production' do
+        context 'date before date of test only file' do
+          let(:time) { Time.parse('1-Dec-2020 12:33') }
+          it 'returns value from the April 2020 file' do
+            expect(Threshold.value_for(:property_maximum_mortgage_allowance, at: time)).to eq 666_666_666_666
+          end
+        end
 
-  describe '#store' do
-    it 'data extracted from file' do
-      expect(threshold.store.data).to eq(data)
+        context 'date after date of test only file' do
+          let(:time) { Time.parse('15-Dec-2020 11:48') }
+          it 'returns mortgage allowance Test file' do
+            expect(Threshold.value_for(:property_maximum_mortgage_allowance, at: time)).to eq 888_888_888_888
+          end
+        end
+
+        context 'date after most recent file' do
+          let(:time) { Time.parse('1-Jan-2030 12:33') }
+          it 'returns value from the Jan 2021 file' do
+            expect(Threshold.value_for(:property_maximum_mortgage_allowance, at: time)).to eq 999_999_999_999
+          end
+        end
+      end
+
+      context 'production' do
+        before { allow(HostEnv).to receive(:environment).and_return(:production) }
+        context 'date before date of test only file' do
+          let(:time) { Time.parse('1-Dec-2020 12:33') }
+          it 'returns value from the April 2020 file' do
+            expect(Threshold.value_for(:property_maximum_mortgage_allowance, at: time)).to eq 666_666_666_666
+          end
+        end
+
+        context 'date after date of test only file' do
+          let(:time) { Time.parse('15-Dec-2020 11:48') }
+          it 'returns value from the April 2020 file' do
+            expect(Threshold.value_for(:property_maximum_mortgage_allowance, at: time)).to eq 666_666_666_666
+          end
+        end
+
+        context 'date after most recent file' do
+          let(:time) { Time.parse('1-Jan-2030 12:33') }
+          it 'returns value from the Jan 2021 file' do
+            expect(Threshold.value_for(:property_maximum_mortgage_allowance, at: time)).to eq 999_999_999_999
+          end
+        end
+      end
     end
   end
 end

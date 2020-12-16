@@ -1,46 +1,38 @@
 class Threshold
   class << self
-    attr_reader :data_folder_path
-
-    def data_folder(path)
-      @data_folder_path = Rails.root.join(path)
+    def data
+      @data ||= load_data
     end
 
-    def data
-      @data ||= begin
-        Dir[File.join(data_folder_path, '*.yml')].each_with_object({}) do |path, hash|
-          threshold = new(path)
-          hash[threshold.start_at] = threshold
-        end
+    def load_data
+      data = {}
+      index = YAML.load_file(Rails.root.join(data_folder_path, 'values.yml'))
+      index.each do |date, filename|
+        hash = YAML.load_file(Rails.root.join(filename)).deep_symbolize_keys
+        data[date.beginning_of_day] = hash if threshold_loadable?(hash)
       end
+      data
     end
 
     def value_for(item, at: Time.now)
       key = data.keys.select { |time| time <= at }.max || data.keys.min
       threshold = data[key]
-      threshold.value(item.to_sym)
+      threshold[item.to_sym]
     end
-  end
 
-  data_folder 'config/thresholds'.freeze
+    def data_folder_path=(new_path)
+      @data_folder_path = new_path
+      @data = nil
+    end
 
-  attr_reader :path
+    def data_folder_path
+      @data_folder_path ||= Rails.root.join('config/thresholds')
+    end
 
-  delegate :value, to: :store
+    def threshold_loadable?(hash)
+      return true unless hash.key?(:test_only)
 
-  def initialize(path)
-    @path = path
-  end
-
-  def start_at
-    @start_at ||= Time.parse(name).beginning_of_day
-  end
-
-  def name
-    @name ||= File.basename(path, '.yml')
-  end
-
-  def store
-    @store ||= YamlStore.from_yaml_file(path)
+      HostEnv.environment != :production
+    end
   end
 end
