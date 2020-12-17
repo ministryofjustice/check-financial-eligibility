@@ -50,6 +50,19 @@ Set ALLOW_FUTURE_SUBMISSION_DATE to true to allow integration tests to run with 
 
 A copy of the `.env` file including the current values can be found in the `Shared-LAA` section of LastPass
 
+## Threshold configuration files
+
+Files holding details of all thresholds values used in calculating eligibility are stored in `config/thresholds`.
+The file `values.yml` details the start dates for each set of thresholds, and the name of the file from which they should be read.
+
+If a file has the key `test_only` with a value of true, then that file will only be read if the 
+`USE_TEST_THRESHOLD_DATA` environment variable is set to true.  This is the default for staging and UAT, and it is 
+false for production.
+
+This allows the insertion of test data on an arbitrary date specified in the `values.yml` file to be used 
+for testing new thresholds before they come into affect on production
+
+
 ## Integration tests
 Several use cases and their expected results can be found in the google spreadsheet https://docs.google.com/spreadsheets/d/1tgZUPtamZnpI-dibN8Q78miqZSfEYBnwBhaXFyFZ8no.
 

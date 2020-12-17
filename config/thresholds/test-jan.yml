@@ -1,0 +1,65 @@
+---
+test_only: true
+gross_income_upper: 2657
+infinite_gross_income_upper: 999_999_999_999
+dependant_step: 222
+dependant_increase_starts_after: 4
+disposable_income_lower: 315
+disposable_income_upper: 733
+capital_lower: 3_000
+capital_upper: 8_000
+pensioner_capital_disregard:
+  minimum_age_in_years: 60
+  passported: 100_000
+  non_passported: 100_000
+  # capital to disregard if monthly disposable income (excluding income derived from capital) is below these figures
+  monthly_income_values:
+    [0, 25.99]: 100_000
+    [26.0, 50.99]: 90_000
+    [51.0, 75.99]: 80_000
+    [76.0, 100.99]: 70_000
+    [101.0, 125.99]: 60_000
+    [126.0, 150.99]: 50_000
+    [151.0, 175.99]: 40_000
+    [176.0, 200.99]: 30_000
+    [201.0, 225.99]: 20_000
+    [226.0, 315.99]: 10_000
+    [316.0]: 0
+property_notional_sale_costs_percentage: 3.0
+property_maximum_mortgage_allowance: 999_999_999_999
+property_disregard:
+  main_home: 100_000
+  additional_property: 0.0
+vehicle_disregard: 15_000
+vehicle_out_of_scope_months: 36
+
+dependant_allowances:
+  child_under_15: 291.49
+  child_aged_15: 291.49
+  child_16_and_over: 291.49
+  adult: 291.49
+  adult_capital_threshold: 8_000
+
+single_monthly_housing_costs_cap: 545
+
+disposable_income_contribution_bands:
+  band_zero:
+    threshold: 0.0
+    disregard: 0.0
+    percentage: 0.0
+    base: 0.0
+  band_a:
+    threshold: 315.0
+    disregard: 311.0
+    percentage: 35.0
+    base: 0
+  band_b:
+    threshold: 466
+    disregard: 465
+    percentage: 45.0
+    base: 53.90
+  band_c:
+    threshold: 617
+    disregard: 616
+    percentage: 70.0
+    base: 121.85
