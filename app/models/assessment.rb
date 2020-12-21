@@ -17,6 +17,7 @@ class Assessment < ApplicationRecord
   has_many :vehicles, through: :capital_summary
   has_many :capital_items, through: :capital_summary
   has_many :assessment_errors
+  has_many :explicit_remarks
 
   enum matter_proceeding_type: enum_hash_for(:domestic_abuse)
 
@@ -24,6 +25,6 @@ class Assessment < ApplicationRecord
 
   # Always instantiate a new Remarks object from a nil value
   def remarks
-    attributes['remarks'] || Remarks.new
+    attributes['remarks'] || Remarks.new(id)
   end
 end

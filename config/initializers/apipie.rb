@@ -29,10 +29,11 @@ Apipie.configure do |config|
       POST /assessments/:assessment_id/applicant          # adds data about the applicant
       POST /assessments/:assessment_id/capitals           # adds data about liquid assets (i.e. bank accounts) and non-liquid assets (valuable items, trusts, etc)
       POST /assessments/:assessment_id/dependants         # adds data about any dependants the applicant may have
+      POST /assessments/:assessment_id/irregular_incomes  # adds data about applicant's irregular income
+      POST /assessments/:assessment_id/other_incomes      # adds data about applicant's other sources of income
       POST /assessments/:assessment_id/outgoings          # adds data about applicant's outgoings
       POST /assessments/:assessment_id/properties         # adds data about properties owned by the applicant
-      POST /assessments/:assessment_id/other_incomes      # adds data about applicant's other sources of income
-      POST /assessments/:assessment_id/irregular_incomes  # adds data about applicant's irregular income
+      POST /assessments/:assessment_id/remarks            # adds remarks to be included on the means report
       POST /assessments/:assessment_id/state_benefits     # adds data about applicant's income from state benefits
       POST /assessments/:assessment_id/vehicles           # adds data about vehicles owned by the applicant
 

@@ -19,7 +19,8 @@ class Remarks
   ].freeze
   VALID_ISSUES = %i[unknown_frequency amount_variation residual_balance multi_benefit].freeze
 
-  def initialize
+  def initialize(assessment_id)
+    @assessment_id = assessment_id
     @remarks_hash = {}
   end
 
@@ -31,7 +32,7 @@ class Remarks
   end
 
   def as_json
-    @remarks_hash
+    @remarks_hash.merge! ExplicitRemark.remarks_by_category(@assessment_id)
   end
 
   private
