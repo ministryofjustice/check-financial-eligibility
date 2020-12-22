@@ -11,7 +11,7 @@ class ExplicitRemarksController < ApplicationController
 
     END_OF_TEXT
   end
-  api :POST, 'assessments/:assessment_id/remark', 'Add remarks to an assessment (create assessment first with POST /assessments)'
+  api :POST, 'assessments/:assessment_id/explicit_remarks', 'Add remarks to an assessment (create assessment first with POST /assessments)'
   formats ['json']
   param :assessment_id, :uuid, required: true, desc: 'The assessment id to which these remarks relate - must have been created prior to this call with POST /assessments'
   param :explicit_remarks, Array, required: true, desc: 'An Array of Objects describing a a category or remarks' do

@@ -2,39 +2,14 @@
   "applicants#create": [
     {
       "verb": "POST",
-      "path": "/assessments/7933e816-bdab-48af-b87a-aa096fd3f3c7/applicant",
+      "path": "/assessments/946195f3-6ef5-403b-ba69-26706232f3a2/applicant",
       "versions": [
         "1.0"
       ],
       "query": null,
       "request_data": {
         "applicant": {
-          "date_of_birth": "2000-12-21",
-          "involvement_type": "applicant",
-          "has_partner_opponent": false,
-          "receives_qualifying_benefit": true
-        }
-      },
-      "response_data": {
-        "success": true,
-        "errors": [
-
-        ]
-      },
-      "code": 200,
-      "show_in_doc": 1,
-      "recorded": true
-    },
-    {
-      "verb": "POST",
-      "path": "/assessments/3b93b7f4-c7aa-4ab7-b715-18738e1a0875/applicant",
-      "versions": [
-        "1.0"
-      ],
-      "query": null,
-      "request_data": {
-        "applicant": {
-          "date_of_birth": "2000-12-21",
+          "date_of_birth": "2000-12-22",
           "involvement_type": "applicant",
           "has_partner_opponent": false,
           "receives_qualifying_benefit": "yes"
@@ -47,6 +22,31 @@
         ]
       },
       "code": 422,
+      "show_in_doc": 1,
+      "recorded": true
+    },
+    {
+      "verb": "POST",
+      "path": "/assessments/bfbae27e-9306-4b70-9420-36d28c58c033/applicant",
+      "versions": [
+        "1.0"
+      ],
+      "query": null,
+      "request_data": {
+        "applicant": {
+          "date_of_birth": "2000-12-22",
+          "involvement_type": "applicant",
+          "has_partner_opponent": false,
+          "receives_qualifying_benefit": true
+        }
+      },
+      "response_data": {
+        "success": true,
+        "errors": [
+
+        ]
+      },
+      "code": 200,
       "show_in_doc": 1,
       "recorded": true
     }
@@ -66,7 +66,7 @@
       },
       "response_data": {
         "success": true,
-        "assessment_id": "91201fcd-0e99-406f-b849-8b5d165d29f3",
+        "assessment_id": "d7305b43-54a6-4d38-9dfb-0e20fbe39fcc",
         "errors": [
 
         ]
@@ -101,7 +101,7 @@
   "assessments#show": [
     {
       "verb": "GET",
-      "path": "/assessments/ad05269f-eb63-4d2e-919e-82c9b68b76f7",
+      "path": "/assessments/df0412b4-b431-4fcc-9d44-d8ff5f11d317",
       "versions": [
         "1.0"
       ],
@@ -109,10 +109,113 @@
       "request_data": null,
       "response_data": {
         "version": "2",
-        "timestamp": "2020-12-21T14:51:50.887+00:00",
+        "timestamp": "2020-12-22T09:37:42.832+00:00",
         "success": true,
         "assessment": {
-          "id": "ad05269f-eb63-4d2e-919e-82c9b68b76f7",
+          "id": "df0412b4-b431-4fcc-9d44-d8ff5f11d317",
+          "client_reference_id": "CLIENT-REF-0014",
+          "submission_date": "2020-12-22",
+          "matter_proceeding_type": "domestic_abuse",
+          "assessment_result": "contribution_required",
+          "applicant": {
+            "date_of_birth": "1974-05-15",
+            "involvement_type": "applicant",
+            "has_partner_opponent": false,
+            "receives_qualifying_benefit": true,
+            "self_employed": false
+          },
+          "gross_income": null,
+          "disposable_income": null,
+          "capital": {
+            "capital_items": {
+              "liquid": [
+                {
+                  "description": "Repellendus velit sit animi.",
+                  "value": "7999.76"
+                }
+              ],
+              "non_liquid": [
+                {
+                  "description": "Voluptatem illo assumenda aliquam.",
+                  "value": "1142.77"
+                }
+              ],
+              "vehicles": [
+                {
+                  "value": "7382.57",
+                  "loan_amount_outstanding": "9081.53",
+                  "date_of_purchase": "2017-04-21",
+                  "in_regular_use": true,
+                  "included_in_assessment": false,
+                  "assessed_value": "0.0"
+                }
+              ],
+              "properties": {
+                "main_home": {
+                  "value": "5415.55",
+                  "outstanding_mortgage": "4284.72",
+                  "percentage_owned": "9.34",
+                  "main_home": true,
+                  "shared_with_housing_assoc": true,
+                  "transaction_allowance": "162.47",
+                  "allowable_outstanding_mortgage": "4284.72",
+                  "net_value": "968.36",
+                  "net_equity": "-3941.38",
+                  "main_home_equity_disregard": "100000.0",
+                  "assessed_equity": "0.0"
+                },
+                "additional_properties": [
+                  {
+                    "value": "3297.24",
+                    "outstanding_mortgage": "5271.23",
+                    "percentage_owned": "3.19",
+                    "main_home": false,
+                    "shared_with_housing_assoc": true,
+                    "transaction_allowance": "98.92",
+                    "allowable_outstanding_mortgage": "5271.23",
+                    "net_value": "-2072.91",
+                    "net_equity": "-5264.97",
+                    "main_home_equity_disregard": "0.0",
+                    "assessed_equity": "0.0"
+                  }
+                ]
+              }
+            },
+            "total_liquid": "7999.76",
+            "total_non_liquid": "1142.77",
+            "total_vehicle": "0.0",
+            "total_property": "0.0",
+            "total_mortgage_allowance": "100000.0",
+            "total_capital": "9142.53",
+            "pensioner_capital_disregard": "0.0",
+            "assessed_capital": "9142.53",
+            "lower_threshold": "3000.0",
+            "upper_threshold": "999999999999.0",
+            "assessment_result": "contribution_required",
+            "capital_contribution": "6142.53"
+          },
+          "remarks": {
+          }
+        }
+      },
+      "code": 200,
+      "show_in_doc": 1,
+      "recorded": true
+    },
+    {
+      "verb": "GET",
+      "path": "/assessments/5039b234-dd31-4d80-81a6-89796b7d961d",
+      "versions": [
+        "1.0"
+      ],
+      "query": null,
+      "request_data": null,
+      "response_data": {
+        "version": "2",
+        "timestamp": "2020-12-22T09:37:43.044+00:00",
+        "success": true,
+        "assessment": {
+          "id": "5039b234-dd31-4d80-81a6-89796b7d961d",
           "client_reference_id": "NPE6-1",
           "submission_date": "2019-05-29",
           "matter_proceeding_type": "domestic_abuse",
@@ -279,119 +382,16 @@
           "remarks": {
             "state_benefit_payment": {
               "amount_variation": [
-                "37351d64-caf7-4952-9b6a-1373e38c12b8",
-                "d8291758-20a0-4c1e-8db1-c626edb60f52",
-                "35e6351a-85bd-434d-a777-211f1d0cce3d"
+                "3dd82193-9069-4ee4-bf10-c89e8ad382cd",
+                "387d289d-c08f-412f-8c75-4c7735b5d77f",
+                "3397bb48-f3c8-4deb-be94-50596b2fe607"
               ],
               "unknown_frequency": [
-                "37351d64-caf7-4952-9b6a-1373e38c12b8",
-                "d8291758-20a0-4c1e-8db1-c626edb60f52",
-                "35e6351a-85bd-434d-a777-211f1d0cce3d"
+                "3dd82193-9069-4ee4-bf10-c89e8ad382cd",
+                "387d289d-c08f-412f-8c75-4c7735b5d77f",
+                "3397bb48-f3c8-4deb-be94-50596b2fe607"
               ]
             }
-          }
-        }
-      },
-      "code": 200,
-      "show_in_doc": 1,
-      "recorded": true
-    },
-    {
-      "verb": "GET",
-      "path": "/assessments/5d1b4d37-a944-4dcd-b29b-d5704193c5ea",
-      "versions": [
-        "1.0"
-      ],
-      "query": null,
-      "request_data": null,
-      "response_data": {
-        "version": "2",
-        "timestamp": "2020-12-21T14:51:51.196+00:00",
-        "success": true,
-        "assessment": {
-          "id": "5d1b4d37-a944-4dcd-b29b-d5704193c5ea",
-          "client_reference_id": "CLIENT-REF-0003",
-          "submission_date": "2020-12-21",
-          "matter_proceeding_type": "domestic_abuse",
-          "assessment_result": "eligible",
-          "applicant": {
-            "date_of_birth": "1951-06-03",
-            "involvement_type": "applicant",
-            "has_partner_opponent": false,
-            "receives_qualifying_benefit": true,
-            "self_employed": false
-          },
-          "gross_income": null,
-          "disposable_income": null,
-          "capital": {
-            "capital_items": {
-              "liquid": [
-                {
-                  "description": "Sequi voluptates dolor porro.",
-                  "value": "3695.52"
-                }
-              ],
-              "non_liquid": [
-                {
-                  "description": "Id tenetur placeat a.",
-                  "value": "9271.22"
-                }
-              ],
-              "vehicles": [
-                {
-                  "value": "1024.76",
-                  "loan_amount_outstanding": "6015.82",
-                  "date_of_purchase": "2020-06-23",
-                  "in_regular_use": false,
-                  "included_in_assessment": true,
-                  "assessed_value": "1024.76"
-                }
-              ],
-              "properties": {
-                "main_home": {
-                  "value": "7050.21",
-                  "outstanding_mortgage": "8217.61",
-                  "percentage_owned": "1.84",
-                  "main_home": true,
-                  "shared_with_housing_assoc": false,
-                  "transaction_allowance": "211.51",
-                  "allowable_outstanding_mortgage": "8217.61",
-                  "net_value": "-1378.91",
-                  "net_equity": "-25.37",
-                  "main_home_equity_disregard": "100000.0",
-                  "assessed_equity": "0.0"
-                },
-                "additional_properties": [
-                  {
-                    "value": "6125.32",
-                    "outstanding_mortgage": "3886.77",
-                    "percentage_owned": "8.74",
-                    "main_home": false,
-                    "shared_with_housing_assoc": true,
-                    "transaction_allowance": "183.76",
-                    "allowable_outstanding_mortgage": "3886.77",
-                    "net_value": "2054.79",
-                    "net_equity": "-3535.18",
-                    "main_home_equity_disregard": "0.0",
-                    "assessed_equity": "0.0"
-                  }
-                ]
-              }
-            },
-            "total_liquid": "3695.52",
-            "total_non_liquid": "9271.22",
-            "total_vehicle": "1024.76",
-            "total_property": "0.0",
-            "total_mortgage_allowance": "100000.0",
-            "total_capital": "13991.5",
-            "pensioner_capital_disregard": "100000.0",
-            "assessed_capital": "-86008.5",
-            "lower_threshold": "3000.0",
-            "upper_threshold": "999999999999.0",
-            "assessment_result": "eligible",
-            "capital_contribution": "0.0"
-          },
-          "remarks": {
           }
         }
       },
@@ -403,7 +403,7 @@
   "capitals#create": [
     {
       "verb": "POST",
-      "path": "/assessments/6148416a-9185-4582-bd34-ce26df443628/capitals",
+      "path": "/assessments/87dc839c-1a50-49cb-8352-637eb32b6ca6/capitals",
       "versions": [
         "1.0"
       ],
@@ -411,61 +411,22 @@
       "request_data": {
         "bank_accounts": [
           {
-            "description": "THE ROYAL BANK OF SCOTLAND PLC (FORMER RBS NV) 35471065",
-            "value": 22547.62
+            "description": "ABINGWORTH MANAGEMENT LIMITED 92394294",
+            "value": 51840.18
           },
           {
-            "description": "ABBEY LIFE 23633114",
-            "value": 70291.61
+            "description": "PGMS (GLASGOW) LIMITED 28124484",
+            "value": 86640.45
           }
         ],
         "non_liquid_capital": [
           {
-            "description": "Van Gogh Sunflowers",
-            "value": 91852.88
+            "description": "Life Endowment Policy",
+            "value": 23344.06
           },
           {
-            "description": "FTSE tracker unit trust",
-            "value": 71442.86
-          }
-        ]
-      },
-      "response_data": {
-        "success": true,
-        "errors": [
-
-        ]
-      },
-      "code": 200,
-      "show_in_doc": 1,
-      "recorded": true
-    },
-    {
-      "verb": "POST",
-      "path": "/assessments/f8d11361-331a-4992-8c24-74c0e82d2446/capitals",
-      "versions": [
-        "1.0"
-      ],
-      "query": null,
-      "request_data": {
-        "bank_accounts": [
-          {
-            "description": "UBS CLEARING AND EXECUTION SERVICES LIMITED 77997750",
-            "value": 11038.64
-          },
-          {
-            "description": "ABG SUNDAL COLLIER LIMITED 55775046",
-            "value": 37381.48
-          }
-        ],
-        "non_liquid_capital": [
-          {
-            "description": "Van Gogh Sunflowers",
-            "value": 29591.13
-          },
-          {
-            "description": "FTSE tracker unit trust",
-            "value": 76509.07
+            "description": "Life Endowment Policy",
+            "value": 24925.21
           }
         ]
       },
@@ -476,6 +437,45 @@
         ]
       },
       "code": 422,
+      "show_in_doc": 1,
+      "recorded": true
+    },
+    {
+      "verb": "POST",
+      "path": "/assessments/6af014a4-407f-490a-a098-a839681e803c/capitals",
+      "versions": [
+        "1.0"
+      ],
+      "query": null,
+      "request_data": {
+        "bank_accounts": [
+          {
+            "description": "PGMS (GLASGOW) LIMITED 88731481",
+            "value": 70239.71
+          },
+          {
+            "description": "AAC CAPITAL PARTNERS LIMITED 05232247",
+            "value": 69380.22
+          }
+        ],
+        "non_liquid_capital": [
+          {
+            "description": "Ming Vase",
+            "value": 75661.33
+          },
+          {
+            "description": "Aramco shares",
+            "value": 75893.54
+          }
+        ]
+      },
+      "response_data": {
+        "success": true,
+        "errors": [
+
+        ]
+      },
+      "code": 200,
       "show_in_doc": 1,
       "recorded": true
     }
@@ -483,7 +483,7 @@
   "dependants#create": [
     {
       "verb": "POST",
-      "path": "/assessments/64cfdd71-0f3d-4e5d-bbb6-533158ed73d5/dependants",
+      "path": "/assessments/6dfc6e35-115f-4cfe-b14e-ab7c2443fc94/dependants",
       "versions": [
         "1.0"
       ],
@@ -491,17 +491,17 @@
       "request_data": {
         "dependants": [
           {
-            "date_of_birth": "1963-01-05",
-            "in_full_time_education": true,
-            "relationship": "child_relative",
-            "monthly_income": 354.82,
+            "date_of_birth": "1956-04-06",
+            "in_full_time_education": false,
+            "relationship": "adult_relative",
+            "monthly_income": 6994.16,
             "assets_value": 0.0
           },
           {
-            "date_of_birth": "1984-11-23",
+            "date_of_birth": "2002-11-04",
             "in_full_time_education": false,
             "relationship": "child_relative",
-            "monthly_income": 2001.95,
+            "monthly_income": 5604.39,
             "assets_value": 0.0
           }
         ]
@@ -518,7 +518,7 @@
     },
     {
       "verb": "POST",
-      "path": "/assessments/bc4205cf-7dd8-4bc3-b112-80ad17320d01/dependants",
+      "path": "/assessments/ed22db05-a464-40ba-a08f-cc5ed89d10b7/dependants",
       "versions": [
         "1.0"
       ],
@@ -526,17 +526,17 @@
       "request_data": {
         "dependants": [
           {
-            "date_of_birth": "2000-03-16",
+            "date_of_birth": "1973-09-12",
             "in_full_time_education": true,
-            "relationship": "child_relative",
-            "monthly_income": 2742.39,
+            "relationship": "adult_relative",
+            "monthly_income": 4.94,
             "assets_value": 0.0
           },
           {
-            "date_of_birth": "1968-02-12",
-            "in_full_time_education": true,
+            "date_of_birth": "1993-06-19",
+            "in_full_time_education": false,
             "relationship": "child_relative",
-            "monthly_income": 33.53,
+            "monthly_income": 548.97,
             "assets_value": 0.0
           }
         ]
@@ -553,7 +553,7 @@
     },
     {
       "verb": "POST",
-      "path": "/assessments/e34a5afe-c7d5-41bb-9594-4102dc0b1ba0/dependants",
+      "path": "/assessments/f85e0a5a-e403-4305-86b7-4ef31edaea49/dependants",
       "versions": [
         "1.0"
       ],
@@ -561,17 +561,17 @@
       "request_data": {
         "dependants": [
           {
-            "date_of_birth": "1971-08-16",
+            "date_of_birth": "1989-07-01",
             "in_full_time_education": null,
-            "relationship": "child_relative",
-            "monthly_income": 2676.22,
+            "relationship": "adult_relative",
+            "monthly_income": 3739.62,
             "assets_value": 0.0
           },
           {
-            "date_of_birth": "1971-10-23",
+            "date_of_birth": "1963-11-30",
             "in_full_time_education": null,
-            "relationship": "adult_relative",
-            "monthly_income": 5914.36,
+            "relationship": "child_relative",
+            "monthly_income": 5879.41,
             "assets_value": 0.0
           }
         ]
@@ -587,35 +587,68 @@
       "recorded": true
     }
   ],
-  "irregular_incomes#create": [
+  "explicit_remarks#create": [
     {
       "verb": "POST",
-      "path": "/assessments/e76b51f9-0f51-4fa4-98f8-9ca2d8c8f110/irregular_incomes",
+      "path": "/assessments/a4a41b2d-c4a7-464b-a615-42f0063db40e/explicit_remarks",
       "versions": [
         "1.0"
       ],
       "query": null,
       "request_data": {
-        "payments": [
+        "explicit_remarks": [
           {
-            "frequency": "annual",
-            "amount": 123456.78
+            "category": "income_disregards",
+            "details": [
+              "employment",
+              "charity"
+            ]
+          }
+        ]
+      },
+      "response_data": {
+        "success": true,
+        "errors": [
+
+        ]
+      },
+      "code": 200,
+      "show_in_doc": 1,
+      "recorded": true
+    },
+    {
+      "verb": "POST",
+      "path": "/assessments/2dd5cdd0-411f-411a-aca2-19902f847146/explicit_remarks",
+      "versions": [
+        "1.0"
+      ],
+      "query": null,
+      "request_data": {
+        "explicit_remarks": [
+          {
+            "category": "other_stuff",
+            "details": [
+              "employment",
+              "charity"
+            ]
           }
         ]
       },
       "response_data": {
         "success": false,
         "errors": [
-          "Missing parameter income_type"
+          "Invalid parameter 'category' value \"other_stuff\": Must be one of: <code>income_disregards</code>."
         ]
       },
       "code": 422,
       "show_in_doc": 1,
       "recorded": true
-    },
+    }
+  ],
+  "irregular_incomes#create": [
     {
       "verb": "POST",
-      "path": "/assessments/2c59cf5a-faa9-45d3-bce8-31b6bcc1637a/irregular_incomes",
+      "path": "/assessments/16023b1b-bdee-4369-8b87-5607ded2b275/irregular_incomes",
       "versions": [
         "1.0"
       ],
@@ -638,12 +671,37 @@
       "code": 200,
       "show_in_doc": 1,
       "recorded": true
+    },
+    {
+      "verb": "POST",
+      "path": "/assessments/b72d7c9f-0010-4acd-887c-1a13c2697c10/irregular_incomes",
+      "versions": [
+        "1.0"
+      ],
+      "query": null,
+      "request_data": {
+        "payments": [
+          {
+            "frequency": "annual",
+            "amount": 123456.78
+          }
+        ]
+      },
+      "response_data": {
+        "success": false,
+        "errors": [
+          "Missing parameter income_type"
+        ]
+      },
+      "code": 422,
+      "show_in_doc": 1,
+      "recorded": true
     }
   ],
   "other_incomes#create": [
     {
       "verb": "POST",
-      "path": "/assessments/a0c79f1e-1937-464b-ae3e-45e597786eba/other_incomes",
+      "path": "/assessments/4aa4c54c-e38b-40d4-a17f-5484948bb77b/other_incomes",
       "versions": [
         "1.0"
       ],
@@ -656,17 +714,17 @@
               {
                 "date": "2019-11-01",
                 "amount": 1046.44,
-                "client_id": "6be41703-52b2-4d48-a9bc-bf9283789d24"
+                "client_id": "5da8e7bf-3b01-42e7-91e5-3fdce65acadb"
               },
               {
                 "date": "2019-10-01",
                 "amount": 1034.33,
-                "client_id": "6d6f5fca-dbc9-40cc-a1d2-c2f4bd2679d5"
+                "client_id": "f39978a2-06ae-4367-ad91-d3d66c36b62f"
               },
               {
                 "date": "2019-09-01",
                 "amount": 1033.44,
-                "client_id": "110f364c-2e4a-4b3a-ab27-a8954673b0e9"
+                "client_id": "a5adaa30-75c5-4d4a-9e6d-16b1b1ad1014"
               }
             ]
           },
@@ -676,17 +734,17 @@
               {
                 "date": "2019-11-01",
                 "amount": 250.0,
-                "client_id": "9dbf8c52-2fd7-48c7-b89a-ef7f3fe8d353"
+                "client_id": "52894df4-9f9c-4a0d-b82c-b63e2601ef87"
               },
               {
                 "date": "2019-10-01",
                 "amount": 266.02,
-                "client_id": "7deae8a0-2796-4cec-bd55-796b56af6833"
+                "client_id": "2a879ef4-2373-4562-ba77-f8fd6189fc1b"
               },
               {
                 "date": "2019-09-01",
                 "amount": 250.0,
-                "client_id": "2aaee775-e890-41bb-8855-c1d36ffb5444"
+                "client_id": "0006ede3-3acb-4f83-8ea6-ab5fb4611c3d"
               }
             ]
           }
@@ -706,7 +764,7 @@
   "outgoings#create": [
     {
       "verb": "POST",
-      "path": "/assessments/c6717894-5a91-416e-ab4c-6240b3fc8d70/outgoings",
+      "path": "/assessments/4da2a43a-2fc3-4815-b85d-a4551ad212be/outgoings",
       "versions": [
         "1.0"
       ],
@@ -717,14 +775,14 @@
             "name": "child_care",
             "payments": [
               {
-                "payment_date": "2020-11-30",
-                "amount": 103.74,
-                "client_id": "aa2ea3f4-8fba-4386-ae29-136f29e4bdc2"
+                "payment_date": "2020-12-01",
+                "amount": 736.28,
+                "client_id": "818b58b4-09f1-4ca8-abb6-af6455db1cd8"
               },
               {
-                "payment_date": "2020-11-30",
-                "amount": 479.05,
-                "client_id": "55056403-02ff-45da-a6f0-c8f7e40eca4c"
+                "payment_date": "2020-12-01",
+                "amount": 500.59,
+                "client_id": "0177a955-47b7-4f11-8518-b95e656d25b4"
               }
             ]
           },
@@ -732,14 +790,14 @@
             "name": "maintenance_out",
             "payments": [
               {
-                "payment_date": "2020-11-30",
-                "amount": 229.93,
-                "client_id": "aa2ea3f4-8fba-4386-ae29-136f29e4bdc2"
+                "payment_date": "2020-12-01",
+                "amount": 285.97,
+                "client_id": "818b58b4-09f1-4ca8-abb6-af6455db1cd8"
               },
               {
-                "payment_date": "2020-11-30",
-                "amount": 266.79,
-                "client_id": "55056403-02ff-45da-a6f0-c8f7e40eca4c"
+                "payment_date": "2020-12-01",
+                "amount": 565.02,
+                "client_id": "0177a955-47b7-4f11-8518-b95e656d25b4"
               }
             ]
           },
@@ -747,16 +805,16 @@
             "name": "rent_or_mortgage",
             "payments": [
               {
-                "payment_date": "2020-11-30",
-                "amount": 767.18,
-                "housing_cost_type": "mortgage",
-                "client_id": "aa2ea3f4-8fba-4386-ae29-136f29e4bdc2"
+                "payment_date": "2020-12-01",
+                "amount": 499.44,
+                "housing_cost_type": "board_and_lodging",
+                "client_id": "818b58b4-09f1-4ca8-abb6-af6455db1cd8"
               },
               {
-                "payment_date": "2020-11-30",
-                "amount": 495.72,
-                "housing_cost_type": "mortgage",
-                "client_id": "55056403-02ff-45da-a6f0-c8f7e40eca4c"
+                "payment_date": "2020-12-01",
+                "amount": 698.52,
+                "housing_cost_type": "board_and_lodging",
+                "client_id": "0177a955-47b7-4f11-8518-b95e656d25b4"
               }
             ]
           }
@@ -785,14 +843,14 @@
             "name": "child_care",
             "payments": [
               {
-                "payment_date": "2020-11-30",
-                "amount": 768.42,
-                "client_id": "632cd306-5be6-488b-93af-62c173b7f0b5"
+                "payment_date": "2020-12-01",
+                "amount": 509.89,
+                "client_id": "4f31ab75-a490-4ee9-bd78-4b605d0dca30"
               },
               {
-                "payment_date": "2020-11-30",
-                "amount": 569.47,
-                "client_id": "627acba9-8180-4704-ad4a-178a89937cd2"
+                "payment_date": "2020-12-01",
+                "amount": 809.92,
+                "client_id": "366f676c-9bd6-4bd3-bdff-7fd313b31bed"
               }
             ]
           },
@@ -800,14 +858,14 @@
             "name": "maintenance_out",
             "payments": [
               {
-                "payment_date": "2020-11-30",
-                "amount": 594.03,
-                "client_id": "632cd306-5be6-488b-93af-62c173b7f0b5"
+                "payment_date": "2020-12-01",
+                "amount": 119.98,
+                "client_id": "4f31ab75-a490-4ee9-bd78-4b605d0dca30"
               },
               {
-                "payment_date": "2020-11-30",
-                "amount": 502.78,
-                "client_id": "627acba9-8180-4704-ad4a-178a89937cd2"
+                "payment_date": "2020-12-01",
+                "amount": 147.39,
+                "client_id": "366f676c-9bd6-4bd3-bdff-7fd313b31bed"
               }
             ]
           },
@@ -815,16 +873,16 @@
             "name": "rent_or_mortgage",
             "payments": [
               {
-                "payment_date": "2020-11-30",
-                "amount": 115.88,
-                "housing_cost_type": "rent",
-                "client_id": "632cd306-5be6-488b-93af-62c173b7f0b5"
+                "payment_date": "2020-12-01",
+                "amount": 406.38,
+                "housing_cost_type": "board_and_lodging",
+                "client_id": "4f31ab75-a490-4ee9-bd78-4b605d0dca30"
               },
               {
-                "payment_date": "2020-11-30",
-                "amount": 288.37,
-                "housing_cost_type": "rent",
-                "client_id": "627acba9-8180-4704-ad4a-178a89937cd2"
+                "payment_date": "2020-12-01",
+                "amount": 600.31,
+                "housing_cost_type": "board_and_lodging",
+                "client_id": "366f676c-9bd6-4bd3-bdff-7fd313b31bed"
               }
             ]
           }
@@ -844,7 +902,7 @@
   "properties#create": [
     {
       "verb": "POST",
-      "path": "/assessments/e48a487b-ebe7-4194-b01f-2ad165b6cf26/properties",
+      "path": "/assessments/5baf5802-fedb-43ae-88c1-0241c59cc102/properties",
       "versions": [
         "1.0"
       ],
@@ -885,7 +943,7 @@
     },
     {
       "verb": "POST",
-      "path": "/assessments/8dc91a9d-e7b9-41b6-b00d-127cc0517927/properties",
+      "path": "/assessments/18c78b20-ed6d-4109-8663-12491735af35/properties",
       "versions": [
         "1.0"
       ],
@@ -1527,7 +1585,7 @@
   "state_benefits#create": [
     {
       "verb": "POST",
-      "path": "/assessments/c65a36aa-b0a0-4e7d-abb1-5c08e880cce0/state_benefits",
+      "path": "/assessments/a20fea0c-6352-446d-b5c5-f6966cca66c1/state_benefits",
       "versions": [
         "1.0"
       ],
@@ -1540,17 +1598,17 @@
               {
                 "date": "2019-11-01",
                 "amount": 1046.44,
-                "client_id": "33d057e7-5b94-4c6e-a16d-d1a86485d544"
+                "client_id": "3408d332-e6a3-41fe-b64b-e944fe26fa63"
               },
               {
                 "date": "2019-10-01",
                 "amount": 1034.33,
-                "client_id": "073e216f-578b-4779-9625-972ae44ba7a6"
+                "client_id": "05bfeb9e-e06f-4f47-97f2-a5ccf28a26d8"
               },
               {
                 "date": "2019-09-01",
                 "amount": 1033.44,
-                "client_id": "755b5e92-cb14-4d1e-975d-abdb1569692a"
+                "client_id": "132508b5-98bd-4d62-bfe2-78b76d85ef5e"
               }
             ]
           },
@@ -1559,17 +1617,17 @@
               {
                 "date": "2019-11-01",
                 "amount": 250.0,
-                "client_id": "33d057e7-5b94-4c6e-a16d-d1a86485d544"
+                "client_id": "3408d332-e6a3-41fe-b64b-e944fe26fa63"
               },
               {
                 "date": "2019-10-01",
                 "amount": 266.02,
-                "client_id": "073e216f-578b-4779-9625-972ae44ba7a6"
+                "client_id": "05bfeb9e-e06f-4f47-97f2-a5ccf28a26d8"
               },
               {
                 "date": "2019-09-01",
                 "amount": 250.0,
-                "client_id": "755b5e92-cb14-4d1e-975d-abdb1569692a",
+                "client_id": "132508b5-98bd-4d62-bfe2-78b76d85ef5e",
                 "flags": {
                   "multi_benefit": true
                 }
@@ -1590,7 +1648,7 @@
     },
     {
       "verb": "POST",
-      "path": "/assessments/e9330783-92cf-47b2-8e42-ef69f5facfe4/state_benefits",
+      "path": "/assessments/8258a538-a656-4ea0-b647-3898227ed41b/state_benefits",
       "versions": [
         "1.0"
       ],
@@ -1603,17 +1661,17 @@
               {
                 "date": "2019-11-01",
                 "amount": 1046.44,
-                "client_id": "569ae65c-381a-4b21-94ab-aa4af972ad53"
+                "client_id": "e8a1c258-ce5c-43c1-83f1-90c63a88f85c"
               },
               {
                 "date": "2019-10-01",
                 "amount": 1034.33,
-                "client_id": "7ed7cb17-9eea-49de-b30b-95120b45edb7"
+                "client_id": "9c188962-4f5f-47a8-9c50-4af20ba751f6"
               },
               {
                 "date": "2019-09-01",
                 "amount": 1033.44,
-                "client_id": "120f560b-34a8-4e97-9469-568004f814fe"
+                "client_id": "c54fa6ce-6ef2-465b-9c17-8c549a96b8c2"
               }
             ]
           },
@@ -1623,17 +1681,17 @@
               {
                 "date": "2019-11-01",
                 "amount": 250.0,
-                "client_id": "569ae65c-381a-4b21-94ab-aa4af972ad53"
+                "client_id": "e8a1c258-ce5c-43c1-83f1-90c63a88f85c"
               },
               {
                 "date": "2019-10-01",
                 "amount": 266.02,
-                "client_id": "7ed7cb17-9eea-49de-b30b-95120b45edb7"
+                "client_id": "9c188962-4f5f-47a8-9c50-4af20ba751f6"
               },
               {
                 "date": "2019-09-01",
                 "amount": 250.0,
-                "client_id": "120f560b-34a8-4e97-9469-568004f814fe",
+                "client_id": "c54fa6ce-6ef2-465b-9c17-8c549a96b8c2",
                 "flags": {
                   "multi_benefit": true
                 }
@@ -1656,7 +1714,7 @@
   "vehicles#create": [
     {
       "verb": "POST",
-      "path": "/assessments/9e111653-2389-448a-8723-3a9bef54db25/vehicles",
+      "path": "/assessments/33e9e032-481a-4b6b-be1d-fca7369d387b/vehicles",
       "versions": [
         "1.0"
       ],
@@ -1664,16 +1722,16 @@
       "request_data": {
         "vehicles": [
           {
-            "value": 7755.32,
-            "loan_amount_outstanding": 1910.67,
-            "date_of_purchase": "2015-05-30",
+            "value": 7955.27,
+            "loan_amount_outstanding": 7843.88,
+            "date_of_purchase": "2016-10-18",
             "in_regular_use": true
           },
           {
-            "value": 1597.71,
-            "loan_amount_outstanding": 9279.25,
-            "date_of_purchase": "2018-10-05",
-            "in_regular_use": true
+            "value": 6276.31,
+            "loan_amount_outstanding": 6275.04,
+            "date_of_purchase": "2016-09-16",
+            "in_regular_use": false
           }
         ]
       },
@@ -1697,15 +1755,15 @@
       "request_data": {
         "vehicles": [
           {
-            "value": 1618.27,
-            "loan_amount_outstanding": 3498.25,
-            "date_of_purchase": "2017-12-23",
-            "in_regular_use": true
+            "value": 7180.16,
+            "loan_amount_outstanding": 1050.85,
+            "date_of_purchase": "2018-09-28",
+            "in_regular_use": false
           },
           {
-            "value": 3492.25,
-            "loan_amount_outstanding": 3703.59,
-            "date_of_purchase": "2015-02-15",
+            "value": 4634.03,
+            "loan_amount_outstanding": 7465.63,
+            "date_of_purchase": "2019-07-31",
             "in_regular_use": false
           }
         ]
