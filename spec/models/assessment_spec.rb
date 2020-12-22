@@ -24,19 +24,21 @@ RSpec.describe Assessment, type: :model do
       it 'instantiates a new empty Remarks object' do
         assessment = create :assessment, remarks: nil
         expect(assessment.remarks.class).to eq Remarks
-        expect(assessment.remarks.as_json).to eq Remarks.new.as_json
+        expect(assessment.remarks.as_json).to eq Remarks.new(assessment.id).as_json
       end
     end
 
     context 'saving and reloading' do
       let(:remarks) do
-        r = Remarks.new
+        r = Remarks.new(assessment.id)
         r.add(:other_income_payment, :unknown_frequency, %w[abc def])
         r.add(:other_income_payment, :amount_variation, %w[ghu jkl])
         r
       end
 
-      let(:assessment) { create :assessment, remarks: remarks }
+      let(:assessment) { create :assessment }
+
+      before { assessment.remarks = remarks }
 
       it 'reconstitutes into a remarks class with the same values' do
         expect(assessment.remarks.as_json).to eq remarks.as_json

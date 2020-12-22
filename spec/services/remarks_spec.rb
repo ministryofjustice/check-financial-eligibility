@@ -1,12 +1,20 @@
 require 'rails_helper'
 
 RSpec.describe Remarks do
-  let(:remarks) { Remarks.new }
+  let(:assessment) { create :assessment }
+  let(:remarks) { Remarks.new(assessment.id) }
 
   describe '#remarks_hash' do
     context 'no remarks' do
       it 'returns and empty hash' do
         expect(remarks.remarks_hash).to eq({})
+      end
+    end
+
+    context 'with remarks' do
+      it 'returns a hash of remarks' do
+        remarks.add(:other_income_payment, :unknown_frequency, %w[abc def])
+        expect(remarks.remarks_hash).to eq({ other_income_payment: { unknown_frequency: %w[abc def] } })
       end
     end
   end
@@ -81,6 +89,19 @@ RSpec.describe Remarks do
     it 'returns the @remarks_hash' do
       remarks.add(:other_income_payment, :unknown_frequency, ['abc'])
       expect(remarks.as_json).to eq remarks.remarks_hash
+    end
+
+    context 'with explicit remarks' do
+      before do
+        create :explicit_remark, assessment: assessment, remark: 'Jacob Creuzfeldt disease fund'
+        create :explicit_remark, assessment: assessment, remark: 'Grenfell tower fund'
+      end
+
+      it 'adds in the explicit remarks' do
+        remarks.add(:other_income_payment, :unknown_frequency, %w[abc def])
+        expect(remarks.as_json).to have_key(:income_disregards)
+        expect(remarks.as_json[:income_disregards]).to eq ['Grenfell tower fund', 'Jacob Creuzfeldt disease fund']
+      end
     end
   end
 end

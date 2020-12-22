@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     resources :other_incomes, only: [:create]
     resource :irregular_incomes, only: [:create]
     resources :state_benefits, only: [:create]
+    resources :explicit_remarks, only: [:create]
   end
   resources :state_benefit_type, only: [:index]
 

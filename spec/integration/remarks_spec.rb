@@ -20,6 +20,7 @@ RSpec.describe 'Full Assessment with remarks' do
     post_other_incomes(assessment_id)
     post_outgoings(assessment_id)
     post_state_benefits(assessment_id)
+    post_explicit_remarks(assessment_id)
 
     get assessment_path(assessment_id), headers: v2_headers
     output_response(:get, :assessment)
@@ -55,6 +56,11 @@ RSpec.describe 'Full Assessment with remarks' do
   def post_state_benefits(assessment_id)
     post assessment_state_benefits_path(assessment_id), params: state_benefit_params, headers: headers
     output_response(:post, :state_benefits)
+  end
+
+  def post_explicit_remarks(assessment_id)
+    post assessment_explicit_remarks_path(assessment_id), params: explicit_remarks_params, headers: headers
+    output_response(:post, :explicit_remarks)
   end
 
   def output_response(method, object)
@@ -283,6 +289,20 @@ RSpec.describe 'Full Assessment with remarks' do
     }.to_json
   end
 
+  def explicit_remarks_params
+    {
+      explicit_remarks: [
+        {
+          category: 'income_disregards',
+          details: [
+            'Grenfell tower fund',
+            'Some other fund'
+          ]
+        }
+      ]
+    }.to_json
+  end
+
   def expected_remarks
     {
       state_benefit_payment: {
@@ -317,7 +337,11 @@ RSpec.describe 'Full Assessment with remarks' do
           client_id,
           client_id
         ]
-      }
+      },
+      income_disregards: [
+        'Grenfell tower fund',
+        'Some other fund'
+      ]
     }
   end
 end
