@@ -33,7 +33,7 @@ Apipie.configure do |config|
       POST /assessments/:assessment_id/other_incomes      # adds data about applicant's other sources of income
       POST /assessments/:assessment_id/outgoings          # adds data about applicant's outgoings
       POST /assessments/:assessment_id/properties         # adds data about properties owned by the applicant
-      POST /assessments/:assessment_id/remarks            # adds remarks to be included on the means report
+      POST /assessments/:assessment_id/explicit_remarks   # adds remarks to be included on the means report
       POST /assessments/:assessment_id/state_benefits     # adds data about applicant's income from state benefits
       POST /assessments/:assessment_id/vehicles           # adds data about vehicles owned by the applicant
 
