@@ -2,10 +2,10 @@ class GrossIncomeSummary < ApplicationRecord
   extend EnumHash
 
   belongs_to :assessment
-  has_many :state_benefits
-  has_many :other_income_sources
-  has_many :irregular_income_payments
-  has_many :cash_transaction_categories
+  has_many :state_benefits, dependent: :destroy
+  has_many :other_income_sources, dependent: :destroy
+  has_many :irregular_income_payments, dependent: :destroy
+  has_many :cash_transaction_categories, dependent: :destroy
 
   enum(
     assessment_result: enum_hash_for(

@@ -5,7 +5,7 @@ RSpec.describe OtherIncomeSource, type: :model do
     let(:source) { create :other_income_source }
     let!(:payment1) { create :other_income_payment, other_income_source: source, payment_date: 3.months.ago.to_date, amount: 301.0 }
     let!(:payment2) { create :other_income_payment, other_income_source: source, payment_date: 2.months.ago.to_date, amount: 302.0 }
-    let!(:payment3) { create :other_income_payment, other_income_source: source, payment_date: 1.months.ago.to_date, amount: 301.50 }
+    let!(:payment3) { create :other_income_payment, other_income_source: source, payment_date: 1.month.ago.to_date, amount: 301.50 }
     let(:analyser) { double Utilities::PaymentPeriodAnalyser }
 
     before do

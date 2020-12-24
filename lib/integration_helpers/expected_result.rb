@@ -102,6 +102,7 @@ class ExpectedResult
   end
 
   # :nocov:
+  # rubocop:disable Rails/Output
   def display_differences_header
     header_pattern = '%40s  %-22s %-22s'
     puts format(header_pattern, @worksheet_name, 'Expected', 'Actual')
@@ -132,6 +133,7 @@ class ExpectedResult
   def display_differences_footer(result)
     result == true ? puts('SUCCESS'.colorize(:green)) : puts('FAIL'.colorize(:red))
   end
+  # rubocop:enable Rails/Output
 
   def difference_pattern
     @difference_pattern ||= '%40s: %-22s %-22s'.freeze

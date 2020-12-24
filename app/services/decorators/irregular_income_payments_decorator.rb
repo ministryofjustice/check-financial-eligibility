@@ -13,7 +13,7 @@ module Decorators
     private
 
     def payments
-      return [] unless @record.present?
+      return [] if @record.blank?
 
       @record.map do |payment|
         {

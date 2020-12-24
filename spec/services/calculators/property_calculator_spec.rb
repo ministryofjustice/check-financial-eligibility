@@ -4,7 +4,7 @@ module Calculators
   RSpec.describe PropertyCalculator do
     let(:assessment) { create :assessment, :with_capital_summary, submission_date: submission_date }
     let(:capital_summary) { assessment.capital_summary }
-    let(:submission_date) { Time.local(2020, 10, 10) }
+    let(:submission_date) { Time.zone.local(2020, 10, 10) }
     let(:service) { described_class.new(assessment) }
 
     describe '#call' do
@@ -65,7 +65,7 @@ module Calculators
 
           context 'on or after 28th Jan 2021' do
             let(:day) { [28, 30].sample }
-            let(:submission_date) { Time.local(2021, 1, day) }
+            let(:submission_date) { Time.zone.local(2021, 1, day) }
             let!(:main_home) do
               create :property,
                      :main_home,
@@ -135,7 +135,7 @@ module Calculators
 
           context 'on or after 28th Jan 2021' do
             let(:day) { [28, 30].sample }
-            let(:submission_date) { Time.local(2021, 1, day) }
+            let(:submission_date) { Time.zone.local(2021, 1, day) }
             let!(:main_home) do
               create :property,
                      :main_home,
@@ -181,7 +181,7 @@ module Calculators
 
           context 'on or after 28th Jan 2021' do
             let(:day) { [28, 30].sample }
-            let(:submission_date) { Time.local(2021, 1, day) }
+            let(:submission_date) { Time.zone.local(2021, 1, day) }
             let!(:main_home) do
               create :property,
                      :main_home,
@@ -266,7 +266,7 @@ module Calculators
 
           context 'on or after 28th Jan 2021' do
             let(:day) { [28, 30].sample }
-            let(:submission_date) { Time.local(2021, 1, day) }
+            let(:submission_date) { Time.zone.local(2021, 1, day) }
 
             it 'deducts outstanding_mortgage instead of mortgage cap' do
               service.call
@@ -323,7 +323,7 @@ module Calculators
 
         context 'on or after 28th Jan 2021' do
           let(:day) { [28, 30].sample }
-          let(:submission_date) { Time.local(2021, 1, day) }
+          let(:submission_date) { Time.zone.local(2021, 1, day) }
           let!(:additional_property) do
             create :property,
                    :additional_property,
@@ -356,7 +356,7 @@ module Calculators
 
       context 'submission date on or after 28/1/2021' do
         let(:day) { [28, 30].sample }
-        let(:submission_date) { Time.local(2021, 1, day) }
+        let(:submission_date) { Time.zone.local(2021, 1, day) }
 
         it 'returns 999_999_999_999' do
           expect(service.remaining_mortgage_allowance).to eq 999_999_999_999

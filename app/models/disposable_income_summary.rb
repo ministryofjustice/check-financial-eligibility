@@ -3,11 +3,11 @@ class DisposableIncomeSummary < ApplicationRecord
   include MonthlyEquivalentCalculator
 
   belongs_to :assessment
-  has_many :outgoings, class_name: 'Outgoings::BaseOutgoing'
-  has_many :childcare_outgoings, class_name: 'Outgoings::Childcare'
-  has_many :housing_cost_outgoings, class_name: 'Outgoings::HousingCost'
-  has_many :maintenance_outgoings, class_name: 'Outgoings::Maintenance'
-  has_many :legal_aid_outgoings, class_name: 'Outgoings::LegalAid'
+  has_many :outgoings, dependent: :destroy, class_name: 'Outgoings::BaseOutgoing'
+  has_many :childcare_outgoings, dependent: :destroy, class_name: 'Outgoings::Childcare'
+  has_many :housing_cost_outgoings, dependent: :destroy, class_name: 'Outgoings::HousingCost'
+  has_many :maintenance_outgoings, dependent: :destroy, class_name: 'Outgoings::Maintenance'
+  has_many :legal_aid_outgoings, dependent: :destroy, class_name: 'Outgoings::LegalAid'
 
   enum(
     assessment_result: enum_hash_for(

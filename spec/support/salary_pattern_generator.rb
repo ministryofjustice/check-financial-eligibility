@@ -32,7 +32,7 @@ class SalaryPatternGenerator
   def generate_monthly_set_day
     (0..2).each_with_object({}) do |offset, hash|
       day = start_at.to_date << offset
-      time = weekend_offset(day.to_time)
+      time = weekend_offset(day.in_time_zone)
       hash[time] = sample_salary
     end
   end
@@ -44,7 +44,7 @@ class SalaryPatternGenerator
     when 1
       day.saturday? ? day - 1.day : day + 1
     when 2
-      day.saturday? ? day + 2.day : day + 1
+      day.saturday? ? day + 2.days : day + 1
     else
       day + day_offset.days
     end
