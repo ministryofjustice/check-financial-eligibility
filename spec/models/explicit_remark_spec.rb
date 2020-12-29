@@ -20,7 +20,7 @@ RSpec.describe ExplicitRemark do
     context 'remarks exist for specified assessment' do
       let(:expected_results) do
         {
-          income_disregards: [
+          policy_disregards: [
             'Remark no. 1',
             'Remark no. 2',
             'Remark no. 3'

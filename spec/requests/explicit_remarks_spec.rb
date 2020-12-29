@@ -8,7 +8,7 @@ RSpec.describe ExplicitRemarksController, type: :request do
       {
         explicit_remarks: [
           {
-            category: 'income_disregards',
+            category: 'policy_disregards',
             details: %w[
               employment
               charity
@@ -42,7 +42,7 @@ RSpec.describe ExplicitRemarksController, type: :request do
           parsed_response = JSON.parse(response.body, symbolize_names: true)
           expect(parsed_response[:success]).to be false
           expect(parsed_response[:errors].size).to eq 1
-          expect(parsed_response[:errors].first).to eq %(Invalid parameter 'category' value "other_stuff": Must be one of: <code>income_disregards</code>.)
+          expect(parsed_response[:errors].first).to eq %(Invalid parameter 'category' value "other_stuff": Must be one of: <code>policy_disregards</code>.)
         end
       end
 
@@ -61,7 +61,7 @@ RSpec.describe ExplicitRemarksController, type: :request do
       {
         explicit_remarks: [
           {
-            category: 'income_disregards',
+            category: 'policy_disregards',
             details: %w[
               employment
               charity
