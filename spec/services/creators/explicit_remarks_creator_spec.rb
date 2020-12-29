@@ -18,7 +18,7 @@ RSpec.describe Creators::ExplicitRemarksCreator do
 
     it 'creates the right records' do
       subject
-      expect(ExplicitRemark.where(assessment_id: assessment.id, category: 'income_disregards').map(&:remark)).to match_array(%w[disregard_1 disregard_2])
+      expect(ExplicitRemark.where(assessment_id: assessment.id, category: 'policy_disregards').map(&:remark)).to match_array(%w[disregard_1 disregard_2])
     end
   end
 
@@ -52,7 +52,7 @@ RSpec.describe Creators::ExplicitRemarksCreator do
   def valid_params
     [
       {
-        category: 'income_disregards',
+        category: 'policy_disregards',
         details: %w[disregard_1 disregard_2]
       }
     ]
@@ -61,7 +61,7 @@ RSpec.describe Creators::ExplicitRemarksCreator do
   def invalid_params
     [
       {
-        category: 'income_disregards',
+        category: 'policy_disregards',
         details: %w[xxxx zzzzz]
       },
       {

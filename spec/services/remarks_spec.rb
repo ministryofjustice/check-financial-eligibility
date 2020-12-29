@@ -99,8 +99,8 @@ RSpec.describe Remarks do
 
       it 'adds in the explicit remarks' do
         remarks.add(:other_income_payment, :unknown_frequency, %w[abc def])
-        expect(remarks.as_json).to have_key(:income_disregards)
-        expect(remarks.as_json[:income_disregards]).to eq ['Grenfell tower fund', 'Jacob Creuzfeldt disease fund']
+        expect(remarks.as_json).to have_key(:policy_disregards)
+        expect(remarks.as_json[:policy_disregards]).to eq ['Grenfell tower fund', 'Jacob Creuzfeldt disease fund']
       end
     end
   end

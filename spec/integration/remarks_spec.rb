@@ -293,7 +293,7 @@ RSpec.describe 'Full Assessment with remarks' do
     {
       explicit_remarks: [
         {
-          category: 'income_disregards',
+          category: 'policy_disregards',
           details: [
             'Grenfell tower fund',
             'Some other fund'
@@ -338,7 +338,7 @@ RSpec.describe 'Full Assessment with remarks' do
           client_id
         ]
       },
-      income_disregards: [
+      policy_disregards: [
         'Grenfell tower fund',
         'Some other fund'
       ]
