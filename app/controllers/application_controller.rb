@@ -4,11 +4,12 @@ class ApplicationController < ActionController::API
     render json: { success: false, errors: ["#{e.class}: #{e.message}"] }, status: :unprocessable_entity
   end
   rescue_from Apipie::ParamError do |e|
-    render_unprocessable([e.message])
+    Raven.capture_exception(e)
+    render json: { success: false, errors: [e.message] }, status: :unprocessable_entity
   end
 
   def render_unprocessable(message)
-    Raven.capture_exception(message)
+    Raven.capture_message(message)
     render json: { success: false, errors: message }, status: :unprocessable_entity
   end
 
