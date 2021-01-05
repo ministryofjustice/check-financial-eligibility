@@ -5,7 +5,7 @@ class IrregularIncomesController < ApplicationController
   resource_description do
     name 'Irregular incomes'
     short 'Add irregular types of income details to an assessment'
-    formats ['json']
+    formats ['json'] # rubocop:disable Layout/SpaceBeforeBrackets
     description <<-END_OF_TEXT
     == Description
       Adds details of an applicant's irregular income payments to an assessment.
@@ -13,7 +13,7 @@ class IrregularIncomesController < ApplicationController
   end
 
   api :POST, 'assessments/:assessment_id/irregular_incomes', 'Create irregular incomes'
-  formats ['json']
+  formats ['json'] # rubocop:disable Layout/SpaceBeforeBrackets
   param :assessment_id, :uuid, required: true
   param :payments, Array, of: Hash, desc: 'Collection of payment types, frequencies and amounts' do
     param :income_type, VALID_IRREGULAR_INCOME_TYPES, required: true, desc: 'An identifying name for this irregular income payment'

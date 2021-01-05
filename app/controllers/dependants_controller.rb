@@ -1,6 +1,6 @@
 class DependantsController < ApplicationController
   api :POST, 'assessments/:assessment_id/dependants', 'Create dependants'
-  formats ['json']
+  formats ['json'] # rubocop:disable Layout/SpaceBeforeBrackets
   param :dependants, Array, required: true, desc: 'An Array of Objects describing a dependant' do
     param :date_of_birth, Date, date_option: :today_or_older, required: true, desc: 'The date of birth of the dependant'
     param :in_full_time_education, :boolean, required: true, desc: 'Whether or not the dependant is in full time education'

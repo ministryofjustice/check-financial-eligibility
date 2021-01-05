@@ -1,6 +1,6 @@
 class VehiclesController < ApplicationController
   api :POST, 'assessments/:assessment_id/vehicles', 'Create vehicles'
-  formats ['json']
+  formats ['json'] # rubocop:disable Layout/SpaceBeforeBrackets
   param :assessment_id, :uuid, required: true
   param(
     :vehicles,
