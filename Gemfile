@@ -72,7 +72,7 @@ group :development do
   gem 'guard'
   gem 'guard-rspec'
   gem 'guard-rubocop'
-  gem 'listen', '>= 3.0.5', '< 3.4'
+  gem 'listen', '>= 3.0.5', '< 3.5'
   gem 'pry-rescue'
   gem 'pry-stack_explorer'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
