@@ -1,7 +1,7 @@
 class AssessmentsController < ApplicationController
   resource_description do
     short 'Assessment container'
-    formats ['json']
+    formats ['json'] # rubocop:disable Layout/SpaceBeforeBrackets
     description <<~END_OF_TEXT
       The assessment is the container that holds the data used to make the assessment. Its `id` is used to identify the
       current assessment in other endpoints.
@@ -11,7 +11,7 @@ class AssessmentsController < ApplicationController
   end
 
   api :POST, 'assessments', 'Create assessment'
-  formats ['json']
+  formats ['json'] # rubocop:disable Layout/SpaceBeforeBrackets
   param :client_reference_id, String, "The client's reference number for this application (free text)"
   param :submission_date, Date, date_option: :submission_date_today_or_older, required: true, desc: 'The date of the original submission'
   param :matter_proceeding_type, Assessment.matter_proceeding_types.values, required: true, desc: 'The matter type of the case'
@@ -43,7 +43,7 @@ class AssessmentsController < ApplicationController
   end
 
   api :GET, 'assessments/:id', AssessmentsController.documentation_for_get
-  formats ['json']
+  formats ['json'] # rubocop:disable Layout/SpaceBeforeBrackets
   param :id, :uuid, required: true
 
   returns code: :ok, desc: 'Successful response - see example for detail' do

@@ -10,7 +10,7 @@ class ApplicantsController < ApplicationController
     END_OF_TEXT
   end
   api :POST, 'assessments/:assessment_id/applicant', 'Create Applicant and attach it to an existing Assessment (create assessment first with POST /assessments)'
-  formats ['json']
+  formats ['json'] # rubocop:disable Layout/SpaceBeforeBrackets
   param :assessment_id, :uuid, required: true, desc: 'The assessment id to which this applicant relates - must have been created prior to this call with POST /assessments'
   param :applicant, Hash, desc: 'Describes basic info about the applicant', required: true do
     param :date_of_birth, Date, date_option: :today_or_older, required: true, desc: "The applicant's date of birth"
