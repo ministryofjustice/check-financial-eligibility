@@ -165,7 +165,8 @@ jobs:
     executor: basic-executor
     steps:
     - checkout
-    - setup_remote_docker
+    - setup_remote_docker:
+        version: 19.03.13
     - *update_packages
     - *install_git_crypt
     - *decrypt_secrets

@@ -1,9 +1,18 @@
-FROM ruby:2.7.2
+FROM ruby:2.7.2-alpine3.12
 MAINTAINER apply for legal aid team
+
 ENV RAILS_ENV production
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-RUN apt-get update -qq && apt-get install -y nodejs yarn postgresql-client
+
+RUN set -ex
+
+RUN apk --no-cache add --virtual build-dependencies \
+                    build-base \
+                    postgresql-dev \
+&& apk --no-cache add \
+                  postgresql-client \
+                  nodejs \
+                  yarn
+
 RUN mkdir /myapp
 WORKDIR /myapp
 
@@ -22,6 +31,8 @@ COPY . /myapp
 RUN yarn --prod
 
 RUN bundle exec rake assets:precompile SECRET_KEY_BASE=a-real-secret-key-is-not-needed-here
+
+RUN apk del build-dependencies
 
 EXPOSE 3000
 
