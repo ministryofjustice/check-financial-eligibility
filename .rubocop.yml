@@ -8,6 +8,8 @@ AllCops:
   SuggestExtensions: false
   Exclude:
     - 'db/schema.rb'
+    - 'log/**/*'
+    - 'tmp/**/*'
     - 'vendor/**/*'
     - 'node_modules/**/*'
 
