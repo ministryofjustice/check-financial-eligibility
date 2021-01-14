@@ -12,7 +12,7 @@ class GrossIncomeSummary < ApplicationRecord
     ),
     _prefix: false
   )
-
+  
   def summarise!
     data = Collators::GrossIncomeCollator.call(assessment)
     update!(data)

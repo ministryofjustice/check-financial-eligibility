@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     resource :irregular_incomes, only: [:create]
     resources :state_benefits, only: [:create]
     resources :explicit_remarks, only: [:create]
+    resources :cash_transactions, only: [:create]
   end
   resources :state_benefit_type, only: [:index]
 

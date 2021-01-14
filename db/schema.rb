@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_21_151158) do
+ActiveRecord::Schema.define(version: 2021_01_14_115829) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -81,6 +81,25 @@ ActiveRecord::Schema.define(version: 2020_12_21_151158) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["assessment_id"], name: "index_capital_summaries_on_assessment_id"
+  end
+
+  create_table "cash_transaction_categories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "gross_income_summary_id"
+    t.string "operation"
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["gross_income_summary_id", "name", "operation"], name: "index_cash_transaction_categories_uniqueness", unique: true
+    t.index ["gross_income_summary_id"], name: "index_cash_transaction_categories_on_gross_income_summary_id"
+  end
+
+  create_table "cash_transactions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "cash_transaction_category_id"
+    t.date "date"
+    t.decimal "amount"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["cash_transaction_category_id"], name: "index_cash_transactions_on_cash_transaction_category_id"
   end
 
   create_table "dependants", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -255,6 +274,8 @@ ActiveRecord::Schema.define(version: 2020_12_21_151158) do
   add_foreign_key "assessment_errors", "assessments"
   add_foreign_key "capital_items", "capital_summaries"
   add_foreign_key "capital_summaries", "assessments"
+  add_foreign_key "cash_transaction_categories", "gross_income_summaries"
+  add_foreign_key "cash_transactions", "cash_transaction_categories"
   add_foreign_key "disposable_income_summaries", "assessments"
   add_foreign_key "gross_income_summaries", "assessments"
   add_foreign_key "irregular_income_payments", "gross_income_summaries"
