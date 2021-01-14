@@ -1,7 +1,7 @@
 class StateBenefitsController < ApplicationController
   resource_description do
     short 'Add state benefits to an assessment'
-    formats ['json'] # rubocop:disable Layout/SpaceBeforeBrackets
+    formats ['json']
     description <<-END_OF_TEXT
     == Description
       Adds details of an applicants'state benefits to an assessment.
@@ -9,7 +9,7 @@ class StateBenefitsController < ApplicationController
   end
 
   api :POST, 'assessments/:assessment_id/state_benefits', 'Create state benefit'
-  formats ['json'] # rubocop:disable Layout/SpaceBeforeBrackets
+  formats ['json']
   param :assessment_id, :uuid, required: true
   param :state_benefits, Array, desc: 'Collection of state benefits' do
     param :name, String, required: true, desc: 'The state benefit name'
