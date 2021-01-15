@@ -4,6 +4,7 @@ class CreateCashTransactions < ActiveRecord::Migration[6.0]
       t.references :cash_transaction_category, foreign_key: true, type: :uuid
       t.date :date
       t.decimal :amount
+      t.string :client_id
 
       t.timestamps
     end

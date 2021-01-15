@@ -71,9 +71,5 @@ RSpec.describe CurrencyValidator do
         expect(subject.description).to eq 'Must be a decimal, zero or greater, with a maximum of two decimal places. For example: 123.34'
       end
     end
-
   end
-
-
-
 end

@@ -5,6 +5,7 @@ class GrossIncomeSummary < ApplicationRecord
   has_many :state_benefits
   has_many :other_income_sources
   has_many :irregular_income_payments
+  has_many :cash_transaction_categories
 
   enum(
     assessment_result: enum_hash_for(
@@ -12,7 +13,7 @@ class GrossIncomeSummary < ApplicationRecord
     ),
     _prefix: false
   )
-  
+
   def summarise!
     data = Collators::GrossIncomeCollator.call(assessment)
     update!(data)

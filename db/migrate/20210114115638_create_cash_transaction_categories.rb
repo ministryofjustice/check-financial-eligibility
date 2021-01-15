@@ -1,7 +1,7 @@
 class CreateCashTransactionCategories < ActiveRecord::Migration[6.0]
   def change
-    create_table :cash_transaction_categories, id: :uuid  do |t|
-      t.references :gross_income_summary,  foreign_key: true, type: :uuid
+    create_table :cash_transaction_categories, id: :uuid do |t|
+      t.references :gross_income_summary, foreign_key: true, type: :uuid
       t.string :operation
       t.string :name
 
@@ -9,7 +9,7 @@ class CreateCashTransactionCategories < ActiveRecord::Migration[6.0]
     end
 
     add_index :cash_transaction_categories,
-              [:gross_income_summary_id, :name, :operation],
+              %i[gross_income_summary_id name operation],
               name: 'index_cash_transaction_categories_uniqueness',
               unique: true
   end

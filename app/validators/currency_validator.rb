@@ -1,5 +1,4 @@
 class CurrencyValidator < Apipie::Validator::BaseValidator
-
   STANDARD_REGEX =  /\A^[-+]?\d+(\.\d{1,2})?\Z$/.freeze
   NO_NEGATIVE_REGEX = /\A^[+]?\d+(\.\d{1,2})?\Z$/.freeze
 
