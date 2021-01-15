@@ -3,7 +3,7 @@ require Rails.root.join('spec/support/faker/other_income_source.rb')
 FactoryBot.define do
   factory :other_income_source do
     gross_income_summary
-    name { OtherIncomeSource::VALID_INCOME_SOURCES.sample }
+    name { CFEConstants::VALID_INCOME_CATEGORIES.sample }
     monthly_income { nil }
 
     trait :with_monthly_payments do

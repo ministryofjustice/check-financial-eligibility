@@ -38,7 +38,7 @@ class Remarks
   private
 
   def validate_type_and_issue(type, issue)
-    raise ArgumentError, "Invalid type: #{type}" unless VALID_TYPES.include?(type)
-    raise ArgumentError, "Invalid issue: #{issue}" unless VALID_ISSUES.include?(issue)
+    raise ArgumentError, "Invalid type: #{type}" unless CFEConstants::VALID_REMARK_TYPES.include?(type)
+    raise ArgumentError, "Invalid issue: #{issue}" unless CFEConstants::VALID_REMARK_ISSUES.include?(issue)
   end
 end

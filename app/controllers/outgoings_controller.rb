@@ -5,7 +5,7 @@ class OutgoingsController < ApplicationController
   param :assessment_id, :uuid, required: true
 
   param :outgoings, Array, desc: 'Collection of other outgoing types' do
-    param :name, Creators::OutgoingsCreator::VALID_OUTGOING_TYPES, required: true, desc: 'The type of outgoing'
+    param :name, CFEConstants::VALID_OUTGOING_CATEGORIES, required: true, desc: 'The type of outgoing'
     param :payments, Array, desc: 'Collection of payment dates and amounts' do
       param :payment_date, Date, date_option: :today_or_older, required: true, desc: 'The date payment made'
       param :housing_costs_type, %w[rent mortgage board_and_lodging], required: false, desc: 'The type of housing cost (omit for non-housing cost outgoings)'

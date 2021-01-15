@@ -3,7 +3,7 @@ class CashTransactionCategory < ApplicationRecord
   has_many :cash_transactions
 
   validates :operation, inclusion: { in: %w[credit debit],
-                                     message: '%{value} is not a valid operation' }
+                                     message: '%<value>s is not a valid operation' }
 
   validates :name, presence: true
 end

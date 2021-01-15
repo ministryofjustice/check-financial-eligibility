@@ -7,6 +7,7 @@ module Creators
     end
 
     def initialize(assessment_id, income, outgoings)
+      super()
       @assessment_id = assessment_id
       @income = income
       @outgoings = outgoings
@@ -38,13 +39,13 @@ module Creators
 
     def create
       [@income, @outgoings].each { |categories| validate_categories(categories) }
-      if @errors.empty?
-        ActiveRecord::Base.transaction do
-          @income.each { |category_hash| create_category(category_hash, 'credit') }
-          @outgoings.each { |category_hash| create_category(category_hash, 'debit') }
-        rescue StandardError => error
-          @errors << "#{error.class} :: #{error.message}\n#{error.backtrace.join("\n")}"
-        end
+      return unless @errors.empty?
+
+      ActiveRecord::Base.transaction do
+        @income.each { |category_hash| create_category(category_hash, 'credit') }
+        @outgoings.each { |category_hash| create_category(category_hash, 'debit') }
+      rescue StandardError => error
+        @errors << "#{error.class} :: #{error.message}\n#{error.backtrace.join("\n")}"
       end
     end
 

@@ -1,7 +1,4 @@
 class CashTransactionsController < ApplicationController
-  VALID_INCOME_CATEGORIES = %w[benefits friends_or_family maintenance_in property_or_lodger pension].freeze
-  VALID_OUTGOING_CATEGORIES = %w[rent_or_mortgage child_care maintenance_out legal_aid].freeze
-
   resource_description do
     short 'Add cash transactions to an assessment'
     formats ['json'] # rubocop:disable Layout/SpaceBeforeBrackets
@@ -15,7 +12,7 @@ class CashTransactionsController < ApplicationController
   formats ['json'] # rubocop:disable Layout/SpaceBeforeBrackets
   param :assessment_id, :uuid, required: true
   param :income, Array, of: Hash, desc: 'Collection of Income categories' do
-    param :category, VALID_INCOME_CATEGORIES, required: true, desc: 'An identifying name for this income category'
+    param :category, CFEConstants::VALID_INCOME_CATEGORIES, required: true, desc: 'An identifying name for this income category'
     param :payments, Array, of: Hash, desc: 'Total payments received for this category in each of the three months preceding the assessment date' do
       param :date, Date, date_option: :today_or_older, required: true,
                          desc: 'The date payment received (this must be the first day of one of the three months preceeding the assessment date'
@@ -24,7 +21,7 @@ class CashTransactionsController < ApplicationController
     end
   end
   param :outgoings, Array, of: Hash, desc: 'Collection of Outgoing categories' do
-    param :category, VALID_OUTGOING_CATEGORIES, required: true, desc: 'An identifying name for this outgoing category'
+    param :category, CFEConstants::VALID_OUTGOING_CATEGORIES, required: true, desc: 'An identifying name for this outgoing category'
     param :payments, Array, of: Hash, desc: 'Total payments made for this category in each of the three months preceding the assessment date' do
       param :date, Date, date_option: :today_or_older, required: true,
                          desc: 'The date payment made (this must be the first day of one of the three months preceeding the assessment date'

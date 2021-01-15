@@ -47,9 +47,7 @@ describe Creators::CashTransactionsCreator do
     end
 
     context 'unhappy paths' do
-      context 'not exactly three occurrences of payments' do
-        let(:params) { invalid_params_two_payments }
-
+      RSpec.shared_examples 'it is unsuccessful' do
         it 'does not create any CashTransactionCategory records' do
           expect { subject }.not_to change { CashTransactionCategory.count }
         end
@@ -61,6 +59,13 @@ describe Creators::CashTransactionsCreator do
         it 'responds false to #success?' do
           expect(subject.success?).to be false
         end
+      end
+
+      context 'not exactly three occurrences of payments' do
+        let(:params) { invalid_params_two_payments }
+        before { subject }
+
+        it_behaves_like 'it is unsuccessful'
 
         it 'returns expected errors' do
           expect(subject.errors).to eq ['There must be exactly 3 payments for category maintenance_in']
@@ -70,20 +75,27 @@ describe Creators::CashTransactionsCreator do
       context 'not the expected dates' do
         let(:params) { invalid_params_wrong_dates }
 
-        it 'does not create any CashTransactionCategory records' do
-          expect { subject }.not_to change { CashTransactionCategory.count }
-        end
+        before { subject }
 
-        it 'does not create any CashTransaction records' do
-          expect { subject }.not_to change { CashTransaction.count }
-        end
-
-        it 'responds false to #success?' do
-          expect(subject.success?).to be false
-        end
+        it_behaves_like 'it is unsuccessful'
 
         it 'returns expected errors' do
           expect(subject.errors).to eq ['Expecting payment dates for category child_care to be 2020-10-01, 2020-11-01, 2020-12-01']
+        end
+      end
+
+      context 'exception raised' do
+        let(:params) { valid_params }
+        before do
+          allow(CashTransaction).to receive(:create!).and_raise(ArgumentError, 'xxxx')
+          subject
+        end
+
+        it_behaves_like 'it is unsuccessful'
+
+        it 'returns details of exception in errors' do
+          expect(subject.errors.first).to match(/^ArgumentError :: xxxx/)
+          expect(subject.errors.first).to match(/in `create_cash_transaction/)
         end
       end
     end

@@ -1,5 +1,5 @@
 class OtherIncomesController < ApplicationController
-  VALID_OTHER_INCOME_TYPES = (OtherIncomeSource::VALID_INCOME_SOURCES + OtherIncomeSource::VALID_INCOME_SOURCES.map(&:humanize)).freeze
+  # VALID_OTHER_INCOME_TYPES = (OtherIncomeSource::VALID_INCOME_SOURCES + OtherIncomeSource::VALID_INCOME_SOURCES.map(&:humanize)).freeze
 
   resource_description do
     short 'Add other types of income details to an assessment'
@@ -14,7 +14,7 @@ class OtherIncomesController < ApplicationController
   formats ['json']
   param :assessment_id, :uuid, required: true
   param :other_incomes, Array, desc: 'Collection of other regular income sources' do
-    param :source, VALID_OTHER_INCOME_TYPES, required: true, desc: 'An identifying name the source of this income'
+    param :source, CFEConstants::HUMANIZED_INCOME_CATEGORIES, required: true, desc: 'An identifying name the source of this income'
     param :payments, Array, desc: 'Collection of payment dates and amounts' do
       param :date, Date, date_option: :today_or_older, required: true, desc: 'The date payment received'
       param :amount, :currency, required: true, desc: 'Amount of payment'

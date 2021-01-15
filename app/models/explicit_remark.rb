@@ -1,7 +1,7 @@
 class ExplicitRemark < ApplicationRecord
   belongs_to :assessment
 
-  validates :category, inclusion: { in: ExplicitRemarksController::VALID_REMARK_CATEGORIES,
+  validates :category, inclusion: { in: CFEConstants::VALID_REMARK_CATEGORIES,
                                     message: '%<value>s is not a valid remark category' }
 
   def self.remarks_by_category(assessment_id)
