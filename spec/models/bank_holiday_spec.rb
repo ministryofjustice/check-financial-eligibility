@@ -5,7 +5,7 @@ RSpec.describe BankHoliday, type: :model do
 
   describe '.populate_dates' do
     before do
-      allow(BankHolidayRetriever).to receive(:dates).and_return(api_response)
+      allow(GovukBankHolidayRetriever).to receive(:dates).and_return(api_response)
     end
 
     context 'no existing bank holidays record' do

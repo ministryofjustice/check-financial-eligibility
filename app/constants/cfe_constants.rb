@@ -8,11 +8,8 @@ module CFEConstants
   #
   OUTGOING_KLASSES = {
     child_care: Outgoings::Childcare,
-    childcare: Outgoings::Childcare, # retained for compatibility with earlier versions of integration test spreadsheet
     rent_or_mortgage: Outgoings::HousingCost,
-    housing_costs: Outgoings::HousingCost, # retained for compatibility with earlier versions of integration test spreadsheet
     maintenance_out: Outgoings::Maintenance,
-    maintenance: Outgoings::Maintenance, # retained for compatibility with earlier versions of integration test spreadsheet
     legal_aid: Outgoings::LegalAid
   }.freeze
   VALID_OUTGOING_CATEGORIES = OUTGOING_KLASSES.keys.map(&:to_s).freeze
@@ -40,7 +37,6 @@ module CFEConstants
   STUDENT_LOAN = 'student_loan'.freeze
   VALID_IRREGULAR_INCOME_FREQUENCIES = [ANNUAL_FREQUENCY].freeze
   VALID_IRREGULAR_INCOME_TYPES = [STUDENT_LOAN].freeze
-
 
   # Date and bank holidays
   #

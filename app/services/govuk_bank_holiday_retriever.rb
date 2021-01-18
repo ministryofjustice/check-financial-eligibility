@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class BankHolidayRetriever
+class GovukBankHolidayRetriever
   UnsuccessfulRetrievalError = Class.new(StandardError)
 
   def self.dates
