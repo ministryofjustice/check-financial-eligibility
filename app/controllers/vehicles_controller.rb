@@ -8,7 +8,7 @@ class VehiclesController < ApplicationController
     desc: 'An array of vehicles owned by the applicant',
     required: true
   ) do
-    param :value, :currency, required: true, desc: 'Value of the vehicle'
+    param :value, :currency, currency_option: :not_negative, required: true, desc: 'Value of the vehicle'
     param :loan_amount_outstanding, :currency, required: false, desc: 'Amount, if any, of a loan used to purchase the vehicle which is still left to pay'
     param :date_of_purchase, Date, date_option: :today_or_older, required: true, desc: 'Date the vehicle was purchased by the applicant'
     param :in_regular_use, :boolean, required: false, desc: 'Whether or not the vehicle is in regular use'

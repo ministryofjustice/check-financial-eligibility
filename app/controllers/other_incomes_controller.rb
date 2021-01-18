@@ -15,7 +15,7 @@ class OtherIncomesController < ApplicationController
     param :source, CFEConstants::HUMANIZED_INCOME_CATEGORIES, required: true, desc: 'An identifying name the source of this income'
     param :payments, Array, desc: 'Collection of payment dates and amounts' do
       param :date, Date, date_option: :today_or_older, required: true, desc: 'The date payment received'
-      param :amount, :currency, required: true, desc: 'Amount of payment'
+      param :amount, :currency, currency_option: :not_negative, required: true, desc: 'Amount of payment'
       param :client_id, String, required: true, desc: 'Uniquely identifying string from client'
     end
   end

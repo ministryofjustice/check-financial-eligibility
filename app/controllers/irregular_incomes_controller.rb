@@ -15,7 +15,7 @@ class IrregularIncomesController < ApplicationController
   param :payments, Array, of: Hash, desc: 'Collection of payment types, frequencies and amounts' do
     param :income_type, CFEConstants::VALID_IRREGULAR_INCOME_TYPES, required: true, desc: 'An identifying name for this irregular income payment'
     param :frequency, CFEConstants::VALID_IRREGULAR_INCOME_FREQUENCIES, required: true, desc: 'The frequency of the payment received'
-    param :amount, :currency, required: true, desc: 'Amount of payment'
+    param :amount, :currency, currency_option: :not_negative, required: true, desc: 'Amount of payment'
   end
 
   returns code: :ok, desc: 'Successful response' do
