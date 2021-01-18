@@ -2,8 +2,6 @@
 
 class BankHolidayRetriever
   UnsuccessfulRetrievalError = Class.new(StandardError)
-  # API_URL = 'https://www.gov.uk/bank-holidays.json'
-  # DEFAULT_GROUP = 'england-and-wales'
 
   def self.dates
     new.dates(CFEConstants::GOVUK_BANK_HOLIDAY_DEFAULT_GROUP)

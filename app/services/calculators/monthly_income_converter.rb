@@ -1,8 +1,5 @@
 module Calculators
   class MonthlyIncomeConverter
-    # VALID_FREQUENCIES = %i[monthly four_weekly two_weekly weekly unknown].freeze
-    # NUMBER_OF_MONTHS_TO_AVERAGE = 3
-
     attr_reader :monthly_amount, :error_message
 
     def initialize(frequency, payments)

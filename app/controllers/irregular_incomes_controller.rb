@@ -1,7 +1,4 @@
 class IrregularIncomesController < ApplicationController
-  # VALID_IRREGULAR_INCOME_TYPES = IrregularIncomePayment::VALID_IRREGULAR_INCOME_TYPES.freeze
-  # VALID_IRREGULAR_INCOME_FREQUENCIES = IrregularIncomePayment::VALID_IRREGULAR_INCOME_FREQUENCIES.freeze
-
   resource_description do
     name 'Irregular incomes'
     short 'Add irregular types of income details to an assessment'

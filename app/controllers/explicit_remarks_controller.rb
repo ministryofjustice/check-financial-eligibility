@@ -1,6 +1,4 @@
 class ExplicitRemarksController < ApplicationController
-  # VALID_REMARK_CATEGORIES = %w[policy_disregards].freeze
-
   resource_description do
     description <<-END_OF_TEXT
     == Description

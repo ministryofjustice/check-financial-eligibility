@@ -1,6 +1,4 @@
 class OtherIncomesController < ApplicationController
-  # VALID_OTHER_INCOME_TYPES = (OtherIncomeSource::VALID_INCOME_SOURCES + OtherIncomeSource::VALID_INCOME_SOURCES.map(&:humanize)).freeze
-
   resource_description do
     short 'Add other types of income details to an assessment'
     formats ['json']
