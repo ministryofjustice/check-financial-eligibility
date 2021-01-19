@@ -1,6 +1,6 @@
 class VehiclesController < ApplicationController
   api :POST, 'assessments/:assessment_id/vehicles', 'Create vehicles'
-  formats ['json']
+  formats(%w[json])
   param :assessment_id, :uuid, required: true
   param(
     :vehicles,

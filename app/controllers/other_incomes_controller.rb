@@ -1,7 +1,7 @@
 class OtherIncomesController < ApplicationController
   resource_description do
     short 'Add other types of income details to an assessment'
-    formats ['json']
+    formats(%w[json])
     description <<-END_OF_TEXT
     == Description
       Adds details of an applicant's other income sources to an assessment.
@@ -9,7 +9,7 @@ class OtherIncomesController < ApplicationController
   end
 
   api :POST, 'assessments/:assessment_id/other_incomes', 'Create other income'
-  formats ['json']
+  formats(%w[json])
   param :assessment_id, :uuid, required: true
   param :other_incomes, Array, desc: 'Collection of other regular income sources' do
     param :source, CFEConstants::HUMANIZED_INCOME_CATEGORIES, required: true, desc: 'An identifying name the source of this income'

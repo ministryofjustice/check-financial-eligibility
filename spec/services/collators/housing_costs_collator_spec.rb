@@ -22,11 +22,7 @@ module Collators
 
       context 'housing cost outgoings' do
         before do
-<<<<<<< HEAD
           create :housing_cost_outgoing, disposable_income_summary: disposable_income_summary, amount: 355.44, payment_date: Date.current, housing_cost_type: housing_cost_type
-=======
-          create :housing_cost_outgoing, disposable_income_summary: disposable_income_summary, amount: 355.44, payment_date: Time.zone.today, housing_cost_type: housing_cost_type
->>>>>>> Implement rubocop-rails and necessary fixes
           create :housing_cost_outgoing, disposable_income_summary: disposable_income_summary, amount: 355.44, payment_date: 1.month.ago, housing_cost_type: housing_cost_type
           create :housing_cost_outgoing, disposable_income_summary: disposable_income_summary, amount: 355.44, payment_date: 2.months.ago, housing_cost_type: housing_cost_type
         end

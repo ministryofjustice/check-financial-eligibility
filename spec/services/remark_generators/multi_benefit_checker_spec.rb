@@ -4,7 +4,8 @@ module RemarkGenerators
   RSpec.describe MultiBenefitChecker do
     context 'state benefit payments' do
       let(:amount) { 123.45 }
-      let(:dates) { [Date.current, 1.month.ago, 2.month.ago] } let(:state_benefit) { create :state_benefit }
+      let(:dates) { [Date.current, 1.month.ago, 2.months.ago] }
+      let(:state_benefit) { create :state_benefit }
       let(:assessment) { state_benefit.gross_income_summary.assessment }
       let(:collection) { [payment1, payment2, payment3] }
       let!(:original_remarks) { assessment.remarks.as_json }

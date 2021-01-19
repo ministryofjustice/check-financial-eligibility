@@ -6,11 +6,7 @@ module RemarkGenerators
 
     context 'state benefit payments' do
       let(:amount) { 123.45 }
-<<<<<<< HEAD
-      let(:dates) { [Date.current, 1.month.ago, 2.month.ago] }
-=======
-      let(:dates) { [Time.zone.today, 1.month.ago, 2.months.ago] }
->>>>>>> Implement rubocop-rails and necessary fixes
+      let(:dates) { [Date.current, 1.month.ago, 2.months.ago] }
       let(:state_benefit) { create :state_benefit }
       let(:assessment) { state_benefit.gross_income_summary.assessment }
       let(:payment1) { create :state_benefit_payment, state_benefit: state_benefit, amount: amount, payment_date: dates[0] }
@@ -19,11 +15,7 @@ module RemarkGenerators
       let(:collection) { [payment1, payment2, payment3] }
 
       context 'regular payments' do
-<<<<<<< HEAD
-        let(:dates) { [Date.current, 1.month.ago, 2.month.ago] }
-=======
-        let(:dates) { [Time.zone.today, 1.month.ago, 2.months.ago] }
->>>>>>> Implement rubocop-rails and necessary fixes
+        let(:dates) { [Date.current, 1.month.ago, 2.months.ago] }
 
         it 'does not update the remarks class' do
           original_remarks = assessment.remarks.as_json

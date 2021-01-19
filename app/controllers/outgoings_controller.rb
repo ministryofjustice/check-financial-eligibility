@@ -1,7 +1,7 @@
 class OutgoingsController < ApplicationController
   # api! works but the links in resulting docs are broken. See https://github.com/Apipie/apipie-rails/issues/559
   api :POST, 'assessments/:assessment_id/outgoings', 'Create outgoings'
-  formats ['json']
+  formats(%w[json])
   param :assessment_id, :uuid, required: true
 
   param :outgoings, Array, desc: 'Collection of other outgoing types' do
