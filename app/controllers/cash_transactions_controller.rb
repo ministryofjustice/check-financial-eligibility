@@ -1,7 +1,7 @@
 class CashTransactionsController < ApplicationController
   resource_description do
     short 'Add cash transactions to an assessment'
-    formats ['json'] # rubocop:disable Layout/SpaceBeforeBrackets
+    formats ['json']
     description <<-END_OF_TEXT
     == Description
       Adds cash income and outgoings to and assessment so that they can be included in the means test.
@@ -9,7 +9,7 @@ class CashTransactionsController < ApplicationController
     END_OF_TEXT
   end
   api :POST, 'assessments/:assessment_id/cash_transactions', 'Add cash income and outgoings'
-  formats ['json'] # rubocop:disable Layout/SpaceBeforeBrackets
+  formats ['json']
   param :assessment_id, :uuid, required: true
   param :income, Array, of: Hash, desc: 'Collection of Income categories' do
     param :category, CFEConstants::VALID_INCOME_CATEGORIES, required: true, desc: 'An identifying name for this income category'
