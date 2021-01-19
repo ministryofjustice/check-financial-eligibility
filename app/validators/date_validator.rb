@@ -32,9 +32,9 @@ class DateValidator < Apipie::Validator::BaseValidator
   def validate_options(option, date)
     case option
     when :today_or_older
-      return true if date <= Date.today
+      return true if date <= Date.current
     when :submission_date_today_or_older
-      return true if date <= Date.today || allow_future_submission_date?
+      return true if date <= Date.current || allow_future_submission_date?
     else
       raise "date option '#{option}' not recognised"
     end

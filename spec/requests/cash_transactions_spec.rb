@@ -7,9 +7,9 @@ RSpec.describe CashTransactionsController, type: :request do
     let(:gross_income_summary) { assessment.gross_income_summary }
     let(:headers) { { 'CONTENT_TYPE' => 'application/json' } }
     let(:creator_class) { Creators::CashTransactionsCreator }
-    let(:month1) { Date.today.beginning_of_month - 3.months }
-    let(:month2) { Date.today.beginning_of_month - 2.months }
-    let(:month3) { Date.today.beginning_of_month - 1.months }
+    let(:month1) { Date.current.beginning_of_month - 3.months }
+    let(:month2) { Date.current.beginning_of_month - 2.months }
+    let(:month3) { Date.current.beginning_of_month - 1.months }
 
     subject { post assessment_cash_transactions_path(assessment_id), params: params.to_json, headers: headers }
 

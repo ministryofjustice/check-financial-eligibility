@@ -6,9 +6,10 @@ describe Creators::CashTransactionsCreator do
     let(:gross_income_summary) { assessment.gross_income_summary }
     let(:income) { params[:income] }
     let(:outgoings) { params[:outgoings] }
-    let(:month1) { Date.today.beginning_of_month - 3.months }
-    let(:month2) { Date.today.beginning_of_month - 2.months }
-    let(:month3) { Date.today.beginning_of_month - 1.months }
+    let(:month0) { Date.current.beginning_of_month - 4.months }
+    let(:month1) { Date.current.beginning_of_month - 3.months }
+    let(:month2) { Date.current.beginning_of_month - 2.months }
+    let(:month3) { Date.current.beginning_of_month - 1.months }
 
     subject { described_class.call(assessment_id: assessment.id, income: income, outgoings: outgoings) }
 
@@ -72,6 +73,17 @@ describe Creators::CashTransactionsCreator do
         end
       end
 
+      context 'not consecutive months' do
+        let(:params) { invalid_params_not_consecutive_months }
+        before { subject }
+
+        it_behaves_like 'it is unsuccessful'
+
+        it 'returns expected errors' do
+          expect(subject.errors).to eq ['Expecting payment dates for category maintenance_in to be 1st of three of the previous 3 months']
+        end
+      end
+
       context 'not the expected dates' do
         let(:params) { invalid_params_wrong_dates }
 
@@ -80,7 +92,7 @@ describe Creators::CashTransactionsCreator do
         it_behaves_like 'it is unsuccessful'
 
         it 'returns expected errors' do
-          expect(subject.errors).to eq ['Expecting payment dates for category child_care to be 2020-10-01, 2020-11-01, 2020-12-01']
+          expect(subject.errors).to eq ['Expecting payment dates for category child_care to be 1st of three of the previous 3 months']
         end
       end
 
@@ -199,6 +211,12 @@ describe Creators::CashTransactionsCreator do
     def invalid_params_wrong_dates
       params = valid_params.clone
       params[:outgoings].last[:payments].first[:date] = '2020-05-06'
+      params
+    end
+
+    def invalid_params_not_consecutive_months
+      params = valid_params.clone
+      params[:income].first[:payments].first[:date] = month0.strftime('%F')
       params
     end
   end

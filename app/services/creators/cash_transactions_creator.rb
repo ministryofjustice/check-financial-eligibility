@@ -27,14 +27,11 @@ module Creators
 
     def valid_dates
       @valid_dates ||= [
-        assessment.submission_date.beginning_of_month - 3.months,
-        assessment.submission_date.beginning_of_month - 2.months,
-        assessment.submission_date.beginning_of_month - 1.month
+        Date.current.beginning_of_month - 4.months,
+        Date.current.beginning_of_month - 3.months,
+        Date.current.beginning_of_month - 2.months,
+        Date.current.beginning_of_month - 1.month
       ]
-    end
-
-    def pretty_dates
-      valid_dates.map { |d| d.strftime('%F') }.join(', ')
     end
 
     def create
@@ -63,7 +60,19 @@ module Creators
 
     def validate_payment_dates(category_hash)
       dates = category_hash[:payments].map { |payment| Date.parse(payment[:date]) }.sort
-      @errors << "Expecting payment dates for category #{category_hash[:category]} to be #{pretty_dates}" unless dates == valid_dates
+      return if dates == first_three_valid_dates
+
+      return if dates == last_three_valid_dates
+
+      @errors << "Expecting payment dates for category #{category_hash[:category]} to be 1st of three of the previous 3 months"
+    end
+
+    def first_three_valid_dates
+      valid_dates.slice(0, 3)
+    end
+
+    def last_three_valid_dates
+      valid_dates.slice(1, 3)
     end
 
     def create_category(category_hash, operation)

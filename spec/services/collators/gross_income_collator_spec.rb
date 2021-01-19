@@ -80,11 +80,11 @@ module Collators
           before do
             source1 = create :other_income_source, gross_income_summary: gross_income_summary, name: 'friends_or_family'
             source2 = create :other_income_source, gross_income_summary: gross_income_summary, name: 'property_or_lodger'
-            create :other_income_payment, other_income_source: source1, payment_date: Date.today, amount: 105.13
+            create :other_income_payment, other_income_source: source1, payment_date: Date.current, amount: 105.13
             create :other_income_payment, other_income_source: source1, payment_date: 1.month.ago.to_date, amount: 105.23
             create :other_income_payment, other_income_source: source1, payment_date: 1.month.ago.to_date, amount: 105.03
 
-            create :other_income_payment, other_income_source: source2, payment_date: Date.today, amount: 66.45
+            create :other_income_payment, other_income_source: source2, payment_date: Date.current, amount: 66.45
             create :other_income_payment, other_income_source: source2, payment_date: 1.month.ago.to_date, amount: 66.45
             create :other_income_payment, other_income_source: source2, payment_date: 1.month.ago.to_date, amount: 66.45
           end

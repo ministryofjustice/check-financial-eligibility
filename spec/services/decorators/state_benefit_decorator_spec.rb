@@ -15,7 +15,7 @@ module Decorators
           excluded_from_income_assessment: excluded,
           state_benefit_payments:
             [
-              { payment_date: Date.today, amount: 88.30 },
+              { payment_date: Date.current, amount: 88.30 },
               { payment_date: 1.month.ago.to_date, amount: 88.3 },
               { payment_date: 2.months.ago.to_date, amount: 88.3 }
             ]

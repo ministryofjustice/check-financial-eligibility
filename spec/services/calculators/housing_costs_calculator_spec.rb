@@ -7,7 +7,7 @@ module Calculators
 
     before do
       create :bank_holiday
-      [2.months.ago, 1.month.ago, Date.today].each do |date|
+      [2.months.ago, 1.month.ago, Date.current].each do |date|
         create :housing_cost_outgoing,
                disposable_income_summary: assessment.disposable_income_summary,
                payment_date: date,
@@ -285,7 +285,7 @@ module Calculators
     def create_benefit_payments(amount)
       housing_benefit_type = create :state_benefit_type, label: 'housing_benefit'
       state_benefit = create :state_benefit, gross_income_summary: assessment.gross_income_summary, state_benefit_type: housing_benefit_type
-      [2.months.ago, 1.month.ago, Date.today].each do |pay_date|
+      [2.months.ago, 1.month.ago, Date.current].each do |pay_date|
         create :state_benefit_payment, state_benefit: state_benefit, amount: amount, payment_date: pay_date
       end
     end

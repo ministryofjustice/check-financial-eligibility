@@ -22,9 +22,9 @@ class CashTransactionsController < ApplicationController
   end
   param :outgoings, Array, of: Hash, desc: 'Collection of Outgoing categories' do
     param :category, CFEConstants::VALID_OUTGOING_CATEGORIES, required: true, desc: 'An identifying name for this outgoing category'
-    param :payments, Array, of: Hash, desc: 'Total payments made for this category in each of the three months preceding the assessment date' do
+    param :payments, Array, of: Hash, desc: 'Total payments made for this category in three consecutive months of the preceding four months' do
       param :date, Date, date_option: :today_or_older, required: true,
-                         desc: 'The date payment made (this must be the first day of one of the three months preceeding the assessment date'
+                         desc: 'The date payment made (this must be the first day of one of the four preceding months'
       param :amount, :currency, currency_option: :not_negative, required: true, desc: 'Amount of payment'
       param :client_id, String, required: true, desc: 'Uniquely identifying string from client'
     end
