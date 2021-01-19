@@ -1,8 +1,5 @@
 module Calculators
   class MonthlyIncomeConverter
-    VALID_FREQUENCIES = %i[monthly four_weekly two_weekly weekly unknown].freeze
-    NUMBER_OF_MONTHS_TO_AVERAGE = 3
-
     attr_reader :monthly_amount, :error_message
 
     def initialize(frequency, payments)
@@ -14,7 +11,7 @@ module Calculators
     end
 
     def run
-      raise 'Unrecognized frequency' unless @frequency.in?(VALID_FREQUENCIES)
+      raise 'Unrecognized frequency' unless @frequency.in?(CFEConstants::VALID_FREQUENCIES)
 
       @monthly_amount = __send__("process_#{@frequency}")
     end
@@ -43,7 +40,7 @@ module Calculators
     end
 
     def process_unknown
-      (@payments.sum.to_f / NUMBER_OF_MONTHS_TO_AVERAGE).round(2)
+      (@payments.sum.to_f / CFEConstants::NUMBER_OF_MONTHS_TO_AVERAGE).round(2)
     end
 
     def payment_average

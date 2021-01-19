@@ -8,7 +8,7 @@ RSpec.describe Assessment, type: :model do
     let(:param_hash) do
       {
         client_reference_id: 'client-ref-1',
-        submission_date: Date.today,
+        submission_date: Date.current,
         matter_proceeding_type: 'domestic_abuse'
       }
     end

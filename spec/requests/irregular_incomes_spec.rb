@@ -20,8 +20,8 @@ RSpec.describe IrregularIncomesController, type: :request do
         it 'creates the required number of IrregularIncomePayment records' do
           expect { subject }.to change { IrregularIncomePayment.count }.by(1)
           payments = gross_income_summary.irregular_income_payments
-          expect(payments[0].income_type).to eq IrregularIncomePayment::STUDENT_LOAN
-          expect(payments[0].frequency).to eq IrregularIncomePayment::ANNUAL_FREQUENCY
+          expect(payments[0].income_type).to eq CFEConstants::STUDENT_LOAN
+          expect(payments[0].frequency).to eq CFEConstants::ANNUAL_FREQUENCY
           expect(payments[0].amount).to eq 123_456.78
         end
       end

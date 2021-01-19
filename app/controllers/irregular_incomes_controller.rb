@@ -1,7 +1,4 @@
 class IrregularIncomesController < ApplicationController
-  VALID_IRREGULAR_INCOME_TYPES = IrregularIncomePayment::VALID_IRREGULAR_INCOME_TYPES.freeze
-  VALID_IRREGULAR_INCOME_FREQUENCIES = IrregularIncomePayment::VALID_IRREGULAR_INCOME_FREQUENCIES.freeze
-
   resource_description do
     name 'Irregular incomes'
     short 'Add irregular types of income details to an assessment'
@@ -16,9 +13,9 @@ class IrregularIncomesController < ApplicationController
   formats ['json']
   param :assessment_id, :uuid, required: true
   param :payments, Array, of: Hash, desc: 'Collection of payment types, frequencies and amounts' do
-    param :income_type, VALID_IRREGULAR_INCOME_TYPES, required: true, desc: 'An identifying name for this irregular income payment'
-    param :frequency, VALID_IRREGULAR_INCOME_FREQUENCIES, required: true, desc: 'The frequency of the payment received'
-    param :amount, :currency, required: true, desc: 'Amount of payment'
+    param :income_type, CFEConstants::VALID_IRREGULAR_INCOME_TYPES, required: true, desc: 'An identifying name for this irregular income payment'
+    param :frequency, CFEConstants::VALID_IRREGULAR_INCOME_FREQUENCIES, required: true, desc: 'The frequency of the payment received'
+    param :amount, :currency, currency_option: :not_negative, required: true, desc: 'Amount of payment'
   end
 
   returns code: :ok, desc: 'Successful response' do

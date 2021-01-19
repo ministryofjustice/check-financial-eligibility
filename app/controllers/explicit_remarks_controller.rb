@@ -1,6 +1,4 @@
 class ExplicitRemarksController < ApplicationController
-  VALID_REMARK_CATEGORIES = %w[policy_disregards].freeze
-
   resource_description do
     description <<-END_OF_TEXT
     == Description
@@ -15,7 +13,7 @@ class ExplicitRemarksController < ApplicationController
   formats ['json']
   param :assessment_id, :uuid, required: true, desc: 'The assessment id to which these remarks relate - must have been created prior to this call with POST /assessments'
   param :explicit_remarks, Array, required: true, desc: 'An Array of Objects describing a a category or remarks' do
-    param :category, VALID_REMARK_CATEGORIES, required: true, desc: "The category of remark. Currently, only 'income disregard' is supported"
+    param :category, CFEConstants::VALID_REMARK_CATEGORIES, required: true, desc: "The category of remark. Currently, only 'income disregard' is supported"
     param :details, Array, of: String, required: true
   end
 

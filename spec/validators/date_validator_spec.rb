@@ -23,7 +23,7 @@ RSpec.describe DateValidator do
       let(:option) { :today_or_older }
 
       it 'returns true for today' do
-        input = Date.today.to_s
+        input = Date.current.to_s
         expect(subject.validate(input)).to be_truthy
       end
 
@@ -44,7 +44,7 @@ RSpec.describe DateValidator do
       before { allow(Rails.configuration.x.application).to receive(:allow_future_submission_date).and_return false }
 
       it 'returns true for today' do
-        input = Date.today.to_s
+        input = Date.current.to_s
         expect(subject.validate(input)).to be_truthy
       end
 
@@ -72,7 +72,7 @@ RSpec.describe DateValidator do
       let(:option) { :unknown }
 
       it 'raises and error' do
-        expect { subject.validate(Date.today.to_s) }.to raise_error("date option 'unknown' not recognised")
+        expect { subject.validate(Date.current.to_s) }.to raise_error("date option 'unknown' not recognised")
       end
     end
   end

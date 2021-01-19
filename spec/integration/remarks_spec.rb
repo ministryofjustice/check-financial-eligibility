@@ -196,7 +196,7 @@ RSpec.describe 'Full Assessment with remarks' do
           ]
         },
         {
-          name: %w[maintenance_out maintenance].sample, # irregular payment dates with old version type name maintenance
+          name: 'maintenance_out',
           payments: [
             {
               payment_date: '2019-11-03',

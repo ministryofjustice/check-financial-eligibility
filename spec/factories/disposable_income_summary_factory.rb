@@ -16,7 +16,7 @@ FactoryBot.define do
 
     trait :with_everything do
       after(:create) do |rec|
-        [Date.today, 1.month.ago, 2.months.ago].each do |date|
+        [Date.current, 1.month.ago, 2.months.ago].each do |date|
           create :childcare_outgoing, disposable_income_summary: rec, payment_date: date, amount: 100
           create :maintenance_outgoing, disposable_income_summary: rec, payment_date: date, amount: 50
           create :housing_cost_outgoing, disposable_income_summary: rec, payment_date: date, amount: 125

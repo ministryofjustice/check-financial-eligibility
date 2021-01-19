@@ -28,6 +28,7 @@ Apipie.configure do |config|
 
       POST /assessments/:assessment_id/applicant          # adds data about the applicant
       POST /assessments/:assessment_id/capitals           # adds data about liquid assets (i.e. bank accounts) and non-liquid assets (valuable items, trusts, etc)
+      POST /assessments/:assessment_id/cash_transactions  # adds cash income and outgoings
       POST /assessments/:assessment_id/dependants         # adds data about any dependants the applicant may have
       POST /assessments/:assessment_id/irregular_incomes  # adds data about applicant's irregular income
       POST /assessments/:assessment_id/other_incomes      # adds data about applicant's other sources of income

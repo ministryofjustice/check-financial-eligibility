@@ -14,7 +14,7 @@ class Vehicle < ApplicationRecord
   private
 
   def date_of_purchase_cannot_be_in_future
-    errors.add(:date_of_purchase, 'cannot be in the future') if date_of_purchase > Date.today
+    errors.add(:date_of_purchase, 'cannot be in the future') if date_of_purchase > Date.current
   end
 
   def assess_vehicle_not_in_regular_use

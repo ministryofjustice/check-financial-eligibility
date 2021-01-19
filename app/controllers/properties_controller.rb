@@ -11,7 +11,7 @@ class PropertiesController < ApplicationController
     end
     param :additional_properties, Array, required: false, desc: "The applicant's main home" do
       param :value, :currency, required: true, desc: 'The value of this property'
-      param :outstanding_mortgage, :currency, required: true, desc: 'The amount outstanding on any mortgage'
+      param :outstanding_mortgage, :currency, currency_option: :not_negative, required: true, desc: 'The amount outstanding on any mortgage'
       param :percentage_owned, :currency, required: true, desc: 'The percentage share of the property which is owned by the applicant'
       param :shared_with_housing_assoc, :boolean, required: true, desc: 'Whether or not this house is shared with a housing association'
     end

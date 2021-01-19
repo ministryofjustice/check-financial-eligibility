@@ -16,7 +16,7 @@ class BankHoliday < ApplicationRecord
 
   def self.populate_dates
     rec = BankHoliday.first || BankHoliday.new
-    rec.dates = BankHolidayRetriever.dates
+    rec.dates = GovukBankHolidayRetriever.dates
     rec.save!
   end
 end

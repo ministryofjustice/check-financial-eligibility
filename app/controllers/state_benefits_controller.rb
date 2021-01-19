@@ -15,7 +15,7 @@ class StateBenefitsController < ApplicationController
     param :name, String, required: true, desc: 'The state benefit name'
     param :payments, Array, desc: 'Collection of payment dates and amounts' do
       param :date, Date, date_option: :today_or_older, required: true, desc: 'The date payment received'
-      param :amount, :currency, required: true, desc: 'Amount of payment'
+      param :amount, :currency, currency_option: :not_negative, required: true, desc: 'Amount of payment'
       param :client_id, String, required: true, desc: 'Uniquely identifying string from client'
       param :flags, Hash, desc: 'Line items that should be flagged to caseworkers for review'
     end

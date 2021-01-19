@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe BankHolidayRetriever do
+RSpec.describe GovukBankHolidayRetriever do
   describe '.dates' do
     context 'successful call' do
       before do
@@ -22,7 +22,7 @@ RSpec.describe BankHolidayRetriever do
       it 'raises an error' do
         expect {
           described_class.dates
-        }.to raise_error BankHolidayRetriever::UnsuccessfulRetrievalError, 'Retrieval Failed:  (404) xxx'
+        }.to raise_error GovukBankHolidayRetriever::UnsuccessfulRetrievalError, 'Retrieval Failed:  (404) xxx'
       end
     end
 

@@ -1,12 +1,10 @@
 # frozen_string_literal: true
 
-class BankHolidayRetriever
+class GovukBankHolidayRetriever
   UnsuccessfulRetrievalError = Class.new(StandardError)
-  API_URL = 'https://www.gov.uk/bank-holidays.json'
-  DEFAULT_GROUP = 'england-and-wales'
 
   def self.dates
-    new.dates(DEFAULT_GROUP)
+    new.dates(CFEConstants::GOVUK_BANK_HOLIDAY_DEFAULT_GROUP)
   end
 
   def data
@@ -28,7 +26,7 @@ class BankHolidayRetriever
   end
 
   def uri
-    URI.parse(API_URL)
+    URI.parse(CFEConstants::GOVUK_BANK_HOLIDAY_API_URL)
   end
 
   def raise_error

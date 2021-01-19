@@ -12,7 +12,7 @@ module Decorators
           monthly_income: 250.0,
           payments: [
             {
-              payment_date: Date.today,
+              payment_date: Date.current,
               amount: 75.0
             },
             {
