@@ -34,8 +34,6 @@ RSpec.describe 'Full Assessment with remarks' do
     expect(remarks[:outgoings_housing_cost]).to eq expected_remarks[:outgoings_housing_cost]
     expect(remarks[:outgoings_childcare]).to eq expected_remarks[:outgoings_childcare]
     expect(remarks[:outgoings_legal_aid]).to eq expected_remarks[:outgoings_legal_aid]
-
-    expect(parsed_response[:assessment][:remarks]).to match expected_remarks
   end
 
   def post_assessment
