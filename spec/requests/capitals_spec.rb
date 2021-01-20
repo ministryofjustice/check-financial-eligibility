@@ -28,6 +28,15 @@ RSpec.describe CapitalsController, type: :request do
         end
       end
 
+      context 'with negative values' do
+        let(:params) do
+          {
+            bank_accounts: negative_bank_account_params,
+            non_liquid_capital: negative_non_liquid_params
+          }
+        end
+      end
+
       context 'with only bank_accounts' do
         let(:params) do
           {
@@ -129,6 +138,19 @@ RSpec.describe CapitalsController, type: :request do
       ]
     end
 
+    def negative_bank_account_params
+      [
+        {
+          description: "#{Faker::Bank.name} #{Faker::Bank.account_number(digits: 8)}",
+          value: (Faker::Number.decimal(r_digits: 2) * -1)
+        },
+        {
+          description: "#{Faker::Bank.name} #{Faker::Bank.account_number(digits: 8)}",
+          value: (Faker::Number.decimal(r_digits: 2) * -1)
+        }
+      ]
+    end
+
     def non_liquid_params
       [
         {
@@ -138,6 +160,19 @@ RSpec.describe CapitalsController, type: :request do
         {
           description: fake_asset_name,
           value: Faker::Number.decimal(r_digits: 2)
+        }
+      ]
+    end
+
+    def negative_non_liquid_params
+      [
+        {
+          description: fake_asset_name,
+          value: (Faker::Number.decimal(r_digits: 2) * -1)
+        },
+        {
+          description: fake_asset_name,
+          value: (Faker::Number.decimal(r_digits: 2) * -1)
         }
       ]
     end
