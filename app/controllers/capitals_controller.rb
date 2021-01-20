@@ -22,12 +22,12 @@ class CapitalsController < ApplicationController
   param :assessment_id, :uuid, required: true
   param :bank_accounts, Array, desc: 'Collection of bank accounts' do
     param :description, String, required: true, desc: 'An identifying name for this bank account'
-    param :value, :currency, currency_option: :not_negative, required: true, desc: 'The lowest balance on this bank account during the calculation period'
+    param :value, :currency, required: true, desc: 'The lowest balance on this bank account during the calculation period'
   end
 
   param :non_liquid_capital, Array, desc: 'Collection of non-liquid capital assets' do
     param :description, String, required: true, desc: 'An description of this non-liquid asset'
-    param :value, :currency, currency_option: :not_negative, required: true, desc: 'Estimated value of this non-liquid asset'
+    param :value, :currency, required: true, desc: 'Estimated value of this non-liquid asset'
   end
 
   returns code: :ok, desc: 'Successful response' do
