@@ -68,6 +68,13 @@ RSpec.configure do |config|
 
   # Allow apipie recording for API documentation
   config.filter_run show_in_doc: true if ENV['APIPIE_RECORD']
+  config.before(:suite) do
+    Faker::Config.locale = 'en-GB'
+    DatabaseCleaner.clean_with :truncation
+  end
+  config.after(:suite) do
+    DatabaseCleaner.clean_with :truncation
+  end
 end
 
 require 'webmock/rspec'
