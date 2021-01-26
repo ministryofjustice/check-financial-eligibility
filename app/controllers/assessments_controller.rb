@@ -65,26 +65,27 @@ class AssessmentsController < ApplicationController
   private
 
   def determine_version_and_process
-    case determine_version
-    when '2'
-      show_v2
+    assessment.version = determine_version
+
+    case assessment.version
+    when CFEConstants::DEFAULT_ASSESSMENT_VERSION, CFEConstants::LATEST_ASSESSMENT_VERSION
+      show_assessment
     else
       raise CheckFinancialEligibilityError, 'Unsupported version specified in AcceptHeader'
     end
   end
 
-  def show_v2
+  def show_assessment
     Workflows::MainWorkflow.call(assessment)
     Assessors::MainAssessor.call(assessment)
     render json: Decorators::AssessmentDecorator.new(assessment).as_json
   end
 
   def determine_version
+    version = CFEConstants::DEFAULT_ASSESSMENT_VERSION
     parts = request.headers['Accept'].split(';')
-    parts.each do |part|
-      return Regexp.last_match(1) if part =~ /^version=(\d)$/
-    end
-    '2'
+    parts.each { |part| version = Regexp.last_match(1) if part =~ /^version=(\d)$/ }
+    version
   end
 
   def assessment_creation_service

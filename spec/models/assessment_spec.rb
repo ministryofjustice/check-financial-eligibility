@@ -44,5 +44,14 @@ RSpec.describe Assessment, type: :model do
         expect(assessment.remarks.as_json).to eq remarks.as_json
       end
     end
+
+    context 'error handling' do
+      it 'instantiates a new empty Remarks object when there is an attributes failure' do
+        assessment = create :assessment, remarks: 'remarks'
+        allow(assessment).to receive(:attributes).and_raise(StandardError.new('error'))
+        expect(assessment.remarks.class).to eq Remarks
+        expect(assessment.remarks.as_json).to eq Remarks.new(assessment.id).as_json
+      end
+    end
   end
 end

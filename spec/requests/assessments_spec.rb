@@ -176,6 +176,48 @@ RSpec.describe AssessmentsController, type: :request do
       end
     end
 
+    context 'version 3 specified in the header' do
+      let(:headers) { { 'Accept' => 'application/json;version=3' } }
+
+      context 'non-passported application' do
+        let(:assessment) { create :assessment, :with_everything, :with_latest_version }
+
+        it 'returns http success' do
+          subject
+          expect(response).to have_http_status(:success)
+        end
+
+        it 'returns capital summary data as json' do
+          Timecop.freeze do
+            subject
+            expected_response = Decorators::AssessmentDecorator.new(assessment.reload).as_json.to_json
+            expect(parsed_response).to eq(JSON.parse(expected_response, symbolize_names: true))
+          end
+        end
+      end
+
+      context 'passported application' do
+        let(:assessment) { create :assessment, :passported }
+
+        it 'returns http success' do
+          subject
+          expect(response).to have_http_status(:success)
+        end
+
+        it 'returns a structure with expected keys' do
+          subject
+          expect(parsed_response.keys).to eq expected_response_keys
+          expect(parsed_response[:assessment].keys).to eq expected_assessment_keys
+        end
+
+        it 'returns nil for the income elements of the response' do
+          subject
+          expect(parsed_response[:assessment][:gross_income]).to be_nil
+          expect(parsed_response[:assessment][:disposable_income]).to be_nil
+        end
+      end
+    end
+
     context 'test assessment NPE6-1' do
       let(:assessment) { create_assessment_npe61 }
       let(:headers) { { 'Accept' => 'application/json;version=2' } }

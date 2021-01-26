@@ -23,8 +23,12 @@ class Assessment < ApplicationRecord
 
   delegate :determine_result!, to: :capital_summary
 
+  attr_accessor :version
+
   # Always instantiate a new Remarks object from a nil value
   def remarks
     attributes['remarks'] || Remarks.new(id)
+  rescue StandardError
+    Remarks.new(id)
   end
 end
