@@ -10,17 +10,17 @@ module Calculators
     let(:disposable_income) { 0 }
 
     describe '#value' do
-      context 'passported' do
+      context 'non-passported' do
         context 'not a pensioner' do
-          let(:applicant) { create :applicant, :under_pensionable_age }
+          let(:applicant) { create :applicant, :without_qualifying_benefits, :under_pensionable_age }
           it 'returns zero' do
             expect(service.value).to eq 0.0
           end
         end
 
         context 'a pensioner' do
-          context 'passported' do
-            let(:applicant) { create :applicant, :with_qualifying_benefits, :over_pensionable_age }
+          context 'non-passported' do
+            let(:applicant) { create :applicant, :without_qualifying_benefits, :over_pensionable_age }
 
             context 'with an income of 0' do
               it 'returns the maximum value' do
@@ -55,9 +55,9 @@ module Calculators
         end
       end
 
-      context 'unpassported' do
-        let(:applicant) { create :applicant, :without_qualifying_benefits, :over_pensionable_age }
-        it 'returns the non-passported value' do
+      context 'passported' do
+        let(:applicant) { create :applicant, :with_qualifying_benefits, :over_pensionable_age }
+        it 'returns the passported value' do
           expect(service.value).to eq 100_000.0
         end
       end

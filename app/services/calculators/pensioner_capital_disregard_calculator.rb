@@ -34,12 +34,12 @@ module Calculators
       applicant.receives_qualifying_benefit
     end
 
-    def passported_value
+    def non_passported_value
       income = assessment.disposable_income_summary&.total_disposable_income.to_f
       thresholds[:monthly_income_values].each { |value_bands, banding| return banding if income_threshold_applies(income, value_bands) }
     end
 
-    def non_passported_value
+    def passported_value
       thresholds[:non_passported]
     end
 
