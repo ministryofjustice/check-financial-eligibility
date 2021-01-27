@@ -247,16 +247,16 @@ RSpec.describe AssessmentsController, type: :request do
         expect(results[:total_property]).to eq 92_500.0.to_s
         expect(results[:total_mortgage_allowance]).to eq 100_000.0.to_s
         expect(results[:total_capital]).to eq 101_500.0.to_s
-        expect(results[:pensioner_capital_disregard]).to eq 100_000.0.to_s
-        expect(results[:assessed_capital]).to eq 1_500.0.to_s
+        expect(results[:pensioner_capital_disregard]).to eq 60_000.0.to_s
+        expect(results[:assessed_capital]).to eq 41_500.0.to_s
         expect(results[:lower_threshold]).to eq 3_000.0.to_s
         expect(results[:upper_threshold]).to eq 999_999_999_999.0.to_s
-        expect(results[:assessment_result]).to eq 'eligible'
-        expect(results[:capital_contribution]).to eq 0.0.to_s
+        expect(results[:assessment_result]).to eq 'contribution_required'
+        expect(results[:capital_contribution]).to eq 38_500.0.to_s
       end
 
       it 'returns expected overall results' do
-        expect(parsed_response[:assessment][:assessment_result]).to eq 'eligible'
+        expect(parsed_response[:assessment][:assessment_result]).to eq 'contribution_required'
       end
     end
 
