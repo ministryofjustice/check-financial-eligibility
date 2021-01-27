@@ -51,7 +51,7 @@ module Creators
     end
 
     def generate_flags(hash)
-      return false unless hash[:flags].present?
+      return false if hash[:flags].blank?
 
       hash[:flags].map { |k, v| k if v.eql?(true) }.compact
     end

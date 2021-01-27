@@ -4,7 +4,7 @@ module RemarkGenerators
   RSpec.describe AmountVariationChecker do
     context 'state benefit payments' do
       let(:amount) { 123.45 }
-      let(:dates) { [Date.current, 1.month.ago, 2.month.ago] }
+      let(:dates) { [Date.current, 1.month.ago, 2.months.ago] }
       let(:state_benefit) { create :state_benefit }
       let(:assessment) { state_benefit.gross_income_summary.assessment }
       let(:collection) { [payment1, payment2, payment3] }

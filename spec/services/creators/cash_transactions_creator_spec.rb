@@ -9,7 +9,7 @@ describe Creators::CashTransactionsCreator do
     let(:month0) { Date.current.beginning_of_month - 4.months }
     let(:month1) { Date.current.beginning_of_month - 3.months }
     let(:month2) { Date.current.beginning_of_month - 2.months }
-    let(:month3) { Date.current.beginning_of_month - 1.months }
+    let(:month3) { Date.current.beginning_of_month - 1.month }
 
     subject { described_class.call(assessment_id: assessment.id, income: income, outgoings: outgoings) }
 

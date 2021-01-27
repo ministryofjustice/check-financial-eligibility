@@ -30,7 +30,7 @@ module RemarkGenerators
     def check_amount_variations
       state_benefits&.each { |sb| AmountVariationChecker.call(@assessment, sb.state_benefit_payments) }
       other_income_sources&.each { |oi| AmountVariationChecker.call(@assessment, oi.other_income_payments) }
-      return unless outgoings.present?
+      return if outgoings.blank?
 
       outgoings.group_by(&:type).each do |_type, collection|
         AmountVariationChecker.call(@assessment, collection)

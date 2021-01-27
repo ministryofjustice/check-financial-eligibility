@@ -46,6 +46,6 @@ class PropertyPayloadGenerator
   end
 
   def nil_or_empty?(obj)
-    obj.nil? || obj.empty?
+    obj.blank?
   end
 end

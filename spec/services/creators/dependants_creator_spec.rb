@@ -16,7 +16,8 @@ module Creators
         dependants_attributes.each do |dependant_attributes|
           dependant = assessment.dependants.find_by!(date_of_birth: dependant_attributes[:date_of_birth])
           dependant_attributes.each_key do |key|
-            expect(dependant[key].to_s).to eq(dependant_attributes[key].to_s)
+            expect(dependant[key].to_s).to eq(dependant_attributes[key].to_s),
+                                           "Dependent attribute `#{key}` mismatch: #{dependant[key].inspect}, #{dependant_attributes[key].inspect}"
           end
         end
       end

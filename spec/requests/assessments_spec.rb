@@ -72,7 +72,7 @@ RSpec.describe AssessmentsController, type: :request do
 
   describe 'GET /assessments/:id' do
     let(:option) { :below_lower_threshold }
-    let(:now) { Time.now }
+    let(:now) { Time.zone.now }
 
     subject { get assessment_path(assessment), headers: headers }
 

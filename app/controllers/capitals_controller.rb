@@ -1,7 +1,7 @@
 class CapitalsController < ApplicationController
   resource_description do
     short 'Add capital details to an assessment'
-    formats ['json']
+    formats(%w[json])
     description <<-END_OF_TEXT
     == Description
       Adds details of an applicant's capital assets to an assessment.
@@ -18,7 +18,7 @@ class CapitalsController < ApplicationController
     END_OF_TEXT
   end
   api :POST, 'assessments/:assessment_id/capitals', 'Create capital declarations'
-  formats ['json']
+  formats(%w[json])
   param :assessment_id, :uuid, required: true
   param :bank_accounts, Array, desc: 'Collection of bank accounts' do
     param :description, String, required: true, desc: 'An identifying name for this bank account'

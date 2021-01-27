@@ -3,13 +3,13 @@ class CapitalSummary < ApplicationRecord
 
   belongs_to :assessment
 
-  has_many :capital_items
-  has_many :liquid_capital_items
-  has_many :non_liquid_capital_items
-  has_many :vehicles
-  has_many :properties
-  has_many :additional_properties, -> { additional }, class_name: 'Property'
-  has_one :main_home, -> { main_home }, class_name: 'Property'
+  has_many :capital_items, dependent: :destroy
+  has_many :liquid_capital_items, dependent: :destroy
+  has_many :non_liquid_capital_items, dependent: :destroy
+  has_many :vehicles, dependent: :destroy
+  has_many :properties, dependent: :destroy
+  has_many :additional_properties, -> { additional }, inverse_of: :capital_summary, class_name: 'Property', dependent: :destroy
+  has_one :main_home, -> { main_home }, inverse_of: :capital_summary, class_name: 'Property', dependent: :destroy
 
   enum(
     assessment_result: enum_hash_for(

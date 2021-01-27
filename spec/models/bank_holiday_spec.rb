@@ -43,7 +43,7 @@ RSpec.describe BankHoliday, type: :model do
       before do
         expect(BankHoliday.count).to be_zero
         expect(BankHoliday).to receive(:populate_dates)
-        expect(BankHoliday).to receive(:first).at_least(1).and_return(double(BankHoliday, dates: api_response, updated_at: Time.now))
+        expect(BankHoliday).to receive(:first).at_least(1).and_return(double(BankHoliday, dates: api_response, updated_at: Time.zone.now))
       end
 
       it 'populates dates and returns dates' do

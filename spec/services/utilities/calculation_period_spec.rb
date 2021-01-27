@@ -44,31 +44,31 @@ module Utilities
 
       context 'before start date' do
         it 'is false' do
-          expect(period.contains?(Time.local(2019, 2, 27))).to be false
+          expect(period.contains?(Time.zone.local(2019, 2, 27))).to be false
         end
       end
 
       context 'on start date' do
         it 'is true' do
-          expect(period.contains?(Time.local(2019, 2, 28, 5, 0, 0))).to be true
+          expect(period.contains?(Time.zone.local(2019, 2, 28, 5, 0, 0))).to be true
         end
       end
 
       context 'in middle of period' do
         it 'is true' do
-          expect(period.contains?(Time.local(2019, 4, 15, 5, 0, 0))).to be true
+          expect(period.contains?(Time.zone.local(2019, 4, 15, 5, 0, 0))).to be true
         end
       end
 
       context 'on end date' do
         it 'is true' do
-          expect(period.contains?(Time.local(2019, 5, 28, 22, 10, 0))).to be true
+          expect(period.contains?(Time.zone.local(2019, 5, 28, 22, 10, 0))).to be true
         end
       end
 
       context 'after end date' do
         it 'is false' do
-          expect(period.contains?(Time.local(2019, 5, 29, 5, 0, 0))).to be false
+          expect(period.contains?(Time.zone.local(2019, 5, 29, 5, 0, 0))).to be false
         end
       end
     end

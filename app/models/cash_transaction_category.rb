@@ -1,6 +1,6 @@
 class CashTransactionCategory < ApplicationRecord
   belongs_to :gross_income_summary
-  has_many :cash_transactions
+  has_many :cash_transactions, dependent: :destroy
 
   validates :operation, inclusion: { in: %w[credit debit],
                                      message: '%<value>s is not a valid operation' }

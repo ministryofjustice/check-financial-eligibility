@@ -3,7 +3,7 @@ class StateBenefit < ApplicationRecord
 
   belongs_to :gross_income_summary
   belongs_to :state_benefit_type
-  has_many :state_benefit_payments
+  has_many :state_benefit_payments, dependent: :destroy
 
   delegate :exclude_from_gross_income, :exclude_from_gross_income?, to: :state_benefit_type
   delegate :assessment, to: :gross_income_summary
