@@ -1,38 +1,37 @@
 module Collators
   class GrossIncomeCollator < BaseWorkflowService
-    OPERATION = :credit
     INCOME_CATEGORIES = CFEConstants::VALID_INCOME_CATEGORIES.map(&:to_sym)
 
     def call
-      params = default_params
+      attrs = default_attrs
 
       case assessment.version
       when CFEConstants::LATEST_ASSESSMENT_VERSION
-        add_transactions_v3 params
+        populate_attrs_v3 attrs
       else
-        add_transactions_v2 params
+        populate_attrs_v2 attrs
       end
 
-      gross_income_summary.send(:update!, params)
+      gross_income_summary.update!(attrs)
     end
 
     private
 
-    def add_transactions_v2(params)
-      INCOME_CATEGORIES.each { |category| params[category] = categorised_income[category] if category != :benefits }
-      params[:total_gross_income] += categorised_income[:total] + monthly_state_benefits
+    def populate_attrs_v2(attrs)
+      INCOME_CATEGORIES.each { |category| attrs[category] = categorised_income[category] if category != :benefits }
+      attrs[:total_gross_income] += categorised_income[:total] + monthly_state_benefits
     end
 
-    def add_transactions_v3(params)
+    def populate_attrs_v3(attrs)
       INCOME_CATEGORIES.each do |category|
-        params[:"#{category}_bank"] = category == :benefits ? monthly_state_benefits : categorised_income[category].to_d
-        params[:"#{category}_cash"] = monthly_transaction_amount_by(operation: OPERATION, name: category)
-        params[:"#{category}_all_sources"] = params[:"#{category}_bank"] + params[:"#{category}_cash"]
-        params[:total_gross_income] += params[:"#{category}_all_sources"]
+        attrs[:"#{category}_bank"] = category == :benefits ? monthly_state_benefits : categorised_income[category].to_d
+        attrs[:"#{category}_cash"] = monthly_transaction_amount_by(category: category)
+        attrs[:"#{category}_all_sources"] = attrs[:"#{category}_bank"] + attrs[:"#{category}_cash"]
+        attrs[:total_gross_income] += attrs[:"#{category}_all_sources"]
       end
     end
 
-    def default_params
+    def default_attrs
       {
         upper_threshold: upper_threshold,
         total_gross_income: monthly_student_loan,
@@ -44,16 +43,11 @@ module Collators
       }
     end
 
-    def monthly_transaction_amount_by(operation:, name:)
-      transactions = cash_transactions_find_by(operation: operation, name: name)
+    def monthly_transaction_amount_by(category:)
+      transactions = assessment.cash_transaction_categories.credits_by_category(category)
       return 0.0 if transactions.empty?
 
       transactions.average(:amount).round(2)
-    end
-
-    def cash_transactions_find_by(operation:, name:)
-      category = gross_income_summary.cash_transaction_categories.find_by(operation: operation, name: name)
-      CashTransaction.where(cash_transaction_category_id: category&.id)
     end
 
     def upper_threshold

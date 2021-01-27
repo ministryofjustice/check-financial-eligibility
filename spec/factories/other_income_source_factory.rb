@@ -6,8 +6,8 @@ FactoryBot.define do
     name { CFEConstants::VALID_INCOME_CATEGORIES.sample }
     monthly_income { nil }
 
-    trait :with_latest_version do
-      gross_income_summary { create :gross_income_summary, :with_latest_version }
+    trait :with_v3 do
+      gross_income_summary { create :gross_income_summary, :with_v3 }
     end
 
     trait :with_monthly_payments do

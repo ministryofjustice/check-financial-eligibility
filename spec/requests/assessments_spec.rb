@@ -180,7 +180,7 @@ RSpec.describe AssessmentsController, type: :request do
       let(:headers) { { 'Accept' => 'application/json;version=3' } }
 
       context 'non-passported application' do
-        let(:assessment) { create :assessment, :with_everything, :with_latest_version }
+        let(:assessment) { create :assessment, :with_everything, :with_v3 }
 
         it 'returns http success' do
           subject

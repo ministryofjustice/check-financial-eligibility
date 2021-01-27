@@ -33,7 +33,7 @@ module Decorators
       context 'version 3' do
         subject { described_class.new(record).as_json }
 
-        let(:record) { create :gross_income_summary, :with_everything, :with_all_transaction_types, :with_latest_version }
+        let(:record) { create :gross_income_summary, :with_everything, :with_all_transaction_types, :with_v3 }
         it 'returns expected hash' do
           expected_hash = {
             monthly_equivalents: {

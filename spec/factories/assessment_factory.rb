@@ -6,7 +6,7 @@ FactoryBot.define do
     matter_proceeding_type { 'domestic_abuse' }
     version { '2' }
 
-    trait :with_latest_version do
+    trait :with_v3 do
       version { '3' }
     end
 

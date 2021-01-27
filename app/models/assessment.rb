@@ -22,6 +22,7 @@ class Assessment < ApplicationRecord
   enum matter_proceeding_type: enum_hash_for(:domestic_abuse)
 
   delegate :determine_result!, to: :capital_summary
+  delegate :cash_transaction_categories, to: :gross_income_summary
 
   attr_accessor :version
 

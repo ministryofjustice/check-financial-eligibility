@@ -3,8 +3,8 @@ FactoryBot.define do
     assessment
     monthly_other_income { nil }
 
-    trait :with_latest_version do
-      assessment { create :assessment, :with_latest_version }
+    trait :with_v3 do
+      assessment { create :assessment, :with_v3 }
     end
 
     trait :with_all_transaction_types do
