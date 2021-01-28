@@ -109,7 +109,7 @@ module Collators
           expect(subject[:total_non_liquid]).to eq 500
           expect(subject[:total_vehicle]).to eq 2_500
           expect(subject[:total_property]).to eq 23_000
-          expect(subject[:total_mortgage_allowance]).to eq 100_000
+          expect(subject[:total_mortgage_allowance]).to eq 999_999_999_999
           expect(subject[:total_capital]).to eq 26_145.83
           expect(subject[:pensioner_capital_disregard]).to eq 100_000
           expect(subject[:assessed_capital]).to eq(-73_854.17)
