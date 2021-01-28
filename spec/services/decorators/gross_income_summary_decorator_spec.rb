@@ -57,6 +57,38 @@ module Decorators
           end
         end
       end
+
+      context 'version 3 record exists' do
+        before { create :disposable_income_summary, :with_everything, assessment: gross_income_summary.assessment }
+
+        context 'student loan payments are in irregular income' do
+          let!(:gross_income_summary) { create :gross_income_summary, :with_irregular_income_payments, :with_v3 }
+
+          it 'returns a hash with the expected keys' do
+            expected_keys = %i[summary
+                               student_loan
+                               other_income]
+            expect(subject.keys).to eq expected_keys
+          end
+
+          it 'returns expected keys for summary' do
+            expected_keys = %i[total_gross_income
+                               upper_threshold
+                               assessment_result]
+            expect(subject[:summary].keys).to match expected_keys
+          end
+
+          it 'returns expected keys for student_loan' do
+            expected_keys = %i[monthly_equivalents]
+            expect(subject[:student_loan].keys).to match expected_keys
+          end
+
+          it 'calls the OtherIncomeSourceDecorator once' do
+            expect(OtherIncomeSourceDecorator).to receive(:new).and_return(double('sbd', as_json: nil)).exactly(1).times
+            subject
+          end
+        end
+      end
     end
   end
 end

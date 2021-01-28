@@ -1,22 +1,54 @@
 module Collators
   class GrossIncomeCollator < BaseWorkflowService
-    def call # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
-      gross_income_summary.update!(
-        upper_threshold: upper_threshold,
-        monthly_other_income: categorised_income[:total],
-        monthly_state_benefits: monthly_state_benefits,
-        monthly_student_loan: monthly_student_loan,
-        friends_or_family: categorised_income[:friends_or_family],
-        maintenance_in: categorised_income[:maintenance_in],
-        property_or_lodger: categorised_income[:property_or_lodger],
-        student_loan: categorised_income[:student_loan],
-        pension: categorised_income[:pension],
-        total_gross_income: total_gross_income,
-        assessment_result: 'summarised'
-      )
+    INCOME_CATEGORIES = CFEConstants::VALID_INCOME_CATEGORIES.map(&:to_sym)
+
+    def call
+      attrs = default_attrs
+
+      case assessment.version
+      when CFEConstants::LATEST_ASSESSMENT_VERSION
+        populate_attrs_v3 attrs
+      else
+        populate_attrs_v2 attrs
+      end
+
+      gross_income_summary.update!(attrs)
     end
 
     private
+
+    def populate_attrs_v2(attrs)
+      INCOME_CATEGORIES.each { |category| attrs[category] = categorised_income[category] if category != :benefits }
+      attrs[:total_gross_income] += categorised_income[:total] + monthly_state_benefits
+    end
+
+    def populate_attrs_v3(attrs)
+      INCOME_CATEGORIES.each do |category|
+        attrs[:"#{category}_bank"] = category == :benefits ? monthly_state_benefits : categorised_income[category].to_d
+        attrs[:"#{category}_cash"] = monthly_transaction_amount_by(category: category)
+        attrs[:"#{category}_all_sources"] = attrs[:"#{category}_bank"] + attrs[:"#{category}_cash"]
+        attrs[:total_gross_income] += attrs[:"#{category}_all_sources"]
+      end
+    end
+
+    def default_attrs
+      {
+        upper_threshold: upper_threshold,
+        total_gross_income: monthly_student_loan,
+        assessment_result: 'summarised',
+        monthly_student_loan: monthly_student_loan,
+        student_loan: categorised_income[:student_loan],
+        monthly_other_income: categorised_income[:total],
+        monthly_state_benefits: monthly_state_benefits
+      }
+    end
+
+    def monthly_transaction_amount_by(category:)
+      transactions = assessment.cash_transaction_categories.credits_by_category(category)
+      return 0.0 if transactions.empty?
+
+      transactions.average(:amount).round(2)
+    end
 
     def upper_threshold
       return infinite_threshold if assessment.matter_proceeding_type == 'domestic_abuse' && assessment.applicant.involvement_type == 'applicant'
@@ -80,10 +112,6 @@ module Collators
         result[:total] += monthly_income
       end
       result
-    end
-
-    def total_gross_income
-      categorised_income[:total] + monthly_state_benefits + monthly_student_loan
     end
   end
 end

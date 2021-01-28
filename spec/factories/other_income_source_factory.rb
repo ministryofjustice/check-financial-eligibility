@@ -6,6 +6,10 @@ FactoryBot.define do
     name { CFEConstants::VALID_INCOME_CATEGORIES.sample }
     monthly_income { nil }
 
+    trait :with_v3 do
+      gross_income_summary { create :gross_income_summary, :with_v3 }
+    end
+
     trait :with_monthly_payments do
       after(:create) do |record|
         [Date.current, 1.month.ago, 2.months.ago].each do |date|

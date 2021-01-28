@@ -128,6 +128,52 @@ module Collators
           end
         end
       end
+
+      context 'version 3' do
+        let(:assessment) { create :assessment, :with_gross_income_summary_and_records, :with_applicant, :with_v3 }
+        let(:benefits_in_cash) { create :cash_transaction_category, name: 'benefits', operation: 'credit', gross_income_summary: gross_income_summary }
+        let(:friends_or_family_in_cash) { create :cash_transaction_category, name: 'friends_or_family', operation: 'credit', gross_income_summary: gross_income_summary }
+        let(:maintenance_in_cash) { create :cash_transaction_category, name: 'maintenance_in', operation: 'credit', gross_income_summary: gross_income_summary }
+        let(:property_or_lodger_in_cash) { create :cash_transaction_category, name: 'property_or_lodger', operation: 'credit', gross_income_summary: gross_income_summary }
+        let(:pension_in_cash) { create :cash_transaction_category, name: 'pension', operation: 'credit', gross_income_summary: gross_income_summary }
+
+        before do
+          3.times do
+            create :cash_transaction, cash_transaction_category: benefits_in_cash
+            create :cash_transaction, cash_transaction_category: friends_or_family_in_cash
+            create :cash_transaction, cash_transaction_category: maintenance_in_cash
+            create :cash_transaction, cash_transaction_category: property_or_lodger_in_cash
+            create :cash_transaction, cash_transaction_category: pension_in_cash
+          end
+          subject
+          gross_income_summary.reload
+        end
+
+        it 'updates with totals for all categories based on bank and cash transactions' do
+          benefits_total = gross_income_summary.benefits_bank + gross_income_summary.benefits_cash
+          friends_or_family_total = gross_income_summary.friends_or_family_bank + gross_income_summary.friends_or_family_cash
+          maintenance_in_total = gross_income_summary.maintenance_in_bank + gross_income_summary.maintenance_in_cash
+          property_or_lodger_total = gross_income_summary.property_or_lodger_bank + gross_income_summary.property_or_lodger_cash
+          pension_total = gross_income_summary.pension_bank + gross_income_summary.pension_cash
+
+          expect(gross_income_summary.benefits_all_sources).to eq benefits_total
+          expect(gross_income_summary.friends_or_family_all_sources).to eq friends_or_family_total
+          expect(gross_income_summary.maintenance_in_all_sources).to eq maintenance_in_total
+          expect(gross_income_summary.property_or_lodger_all_sources).to eq property_or_lodger_total
+          expect(gross_income_summary.pension_all_sources).to eq pension_total
+        end
+
+        it 'has a total gross income based on all sources and monthly student loan' do
+          all_sources_total = gross_income_summary.benefits_all_sources +
+                              gross_income_summary.friends_or_family_all_sources +
+                              gross_income_summary.maintenance_in_all_sources +
+                              gross_income_summary.property_or_lodger_all_sources +
+                              gross_income_summary.pension_all_sources +
+                              gross_income_summary.monthly_student_loan
+
+          expect(gross_income_summary.total_gross_income).to eq all_sources_total
+        end
+      end
     end
   end
 end

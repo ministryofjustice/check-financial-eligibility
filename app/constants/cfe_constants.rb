@@ -1,4 +1,9 @@
 module CFEConstants
+  # Versions
+  #
+  DEFAULT_ASSESSMENT_VERSION = '2'.freeze
+  LATEST_ASSESSMENT_VERSION = '3'.freeze
+
   # Income categories
   #
   VALID_INCOME_CATEGORIES = %w[benefits friends_or_family maintenance_in property_or_lodger pension].freeze

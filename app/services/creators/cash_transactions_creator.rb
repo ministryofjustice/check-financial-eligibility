@@ -2,25 +2,16 @@ module Creators
   class CashTransactionsCreator < BaseCreator
     delegate :gross_income_summary, to: :assessment
 
-    def self.call(assessment_id:, income:, outgoings:)
-      new(assessment_id, income, outgoings).call
-    end
-
-    def initialize(assessment_id, income, outgoings)
+    def initialize(assessment_id:, income:, outgoings:)
       super()
       @assessment_id = assessment_id
       @income = income
       @outgoings = outgoings
-      @errors = []
     end
 
     def call
       create
       self
-    end
-
-    def success?
-      @errors.empty?
     end
 
     private
@@ -36,13 +27,13 @@ module Creators
 
     def create
       [@income, @outgoings].each { |categories| validate_categories(categories) }
-      return unless @errors.empty?
+      return unless errors.empty?
 
       ActiveRecord::Base.transaction do
         @income.each { |category_hash| create_category(category_hash, 'credit') }
         @outgoings.each { |category_hash| create_category(category_hash, 'debit') }
       rescue StandardError => error
-        @errors << "#{error.class} :: #{error.message}\n#{error.backtrace.join("\n")}"
+        errors << "#{error.class} :: #{error.message}\n#{error.backtrace.join("\n")}"
       end
     end
 
@@ -52,7 +43,7 @@ module Creators
 
     def validate_category(category_hash)
       if category_hash[:payments].size != 3
-        @errors << "There must be exactly 3 payments for category #{category_hash[:category]}"
+        errors << "There must be exactly 3 payments for category #{category_hash[:category]}"
         return
       end
       validate_payment_dates(category_hash)
@@ -60,11 +51,9 @@ module Creators
 
     def validate_payment_dates(category_hash)
       dates = category_hash[:payments].map { |payment| Date.parse(payment[:date]) }.sort
-      return if dates == first_three_valid_dates
+      return if dates == first_three_valid_dates || dates == last_three_valid_dates
 
-      return if dates == last_three_valid_dates
-
-      @errors << "Expecting payment dates for category #{category_hash[:category]} to be 1st of three of the previous 3 months"
+      errors << "Expecting payment dates for category #{category_hash[:category]} to be 1st of three of the previous 3 months"
     end
 
     def first_three_valid_dates
