@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Full Assessment with remarks' do
+RSpec.describe 'contribution_required Full Assessment with remarks' do
   let(:client_id) { 'uuid or any unique string' }
 
   before do
@@ -13,7 +13,7 @@ RSpec.describe 'Full Assessment with remarks' do
     create :bank_holiday
   end
 
-  it 'returns the expected payload with remarks' do
+  it 'returns the expected payload with all remarks' do
     assessment_id = post_assessment
     post_applicant(assessment_id)
     post_capitals(assessment_id)
@@ -344,4 +344,6 @@ RSpec.describe 'Full Assessment with remarks' do
       ]
     }
   end
+
+
 end
