@@ -1,12 +1,16 @@
 module Collators
   class ChildcareCollator < BaseWorkflowService
     def call
-      return unless applicant_has_dependent_child?
+      return unless eligible_for_childcare_costs?
 
-      collate! if applicant_employed? || applicant_has_student_loan?
+      collate!
     end
 
     private
+
+    def eligible_for_childcare_costs?
+      applicant_has_dependent_child? && (applicant_employed? || applicant_has_student_loan?)
+    end
 
     def applicant_has_dependent_child?
       assessment.dependants.each do |dependant|

@@ -3,22 +3,23 @@ require 'rails_helper'
 module Collators
   RSpec.describe DisposableIncomeCollator do
     let(:assessment)  { disposable_income_summary.assessment }
-    let(:childcare) { Faker::Number.decimal(l_digits: 3, r_digits: 2).to_d }
-    let(:maintenance) { Faker::Number.decimal(l_digits: 3, r_digits: 2).to_d }
+    let(:child_care_bank) { Faker::Number.decimal(l_digits: 3, r_digits: 2).to_d }
+    let(:maintenance_out_bank) { Faker::Number.decimal(l_digits: 3, r_digits: 2).to_d }
     let(:gross_housing) { Faker::Number.decimal(l_digits: 3, r_digits: 2).to_d }
-    let(:legal_aid) { Faker::Number.decimal(l_digits: 3, r_digits: 2).to_d }
+    let(:legal_aid_bank) { Faker::Number.decimal(l_digits: 3, r_digits: 2).to_d }
     let(:housing_benefit) { Faker::Number.between(from: 1.25, to: gross_housing / 2).round(2) }
     let(:net_housing) { gross_housing - housing_benefit }
-    let(:total_outgoings) { childcare + maintenance + net_housing + dependant_allowance + legal_aid }
+    let(:total_outgoings) { child_care_bank + maintenance_out_bank + net_housing + dependant_allowance + legal_aid_bank }
 
     let(:dependant_allowance) { 582.98 }
 
     let(:disposable_income_summary) do
       create :disposable_income_summary,
-             childcare: childcare,
-             maintenance: maintenance,
+             child_care_bank: child_care_bank,
+             maintenance_out_bank: maintenance_out_bank,
              gross_housing_costs: gross_housing,
-             legal_aid: legal_aid,
+             rent_or_mortgage_bank: gross_housing,
+             legal_aid_bank: legal_aid_bank,
              housing_benefit: housing_benefit,
              net_housing_costs: net_housing,
              total_outgoings_and_allowances: 0.0,

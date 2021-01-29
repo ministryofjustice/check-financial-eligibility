@@ -22,6 +22,11 @@ class CashTransactionCategory < ApplicationRecord
     transactions(record&.id)
   end
 
+  scope :debits_by_category, ->(category) do
+    record = find_by(operation: :debit, name: category)
+    transactions(record&.id)
+  end
+
   scope :transactions, ->(id) { CashTransaction.by_category_id(id) }
 
   def credit?

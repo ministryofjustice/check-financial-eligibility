@@ -17,7 +17,7 @@ module Decorators
         let!(:gross_income_summary) { create :gross_income_summary, assessment: disposable_income_summary.assessment }
         it 'has the expected keys in the response structure' do
           expected_keys = %i[
-            monthly_outgoing_equivalents
+            monthly_equivalents
             childcare_allowance
             deductions
             dependant_allowance
@@ -34,7 +34,7 @@ module Decorators
           ]
           expect(subject.keys).to eq expected_keys
           outgoings_keys = %i[child_care maintenance_out rent_or_mortgage legal_aid]
-          expect(subject[:monthly_outgoing_equivalents].keys).to eq outgoings_keys
+          expect(subject[:monthly_equivalents].keys).to eq outgoings_keys
         end
       end
     end

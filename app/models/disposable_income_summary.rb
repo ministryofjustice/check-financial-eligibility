@@ -9,6 +9,8 @@ class DisposableIncomeSummary < ApplicationRecord
   has_many :maintenance_outgoings, dependent: :destroy, class_name: 'Outgoings::Maintenance'
   has_many :legal_aid_outgoings, dependent: :destroy, class_name: 'Outgoings::LegalAid'
 
+  delegate :version, to: :assessment
+
   enum(
     assessment_result: enum_hash_for(
       :pending, :eligible, :ineligible, :contribution_required
@@ -17,17 +19,17 @@ class DisposableIncomeSummary < ApplicationRecord
   )
 
   def calculate_monthly_childcare_amount!
-    calculate_monthly_equivalent!(target_field: :childcare,
+    calculate_monthly_equivalent!(target_field: :child_care_bank,
                                   collection: childcare_outgoings)
   end
 
   def calculate_monthly_maintenance_amount!
-    calculate_monthly_equivalent!(target_field: :maintenance,
+    calculate_monthly_equivalent!(target_field: :maintenance_out_bank,
                                   collection: maintenance_outgoings)
   end
 
   def calculate_monthly_legal_aid_amount!
-    calculate_monthly_equivalent!(target_field: :legal_aid,
+    calculate_monthly_equivalent!(target_field: :legal_aid_bank,
                                   collection: legal_aid_outgoings)
   end
 end

@@ -74,14 +74,14 @@ module Collators
 
             it 'updates the childcare value on the disposable income summary' do
               subject
-              expect(disposable_income_summary.childcare).to eq 155.63
+              expect(disposable_income_summary.child_care_bank).to eq 155.63
             end
           end
 
           context 'not in receipt of Student grant' do
             it 'updates the childcare value on the disposable income summary' do
               subject
-              expect(disposable_income_summary.childcare).to eq 155.63
+              expect(disposable_income_summary.child_care_bank).to eq 155.63
             end
           end
         end
@@ -91,7 +91,7 @@ module Collators
             before { create :irregular_income_payment, amount: 0.0, gross_income_summary: gross_income_summary }
             it 'updates the childcare value on the disposable income summary' do
               subject
-              expect(disposable_income_summary.childcare).to eq 155.63
+              expect(disposable_income_summary.child_care_bank).to eq 155.63
             end
           end
 
@@ -99,7 +99,7 @@ module Collators
             before { create :other_income_source, gross_income_summary: gross_income_summary, name: 'friends_or_family' }
             it 'does not update the childcare value on the disposable income summary' do
               subject
-              expect(disposable_income_summary.childcare).to eq 0.0
+              expect(disposable_income_summary.child_care_bank).to eq 0.0
             end
           end
         end

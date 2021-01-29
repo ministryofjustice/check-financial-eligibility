@@ -85,7 +85,7 @@ module RemarkGenerators
             ]
           end
           context 'if the childcare costs are allowed as an outgoing' do
-            before { disposable_income_summary.childcare = 1 }
+            before { disposable_income_summary.child_care_bank = 1 }
 
             it 'adds the remark' do
               expect_any_instance_of(Remarks).to receive(:add).with(:outgoings_childcare, :unknown_frequency, collection.map(&:client_id))
