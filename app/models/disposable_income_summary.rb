@@ -23,6 +23,12 @@ class DisposableIncomeSummary < ApplicationRecord
                                   collection: childcare_outgoings)
   end
 
+  def calculate_monthly_rent_or_mortgage_amount!
+    monthly_amount = calculate_monthly_equivalent(collection: housing_cost_outgoings,
+                                                  amount_method: :allowable_amount)
+    update!(rent_or_mortgage_bank: monthly_amount)
+  end
+
   def calculate_monthly_maintenance_amount!
     calculate_monthly_equivalent!(target_field: :maintenance_out_bank,
                                   collection: maintenance_outgoings)

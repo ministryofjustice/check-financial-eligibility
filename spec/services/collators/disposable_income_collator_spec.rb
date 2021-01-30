@@ -2,7 +2,7 @@ require 'rails_helper'
 
 module Collators
   RSpec.describe DisposableIncomeCollator do
-    let(:assessment)  { disposable_income_summary.assessment }
+    let(:assessment) { disposable_income_summary.assessment }
     let(:child_care_bank) { Faker::Number.decimal(l_digits: 3, r_digits: 2).to_d }
     let(:maintenance_out_bank) { Faker::Number.decimal(l_digits: 3, r_digits: 2).to_d }
     let(:gross_housing) { Faker::Number.decimal(l_digits: 3, r_digits: 2).to_d }

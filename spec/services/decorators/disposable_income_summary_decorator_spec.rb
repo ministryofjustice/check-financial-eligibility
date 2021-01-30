@@ -17,7 +17,7 @@ module Decorators
         let!(:gross_income_summary) { create :gross_income_summary, assessment: disposable_income_summary.assessment }
         it 'has the expected keys in the response structure' do
           expected_keys = %i[
-            monthly_equivalents
+            monthly_outgoing_equivalents
             childcare_allowance
             deductions
             dependant_allowance
@@ -33,8 +33,8 @@ module Decorators
             income_contribution
           ]
           expect(subject.keys).to eq expected_keys
-          outgoings_keys = %i[child_care maintenance_out rent_or_mortgage legal_aid]
-          expect(subject[:monthly_equivalents].keys).to eq outgoings_keys
+          outgoings_keys = CFEConstants::VALID_OUTGOING_CATEGORIES.map(&:to_sym)
+          expect(subject[:monthly_outgoing_equivalents].keys).to eq outgoings_keys
         end
       end
     end

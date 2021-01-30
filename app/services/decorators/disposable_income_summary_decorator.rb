@@ -6,11 +6,20 @@ module Decorators
       @record = record
     end
 
-    def as_json # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    def as_json
       return nil if record.nil?
 
+      attrs = {}
+      monthly_equivalents_key = assessment_v3? ? :monthly_equivalents : :monthly_outgoing_equivalents
+      attrs[monthly_equivalents_key] = MonthlyOutgoingEquivalentDecorator.new(record).as_json
+
+      attrs.update(default_attrs)
+    end
+
+    private
+
+    def default_attrs # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       {
-        monthly_equivalents: MonthlyOutgoingEquivalentDecorator.new(record).as_json,
         childcare_allowance: record.childcare,
         deductions: DeductionsDecorator.new(record).as_json,
         dependant_allowance: record.dependant_allowance,
@@ -25,6 +34,10 @@ module Decorators
         assessment_result: record.assessment_result,
         income_contribution: record.income_contribution
       }
+    end
+
+    def assessment_v3?
+      record.version == CFEConstants::LATEST_ASSESSMENT_VERSION
     end
   end
 end
