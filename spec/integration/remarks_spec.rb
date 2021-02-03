@@ -344,6 +344,4 @@ RSpec.describe 'contribution_required Full Assessment with remarks' do
       ]
     }
   end
-
-
 end

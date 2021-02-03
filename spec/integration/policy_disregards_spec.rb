@@ -27,7 +27,6 @@ RSpec.describe 'Eligible Full Assessment with policy disregard remarks' do
     get assessment_path(assessment_id), headers: v2_headers
     output_response(:get, :assessment)
 
-    remarks = parsed_response[:assessment][:remarks]
     expect(parsed_response[:assessment][:remarks]).to_not include(:policy_disregards)
   end
 
@@ -172,7 +171,7 @@ RSpec.describe 'Eligible Full Assessment with policy disregard remarks' do
                   { 'date' => '2020-06-11',
                     'amount' => 50.0,
                     'client_id' => 'TX-other-income-property-3' }] }] }
-        .to_json
+      .to_json
   end
 
   def outgoings_params
@@ -247,15 +246,15 @@ RSpec.describe 'Eligible Full Assessment with policy disregard remarks' do
 
   def explicit_remarks_params
     {
-        explicit_remarks: [
-            {
-                category: 'policy_disregards',
-                details: [
-                    'Grenfell tower fund',
-                    'Some other fund'
-                ]
-            }
-        ]
+      explicit_remarks: [
+        {
+          category: 'policy_disregards',
+          details: [
+            'Grenfell tower fund',
+            'Some other fund'
+          ]
+        }
+      ]
     }.to_json
   end
 end

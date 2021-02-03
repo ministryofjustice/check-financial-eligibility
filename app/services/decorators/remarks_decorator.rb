@@ -13,7 +13,7 @@ module Decorators
       if assessment.assessment_result == 'contribution_required'
         @record.as_json
       else
-        @record.as_json.except(:policy_disregards)
+        @record.as_json.except!(:policy_disregards)
       end
     end
   end

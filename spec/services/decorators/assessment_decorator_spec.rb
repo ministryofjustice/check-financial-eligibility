@@ -35,11 +35,7 @@ module Decorators
         expect(GrossIncomeSummaryDecorator).to receive(:new).and_return(double('gisd', as_json: nil))
         expect(DisposableIncomeSummaryDecorator).to receive(:new).and_return(double('disd', as_json: nil))
         expect(CapitalSummaryDecorator).to receive(:new).and_return(double('csd', as_json: nil))
-        subject
-      end
-
-      it 'calls #as_json on the remarks object' do
-        expect_any_instance_of(Remarks).to receive(:as_json)
+        expect(RemarksDecorator).to receive(:new).and_return(double('rmk', as_json: nil))
         subject
       end
     end
