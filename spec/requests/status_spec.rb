@@ -11,8 +11,8 @@ RSpec.describe StatusController, type: :request do
 
       let(:failed_healthcheck) do
         {
-          'checks': {
-            'database': false
+          'checks' => {
+            'database' => false
           }
         }.to_json
       end
@@ -34,8 +34,8 @@ RSpec.describe StatusController, type: :request do
 
       let(:expected_response) do
         {
-          'checks': {
-            'database': true
+          'checks' => {
+            'database' => true
           }
         }.to_json
       end
