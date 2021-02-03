@@ -46,16 +46,16 @@ RSpec.describe 'IntegrationTests::TestRunner', type: :request do
   # rubocop:disable Style/StringLiterals
   def google_secret
     {
-      "type": 'service_account',
-      "project_id": 'laa-apply-for-legal-aid',
-      "private_key_id": ENV['PRIVATE_KEY_ID'],
-      "private_key": ENV['PRIVATE_KEY'].gsub("\\n", "\n"),
-      "client_email": ENV['CLIENT_EMAIL'],
-      "client_id": ENV['CLIENT_ID'],
-      "auth_uri": 'https://accounts.google.com/o/oauth2/auth',
-      "token_uri": 'https://oauth2.googleapis.com/token',
-      "auth_provider_x509_cert_url": 'https://www.googleapis.com/oauth2/v1/certs',
-      "client_x509_cert_url": 'https://www.googleapis.com/robot/v1/metadata/x509/laa-apply-service%40laa-apply-for-legal-aid.iam.gserviceaccount.com'
+      type: 'service_account',
+      project_id: 'laa-apply-for-legal-aid',
+      private_key_id: ENV['PRIVATE_KEY_ID'],
+      private_key: ENV['PRIVATE_KEY'].gsub("\\n", "\n"),
+      client_email: ENV['CLIENT_EMAIL'],
+      client_id: ENV['CLIENT_ID'],
+      auth_uri: 'https://accounts.google.com/o/oauth2/auth',
+      token_uri: 'https://oauth2.googleapis.com/token',
+      auth_provider_x509_cert_url: 'https://www.googleapis.com/oauth2/v1/certs',
+      client_x509_cert_url: 'https://www.googleapis.com/robot/v1/metadata/x509/laa-apply-service%40laa-apply-for-legal-aid.iam.gserviceaccount.com'
     }
   end
   # rubocop:enable Style/StringLiterals
