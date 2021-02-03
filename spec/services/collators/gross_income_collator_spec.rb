@@ -130,21 +130,9 @@ module Collators
       end
 
       context 'version 3' do
-        let(:assessment) { create :assessment, :with_gross_income_summary_and_records, :with_applicant, :with_v3 }
-        let(:benefits_in_cash) { create :cash_transaction_category, name: 'benefits', operation: 'credit', gross_income_summary: gross_income_summary }
-        let(:friends_or_family_in_cash) { create :cash_transaction_category, name: 'friends_or_family', operation: 'credit', gross_income_summary: gross_income_summary }
-        let(:maintenance_in_cash) { create :cash_transaction_category, name: 'maintenance_in', operation: 'credit', gross_income_summary: gross_income_summary }
-        let(:property_or_lodger_in_cash) { create :cash_transaction_category, name: 'property_or_lodger', operation: 'credit', gross_income_summary: gross_income_summary }
-        let(:pension_in_cash) { create :cash_transaction_category, name: 'pension', operation: 'credit', gross_income_summary: gross_income_summary }
+        let(:assessment) { create :assessment, :with_applicant, :with_v3 }
 
         before do
-          3.times do
-            create :cash_transaction, cash_transaction_category: benefits_in_cash
-            create :cash_transaction, cash_transaction_category: friends_or_family_in_cash
-            create :cash_transaction, cash_transaction_category: maintenance_in_cash
-            create :cash_transaction, cash_transaction_category: property_or_lodger_in_cash
-            create :cash_transaction, cash_transaction_category: pension_in_cash
-          end
           subject
           gross_income_summary.reload
         end

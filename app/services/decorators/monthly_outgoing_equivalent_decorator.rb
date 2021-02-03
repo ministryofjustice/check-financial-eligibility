@@ -10,13 +10,7 @@ module Decorators
     end
 
     def as_json
-      assessment_v3? ? all_transaction_types : all_transaction_types[:bank_transactions]
-    end
-
-    private
-
-    def assessment_v3?
-      record.version == CFEConstants::LATEST_ASSESSMENT_VERSION
+      record.v3? ? all_transaction_types : all_transaction_types[:bank_transactions]
     end
   end
 end

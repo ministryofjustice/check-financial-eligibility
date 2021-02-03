@@ -18,7 +18,7 @@ module Transactions
   end
 
   def monthly_transaction_amount_by(operation:, category:)
-    transactions = @assessment.cash_transaction_categories.__send__("#{operation}s_by_category", category)
+    transactions = CashTransaction.by_operation_and_category(@assessment, operation, category)
     return 0.0 if transactions.empty?
 
     transactions.average(:amount).round(2)

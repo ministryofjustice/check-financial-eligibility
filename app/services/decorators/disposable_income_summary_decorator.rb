@@ -10,10 +10,10 @@ module Decorators
       return nil if record.nil?
 
       attrs = {}
-      monthly_equivalents_key = assessment_v3? ? :monthly_equivalents : :monthly_outgoing_equivalents
+      monthly_equivalents_key = record.v3? ? :monthly_equivalents : :monthly_outgoing_equivalents
       attrs[monthly_equivalents_key] = MonthlyOutgoingEquivalentDecorator.new(record).as_json
 
-      attrs.update(default_attrs)
+      attrs.merge(default_attrs)
     end
 
     private
@@ -34,10 +34,6 @@ module Decorators
         assessment_result: record.assessment_result,
         income_contribution: record.income_contribution
       }
-    end
-
-    def assessment_v3?
-      record.version == CFEConstants::LATEST_ASSESSMENT_VERSION
     end
   end
 end

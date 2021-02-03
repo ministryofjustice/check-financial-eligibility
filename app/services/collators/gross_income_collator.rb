@@ -7,12 +7,7 @@ module Collators
     def call
       attrs = default_attrs
 
-      case assessment.version
-      when CFEConstants::LATEST_ASSESSMENT_VERSION
-        populate_attrs_v3 attrs
-      else
-        populate_attrs_v2 attrs
-      end
+      assessment.v3? ? populate_attrs_v3(attrs) : populate_attrs_v2(attrs)
 
       gross_income_summary.update!(attrs)
     end

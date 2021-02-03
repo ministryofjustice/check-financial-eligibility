@@ -18,7 +18,7 @@ module Calculators
     end
 
     def gross_housing_costs
-      @gross_housing_costs ||= assessment_v3? ? gross_housing_costs_all_payments : gross_housing_costs_bank_payments_only
+      @gross_housing_costs ||= assessment.v3? ? gross_housing_costs_all_sources : gross_housing_costs_bank
     end
 
     def monthly_housing_benefit
@@ -27,25 +27,21 @@ module Calculators
 
     private
 
-    def cash_housing_costs
+    def gross_housing_costs_cash
       monthly_transaction_amount_by(operation: :debit, category: :rent_or_mortgage)
     end
 
-    def gross_housing_costs_all_payments
-      gross_housing_costs_bank_payments_only + cash_housing_costs
+    def gross_housing_costs_all_sources
+      gross_housing_costs_bank + gross_housing_costs_cash
     end
 
-    def gross_housing_costs_bank_payments_only
+    def gross_housing_costs_bank
       disposable_income_summary.calculate_monthly_rent_or_mortgage_amount!
       disposable_income_summary.rent_or_mortgage_bank
     end
 
-    def assessment_v3?
-      assessment.version == CFEConstants::LATEST_ASSESSMENT_VERSION
-    end
-
     def monthly_actual_housing_costs
-      @monthly_actual_housing_costs ||= assessment_v3? ? calculate_actual_housing_costs + cash_housing_costs : calculate_actual_housing_costs
+      @monthly_actual_housing_costs ||= assessment.v3? ? calculate_actual_housing_costs + gross_housing_costs_cash : calculate_actual_housing_costs
     end
 
     def calculate_actual_housing_costs

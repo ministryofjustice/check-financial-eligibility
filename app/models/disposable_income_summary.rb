@@ -9,7 +9,7 @@ class DisposableIncomeSummary < ApplicationRecord
   has_many :maintenance_outgoings, dependent: :destroy, class_name: 'Outgoings::Maintenance'
   has_many :legal_aid_outgoings, dependent: :destroy, class_name: 'Outgoings::LegalAid'
 
-  delegate :version, to: :assessment
+  delegate :v3?, to: :assessment
 
   enum(
     assessment_result: enum_hash_for(

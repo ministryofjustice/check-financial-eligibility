@@ -12,12 +12,7 @@ module Decorators
     def as_json
       return nil if record.nil?
 
-      case record.version
-      when CFEConstants::LATEST_ASSESSMENT_VERSION
-        payload_v3
-      else
-        payload_v2
-      end
+      record.v3? ? payload_v3 : payload_v2
     end
 
     private

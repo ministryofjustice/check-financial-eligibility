@@ -22,18 +22,14 @@ module Collators
 
     def call
       attrs = {}
-      populate_attrs_v3 attrs if assessment_v3?
+      populate_attrs_v3 attrs if assessment.v3?
 
-      attrs.update(default_attrs)
+      attrs = attrs.merge(default_attrs)
 
       disposable_income_summary.update!(attrs)
     end
 
     private
-
-    def assessment_v3?
-      assessment.version == CFEConstants::LATEST_ASSESSMENT_VERSION
-    end
 
     def populate_attrs_v3(attrs)
       OUTGOING_CATEGORIES.each do |category|
