@@ -66,7 +66,8 @@ module Decorators
 
           it 'returns a hash with the expected keys' do
             expected_keys = %i[summary
-                               student_loan
+                               irregular_income
+                               state_benefits
                                other_income]
             expect(subject.keys).to eq expected_keys
           end
@@ -79,8 +80,8 @@ module Decorators
           end
 
           it 'returns expected keys for student_loan' do
-            expected_keys = %i[monthly_equivalents]
-            expect(subject[:student_loan].keys).to match expected_keys
+            expected_keys = %i[student_loan]
+            expect(subject[:irregular_income][:monthly_equivalents].keys).to match expected_keys
           end
 
           it 'calls the OtherIncomeSourceDecorator once' do

@@ -6,7 +6,7 @@ module Decorators
 
     def initialize(record)
       @record = record
-      @categories = CFEConstants::VALID_INCOME_CATEGORIES.map(&:to_sym)
+      @categories = income_categories_excluding_benefits
     end
 
     def as_json
@@ -27,6 +27,10 @@ module Decorators
       {
         monthly_equivalents: all_transaction_types
       }
+    end
+
+    def income_categories_excluding_benefits
+      CFEConstants::VALID_INCOME_CATEGORIES.map(&:to_sym) - [:benefits]
     end
 
     def payments
