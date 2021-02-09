@@ -1,3 +1,4 @@
+
 class DisposableIncomeSummary < ApplicationRecord
   extend EnumHash
   include MonthlyEquivalentCalculator

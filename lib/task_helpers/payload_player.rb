@@ -32,7 +32,6 @@ class PayloadPlayer
     end
   end
 
-  # rubocop:disable Rails/Output
   def play_post(request)
     puts '>>>> playing POST request'
     substitute_assessment_id(request)
@@ -75,5 +74,4 @@ class PayloadPlayer
     puts 'response payload:'
     pp JSON.parse(response.body)
   end
-  # rubocop:enable Rails/Output
 end

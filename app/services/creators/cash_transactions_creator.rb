@@ -17,11 +17,12 @@ module Creators
     private
 
     def valid_dates
+      base_date = assessment.submission_date.beginning_of_month
       @valid_dates ||= [
-        Date.current.beginning_of_month - 4.months,
-        Date.current.beginning_of_month - 3.months,
-        Date.current.beginning_of_month - 2.months,
-        Date.current.beginning_of_month - 1.month
+        base_date - 4.months,
+        base_date - 3.months,
+        base_date - 2.months,
+        base_date - 1.month
       ]
     end
 

@@ -188,6 +188,9 @@ Lint/TopLevelReturnWithArgument:
 Lint/UnreachableLoop:
   Enabled: true
 
+Rails/Output:
+  Enabled: false
+
 Style/ExplicitBlockArgument:
   Enabled: true
 
