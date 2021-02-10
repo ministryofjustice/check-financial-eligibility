@@ -73,7 +73,7 @@ GEM
     awesome_print (1.8.0)
     binding_of_caller (1.0.0)
       debug_inspector (>= 0.0.1)
-    bootsnap (1.7.0)
+    bootsnap (1.7.2)
       msgpack (~> 1.0)
     builder (3.2.4)
     business (2.1.0)
