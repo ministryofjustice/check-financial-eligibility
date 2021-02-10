@@ -97,9 +97,9 @@ module Collators
             disposable_income_summary.maintenance_out_cash +
             disposable_income_summary.rent_or_mortgage_cash +
             disposable_income_summary.legal_aid_cash +
-            disposable_income_summary.child_care_bank +
-            disposable_income_summary.maintenance_out_bank +
-            disposable_income_summary.legal_aid_bank +
+            child_care_bank +
+            maintenance_out_bank +
+            legal_aid_bank +
             net_housing +
             dependant_allowance
         end

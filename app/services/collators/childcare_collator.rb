@@ -1,15 +1,19 @@
 module Collators
   class ChildcareCollator < BaseWorkflowService
-    def call
-      return unless eligible_for_childcare_costs?
+    include Transactions
 
-      collate!
+    def call
+      disposable_income_summary.calculate_monthly_childcare_amount!(eligible_for_childcare_costs?, monthly_child_care_cash)
     end
 
     private
 
     def eligible_for_childcare_costs?
       applicant_has_dependent_child? && (applicant_employed? || applicant_has_student_loan?)
+    end
+
+    def monthly_child_care_cash
+      monthly_transaction_amount_by(operation: :debit, category: :child_care)
     end
 
     def applicant_has_dependent_child?
@@ -29,10 +33,6 @@ module Collators
       return true if irregular_income_payments&.present?
 
       false
-    end
-
-    def collate!
-      disposable_income_summary.calculate_monthly_childcare_amount!
     end
   end
 end

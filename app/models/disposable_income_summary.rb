@@ -18,9 +18,10 @@ class DisposableIncomeSummary < ApplicationRecord
     _prefix: false
   )
 
-  def calculate_monthly_childcare_amount!
+  def calculate_monthly_childcare_amount!(eligible, cash_amount)
     calculate_monthly_equivalent!(target_field: :child_care_bank,
-                                  collection: childcare_outgoings)
+                                  collection: eligible ? childcare_outgoings : [])
+    update!(child_care_cash: eligible ? cash_amount : 0.0)
   end
 
   def calculate_monthly_rent_or_mortgage_amount!

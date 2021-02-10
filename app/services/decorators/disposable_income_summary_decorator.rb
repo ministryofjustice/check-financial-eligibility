@@ -20,10 +20,10 @@ module Decorators
 
     def default_attrs # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       {
-        childcare_allowance: record.childcare,
+        childcare_allowance: childcare_allowance,
         deductions: DeductionsDecorator.new(record).as_json,
         dependant_allowance: record.dependant_allowance,
-        maintenance_allowance: record.maintenance,
+        maintenance_allowance: maintenance_allowance,
         gross_housing_costs: record.gross_housing_costs,
         housing_benefit: record.housing_benefit,
         net_housing_costs: record.net_housing_costs,
@@ -34,6 +34,14 @@ module Decorators
         assessment_result: record.assessment_result,
         income_contribution: record.income_contribution
       }
+    end
+
+    def childcare_allowance
+      record.v3? ? record.child_care_all_sources : record.child_care_bank
+    end
+
+    def maintenance_allowance
+      record.v3? ? record.maintenance_out_all_sources : record.maintenance_out_bank
     end
   end
 end

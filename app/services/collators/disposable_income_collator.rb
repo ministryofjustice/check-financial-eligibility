@@ -8,10 +8,14 @@ module Collators
 
     delegate :net_housing_costs,
              :rent_or_mortgage_bank,
+             :rent_or_mortgage_cash,
              :child_care_bank,
+             :child_care_cash,
              :maintenance_out_bank,
+             :maintenance_out_cash,
              :dependant_allowance,
-             :legal_aid_bank, to: :disposable_income_summary
+             :legal_aid_bank,
+             :legal_aid_cash, to: :disposable_income_summary
 
     delegate :total_gross_income, to: :gross_income_summary
 
@@ -33,13 +37,17 @@ module Collators
 
     def populate_attrs_v3(attrs)
       OUTGOING_CATEGORIES.each do |category|
-        monthly_cash_amount = monthly_transaction_amount_by(operation: :debit, category: category)
-        @monthly_cash_transactions_total += monthly_cash_amount
+        monthly_cash_amount = category == :child_care ? __send__("#{category}_cash") : monthly_cash_by_category(category)
+        @monthly_cash_transactions_total += monthly_cash_amount unless category == :rent_or_mortgage
 
         attrs[:"#{category}_bank"] = __send__("#{category}_bank")
         attrs[:"#{category}_cash"] = monthly_cash_amount
         attrs[:"#{category}_all_sources"] = attrs[:"#{category}_bank"] + attrs[:"#{category}_cash"]
       end
+    end
+
+    def monthly_cash_by_category(category)
+      monthly_transaction_amount_by(operation: :debit, category: category)
     end
 
     def default_attrs
