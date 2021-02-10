@@ -77,20 +77,29 @@ bundle exec rescue rspec
 will cause any failing tests or unhandled exceptions to automatically open a `pry` prompt for immediate investigation.
 
 ## Integration tests
-Several use cases and their expected results can be found in the google spreadsheet https://docs.google.com/spreadsheets/d/1tgZUPtamZnpI-dibN8Q78miqZSfEYBnwBhaXFyFZ8no.
+Several use cases and their expected results can be found in the google spreadsheet https://docs.google.com/spreadsheets/d/1jOtk5LGoVi1SxJPmRvIvZXufvH0wmYYL2NF1RlT8_RU/edit#gid=667499172 named CFE Integration Test V3.
 
 Once the master Google spreadsheet is edited, the next time the unit test (`spec/integration/test_runner_spec.rb`) is started it will export the file to (`tmp/integration_test_data.xlsx`) and it will over-write any existing copy in the same location.
 
 This ensures that the service returns the expected results for the use cases of the spreadsheet.
 
-To run just the integration tests and see detailed output, run:
+When the test is run by the command `rspec spec/integration/test_runner_spec.rb` it runs in silent mode, that is, no output except the normal green dot 
+to indicate all test cases in the spreadsheet have been run successfully, or red F if any of them failed.
 
-   ```VERBOSE=true bundle exec rspec spec/integration/test_runner_spec.rb```
+For more fine control over the amount of verbosity, to run just one test case, or to force download the google spreadsheet, 
+use `bin/ispec`, the help text of which is given below.
 
-or more simply:
+```
+      ispec - Run integration tests
 
-* ```rake integration``` to run verbose, or
-* ```rake integration[silent]``` to run in silent mode
+      options:
+        -h        Display this help text
+        -r        Force refresh of Google speadsheet to local storage
+        -v        Set verbosity level to 1 (default is 0: silent)
+        -vv       Set verbosity level to 2
+        -w XXX    Only process worksheet named XXX
+  ```
+
 
 ## Replaying live API interactions for debugging purposes
 
