@@ -13,9 +13,7 @@ Dir[Rails.root.join('lib/integration_helpers/**/*.rb')].sort.each { |f| require 
 #
 
 RSpec.describe 'IntegrationTests::TestRunner', type: :request do
-  # let(:spreadsheet_title) { 'New means assessment test data' }
-  let(:spreadsheet_title) { 'Copy of New means assessment test data' }
-
+  let(:spreadsheet_title) { 'CFE Integration Test V3' }
 
   let(:spreadsheet_file) { Rails.root.join('tmp/integration_test_data.xlsx') }
   let(:spreadsheet) { Roo::Spreadsheet.open(spreadsheet_file.to_s) }
@@ -34,6 +32,7 @@ RSpec.describe 'IntegrationTests::TestRunner', type: :request do
 
         test_case = TestCase::Worksheet.new(spreadsheet, worksheet_name, verbosity_level)
         next if test_case.skippable?
+
         puts ">>> RUNNING TEST #{worksheet_name} <<<".yellow unless silent?
         pass = run_test_case(test_case)
         failing_tests << worksheet_name unless pass
@@ -79,7 +78,6 @@ RSpec.describe 'IntegrationTests::TestRunner', type: :request do
 
     def post_object(obj, assessment_id)
       return if obj.nil?
-
 
       url_method = obj.__send__(:url_method)
       url = Rails.application.routes.url_helpers.__send__(url_method, assessment_id)

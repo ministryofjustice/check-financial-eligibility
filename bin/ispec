@@ -34,10 +34,11 @@ class Ispec
   def display_help
     help_string = <<~END_OF_HELP
             ispec - Run integration tests
-      #{'      '}
+      #{' '}
             options:
               -h        Display this help text
-              -v        Set verbosity level to 1 (default is 0)
+              -r        Force refresh of Google speadsheet to local storage
+              -v        Set verbosity level to 1 (default is 0: silent)
               -vv       Set verbosity level to 2
               -w XXX    Only process worksheet named XXX
     END_OF_HELP

@@ -21,18 +21,22 @@ module TestCase
     private
 
     def compare_and_print_result(key)
-      color = :green
       if ignorable?(expected_value(key))
-        color = :blue
-        print_result(key, color)
-        return
+        print_ignored_result(key)
+      elsif expected_value(key) != actual_value(key)
+        print_error_result(key)
+      else
+        print_result(key, :green)
       end
+    end
 
-      if expected_value(key) != actual_value(key)
-        @overall_result = false
-        color = :red
-      end
-      print_result(key, color)
+    def print_ignored_result(key)
+      print_result(key, :blue)
+    end
+
+    def print_error_result(key)
+      @overall_result = false
+      print_result(key, :bluw)
     end
 
     def expected_value(key)

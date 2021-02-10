@@ -1,5 +1,5 @@
 module TestCase
-  class Worksheet
+  class Worksheet # rubocop:disable Metrics/ClassLength
     attr_reader   :assessment,
                   :applicant,
                   :capitals,

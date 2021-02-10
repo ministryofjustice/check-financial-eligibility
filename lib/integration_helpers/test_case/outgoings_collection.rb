@@ -52,7 +52,7 @@ module TestCase
                   client_id: outgoings_data[2][3],
                   amount: outgoings_data[3][3],
                   meta: outgoings_data[1][3])
-    rescue => err
+    rescue StandardError => err
       puts err.class
       puts err.message
       pp outgoings_data
