@@ -2,7 +2,7 @@ module CFEConstants
   # Versions
   #
   DEFAULT_ASSESSMENT_VERSION = '2'.freeze
-  LATEST_ASSESSMENT_VERSION = '3'.freeze
+  VALID_ASSESSMENT_VERSIONS = %w[2 3].freeze
 
   # Income categories
   #

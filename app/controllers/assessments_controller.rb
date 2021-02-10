@@ -67,12 +67,13 @@ class AssessmentsController < ApplicationController
   def determine_version_and_process
     assessment.version = determine_version
 
-    case assessment.version
-    when CFEConstants::DEFAULT_ASSESSMENT_VERSION, CFEConstants::LATEST_ASSESSMENT_VERSION
-      show_assessment
-    else
-      raise CheckFinancialEligibilityError, 'Unsupported version specified in AcceptHeader'
-    end
+    raise CheckFinancialEligibilityError, 'Unsupported version specified in AcceptHeader' unless valid_assessment_version?
+
+    show_assessment
+  end
+
+  def valid_assessment_version?
+    CFEConstants::VALID_ASSESSMENT_VERSIONS.include?(assessment.version)
   end
 
   def show_assessment

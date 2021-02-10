@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_22_165708) do
+ActiveRecord::Schema.define(version: 2021_01_28_181623) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -132,6 +132,18 @@ ActiveRecord::Schema.define(version: 2021_01_22_165708) do
     t.decimal "housing_benefit", default: "0.0"
     t.decimal "income_contribution", default: "0.0"
     t.decimal "legal_aid", default: "0.0", null: false
+    t.decimal "child_care_all_sources", default: "0.0"
+    t.decimal "maintenance_out_all_sources", default: "0.0"
+    t.decimal "rent_or_mortgage_all_sources", default: "0.0"
+    t.decimal "legal_aid_all_sources", default: "0.0"
+    t.decimal "child_care_bank", default: "0.0"
+    t.decimal "maintenance_out_bank", default: "0.0"
+    t.decimal "rent_or_mortgage_bank", default: "0.0"
+    t.decimal "legal_aid_bank", default: "0.0"
+    t.decimal "child_care_cash", default: "0.0"
+    t.decimal "maintenance_out_cash", default: "0.0"
+    t.decimal "rent_or_mortgage_cash", default: "0.0"
+    t.decimal "legal_aid_cash", default: "0.0"
     t.index ["assessment_id"], name: "index_disposable_income_summaries_on_assessment_id"
   end
 

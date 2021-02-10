@@ -7,6 +7,7 @@ FactoryBot.define do
     version { '2' }
 
     trait :with_v3 do
+      with_gross_income_summary_and_records
       version { '3' }
     end
 

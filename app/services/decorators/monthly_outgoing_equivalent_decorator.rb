@@ -1,16 +1,16 @@
 module Decorators
   class MonthlyOutgoingEquivalentDecorator
+    include Transactions
+
+    attr_reader :record, :categories
+
     def initialize(disposable_income_summary)
       @record = disposable_income_summary
+      @categories = CFEConstants::VALID_OUTGOING_CATEGORIES.map(&:to_sym)
     end
 
     def as_json
-      {
-        child_care: @record.childcare,
-        maintenance_out: @record.maintenance,
-        rent_or_mortgage: @record.gross_housing_costs,
-        legal_aid: @record.legal_aid
-      }
+      record.v3? ? all_transaction_types : all_transaction_types[:bank_transactions]
     end
   end
 end
