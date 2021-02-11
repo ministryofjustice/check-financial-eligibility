@@ -35,6 +35,8 @@ The documentaion is automatically generated when tests are run with an environme
 
 This generates a JSON file `doc/apipie_examples.json` which is read and used when drilling down in the documentation available at '/apidocs'.
 
+To add additional examples to this json file, add the `:show_in_doc` tag to the relevant rspec tests and rerun the above command.
+
 ## Setting the env vars
 To run the integration tests you will need to set up a `.env` file in the root folder.
 

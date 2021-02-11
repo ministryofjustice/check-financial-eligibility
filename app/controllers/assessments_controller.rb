@@ -36,8 +36,8 @@ class AssessmentsController < ApplicationController
 
   def self.documentation_for_get
     %(Get assessment result<br/>
-       Only version 2 of this api is currently valid.  The version is specified by the Accept header, for example</br>
-       <tt>&nbsp;&nbsp;&nbsp;&nbsp;Accept:application/json;version=2</tt><br/>
+       Versions 2 & 3 of this api are currently valid.  The version is specified by the Accept header, for example</br>
+       <tt>&nbsp;&nbsp;&nbsp;&nbsp;Accept:application/json;version=3</tt><br/>
        If the version part of the Accept header is not specified, version 2 is assumed<br/<br/>
      )
   end

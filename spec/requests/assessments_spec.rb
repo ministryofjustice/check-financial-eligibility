@@ -182,7 +182,7 @@ RSpec.describe AssessmentsController, type: :request do
       context 'non-passported application' do
         let(:assessment) { create :assessment, :with_everything, :with_v3 }
 
-        it 'returns http success' do
+        it 'returns http success', :show_in_doc do
           subject
           expect(response).to have_http_status(:success)
         end
