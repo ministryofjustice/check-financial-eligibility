@@ -7,6 +7,7 @@ unless ENV['NOCOVERAGE']
   SimpleCov.start do
     add_filter 'spec/'
     add_filter 'config/initializers/raven.rb'
+    add_filter 'lib/integration_helpers'
   end
 end
 

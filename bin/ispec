@@ -1,0 +1,75 @@
+#! /usr/bin/env ruby
+
+require 'getoptlong'
+
+class Ispec
+  HELP_STRING = <<~END_OF_HELP.freeze
+          ispec - Run integration tests
+    #{' '}
+          options:
+            -h        Display this help text
+            -r        Force refresh of Google speadsheet to local storage
+            -v        Set verbosity level to 1 (default is 0: silent)
+            -vv       Set verbosity level to 2
+            -w XXX    Only process worksheet named XXX
+  END_OF_HELP
+
+  def initialize(help:, verbose:, refresh:, worksheet:)
+    @help = help
+    @verbose = verbose
+    @refresh = refresh
+    @worksheet = worksheet
+  end
+
+  def run
+    display_help if @help
+
+    command = "#{verbosity} #{freshness} #{target} bundle exec rspec spec/integration/test_runner_spec.rb"
+    system command
+  end
+
+  private
+
+  def verbosity
+    "VERBOSE=#{@verbose}"
+  end
+
+  def freshness
+    @refresh ? 'REFRESH=true' : ''
+  end
+
+  def target
+    @worksheet.nil? || @worksheet == '' ? '' : "TARGET_WORKSHEET=#{@worksheet}"
+  end
+
+  def display_help
+    puts HELP_STRING
+    exit!
+  end
+end
+
+opts = GetoptLong.new(
+  ['--help', '-h', GetoptLong::NO_ARGUMENT],
+  ['--verbose', '-v', GetoptLong::OPTIONAL_ARGUMENT],
+  ['--refresh', '-r', GetoptLong::NO_ARGUMENT],
+  ['--worksheet', '-w', GetoptLong::REQUIRED_ARGUMENT]
+)
+
+help = false
+verbose = 0
+refresh = false
+worksheet = nil
+opts.each do |opt, arg|
+  case opt
+  when '--help'
+    help = true
+  when '--verbose'
+    verbose = arg == 'v' ? 2 : 1
+  when '--refresh'
+    refresh = true
+  when '--worksheet'
+    worksheet = arg
+  end
+end
+
+Ispec.new(help: help, verbose: verbose, refresh: refresh, worksheet: worksheet).run
