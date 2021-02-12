@@ -5,6 +5,7 @@ module Decorators
     delegate :applicant,
              :capital_summary,
              :gross_income_summary,
+             :remarks,
              :disposable_income_summary, to: :assessment
 
     def initialize(assessment)
@@ -26,7 +27,7 @@ module Decorators
           gross_income: GrossIncomeSummaryDecorator.new(gross_income_summary).as_json,
           disposable_income: DisposableIncomeSummaryDecorator.new(disposable_income_summary).as_json,
           capital: CapitalSummaryDecorator.new(capital_summary).as_json,
-          remarks: assessment.remarks.as_json
+          remarks: RemarksDecorator.new(remarks, assessment).as_json
         }
       }
     end
