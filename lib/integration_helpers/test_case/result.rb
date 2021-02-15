@@ -133,7 +133,7 @@ module TestCase
     end
 
     def gross_income_summary_monthly_state_benefits
-      state_benefits.sum { |sb| sb[:all_sources].to_f }
+      state_benefits[:all_sources].to_f
     end
 
     def gross_income_summary_total_gross_income

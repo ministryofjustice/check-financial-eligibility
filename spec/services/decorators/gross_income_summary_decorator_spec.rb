@@ -79,6 +79,13 @@ module Decorators
             expect(subject[:summary].keys).to match expected_keys
           end
 
+          it 'returns expected keys for state benefits' do
+            expected_keys = %i[all_sources
+                               cash_transactions
+                               bank_transactions]
+            expect(subject[:state_benefits][:monthly_equivalents].keys).to match expected_keys
+          end
+
           it 'returns expected keys for student_loan' do
             expected_keys = %i[student_loan]
             expect(subject[:irregular_income][:monthly_equivalents].keys).to match expected_keys
