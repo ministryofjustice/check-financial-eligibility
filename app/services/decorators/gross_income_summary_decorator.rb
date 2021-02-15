@@ -46,7 +46,11 @@ module Decorators
           }
         },
         state_benefits: {
-          monthly_equivalents: record.state_benefits.map { |sb| StateBenefitDecorator.new(record, sb).as_json }
+          monthly_equivalents: {
+            all_sources: record.benefits_all_sources,
+            cash_transactions: record.benefits_cash,
+            bank_transactions: record.state_benefits.map { |sb| StateBenefitDecorator.new(record, sb).as_json }
+          }
         },
         other_income: OtherIncomeSourceDecorator.new(record).as_json
       }

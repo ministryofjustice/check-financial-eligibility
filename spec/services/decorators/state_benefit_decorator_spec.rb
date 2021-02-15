@@ -35,9 +35,7 @@ module Decorators
         it 'returns the expected hash' do
           expected_hash = {
             name: 'Childcare allowance',
-            bank_transactions: 88.3,
-            cash_transactions: 1038.07,
-            all_sources: 1072.23,
+            monthly_value: 88.3,
             excluded_from_income_assessment: excluded
           }
           expect(subject).to eq expected_hash
