@@ -30,18 +30,14 @@ class DateValidator < Apipie::Validator::BaseValidator
   private
 
   def validate_options(option, date)
-    case option
-    when :today_or_older
-      return true if date <= Date.current
-    when :submission_date_today_or_older
-      return true if date <= Date.current || allow_future_submission_date?
-    else
-      raise "date option '#{option}' not recognised"
-    end
+    raise "date option '#{option}' not recognised" unless date_option_valid?(option)
+
+    date <= Date.current
   end
 
-  def allow_future_submission_date?
-    Rails.configuration.x.application.allow_future_submission_date
+  def date_option_valid?(option)
+    valid_options = %i[today_or_older submission_date_today_or_older]
+    valid_options.include?(option)
   end
 
   def date_parsable?(string)

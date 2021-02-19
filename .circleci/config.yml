@@ -31,7 +31,6 @@ executors:
           - PGHOST=localhost
           - PGUSER=user
           - TZ: "Europe/London"
-          - ALLOW_FUTURE_SUBMISSION_DATE: true
       - image: postgres:10.5
         environment:
           - POSTGRES_USER=user
