@@ -4,12 +4,7 @@ FactoryBot.define do
     remote_ip { Faker::Internet.ip_v4_address }
     submission_date { Date.current }
     matter_proceeding_type { 'domestic_abuse' }
-    version { '2' }
-
-    trait :with_v3 do
-      with_gross_income_summary_and_records
-      version { '3' }
-    end
+    version { '3' }
 
     trait :with_applicant do
       applicant { create :applicant, :under_pensionable_age }

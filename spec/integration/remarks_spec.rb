@@ -78,7 +78,7 @@ RSpec.describe 'contribution_required Full Assessment with remarks' do
   end
 
   def v2_headers
-    { 'Accept' => 'application/json;version=2' }
+    { 'Accept' => 'application/json;version=3' }
   end
 
   def assessment_params

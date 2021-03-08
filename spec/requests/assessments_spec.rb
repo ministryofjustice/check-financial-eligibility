@@ -100,9 +100,9 @@ RSpec.describe AssessmentsController, type: :request do
           subject
         end
 
-        it 'has defaulted to using version 2' do
+        it 'has defaulted to using version 3' do
           subject
-          expect(parsed_response[:version]).to eq '2'
+          expect(parsed_response[:version]).to eq '3'
         end
       end
 
@@ -123,66 +123,13 @@ RSpec.describe AssessmentsController, type: :request do
       end
     end
 
-    context 'version 1 specified in the header' do
-      let(:headers) { { 'Accept' => 'application/json;version=1' } }
-      let(:assessment) { create :assessment, :passported }
-
-      it 'returns http success' do
-        subject
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(parsed_response[:errors]).to eq ['Unsupported version specified in AcceptHeader']
-      end
-    end
-
-    context 'version 2 specified in the header' do
-      let(:headers) { { 'Accept' => 'application/json;version=2' } }
+    context 'version 3 specified in the header' do
+      let(:headers) { { 'Accept' => 'application/json;version=3' } }
 
       context 'non-passported application' do
         let(:assessment) { create :assessment, :with_everything }
 
         it 'returns http success' do
-          subject
-          expect(response).to have_http_status(:success)
-        end
-
-        it 'returns capital summary data as json' do
-          Timecop.freeze do
-            subject
-            expected_response = Decorators::AssessmentDecorator.new(assessment.reload).as_json.to_json
-            expect(parsed_response).to eq(JSON.parse(expected_response, symbolize_names: true))
-          end
-        end
-      end
-
-      context 'passported application' do
-        let(:assessment) { create :assessment, :passported }
-
-        it 'returns http success' do
-          subject
-          expect(response).to have_http_status(:success)
-        end
-
-        it 'returns a structure with expected keys' do
-          subject
-          expect(parsed_response.keys).to eq expected_response_keys
-          expect(parsed_response[:assessment].keys).to eq expected_assessment_keys
-        end
-
-        it 'returns nil for the income elements of the response' do
-          subject
-          expect(parsed_response[:assessment][:gross_income]).to be_nil
-          expect(parsed_response[:assessment][:disposable_income]).to be_nil
-        end
-      end
-    end
-
-    context 'version 3 specified in the header' do
-      let(:headers) { { 'Accept' => 'application/json;version=3' } }
-
-      context 'non-passported application' do
-        let(:assessment) { create :assessment, :with_everything, :with_v3 }
-
-        it 'returns http success', :show_in_doc do
           subject
           expect(response).to have_http_status(:success)
         end
@@ -220,7 +167,7 @@ RSpec.describe AssessmentsController, type: :request do
 
     context 'test assessment NPE6-1' do
       let(:assessment) { create_assessment_npe61 }
-      let(:headers) { { 'Accept' => 'application/json;version=2' } }
+      let(:headers) { { 'Accept' => 'application/json;version=3' } }
 
       before { subject }
 
@@ -230,23 +177,26 @@ RSpec.describe AssessmentsController, type: :request do
 
       it 'returns expected gross income assessment results' do
         results = parsed_response[:assessment][:gross_income]
-        expect(results[:assessment_result]).to eq 'eligible'
-        expect(results[:upper_threshold]).to eq 999_999_999_999.0.to_s
-        expect(results[:monthly_other_income]).to eq 1415.0.to_s
-        expect(results[:monthly_state_benefits]).to eq 200.0.to_s
-        expect(results[:total_gross_income]).to eq 1615.0.to_s
+        expect(results[:summary][:assessment_result]).to eq 'eligible'
+        expect(results[:summary][:upper_threshold]).to eq 999_999_999_999.0.to_s
+        expect(results[:state_benefits][:monthly_equivalents][:all_sources]).to eq 200.0.to_s
+        expect(results[:summary][:total_gross_income]).to eq 1615.0.to_s
       end
 
-      it 'returns expected monthly_income_equivalents' do
-        mie = parsed_response[:assessment][:gross_income][:monthly_income_equivalents]
+      it 'returns expected gross income monthly equivalents' do
+        mie = parsed_response[:assessment][:gross_income][:other_income][:monthly_equivalents][:all_sources]
         expect(mie[:friends_or_family]).to eq 1415.0.to_s
         expect(mie[:maintenance_in]).to eq 0.0.to_s
         expect(mie[:property_or_lodger]).to eq 0.0.to_s
+      end
+
+      it 'returns expected gross income student loan amount' do
+        mie = parsed_response[:assessment][:gross_income][:irregular_income][:monthly_equivalents]
         expect(mie[:student_loan]).to eq 0.0.to_s
       end
 
-      it 'returns expected monthly_outgoing_equivalents' do
-        moe = parsed_response[:assessment][:gross_income][:monthly_outgoing_equivalents]
+      it 'returns expected disposable income monthly equivalents' do
+        moe = parsed_response[:assessment][:disposable_income][:monthly_equivalents][:all_sources]
         expect(moe[:child_care]).to eq 0.0.to_s
         expect(moe[:maintenance_out]).to eq 0.0.to_s
         expect(moe[:rent_or_mortgage]).to eq 50.0.to_s

@@ -8,7 +8,6 @@ class OtherIncomeSource < ApplicationRecord
   validates :name, inclusion: { in: CFEConstants::HUMANIZED_INCOME_CATEGORIES }
 
   delegate :assessment, to: :gross_income_summary
-  delegate :v3?, to: :assessment
 
   def calculate_monthly_income!
     calculate_monthly_equivalent!(target_field: :monthly_income,

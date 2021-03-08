@@ -91,7 +91,7 @@ RSpec.describe 'Eligible Full Assessment with policy disregard remarks' do
   end
 
   def v2_headers
-    { 'Accept' => 'application/json;version=2' }
+    { 'Accept' => 'application/json;version=3' }
   end
 
   def assessment_params

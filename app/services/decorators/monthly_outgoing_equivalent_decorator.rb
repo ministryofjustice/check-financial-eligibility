@@ -10,7 +10,7 @@ module Decorators
     end
 
     def as_json
-      record.v3? ? all_transaction_types : all_transaction_types[:bank_transactions]
+      all_transaction_types
     end
   end
 end

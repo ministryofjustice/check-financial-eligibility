@@ -26,7 +26,7 @@ module Collators
 
     def call
       attrs = {}
-      populate_attrs_v3 attrs if assessment.v3?
+      populate_attrs_v3 attrs
 
       attrs = attrs.merge(default_attrs)
 

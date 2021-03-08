@@ -7,17 +7,12 @@ module Collators
     def call
       attrs = default_attrs
 
-      assessment.v3? ? populate_attrs_v3(attrs) : populate_attrs_v2(attrs)
+      populate_attrs_v3(attrs)
 
       gross_income_summary.update!(attrs)
     end
 
     private
-
-    def populate_attrs_v2(attrs)
-      INCOME_CATEGORIES.each { |category| attrs[category] = categorised_income[category] if category != :benefits }
-      attrs[:total_gross_income] += categorised_income[:total] + monthly_state_benefits
-    end
 
     def populate_attrs_v3(attrs)
       INCOME_CATEGORIES.each do |category|

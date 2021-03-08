@@ -3,10 +3,6 @@ FactoryBot.define do
     assessment
     monthly_other_income { nil }
 
-    trait :with_v3 do
-      assessment { create :assessment, :with_v3 }
-    end
-
     trait :with_all_transaction_types do
       benefits_bank { 34.16 }
       friends_or_family_bank { 7.47 }

@@ -23,9 +23,9 @@ The documentation and input validation is maintained via
 
 The API version is specified through the accept header, as follows:
 
-    ``` Accept:application/json;version=2```
+    ``` Accept:application/json;version=3```
 
-The only currently acceptable version is 2.  If no version is specified, version 2 is assumed.
+The only currently acceptable version is 3.  If no version is specified, version 3 is assumed if alternative versions are developed.
 
 
 ## Generation of API documentation

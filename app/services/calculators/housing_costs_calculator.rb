@@ -18,7 +18,7 @@ module Calculators
     end
 
     def gross_housing_costs
-      @gross_housing_costs ||= assessment.v3? ? gross_housing_costs_all_sources : gross_housing_costs_bank
+      @gross_housing_costs ||= gross_housing_costs_all_sources
     end
 
     def monthly_housing_benefit
@@ -41,7 +41,7 @@ module Calculators
     end
 
     def monthly_actual_housing_costs
-      @monthly_actual_housing_costs ||= assessment.v3? ? calculate_actual_housing_costs + gross_housing_costs_cash : calculate_actual_housing_costs
+      @monthly_actual_housing_costs ||= calculate_actual_housing_costs + gross_housing_costs_cash
     end
 
     def calculate_actual_housing_costs
