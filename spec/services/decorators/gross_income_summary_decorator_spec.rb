@@ -58,11 +58,6 @@ module Decorators
             expect(StateBenefitDecorator).to receive(:new).and_return(double('oisd', as_json: nil)).exactly(expected_count).times
             subject
           end
-
-          it 'calls the OtherIncomeSourceDecorator once' do
-            expect(OtherIncomeSourceDecorator).to receive(:new).and_return(double('sbd', as_json: nil)).exactly(1).times
-            subject
-          end
         end
       end
     end

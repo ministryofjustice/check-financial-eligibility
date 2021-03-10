@@ -9,7 +9,7 @@ module Decorators
       let(:excluded) { state_benefit.state_benefit_type.exclude_from_gross_income }
       let!(:gross_income_summary) { create :gross_income_summary, :with_all_transaction_types }
 
-      subject { described_class.new(gross_income_summary, state_benefit).as_json }
+      subject { described_class.new(state_benefit).as_json }
 
       it 'returns the expected hash' do
         expected_hash = {

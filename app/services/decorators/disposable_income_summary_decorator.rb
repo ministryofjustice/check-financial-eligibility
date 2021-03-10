@@ -1,25 +1,23 @@
 module Decorators
   class DisposableIncomeSummaryDecorator
-    attr_reader :record
+    include Transactions
 
-    def initialize(record)
-      @record = record
+    attr_reader :record, :categories
+
+    def initialize(disposable_income_summary)
+      @record = disposable_income_summary
+      @categories = CFEConstants::VALID_OUTGOING_CATEGORIES.map(&:to_sym)
     end
 
     def as_json
-      return nil if record.nil?
-
-      attrs = {
-        monthly_equivalents: MonthlyOutgoingEquivalentDecorator.new(record).as_json
-      }
-
-      attrs.merge(default_attrs)
+      payload unless record.nil?
     end
 
     private
 
-    def default_attrs # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    def payload # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       {
+        monthly_equivalents: all_transaction_types,
         childcare_allowance: record.child_care_all_sources,
         deductions: DeductionsDecorator.new(record).as_json,
         dependant_allowance: record.dependant_allowance,

@@ -22,7 +22,7 @@ RSpec.describe 'contribution_required Full Assessment with remarks' do
     post_state_benefits(assessment_id)
     post_explicit_remarks(assessment_id)
 
-    get assessment_path(assessment_id), headers: v2_headers
+    get assessment_path(assessment_id), headers: v3_headers
     output_response(:get, :assessment)
     expect(parsed_response[:assessment][:remarks]).to match_array(expected_remarks)
   end
@@ -77,7 +77,7 @@ RSpec.describe 'contribution_required Full Assessment with remarks' do
     { 'CONTENT_TYPE' => 'application/json' }
   end
 
-  def v2_headers
+  def v3_headers
     { 'Accept' => 'application/json;version=3' }
   end
 

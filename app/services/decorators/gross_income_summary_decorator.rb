@@ -1,23 +1,28 @@
 module Decorators
   class GrossIncomeSummaryDecorator
-    attr_reader :record
+    include Transactions
+
+    attr_reader :record, :categories
 
     delegate :assessment, to: :record
     delegate :disposable_income_summary, to: :assessment
 
     def initialize(gross_income_summary)
       @record = gross_income_summary
+      @categories = income_categories_excluding_benefits
     end
 
     def as_json
-      return if record.nil?
-
-      payload_v3
+      payload unless record.nil?
     end
 
     private
 
-    def payload_v3 # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    def income_categories_excluding_benefits
+      CFEConstants::VALID_INCOME_CATEGORIES.map(&:to_sym) - [:benefits]
+    end
+
+    def payload # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       {
         summary: {
           total_gross_income: record.total_gross_income,
@@ -33,10 +38,12 @@ module Decorators
           monthly_equivalents: {
             all_sources: record.benefits_all_sources,
             cash_transactions: record.benefits_cash,
-            bank_transactions: record.state_benefits.map { |sb| StateBenefitDecorator.new(record, sb).as_json }
+            bank_transactions: record.state_benefits.map { |sb| StateBenefitDecorator.new(sb).as_json }
           }
         },
-        other_income: OtherIncomeSourceDecorator.new(record).as_json
+        other_income: {
+          monthly_equivalents: all_transaction_types
+        }
       }
     end
   end

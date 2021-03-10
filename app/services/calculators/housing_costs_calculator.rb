@@ -18,7 +18,7 @@ module Calculators
     end
 
     def gross_housing_costs
-      @gross_housing_costs ||= gross_housing_costs_all_sources
+      @gross_housing_costs ||= gross_housing_costs_bank + gross_housing_costs_cash
     end
 
     def monthly_housing_benefit
@@ -29,10 +29,6 @@ module Calculators
 
     def gross_housing_costs_cash
       monthly_transaction_amount_by(operation: :debit, category: :rent_or_mortgage)
-    end
-
-    def gross_housing_costs_all_sources
-      gross_housing_costs_bank + gross_housing_costs_cash
     end
 
     def gross_housing_costs_bank
