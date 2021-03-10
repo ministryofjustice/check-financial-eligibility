@@ -70,7 +70,7 @@ GEM
     apipie-rails (0.5.18)
       rails (>= 4.1)
     ast (2.4.2)
-    awesome_print (1.8.0)
+    awesome_print (1.9.2)
     binding_of_caller (1.0.0)
       debug_inspector (>= 0.0.1)
     bootsnap (1.7.2)
