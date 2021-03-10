@@ -1,29 +1,27 @@
 module Decorators
   class DisposableIncomeSummaryDecorator
-    attr_reader :record
+    include Transactions
 
-    def initialize(record)
-      @record = record
+    attr_reader :record, :categories
+
+    def initialize(disposable_income_summary)
+      @record = disposable_income_summary
+      @categories = CFEConstants::VALID_OUTGOING_CATEGORIES.map(&:to_sym)
     end
 
     def as_json
-      return nil if record.nil?
-
-      attrs = {}
-      monthly_equivalents_key = record.v3? ? :monthly_equivalents : :monthly_outgoing_equivalents
-      attrs[monthly_equivalents_key] = MonthlyOutgoingEquivalentDecorator.new(record).as_json
-
-      attrs.merge(default_attrs)
+      payload unless record.nil?
     end
 
     private
 
-    def default_attrs # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    def payload # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       {
-        childcare_allowance: childcare_allowance,
+        monthly_equivalents: all_transaction_types,
+        childcare_allowance: record.child_care_all_sources,
         deductions: DeductionsDecorator.new(record).as_json,
         dependant_allowance: record.dependant_allowance,
-        maintenance_allowance: maintenance_allowance,
+        maintenance_allowance: record.maintenance_out_all_sources,
         gross_housing_costs: record.gross_housing_costs,
         housing_benefit: record.housing_benefit,
         net_housing_costs: record.net_housing_costs,
@@ -34,14 +32,6 @@ module Decorators
         assessment_result: record.assessment_result,
         income_contribution: record.income_contribution
       }
-    end
-
-    def childcare_allowance
-      record.v3? ? record.child_care_all_sources : record.child_care_bank
-    end
-
-    def maintenance_allowance
-      record.v3? ? record.maintenance_out_all_sources : record.maintenance_out_bank
     end
   end
 end

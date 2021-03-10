@@ -1,7 +1,5 @@
 module Decorators
   class CapitalItemDecorator
-    attr_reader :assessment
-
     def initialize(record)
       @record = record
     end

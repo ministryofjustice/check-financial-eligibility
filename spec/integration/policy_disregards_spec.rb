@@ -24,7 +24,7 @@ RSpec.describe 'Eligible Full Assessment with policy disregard remarks' do
     post_irregular_income(assessment_id)
     post_explicit_remarks(assessment_id)
 
-    get assessment_path(assessment_id), headers: v2_headers
+    get assessment_path(assessment_id), headers: v3_headers
     output_response(:get, :assessment)
 
     expect(parsed_response[:assessment][:remarks]).to_not include(:policy_disregards)
@@ -90,8 +90,8 @@ RSpec.describe 'Eligible Full Assessment with policy disregard remarks' do
     { 'CONTENT_TYPE' => 'application/json' }
   end
 
-  def v2_headers
-    { 'Accept' => 'application/json;version=2' }
+  def v3_headers
+    { 'Accept' => 'application/json;version=3' }
   end
 
   def assessment_params

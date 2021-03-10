@@ -1,14 +1,16 @@
 module Decorators
   class CapitalSummaryDecorator
-    attr_reader :assessment
-
-    def initialize(record)
-      @record = record
+    def initialize(capital_summary)
+      @record = capital_summary
     end
 
-    def as_json # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
-      return nil if @record.nil?
+    def as_json
+      payload unless @record.nil?
+    end
 
+    private
+
+    def payload # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       {
         capital_items: {
           liquid: liquid_items,
@@ -33,8 +35,6 @@ module Decorators
         capital_contribution: @record.capital_contribution
       }
     end
-
-    private
 
     def liquid_items
       @record.liquid_capital_items.map { |i| CapitalItemDecorator.new(i).as_json }

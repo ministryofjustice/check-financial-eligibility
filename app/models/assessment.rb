@@ -26,10 +26,6 @@ class Assessment < ApplicationRecord
 
   attr_accessor :version
 
-  def v3?
-    @version == '3'
-  end
-
   # Always instantiate a new Remarks object from a nil value
   def remarks
     attributes['remarks'] || Remarks.new(id)

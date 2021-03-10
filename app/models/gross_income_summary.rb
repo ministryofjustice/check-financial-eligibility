@@ -7,8 +7,6 @@ class GrossIncomeSummary < ApplicationRecord
   has_many :irregular_income_payments, dependent: :destroy
   has_many :cash_transaction_categories, dependent: :destroy
 
-  delegate :v3?, to: :assessment
-
   enum(
     assessment_result: enum_hash_for(
       :pending, :eligible, :ineligible, :summarised

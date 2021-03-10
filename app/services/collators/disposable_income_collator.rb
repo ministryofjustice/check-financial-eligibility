@@ -25,17 +25,14 @@ module Collators
     end
 
     def call
-      attrs = {}
-      populate_attrs_v3 attrs if assessment.v3?
-
-      attrs = attrs.merge(default_attrs)
-
-      disposable_income_summary.update!(attrs)
+      disposable_income_summary.update!(populate_attrs)
     end
 
     private
 
-    def populate_attrs_v3(attrs)
+    def populate_attrs
+      attrs = {}
+
       OUTGOING_CATEGORIES.each do |category|
         monthly_cash_amount = category == :child_care ? __send__("#{category}_cash") : monthly_cash_by_category(category)
         @monthly_cash_transactions_total += monthly_cash_amount unless category == :rent_or_mortgage
@@ -44,6 +41,8 @@ module Collators
         attrs[:"#{category}_cash"] = monthly_cash_amount
         attrs[:"#{category}_all_sources"] = attrs[:"#{category}_bank"] + attrs[:"#{category}_cash"]
       end
+
+      attrs.merge(default_attrs)
     end
 
     def monthly_cash_by_category(category)

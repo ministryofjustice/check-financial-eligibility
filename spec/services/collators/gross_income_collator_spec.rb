@@ -4,7 +4,7 @@ module Collators
   RSpec.describe GrossIncomeCollator do
     before { create :bank_holiday }
 
-    let(:assessment) { create :assessment, :with_gross_income_summary, :with_applicant }
+    let(:assessment) { create :assessment, :with_applicant, :with_gross_income_summary }
     let(:gross_income_summary) { assessment.gross_income_summary }
 
     describe '.call' do
@@ -92,11 +92,11 @@ module Collators
           it 'updates the gross income record with categorised monthly incomes' do
             subject
             gross_income_summary.reload
-            expect(gross_income_summary.monthly_state_benefits).to be_zero
-            expect(gross_income_summary.maintenance_in).to be_zero
-            expect(gross_income_summary.pension).to be_zero
-            expect(gross_income_summary.friends_or_family).to eq 105.13
-            expect(gross_income_summary.property_or_lodger).to eq 66.45
+            expect(gross_income_summary.benefits_all_sources).to be_zero
+            expect(gross_income_summary.maintenance_in_all_sources).to be_zero
+            expect(gross_income_summary.pension_all_sources).to be_zero
+            expect(gross_income_summary.friends_or_family_all_sources).to eq 105.13
+            expect(gross_income_summary.property_or_lodger_all_sources).to eq 66.45
             expect(gross_income_summary.monthly_other_income).to eq 171.58
             expect(gross_income_summary.total_gross_income).to eq 171.58
           end
@@ -119,9 +119,9 @@ module Collators
           it 'updates the gross income record with categorised monthly incomes' do
             subject
             gross_income_summary.reload
-            expect(gross_income_summary.monthly_state_benefits).to be_zero
-            expect(gross_income_summary.maintenance_in).to be_zero
-            expect(gross_income_summary.pension).to be_zero
+            expect(gross_income_summary.benefits_all_sources).to be_zero
+            expect(gross_income_summary.maintenance_in_all_sources).to be_zero
+            expect(gross_income_summary.pension_all_sources).to be_zero
             expect(gross_income_summary.monthly_other_income).to eq 0.0
             expect(gross_income_summary.monthly_student_loan).to eq 12_000 / 12
             expect(gross_income_summary.total_gross_income).to eq 12_000 / 12
@@ -129,8 +129,8 @@ module Collators
         end
       end
 
-      context 'version 3' do
-        let(:assessment) { create :assessment, :with_applicant, :with_v3 }
+      context 'bank and cash transactions' do
+        let(:assessment) { create :assessment, :with_applicant, :with_gross_income_summary_and_records }
 
         before do
           subject
