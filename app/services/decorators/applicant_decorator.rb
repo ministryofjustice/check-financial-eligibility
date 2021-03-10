@@ -5,12 +5,8 @@ module Decorators
     end
 
     def as_json
-      payload unless @record.nil?
-    end
+      return nil if @record.nil?
 
-    private
-
-    def payload
       {
         date_of_birth: @record.date_of_birth,
         involvement_type: @record.involvement_type,

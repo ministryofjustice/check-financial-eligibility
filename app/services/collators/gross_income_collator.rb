@@ -5,22 +5,27 @@ module Collators
     INCOME_CATEGORIES = CFEConstants::VALID_INCOME_CATEGORIES.map(&:to_sym)
 
     def call
-      gross_income_summary.update!(populate_attrs)
+      attrs = default_attrs
+
+      assessment.v3? ? populate_attrs_v3(attrs) : populate_attrs_v2(attrs)
+
+      gross_income_summary.update!(attrs)
     end
 
     private
 
-    def populate_attrs
-      attrs = default_attrs
+    def populate_attrs_v2(attrs)
+      INCOME_CATEGORIES.each { |category| attrs[category] = categorised_income[category] if category != :benefits }
+      attrs[:total_gross_income] += categorised_income[:total] + monthly_state_benefits
+    end
 
+    def populate_attrs_v3(attrs)
       INCOME_CATEGORIES.each do |category|
         attrs[:"#{category}_bank"] = category == :benefits ? monthly_state_benefits : categorised_income[category].to_d
         attrs[:"#{category}_cash"] = monthly_transaction_amount_by(operation: :credit, category: category)
         attrs[:"#{category}_all_sources"] = attrs[:"#{category}_bank"] + attrs[:"#{category}_cash"]
         attrs[:total_gross_income] += attrs[:"#{category}_all_sources"]
       end
-
-      attrs
     end
 
     def default_attrs

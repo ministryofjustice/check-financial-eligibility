@@ -1,16 +1,14 @@
 module Decorators
   class PropertyDecorator
-    def initialize(property)
-      @record = property
+    attr_reader :assessment
+
+    def initialize(record)
+      @record = record
     end
 
-    def as_json
-      payload unless @record.nil?
-    end
+    def as_json # rubocop:disable Metrics/MethodLength
+      return nil if @record.nil?
 
-    private
-
-    def payload # rubocop:disable Metrics/MethodLength
       {
         value: @record.value,
         outstanding_mortgage: @record.outstanding_mortgage,

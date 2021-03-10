@@ -12,13 +12,7 @@ module Decorators
       @assessment = assessment
     end
 
-    def as_json
-      payload
-    end
-
-    private
-
-    def payload # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    def as_json # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       {
         version: assessment.version,
         timestamp: Time.current,

@@ -15,6 +15,10 @@ FactoryBot.define do
     upper_threshold { 0.0 }
     assessment_result { 'pending' }
 
+    trait :with_v3 do
+      assessment { create :assessment, :with_v3 }
+    end
+
     trait :with_everything do
       after(:create) do |rec|
         [Date.current, 1.month.ago, 2.months.ago].each do |date|
