@@ -9,7 +9,8 @@ class ApplicationController < ActionController::API
   end
 
   def render_unprocessable(message)
-    Raven.capture_message(message)
+    raven_message = message.is_a?(Array) ? message.join(', ') : message
+    Raven.capture_message(raven_message)
     render json: { success: false, errors: message }, status: :unprocessable_entity
   end
 
