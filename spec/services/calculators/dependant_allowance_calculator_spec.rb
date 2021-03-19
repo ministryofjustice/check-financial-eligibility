@@ -126,6 +126,7 @@ module Calculators
       end
     end
 
+    # Changing these to be 2021 dates.
     describe 'retrieving threshold values' do
       let(:dependant) { create :dependant }
 
@@ -133,7 +134,7 @@ module Calculators
 
       context 'before new allowances date' do
         before do
-          dependant.assessment.submission_date = 'Sun, 05 Apr 2020'
+          dependant.assessment.submission_date = 'Sun, 11 Apr 2021'
         end
 
         describe 'child_under_15_allowance' do
@@ -163,30 +164,30 @@ module Calculators
 
       context 'after new allowances date' do
         before do
-          dependant.assessment.submission_date = 'Mon, 07 Apr 2020'
+          dependant.assessment.submission_date = 'Mon, 12 Apr 2021'
         end
 
         describe 'child_under_15_allowance' do
           it 'returns the threshold value' do
-            expect(subject.child_under_15_allowance).to eq 296.65
+            expect(subject.child_under_15_allowance).to eq 298.08
           end
         end
 
         describe 'child_aged_15_allowance' do
           it 'returns the threshold value' do
-            expect(subject.child_aged_15_allowance).to eq 296.65
+            expect(subject.child_aged_15_allowance).to eq 298.08
           end
         end
 
         describe 'child_16_and_over_allowance' do
           it 'returns the threshold value' do
-            expect(subject.child_16_and_over_allowance).to eq 296.65
+            expect(subject.child_16_and_over_allowance).to eq 298.08
           end
         end
 
         describe 'adult_allowance' do
           it 'returns the threshold value' do
-            expect(subject.adult_allowance).to eq 296.65
+            expect(subject.adult_allowance).to eq 298.08
           end
         end
       end
