@@ -41,6 +41,8 @@ RSpec.describe DateValidator do
     context 'with submission_date_today_or_older option' do
       let(:option) { :submission_date_today_or_older }
 
+      before { allow(Rails.configuration.x.application).to receive(:allow_future_submission_date).and_return false }
+
       it 'returns true for today' do
         input = Date.current.to_s
         expect(subject.validate(input)).to be_truthy
@@ -54,6 +56,15 @@ RSpec.describe DateValidator do
       it 'returns false for date in future' do
         input = 2.days.from_now.to_s
         expect(subject.validate(input)).to be_falsey
+      end
+
+      context 'allow submission date to be future is configured to true' do
+        before { allow(Rails.configuration.x.application).to receive(:allow_future_submission_date).and_return true }
+
+        it 'returns true for date in future' do
+          input = 2.days.from_now.to_s
+          expect(subject.validate(input)).to be_truthy
+        end
       end
     end
 

@@ -46,8 +46,10 @@ PRIVATE_KEY_ID
 PRIVATE_KEY
 CLIENT_EMAIL
 CLIENT_ID
+ALLOW_FUTURE_SUBMISSION_DATE
 ```
 
+Set ALLOW_FUTURE_SUBMISSION_DATE to true to allow integration tests to run with submission dates that are in the future.
 A copy of the `.env` file including the current values can be found in the `Shared-LAA` section of LastPass
 
 ## Threshold configuration files
@@ -55,11 +57,11 @@ A copy of the `.env` file including the current values can be found in the `Shar
 Files holding details of all thresholds values used in calculating eligibility are stored in `config/thresholds`.
 The file `values.yml` details the start dates for each set of thresholds, and the name of the file from which they should be read.
 
-If a file has the key `test_only` with a value of true, then that file will only be read if the 
-`USE_TEST_THRESHOLD_DATA` environment variable is set to true.  This is the default for staging and UAT, and it is 
+If a file has the key `test_only` with a value of true, then that file will only be read if the
+`USE_TEST_THRESHOLD_DATA` environment variable is set to true.  This is the default for staging and UAT, and it is
 false for production.
 
-This allows the insertion of test data on an arbitrary date specified in the `values.yml` file to be used 
+This allows the insertion of test data on an arbitrary date specified in the `values.yml` file to be used
 for testing new thresholds before they come into affect on production
 
 ## Running tests
@@ -82,10 +84,10 @@ Once the master Google spreadsheet is edited, the next time the unit test (`spec
 
 This ensures that the service returns the expected results for the use cases of the spreadsheet.
 
-When the test is run by the command `rspec spec/integration/test_runner_spec.rb` it runs in silent mode, that is, no output except the normal green dot 
+When the test is run by the command `rspec spec/integration/test_runner_spec.rb` it runs in silent mode, that is, no output except the normal green dot
 to indicate all test cases in the spreadsheet have been run successfully, or red F if any of them failed.
 
-For more fine control over the amount of verbosity, to run just one test case, or to force download the google spreadsheet, 
+For more fine control over the amount of verbosity, to run just one test case, or to force download the google spreadsheet,
 use `bin/ispec`, the help text of which is given below.
 
 ```
@@ -102,17 +104,17 @@ use `bin/ispec`, the help text of which is given below.
 
 ## Replaying live API interactions for debugging purposes
 
-In the event that you need to investigate why a CFE result was produced on live, there is 
+In the event that you need to investigate why a CFE result was produced on live, there is
 a way to replay the API calls of the original application and debug the assessment process
 on a local machine
 
 1) Record the original api payloads and calls on the Apply system
-   Run the rake task `rake cfe:record_payloads`.  This will print to the screen a YAML 
+   Run the rake task `rake cfe:record_payloads`.  This will print to the screen a YAML
    representation of the calls to the API with the actual payloads
-   
+
 2) Copy and paste that output to the file `tmp/api_payloads.yml` in this repo
 
 3) Start a CFE server locally on port 4000, and add breakpoints at the required places
 
-4) Run the rake task `rake replay`: this will read the `tmp/api_payloads.yml` file and 
+4) Run the rake task `rake replay`: this will read the `tmp/api_payloads.yml` file and
    replay the original API calls and payloads enabling you to re-create the conditions.
