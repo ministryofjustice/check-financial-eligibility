@@ -139,25 +139,25 @@ module Calculators
 
         describe 'child_under_15_allowance' do
           it 'returns the threshold value' do
-            expect(subject.child_under_15_allowance).to eq 291.49
+            expect(subject.child_under_15_allowance).to eq 296.65
           end
         end
 
         describe 'child_aged_15_allowance' do
           it 'returns the threshold value' do
-            expect(subject.child_aged_15_allowance).to eq 291.49
+            expect(subject.child_aged_15_allowance).to eq 296.65
           end
         end
 
         describe 'child_16_and_over_allowance' do
           it 'returns the threshold value' do
-            expect(subject.child_16_and_over_allowance).to eq 291.49
+            expect(subject.child_16_and_over_allowance).to eq 296.65
           end
         end
 
         describe 'adult_allowance' do
           it 'returns the threshold value' do
-            expect(subject.adult_allowance).to eq 291.49
+            expect(subject.adult_allowance).to eq 296.65
           end
         end
       end
