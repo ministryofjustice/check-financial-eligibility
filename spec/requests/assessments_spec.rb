@@ -24,7 +24,7 @@ RSpec.describe AssessmentsController, type: :request do
       expect(response).to have_http_status(:success)
     end
 
-    it 'has a valid payload', :show_in_doc do
+    it 'has a valid payload', :show_in_doc, doc_title: 'POST Success Response' do
       expected_response = {
         success: true,
         assessment_id: Assessment.last.id,
@@ -43,7 +43,7 @@ RSpec.describe AssessmentsController, type: :request do
         expect(response).to have_http_status(422)
       end
 
-      it 'returns error json payload', :show_in_doc do
+      it 'returns error json payload', :show_in_doc, doc_title: 'POST Error Response' do
         expected_response = {
           success: false,
           errors: ['error creating record']
@@ -81,7 +81,7 @@ RSpec.describe AssessmentsController, type: :request do
       context 'passported' do
         let(:assessment) { create :assessment, :passported }
 
-        it 'returns http success', :show_in_doc do
+        it 'returns http success', :show_in_doc, doc_title: 'GET Version 3 Passported Response' do
           subject
           expect(response).to have_http_status(:success)
         end
@@ -219,7 +219,7 @@ RSpec.describe AssessmentsController, type: :request do
         expect(results[:income_contribution]).to eq 0.0.to_s
       end
 
-      it 'returns expected capital results', show_in_doc: true do
+      it 'returns expected capital results', :show_in_doc, doc_title: 'GET Version 3 Non-Passported Response' do
         results = parsed_response[:assessment][:capital]
         main_home = results[:capital_items][:properties][:main_home]
         expect(main_home[:value]).to eq 500_000.0.to_s

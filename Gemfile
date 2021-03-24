@@ -92,3 +92,8 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data'
+
+# Rails has been blocked by this internal dependency set to 0.3.5.
+# This has been explicitly set here until the Rails core team sort it out.
+# https://github.com/rails/rails/issues/41750
+gem 'mimemagic', '~> 0.3.6'
