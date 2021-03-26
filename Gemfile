@@ -82,6 +82,7 @@ group :development do
 end
 
 group :test do
+  gem 'codecov', require: false
   gem 'database_cleaner'
   gem 'shoulda-matchers'
   gem 'simplecov', require: false
@@ -93,7 +94,5 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data'
 
-# Rails has been blocked by this internal dependency set to 0.3.5.
-# This has been explicitly set here until the Rails core team sort it out.
-# https://github.com/rails/rails/issues/41750
-gem 'mimemagic', '~> 0.3.6'
+# Identify file types before uploads
+gem 'mimemagic'

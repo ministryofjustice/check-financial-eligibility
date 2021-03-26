@@ -1,3 +1,4 @@
+require 'codecov'
 require 'simplecov'
 require 'vcr'
 require 'support/apipie_helper'
@@ -10,6 +11,8 @@ unless ENV['NOCOVERAGE']
     add_filter 'config/initializers/raven.rb'
     add_filter 'lib/integration_helpers'
   end
+
+  SimpleCov.formatter = SimpleCov::Formatter::Codecov if ENV['CODECOV_TOKEN']
 end
 
 vcr_debug = ENV['VCR_DEBUG'].to_s == 'true'
