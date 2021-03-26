@@ -11,6 +11,7 @@ RUN apk --no-cache add --virtual build-dependencies \
 && apk --no-cache add \
                   postgresql-client \
                   nodejs \
+                  shared-mime-info \
                   yarn
 
 RUN mkdir /myapp
