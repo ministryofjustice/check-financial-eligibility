@@ -262,7 +262,7 @@ RSpec.describe AssessmentsController, type: :request do
       end
 
       it 'captures error' do
-        expect(Raven).to receive(:capture_exception).with(message_contains('Unsupported version specified in AcceptHeader'))
+        expect(Sentry).to receive(:capture_exception).with(message_contains('Unsupported version specified in AcceptHeader'))
         subject
       end
 

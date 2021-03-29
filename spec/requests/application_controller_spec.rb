@@ -45,8 +45,8 @@ RSpec.describe ApplicationController, type: :request do
       expect(parsed_response).to eq JSON.parse(expected_response, symbolize_names: true)
     end
 
-    it 'is captured by Raven' do
-      expect(Raven).to receive(:capture_exception).with(instance_of(ZeroDivisionError))
+    it 'is captured by Sentry' do
+      expect(Sentry).to receive(:capture_exception).with(instance_of(ZeroDivisionError))
       get '/my_test?raise_error=1'
     end
 
@@ -60,8 +60,8 @@ RSpec.describe ApplicationController, type: :request do
         expect(parsed_response).to eq JSON.parse(expected_response, symbolize_names: true)
       end
 
-      it 'is a captured message by Raven' do
-        expect(Raven).to receive(:capture_exception).with(instance_of(Apipie::ParamError))
+      it 'is a captured message by Sentry' do
+        expect(Sentry).to receive(:capture_exception).with(instance_of(Apipie::ParamError))
         get '/my_test?param_error=1'
       end
     end
