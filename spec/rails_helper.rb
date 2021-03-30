@@ -96,9 +96,3 @@ end
 def json_schema_definitions
   File.read(Rails.root.join('public/schemas/assessment_request.json'))
 end
-
-# Modify ENV variables within a spec. See:
-#   https://github.com/thoughtbot/climate_control
-def with_modified_env(options, &block)
-  ClimateControl.modify(options, &block)
-end

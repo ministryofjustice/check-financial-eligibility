@@ -73,7 +73,7 @@ group :development do
   gem 'guard'
   gem 'guard-rspec'
   gem 'guard-rubocop'
-  gem 'listen', '>= 3.0.5', '< 3.5'
+  gem 'listen', '>= 3.0.5', '< 3.6'
   gem 'pry-rescue'
   gem 'pry-stack_explorer'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
@@ -82,7 +82,7 @@ group :development do
 end
 
 group :test do
-  gem 'climate_control' # Allows environment variables to be modified within specs
+  gem 'codecov', require: false
   gem 'database_cleaner'
   gem 'shoulda-matchers'
   gem 'simplecov', require: false
@@ -93,3 +93,6 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data'
+
+# Identify file types before uploads
+gem 'mimemagic'
