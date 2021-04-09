@@ -10,7 +10,6 @@ gem 'rails', '~> 6.1.3'
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
 gem 'puma', '~> 5.2'
-gem 'sentry-raven'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
@@ -20,6 +19,9 @@ gem 'sentry-raven'
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
+
+gem 'sentry-rails'
+gem 'sentry-ruby'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

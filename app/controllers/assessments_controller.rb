@@ -59,7 +59,7 @@ class AssessmentsController < ApplicationController
   def show
     determine_version_and_process
   rescue StandardError => err
-    Raven.capture_exception(err)
+    Sentry.capture_exception(err)
     render json: Decorators::ErrorDecorator.new(err).as_json, status: :unprocessable_entity
   end
 

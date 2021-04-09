@@ -8,7 +8,7 @@ SimpleCov.minimum_coverage 100 unless ENV['SKIP_COVERAGE']
 unless ENV['NOCOVERAGE']
   SimpleCov.start do
     add_filter 'spec/'
-    add_filter 'config/initializers/raven.rb'
+    add_filter 'config/initializers/sentry.rb'
     add_filter 'lib/integration_helpers'
   end
 
