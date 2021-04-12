@@ -80,6 +80,10 @@ class ProceedingTypeThreshold
     waivable_threshold? ? waivable_value : standard_value
   end
 
+  def self.valid_ccms_codes
+    WAIVERS.keys
+  end
+
   private
 
   def waivable_threshold?

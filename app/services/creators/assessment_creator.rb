@@ -4,10 +4,17 @@ module Creators
 
     attr_reader :assessment_hash, :raw_post
 
-    def initialize(remote_ip:, raw_post:)
+    def initialize(remote_ip:, raw_post:, version:)
       super()
-      @raw_post = raw_post
-      @assessment_hash = JSON.parse(raw_post).merge(remote_ip: remote_ip)
+      parsed_raw_post = JSON.parse(raw_post, symbolize_names: true)
+      @assessment_hash = {
+        client_reference_id: parsed_raw_post[:client_reference_id],
+        submission_date: Date.parse(parsed_raw_post[:submission_date]),
+        matter_proceeding_type: parsed_raw_post[:matter_proceeding_type],
+        proceeding_type_codes: ccms_codes_from_post(parsed_raw_post),
+        version: version,
+        remote_ip: remote_ip
+      }
     end
 
     def call
@@ -27,6 +34,12 @@ module Creators
     end
 
     private
+
+    def ccms_codes_from_post(post)
+      return nil unless post.key?(:proceeding_types)
+
+      post[:proceeding_types][:ccms_codes]
+    end
 
     def new_assessment
       @new_assessment ||= create_new_assessment_and_summary_records

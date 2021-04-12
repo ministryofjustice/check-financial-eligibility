@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_28_181623) do
+ActiveRecord::Schema.define(version: 2021_04_12_102115) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -42,9 +42,11 @@ ActiveRecord::Schema.define(version: 2021_01_28_181623) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.date "submission_date", null: false
-    t.string "matter_proceeding_type", null: false
+    t.string "matter_proceeding_type"
     t.string "assessment_result", default: "pending", null: false
     t.text "remarks"
+    t.string "version"
+    t.string "proceeding_type_codes"
     t.index ["client_reference_id"], name: "index_assessments_on_client_reference_id"
   end
 
