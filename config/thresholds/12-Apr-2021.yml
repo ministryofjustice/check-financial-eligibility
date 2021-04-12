@@ -25,7 +25,7 @@ pensioner_capital_disregard:
     [226.0, 315.99]: 10_000
     [316.0]: 0
 property_notional_sale_costs_percentage: 3.0
-property_maximum_mortgage_allowance: 100_000
+property_maximum_mortgage_allowance: 999_999_999_999
 property_disregard:
   main_home: 100_000
   additional_property: 0.0

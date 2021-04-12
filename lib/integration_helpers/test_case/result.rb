@@ -36,7 +36,7 @@ module TestCase
 
     def print_error_result(key)
       @overall_result = false
-      print_result(key, :blue)
+      print_result(key, :red)
     end
 
     def expected_value(key)
