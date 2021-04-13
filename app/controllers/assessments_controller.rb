@@ -14,7 +14,10 @@ class AssessmentsController < ApplicationController
   formats(%w[json])
   param :client_reference_id, String, "The client's reference number for this application (free text)"
   param :submission_date, Date, date_option: :submission_date_today_or_older, required: true, desc: 'The date of the original submission'
-  param :matter_proceeding_type, Assessment.matter_proceeding_types.values, required: true, desc: 'The matter type of the case'
+  param :matter_proceeding_type, Assessment.matter_proceeding_types.values, required: false, desc: 'The matter type of the case(v3 and below only)'
+  param :proceeding_types, Hash, required: false, desc: 'Details of proceeding types in the application (v4 and above only)' do
+    param :ccms_codes, Array, required: true, desc: 'Array of proceeding type CCMS codes'
+  end
 
   returns code: :ok, desc: 'Successful response' do
     property :success, ['true'], desc: 'Success flag shows true'
@@ -57,7 +60,7 @@ class AssessmentsController < ApplicationController
   end
 
   def show
-    determine_version_and_process
+    perform_assessment
   rescue StandardError => err
     Sentry.capture_exception(err)
     render json: Decorators::ErrorDecorator.new(err).as_json, status: :unprocessable_entity
@@ -65,33 +68,21 @@ class AssessmentsController < ApplicationController
 
   private
 
-  def determine_version_and_process
-    assessment.version = determine_version
-
-    raise CheckFinancialEligibilityError, 'Unsupported version specified in AcceptHeader' unless valid_assessment_version?
-
-    show_assessment
-  end
-
-  def valid_assessment_version?
-    CFEConstants::VALID_ASSESSMENT_VERSIONS.include?(assessment.version)
-  end
-
-  def show_assessment
+  def perform_assessment
     Workflows::MainWorkflow.call(assessment)
     Assessors::MainAssessor.call(assessment)
     render json: Decorators::AssessmentDecorator.new(assessment).as_json
   end
 
-  def determine_version
+  def version
     version = CFEConstants::DEFAULT_ASSESSMENT_VERSION
     parts = request.headers['Accept'].split(';')
-    parts.each { |part| version = Regexp.last_match(1) if part =~ /^version=(\d)$/ }
+    parts.each { |part| version = Regexp.last_match(1) if part.strip =~ /^version=(\d)$/ }
     version
   end
 
   def assessment_creation_service
-    @assessment_creation_service ||= Creators::AssessmentCreator.call(remote_ip: request.remote_ip, raw_post: request.raw_post)
+    @assessment_creation_service ||= Creators::AssessmentCreator.call(remote_ip: request.remote_ip, raw_post: request.raw_post, version: version)
   end
 
   def assessment

@@ -3,70 +3,124 @@ require 'rails_helper'
 RSpec.describe AssessmentsController, type: :request do
   before { create :bank_holiday }
   describe 'POST assessments' do
-    let(:params) do
-      {
-        client_reference_id: 'psr-123',
-        submission_date: '2019-06-06',
-        matter_proceeding_type: 'domestic_abuse'
-      }
-    end
-    let(:headers) { { 'CONTENT_TYPE' => 'application/json' } }
-    let(:before_request) { nil }
-
-    subject { post assessments_path, params: params.to_json, headers: headers }
-
-    before do
-      before_request
-      subject
-    end
-
-    it 'returns http success' do
-      expect(response).to have_http_status(:success)
-    end
-
-    it 'has a valid payload', :show_in_doc, doc_title: 'POST Success Response' do
-      expected_response = {
-        success: true,
-        assessment_id: Assessment.last.id,
-        errors: []
-      }.to_json
-      expect(parsed_response).to eq JSON.parse(expected_response, symbolize_names: true)
-    end
-
-    context 'Active Record Error in service' do
-      let(:before_request) do
-        creation_service = double Creators::AssessmentCreator, success?: false, errors: ['error creating record']
-        allow(Creators::AssessmentCreator).to receive(:call).and_return(creation_service)
-      end
-
-      it 'returns http unprocessable_entity' do
-        expect(response).to have_http_status(422)
-      end
-
-      it 'returns error json payload', :show_in_doc, doc_title: 'POST Error Response' do
-        expected_response = {
-          success: false,
-          errors: ['error creating record']
-        }
-        expect(parsed_response).to eq expected_response
-      end
-    end
-
-    context 'invalid matter proceeding type' do
-      let(:params) { { matter_proceeding_type: 'xxx', submission_date: '2019-07-01' } }
-
-      it_behaves_like 'it fails with message', %(Invalid parameter 'matter_proceeding_type' value "xxx": Must be one of: <code>domestic_abuse</code>.)
-    end
-
-    context 'missing submission date' do
+    let(:ipaddr) { '127.0.0.1' }
+    let(:ccms_codes) { %w[DA005 SE003 SE014] }
+    context 'version 3' do
       let(:params) do
         {
-          matter_proceeding_type: 'domestic_abuse',
-          client_reference_id: 'psr-123'
+          client_reference_id: 'psr-123',
+          submission_date: '2019-06-06',
+          matter_proceeding_type: 'domestic_abuse'
+        }
+      end
+      let(:headers) { { 'CONTENT_TYPE' => 'application/json' } }
+      let(:before_request) { nil }
+
+      subject { post assessments_path, params: params.to_json, headers: headers }
+
+      before do
+        before_request
+        subject
+      end
+
+      it 'returns http success' do
+        expect(response).to have_http_status(:success)
+      end
+
+      it 'has a valid payload', :show_in_doc, doc_title: 'POST Success Response' do
+        expected_response = {
+          success: true,
+          assessment_id: Assessment.last.id,
+          errors: []
+        }.to_json
+        expect(parsed_response).to eq JSON.parse(expected_response, symbolize_names: true)
+      end
+
+      context 'Active Record Error in service' do
+        let(:before_request) do
+          creation_service = double Creators::AssessmentCreator, success?: false, errors: ['error creating record']
+          allow(Creators::AssessmentCreator).to receive(:call).and_return(creation_service)
+        end
+
+        it 'returns http unprocessable_entity' do
+          expect(response).to have_http_status(422)
+        end
+
+        it 'returns error json payload', :show_in_doc, doc_title: 'POST Error Response' do
+          expected_response = {
+            success: false,
+            errors: ['error creating record']
+          }
+          expect(parsed_response).to eq expected_response
+        end
+      end
+
+      context 'invalid matter proceeding type' do
+        let(:params) { { matter_proceeding_type: 'xxx', submission_date: '2019-07-01' } }
+
+        it_behaves_like 'it fails with message', %(Invalid parameter 'matter_proceeding_type' value "xxx": Must be one of: <code>domestic_abuse</code>.)
+      end
+
+      context 'missing submission date' do
+        let(:params) do
+          {
+            matter_proceeding_type: 'domestic_abuse',
+            client_reference_id: 'psr-123'
+          }
+        end
+
+        it_behaves_like 'it fails with message', 'Missing parameter submission_date'
+      end
+    end
+
+    context 'version 4' do
+      let(:headers) do
+        {
+          'CONTENT_TYPE' => 'application/json',
+          'Accept' => 'application/json; version=4'
+        }
+      end
+      let(:params) do
+        {
+          client_reference_id: 'psr-123',
+          submission_date: '2019-06-06',
+          proceeding_types: {
+            ccms_codes: ccms_codes
+          }
         }
       end
 
-      it_behaves_like 'it fails with message', 'Missing parameter submission_date'
+      it 'calls the assessment creator with version and params' do
+        expect(Creators::AssessmentCreator).to receive(:call).with(remote_ip: ipaddr, raw_post: params.to_json, version: '4').and_call_original
+        post assessments_path, params: params.to_json, headers: headers
+        expect(response).to have_http_status(:ok)
+        expect(parsed_response[:success]).to be true
+      end
+    end
+
+    context 'invalid version' do
+      let(:headers) do
+        {
+          'CONTENT_TYPE' => 'application/json',
+          'Accept' => 'application/json; version=5'
+        }
+      end
+      let(:params) do
+        {
+          client_reference_id: 'psr-123',
+          submission_date: '2019-06-06',
+          proceeding_types: {
+            ccms_codes: ccms_codes
+          }
+        }
+      end
+
+      it 'returns error' do
+        post assessments_path, params: params.to_json, headers: headers
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(parsed_response[:success]).to be false
+        expect(parsed_response[:errors]).to eq ['Version not valid in Accept header']
+      end
     end
   end
 
@@ -76,6 +130,7 @@ RSpec.describe AssessmentsController, type: :request do
 
     subject { get assessment_path(assessment), headers: headers }
 
+    # NOTE: as from version 4, the version is specified when making the first POST, not when getting the result.
     context 'no version specified' do
       let(:headers) { { 'Accept' => 'application/json' } }
       context 'passported' do
@@ -123,45 +178,15 @@ RSpec.describe AssessmentsController, type: :request do
       end
     end
 
-    context 'version 3 specified in the header' do
-      let(:headers) { { 'Accept' => 'application/json;version=3' } }
-
-      context 'non-passported application' do
-        let(:assessment) { create :assessment, :with_everything }
-
-        it 'returns http success' do
-          subject
-          expect(response).to have_http_status(:success)
-        end
-
-        it 'returns capital summary data as json' do
-          Timecop.freeze do
-            subject
-            expected_response = Decorators::AssessmentDecorator.new(assessment.reload).as_json.to_json
-            expect(parsed_response).to eq(JSON.parse(expected_response, symbolize_names: true))
-          end
-        end
-      end
-
-      context 'passported application' do
-        let(:assessment) { create :assessment, :passported }
-
-        it 'returns http success' do
-          subject
-          expect(response).to have_http_status(:success)
-        end
-
-        it 'returns a structure with expected keys' do
-          subject
-          expect(parsed_response.keys).to eq expected_response_keys
-          expect(parsed_response[:assessment].keys).to eq expected_assessment_keys
-        end
-
-        it 'returns nil for the income elements of the response' do
-          subject
-          expect(parsed_response[:assessment][:gross_income]).to be_nil
-          expect(parsed_response[:assessment][:disposable_income]).to be_nil
-        end
+    context 'untrapped error during processing' do
+      let(:assessment) { create :assessment, :with_everything }
+      it 'call sentry and returns error response' do
+        allow(Assessors::MainAssessor).to receive(:call).and_raise(RuntimeError, 'Oops')
+        expect(Sentry).to receive(:capture_exception)
+        subject
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(parsed_response[:success]).to be false
+        expect(parsed_response[:errors].first).to match(/^RuntimeError: Oops/)
       end
     end
 
@@ -249,27 +274,6 @@ RSpec.describe AssessmentsController, type: :request do
 
       it 'returns expected overall results' do
         expect(parsed_response[:assessment][:assessment_result]).to eq 'contribution_required'
-      end
-    end
-
-    context 'unknown version' do
-      let(:headers) { { 'Accept' => 'application/json;version=9' } }
-      let(:assessment) { create :assessment }
-
-      it 'returns unprocessable entity' do
-        subject
-        expect(response).to have_http_status(:unprocessable_entity)
-      end
-
-      it 'captures error' do
-        expect(Sentry).to receive(:capture_exception).with(message_contains('Unsupported version specified in AcceptHeader'))
-        subject
-      end
-
-      it 'returns errors struct with message' do
-        subject
-        expect(parsed_response[:success]).to be false
-        expect(parsed_response[:errors]).to eq ['Unsupported version specified in AcceptHeader']
       end
     end
   end
