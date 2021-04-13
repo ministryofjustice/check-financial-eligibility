@@ -65,6 +65,7 @@ RSpec.configure do |config|
   # https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#rspec
   config.include FactoryBot::Syntax::Methods
   config.include RequestHelpers, type: :request
+  config.include ActiveSupport::Testing::TimeHelpers
 
   # Allow apipie recording for API documentation
   config.filter_run show_in_doc: true if ENV['APIPIE_RECORD']
