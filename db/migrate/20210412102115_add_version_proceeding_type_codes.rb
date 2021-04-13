@@ -1,5 +1,4 @@
 class AddVersionProceedingTypeCodes < ActiveRecord::Migration[6.1]
-  # rubocop:disable Rails/BulkChangeTable
   def up
     add_column :assessments, :version, :string
     add_column :assessments, :proceeding_type_codes, :string
@@ -13,5 +12,4 @@ class AddVersionProceedingTypeCodes < ActiveRecord::Migration[6.1]
     remove_column :assessments, :proceeding_type_codes
     change_column :assessments, :matter_proceeding_type, :string, null: false
   end
-  # rubocop:enable Rails/BulkChangeTable
 end

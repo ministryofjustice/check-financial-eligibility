@@ -13,7 +13,7 @@ module Decorators
       end
 
       context 'capital summary decorator exists' do
-        let(:record) { create :capital_summary, :with_everything }
+        let(:record) { create :capital_summary, :with_everything, :with_eligibilities }
 
         it 'has all expected keys in the returned hash' do
           expected_keys = %i[

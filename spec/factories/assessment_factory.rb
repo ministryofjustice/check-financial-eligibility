@@ -4,6 +4,7 @@ FactoryBot.define do
     remote_ip { Faker::Internet.ip_v4_address }
     submission_date { Date.current }
     matter_proceeding_type { 'domestic_abuse' }
+    proceeding_type_codes { ['DA001'] }
     version { '3' }
 
     trait :with_applicant do
@@ -33,9 +34,27 @@ FactoryBot.define do
       end
     end
 
+    trait :with_disposable_income_summary_and_eligibilities do
+      after(:create) do |assessment|
+        dis = create :disposable_income_summary, assessment: assessment
+        assessment.proceeding_type_codes.each do |ptc|
+          create :disposable_income_eligibility, disposable_income_summary: dis, proceeding_type_code: ptc
+        end
+      end
+    end
+
     trait :with_capital_summary do
       after(:create) do |assessment|
         create :capital_summary, assessment: assessment
+      end
+    end
+
+    trait :with_capital_summary_and_eligibilities do
+      after(:create) do |assessment|
+        capsum = create :capital_summary, assessment: assessment
+        assessment.proceeding_type_codes.each do |ptc|
+          create :capital_eligibility, capital_summary: capsum, proceeding_type_code: ptc
+        end
       end
     end
 
@@ -45,18 +64,30 @@ FactoryBot.define do
       end
     end
 
+    trait :with_gross_income_summary_and_eligibilities do
+      after(:create) do |assessment|
+        gis = create :gross_income_summary, assessment: assessment
+        assessment.proceeding_type_codes.each do |ptc|
+          create :gross_income_eligibility, gross_income_summary: gis, proceeding_type_code: ptc
+        end
+      end
+    end
+
     trait :with_gross_income_summary_and_records do
       after(:create) do |assessment|
         create :gross_income_summary, :with_all_records, assessment: assessment
       end
     end
 
+    # NOTE: this ends up creating two assessments because the :with_non_passported_applicant trait
+    # creates one too
+    #
     trait :with_everything do
       with_non_passported_applicant
       after(:create) do |assessment|
-        create :gross_income_summary, :with_everything, assessment: assessment, assessment_result: 'eligible'
-        create :disposable_income_summary, :with_everything, assessment: assessment, assessment_result: 'eligible'
-        create :capital_summary, :with_everything, assessment: assessment, assessment_result: 'eligible'
+        create :gross_income_summary, :with_everything, assessment: assessment
+        create :disposable_income_summary, :with_everything, assessment: assessment
+        create :capital_summary, :with_everything, assessment: assessment
       end
     end
 
@@ -64,6 +95,28 @@ FactoryBot.define do
       with_passported_applicant
       after(:create) do |assessment|
         create :capital_summary, :with_everything, assessment: assessment
+      end
+    end
+
+    trait :with_eligibilities do
+      after(:create) do |assessment|
+        if assessment.capital_summary
+          assessment.proceeding_type_codes.each do |ptc|
+            assessment.capital_summary.eligibilities << create(:capital_eligibility, proceeding_type_code: ptc)
+          end
+        end
+
+        if assessment.gross_income_summary
+          assessment.proceeding_type_codes.each do |ptc|
+            assessment.gross_income_summary.eligibilities << create(:gross_income_eligibility, proceeding_type_code: ptc)
+          end
+        end
+
+        if assessment.disposable_income_summary
+          assessment.proceeding_type_codes.each do |ptc|
+            assessment.disposable_income_summary.eligibilities << create(:disposable_income_eligibility, proceeding_type_code: ptc)
+          end
+        end
       end
     end
 

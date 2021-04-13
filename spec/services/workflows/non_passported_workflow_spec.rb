@@ -4,6 +4,14 @@ module Workflows
   RSpec.describe NonPassportedWorkflow do
     let(:assessment) { create :assessment, :with_everything, applicant: applicant }
 
+    before do
+      assessment.proceeding_type_codes.each do |ptc|
+        create :capital_eligibility, capital_summary: assessment.capital_summary, proceeding_type_code: ptc
+        create :gross_income_eligibility, gross_income_summary: assessment.gross_income_summary, proceeding_type_code: ptc
+        create :disposable_income_eligibility, disposable_income_summary: assessment.disposable_income_summary, proceeding_type_code: ptc
+      end
+    end
+
     describe '.call' do
       subject { described_class.call(assessment) }
 
@@ -19,7 +27,9 @@ module Workflows
       context 'not employed, not self_employed, Gross income exceeds threshold' do
         let(:applicant) { create :applicant, self_employed: false }
 
-        before { assessment.gross_income_summary.update! assessment_result: 'ineligible' }
+        before do
+          assessment.gross_income_summary.eligibilities.map { |elig| elig.update! assessment_result: 'ineligible' }
+        end
 
         it 'collates and assesses gross income but not disposable' do
           expect(Collators::GrossIncomeCollator).to receive(:call).with(assessment)
@@ -34,7 +44,9 @@ module Workflows
       context 'not employed, not self_employed, Gross income does not exceed threshold' do
         let(:applicant) { create :applicant, self_employed: false }
 
-        before { assessment.gross_income_summary.update! assessment_result: 'eligible' }
+        before do
+          assessment.gross_income_summary.eligibilities.map { |elig| elig.update! assessment_result: 'eligible' }
+        end
 
         it 'collates and assesses gross income, outgoings and perfoms disposable assessment' do
           expect(Collators::GrossIncomeCollator).to receive(:call).with(assessment)

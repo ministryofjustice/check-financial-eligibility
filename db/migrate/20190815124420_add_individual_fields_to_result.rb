@@ -1,6 +1,5 @@
 class AddIndividualFieldsToResult < ActiveRecord::Migration[5.2]
   def change
-    # rubocop:disable Rails/BulkChangeTable
     remove_column :results, :details, :jsonb
     add_column :results, :liquid_capital, :decimal, default: 0.0
     add_column :results, :property, :decimal, default: 0.0
@@ -11,6 +10,5 @@ class AddIndividualFieldsToResult < ActiveRecord::Migration[5.2]
     add_column :results, :disposable_capital, :decimal, default: 0.0
     add_column :results, :total_capital_lower_threshold, :decimal, default: 0.0
     add_column :results, :total_capital_upper_threshold, :decimal, default: 0.0
-    # rubocop:enable Rails/BulkChangeTable
   end
 end

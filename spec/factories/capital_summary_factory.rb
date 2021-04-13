@@ -16,26 +16,18 @@ FactoryBot.define do
       pensioner_capital_disregard { Faker::Number.decimal }
       total_capital { Faker::Number.decimal }
       assessed_capital { Faker::Number.decimal }
-      lower_threshold { Faker::Number.between(from: 1.0, to: 3_000).round(2) }
-      upper_threshold { Faker::Number.between(from: 3_001, to: 10_000).round(2) }
     end
 
     trait :below_lower_threshold do
       assessed_capital { Faker::Number.between(from: 1.0, to: 3_000).round(2) }
-      lower_threshold { Faker::Number.between(from: 4_000, to: 5_000).round(2) }
-      upper_threshold { Faker::Number.between(from: 6_000, to: 10_000).round(2) }
     end
 
     trait :between_thresholds do
       assessed_capital { Faker::Number.between(from: 4_000, to: 5_000).round(2) }
-      lower_threshold { Faker::Number.between(from: 1.0, to: 3_000).round(2) }
-      upper_threshold { Faker::Number.between(from: 6_000, to: 10_000).round(2) }
     end
 
     trait :above_upper_threshold do
       assessed_capital { Faker::Number.between(from: 11_000, to: 30_000).round(2) }
-      lower_threshold { Faker::Number.between(from: 1.0, to: 3_000).round(2) }
-      upper_threshold { Faker::Number.between(from: 6_000, to: 10_000).round(2) }
     end
 
     trait :with_everything do
@@ -45,6 +37,14 @@ FactoryBot.define do
         create :vehicle, capital_summary: record
         create :property, :main_home, capital_summary: record
         create :property, :additional_property, capital_summary: record
+      end
+    end
+
+    trait :with_eligibilities do
+      after(:create) do |rec|
+        rec.assessment.proceeding_type_codes.each do |ptc|
+          create :capital_eligibility, capital_summary: rec, proceeding_type_code: ptc
+        end
       end
     end
   end

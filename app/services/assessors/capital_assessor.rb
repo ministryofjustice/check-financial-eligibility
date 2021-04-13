@@ -1,17 +1,17 @@
 module Assessors
   class CapitalAssessor < BaseWorkflowService
-    delegate :assessed_capital, :lower_threshold, to: :capital_summary
+    delegate :assessed_capital, to: :capital_summary
 
     def call
-      capital_summary.update!(assessment_result: result)
+      capital_summary.eligibilities.each(&:update_assessment_result!)
+      summary_result
     end
 
     private
 
-    def result
-      return :eligible if assessed_capital <= lower_threshold
-
-      :contribution_required
+    def summary_result
+      # require Rails.root.join('app/services/utilities/result_summarizer')
+      Utilities::ResultSummarizer.call(capital_summary.eligibilities.map(&:assessment_result))
     end
   end
 end

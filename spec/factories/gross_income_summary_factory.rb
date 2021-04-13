@@ -30,6 +30,14 @@ FactoryBot.define do
       end
     end
 
+    trait :with_eligibilities do
+      after(:create) do |rec|
+        rec.assessment.proceeding_type_codes.each do |ptc|
+          create :gross_income_eligibility, gross_income_summary: rec, proceeding_type_code: ptc
+        end
+      end
+    end
+
     trait :with_all_records do
       after(:create) do |gross_income_summary|
         benefits_in_cash = create :cash_transaction_category, name: 'benefits', operation: 'credit', gross_income_summary: gross_income_summary

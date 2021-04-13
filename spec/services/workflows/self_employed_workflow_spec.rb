@@ -7,7 +7,7 @@ module Workflows
       it 'raises' do
         expect {
           described_class.call(assessment)
-        }.to raise_error RuntimeError, 'Not yet implemented: Check Fincancial Eligibility service currently does not handle self-employed applicants'
+        }.to raise_error RuntimeError, 'Not yet implemented: Check Fincancial Base service currently does not handle self-employed applicants'
       end
     end
   end

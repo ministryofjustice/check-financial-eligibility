@@ -26,8 +26,8 @@ module Decorators
       {
         summary: {
           total_gross_income: record.total_gross_income,
-          upper_threshold: record.upper_threshold,
-          assessment_result: record.assessment_result
+          upper_threshold: record.eligibilities.first.upper_threshold,
+          assessment_result: record.summarized_assessment_result
         },
         irregular_income: {
           monthly_equivalents: {

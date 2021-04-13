@@ -14,19 +14,19 @@ module Collators
     let(:dependant_allowance) { 582.98 }
 
     let(:disposable_income_summary) do
-      create :disposable_income_summary,
-             child_care_bank: child_care_bank,
-             maintenance_out_bank: maintenance_out_bank,
-             gross_housing_costs: gross_housing,
-             rent_or_mortgage_bank: gross_housing,
-             legal_aid_bank: legal_aid_bank,
-             housing_benefit: housing_benefit,
-             net_housing_costs: net_housing,
-             total_outgoings_and_allowances: 0.0,
-             dependant_allowance: dependant_allowance,
-             total_disposable_income: 0.0,
-             lower_threshold: 0.0,
-             upper_threshold: 0.0
+      summary = create :disposable_income_summary,
+                       child_care_bank: child_care_bank,
+                       maintenance_out_bank: maintenance_out_bank,
+                       gross_housing_costs: gross_housing,
+                       rent_or_mortgage_bank: gross_housing,
+                       legal_aid_bank: legal_aid_bank,
+                       housing_benefit: housing_benefit,
+                       net_housing_costs: net_housing,
+                       total_outgoings_and_allowances: 0.0,
+                       dependant_allowance: dependant_allowance,
+                       total_disposable_income: 0.0
+      create :disposable_income_eligibility, disposable_income_summary: summary, proceeding_type_code: 'DA001'
+      summary
     end
 
     let(:total_outgoings) do
@@ -66,7 +66,7 @@ module Collators
       context 'lower threshold' do
         it 'populates the lower threshold' do
           subject
-          expect(disposable_income_summary.lower_threshold).to eq 315.0
+          expect(disposable_income_summary.eligibilities.first.lower_threshold).to eq 315.0
         end
       end
 
@@ -74,15 +74,7 @@ module Collators
         context 'domestic abuse' do
           it 'populates it with infinity' do
             subject
-            expect(disposable_income_summary.upper_threshold).to eq 999_999_999_999.0
-          end
-        end
-
-        context 'non_domestic_abuse' do
-          it 'populates it with the standard upper limit' do
-            expect(assessment).to receive(:matter_proceeding_type).and_return('housing')
-            subject
-            expect(disposable_income_summary.upper_threshold).to eq 733.0
+            expect(disposable_income_summary.eligibilities.first.upper_threshold).to eq 999_999_999_999.0
           end
         end
       end

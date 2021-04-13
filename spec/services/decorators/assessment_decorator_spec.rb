@@ -7,7 +7,8 @@ module Decorators
              :with_gross_income_summary,
              :with_disposable_income_summary,
              :with_capital_summary,
-             :with_applicant
+             :with_applicant,
+             :with_eligibilities
     end
 
     describe '#as_json' do

@@ -2,7 +2,12 @@ require 'rails_helper'
 
 module Workflows
   RSpec.describe PassportedWorkflow do
-    let(:assessment) { create :assessment, :with_gross_income_summary, :with_capital_summary, applicant: applicant }
+    let(:assessment) do
+      create :assessment,
+             :with_gross_income_summary_and_eligibilities,
+             :with_capital_summary_and_eligibilities,
+             applicant: applicant
+    end
     let(:applicant) { create :applicant, :with_qualifying_benefits }
     let(:capital_summary) { assessment.capital_summary }
     let(:gross_income_summary) { assessment.gross_income_summary }
@@ -20,7 +25,7 @@ module Workflows
         expect(Collators::CapitalCollator).to receive(:call).with(assessment).and_return(capital_data)
         expect(Assessors::CapitalAssessor).to receive(:call).with(assessment).and_call_original
         subject
-        expect(capital_summary.assessment_result).to eq 'eligible'
+        expect(capital_summary.summarized_assessment_result).to eq :eligible
       end
 
       def capital_data
