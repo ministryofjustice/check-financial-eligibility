@@ -1,5 +1,7 @@
 module Eligibility
   class Capital < Base
+    validates :upper_threshold, :lower_threshold, presence: true
+
     belongs_to :capital_summary, inverse_of: :eligibilities, foreign_key: :parent_id
 
     delegate :assessed_capital, to: :capital_summary

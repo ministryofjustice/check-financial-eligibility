@@ -12,6 +12,7 @@ module Creators
       GrossIncomeEligibilityCreator.call(@assessment)
       DisposableIncomeEligibilityCreator.call(@assessment)
       CapitalEligibilityCreator.call(@assessment)
+      AssessmentEligibilityCreator.call(@assessment)
     end
   end
 end

@@ -56,14 +56,14 @@ module Utilities
       end
     end
 
-    context 'eligble and eligible_with_contribution mixed' do
+    context 'eligible and contribution_required mixed' do
       let(:results) { elig_and_contrib }
       it 'returns :eligible_with_contribution' do
         expect(subject).to eq :contribution_required
       end
     end
 
-    context 'ineligble and eligible_with_contribution mixed' do
+    context 'ineligble and contribution_required mixed' do
       let(:results) { inelig_and_contrib }
       it 'returns :partially_eligible' do
         expect(subject).to eq :partially_eligible

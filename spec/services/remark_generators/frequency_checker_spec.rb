@@ -4,6 +4,12 @@ module RemarkGenerators
   RSpec.describe FrequencyChecker do
     before { create :bank_holiday }
 
+    around do |example|
+      travel_to Date.new(2021, 4, 15) # avoid problems because of 29th Feb
+      example.run
+      travel_back
+    end
+
     context 'state benefit payments' do
       let(:amount) { 123.45 }
       let(:dates) { [Date.current, 1.month.ago, 2.months.ago] }

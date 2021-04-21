@@ -63,7 +63,7 @@ class AssessmentsController < ApplicationController
     perform_assessment
   rescue StandardError => err
     Sentry.capture_exception(err)
-    render json: Decorators::ErrorDecorator.new(err).as_json, status: :unprocessable_entity
+    render json: Decorators::V3::ErrorDecorator.new(err).as_json, status: :unprocessable_entity
   end
 
   private
@@ -71,7 +71,8 @@ class AssessmentsController < ApplicationController
   def perform_assessment
     Workflows::MainWorkflow.call(assessment)
     Assessors::MainAssessor.call(assessment)
-    render json: Decorators::AssessmentDecorator.new(assessment).as_json
+    decorator_klass = assessment.version_3? ? Decorators::V3::AssessmentDecorator : Decorators::V4::AssessmentDecorator
+    render json: decorator_klass.new(assessment).as_json
   end
 
   def version

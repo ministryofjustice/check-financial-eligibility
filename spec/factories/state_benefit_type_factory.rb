@@ -22,5 +22,19 @@ FactoryBot.define do
     trait :benefit_included do
       exclude_from_gross_income { false }
     end
+
+    trait :universal_credit do
+      label { 'universal_credit' }
+      name { 'Universal Credit' }
+      exclude_from_gross_income { false }
+      dwp_code { 'UC' }
+    end
+
+    trait :child_benefit do
+      label { 'child_benefit' }
+      name { 'Child Benefit' }
+      exclude_from_gross_income { false }
+      dwp_code { 'CHB' }
+    end
   end
 end

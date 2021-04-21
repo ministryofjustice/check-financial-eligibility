@@ -1,5 +1,8 @@
 module Eligibility
   class GrossIncome < Base
+    validates :upper_threshold, presence: true
+    validates :lower_threshold, absence: true
+
     belongs_to :gross_income_summary, inverse_of: :eligibilities, foreign_key: :parent_id
 
     delegate :total_gross_income, to: :gross_income_summary

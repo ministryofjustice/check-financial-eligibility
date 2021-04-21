@@ -24,6 +24,11 @@ class Assessment < ApplicationRecord
   has_many :capital_items, through: :capital_summary, dependent: :destroy
   has_many :assessment_errors, dependent: :destroy
   has_many :explicit_remarks, dependent: :destroy
+  has_many :eligibilities,
+           class_name: 'Eligibility::Assessment',
+           foreign_key: :parent_id,
+           inverse_of: :assessment,
+           dependent: :destroy
 
   enum matter_proceeding_type: enum_hash_for(:domestic_abuse)
 
@@ -37,14 +42,22 @@ class Assessment < ApplicationRecord
     Remarks.new(id)
   end
 
-  private
-
-  def matter_proceeding_type_required?
+  def version_3?
     version == '3'
   end
 
+  def version_4?
+    version == '4'
+  end
+
+  private
+
+  def matter_proceeding_type_required?
+    version_3?
+  end
+
   def proceeding_type_codes_validations
-    return if version == '3'
+    return if version_3?
 
     proceeding_type_codes.each do |code|
       errors.add(:proceeding_type_codes, "invalid: #{code}") unless code.to_sym.in?(ProceedingTypeThreshold.valid_ccms_codes)
@@ -52,6 +65,6 @@ class Assessment < ApplicationRecord
   end
 
   def proceeding_types_codes_required?
-    version != '3'
+    version_4?
   end
 end
