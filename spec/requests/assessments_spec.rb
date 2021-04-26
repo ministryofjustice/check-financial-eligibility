@@ -134,7 +134,7 @@ RSpec.describe AssessmentsController, type: :request do
     context 'no version specified' do
       let(:headers) { { 'Accept' => 'application/json' } }
       context 'passported' do
-        let(:assessment) { create :assessment, :passported }
+        let(:assessment) { create :assessment, :passported, :with_everything, :with_eligibilities }
 
         it 'returns http success', :show_in_doc, doc_title: 'GET Version 3 Passported Response' do
           subject
@@ -162,7 +162,7 @@ RSpec.describe AssessmentsController, type: :request do
       end
 
       context 'non-passported' do
-        let(:assessment) { create :assessment, :with_everything }
+        let(:assessment) { create :assessment, :with_everything, :with_eligibilities }
         it 'returns success' do
           subject
           expect(response).to have_http_status(:success)
@@ -179,7 +179,7 @@ RSpec.describe AssessmentsController, type: :request do
     end
 
     context 'untrapped error during processing' do
-      let(:assessment) { create :assessment, :with_everything }
+      let(:assessment) { create :assessment, :with_everything, :with_eligibilities }
       it 'call sentry and returns error response' do
         allow(Assessors::MainAssessor).to receive(:call).and_raise(RuntimeError, 'Oops')
         expect(Sentry).to receive(:capture_exception)
@@ -335,6 +335,11 @@ RSpec.describe AssessmentsController, type: :request do
     create :liquid_capital_item, capital_summary: cs, description: 'Bank acct 2', value: 0
     create :liquid_capital_item, capital_summary: cs, description: 'Bank acct 3', value: 0
     create :vehicle, capital_summary: cs, value: 9_000, loan_amount_outstanding: 0, date_of_purchase: Date.parse('20/5/2018'), in_regular_use: false
+
+    create :capital_eligibility, capital_summary: cs, proceeding_type_code: assessment.proceeding_type_codes.first
+    create :gross_income_eligibility, gross_income_summary: gis, proceeding_type_code: assessment.proceeding_type_codes.first
+    create :disposable_income_eligibility, disposable_income_summary: dis, proceeding_type_code: assessment.proceeding_type_codes.first
+
     assessment
   end
 

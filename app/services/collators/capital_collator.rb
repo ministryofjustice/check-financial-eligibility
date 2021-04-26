@@ -9,8 +9,6 @@ module Collators
       pensioner_capital_disregard: 'pensioner_capital_disregard',
       total_capital: 'total_capital',
       assessed_capital: 'assessed_capital',
-      lower_threshold: 'lower_threshold',
-      upper_threshold: 'upper_threshold',
       capital_contribution: 'capital_contribution'
     }.freeze
 
@@ -56,18 +54,8 @@ module Collators
       Threshold.value_for(:capital_lower, at: assessment.submission_date)
     end
 
-    def upper_threshold
-      return infinite_threshold if assessment.matter_proceeding_type == 'domestic_abuse' && assessment.applicant.involvement_type == 'applicant'
-
-      Threshold.value_for(:capital_upper, at: assessment.submission_date)
-    end
-
     def capital_contribution
       [0, assessed_capital - lower_threshold].max
-    end
-
-    def infinite_threshold
-      @infinite_threshold ||= Threshold.value_for(:infinite_gross_income_upper, at: assessment.submission_date)
     end
   end
 end

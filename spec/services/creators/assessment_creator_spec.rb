@@ -37,6 +37,12 @@ module Creators
           expect { subject.success? }.to change { Assessment.count }.by(1)
         end
 
+        it 'writes the dummy proceeding type code on the assessment record' do
+          subject.success?
+          assessment = Assessment.first
+          expect(assessment.proceeding_type_codes).to eq ['DA001']
+        end
+
         it 'creates a CapitalSummary record' do
           expect { subject.success? }.to change { CapitalSummary.count }.by(1)
         end
@@ -44,10 +50,6 @@ module Creators
         context 'capital summary record' do
           before { subject.success? }
           let(:capital_summary) { CapitalSummary.first }
-
-          it 'creates a pending Result record' do
-            expect(capital_summary.assessment_result).to eq 'pending'
-          end
 
           it 'creates all fields as zero' do
             expect(capital_summary.total_liquid).to eq 0.0
@@ -128,10 +130,6 @@ module Creators
         context 'capital summary record' do
           before { subject.success? }
           let(:capital_summary) { CapitalSummary.first }
-
-          it 'creates a pending Result record' do
-            expect(capital_summary.assessment_result).to eq 'pending'
-          end
 
           it 'creates all fields as zero' do
             expect(capital_summary.total_liquid).to eq 0.0

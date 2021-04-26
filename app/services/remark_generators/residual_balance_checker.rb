@@ -21,13 +21,18 @@ module RemarkGenerators
     end
 
     def capital_exceeds_lower_threshold?
-      assessment.capital_summary.assessed_capital > assessment.capital_summary.lower_threshold
+      assessment.capital_summary.assessed_capital > lower_capital_threshold
     end
 
     def populate_remarks
       my_remarks = assessment.remarks
       my_remarks.add(:current_account_balance, :residual_balance, [])
       assessment.update!(remarks: my_remarks)
+    end
+
+    def lower_capital_threshold
+      # we can take the lower threshold from the first eligibility records as they are all the same
+      assessment.capital_summary.eligibilities.first.lower_threshold
     end
 
     attr_reader :assessment

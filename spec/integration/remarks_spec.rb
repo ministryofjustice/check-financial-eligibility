@@ -24,7 +24,22 @@ RSpec.describe 'contribution_required Full Assessment with remarks' do
 
     get assessment_path(assessment_id), headers: v3_headers
     output_response(:get, :assessment)
-    expect(parsed_response[:assessment][:remarks]).to match_array(expected_remarks)
+    expect(deep_orderless_match(parsed_response[:assessment][:remarks], expected_remarks)).to be true
+  end
+
+  def deep_orderless_match(actual, expected)
+    expect(actual.keys).to match_array(expected.keys)
+    expect_matching_array(actual, expected, :state_benefit_payment, :amount_variation)
+    expect_matching_array(actual, expected, :state_benefit_payment, :unknown_frequency)
+    expect_matching_array(actual, expected, :other_income_payment, :amount_variation)
+    expect_matching_array(actual, expected, :other_income_payment, :unknown_frequency)
+    expect_matching_array(actual, expected, :outgoings_housing_cost, :amount_variation)
+    expect_matching_array(actual, expected, :outgoings_maintenance, :unknown_frequency)
+    expect(actual[:policy_disregards]).to match_array(expected[:policy_disregards])
+  end
+
+  def expect_matching_array(actual, expected, key1, key2)
+    expect(actual[key1][key2]).to match_array(expected[key1][key2])
   end
 
   def post_assessment

@@ -64,26 +64,6 @@ module Collators
         end
       end
 
-      describe 'upper_threshold' do
-        context 'when the matter_proceeding_type is `domestic_abuse`' do
-          it 'returns the infinite_threshold' do
-            subject
-            expect(subject[:upper_threshold]).to eq 999_999_999_999
-          end
-        end
-
-        context 'when the matter_proceeding_type is not `domestic_abuse`' do
-          before do
-            allow(assessment).to receive(:matter_proceeding_type).and_return 'not_domestic_abuse'
-          end
-
-          it 'returns a lower threshold' do
-            subject
-            expect(subject[:upper_threshold]).to eq 8000
-          end
-        end
-      end
-
       context 'summarization of result_fields' do
         it 'summarizes the results it gets from the subservices' do
           liquid_capital_service = double Assessors::LiquidCapitalAssessor
@@ -105,6 +85,7 @@ module Collators
           expect(pcd).to receive(:value).and_return(100_000)
 
           subject
+
           expect(subject[:total_liquid]).to eq 145.83
           expect(subject[:total_non_liquid]).to eq 500
           expect(subject[:total_vehicle]).to eq 2_500
@@ -113,8 +94,6 @@ module Collators
           expect(subject[:total_capital]).to eq 26_145.83
           expect(subject[:pensioner_capital_disregard]).to eq 100_000
           expect(subject[:assessed_capital]).to eq(-73_854.17)
-          expect(subject[:lower_threshold]).to eq 3_000
-          expect(subject[:upper_threshold]).to eq 999_999_999_999
         end
       end
     end

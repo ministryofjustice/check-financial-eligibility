@@ -10,7 +10,7 @@ module Assessors
 
       context 'gross_income has not been summarised' do
         it 'raises' do
-          allow(gross_income_summary).to receive(:assessment_result).and_return('pending')
+          allow(gross_income_summary).to receive(:summarized_assessment_result).and_return('pending')
           expect { subject }.to raise_error RuntimeError, 'Gross income not summarised'
         end
       end
@@ -20,15 +20,15 @@ module Assessors
           it 'is eligible' do
             set_gross_income_values gross_income_summary, 1_023, 0.0, 45.3, 2_567
             subject
-            expect(gross_income_summary.assessment_result).to eq 'eligible'
+            expect(gross_income_summary.summarized_assessment_result).to eq :eligible
           end
         end
 
         context 'monthly income equals upper threshold' do
           it 'is not eligible' do
-            set_gross_income_values gross_income_summary, 2_000, 0.0, 567, 2_567
+            set_gross_income_values gross_income_summary, 2_000, 0.0, 567.00, 2_567.00
             subject
-            expect(gross_income_summary.assessment_result).to eq 'ineligible'
+            expect(gross_income_summary.summarized_assessment_result).to eq :ineligible
           end
         end
 
@@ -36,7 +36,7 @@ module Assessors
           it 'is not eligible' do
             set_gross_income_values gross_income_summary, 2_100.0, 0.0, 500.2, 2_567
             subject
-            expect(gross_income_summary.assessment_result).to eq 'ineligible'
+            expect(gross_income_summary.summarized_assessment_result).to eq :ineligible
           end
         end
 
@@ -47,6 +47,7 @@ module Assessors
                          total_gross_income: other_income + state_benefits + monthly_student_loan,
                          upper_threshold: threshold,
                          assessment_result: 'summarised')
+          create :gross_income_eligibility, gross_income_summary: record, upper_threshold: threshold
         end
       end
     end

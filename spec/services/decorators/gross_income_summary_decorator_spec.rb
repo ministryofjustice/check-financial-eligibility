@@ -16,7 +16,7 @@ module Decorators
         before { create :disposable_income_summary, :with_everything, assessment: gross_income_summary.assessment }
 
         context 'student loan payments are in irregular income' do
-          let!(:gross_income_summary) { create :gross_income_summary, :with_all_records }
+          let!(:gross_income_summary) { create :gross_income_summary, :with_all_records, :with_eligibilities }
 
           it 'returns a hash with the expected keys' do
             expected_keys = %i[summary
