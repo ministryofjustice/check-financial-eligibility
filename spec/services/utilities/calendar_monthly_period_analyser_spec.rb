@@ -177,6 +177,26 @@ module Utilities
         end
       end
 
+      context 'longer months after shorter months' do
+        context 'where February is included' do
+          let(:dates) { make_dates(%w[2021-02-28 2021-03-29 2021-04-29]) }
+
+          it { is_expected.to be true }
+        end
+
+        context 'where February is in the middle' do
+          let(:dates) { make_dates(%w[2021-01-31 2021-02-28 2021-03-31]) }
+
+          it { is_expected.to be true }
+        end
+
+        context 'not including February' do
+          let(:dates) { make_dates(%w[2021-03-31 2021-04-30 2021-05-31]) }
+
+          it { is_expected.to be true }
+        end
+      end
+
       def make_dates(array_of_string_dates)
         array_of_string_dates.map { |x| Date.parse(x) }
       end

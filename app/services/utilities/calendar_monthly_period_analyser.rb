@@ -43,7 +43,6 @@ module Utilities
     end
 
     def calendar_month_intervals?
-      first_payment_date = @dates.first
       result = true
       @dates.each_with_index do |date, iteration_count|
         next if iteration_count.zero?
@@ -51,10 +50,23 @@ module Utilities
         expected_date = first_payment_date + iteration_count.months
         next if date == expected_date
 
+        next if end_of_feb_check_needed?(date, iteration_count)
+
         result = false unless bank_holiday_adjustment?(date, expected_date)
         break if result == false
       end
       result
+    end
+
+    def first_payment_date
+      @first_payment_date ||= @dates.first
+    end
+
+    def end_of_feb_check_needed?(date, iteration_count)
+      return unless first_payment_date.month.eql?(2) && first_payment_date.day > 27
+
+      expected_date = date - iteration_count.months
+      first_payment_date == expected_date
     end
 
     def bank_holiday_adjustment?(actual_date, expected_date)
