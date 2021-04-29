@@ -11,4 +11,3 @@ RSpec::Matchers.define :show_all_integration_tests_passed do
     msg
   end
 end
-
