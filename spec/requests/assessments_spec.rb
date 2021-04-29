@@ -290,7 +290,7 @@ RSpec.describe AssessmentsController, type: :request do
         let(:headers) { { 'Accept' => 'application/json;version=4' } }
         let(:frozen_time) { Time.zone.now }
 
-        it 'returns expected structure' do
+        it 'returns expected structure', :show_in_doc, doc_title: 'POST V4 Success Response' do
           expect(parsed_response).to eq expected_v4_result
         end
       end
