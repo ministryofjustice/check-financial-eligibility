@@ -29,8 +29,45 @@ The API version is specified through the accept header, as follows:
 The only currently acceptable version is 3.  If no version is specified, version 3 is assumed if alternative versions are developed.
 
 
+## System architecture
+
+### Database Architecture
+
+An ORM diagram can be found here: https://docs.google.com/drawings/d/1fgr-33x-kAwCkXcvr9GJ8xBs7DAbUnPCwTjrSZo74Tg/edit?usp=sharing
+
+Each assessment has a `CapitalSummary`, a `GrossIncomeSummary` and a `DisposableIncomeSummary`, to encapsulate the totals and results of the 
+three means assessments that are performed, the capital assessment, the gross income assessment and the disposable income assessment,
+in order to arrive at an overall means assessment of the application.
+
+Each summary record has one or more sub records that record the individual items/transactions: The `CapitalSummary` has capital items,
+the `GrossIncomeSummary` has income transactions of various types, and the `DisposableIncomeSummary` various outgoings.
+
+Each of the three summary records also has a number of Eligibility records - one for each proceeding type specified on the assessment.  The eligibility
+record the upper and lower thresholds for that proceeding type, and will eventually hold the result for that proceeding type.
+
+### Usage
+
+The client will create as assessment by posting a payload to the `/assessments` endpoint, which will respond with an `assessment_id`.  This assessment id
+is then given on all subsequent posts to the other endpoints to build up a record of capital, income and outgoings, finally requesting an assessment result
+by sending a GET request to the /assessments endpoint.
+
+### Logic flow
+
+The `AssessmentController` calls the `MainWorkflow`, which immediately branches off to the `PassportedWorkflow` or `UnpassportedWorkflow`.  
+The main difference is 
+that unpassported applications are assessed on capital, gross income and disposable income, whereas passported applications are only 
+assessed on capital.
+
+In each case, the workflow takes each of the assessments in turn, calls a collator to look at all the sub-records under the summary and come up 
+with a total figure in the case of capital, or a monthly equivalent figure in the case of gross or disposable  income, and these results are stored on
+the associated summary record.  After collation, an assessor is called for each summary which stores the results (eligible, ineligible, contribution required) 
+in each of the eligibility records (one for each proceeding type).  Finally, the main assessor is called to work out the overall result for 
+each proceeding type taking into account the results from the capital, gross income and disposable income assessments.
+The assessments controller then calls the main decorator to format the output in the required structure to send back to the client.
+
+
 ## Generation of API documentation
-The documentaion is automatically generated when tests are run with an environment variable set.
+The documentation is automatically generated when tests are run with an environment variable set.
 
 ```APIPIE_RECORD=examples bundle exec rspec```
 
