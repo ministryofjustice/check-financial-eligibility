@@ -54,7 +54,7 @@ gem 'roo', '~> 2.8.3'
 # Manage security headers
 gem 'secure_headers'
 
-gem 'webpacker', '~> 5', '>= 5.2.1'
+gem 'webpacker', '~> 5'
 
 group :development, :test do
   gem 'awesome_print'
