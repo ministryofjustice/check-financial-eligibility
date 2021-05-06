@@ -33,7 +33,10 @@ module CheckFinancialEligibility
     config.api_only = true
 
     config.x.application.allow_future_submission_date = ENV['ALLOW_FUTURE_SUBMISSION_DATE'] || false
-
+    config.x.status.build_date = ENV['BUILD_DATE'] || 'Not Available'
+    config.x.status.build_tag = ENV['BUILD_TAG'] || 'Not Available'
+    config.x.status.app_branch = ENV['APP_BRANCH'] || 'Not Available'
+    config.x.use_test_threshold_data = ENV['USE_TEST_THRESHOLD_DATA']
     config.autoload_paths += %W[#{config.root}/app/validators]
   end
 end
