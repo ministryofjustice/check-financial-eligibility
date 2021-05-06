@@ -30,11 +30,7 @@ RSpec.describe Threshold do
 
     context 'file is marked as test_only: true' do
       context "ENV['USE_TEST_THRESHOLD_DATA'] is set to 'true'" do
-        around do |example|
-          ENV['USE_TEST_THRESHOLD_DATA'] = 'true'
-          example.run
-          ENV['USE_TEST_THRESHOLD_DATA'] = nil
-        end
+        before { allow(Rails.configuration.x).to receive(:use_test_threshold_data).and_return('true') }
 
         context 'date before date of test only file' do
           let(:time) { Time.zone.parse('1-Dec-2020 12:33') }

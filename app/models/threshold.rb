@@ -32,7 +32,7 @@ class Threshold
     def threshold_loadable?(hash)
       return true unless hash.key?(:test_only)
 
-      ENV['USE_TEST_THRESHOLD_DATA'] == 'true'
+      Rails.configuration.x.use_test_threshold_data == 'true'
     end
   end
 end
