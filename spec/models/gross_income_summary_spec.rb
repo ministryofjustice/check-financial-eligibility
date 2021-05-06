@@ -32,7 +32,7 @@ RSpec.describe GrossIncomeSummary do
         housing_benefit = create :state_benefit, state_benefit_type: housing_benefit_type, gross_income_summary: gross_income_summary
         housing_benefit_payments = create_list :state_benefit_payment, 3, state_benefit: housing_benefit
 
-        expect(gross_income_summary.housing_benefit_payments).to eq housing_benefit_payments
+        expect(gross_income_summary.housing_benefit_payments).to match_array housing_benefit_payments
       end
     end
   end
