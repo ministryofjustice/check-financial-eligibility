@@ -11,7 +11,6 @@ module Eligibility
       {
         proceeding_type_code: proceeding_type_code,
         upper_threshold: upper_threshold,
-        lower_threshold: lower_threshold,
         assessment_result: assessment_result
       }
     end
@@ -24,7 +23,7 @@ module Eligibility
           expect(rec.parent_id).to eq gis.id
           expect(rec.type).to eq 'Eligibility::GrossIncome'
           expect(rec.proceeding_type_code).to eq 'DA001'
-          expect(rec.lower_threshold).to eq 3_000
+          expect(rec.lower_threshold).to be nil
           expect(rec.upper_threshold).to eq 8_000
         end
       end
@@ -40,9 +39,9 @@ module Eligibility
 
       context 'adding duplicate record' do
         it 'raises not unique error' do
-          gis.eligibilities.create(attrs)
+          gis.eligibilities.create!(attrs)
           expect {
-            gis.eligibilities.create(attrs)
+            gis.eligibilities.create!(attrs)
           }.to raise_error ActiveRecord::RecordNotUnique, /PG::UniqueViolation: ERROR:  duplicate key value violates unique constraint/
         end
       end

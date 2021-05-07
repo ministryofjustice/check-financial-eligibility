@@ -144,7 +144,7 @@ RSpec.describe AssessmentsController, type: :request do
         it 'returns capital summary data as json' do
           Timecop.freeze(now) do # freeze time so we don't have to worry about time differences between actual and expected results
             subject
-            expected_response = Decorators::AssessmentDecorator.new(assessment.reload).as_json.to_json
+            expected_response = Decorators::V3::AssessmentDecorator.new(assessment.reload).as_json.to_json
             expect(parsed_response).to eq(JSON.parse(expected_response, symbolize_names: true))
           end
         end
@@ -171,7 +171,7 @@ RSpec.describe AssessmentsController, type: :request do
         it 'returns capital summary data as json' do
           Timecop.freeze(now) do # freeze time so we don't have to worry about time differences between actual and expected results
             subject
-            expected_response = Decorators::AssessmentDecorator.new(assessment.reload).as_json.to_json
+            expected_response = Decorators::V3::AssessmentDecorator.new(assessment.reload).as_json.to_json
             expect(parsed_response).to eq(JSON.parse(expected_response, symbolize_names: true))
           end
         end
@@ -192,88 +192,107 @@ RSpec.describe AssessmentsController, type: :request do
 
     context 'test assessment NPE6-1' do
       let(:assessment) { create_assessment_npe61 }
-      let(:headers) { { 'Accept' => 'application/json;version=3' } }
 
-      before { subject }
+      context 'VERSION 3' do
+        before { subject }
 
-      it 'returns success' do
-        expect(parsed_response[:success]).to be true
+        let(:headers) { { 'Accept' => 'application/json;version=3' } }
+
+        it 'returns success' do
+          expect(parsed_response[:success]).to be true
+        end
+
+        it 'returns expected gross income assessment results' do
+          results = parsed_response[:assessment][:gross_income]
+          expect(results[:summary][:assessment_result]).to eq 'eligible'
+          expect(results[:summary][:upper_threshold]).to eq 999_999_999_999.0.to_s
+          expect(results[:state_benefits][:monthly_equivalents][:all_sources]).to eq 200.0.to_s
+          expect(results[:summary][:total_gross_income]).to eq 1615.0.to_s
+        end
+
+        it 'returns expected gross income monthly equivalents' do
+          mie = parsed_response[:assessment][:gross_income][:other_income][:monthly_equivalents][:all_sources]
+          expect(mie[:friends_or_family]).to eq 1415.0.to_s
+          expect(mie[:maintenance_in]).to eq 0.0.to_s
+          expect(mie[:property_or_lodger]).to eq 0.0.to_s
+        end
+
+        it 'returns expected gross income student loan amount' do
+          mie = parsed_response[:assessment][:gross_income][:irregular_income][:monthly_equivalents]
+          expect(mie[:student_loan]).to eq 0.0.to_s
+        end
+
+        it 'returns expected disposable income monthly equivalents' do
+          moe = parsed_response[:assessment][:disposable_income][:monthly_equivalents][:all_sources]
+          expect(moe[:child_care]).to eq 0.0.to_s
+          expect(moe[:maintenance_out]).to eq 0.0.to_s
+          expect(moe[:rent_or_mortgage]).to eq 50.0.to_s
+          expect(moe[:legal_aid]).to eq 0.0.to_s
+        end
+
+        it 'returns expected disposable income results' do
+          results = parsed_response[:assessment][:disposable_income]
+          expect(results[:childcare_allowance]).to eq 0.0.to_s
+          expect(results[:dependant_allowance]).to eq 1457.45.to_s
+          expect(results[:maintenance_allowance]).to eq 0.0.to_s
+          expect(results[:gross_housing_costs]).to eq 50.0.to_s
+          expect(results[:housing_benefit]).to eq 0.0.to_s
+          expect(results[:net_housing_costs]).to eq 50.0.to_s
+          expect(results[:total_outgoings_and_allowances]).to eq 1507.45.to_s
+          expect(results[:total_disposable_income]).to eq 107.55.to_s
+          expect(results[:lower_threshold]).to eq 315.0.to_s
+          expect(results[:upper_threshold]).to eq 999_999_999_999.0.to_s
+          expect(results[:assessment_result]).to eq 'eligible'
+          expect(results[:income_contribution]).to eq 0.0.to_s
+        end
+
+        it 'returns expected capital results', :show_in_doc, doc_title: 'GET Version 3 Non-Passported Response' do
+          results = parsed_response[:assessment][:capital]
+          main_home = results[:capital_items][:properties][:main_home]
+          expect(main_home[:value]).to eq 500_000.0.to_s
+          expect(main_home[:outstanding_mortgage]).to eq 150_000.0.to_s
+          expect(main_home[:percentage_owned]).to eq 50.0.to_s
+          expect(main_home[:shared_with_housing_assoc]).to be false
+          expect(main_home[:transaction_allowance]).to eq 15_000.0.to_s
+          expect(main_home[:allowable_outstanding_mortgage]).to eq 100_000.0.to_s
+          expect(main_home[:net_value]).to eq 385_000.0.to_s
+          expect(main_home[:net_equity]).to eq 192_500.0.to_s
+          expect(main_home[:main_home_equity_disregard]).to eq 100_000.0.to_s
+          expect(main_home[:assessed_equity]).to eq 92_500.0.to_s
+
+          expect(results[:capital_items][:properties][:additional_properties]).to eq []
+
+          expect(results[:total_vehicle]).to eq 9_000.0.to_s
+          expect(results[:total_property]).to eq 92_500.0.to_s
+          expect(results[:total_mortgage_allowance]).to eq 100_000.0.to_s
+          expect(results[:total_capital]).to eq 101_500.0.to_s
+          expect(results[:pensioner_capital_disregard]).to eq 60_000.0.to_s
+          expect(results[:assessed_capital]).to eq 41_500.0.to_s
+          expect(results[:lower_threshold]).to eq 3_000.0.to_s
+          expect(results[:upper_threshold]).to eq 999_999_999_999.0.to_s
+          expect(results[:assessment_result]).to eq 'contribution_required'
+          expect(results[:capital_contribution]).to eq 38_500.0.to_s
+        end
+
+        it 'returns expected overall results' do
+          expect(parsed_response[:assessment][:assessment_result]).to eq 'contribution_required'
+        end
       end
 
-      it 'returns expected gross income assessment results' do
-        results = parsed_response[:assessment][:gross_income]
-        expect(results[:summary][:assessment_result]).to eq 'eligible'
-        expect(results[:summary][:upper_threshold]).to eq 999_999_999_999.0.to_s
-        expect(results[:state_benefits][:monthly_equivalents][:all_sources]).to eq 200.0.to_s
-        expect(results[:summary][:total_gross_income]).to eq 1615.0.to_s
-      end
+      context 'version 4' do
+        before do
+          assessment.update!(version: '4')
+          travel_to frozen_time
+          subject
+          travel_back
+        end
 
-      it 'returns expected gross income monthly equivalents' do
-        mie = parsed_response[:assessment][:gross_income][:other_income][:monthly_equivalents][:all_sources]
-        expect(mie[:friends_or_family]).to eq 1415.0.to_s
-        expect(mie[:maintenance_in]).to eq 0.0.to_s
-        expect(mie[:property_or_lodger]).to eq 0.0.to_s
-      end
+        let(:headers) { { 'Accept' => 'application/json;version=4' } }
+        let(:frozen_time) { Time.zone.now }
 
-      it 'returns expected gross income student loan amount' do
-        mie = parsed_response[:assessment][:gross_income][:irregular_income][:monthly_equivalents]
-        expect(mie[:student_loan]).to eq 0.0.to_s
-      end
-
-      it 'returns expected disposable income monthly equivalents' do
-        moe = parsed_response[:assessment][:disposable_income][:monthly_equivalents][:all_sources]
-        expect(moe[:child_care]).to eq 0.0.to_s
-        expect(moe[:maintenance_out]).to eq 0.0.to_s
-        expect(moe[:rent_or_mortgage]).to eq 50.0.to_s
-        expect(moe[:legal_aid]).to eq 0.0.to_s
-      end
-
-      it 'returns expected disposable income results' do
-        results = parsed_response[:assessment][:disposable_income]
-        expect(results[:childcare_allowance]).to eq 0.0.to_s
-        expect(results[:dependant_allowance]).to eq 1457.45.to_s
-        expect(results[:maintenance_allowance]).to eq 0.0.to_s
-        expect(results[:gross_housing_costs]).to eq 50.0.to_s
-        expect(results[:housing_benefit]).to eq 0.0.to_s
-        expect(results[:net_housing_costs]).to eq 50.0.to_s
-        expect(results[:total_outgoings_and_allowances]).to eq 1507.45.to_s
-        expect(results[:total_disposable_income]).to eq 107.55.to_s
-        expect(results[:lower_threshold]).to eq 315.0.to_s
-        expect(results[:upper_threshold]).to eq 999_999_999_999.0.to_s
-        expect(results[:assessment_result]).to eq 'eligible'
-        expect(results[:income_contribution]).to eq 0.0.to_s
-      end
-
-      it 'returns expected capital results', :show_in_doc, doc_title: 'GET Version 3 Non-Passported Response' do
-        results = parsed_response[:assessment][:capital]
-        main_home = results[:capital_items][:properties][:main_home]
-        expect(main_home[:value]).to eq 500_000.0.to_s
-        expect(main_home[:outstanding_mortgage]).to eq 150_000.0.to_s
-        expect(main_home[:percentage_owned]).to eq 50.0.to_s
-        expect(main_home[:shared_with_housing_assoc]).to be false
-        expect(main_home[:transaction_allowance]).to eq 15_000.0.to_s
-        expect(main_home[:allowable_outstanding_mortgage]).to eq 100_000.0.to_s
-        expect(main_home[:net_value]).to eq 385_000.0.to_s
-        expect(main_home[:net_equity]).to eq 192_500.0.to_s
-        expect(main_home[:main_home_equity_disregard]).to eq 100_000.0.to_s
-        expect(main_home[:assessed_equity]).to eq 92_500.0.to_s
-
-        expect(results[:capital_items][:properties][:additional_properties]).to eq []
-
-        expect(results[:total_vehicle]).to eq 9_000.0.to_s
-        expect(results[:total_property]).to eq 92_500.0.to_s
-        expect(results[:total_mortgage_allowance]).to eq 100_000.0.to_s
-        expect(results[:total_capital]).to eq 101_500.0.to_s
-        expect(results[:pensioner_capital_disregard]).to eq 60_000.0.to_s
-        expect(results[:assessed_capital]).to eq 41_500.0.to_s
-        expect(results[:lower_threshold]).to eq 3_000.0.to_s
-        expect(results[:upper_threshold]).to eq 999_999_999_999.0.to_s
-        expect(results[:assessment_result]).to eq 'contribution_required'
-        expect(results[:capital_contribution]).to eq 38_500.0.to_s
-      end
-
-      it 'returns expected overall results' do
-        expect(parsed_response[:assessment][:assessment_result]).to eq 'contribution_required'
+        it 'returns expected structure', :show_in_doc, doc_title: 'POST V4 Success Response' do
+          expect(parsed_response).to eq expected_v4_result
+        end
       end
     end
   end
@@ -339,6 +358,7 @@ RSpec.describe AssessmentsController, type: :request do
     create :capital_eligibility, capital_summary: cs, proceeding_type_code: assessment.proceeding_type_codes.first
     create :gross_income_eligibility, gross_income_summary: gis, proceeding_type_code: assessment.proceeding_type_codes.first
     create :disposable_income_eligibility, disposable_income_summary: dis, proceeding_type_code: assessment.proceeding_type_codes.first
+    create :assessment_eligibility, assessment: assessment, proceeding_type_code: assessment.proceeding_type_codes.first
 
     assessment
   end
@@ -375,5 +395,203 @@ RSpec.describe AssessmentsController, type: :request do
            outstanding_mortgage: mortgage,
            percentage_owned: percentage_owned,
            shared_with_housing_assoc: housing_assoc
+  end
+
+  def expected_v4_result
+    client_ids = StateBenefitPayment.order(:payment_date).map(&:client_id)
+    {
+      version: '4',
+      timestamp: frozen_time.strftime('%Y-%m-%dT%H:%M:%S.000Z'),
+      success: true,
+      result_summary: {
+        overall_result: {
+          result: 'contribution_required',
+          capital_contribution: 38_500.0,
+          income_contribution: 0.0,
+          matter_types: [
+            {
+              matter_type: 'domestic_abuse',
+              result: 'contribution_required'
+            }
+          ],
+          proceeding_types: [
+            {
+              ccms_code: 'DA001',
+              result: 'contribution_required'
+            }
+          ]
+        },
+        gross_income: {
+          total_gross_income: 1615.0,
+          proceeding_types: [
+            {
+              ccms_code: 'DA001',
+              upper_threshold: 999_999_999_999.0,
+              result: 'eligible'
+            }
+          ]
+        },
+        disposable_income: {
+          dependant_allowance: 1457.45,
+          gross_housing_costs: 50.0,
+          housing_benefit: 0.0,
+          net_housing_costs: 50.0,
+          maintenance_allowance: 0.0,
+          total_outgoings_and_allowances: 1507.45,
+          total_disposable_income: 107.55,
+          income_contribution: 0.0,
+          proceeding_types: [
+            {
+              ccms_code: 'DA001',
+              upper_threshold: 999_999_999_999.0,
+              lower_threshold: 315.0,
+              result: 'eligible'
+            }
+          ]
+        },
+        capital: {
+          total_liquid: 0.0,
+          total_non_liquid: 0.0,
+          total_vehicle: 9000.0,
+          total_property: 92_500.0,
+          total_mortgage_allowance: 100_000.0,
+          total_capital: 101_500.0,
+          pensioner_capital_disregard: 60_000.0,
+          capital_contribution: 38_500.0,
+          assessed_capital: 41_500.0,
+          proceeding_types: [
+            {
+              ccms_code: 'DA001',
+              lower_threshold: 3000.0,
+              upper_threshold: 999_999_999_999.0,
+              result: 'contribution_required'
+            }
+          ]
+        }
+      },
+      assessment: {
+        id: assessment.id,
+        client_reference_id: 'NPE6-1',
+        submission_date: '2019-05-29',
+        applicant: {
+          date_of_birth: '1958-05-29',
+          involvement_type: 'applicant',
+          has_partner_opponent: false,
+          receives_qualifying_benefit: false,
+          self_employed: false
+        },
+        gross_income: {
+          irregular_income: {
+            monthly_equivalents: {
+              student_loan: 0.0
+            }
+          },
+          state_benefits: {
+            monthly_equivalents: {
+              all_sources: 200.0,
+              cash_transactions: 0.0,
+              bank_transactions: [
+                {
+                  name: 'Child Benefit',
+                  monthly_value: 200.0,
+                  excluded_from_income_assessment: false
+                }
+              ]
+            }
+          },
+          other_income: {
+            monthly_equivalents: {
+              all_sources: {
+                friends_or_family: 1415.0,
+                maintenance_in: 0.0,
+                property_or_lodger: 0.0,
+                pension: 0.0
+              },
+              bank_transactions: {
+                friends_or_family: 1415.0,
+                maintenance_in: 0.0,
+                property_or_lodger: 0.0,
+                pension: 0.0
+              },
+              cash_transactions: {
+                friends_or_family: 0.0,
+                maintenance_in: 0.0,
+                property_or_lodger: 0.0,
+                pension: 0.0
+              }
+            }
+          }
+        },
+        disposable_income: {
+          monthly_equivalents: {
+            all_sources: {
+              child_care: 0.0,
+              rent_or_mortgage: 50.0,
+              maintenance_out: 0.0,
+              legal_aid: 0.0
+            },
+            bank_transactions: {
+              child_care: 0.0,
+              rent_or_mortgage: 50.0,
+              maintenance_out: 0.0,
+              legal_aid: 0.0
+            },
+            cash_transactions: {
+              child_care: 0.0,
+              rent_or_mortgage: 0.0,
+              maintenance_out: 0.0,
+              legal_aid: 0.0
+            }
+          },
+          childcare_allowance: 0.0,
+          deductions: {
+            dependants_allowance: 1457.45,
+            disregarded_state_benefits: 0.0
+          }
+        },
+        capital: {
+          capital_items: {
+            liquid: [
+              { description: 'Bank acct 1', value: 0.0 },
+              { description: 'Bank acct 2', value: 0.0 },
+              { description: 'Bank acct 3', value: 0.0 }
+            ],
+            non_liquid: [],
+            vehicles: [
+              {
+                value: 9000.0,
+                loan_amount_outstanding: 0.0,
+                date_of_purchase: '2018-05-20',
+                in_regular_use: false,
+                included_in_assessment: true,
+                assessed_value: 9000.0
+              }
+            ],
+            properties: {
+              main_home: {
+                value: 500_000.0,
+                outstanding_mortgage: 150_000.0,
+                percentage_owned: 50.0,
+                main_home: true,
+                shared_with_housing_assoc: false,
+                transaction_allowance: 15_000.0,
+                allowable_outstanding_mortgage: 100_000.0,
+                net_value: 385_000.0,
+                net_equity: 192_500.0,
+                main_home_equity_disregard: 100_000.0,
+                assessed_equity: 92_500.0
+              },
+              additional_properties: []
+            }
+          }
+        },
+        remarks: {
+          state_benefit_payment: {
+            amount_variation: client_ids,
+            unknown_frequency: client_ids
+          }
+        }
+      }
+    }
   end
 end

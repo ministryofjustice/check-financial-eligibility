@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_14_084415) do
+ActiveRecord::Schema.define(version: 2021_04_28_110741) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -158,7 +158,7 @@ ActiveRecord::Schema.define(version: 2021_04_14_084415) do
     t.string "assessment_result", default: "pending", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["parent_id", "proceeding_type_code"], name: "index_eligibilities_on_parent_id_and_proceeding_type_code", unique: true
+    t.index ["parent_id", "type", "proceeding_type_code"], name: "eligibilities_unique_type_ptc", unique: true
   end
 
   create_table "explicit_remarks", force: :cascade do |t|

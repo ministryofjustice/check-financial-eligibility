@@ -71,7 +71,8 @@ class AssessmentsController < ApplicationController
   def perform_assessment
     Workflows::MainWorkflow.call(assessment)
     Assessors::MainAssessor.call(assessment)
-    render json: Decorators::AssessmentDecorator.new(assessment).as_json
+    decorator_klass = assessment.version_3? ? Decorators::V3::AssessmentDecorator : Decorators::V4::AssessmentDecorator
+    render json: decorator_klass.new(assessment).as_json
   end
 
   def version

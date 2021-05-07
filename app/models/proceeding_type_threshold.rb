@@ -5,61 +5,73 @@ class ProceedingTypeThreshold
 
   WAIVERS = {
     DA001: {
+      matter_type: 'domestic_abuse',
       capital_upper: true,
       gross_income_upper: true,
       disposable_income_upper: true
     },
     DA002: {
+      matter_type: 'domestic_abuse',
       capital_upper: true,
       gross_income_upper: true,
       disposable_income_upper: true
     },
     DA003: {
+      matter_type: 'domestic_abuse',
       capital_upper: true,
       gross_income_upper: true,
       disposable_income_upper: true
     },
     DA004: {
+      matter_type: 'domestic_abuse',
       capital_upper: true,
       gross_income_upper: true,
       disposable_income_upper: true
     },
     DA005: {
+      matter_type: 'domestic_abuse',
       capital_upper: true,
       gross_income_upper: true,
       disposable_income_upper: true
     },
     DA006: {
+      matter_type: 'domestic_abuse',
       capital_upper: true,
       gross_income_upper: true,
       disposable_income_upper: true
     },
     DA007: {
+      matter_type: 'domestic_abuse',
       capital_upper: true,
       gross_income_upper: true,
       disposable_income_upper: true
     },
     DA020: {
+      matter_type: 'domestic_abuse',
       capital_upper: true,
       gross_income_upper: true,
       disposable_income_upper: true
     },
     SE003: {
+      matter_type: 'section8',
       capital_upper: false,
       gross_income_upper: false,
       disposable_income_upper: false
     },
     SE004: {
+      matter_type: 'section8',
       capital_upper: false,
       gross_income_upper: false,
       disposable_income_upper: false
     },
     SE013: {
+      matter_type: 'section8',
       capital_upper: false,
       gross_income_upper: false,
       disposable_income_upper: false
     },
     SE014: {
+      matter_type: 'section8',
       capital_upper: false,
       gross_income_upper: false,
       disposable_income_upper: false
@@ -68,6 +80,10 @@ class ProceedingTypeThreshold
 
   def self.value_for(ccms_code, threshold, at)
     new(ccms_code, threshold, at).value
+  end
+
+  def self.matter_type(ccms_code)
+    WAIVERS.fetch(ccms_code.to_sym)[:matter_type]
   end
 
   def initialize(ccms_code, threshold, at)

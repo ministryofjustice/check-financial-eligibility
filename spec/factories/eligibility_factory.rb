@@ -21,4 +21,12 @@ FactoryBot.define do
     upper_threshold { 999_999_999_999.0 }
     assessment_result { 'pending' }
   end
+
+  factory :assessment_eligibility, class: Eligibility::Assessment do
+    assessment
+    proceeding_type_code { 'DA001' }
+    lower_threshold { nil }
+    upper_threshold { nil }
+    assessment_result { 'pending' }
+  end
 end

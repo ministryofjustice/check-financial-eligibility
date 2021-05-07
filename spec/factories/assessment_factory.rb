@@ -117,6 +117,10 @@ FactoryBot.define do
             assessment.disposable_income_summary.eligibilities << create(:disposable_income_eligibility, proceeding_type_code: ptc)
           end
         end
+
+        assessment.proceeding_type_codes.each do |ptc|
+          assessment.eligibilities << create(:assessment_eligibility, proceeding_type_code: ptc)
+        end
       end
     end
 

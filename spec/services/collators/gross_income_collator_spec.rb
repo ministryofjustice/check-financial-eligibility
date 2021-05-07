@@ -11,8 +11,7 @@ module Collators
         create :gross_income_eligibility,
                gross_income_summary: gross_income_summary,
                proceeding_type_code: ptc,
-               upper_threshold: ProceedingTypeThreshold.value_for(ptc.to_sym, :capital_upper, assessment.submission_date),
-               lower_threshold: ProceedingTypeThreshold.value_for(ptc.to_sym, :capital_lower, assessment.submission_date),
+               upper_threshold: ProceedingTypeThreshold.value_for(ptc.to_sym, :gross_income_upper, assessment.submission_date),
                assessment_result: 'pending'
       end
     end

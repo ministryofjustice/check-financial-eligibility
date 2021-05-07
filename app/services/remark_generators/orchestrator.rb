@@ -28,8 +28,20 @@ module RemarkGenerators
     private
 
     def check_amount_variations
+      check_state_benefit_variations
+      check_other_income_variaions
+      check_outgoings_variation
+    end
+
+    def check_state_benefit_variations
       state_benefits&.each { |sb| AmountVariationChecker.call(@assessment, sb.state_benefit_payments) }
+    end
+
+    def check_other_income_variaions
       other_income_sources&.each { |oi| AmountVariationChecker.call(@assessment, oi.other_income_payments) }
+    end
+
+    def check_outgoings_variation
       return if outgoings.blank?
 
       outgoings.group_by(&:type).each do |_type, collection|
