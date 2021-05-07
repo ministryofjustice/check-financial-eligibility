@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 module Decorators
-  module V3
-    RSpec.describe Decorators::V4::DisposableIncomeResultDecorator do
+  module V4
+    RSpec.describe DisposableIncomeResultDecorator do
       let(:unlimited) { 999_999_999_999.0 }
       let(:assessment) { create :assessment, proceeding_type_codes: codes }
       let(:summary) do

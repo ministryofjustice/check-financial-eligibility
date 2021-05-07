@@ -2,7 +2,7 @@ require 'rails_helper'
 
 module Decorators
   module V4
-    RSpec.describe Decorators::V4::GrossIncomeDecorator do
+    RSpec.describe GrossIncomeDecorator do
       let(:assessment) { create :assessment }
       let(:summary) do
         create :gross_income_summary,

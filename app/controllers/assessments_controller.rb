@@ -63,7 +63,7 @@ class AssessmentsController < ApplicationController
     perform_assessment
   rescue StandardError => err
     Sentry.capture_exception(err)
-    render json: Decorators::V3::ErrorDecorator.new(err).as_json, status: :unprocessable_entity
+    render json: Decorators::ErrorDecorator.new(err).as_json, status: :unprocessable_entity
   end
 
   private

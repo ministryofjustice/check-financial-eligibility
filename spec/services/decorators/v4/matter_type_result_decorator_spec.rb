@@ -2,7 +2,7 @@ require 'rails_helper'
 
 module Decorators
   module V4
-    RSpec.describe Decorators::V4::MatterTypeResultDecorator do
+    RSpec.describe MatterTypeResultDecorator do
       subject { described_class.new(assessment).as_json }
 
       let(:assessment) { create :assessment, proceeding_type_codes: ptcs }

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 module Decorators
   module V4
-    RSpec.describe Decorators::V4::CapitalResultDecorator do
+    RSpec.describe CapitalResultDecorator do
       let(:unlimited) { 999_999_999_999.0 }
       let(:assessment) { create :assessment, proceeding_type_codes: pt_results.keys }
       let(:pt_results) do
