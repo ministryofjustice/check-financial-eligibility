@@ -16,6 +16,7 @@ Dir[Rails.root.join('lib/integration_helpers/**/*.rb')].sort.each { |f| require 
 RSpec.describe 'IntegrationTests::TestRunner', type: :request do
   let(:target_worksheet) { ENV['TARGET_WORKSHEET'] }
   let(:verbosity_level) { (ENV['VERBOSE'] || '0').to_i }
+  let(:refresh) { (ENV['REFRESH'] || 'false') }
 
   before { setup_test_data }
 
@@ -23,7 +24,7 @@ RSpec.describe 'IntegrationTests::TestRunner', type: :request do
     it 'processes all the tests on all the sheets' do
       failing_tests = []
       test_count = 0
-      TestCase::GroupRunner.each(verbosity_level) do |worksheet|
+      TestCase::GroupRunner.each(verbosity_level, refresh) do |worksheet|
         next if target_worksheet.present? && worksheet.worksheet_name != target_worksheet
 
         puts ">>> RUNNING TEST #{worksheet.description} <<<".yellow unless silent?

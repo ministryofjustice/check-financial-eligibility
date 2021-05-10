@@ -7,15 +7,16 @@ module TestCase
     DATA_DIR = Rails.root.join('tmp/integration_test_data')
     MASTER_SHEET = 'AAA - CFE Integration Test master spreadsheet'.freeze
 
-    def initialize(verbosity_level)
+    def initialize(verbosity_level, refresh)
       @verbosity_level = verbosity_level
       @spreadsheet_names = parse_master_sheet
+      @refresh = refresh
       @spreadsheets = {}
       @spreadsheet_names.each { |name| @spreadsheets[name] = load_spreadsheet(name) }
     end
 
-    def self.each(verbosity_level, &block)
-      new(verbosity_level).each(&block)
+    def self.each(verbosity_level, refresh, &block)
+      new(verbosity_level, refresh).each(&block)
     end
 
     def each
@@ -40,7 +41,7 @@ module TestCase
     def local_spreadsheet_needs_replacing?(local, remote)
       return true unless File.exist?(local)
 
-      return true if ENV['REFRESH'] == 'true'
+      return true if @refresh == 'true'
 
       remote.modified_time > File.mtime(local)
     end
@@ -69,21 +70,21 @@ module TestCase
       google_sheet.export_as_file(local_file_name, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     end
 
-    # rubocop:disable Style/StringLiterals, Metrics/MethodLength
+    # rubocop:disable Metrics/MethodLength
     def google_secret
       {
         type: 'service_account',
         project_id: 'laa-apply-for-legal-aid',
-        private_key_id: ENV['PRIVATE_KEY_ID'],
-        private_key: ENV['PRIVATE_KEY'].gsub("\\n", "\n"),
-        client_email: ENV['CLIENT_EMAIL'],
-        client_id: ENV['CLIENT_ID'],
+        private_key_id: Rails.configuration.x.google_sheets.private_key_id,
+        private_key: Rails.configuration.x.google_sheets.private_key,
+        client_email: Rails.configuration.x.google_sheets.client_email,
+        client_id: Rails.configuration.x.google_sheets.client_id,
         auth_uri: 'https://accounts.google.com/o/oauth2/auth',
         token_uri: 'https://oauth2.googleapis.com/token',
         auth_provider_x509_cert_url: 'https://www.googleapis.com/oauth2/v1/certs',
         client_x509_cert_url: 'https://www.googleapis.com/robot/v1/metadata/x509/laa-apply-service%40laa-apply-for-legal-aid.iam.gserviceaccount.com'
       }
     end
-    # rubocop:enable Style/StringLiterals, Metrics/MethodLength
+    # rubocop:enable Metrics/MethodLength
   end
 end

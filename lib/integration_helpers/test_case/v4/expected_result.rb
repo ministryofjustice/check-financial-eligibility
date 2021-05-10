@@ -10,12 +10,8 @@ module TestCase
         populate
       end
 
-      def compare(actual_result, _verbosity_level)
-        # instantiate the Resultcomparer here and call
-        puts ">>>>>>>>>>>> actual_result #{__FILE__}:#{__LINE__} <<<<<<<<<<<<".yellow
-        pp actual_result
-        puts ">>>>>>>>>>>> expected_results #{__FILE__}:#{__LINE__} <<<<<<<<<<<<".yellow
-        pp @result_set
+      def compare(actual_result, verbosity_level)
+        ResultComparer.call(actual_result, @result_set, verbosity_level)
       end
 
       private

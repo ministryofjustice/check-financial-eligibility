@@ -1,7 +1,20 @@
 module TestCase
   class Worksheet # rubocop:disable Metrics/ClassLength
-    attr_reader :assessment, :applicant, :capitals, :cash_transactions, :dependants, :expected_results, :irregular_income, :other_incomes, :outgoings, :properties,
-                :state_benefits, :submission_date, :test_name, :vehicle, :worksheet_name
+    attr_reader :assessment,
+                :applicant,
+                :capitals,
+                :cash_transactions,
+                :dependants,
+                :expected_results,
+                :irregular_income,
+                :other_incomes,
+                :outgoings,
+                :properties,
+                :state_benefits,
+                :submission_date,
+                :test_name,
+                :vehicle,
+                :worksheet_name
 
     PAYLOAD_OBJECTS = %i[
       applicant
