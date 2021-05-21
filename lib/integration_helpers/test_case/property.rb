@@ -10,6 +10,7 @@ module TestCase
 
     def payload
       return nil if empty_values?
+
       {
         value: @value,
         outstanding_mortgage: @outstanding_mortgage,
@@ -21,7 +22,7 @@ module TestCase
     private
 
     def empty_values?
-      @value.nil? && @outstanding_mortgage.nil? && @percentage_owned.nil? &&  @shared_with_housing_assoc.nil?
+      @value.nil? && @outstanding_mortgage.nil? && @percentage_owned.nil? && @shared_with_housing_assoc.nil?
     end
   end
 end

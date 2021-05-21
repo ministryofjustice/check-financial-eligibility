@@ -52,6 +52,7 @@ module TestCase
         while rows.any?
           row = rows.shift
           next if row[2].nil?
+
           hash[:matter_types] << { row[2].to_sym => row[3] }
         end
       end

@@ -12,6 +12,7 @@ module TestCase
 
     def payload
       return nil if @amount.nil?
+
       {
         payments: [
           {

@@ -11,6 +11,7 @@ module TestCase
 
     def payload
       return if empty?
+
       {
         properties: {
           main_home: main_home.payload,
