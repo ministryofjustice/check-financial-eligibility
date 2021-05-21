@@ -16,6 +16,10 @@ module TestCase
       }
     end
 
+    def empty?
+      false
+    end
+
     private
 
     def capital_payload(type)

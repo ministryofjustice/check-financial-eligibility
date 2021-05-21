@@ -11,6 +11,7 @@ module TestCase
     end
 
     def payload
+      return nil if @amount.nil?
       {
         payments: [
           {
@@ -20,6 +21,10 @@ module TestCase
           }
         ]
       }
+    end
+
+    def empty?
+      @amount.nil?
     end
   end
 end

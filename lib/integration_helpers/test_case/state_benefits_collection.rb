@@ -15,6 +15,10 @@ module TestCase
       }
     end
 
+    def empty?
+      @benefits.empty?
+    end
+
     private
 
     def benefit_type_payload(benefit_type)
@@ -29,6 +33,8 @@ module TestCase
 
       while benefits_rows.any?
         benefits_data = benefits_rows.shift(3)
+        next if benefits_data.first[3].nil?
+
         benefits_type = benefits_data.first[1] if benefits_data.first[1].present?
         add_benefits(benefits_type, benefits_data)
 

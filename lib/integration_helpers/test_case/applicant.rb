@@ -21,5 +21,9 @@ module TestCase
         }
       }
     end
+
+    def empty?
+      false
+    end
   end
 end

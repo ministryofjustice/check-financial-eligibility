@@ -88,7 +88,7 @@ RSpec.describe 'IntegrationTests::TestRunner', type: :request do
     end
 
     def post_object(obj, assessment_id, version)
-      return if obj.nil?
+      return if obj.nil? || obj.empty?
 
       url_method = obj.__send__(:url_method)
       url = Rails.application.routes.url_helpers.__send__(url_method, assessment_id)

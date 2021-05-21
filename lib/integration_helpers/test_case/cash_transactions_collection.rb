@@ -22,6 +22,10 @@ module TestCase
       }
     end
 
+    def empty?
+      @collection[:income].empty? && @collection[:outgoings].empty?
+    end
+
     private
 
     def payload_for_category(in_out, category)

@@ -23,5 +23,9 @@ module TestCase
         ]
       }
     end
+
+    def empty?
+      @value.nil?
+    end
   end
 end
