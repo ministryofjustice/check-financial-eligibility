@@ -10,7 +10,6 @@ module Assessors
     private
 
     def summary_result
-      # require Rails.root.join('app/services/utilities/result_summarizer')
       Utilities::ResultSummarizer.call(capital_summary.eligibilities.map(&:assessment_result))
     end
   end

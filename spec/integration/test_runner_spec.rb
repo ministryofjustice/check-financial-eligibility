@@ -14,6 +14,12 @@ Dir[Rails.root.join('lib/integration_helpers/**/*.rb')].sort.each { |f| require 
 #    bin/ispec -h # show help text
 #
 RSpec.describe 'IntegrationTests::TestRunner', type: :request do
+  let(:spreadsheet_title) { 'CFE Integration Test V3' }
+
+  let(:spreadsheet_file) { Rails.root.join('tmp/integration_test_data.xlsx') }
+  let(:spreadsheet) { Roo::Spreadsheet.open(spreadsheet_file.to_s) }
+  let(:worksheet_names) { spreadsheet.sheets }
+  let(:headers) { { 'CONTENT_TYPE' => 'application/json', 'Accept' => 'application/json;version=3' } }
   let(:target_worksheet) { ENV['TARGET_WORKSHEET'] }
   let(:verbosity_level) { (ENV['VERBOSE'] || '0').to_i }
   let(:refresh) { (ENV['REFRESH'] || 'false') }

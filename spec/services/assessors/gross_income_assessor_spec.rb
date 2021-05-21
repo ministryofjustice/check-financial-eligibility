@@ -8,13 +8,6 @@ module Assessors
     describe '.call' do
       subject { described_class.call(assessment) }
 
-      context 'gross_income has not been summarised' do
-        it 'raises' do
-          allow(gross_income_summary).to receive(:summarized_assessment_result).and_return('pending')
-          expect { subject }.to raise_error RuntimeError, 'Gross income not summarised'
-        end
-      end
-
       context 'gross income has been summarised' do
         context 'monthly income below upper threshold' do
           it 'is eligible' do
