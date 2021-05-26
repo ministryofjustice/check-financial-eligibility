@@ -15,16 +15,10 @@ module TestCase
       @spreadsheet_names.each { |name| @spreadsheets[name] = load_spreadsheet(name) }
     end
 
-    def self.each(verbosity_level, refresh, &block)
-      new(verbosity_level, refresh).each(&block)
-    end
-
     def each
       @spreadsheets.each do |spreadsheet_name, spreadsheet|
         spreadsheet.sheets.each do |worksheet_name|
           worksheet = TestCase::Worksheet.new(spreadsheet_name, spreadsheet, worksheet_name, @verbosity_level)
-          next if worksheet.skippable?
-
           yield(worksheet)
         end
       end

@@ -47,4 +47,8 @@ class DisposableIncomeSummary < ApplicationRecord
   def contribution_required?
     summarized_assessment_result == :contribution_required
   end
+
+  def ineligible?
+    summarized_assessment_result == :ineligible
+  end
 end
