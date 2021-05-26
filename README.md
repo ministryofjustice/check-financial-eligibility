@@ -116,14 +116,14 @@ bundle exec rescue rspec
 will cause any failing tests or unhandled exceptions to automatically open a `pry` prompt for immediate investigation.
 
 ## Integration tests
-Several use cases and their expected results can be found in the google spreadsheet https://docs.google.com/spreadsheets/d/1jOtk5LGoVi1SxJPmRvIvZXufvH0wmYYL2NF1RlT8_RU/edit#gid=667499172 named CFE Integration Test V3.
+A series of spreadsheets is used to provide use cases and their expected results, and are run as part of the normal `rspec` test suite, or can  be 
+run individually with more control using the script `bin/ispec` (see below).
 
-Once the master Google spreadsheet is edited, the next time the unit test (`spec/integration/test_runner_spec.rb`) is started it will export the file to (`tmp/integration_test_data.xlsx`) and it will over-write any existing copy in the same location.
+There is a  [Master CFE Integration Tests Spreadsheet](https://docs.google.com/spreadsheets/d/1lkRmiqi4KpoAIxzui3hTnHddsdWgN9VquEE_Cxjy9AM/edit#gid=651307264) which 
+lists all the other spreadsheets to be run, as well as contain skeleton worksheets for creating new tests scenarios.  Each spreadsheet can hold multiple worksheet, 
+each of which is a test scenario.
 
-This ensures that the service returns the expected results for the use cases of the spreadsheet.
-
-When the test is run by the command `rspec spec/integration/test_runner_spec.rb` it runs in silent mode, that is, no output except the normal green dot
-to indicate all test cases in the spreadsheet have been run successfully, or red F if any of them failed.
+When run as part of the `rspec` test suite, it is run in silent mode and only passes if all tests on all spreadsheets pass.
 
 For more fine control over the amount of verbosity, to run just one test case, or to force download the google spreadsheet,
 use `bin/ispec`, the help text of which is given below.
@@ -134,11 +134,13 @@ use `bin/ispec`, the help text of which is given below.
       options:
         -h        Display this help text
         -r        Force refresh of Google speadsheet to local storage
-        -v        Set verbosity level to 1 (default is 0: silent)
-        -vv       Set verbosity level to 2
+        -v        Set verbosity level to 1 (default is 0: silent) - produce detailed expected and actual results
+        -vv       Set verbosity level to 2 - display all payloads, and actual and expected results
         -w XXX    Only process worksheet named XXX
   ```
 
+Each worksheet has a entry `Test Active` which can be either true or false.  If set to false, the worksheet will be skipped, unless it is 
+the named worksheet using the `-w` command line switch.
 
 ## Replaying live API interactions for debugging purposes
 
