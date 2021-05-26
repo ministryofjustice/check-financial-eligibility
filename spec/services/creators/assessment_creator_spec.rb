@@ -155,6 +155,7 @@ module Creators
         describe '#as_json' do
           it 'returns a successful json struct including the assessment it has created' do
             subject.success?
+
             expected_response = {
               success: true,
               assessment_id: Assessment.last.id,
@@ -177,7 +178,7 @@ module Creators
         end
 
         it 'has  errors' do
-          expect(subject.errors).to eq ["Remote ip can't be blank"]
+          expect(subject.errors).to include("Remote ip can't be blank")
         end
       end
     end

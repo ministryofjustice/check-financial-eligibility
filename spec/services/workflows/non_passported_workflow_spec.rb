@@ -34,7 +34,6 @@ module Workflows
         it 'collates and assesses gross income but not disposable' do
           expect(Collators::GrossIncomeCollator).to receive(:call).with(assessment)
           expect(Assessors::GrossIncomeAssessor).to receive(:call).with(assessment)
-          expect(Collators::OutgoingsCollator).to receive(:call)
           expect(Assessors::DisposableIncomeAssessor).not_to receive(:call)
 
           subject

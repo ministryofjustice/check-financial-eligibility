@@ -4,11 +4,14 @@ module Workflows
       return SelfEmployedWorkflow.call(assessment) if applicant.self_employed?
 
       collate_and_assess_gross_income
-      collate_outgoings
-
       disposable_income_assessment if gross_income_summary.eligible?
 
-      collate_and_assess_capital if disposable_income_summary.eligible? || disposable_income_summary.contribution_required?
+      return if disposable_income_summary.ineligible?
+
+      collate_and_assess_capital
+      # collate_and_assess_capital if disposable_income_summary.eligible? || disposable_income_summary.contribution_required?
+
+      # collate_and_assess_capital if disposable_income_summary.summarized_assessment_result.in?([:eligible, :contribution_required, :partially_eligible])
     end
 
     private
@@ -23,6 +26,7 @@ module Workflows
     end
 
     def disposable_income_assessment
+      collate_outgoings
       Collators::DisposableIncomeCollator.call(assessment)
       Assessors::DisposableIncomeAssessor.call(assessment)
     end

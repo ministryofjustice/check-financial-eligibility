@@ -22,6 +22,10 @@ module TestCase
       }
     end
 
+    def empty?
+      @outgoings.empty?
+    end
+
     private
 
     def populate_outgoings(rows)

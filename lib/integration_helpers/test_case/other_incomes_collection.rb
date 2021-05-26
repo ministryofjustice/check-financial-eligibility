@@ -15,6 +15,10 @@ module TestCase
       }
     end
 
+    def empty?
+      @other_incomes.empty?
+    end
+
     private
 
     def source_payload(payment_source)

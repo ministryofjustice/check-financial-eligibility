@@ -15,6 +15,10 @@ module TestCase
       }
     end
 
+    def empty?
+      @dependants.empty?
+    end
+
     private
 
     def populate_dependants(rows)

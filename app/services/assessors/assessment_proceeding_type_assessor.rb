@@ -45,7 +45,7 @@ module Assessors
     def disposble_income_assessment
       raise AssessmentError, 'Assessment not complete: Disposable Income assessment still pending' if disposable_income_result == 'pending'
 
-      return 'ineligible' if disposable_income_result == 'ineligible'
+      return disposable_income_result if disposable_income_result == 'ineligible'
 
       capital_assessment
     end

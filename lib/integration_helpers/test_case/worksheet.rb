@@ -1,19 +1,20 @@
 module TestCase
-  class Worksheet
-    attr_reader   :assessment,
-                  :applicant,
-                  :capitals,
-                  :cash_transactions,
-                  :dependants,
-                  :expected_results,
-                  :irregular_income,
-                  :other_incomes,
-                  :outgoings,
-                  :properties,
-                  :state_benefits,
-                  :submission_date,
-                  :test_name,
-                  :vehicle
+  class Worksheet # rubocop:disable Metrics/ClassLength
+    attr_reader :assessment,
+                :applicant,
+                :capitals,
+                :cash_transactions,
+                :dependants,
+                :expected_results,
+                :irregular_income,
+                :other_incomes,
+                :outgoings,
+                :properties,
+                :state_benefits,
+                :submission_date,
+                :test_name,
+                :vehicle,
+                :worksheet_name
 
     PAYLOAD_OBJECTS = %i[
       applicant
@@ -28,7 +29,10 @@ module TestCase
       vehicle
     ].freeze
 
-    def initialize(spreadsheet, worksheet_name, verbosity_level)
+    delegate :version, to: :assessment
+
+    def initialize(spreadsheet_name, spreadsheet, worksheet_name, verbosity_level)
+      @spreadsheet_name = spreadsheet_name
       @worksheet_name = worksheet_name
       @worksheet = spreadsheet.sheet(worksheet_name)
       @verbosity_level = verbosity_level
@@ -40,6 +44,10 @@ module TestCase
 
     def skippable?
       @skippable
+    end
+
+    def description
+      "#{@spreadsheet_name} (#{@worksheet_name})"
     end
 
     def parse_worksheet
@@ -55,21 +63,25 @@ module TestCase
     end
 
     def compare_results(actual_result)
-      Result.new(@expected_results, actual_result, @verbosity_level).compare
+      if version == '3'
+        Result.new(@expected_results, actual_result, @verbosity_level).compare
+      else
+        @expected_results.compare(actual_result, @verbosity_level)
+      end
     end
 
     private
 
-    def post_payload(obj)
-      post obj.path, params: obj.payload.to_json, headers: @headers
-    end
+    # def post_payload(obj)
+    #   post obj.path, params: obj.payload.to_json, headers: @headers
+    # end
 
     def skip_header_rows
       4.times { @rows.shift }
     end
 
     def populate_assessment
-      @assessment = TestCase::Assessment.new(@worksheet_name, @rows.shift(2))
+      @assessment = TestCase::Assessment.new(@worksheet_name, @rows)
     end
 
     def populate_applicant
@@ -119,10 +131,13 @@ module TestCase
     end
 
     def populate_expected_results
-      @expected_results = ExpectedResult.new(@rows)
+      @expected_results = version == '4' ? V4::ExpectedResult.new(@rows) : V3::ExpectedResult.new(@rows)
     end
 
     def populate_earned_income
+      # extract the earned income section and remove from the worksheet
+      row_index = @rows.index { |r| r.first.present? && r.first != 'earned_income' }
+      @rows.shift(row_index)
       nil
     end
   end

@@ -8,10 +8,11 @@ Dir[Rails.root.join('lib/integration_helpers/**/*.rb')].sort.each { |f| require 
 #
 #     bin/ispec -r -vv -w NPE6-1
 #
-# Will force a refresh of the spreadsheet, process only worksheet NPE6-1, and have verbosity level 2
+# Will force a refresh of all the spreadsheets, process only worksheet NPE6-1, and have verbosity level 2
 # (show details of all payloads and responses)
 #
-
+#    bin/ispec -h # show help text
+#
 RSpec.describe 'IntegrationTests::TestRunner', type: :request do
   let(:spreadsheet_title) { 'CFE Integration Test V3' }
 
@@ -22,46 +23,60 @@ RSpec.describe 'IntegrationTests::TestRunner', type: :request do
   let(:target_worksheet) { ENV['TARGET_WORKSHEET'] }
   let(:verbosity_level) { (ENV['VERBOSE'] || '0').to_i }
 
+  let(:refresh) { (ENV['REFRESH'] || 'false') }
+
   before { setup_test_data }
 
   describe 'run integration_tests' do
-    it 'passes all tests' do
+    it 'processes all the tests on all the sheets' do
       failing_tests = []
-      worksheet_names.each do |worksheet_name|
-        next if target_worksheet.present? && worksheet_name != target_worksheet
+      test_count = 0
+      group_runner = TestCase::GroupRunner.new(verbosity_level, refresh)
+      group_runner.each do |worksheet|
+        next if target_worksheet.nil? && worksheet.skippable?
+        next if target_worksheet.present? && target_worksheet != worksheet.worksheet_name
 
-        test_case = TestCase::Worksheet.new(spreadsheet, worksheet_name, verbosity_level)
-        next if test_case.skippable?
-
-        puts ">>> RUNNING TEST #{worksheet_name} <<<".yellow unless silent?
-        pass = run_test_case(test_case)
-        failing_tests << worksheet_name unless pass
+        test_count += 1
+        puts ">>> RUNNING TEST #{worksheet.description} <<<".yellow unless silent?
+        pass = run_test_case(worksheet)
+        failing_tests << worksheet.description unless pass
+        result_message(failing_tests, test_count) unless silent?
       end
+
       expect(failing_tests).to be_empty, "Failing tests: #{failing_tests.join(', ')}"
     end
 
-    def run_test_case(test_case)
-      test_case.parse_worksheet
-      assessment_id = post_assessment(test_case)
-
-      test_case.payload_objects.each { |obj| post_object(obj, assessment_id) }
-      actual_results = get_assessment(assessment_id)
-      test_case.compare_results(actual_results)
+    def result_message(failing_tests, test_count)
+      if failing_tests.empty?
+        puts "#{test_count} tests run successfully".green
+      else
+        puts "#{failing_tests.size} tests failed out of #{test_count}".red
+        failing_tests.each { |t| puts " >> #{t}".red }
+      end
     end
 
-    def get_assessment(assessment_id)
+    def run_test_case(worksheet)
+      worksheet.parse_worksheet
+      assessment_id = post_assessment(worksheet)
+
+      worksheet.payload_objects.each { |obj| post_object(obj, assessment_id, worksheet.version) }
+      actual_results = get_assessment(assessment_id, worksheet.version)
+      worksheet.compare_results(actual_results)
+    end
+
+    def get_assessment(assessment_id, version)
       puts ">>>>>>>>>>>> #{assessment_path(assessment_id)} #{__FILE__}:#{__LINE__} <<<<<<<<<<<<".yellow unless silent?
-      get assessment_path(assessment_id), headers: headers
+      get assessment_path(assessment_id), headers: headers(version)
       pp parsed_response if noisy?
       raise 'Unsuccessful response' unless parsed_response[:success]
 
       parsed_response
     end
 
-    def noisy_post(url, payload)
-      puts ">>>>>>>>>>>> #{url} #{__FILE__}:#{__LINE__} <<<<<<<<<<<<".yellow unless silent?
+    def noisy_post(url, payload, version)
+      puts ">>>>>>>>>>>> #{url} V#{version} #{__FILE__}:#{__LINE__} <<<<<<<<<<<<".yellow unless silent?
       pp payload if noisy?
-      post url, params: payload.to_json, headers: headers
+      post url, params: payload.to_json, headers: headers(version)
       pp parsed_response if noisy?
       puts " \n" if noisy?
       raise "Unsuccessful response: #{parsed_response.inspect}" unless parsed_response[:success]
@@ -69,27 +84,20 @@ RSpec.describe 'IntegrationTests::TestRunner', type: :request do
       parsed_response
     end
 
-    def post_assessment(test_case)
-      url = test_case.assessment.url
-      payload = test_case.assessment.payload
-      noisy_post url, payload
+    def post_assessment(worksheet)
+      url = worksheet.assessment.url
+      payload = worksheet.assessment.payload
+      noisy_post url, payload, worksheet.version
       parsed_response[:assessment_id]
     end
 
-    def post_object(obj, assessment_id)
-      return if obj.nil?
+    def post_object(obj, assessment_id, version)
+      return if obj.blank?
 
       url_method = obj.__send__(:url_method)
       url = Rails.application.routes.url_helpers.__send__(url_method, assessment_id)
       payload = obj.__send__(:payload)
-      noisy_post(url, payload)
-    end
-
-    def compare_results(worksheet_name, actual_results_hash, expected_results_hash)
-      actual_result = ActualResult.new(actual_results_hash)
-      noisy_pp actual_result, 'ASSESSMENT RESULT'
-      expected_result = ExpectedResult.new(worksheet_name, expected_results_hash)
-      expected_result == actual_result
+      noisy_post(url, payload, version)
     end
 
     def silent?
@@ -100,42 +108,13 @@ RSpec.describe 'IntegrationTests::TestRunner', type: :request do
       verbosity_level == 2
     end
 
-    # rubocop:disable Style/StringLiterals
-    def google_secret
-      {
-        type: 'service_account',
-        project_id: 'laa-apply-for-legal-aid',
-        private_key_id: ENV['PRIVATE_KEY_ID'],
-        private_key: ENV['PRIVATE_KEY'].gsub("\\n", "\n"),
-        client_email: ENV['CLIENT_EMAIL'],
-        client_id: ENV['CLIENT_ID'],
-        auth_uri: 'https://accounts.google.com/o/oauth2/auth',
-        token_uri: 'https://oauth2.googleapis.com/token',
-        auth_provider_x509_cert_url: 'https://www.googleapis.com/oauth2/v1/certs',
-        client_x509_cert_url: 'https://www.googleapis.com/robot/v1/metadata/x509/laa-apply-service%40laa-apply-for-legal-aid.iam.gserviceaccount.com'
-      }
-    end
-    # rubocop:enable Style/StringLiterals
-
-    def local_spreadsheet_needs_replacing?(local, remote)
-      return true unless File.exist?(local)
-
-      return true if ENV['REFRESH'] == 'true'
-
-      remote.modified_time > File.mtime(local)
+    def headers(version)
+      { 'CONTENT_TYPE' => 'application/json', 'Accept' => "application/json;version=#{version}" }
     end
 
     def setup_test_data
       create :bank_holiday
       Dibber::Seeder.new(StateBenefitType, 'data/state_benefit_types.yml', name_method: :label, overwrite: true).build
-
-      secret_file = StringIO.new(google_secret.to_json)
-      session = GoogleDrive::Session.from_service_account_key(secret_file)
-      google_sheet = session.spreadsheet_by_title(spreadsheet_title)
-      return unless local_spreadsheet_needs_replacing?(spreadsheet_file, google_sheet)
-
-      puts 'Refreshing spreadsheet'
-      google_sheet.export_as_file('tmp/integration_test_data.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     end
   end
 end

@@ -10,12 +10,18 @@ module TestCase
     end
 
     def payload
+      return if empty?
+
       {
         properties: {
           main_home: main_home.payload,
           additional_properties: additional_properties.map(&:payload)
         }
       }
+    end
+
+    def empty?
+      main_home.payload.nil? && additional_properties.empty?
     end
 
     private
