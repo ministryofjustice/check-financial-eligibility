@@ -7,6 +7,7 @@ module Workflows
       disposable_income_assessment if gross_income_summary.eligible?
 
       return if disposable_income_summary.ineligible?
+
       collate_and_assess_capital
       # collate_and_assess_capital if disposable_income_summary.eligible? || disposable_income_summary.contribution_required?
 

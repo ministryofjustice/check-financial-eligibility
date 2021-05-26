@@ -23,7 +23,6 @@ RSpec.describe 'IntegrationTests::TestRunner', type: :request do
   let(:target_worksheet) { ENV['TARGET_WORKSHEET'] }
   let(:verbosity_level) { (ENV['VERBOSE'] || '0').to_i }
 
-
   let(:refresh) { (ENV['REFRESH'] || 'false') }
 
   before { setup_test_data }
@@ -93,7 +92,7 @@ RSpec.describe 'IntegrationTests::TestRunner', type: :request do
     end
 
     def post_object(obj, assessment_id, version)
-      return if obj.nil? || obj.empty?
+      return if obj.blank?
 
       url_method = obj.__send__(:url_method)
       url = Rails.application.routes.url_helpers.__send__(url_method, assessment_id)

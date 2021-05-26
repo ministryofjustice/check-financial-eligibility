@@ -40,13 +40,13 @@ class DisposableIncomeSummary < ApplicationRecord
     Utilities::ResultSummarizer.call(eligibilities.map(&:assessment_result))
   end
 
-  def eligible?
-    summarized_assessment_result == :eligible
-  end
-
-  def contribution_required?
-    summarized_assessment_result == :contribution_required
-  end
+  # def eligible?
+  #   summarized_assessment_result == :eligible
+  # end
+  #
+  # def contribution_required?
+  #   summarized_assessment_result == :contribution_required
+  # end
 
   def ineligible?
     summarized_assessment_result == :ineligible
