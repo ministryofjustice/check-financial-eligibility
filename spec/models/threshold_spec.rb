@@ -11,7 +11,7 @@ RSpec.describe Threshold do
     end
 
     let(:time) { Time.zone.parse('9-June-2019 12:35') }
-    let(:test_data_file) { "#{threshold_test_data_folder}/8-Apr-2019.yml" }
+    let(:test_data_file) { "#{threshold_test_data_folder}/2019-04-08.yml" }
     let(:data) { YAML.load_file(test_data_file).deep_symbolize_keys }
 
     it 'returns the expected value' do
@@ -21,7 +21,7 @@ RSpec.describe Threshold do
     context 'for dates before oldest' do
       let(:time) { Time.zone.parse('9-June-2001 12:35') }
       let(:path) { data_file_path('thresholds/8-Apr-2018.yml') }
-      let(:data) { YAML.load_file("#{threshold_test_data_folder}/8-Apr-2018.yml").deep_symbolize_keys }
+      let(:data) { YAML.load_file("#{threshold_test_data_folder}/2018-04-08.yml").deep_symbolize_keys }
 
       it 'returns the value from oldest file' do
         expect(Threshold.value_for(:capital_lower, at: time)).to eq(data[:capital_lower])

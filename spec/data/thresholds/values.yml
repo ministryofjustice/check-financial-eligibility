@@ -1,7 +1,7 @@
 ---
-2018-04-08: spec/data/thresholds/8-Apr-2018.yml
-2019-04-08: spec/data/thresholds/8-Apr-2019.yml
-2020-04-08: spec/data/thresholds/8-Apr-2020.yml
-2020-12-15: spec/data/thresholds/test_only_15-Dec-2020.yml
-2021-01-28: spec/data/thresholds/28-Jan-2021.yml
+2018-04-08: spec/data/thresholds/2018-04-08.yml
+2019-04-08: spec/data/thresholds/2019-04-08.yml
+2020-04-08: spec/data/thresholds/2020-04-08.yml
+2020-12-15: spec/data/thresholds/test_only_2020-12-15.yml
+2021-01-28: spec/data/thresholds/2021-01-28.yml
 
