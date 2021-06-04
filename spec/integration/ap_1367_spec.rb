@@ -30,10 +30,10 @@ RSpec.describe 'Full Assessment with remarks' do
     expect(remarks[:state_benefit_payment]).to eq expected_remarks[:state_benefit_payment]
     expect(remarks[:other_income_payment][:amount_variation]).to match_array expected_remarks[:other_income_payment][:amount_variation]
     expect(remarks[:other_income_payment][:unknown_frequency]).to match_array expected_remarks[:other_income_payment][:unknown_frequency]
-    expect(remarks[:outgoings_maintenance]).to eq expected_remarks[:outgoings_maintenance]
-    expect(remarks[:outgoings_housing_cost]).to eq expected_remarks[:outgoings_housing_cost]
-    expect(remarks[:outgoings_childcare]).to eq expected_remarks[:outgoings_childcare]
-    expect(remarks[:outgoings_legal_aid]).to eq expected_remarks[:outgoings_legal_aid]
+    expect(remarks[:outgoings_maintenance]).to match_array expected_remarks[:outgoings_maintenance]
+    expect(remarks[:outgoings_housing_cost]).to match_array expected_remarks[:outgoings_housing_cost]
+    expect(remarks[:outgoings_childcare]).to match_array expected_remarks[:outgoings_childcare]
+    expect(remarks[:outgoings_legal_aid]).to match_array expected_remarks[:outgoings_legal_aid]
     expect(remarks[:other_income_payment][:amount_variation]).to match_array(expected_remarks[:other_income_payment][:amount_variation])
     expect(remarks[:other_income_payment][:unknown_frequency]).to match_array(expected_remarks[:other_income_payment][:unknown_frequency])
   end

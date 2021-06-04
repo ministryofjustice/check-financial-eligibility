@@ -145,6 +145,7 @@ RSpec.describe AssessmentsController, type: :request do
           Timecop.freeze(now) do # freeze time so we don't have to worry about time differences between actual and expected results
             subject
             expected_response = Decorators::V3::AssessmentDecorator.new(assessment.reload).as_json.to_json
+            expected_response.gsub!('"-0.0"', '"0.0"')
             expect(parsed_response).to eq(JSON.parse(expected_response, symbolize_names: true))
           end
         end
