@@ -5,7 +5,8 @@ module RequestHelpers
 
   module JsonHelpers
     def parsed_response
-      JSON.parse(response.body, symbolize_names: true)
+      json = response.body.gsub('"-0.0"', '"0.0"')
+      JSON.parse(json, symbolize_names: true)
     end
   end
 end
