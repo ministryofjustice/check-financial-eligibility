@@ -19,6 +19,6 @@ class GrossIncomeSummary < ApplicationRecord
   end
 
   def eligible?
-    summarized_assessment_result == :eligible
+    summarized_assessment_result.in? %i[eligible partially_eligible]
   end
 end
