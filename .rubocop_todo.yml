@@ -21,4 +21,8 @@ Metrics/AbcSize:
   IgnoredMethods:
     - assessment_details # AssessmentDecorator
 
+#Rubocop 1.18.1 added the below linter which appears broken and causes a number of false positives
+#which the auto-correct tool falls over when trying to fix. Review this setting and enable to feature
+#once the issue is fixed
+#Layout/LineEndStringConcatenationIndentation:
 
