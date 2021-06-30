@@ -35,8 +35,8 @@ Metrics/ParameterLists:
   Exclude:
     - 'spec/**/*'
 
-Layout/EmptyLinesAroundAttributeAccessor:
-  Enabled: true
+Layout/LineEndStringConcatenationIndentation:
+  Enabled: false
 
 Layout/SpaceAroundMethodCallOperator:
   Enabled: true
