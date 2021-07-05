@@ -55,7 +55,7 @@ class IntegrationTestMigrator
     end
 
     csv += convert_results_section
-    filename = "#{DATA_DIR}/csv/#{sheet_name.downcase}.csv"
+    filename = "#{DATA_DIR}/csv/#{sheet_name.upcase}-V4.csv"
 
     CSV.open(filename, 'wb') do |fp|
       csv.each {|row| fp << row}
@@ -80,29 +80,29 @@ class IntegrationTestMigrator
     v4_results << [nil, 'assessment_result', nil, v3_results['assessment_assessment_result']]
     v4_results << [nil, 'matter_types', 'domestic_abuse', v3_results['assessment_assessment_result']]
     v4_results << [nil, 'proceeding_type: DA004', 'assessment_result', v3_results['assessment_assessment_result']]
-    v4_results << [nil, 'proceeding_type: DA004', 'capital_lower_threshold', v3_results['capital_lower_threshold']]
-    v4_results << [nil, 'proceeding_type: DA004', 'capital_upper_threshold', v3_results['capital_upper_threshold']]
-    v4_results << [nil, 'proceeding_type: DA004', 'gross_income_upper_threshold', v3_results['gross_income_upper_threshold']]
-    v4_results << [nil, 'proceeding_type: DA004', 'disposable_income_lower_threshold', v3_results['disposable_income_summary_lower_threshold']]
-    v4_results << [nil, 'proceeding_type: DA004', 'disposable_income_upper_threshold', v3_results['disposable_income_summary_upper_threshold']]
+    v4_results << [nil, nil, 'capital_lower_threshold', v3_results['capital_lower_threshold']]
+    v4_results << [nil, nil, 'capital_upper_threshold', v3_results['capital_upper_threshold']]
+    v4_results << [nil, nil, 'gross_income_upper_threshold', v3_results['gross_income_upper_threshold']]
+    v4_results << [nil, nil, 'disposable_income_lower_threshold', v3_results['disposable_income_summary_lower_threshold']]
+    v4_results << [nil, nil, 'disposable_income_upper_threshold', v3_results['disposable_income_summary_upper_threshold']]
     v4_results << ['gross_income_summary', 'monthly_other_income', nil, v3_results['gross_income_summary_monthly_other_income']]
     v4_results << [nil, 'monthly_state_benefits', nil, v3_results['gross_income_summary_monthly_state_benefits']]
-    v4_results << [nil, 'monthly_student_loan', nil, 'TBA']
+    v4_results << [nil, 'monthly_student_loan', nil, nil]
     v4_results << [nil, 'total_gross_income', nil, v3_results['gross_income_summary_total_gross_income']]
     v4_results << ['disposable_income_summary', 'childcare', nil, v3_results['disposable_income_summary_childcare']]
     v4_results << [nil, 'dependant_allowance', nil, v3_results['disposable_income_summary_dependant_allowance']]
-    v4_results << [nil, 'maintenance', nil, v3_results['disposable_income_summary_dependant_allowance']]
+    v4_results << [nil, 'maintenance', nil, v3_results['disposable_income_summary_maintenance']]
     v4_results << [nil, 'gross_housing_costs', nil, v3_results['disposable_income_summary_gross_housing_costs']]
     v4_results << [nil, 'housing_benefit', nil, v3_results['disposable_income_summary_housing_benefit']]
     v4_results << [nil, 'net_housing_costs', nil, v3_results['disposable_income_summary_net_housing_costs']]
     v4_results << [nil, 'total_outgoings_and_allowances', nil, v3_results['disposable_income_summary_total_outgoings_and_allowances']]
     v4_results << [nil, 'total_disposable_income', nil, v3_results['disposable_income_summary_total_disposable_income']]
-    v4_results << [nil, 'income_contribution', nil, 'TBA']
+    v4_results << [nil, 'income_contribution', nil, nil]
     v4_results << ['capital', 'total_liquid', nil, v3_results['capital_total_liquid']]
     v4_results << [nil, 'total_non_liquid', nil, v3_results['capital_total_non_liquid']]
     v4_results << [nil, 'total_vehicle', nil, v3_results['capital_total_vehicle']]
     v4_results << [nil, 'total_mortgage_allowance', nil, v3_results['capital_total_mortgage_allowance']]
-    v4_results << [nil, 'total_capital', nil, v3_results['capital_total_non_liquid']]
+    v4_results << [nil, 'total_capital', nil, v3_results['capital_total_capital']]
     v4_results << [nil, 'pensioner_capital_disregard', nil, v3_results['capital_pensioner_capital_disregard']]
     v4_results << [nil, 'assessed_capital', nil, v3_results['capital_assessed_capital']]
     v4_results << [nil, 'capital_contribution', nil, v3_results['capital_capital_contribution']]
