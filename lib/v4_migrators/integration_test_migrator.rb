@@ -38,8 +38,10 @@ class IntegrationTestMigrator
 
   def process_worksheet(workbook, sheet_name)
     worksheet = workbook.sheet(sheet_name)
+    return if version4?(worksheet) || worksheet_inactive?(worksheet)
+
     @data_hash = {}
-    convert_sheet(worksheet, sheet_name) unless version4?(worksheet)
+    convert_sheet(worksheet, sheet_name)
     output_csv(sheet_name)
   end
 
@@ -53,7 +55,7 @@ class IntegrationTestMigrator
     end
 
     csv += convert_results_section
-    filename = "#{DATA_DIR}/#{sheet_name.downcase}.csv"
+    filename = "#{DATA_DIR}/csv/#{sheet_name.downcase}.csv"
 
     CSV.open(filename, 'wb') do |fp|
       csv.each {|row| fp << row}
@@ -70,8 +72,10 @@ class IntegrationTestMigrator
   end
 
   def convert_results_section
+
     v3_results = hasherize_v3_results
     v4_results = []
+    v4_results << results_header
     v4_results << ['assessment', 'passported', nil, v3_results['assessment_passported']]
     v4_results << [nil, 'assessment_result', nil, v3_results['assessment_assessment_result']]
     v4_results << [nil, 'matter_types', 'domestic_abuse', v3_results['assessment_assessment_result']]
@@ -118,7 +122,7 @@ class IntegrationTestMigrator
 
   def extract_submission_date
     rows = @data_hash['assessment']
-    raise 'Ubable to find submission date' unless rows.first[2] == 'submission_date'
+    raise 'Unable to find submission date' unless rows.first[2] == 'submission_date'
     rows.first[3].strftime('%F')
   end
 
@@ -155,10 +159,19 @@ class IntegrationTestMigrator
     row[2] == 'version' && row[3] == 4
   end
 
+  def worksheet_inactive?(worksheet)
+    row = worksheet.row(1)
+    row[0] == 'Test active' && row[1] == false
+  end
+
   def sheet_to_array(worksheet)
     rows = []
     worksheet.each { |row| rows << row }
     rows
+  end
+
+  def results_header
+    ['Expected results']
   end
 
 end
