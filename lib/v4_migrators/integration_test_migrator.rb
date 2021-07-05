@@ -60,7 +60,6 @@ class IntegrationTestMigrator
     CSV.open(filename, 'wb') do |fp|
       csv.each {|row| fp << row}
     end
-    puts "File #{filename} created"
   end
 
   def convert_assessment_section
@@ -128,7 +127,6 @@ class IntegrationTestMigrator
 
 
   def convert_sheet(worksheet, sheet_name)
-    puts ">>>>>>>>>>>> CONVERTING WORKSHEET #{sheet_name} #{__FILE__}:#{__LINE__} <<<<<<<<<<<<".yellow
     rows = sheet_to_array(worksheet)
     @data_hash['headers'] = rows.slice!(0, 4)
 
