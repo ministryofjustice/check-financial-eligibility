@@ -1,5 +1,5 @@
-class IntegrationTestMigrator
-  DATA_DIR = Rails.root.join('tmp/integration_test_data')
+class IntegrationTestMigrator # rubocop:disable Metrics/ClassLength
+  DATA_DIR = Rails.root.join('tmp/integration_test_data').freeze
   MASTER_SHEET = 'AAA - CFE Integration Test master spreadsheet'.freeze
   VALID_SECTION_NAMES = [
     'assessment',
@@ -14,23 +14,21 @@ class IntegrationTestMigrator
     'state_benefits',
     'cash_transactions_income',
     'cash_transactions_outgoings',
-    'irregular_income']
-
-
+    'irregular_income'
+  ].freeze
 
   def initialize
     @master_workbook = Roo::Spreadsheet.open(local_file_name_for(MASTER_SHEET))
     @main_sheet = @master_workbook.sheet('Sheets to process')
-    @workbook_names  = @main_sheet.map(&:first)
+    @workbook_names = @main_sheet.map(&:first)
   end
 
   def run
     @workbook_names.each { |workbook_name| process_workbook(workbook_name) }
   end
-  
-  
+
   private
-  
+
   def process_workbook(workbook_name)
     book = Roo::Spreadsheet.open(local_file_name_for(workbook_name))
     book.sheets.each { |sheet_name| process_worksheet(book, sheet_name) }
@@ -46,7 +44,6 @@ class IntegrationTestMigrator
   end
 
   def output_csv(sheet_name)
-
     csv = @data_hash['headers']
     csv += convert_assessment_section
 
@@ -58,7 +55,7 @@ class IntegrationTestMigrator
     filename = "#{DATA_DIR}/csv/#{sheet_name.upcase}-V4.csv"
 
     CSV.open(filename, 'wb') do |fp|
-      csv.each {|row| fp << row}
+      csv.each { |row| fp << row }
     end
   end
 
@@ -70,8 +67,7 @@ class IntegrationTestMigrator
     v4_csv
   end
 
-  def convert_results_section
-
+  def convert_results_section # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     v3_results = hasherize_v3_results
     v4_results = []
     v4_results << results_header
@@ -112,7 +108,7 @@ class IntegrationTestMigrator
     v3_results = {}
     col1 = nil
     @data_hash['results'].each do |row|
-      col1 = row.first unless row.first.blank?
+      col1 = row.first if row.first.present?
       col2 = row[1]
       v3_results["#{col1}_#{col2}"] = row[3]
     end
@@ -122,11 +118,11 @@ class IntegrationTestMigrator
   def extract_submission_date
     rows = @data_hash['assessment']
     raise 'Unable to find submission date' unless rows.first[2] == 'submission_date'
+
     rows.first[3].strftime('%F')
   end
 
-
-  def convert_sheet(worksheet, sheet_name)
+  def convert_sheet(worksheet, sheet_name) # rubocop:disable Metrics/MethodLength
     rows = sheet_to_array(worksheet)
     @data_hash['headers'] = rows.slice!(0, 4)
 
@@ -144,7 +140,7 @@ class IntegrationTestMigrator
   end
 
   def store_section(section_name, rows)
-    index = rows.index{ |r| r.first != section_name && r.first.present? }
+    index = rows.index { |r| r.first != section_name && r.first.present? }
     @data_hash[section_name] = rows.slice!(0, index)
   end
 
@@ -171,5 +167,4 @@ class IntegrationTestMigrator
   def results_header
     ['Expected results']
   end
-
 end
