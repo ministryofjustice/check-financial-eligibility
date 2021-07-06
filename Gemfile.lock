@@ -316,6 +316,7 @@ GEM
       activesupport (>= 4.2.0)
       rack (>= 1.1)
       rubocop (>= 1.7.0, < 2.0)
+    ruby-ole (1.2.12.2)
     ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.4)
     rubyzip (2.3.0)
@@ -347,6 +348,8 @@ GEM
     simplecov-rcov (0.2.3)
       simplecov (>= 0.4.1)
     simplecov_json_formatter (0.1.2)
+    spreadsheet (1.2.9)
+      ruby-ole
     spring (2.1.1)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -425,6 +428,7 @@ DEPENDENCIES
   shoulda-matchers
   simplecov
   simplecov-rcov
+  spreadsheet
   spring
   spring-watcher-listen (~> 2.0.0)
   timecop
