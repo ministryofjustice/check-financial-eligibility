@@ -35,7 +35,7 @@ gem 'business', '~> 2.2'
 
 gem 'colorize'
 
-gem 'json-schema'
+gem 'json-schema', '>= 2.8.1'
 
 # Seeding tools
 gem 'dibber'
@@ -90,7 +90,7 @@ group :test do
   gem 'simplecov', require: false
   gem 'simplecov-rcov'
   gem 'vcr'
-  gem 'webmock'
+  gem 'webmock', '>= 3.13.0'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
