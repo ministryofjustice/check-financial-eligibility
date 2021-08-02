@@ -22,3 +22,5 @@ jobs:
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           SLACK_TITLE: DUMMY MESSAGE - PLEASE IGNORE
+          SLACK_MESSAGE: This is the message
+          SLACK_COLOR: danger
