@@ -42,18 +42,3 @@ jobs:
       uses: github/codeql-action/upload-sarif@v1
       with:
         sarif_file: output.sarif.json
-
-  slackNotification:
-    name: Slack Notification
-    needs: [ build ]
-    if: ${{ always() && (needs.build.result=='failure') }}
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Slack Notification
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          SLACK_TITLE: CFE Integration tests failuer
-          SLACK_MESSAGE: The daily integration tests have failed.  To test, run 'bin/ispec -v -r` locally to run verbose tests against refreshed test data worksheets.
-          SLACK_COLOR: danger
