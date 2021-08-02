@@ -1,8 +1,39 @@
-# This is a basic workflow to help you get started with Actions
+## This is a basic workflow to help you get started with Actions
+#
+#name: Notify Slack
+#
+## Controls when the workflow will run
+#on:
+#  # Triggers the workflow on push or pull request events but only for the master branch
+#  push:
+#
+#  # Allows you to run this workflow manually from the Actions tab
+#  workflow_dispatch:
+#
+## A workflow run is made up of one or more jobs that can run sequentially or in parallel
+#jobs:
+#  slackNotification:
+#    name: Slack Notification
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v2
+#      - name: Slack Notification
+#        uses: rtCamp/action-slack-notify@v2
+#        env:
+#          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+#          SLACK_TITLE: DUMMY MESSAGE - PLEASE IGNORE
+#          SLACK_MESSAGE: This is the message
+#          SLACK_COLOR: danger
 
-name: Notify Slack
 
-# Controls when the workflow will run
+name: manual-integration-tests
+
+#on:
+#  repository_dispatch:
+#    types: manual-trigger
+#  schedule:
+#    - cron:  '0 10 * * *'
+
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
@@ -10,17 +41,72 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  slackNotification:
-    name: Slack Notification
+  build:
+
     runs-on: ubuntu-latest
+    env:
+      PGHOST: localhost
+      PGUSER: postgres
+      RAILS_ENV: test
+      TZ: "Europe/London"
+
+    services:
+      postgres:
+        image: postgres:10.11
+        ports: ["5432:5432"]
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+
     steps:
+      - name: Run started by ${{ github.event.client_payload.user }}
+        run: echo Run started by ${{ github.event.client_payload.user }}
       - uses: actions/checkout@v2
-      - name: Slack Notification
-        uses: rtCamp/action-slack-notify@v2
+      - name: Set up Ruby 2.7
+        uses: ruby/setup-ruby@v1
+      - uses: actions/cache@v2
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+      - name: Bundle install
+        run: |
+          gem install bundler
+          bundle config path vendor/bundle
+          bundle install --jobs 4 --retry 3
+      - name: Configure database
         env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          SLACK_TITLE: DUMMY MESSAGE - PLEASE IGNORE
-          SLACK_MESSAGE: This is the message
-          SLACK_COLOR: danger
+          CLIENT_EMAIL: ${{ secrets.CLIENT_EMAIL }}
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+          PRIVATE_KEY_ID: ${{ secrets.PRIVATE_KEY_ID }}
+          ALLOW_FUTURE_SUBMISSION_DATE: true
+        run: |
+          bin/rails db:create db:schema:load
+      - name: Run Tests
+        env:
+          SKIP_COVERAGE: true
+          VERBOSE: true
+          CLIENT_EMAIL: ${{ secrets.CLIENT_EMAIL }}
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+          PRIVATE_KEY_ID: ${{ secrets.PRIVATE_KEY_ID }}
+          ALLOW_FUTURE_SUBMISSION_DATE: true
+        run: |
+          bundle exec rspec spec/integration/test_runner_spec.rb
+
+  slackNotification:
+      name: Slack Notification
+      needs: [ build ]
+      if: ${{ always() && (needs.build.result=='failure') }}
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v2
+        - name: Slack Notification
+          uses: rtCamp/action-slack-notify@v2
+          env:
+            SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+            SLACK_TITLE: DUMMY MESSAGE - PLEASE IGNORE
+            SLACK_MESSAGE: This is the message
+            SLACK_COLOR: danger
