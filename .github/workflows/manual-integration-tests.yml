@@ -4,7 +4,7 @@ on:
   repository_dispatch:
     types: manual-trigger
   schedule:
-    - cron:  '0 10 * * *'
+    - cron:  '0 7 * * *'
 
 jobs:
   build:
