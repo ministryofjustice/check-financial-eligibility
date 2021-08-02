@@ -71,6 +71,6 @@ jobs:
           uses: rtCamp/action-slack-notify@v2
           env:
             SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-            SLACK_TITLE: DUMMY MESSAGE - PLEASE IGNORE
-            SLACK_MESSAGE: This is the message
-            SLACK_COLOR: danger
+              SLACK_TITLE: CFE Integration tests failuer
+              SLACK_MESSAGE: The daily integration tests have failed.  To test, run 'bin/ispec -v -r` locally to run verbose tests against refreshed test data worksheets.
+              SLACK_COLOR: danger
