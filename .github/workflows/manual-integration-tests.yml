@@ -60,3 +60,18 @@ jobs:
           ALLOW_FUTURE_SUBMISSION_DATE: true
         run: |
           bundle exec rspec spec/integration/test_runner_spec.rb
+
+  slackNotification:
+    name: Slack Notification
+    needs: [ build ]
+    if: ${{ always() && (needs.build.result=='failure') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_TITLE: CFE Integration tests failuer
+          SLACK_MESSAGE: The daily CFE integration tests have failed.  To reproduce locally, run 'bin/ispec -vv -r' to get verbose output against refreshed test data worksheets.
+          SLACK_COLOR: danger
