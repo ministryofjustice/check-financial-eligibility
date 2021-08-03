@@ -72,6 +72,6 @@ jobs:
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          SLACK_TITLE: CFE Integration tests failuer
+          SLACK_TITLE: CFE Integration tests failure
           SLACK_MESSAGE: The daily CFE integration tests have failed.  To reproduce locally, run 'bin/ispec -vv -r' to get verbose output against refreshed test data worksheets.
           SLACK_COLOR: danger
