@@ -5,7 +5,7 @@ class DatedStruct < OpenStruct
   # to generate an intermediate "table" key, as does OpenStruct
   #
   def initialize(hash = nil, options = {})
-    super()
+    super(hash)
     @options = options
     @table = {}
     hash&.each_pair do |k, v|
