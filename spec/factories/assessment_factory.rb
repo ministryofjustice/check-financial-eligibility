@@ -94,7 +94,7 @@ FactoryBot.define do
     trait :passported do
       with_passported_applicant
       after(:create) do |assessment|
-        create :capital_summary, :with_everything, assessment: assessment
+        create :capital_summary, :with_everything, :with_eligibilities, assessment: assessment
       end
     end
 

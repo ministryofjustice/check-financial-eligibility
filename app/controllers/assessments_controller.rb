@@ -62,6 +62,13 @@ class AssessmentsController < ApplicationController
   def show
     perform_assessment
   rescue StandardError => err
+    puts ">>>>>>>>>  #{__FILE__}:#{__LINE__} <<<<<<<<<<".yellow if ENV["DEBUG_VERBOSE"] == '1'
+    puts err.class if ENV["DEBUG_VERBOSE"] == '1'
+    puts err.message if ENV["DEBUG_VERBOSE"] == '1'
+    ap assessment if ENV["DEBUG_VERBOSE"] == '1'
+    if ENV["DEBUG_VERBOSE"] == '1'
+      binding.pry
+    end
     Sentry.capture_exception(err)
     render json: Decorators::ErrorDecorator.new(err).as_json, status: :unprocessable_entity
   end
