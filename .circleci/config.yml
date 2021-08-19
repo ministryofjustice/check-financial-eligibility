@@ -53,7 +53,7 @@ references:
         docker tag app "${ECR_ENDPOINT}/laa-apply-for-legal-aid/check-financial-eligibility-service:${CIRCLE_SHA1}"
         docker push "${ECR_ENDPOINT}/laa-apply-for-legal-aid/check-financial-eligibility-service:${CIRCLE_SHA1}"
 
-        if [ "${CIRCLE_BRANCH}" == "master" ]; then
+        if [ "${CIRCLE_BRANCH}" == "main" ]; then
           docker tag app "${ECR_ENDPOINT}/laa-apply-for-legal-aid/check-financial-eligibility-service:latest"
           docker push "${ECR_ENDPOINT}/laa-apply-for-legal-aid/check-financial-eligibility-service:latest"
         fi
@@ -190,7 +190,7 @@ jobs:
           name: Helm deployment to UAT
           command: |
             ./bin/uat_deploy
-  deploy_master_uat:
+  deploy_main_uat:
     <<: *deploy_uat
   delete_uat_branch:
     executor: cloud-platform-executor
@@ -267,15 +267,15 @@ workflows:
       - lint_checks:
           filters:
             branches:
-              ignore: master
+              ignore: main
       - unit_tests:
           filters:
             branches:
-              ignore: master
+              ignore: main
       - build_and_push:
           filters:
             branches:
-              ignore: master
+              ignore: main
       - deploy_uat:
           requires:
             - lint_checks
@@ -286,21 +286,21 @@ workflows:
       - lint_checks:
           filters:
             branches:
-              only: master
+              only: main
       - unit_tests:
           filters:
             branches:
-              only: master
+              only: main
       - build_and_push:
           requires:
             - lint_checks
             - unit_tests
-      - deploy_master_uat:
+      - deploy_main_uat:
           requires:
             - build_and_push
       - delete_uat_branch:
           requires:
-            - deploy_master_uat
+            - deploy_main_uat
       - deploy_staging:
           requires:
             - build_and_push
@@ -322,6 +322,6 @@ workflows:
           cron: "0 2 * * *"
           filters:
             branches:
-              only: master
+              only: main
     jobs:
       - clean_up_ecr
