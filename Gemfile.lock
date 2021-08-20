@@ -186,7 +186,7 @@ GEM
       addressable (>= 2.4)
     jsonapi-renderer (0.2.2)
     jwt (2.2.3)
-    listen (3.6.0)
+    listen (3.7.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     loofah (2.12.0)
@@ -411,7 +411,7 @@ DEPENDENCIES
   guard-rspec
   guard-rubocop
   json-schema (>= 2.8.1)
-  listen (>= 3.0.5, < 3.7)
+  listen (>= 3.0.5, < 3.8)
   mimemagic (>= 0.4.3)
   pg (>= 0.18, < 2.0)
   pry-byebug
