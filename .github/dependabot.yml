@@ -12,6 +12,3 @@ updates:
   - dependency-name: sentry-raven
     versions:
     - 3.1.2
-  - dependency-name: climate_control
-    versions:
-    - 1.0.0
