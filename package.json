@@ -2,7 +2,7 @@
   "name": "laa-apply-check-financial-eligibility",
   "private": true,
   "dependencies": {
-    "@rails/webpacker": "5.2.1",
+    "@rails/webpacker": "5.4.2",
     "jquery": "^3.5.1"
   },
   "devDependencies": {
