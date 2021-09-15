@@ -6,7 +6,7 @@ module Calculators
     end
 
     def in_months
-      months = (@calculation_date.year * 12 + @calculation_date.month) - (@purchase_date.year * 12 + @purchase_date.month)
+      months = ((@calculation_date.year * 12) + @calculation_date.month) - ((@purchase_date.year * 12) + @purchase_date.month)
       months += 1 if @purchase_date.day < @calculation_date.day
       months
     end

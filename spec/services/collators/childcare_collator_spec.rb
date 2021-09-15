@@ -18,8 +18,6 @@ module Collators
         create :childcare_outgoing, disposable_income_summary: disposable_income_summary, payment_date: 2.months.ago, amount: 155.63
       end
 
-      after { travel_back }
-
       context 'No dependants under 15' do
         before do
           create :dependant, assessment: assessment, date_of_birth: 16.years.ago
@@ -71,8 +69,6 @@ module Collators
           create :dependant, assessment: assessment, date_of_birth: 16.years.ago
           create :dependant, assessment: assessment, date_of_birth: 14.years.ago
         end
-
-        after { travel_back }
 
         context 'Employed' do
           before { allow_any_instance_of(described_class).to receive(:applicant_employed?).and_return(true) }
