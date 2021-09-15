@@ -33,7 +33,7 @@ module Calculators
     end
 
     def contribution
-      (base + (@income - disregard) * percentage).round(2)
+      (base + ((@income - disregard) * percentage)).round(2)
     end
 
     def base
