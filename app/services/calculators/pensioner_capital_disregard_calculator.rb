@@ -44,7 +44,7 @@ module Calculators
     end
 
     def income_threshold_applies(income, key_array)
-      key_array.count.eql?(1) && income >= key_array[0] || income >= key_array[0] && income <= key_array[1]
+      (key_array.count.eql?(1) && income >= key_array[0]) || (income >= key_array[0] && income <= key_array[1])
     end
   end
 end
