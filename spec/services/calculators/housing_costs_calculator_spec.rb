@@ -53,9 +53,9 @@ module Calculators
             let(:housing_cost_amount) { 888.0 }
 
             it 'should return the gross cost as net' do
-              expect(calculator.gross_housing_costs.to_f).to eq 444.0 + monthly_cash_housing
+              expect(calculator.gross_housing_costs).to eq 444.0.to_d + monthly_cash_housing # all variables are always decimals
               expect(calculator.monthly_housing_benefit).to eq 0.0
-              expect(calculator.net_housing_costs.to_f).to eq 444.0 + monthly_cash_housing
+              expect(calculator.net_housing_costs).to eq (444.0.to_d + monthly_cash_housing).to_f # net_housing_costs is always a float
             end
           end
         end
@@ -93,9 +93,9 @@ module Calculators
             let(:housing_cost_amount) { 420.00 }
 
             it 'should return the net cost' do
-              expect(calculator.gross_housing_costs).to eq 420.00.to_d + monthly_cash_housing
+              expect(calculator.gross_housing_costs).to eq 420.00.to_d + monthly_cash_housing # all variables are always decimals
               expect(calculator.monthly_housing_benefit).to eq 0.0
-              expect(calculator.net_housing_costs).to eq 420.00.to_d + monthly_cash_housing
+              expect(calculator.net_housing_costs).to eq (420.00.to_d + monthly_cash_housing).to_f # net_housing_costs is always a float
             end
           end
         end
