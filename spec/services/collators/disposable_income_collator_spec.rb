@@ -3,10 +3,10 @@ require 'rails_helper'
 module Collators
   RSpec.describe DisposableIncomeCollator do
     let(:assessment) { disposable_income_summary.assessment }
-    let(:child_care_bank) { Faker::Number.decimal(l_digits: 3, r_digits: 2).to_d }
-    let(:maintenance_out_bank) { Faker::Number.decimal(l_digits: 3, r_digits: 2).to_d }
-    let(:gross_housing) { Faker::Number.decimal(l_digits: 3, r_digits: 2).to_d }
-    let(:legal_aid_bank) { Faker::Number.decimal(l_digits: 3, r_digits: 2).to_d }
+    let(:child_care_bank) { Faker::Number.decimal(l_digits: 3, r_digits: 2).to_d(Float::DIG) }
+    let(:maintenance_out_bank) { Faker::Number.decimal(l_digits: 3, r_digits: 2).to_d(Float::DIG) }
+    let(:gross_housing) { Faker::Number.decimal(l_digits: 3, r_digits: 2).to_d(Float::DIG) }
+    let(:legal_aid_bank) { Faker::Number.decimal(l_digits: 3, r_digits: 2).to_d(Float::DIG) }
     let(:housing_benefit) { Faker::Number.between(from: 1.25, to: gross_housing / 2).round(2) }
     let(:net_housing) { gross_housing - housing_benefit }
     let(:total_outgoings) { child_care_bank + maintenance_out_bank + net_housing + dependant_allowance + legal_aid_bank }
