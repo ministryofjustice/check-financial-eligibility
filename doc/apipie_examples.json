@@ -3,40 +3,14 @@
     {
       "title": "Default",
       "verb": "POST",
-      "path": "/assessments/cf8c8416-a4cc-431e-afa8-aa8d86356ab5/applicant",
+      "path": "/assessments/d0bd07d7-6eef-4975-aa3e-9e1897e5cc69/applicant",
       "versions": [
         "1.0"
       ],
       "query": null,
       "request_data": {
         "applicant": {
-          "date_of_birth": "2001-04-29",
-          "involvement_type": "applicant",
-          "has_partner_opponent": false,
-          "receives_qualifying_benefit": "yes"
-        }
-      },
-      "response_data": {
-        "success": false,
-        "errors": [
-          "Invalid parameter 'receives_qualifying_benefit' value \"yes\": Must be one of: <code>true</code>, <code>false</code>, <code>1</code>, <code>0</code>."
-        ]
-      },
-      "code": 422,
-      "show_in_doc": 1,
-      "recorded": true
-    },
-    {
-      "title": "Default",
-      "verb": "POST",
-      "path": "/assessments/57e5475f-f73a-4bb4-a639-8a00b8b45e20/applicant",
-      "versions": [
-        "1.0"
-      ],
-      "query": null,
-      "request_data": {
-        "applicant": {
-          "date_of_birth": "2001-04-29",
+          "date_of_birth": "2001-09-22",
           "involvement_type": "applicant",
           "has_partner_opponent": false,
           "receives_qualifying_benefit": true
@@ -51,50 +25,27 @@
       "code": 200,
       "show_in_doc": 1,
       "recorded": true
-    }
-  ],
-  "assessments#create": [
-    {
-      "title": "POST Success Response",
-      "verb": "POST",
-      "path": "/assessments",
-      "versions": [
-        "1.0"
-      ],
-      "query": null,
-      "request_data": {
-        "client_reference_id": "psr-123",
-        "submission_date": "2019-06-06",
-        "matter_proceeding_type": "domestic_abuse"
-      },
-      "response_data": {
-        "success": true,
-        "assessment_id": "4e35ad52-4536-471d-9b5a-acf6fdf5b4d7",
-        "errors": [
-
-        ]
-      },
-      "code": 200,
-      "show_in_doc": 1,
-      "recorded": true
     },
     {
-      "title": "POST Error Response",
+      "title": "Default",
       "verb": "POST",
-      "path": "/assessments",
+      "path": "/assessments/b591171b-6f8c-474b-b704-26798e5935dc/applicant",
       "versions": [
         "1.0"
       ],
       "query": null,
       "request_data": {
-        "client_reference_id": "psr-123",
-        "submission_date": "2019-06-06",
-        "matter_proceeding_type": "domestic_abuse"
+        "applicant": {
+          "date_of_birth": "2001-09-22",
+          "involvement_type": "applicant",
+          "has_partner_opponent": false,
+          "receives_qualifying_benefit": "yes"
+        }
       },
       "response_data": {
         "success": false,
         "errors": [
-          "error creating record"
+          "Invalid parameter 'receives_qualifying_benefit' value \"yes\": Must be one of: <code>true</code>, <code>false</code>, <code>1</code>, <code>0</code>."
         ]
       },
       "code": 422,
@@ -106,7 +57,7 @@
     {
       "title": "GET Version 3 Non-Passported Response",
       "verb": "GET",
-      "path": "/assessments/d06f2c59-04f6-4e06-96cd-954c6a1729fb",
+      "path": "/assessments/3182a6ad-5860-4f2d-8385-50c0d35b4f5c",
       "versions": [
         "1.0"
       ],
@@ -114,10 +65,10 @@
       "request_data": null,
       "response_data": {
         "version": "3",
-        "timestamp": "2021-04-29T15:44:53.021Z",
+        "timestamp": "2021-09-22T10:11:06.058Z",
         "success": true,
         "assessment": {
-          "id": "d06f2c59-04f6-4e06-96cd-954c6a1729fb",
+          "id": "3182a6ad-5860-4f2d-8385-50c0d35b4f5c",
           "client_reference_id": "NPE6-1",
           "submission_date": "2019-05-29",
           "matter_proceeding_type": "domestic_abuse",
@@ -278,14 +229,14 @@
           "remarks": {
             "state_benefit_payment": {
               "amount_variation": [
-                "24371378-0df8-440d-ba54-05e2635b57a3",
-                "e0f5c425-b2d3-4315-ae9a-795c64ceb89e",
-                "b0cfb475-d2d1-4b5c-a251-59a3cb87c914"
+                "bada107b-0ab4-414a-bd2e-e8a50c09c647",
+                "63216aee-cdba-4e0d-b4bb-4b56275a9d1c",
+                "1fc39583-5f7b-4238-95b1-eee8b741919a"
               ],
               "unknown_frequency": [
-                "24371378-0df8-440d-ba54-05e2635b57a3",
-                "e0f5c425-b2d3-4315-ae9a-795c64ceb89e",
-                "b0cfb475-d2d1-4b5c-a251-59a3cb87c914"
+                "bada107b-0ab4-414a-bd2e-e8a50c09c647",
+                "63216aee-cdba-4e0d-b4bb-4b56275a9d1c",
+                "1fc39583-5f7b-4238-95b1-eee8b741919a"
               ]
             }
           }
@@ -298,235 +249,26 @@
     {
       "title": "POST V4 Success Response",
       "verb": "GET",
-      "path": "/assessments/53448494-5481-4b65-95b8-2afb6e7bc862",
+      "path": "/assessments/540d0698-8344-4646-848d-f4f104fd80ff",
       "versions": [
         "1.0"
       ],
       "query": null,
       "request_data": null,
       "response_data": {
-        "version": "4",
-        "timestamp": "2021-04-29T15:44:53.000Z",
-        "success": true,
-        "result_summary": {
-          "overall_result": {
-            "result": "contribution_required",
-            "capital_contribution": 38500.0,
-            "income_contribution": 0.0,
-            "matter_types": [
-              {
-                "matter_type": "domestic_abuse",
-                "result": "contribution_required"
-              }
-            ],
-            "proceeding_types": [
-              {
-                "ccms_code": "DA001",
-                "result": "contribution_required"
-              }
-            ]
-          },
-          "gross_income": {
-            "total_gross_income": 1615.0,
-            "proceeding_types": [
-              {
-                "ccms_code": "DA001",
-                "upper_threshold": 999999999999.0,
-                "result": "eligible"
-              }
-            ]
-          },
-          "disposable_income": {
-            "dependant_allowance": 1457.45,
-            "gross_housing_costs": 50.0,
-            "housing_benefit": 0.0,
-            "net_housing_costs": 50.0,
-            "maintenance_allowance": 0.0,
-            "total_outgoings_and_allowances": 1507.45,
-            "total_disposable_income": 107.55,
-            "income_contribution": 0.0,
-            "proceeding_types": [
-              {
-                "ccms_code": "DA001",
-                "upper_threshold": 999999999999.0,
-                "lower_threshold": 315.0,
-                "result": "eligible"
-              }
-            ]
-          },
-          "capital": {
-            "total_liquid": 0.0,
-            "total_non_liquid": 0.0,
-            "total_vehicle": 9000.0,
-            "total_property": 92500.0,
-            "total_mortgage_allowance": 100000.0,
-            "total_capital": 101500.0,
-            "pensioner_capital_disregard": 60000.0,
-            "capital_contribution": 38500.0,
-            "assessed_capital": 41500.0,
-            "proceeding_types": [
-              {
-                "ccms_code": "DA001",
-                "lower_threshold": 3000.0,
-                "upper_threshold": 999999999999.0,
-                "result": "contribution_required"
-              }
-            ]
-          }
-        },
-        "assessment": {
-          "id": "53448494-5481-4b65-95b8-2afb6e7bc862",
-          "client_reference_id": "NPE6-1",
-          "submission_date": "2019-05-29",
-          "applicant": {
-            "date_of_birth": "1958-05-29",
-            "involvement_type": "applicant",
-            "has_partner_opponent": false,
-            "receives_qualifying_benefit": false,
-            "self_employed": false
-          },
-          "gross_income": {
-            "irregular_income": {
-              "monthly_equivalents": {
-                "student_loan": 0.0
-              }
-            },
-            "state_benefits": {
-              "monthly_equivalents": {
-                "all_sources": 200.0,
-                "cash_transactions": 0.0,
-                "bank_transactions": [
-                  {
-                    "name": "Child Benefit",
-                    "monthly_value": 200.0,
-                    "excluded_from_income_assessment": false
-                  }
-                ]
-              }
-            },
-            "other_income": {
-              "monthly_equivalents": {
-                "all_sources": {
-                  "friends_or_family": 1415.0,
-                  "maintenance_in": 0.0,
-                  "property_or_lodger": 0.0,
-                  "pension": 0.0
-                },
-                "bank_transactions": {
-                  "friends_or_family": 1415.0,
-                  "maintenance_in": 0.0,
-                  "property_or_lodger": 0.0,
-                  "pension": 0.0
-                },
-                "cash_transactions": {
-                  "friends_or_family": 0.0,
-                  "maintenance_in": 0.0,
-                  "property_or_lodger": 0.0,
-                  "pension": 0.0
-                }
-              }
-            }
-          },
-          "disposable_income": {
-            "monthly_equivalents": {
-              "all_sources": {
-                "child_care": 0.0,
-                "rent_or_mortgage": 50.0,
-                "maintenance_out": 0.0,
-                "legal_aid": 0.0
-              },
-              "bank_transactions": {
-                "child_care": 0.0,
-                "rent_or_mortgage": 50.0,
-                "maintenance_out": 0.0,
-                "legal_aid": 0.0
-              },
-              "cash_transactions": {
-                "child_care": 0.0,
-                "rent_or_mortgage": 0.0,
-                "maintenance_out": 0.0,
-                "legal_aid": 0.0
-              }
-            },
-            "childcare_allowance": 0.0,
-            "deductions": {
-              "dependants_allowance": 1457.45,
-              "disregarded_state_benefits": 0.0
-            }
-          },
-          "capital": {
-            "capital_items": {
-              "liquid": [
-                {
-                  "description": "Bank acct 1",
-                  "value": 0.0
-                },
-                {
-                  "description": "Bank acct 2",
-                  "value": 0.0
-                },
-                {
-                  "description": "Bank acct 3",
-                  "value": 0.0
-                }
-              ],
-              "non_liquid": [
-
-              ],
-              "vehicles": [
-                {
-                  "value": 9000.0,
-                  "loan_amount_outstanding": 0.0,
-                  "date_of_purchase": "2018-05-20",
-                  "in_regular_use": false,
-                  "included_in_assessment": true,
-                  "assessed_value": 9000.0
-                }
-              ],
-              "properties": {
-                "main_home": {
-                  "value": 500000.0,
-                  "outstanding_mortgage": 150000.0,
-                  "percentage_owned": 50.0,
-                  "main_home": true,
-                  "shared_with_housing_assoc": false,
-                  "transaction_allowance": 15000.0,
-                  "allowable_outstanding_mortgage": 100000.0,
-                  "net_value": 385000.0,
-                  "net_equity": 192500.0,
-                  "main_home_equity_disregard": 100000.0,
-                  "assessed_equity": 92500.0
-                },
-                "additional_properties": [
-
-                ]
-              }
-            }
-          },
-          "remarks": {
-            "state_benefit_payment": {
-              "amount_variation": [
-                "4b84cd39-bb3e-4603-9470-b64df27c72f2",
-                "306ef3e1-9316-402e-b6f7-c87cdafbd790",
-                "934b2ecb-015c-4f55-84ca-a8ec6614ddde"
-              ],
-              "unknown_frequency": [
-                "4b84cd39-bb3e-4603-9470-b64df27c72f2",
-                "306ef3e1-9316-402e-b6f7-c87cdafbd790",
-                "934b2ecb-015c-4f55-84ca-a8ec6614ddde"
-              ]
-            }
-          }
-        }
+        "errors": [
+          "LegalFrameworkQueryService::SubmissionError: LegalFrameworkQueryService received VCR::Errors::UnhandledHTTPRequestError: \n\n================================================================================\nAn HTTP request has been made that VCR does not know how to handle:\n  POST https://legal-framework-api-staging.apps.live-1.cloud-platform.service.justice.gov.uk/proceeding_types/threshold_waivers\n\nThere is currently no cassette in use. There are a few ways\nyou can configure VCR to handle this request:\n\n  * If you're surprised VCR is raising this error\n    and want insight about how VCR attempted to handle the request,\n    you can use the debug_logger configuration option to log more details [1].\n  * If you want VCR to record this request and play it back during future test\n    runs, you should wrap your test (or this portion of your test) in a\n    `VCR.use_cassette` block [2].\n  * If you only want VCR to handle requests made while a cassette is in use,\n    configure `allow_http_connections_when_no_cassette = true`. VCR will\n    ignore this request since it is made when there is no cassette [3].\n  * If you want VCR to ignore this request (and others like it), you can\n    set an `ignore_request` callback [4].\n\n[1] https://www.relishapp.com/vcr/vcr/v/6-0-0/docs/configuration/debug-logging\n[2] https://www.relishapp.com/vcr/vcr/v/6-0-0/docs/getting-started\n[3] https://www.relishapp.com/vcr/vcr/v/6-0-0/docs/configuration/allow-http-connections-when-no-cassette\n[4] https://www.relishapp.com/vcr/vcr/v/6-0-0/docs/configuration/ignore-request\n================================================================================\n\n\n[\"/Users/stephenrichards/moj/check/app/models/legal_framework_query_service.rb:229:in `raise_exception_error'\", \"/Users/stephenrichards/moj/check/app/models/legal_framework_query_service.rb:220:in `catch_and_record_exception'\", \"/Users/stephenrichards/moj/check/app/models/legal_framework_query_service.rb:201:in `rescue in post_request'\", \"/Users/stephenrichards/moj/check/app/models/legal_framework_query_service.rb:194:in `post_request'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/vcr-6.0.0/lib/vcr/request_handler.rb:97:in `on_unhandled_request': \\n\\n================================================================================\\nAn HTTP request has been made that VCR does not know how to handle:\\n  POST https://legal-framework-api-staging.apps.live-1.cloud-platform.service.justice.gov.uk/proceeding_types/threshold_waivers\\n\\nThere is currently no cassette in use. There are a few ways\\nyou can configure VCR to handle this request:\\n\\n  * If you're surprised VCR is raising this error\\n    and want insight about how VCR attempted to handle the request,\\n    you can use the debug_logger configuration option to log more details [1].\\n  * If you want VCR to record this request and play it back during future test\\n    runs, you should wrap your test (or this portion of your test) in a\\n    `VCR.use_cassette` block [2].\\n  * If you only want VCR to handle requests made while a cassette is in use,\\n    configure `allow_http_connections_when_no_cassette = true`. VCR will\\n    ignore this request since it is made when there is no cassette [3].\\n  * If you want VCR to ignore this request (and others like it), you can\\n    set an `ignore_request` callback [4].\\n\\n[1] https://www.relishapp.com/vcr/vcr/v/6-0-0/docs/configuration/debug-logging\\n[2] https://www.relishapp.com/vcr/vcr/v/6-0-0/docs/getting-started\\n[3] https://www.relishapp.com/vcr/vcr/v/6-0-0/docs/configuration/allow-http-connections-when-no-cassette\\n[4] https://www.relishapp.com/vcr/vcr/v/6-0-0/docs/configuration/ignore-request\\n================================================================================\\n\\n (VCR::Errors::UnhandledHTTPRequestError)\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/vcr-6.0.0/lib/vcr/library_hooks/webmock.rb:129:in `on_unhandled_request'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/vcr-6.0.0/lib/vcr/request_handler.rb:24:in `handle'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/vcr-6.0.0/lib/vcr/library_hooks/webmock.rb:144:in `block in <module:WebMock>'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/webmock-3.14.0/lib/webmock/stub_registry.rb:33:in `block (2 levels) in register_global_stub'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/webmock-3.14.0/lib/webmock/stub_registry.rb:39:in `synchronize'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/webmock-3.14.0/lib/webmock/stub_registry.rb:39:in `block in register_global_stub'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/webmock-3.14.0/lib/webmock/request_pattern.rb:40:in `matches?'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/webmock-3.14.0/lib/webmock/stub_registry.rb:73:in `block in request_stub_for'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/webmock-3.14.0/lib/webmock/stub_registry.rb:72:in `each'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/webmock-3.14.0/lib/webmock/stub_registry.rb:72:in `detect'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/webmock-3.14.0/lib/webmock/stub_registry.rb:72:in `request_stub_for'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/webmock-3.14.0/lib/webmock/stub_registry.rb:64:in `response_for_request'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/webmock-3.14.0/lib/webmock/http_lib_adapters/net_http.rb:79:in `request'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/faraday-net_http-1.0.1/lib/faraday/adapter/net_http.rb:152:in `block in request_via_request_method'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/webmock-3.14.0/lib/webmock/http_lib_adapters/net_http.rb:123:in `start_without_connect'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/webmock-3.14.0/lib/webmock/http_lib_adapters/net_http.rb:150:in `start'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/faraday-net_http-1.0.1/lib/faraday/adapter/net_http.rb:146:in `request_via_request_method'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/faraday-net_http-1.0.1/lib/faraday/adapter/net_http.rb:131:in `request_with_wrapped_block'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/faraday-net_http-1.0.1/lib/faraday/adapter/net_http.rb:122:in `perform_request'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/faraday-net_http-1.0.1/lib/faraday/adapter/net_http.rb:66:in `block in call'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/faraday-1.7.2/lib/faraday/adapter.rb:50:in `connection'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/faraday-net_http-1.0.1/lib/faraday/adapter/net_http.rb:64:in `call'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/faraday-1.7.2/lib/faraday/request/url_encoded.rb:25:in `call'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/faraday-1.7.2/lib/faraday/rack_builder.rb:154:in `build_response'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/faraday-1.7.2/lib/faraday/connection.rb:516:in `run_request'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/faraday-1.7.2/lib/faraday/connection.rb:281:in `post'\", \"/Users/stephenrichards/moj/check/app/models/legal_framework_query_service.rb:195:in `post_request'\", \"/Users/stephenrichards/moj/check/app/models/legal_framework_query_service.rb:136:in `query_legal_framework_api'\", \"/Users/stephenrichards/moj/check/app/models/legal_framework_query_service.rb:131:in `populate_proceeding_types'\", \"/Users/stephenrichards/moj/check/app/models/legal_framework_query_service.rb:115:in `initialize'\", \"/Users/stephenrichards/moj/check/app/models/legal_framework_query_service.rb:105:in `new'\", \"/Users/stephenrichards/moj/check/app/models/legal_framework_query_service.rb:105:in `matter_type'\", \"/Users/stephenrichards/moj/check/app/models/proceeding_type_threshold.rb:11:in `matter_type'\", \"/Users/stephenrichards/moj/check/app/services/decorators/v4/matter_type_result_decorator.rb:26:in `add_matter_type'\", \"/Users/stephenrichards/moj/check/app/services/decorators/v4/matter_type_result_decorator.rb:16:in `block in collate_results'\", \"/Users/stephenrichards/moj/check/app/services/decorators/v4/matter_type_result_decorator.rb:16:in `each'\", \"/Users/stephenrichards/moj/check/app/services/decorators/v4/matter_type_result_decorator.rb:16:in `collate_results'\", \"/Users/stephenrichards/moj/check/app/services/decorators/v4/matter_type_result_decorator.rb:10:in `as_json'\", \"/Users/stephenrichards/moj/check/app/services/decorators/v4/result_summary_decorator.rb:20:in `as_json'\", \"/Users/stephenrichards/moj/check/app/services/decorators/v4/assessment_decorator.rb:31:in `payload'\", \"/Users/stephenrichards/moj/check/app/services/decorators/v4/assessment_decorator.rb:21:in `as_json'\", \"/Users/stephenrichards/moj/check/app/controllers/assessments_controller.rb:75:in `perform_assessment'\", \"/Users/stephenrichards/moj/check/app/controllers/assessments_controller.rb:63:in `show'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/apipie-rails-0.5.19/lib/apipie/dsl_definition.rb:286:in `call'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/apipie-rails-0.5.19/lib/apipie/dsl_definition.rb:286:in `block in _apipie_define_validators'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/actionpack-6.1.4.1/lib/action_controller/metal/basic_implicit_render.rb:6:in `send_action'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/actionpack-6.1.4.1/lib/abstract_controller/base.rb:228:in `process_action'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/actionpack-6.1.4.1/lib/action_controller/metal/rendering.rb:30:in `process_action'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/actionpack-6.1.4.1/lib/abstract_controller/callbacks.rb:42:in `block in process_action'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/activesupport-6.1.4.1/lib/active_support/callbacks.rb:106:in `run_callbacks'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/actionpack-6.1.4.1/lib/abstract_controller/callbacks.rb:41:in `process_action'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/actionpack-6.1.4.1/lib/action_controller/metal/rescue.rb:22:in `process_action'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/actionpack-6.1.4.1/lib/action_controller/metal/instrumentation.rb:34:in `block in process_action'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/activesupport-6.1.4.1/lib/active_support/notifications.rb:203:in `block in instrument'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/activesupport-6.1.4.1/lib/active_support/notifications/instrumenter.rb:24:in `instrument'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/activesupport-6.1.4.1/lib/active_support/notifications.rb:203:in `instrument'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/actionpack-6.1.4.1/lib/action_controller/metal/instrumentation.rb:33:in `process_action'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/actionpack-6.1.4.1/lib/action_controller/metal/params_wrapper.rb:249:in `process_action'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/activerecord-6.1.4.1/lib/active_record/railties/controller_runtime.rb:27:in `process_action'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/actionpack-6.1.4.1/lib/abstract_controller/base.rb:165:in `process'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/actionpack-6.1.4.1/lib/action_controller/metal.rb:190:in `dispatch'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/actionpack-6.1.4.1/lib/action_controller/metal.rb:254:in `dispatch'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/actionpack-6.1.4.1/lib/action_dispatch/routing/route_set.rb:50:in `dispatch'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/actionpack-6.1.4.1/lib/action_dispatch/routing/route_set.rb:33:in `serve'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/actionpack-6.1.4.1/lib/action_dispatch/journey/router.rb:50:in `block in serve'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/actionpack-6.1.4.1/lib/action_dispatch/journey/router.rb:32:in `each'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/actionpack-6.1.4.1/lib/action_dispatch/journey/router.rb:32:in `serve'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/actionpack-6.1.4.1/lib/action_dispatch/routing/route_set.rb:842:in `call'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/apipie-rails-0.5.19/lib/apipie/static_dispatcher.rb:66:in `call'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/apipie-rails-0.5.19/lib/apipie/extractor/recorder.rb:134:in `block in call'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/apipie-rails-0.5.19/lib/apipie/extractor/recorder.rb:143:in `analyze'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/apipie-rails-0.5.19/lib/apipie/extractor/recorder.rb:133:in `call'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rack-2.2.3/lib/rack/etag.rb:27:in `call'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rack-2.2.3/lib/rack/conditional_get.rb:27:in `call'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rack-2.2.3/lib/rack/head.rb:12:in `call'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/actionpack-6.1.4.1/lib/action_dispatch/middleware/callbacks.rb:27:in `block in call'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/activesupport-6.1.4.1/lib/active_support/callbacks.rb:98:in `run_callbacks'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/actionpack-6.1.4.1/lib/action_dispatch/middleware/callbacks.rb:26:in `call'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/actionpack-6.1.4.1/lib/action_dispatch/middleware/actionable_exceptions.rb:18:in `call'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/sentry-rails-4.7.2/lib/sentry/rails/rescued_exception_interceptor.rb:9:in `call'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/actionpack-6.1.4.1/lib/action_dispatch/middleware/debug_exceptions.rb:29:in `call'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/actionpack-6.1.4.1/lib/action_dispatch/middleware/show_exceptions.rb:33:in `call'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/railties-6.1.4.1/lib/rails/rack/logger.rb:37:in `call_app'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/railties-6.1.4.1/lib/rails/rack/logger.rb:26:in `block in call'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/activesupport-6.1.4.1/lib/active_support/tagged_logging.rb:99:in `block in tagged'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/activesupport-6.1.4.1/lib/active_support/tagged_logging.rb:37:in `tagged'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/activesupport-6.1.4.1/lib/active_support/tagged_logging.rb:99:in `tagged'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/railties-6.1.4.1/lib/rails/rack/logger.rb:26:in `call'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/actionpack-6.1.4.1/lib/action_dispatch/middleware/remote_ip.rb:81:in `call'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/actionpack-6.1.4.1/lib/action_dispatch/middleware/request_id.rb:26:in `call'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rack-2.2.3/lib/rack/runtime.rb:22:in `call'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/activesupport-6.1.4.1/lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/sentry-ruby-core-4.7.2/lib/sentry/rack/capture_exceptions.rb:9:in `call'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/actionpack-6.1.4.1/lib/action_dispatch/middleware/executor.rb:14:in `call'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/actionpack-6.1.4.1/lib/action_dispatch/middleware/static.rb:24:in `call'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rack-2.2.3/lib/rack/sendfile.rb:110:in `call'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/actionpack-6.1.4.1/lib/action_dispatch/middleware/host_authorization.rb:92:in `call'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/secure_headers-6.3.3/lib/secure_headers/middleware.rb:11:in `call'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/railties-6.1.4.1/lib/rails/engine.rb:539:in `call'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rack-test-1.1.0/lib/rack/mock_session.rb:29:in `request'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rack-test-1.1.0/lib/rack/test.rb:266:in `process_request'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rack-test-1.1.0/lib/rack/test.rb:119:in `request'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/actionpack-6.1.4.1/lib/action_dispatch/testing/integration.rb:279:in `process'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/actionpack-6.1.4.1/lib/action_dispatch/testing/integration.rb:16:in `get'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/actionpack-6.1.4.1/lib/action_dispatch/testing/integration.rb:372:in `get'\", \"/Users/stephenrichards/moj/check/spec/requests/assessments_spec.rb:137:in `block (3 levels) in <top (required)>'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/memoized_helpers.rb:317:in `block (2 levels) in let'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/memoized_helpers.rb:157:in `block (3 levels) in fetch_or_store'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/memoized_helpers.rb:157:in `fetch'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/memoized_helpers.rb:157:in `block (2 levels) in fetch_or_store'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-support-3.10.2/lib/rspec/support/reentrant_mutex.rb:23:in `synchronize'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/memoized_helpers.rb:156:in `block in fetch_or_store'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/memoized_helpers.rb:155:in `fetch'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/memoized_helpers.rb:155:in `fetch_or_store'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/memoized_helpers.rb:317:in `block in let'\", \"/Users/stephenrichards/moj/check/spec/requests/assessments_spec.rb:293:in `block (5 levels) in <top (required)>'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/example.rb:455:in `instance_exec'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/example.rb:455:in `instance_exec'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/hooks.rb:365:in `run'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/hooks.rb:529:in `block in run_owned_hooks_for'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/hooks.rb:528:in `each'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/hooks.rb:528:in `run_owned_hooks_for'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/hooks.rb:615:in `block in run_example_hooks_for'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/hooks.rb:614:in `reverse_each'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/hooks.rb:614:in `run_example_hooks_for'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/hooks.rb:484:in `run'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/example.rb:502:in `run_before_example'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/example.rb:261:in `block in run'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/example.rb:508:in `block in with_around_and_singleton_context_hooks'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/example.rb:465:in `block in with_around_example_hooks'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/hooks.rb:486:in `block in run'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/hooks.rb:626:in `block in run_around_example_hooks_for'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/example.rb:350:in `call'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-rails-5.0.2/lib/rspec/rails/adapters.rb:75:in `block (2 levels) in <module:MinitestLifecycleAdapter>'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/example.rb:455:in `instance_exec'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/example.rb:455:in `instance_exec'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/hooks.rb:390:in `execute_with'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/hooks.rb:628:in `block (2 levels) in run_around_example_hooks_for'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/example.rb:350:in `call'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/webmock-3.14.0/lib/webmock/rspec.rb:37:in `block (2 levels) in <top (required)>'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/example.rb:455:in `instance_exec'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/example.rb:455:in `instance_exec'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/hooks.rb:390:in `execute_with'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/hooks.rb:628:in `block (2 levels) in run_around_example_hooks_for'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/example.rb:350:in `call'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/hooks.rb:629:in `run_around_example_hooks_for'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/hooks.rb:486:in `run'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/example.rb:465:in `with_around_example_hooks'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/example.rb:508:in `with_around_and_singleton_context_hooks'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/example.rb:259:in `run'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/example_group.rb:644:in `block in run_examples'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/example_group.rb:640:in `map'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/example_group.rb:640:in `run_examples'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/example_group.rb:606:in `run'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/example_group.rb:607:in `block in run'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/example_group.rb:607:in `map'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/example_group.rb:607:in `run'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/example_group.rb:607:in `block in run'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/example_group.rb:607:in `map'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/example_group.rb:607:in `run'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/example_group.rb:607:in `block in run'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/example_group.rb:607:in `map'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/example_group.rb:607:in `run'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/runner.rb:121:in `block (3 levels) in run_specs'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/runner.rb:121:in `map'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/runner.rb:121:in `block (2 levels) in run_specs'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/configuration.rb:2067:in `with_suite_hooks'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/runner.rb:116:in `block in run_specs'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/reporter.rb:74:in `report'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/runner.rb:115:in `run_specs'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/runner.rb:89:in `run'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/runner.rb:71:in `run'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/lib/rspec/core/runner.rb:45:in `invoke'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/rspec-core-3.10.1/exe/rspec:4:in `<top (required)>'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/bin/rspec:23:in `load'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/bin/rspec:23:in `<top (required)>'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/bundler-2.2.24/lib/bundler/cli/exec.rb:63:in `load'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/bundler-2.2.24/lib/bundler/cli/exec.rb:63:in `kernel_load'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/bundler-2.2.24/lib/bundler/cli/exec.rb:28:in `run'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/bundler-2.2.24/lib/bundler/cli.rb:475:in `exec'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/bundler-2.2.24/lib/bundler/vendor/thor/lib/thor/command.rb:27:in `run'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/bundler-2.2.24/lib/bundler/vendor/thor/lib/thor/invocation.rb:127:in `invoke_command'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/bundler-2.2.24/lib/bundler/vendor/thor/lib/thor.rb:392:in `dispatch'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/bundler-2.2.24/lib/bundler/cli.rb:31:in `dispatch'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/bundler-2.2.24/lib/bundler/vendor/thor/lib/thor/base.rb:485:in `start'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/bundler-2.2.24/lib/bundler/cli.rb:25:in `start'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/bundler-2.2.24/exe/bundle:49:in `block in <top (required)>'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/bundler-2.2.24/lib/bundler/friendly_errors.rb:128:in `with_friendly_errors'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/bundler-2.2.24/exe/bundle:37:in `<top (required)>'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/bin/bundle:23:in `load'\", \"/Users/stephenrichards/.rbenv/versions/3.0.2/bin/bundle:23:in `<main>'\"]"
+        ],
+        "success": false
       },
-      "code": 200,
+      "code": 422,
       "show_in_doc": 1,
       "recorded": true
     },
     {
       "title": "GET Version 3 Passported Response",
       "verb": "GET",
-      "path": "/assessments/29d00b93-bc8f-493d-a8ad-628f7e9e9c34",
+      "path": "/assessments/06f6951b-74f5-497a-b945-4b117a3f999d",
       "versions": [
         "1.0"
       ],
@@ -534,16 +276,16 @@
       "request_data": null,
       "response_data": {
         "version": "3",
-        "timestamp": "2021-04-29T15:44:53.811Z",
+        "timestamp": "2021-09-22T10:11:07.195Z",
         "success": true,
         "assessment": {
-          "id": "29d00b93-bc8f-493d-a8ad-628f7e9e9c34",
-          "client_reference_id": "CLIENT-REF-0006",
-          "submission_date": "2021-04-29",
+          "id": "06f6951b-74f5-497a-b945-4b117a3f999d",
+          "client_reference_id": "CLIENT-REF-0004",
+          "submission_date": "2021-09-22",
           "matter_proceeding_type": "domestic_abuse",
           "assessment_result": "eligible",
           "applicant": {
-            "date_of_birth": "1957-03-10",
+            "date_of_birth": "1959-10-18",
             "involvement_type": "applicant",
             "has_partner_opponent": false,
             "receives_qualifying_benefit": false,
@@ -551,7 +293,7 @@
           },
           "gross_income": {
             "summary": {
-              "total_gross_income": "88.3",
+              "total_gross_income": "75.0",
               "upper_threshold": "999999999999.0",
               "assessment_result": "eligible"
             },
@@ -562,13 +304,13 @@
             },
             "state_benefits": {
               "monthly_equivalents": {
-                "all_sources": "88.3",
+                "all_sources": "0.0",
                 "cash_transactions": "0.0",
                 "bank_transactions": [
                   {
-                    "name": "benefit_type_5",
+                    "name": "benefit_type_1",
                     "monthly_value": "88.3",
-                    "excluded_from_income_assessment": false
+                    "excluded_from_income_assessment": true
                   }
                 ]
               }
@@ -577,7 +319,7 @@
               "monthly_equivalents": {
                 "bank_transactions": {
                   "friends_or_family": "0.0",
-                  "maintenance_in": "0.0",
+                  "maintenance_in": "75.0",
                   "property_or_lodger": "0.0",
                   "pension": "0.0"
                 },
@@ -589,7 +331,7 @@
                 },
                 "all_sources": {
                   "friends_or_family": "0.0",
-                  "maintenance_in": "0.0",
+                  "maintenance_in": "75.0",
                   "property_or_lodger": "0.0",
                   "pension": "0.0"
                 }
@@ -620,7 +362,7 @@
             "childcare_allowance": "0.0",
             "deductions": {
               "dependants_allowance": "0.0",
-              "disregarded_state_benefits": 0.0
+              "disregarded_state_benefits": "88.3"
             },
             "dependant_allowance": "0.0",
             "maintenance_allowance": "50.0",
@@ -638,106 +380,71 @@
             "capital_items": {
               "liquid": [
                 {
-                  "description": "Hic et nulla blanditiis.",
-                  "value": "6413.33"
+                  "description": "Est id voluptatem enim.",
+                  "value": "2015.18"
                 }
               ],
               "non_liquid": [
                 {
-                  "description": "Perferendis numquam ipsa dolorum.",
-                  "value": "4683.18"
+                  "description": "Non rerum quam sed.",
+                  "value": "1357.87"
                 }
               ],
               "vehicles": [
                 {
-                  "value": "4172.46",
-                  "loan_amount_outstanding": "2203.09",
-                  "date_of_purchase": "2017-09-29",
-                  "in_regular_use": true,
-                  "included_in_assessment": false,
-                  "assessed_value": "0.0"
+                  "value": "1778.38",
+                  "loan_amount_outstanding": "5554.22",
+                  "date_of_purchase": "2016-12-27",
+                  "in_regular_use": false,
+                  "included_in_assessment": true,
+                  "assessed_value": "1778.38"
                 }
               ],
               "properties": {
                 "main_home": {
-                  "value": "7263.52",
-                  "outstanding_mortgage": "6514.58",
-                  "percentage_owned": "3.76",
+                  "value": "1885.82",
+                  "outstanding_mortgage": "1414.76",
+                  "percentage_owned": "7.27",
                   "main_home": true,
                   "shared_with_housing_assoc": false,
-                  "transaction_allowance": "217.91",
-                  "allowable_outstanding_mortgage": "6514.58",
-                  "net_value": "531.03",
-                  "net_equity": "19.97",
+                  "transaction_allowance": "56.57",
+                  "allowable_outstanding_mortgage": "1414.76",
+                  "net_value": "414.49",
+                  "net_equity": "30.13",
                   "main_home_equity_disregard": "100000.0",
                   "assessed_equity": "0.0"
                 },
                 "additional_properties": [
                   {
-                    "value": "1952.02",
-                    "outstanding_mortgage": "1855.99",
-                    "percentage_owned": "6.78",
+                    "value": "8724.690000000001",
+                    "outstanding_mortgage": "9938.129999999999",
+                    "percentage_owned": "7.81",
                     "main_home": false,
-                    "shared_with_housing_assoc": true,
-                    "transaction_allowance": "58.56",
-                    "allowable_outstanding_mortgage": "1855.99",
-                    "net_value": "37.47",
-                    "net_equity": "-1782.2",
+                    "shared_with_housing_assoc": false,
+                    "transaction_allowance": "261.74",
+                    "allowable_outstanding_mortgage": "9938.129999999999",
+                    "net_value": "-1475.179999999998",
+                    "net_equity": "-115.21",
                     "main_home_equity_disregard": "0.0",
                     "assessed_equity": "0.0"
                   }
                 ]
               }
             },
-            "total_liquid": "6413.33",
-            "total_non_liquid": "4683.18",
-            "total_vehicle": "0.0",
+            "total_liquid": "2015.18",
+            "total_non_liquid": "1357.87",
+            "total_vehicle": "1778.38",
             "total_property": "0.0",
             "total_mortgage_allowance": "999999999999.0",
-            "total_capital": "11096.51",
+            "total_capital": "5151.43",
             "pensioner_capital_disregard": "100000.0",
-            "assessed_capital": "-88903.49",
+            "assessed_capital": "-94848.57",
             "lower_threshold": "3000.0",
             "upper_threshold": "999999999999.0",
             "assessment_result": "eligible",
             "capital_contribution": "0.0"
           },
           "remarks": {
-            "state_benefit_payment": {
-              "unknown_frequency": [
-                "c78eefea-dd10-4e1f-be89-bc1a86332117",
-                "712cf966-6574-4e8a-b6ef-6d746f396856",
-                "f78af0d3-eabf-409a-bc27-8189f5dc90a5"
-              ]
-            },
-            "other_income_payment": {
-              "unknown_frequency": [
-                "bb255b16-7b9e-444b-a97e-2e4517ad216c",
-                "747be67e-143f-4652-aad4-113f1a6df9df",
-                "2f9e5a08-a144-498c-978a-07129d5fa839"
-              ]
-            },
-            "outgoings_maintenance": {
-              "unknown_frequency": [
-                null,
-                null,
-                null
-              ]
-            },
-            "outgoings_housing_cost": {
-              "unknown_frequency": [
-                null,
-                null,
-                null
-              ]
-            },
-            "outgoings_legal_aid": {
-              "unknown_frequency": [
-                null,
-                null,
-                null
-              ]
-            }
           }
         }
       },
@@ -750,7 +457,7 @@
     {
       "title": "Default",
       "verb": "POST",
-      "path": "/assessments/67ecd94c-1fca-43df-8492-042cf2d3f22b/capitals",
+      "path": "/assessments/5e974edc-a07e-4e87-ac47-fc4e96be616d/capitals",
       "versions": [
         "1.0"
       ],
@@ -758,22 +465,22 @@
       "request_data": {
         "bank_accounts": [
           {
-            "description": "ABN AMRO QUOTED INVESTMENTS (UK) LIMITED 76958583",
-            "value": 98517.62
+            "description": "ALKEN ASSET MANAGEMENT 30205847",
+            "value": 60798.08
           },
           {
-            "description": "AAC CAPITAL PARTNERS LIMITED 88955480",
-            "value": 66870.92
+            "description": "THE ROYAL BANK OF SCOTLAND PLC (FORMER RBS NV) 49923668",
+            "value": 29078.14
           }
         ],
         "non_liquid_capital": [
           {
             "description": "R.J.Ewing Trust",
-            "value": 31412.76
+            "value": 49060.68
           },
           {
-            "description": "Life Endowment Policy",
-            "value": 55428.24
+            "description": "Aramco shares",
+            "value": 10810.72
           }
         ]
       },
@@ -790,7 +497,7 @@
     {
       "title": "Default",
       "verb": "POST",
-      "path": "/assessments/13c21b47-518a-4106-9ce3-a9a950c6afc9/capitals",
+      "path": "/assessments/7f01cc92-4496-4b6f-8b01-faa4ee2b88d5/capitals",
       "versions": [
         "1.0"
       ],
@@ -798,22 +505,22 @@
       "request_data": {
         "bank_accounts": [
           {
-            "description": "ABN AMRO CORPORATE FINANCE LIMITED 50607394",
-            "value": 24142.43
+            "description": "ABBEY LIFE 24161431",
+            "value": 61836.82
           },
           {
-            "description": "ABN AMRO QUOTED INVESTMENTS (UK) LIMITED 24083345",
-            "value": 27488.02
+            "description": "THE ROYAL BANK OF SCOTLAND PLC (FORMER RBS NV) 28854917",
+            "value": 89705.28
           }
         ],
         "non_liquid_capital": [
           {
-            "description": "Ming Vase",
-            "value": 44673.26
+            "description": "Life Endowment Policy",
+            "value": 45029.38
           },
           {
             "description": "Aramco shares",
-            "value": 69658.37
+            "value": 63697.36
           }
         ]
       },
@@ -832,7 +539,7 @@
     {
       "title": "Default",
       "verb": "POST",
-      "path": "/assessments/64e2ac15-f947-48aa-b433-49bbbcb2896a/cash_transactions",
+      "path": "/assessments/452e2407-fdff-4574-8aa4-1df374869930/cash_transactions",
       "versions": [
         "1.0"
       ],
@@ -843,17 +550,17 @@
             "category": "maintenance_in",
             "payments": [
               {
-                "date": "2021-01-01",
+                "date": "2021-06-01",
                 "amount": 1046.44,
                 "client_id": "05459c0f-a620-4743-9f0c-b3daa93e5711"
               },
               {
-                "date": "2021-02-01",
+                "date": "2021-07-01",
                 "amount": 1034.33,
                 "client_id": "10318f7b-289a-4fa5-a986-fc6f499fecd0"
               },
               {
-                "date": "2021-03-01",
+                "date": "2021-08-01",
                 "amount": 1033.44,
                 "client_id": "5cf62a12-c92b-4cc1-b8ca-eeb4efbcce21"
               }
@@ -863,17 +570,17 @@
             "category": "friends_or_family",
             "payments": [
               {
-                "date": "2021-02-01",
+                "date": "2021-07-01",
                 "amount": 250.0,
                 "client_id": "e47b707b-d795-47c2-8b39-ccf022eae33b"
               },
               {
-                "date": "2021-03-01",
+                "date": "2021-08-01",
                 "amount": 266.02,
                 "client_id": "b0c46cc7-8478-4658-a7f9-85ec85d420b1"
               },
               {
-                "date": "2021-01-01",
+                "date": "2021-06-01",
                 "amount": 250.0,
                 "client_id": "f3ec68a3-8748-4ed5-971a-94d133e0efa0"
               }
@@ -885,17 +592,17 @@
             "category": "maintenance_out",
             "payments": [
               {
-                "date": "2021-02-01",
+                "date": "2021-07-01",
                 "amount": 256.0,
                 "client_id": "347b707b-d795-47c2-8b39-ccf022eae33b"
               },
               {
-                "date": "2021-03-01",
+                "date": "2021-08-01",
                 "amount": 256.0,
                 "client_id": "722b707b-d795-47c2-8b39-ccf022eae33b"
               },
               {
-                "date": "2021-01-01",
+                "date": "2021-06-01",
                 "amount": 256.0,
                 "client_id": "abcb707b-d795-47c2-8b39-ccf022eae33b"
               }
@@ -905,17 +612,17 @@
             "category": "child_care",
             "payments": [
               {
-                "date": "2021-03-01",
+                "date": "2021-08-01",
                 "amount": 258.0,
                 "client_id": "ff7b707b-d795-47c2-8b39-ccf022eae33b"
               },
               {
-                "date": "2021-02-01",
+                "date": "2021-07-01",
                 "amount": 257.0,
                 "client_id": "ee7b707b-d795-47c2-8b39-ccf022eae33b"
               },
               {
-                "date": "2021-01-01",
+                "date": "2021-06-01",
                 "amount": 256.0,
                 "client_id": "ec7b707b-d795-47c2-8b39-ccf022eae33b"
               }
@@ -938,7 +645,7 @@
     {
       "title": "Default",
       "verb": "POST",
-      "path": "/assessments/70df097e-0964-42c0-b151-087fcbf113a7/dependants",
+      "path": "/assessments/5ea39690-9648-45d5-93d0-567300d3957e/dependants",
       "versions": [
         "1.0"
       ],
@@ -946,53 +653,17 @@
       "request_data": {
         "dependants": [
           {
-            "date_of_birth": "2003-02-19",
-            "in_full_time_education": true,
-            "relationship": "child_relative",
-            "monthly_income": 1405.48,
+            "date_of_birth": "1987-12-16",
+            "in_full_time_education": null,
+            "relationship": "adult_relative",
+            "monthly_income": "4779.53",
             "assets_value": 0.0
           },
           {
-            "date_of_birth": "1985-10-27",
-            "in_full_time_education": true,
-            "relationship": "adult_relative",
-            "monthly_income": 2711.27,
-            "assets_value": 0.0
-          }
-        ]
-      },
-      "response_data": {
-        "success": true,
-        "errors": [
-
-        ]
-      },
-      "code": 200,
-      "show_in_doc": 1,
-      "recorded": true
-    },
-    {
-      "title": "Default",
-      "verb": "POST",
-      "path": "/assessments/3574e906-6fe9-4b39-9842-1d0c895855f2/dependants",
-      "versions": [
-        "1.0"
-      ],
-      "query": null,
-      "request_data": {
-        "dependants": [
-          {
-            "date_of_birth": "1978-06-29",
-            "in_full_time_education": null,
-            "relationship": "child_relative",
-            "monthly_income": 1411.5,
-            "assets_value": 0.0
-          },
-          {
-            "date_of_birth": "1957-05-29",
+            "date_of_birth": "1962-02-14",
             "in_full_time_education": null,
             "relationship": "adult_relative",
-            "monthly_income": 6026.0,
+            "monthly_income": "2883.71",
             "assets_value": 0.0
           }
         ]
@@ -1010,7 +681,7 @@
     {
       "title": "Default",
       "verb": "POST",
-      "path": "/assessments/c805c757-e4ba-4d86-9ff7-4d9976b3a108/dependants",
+      "path": "/assessments/657b739e-71e4-47ad-9959-406e630369a5/dependants",
       "versions": [
         "1.0"
       ],
@@ -1018,17 +689,17 @@
       "request_data": {
         "dependants": [
           {
-            "date_of_birth": "1994-06-12",
-            "in_full_time_education": true,
+            "date_of_birth": "1989-10-12",
+            "in_full_time_education": false,
             "relationship": "child_relative",
-            "monthly_income": 9037.71,
+            "monthly_income": "1040.84",
             "assets_value": 0.0
           },
           {
-            "date_of_birth": "1983-07-17",
+            "date_of_birth": "1963-07-06",
             "in_full_time_education": true,
             "relationship": "child_relative",
-            "monthly_income": 6569.73,
+            "monthly_income": "7912.03",
             "assets_value": 0.0
           }
         ]
@@ -1042,25 +713,30 @@
       "code": 422,
       "show_in_doc": 1,
       "recorded": true
-    }
-  ],
-  "explicit_remarks#create": [
+    },
     {
       "title": "Default",
       "verb": "POST",
-      "path": "/assessments/3a577279-6a06-420b-98ce-1a91d01cacf4/explicit_remarks",
+      "path": "/assessments/33c397d0-91ff-482f-8fbf-9decdd63fd71/dependants",
       "versions": [
         "1.0"
       ],
       "query": null,
       "request_data": {
-        "explicit_remarks": [
+        "dependants": [
           {
-            "category": "policy_disregards",
-            "details": [
-              "employment",
-              "charity"
-            ]
+            "date_of_birth": "1988-09-16",
+            "in_full_time_education": false,
+            "relationship": "child_relative",
+            "monthly_income": "2922.95",
+            "assets_value": 0.0
+          },
+          {
+            "date_of_birth": "1969-11-12",
+            "in_full_time_education": true,
+            "relationship": "adult_relative",
+            "monthly_income": "2022.17",
+            "assets_value": 0.0
           }
         ]
       },
@@ -1073,11 +749,13 @@
       "code": 200,
       "show_in_doc": 1,
       "recorded": true
-    },
+    }
+  ],
+  "explicit_remarks#create": [
     {
       "title": "Default",
       "verb": "POST",
-      "path": "/assessments/9ae58d05-d446-4f7b-b17f-7cb70958374a/explicit_remarks",
+      "path": "/assessments/1f496c52-d130-4edc-8bbe-f1cc3259899e/explicit_remarks",
       "versions": [
         "1.0"
       ],
@@ -1102,13 +780,68 @@
       "code": 422,
       "show_in_doc": 1,
       "recorded": true
+    },
+    {
+      "title": "Default",
+      "verb": "POST",
+      "path": "/assessments/c8da7b28-124e-43b3-b394-1a7e25e6e59e/explicit_remarks",
+      "versions": [
+        "1.0"
+      ],
+      "query": null,
+      "request_data": {
+        "explicit_remarks": [
+          {
+            "category": "policy_disregards",
+            "details": [
+              "employment",
+              "charity"
+            ]
+          }
+        ]
+      },
+      "response_data": {
+        "success": true,
+        "errors": [
+
+        ]
+      },
+      "code": 200,
+      "show_in_doc": 1,
+      "recorded": true
     }
   ],
   "irregular_incomes#create": [
     {
       "title": "Default",
       "verb": "POST",
-      "path": "/assessments/daac06bf-76a2-4626-a6ea-4b1d3313f3d1/irregular_incomes",
+      "path": "/assessments/6433cdae-cfa9-4f2f-9aea-14d25614b06f/irregular_incomes",
+      "versions": [
+        "1.0"
+      ],
+      "query": null,
+      "request_data": {
+        "payments": [
+          {
+            "frequency": "annual",
+            "amount": 123456.78
+          }
+        ]
+      },
+      "response_data": {
+        "success": false,
+        "errors": [
+          "Missing parameter income_type"
+        ]
+      },
+      "code": 422,
+      "show_in_doc": 1,
+      "recorded": true
+    },
+    {
+      "title": "Default",
+      "verb": "POST",
+      "path": "/assessments/954dda47-5cf1-44ac-ba63-7d2fef5e23b1/irregular_incomes",
       "versions": [
         "1.0"
       ],
@@ -1131,39 +864,13 @@
       "code": 200,
       "show_in_doc": 1,
       "recorded": true
-    },
-    {
-      "title": "Default",
-      "verb": "POST",
-      "path": "/assessments/4b29e2a7-9e2d-4907-a1f3-dcbbaec36b56/irregular_incomes",
-      "versions": [
-        "1.0"
-      ],
-      "query": null,
-      "request_data": {
-        "payments": [
-          {
-            "frequency": "annual",
-            "amount": 123456.78
-          }
-        ]
-      },
-      "response_data": {
-        "success": false,
-        "errors": [
-          "Missing parameter income_type"
-        ]
-      },
-      "code": 422,
-      "show_in_doc": 1,
-      "recorded": true
     }
   ],
   "other_incomes#create": [
     {
       "title": "Default",
       "verb": "POST",
-      "path": "/assessments/23384ba1-d099-4858-a65a-1aeb10ebc430/other_incomes",
+      "path": "/assessments/a3e8e565-c29a-4492-810b-fc8768aa60be/other_incomes",
       "versions": [
         "1.0"
       ],
@@ -1176,17 +883,17 @@
               {
                 "date": "2019-11-01",
                 "amount": 1046.44,
-                "client_id": "978c0e45-f6d2-4982-b0a9-d5fe08287a9d"
+                "client_id": "7d61816a-a959-4900-ac8e-9e1eeb1fce51"
               },
               {
                 "date": "2019-10-01",
                 "amount": 1034.33,
-                "client_id": "9bfe9782-33aa-41cb-976f-08e4e7b0c522"
+                "client_id": "8a920fde-9e51-4308-b05f-5f94fce6a854"
               },
               {
                 "date": "2019-09-01",
                 "amount": 1033.44,
-                "client_id": "d932737c-27b9-4587-b84e-4514cd1ae632"
+                "client_id": "e7bf573a-66bb-4b83-813e-bb91378b3f6c"
               }
             ]
           },
@@ -1196,17 +903,17 @@
               {
                 "date": "2019-11-01",
                 "amount": 250.0,
-                "client_id": "85cab430-e7c9-4c1e-9f2f-c01dd7bf7892"
+                "client_id": "227437fb-2e6f-4199-b944-a7cfe99896ce"
               },
               {
                 "date": "2019-10-01",
                 "amount": 266.02,
-                "client_id": "28557cdb-66a9-4114-8a4c-20700dd01a99"
+                "client_id": "55a380e7-3869-4096-b2be-8329b4aa4b7d"
               },
               {
                 "date": "2019-09-01",
                 "amount": 250.0,
-                "client_id": "5730a4ad-a4f7-45dd-9b1d-e9eb21e5fae7"
+                "client_id": "377bb21d-ce3b-43c7-82ad-807390c2c4f5"
               }
             ]
           }
@@ -1227,7 +934,7 @@
     {
       "title": "Default",
       "verb": "POST",
-      "path": "/assessments/4d4920fd-e733-4ec6-b0d6-ac9c591d2ad3/outgoings",
+      "path": "/assessments/2e65c98e-e2e8-4d53-a253-6fdaa34e665d/outgoings",
       "versions": [
         "1.0"
       ],
@@ -1238,14 +945,14 @@
             "name": "child_care",
             "payments": [
               {
-                "payment_date": "2021-04-08",
-                "amount": 682.89,
-                "client_id": "c03dd7b5-a6e4-405e-8162-f1ccfe88ccc0"
+                "payment_date": "2021-09-01",
+                "amount": 528.31,
+                "client_id": "ac27c867-b7c9-4edc-b73e-208cbaed88b5"
               },
               {
-                "payment_date": "2021-04-08",
-                "amount": 297.57,
-                "client_id": "6a7be07b-de67-487c-99ab-d3182b7b3ccf"
+                "payment_date": "2021-09-01",
+                "amount": 682.48,
+                "client_id": "b32ffbe8-21b8-4ad4-b954-7cba6b006280"
               }
             ]
           },
@@ -1253,14 +960,14 @@
             "name": "maintenance_out",
             "payments": [
               {
-                "payment_date": "2021-04-08",
-                "amount": 986.23,
-                "client_id": "c03dd7b5-a6e4-405e-8162-f1ccfe88ccc0"
+                "payment_date": "2021-09-01",
+                "amount": 192.67,
+                "client_id": "ac27c867-b7c9-4edc-b73e-208cbaed88b5"
               },
               {
-                "payment_date": "2021-04-08",
-                "amount": 543.37,
-                "client_id": "6a7be07b-de67-487c-99ab-d3182b7b3ccf"
+                "payment_date": "2021-09-01",
+                "amount": 743.89,
+                "client_id": "b32ffbe8-21b8-4ad4-b954-7cba6b006280"
               }
             ]
           },
@@ -1268,16 +975,16 @@
             "name": "rent_or_mortgage",
             "payments": [
               {
-                "payment_date": "2021-04-08",
-                "amount": 289.27,
-                "housing_cost_type": "board_and_lodging",
-                "client_id": "c03dd7b5-a6e4-405e-8162-f1ccfe88ccc0"
+                "payment_date": "2021-09-01",
+                "amount": 935.28,
+                "housing_cost_type": "rent",
+                "client_id": "ac27c867-b7c9-4edc-b73e-208cbaed88b5"
               },
               {
-                "payment_date": "2021-04-08",
-                "amount": 192.81,
-                "housing_cost_type": "board_and_lodging",
-                "client_id": "6a7be07b-de67-487c-99ab-d3182b7b3ccf"
+                "payment_date": "2021-09-01",
+                "amount": 413.03,
+                "housing_cost_type": "rent",
+                "client_id": "b32ffbe8-21b8-4ad4-b954-7cba6b006280"
               }
             ]
           }
@@ -1307,14 +1014,14 @@
             "name": "child_care",
             "payments": [
               {
-                "payment_date": "2021-04-08",
-                "amount": 803.93,
-                "client_id": "588ec6f7-70ae-4db3-a763-4c5eaa53cd58"
+                "payment_date": "2021-09-01",
+                "amount": 596.81,
+                "client_id": "8b696374-f362-4bc2-b614-95c06c9296ae"
               },
               {
-                "payment_date": "2021-04-08",
-                "amount": 586.25,
-                "client_id": "582ebb1c-3f82-4270-abcb-cbe1c1ed3193"
+                "payment_date": "2021-09-01",
+                "amount": 488.55,
+                "client_id": "32642280-3152-4c82-8cf1-5fb8e1aeebc5"
               }
             ]
           },
@@ -1322,14 +1029,14 @@
             "name": "maintenance_out",
             "payments": [
               {
-                "payment_date": "2021-04-08",
-                "amount": 677.33,
-                "client_id": "588ec6f7-70ae-4db3-a763-4c5eaa53cd58"
+                "payment_date": "2021-09-01",
+                "amount": 739.06,
+                "client_id": "8b696374-f362-4bc2-b614-95c06c9296ae"
               },
               {
-                "payment_date": "2021-04-08",
-                "amount": 860.02,
-                "client_id": "582ebb1c-3f82-4270-abcb-cbe1c1ed3193"
+                "payment_date": "2021-09-01",
+                "amount": 118.84,
+                "client_id": "32642280-3152-4c82-8cf1-5fb8e1aeebc5"
               }
             ]
           },
@@ -1337,16 +1044,16 @@
             "name": "rent_or_mortgage",
             "payments": [
               {
-                "payment_date": "2021-04-08",
-                "amount": 866.48,
+                "payment_date": "2021-09-01",
+                "amount": 515.04,
                 "housing_cost_type": "mortgage",
-                "client_id": "588ec6f7-70ae-4db3-a763-4c5eaa53cd58"
+                "client_id": "8b696374-f362-4bc2-b614-95c06c9296ae"
               },
               {
-                "payment_date": "2021-04-08",
-                "amount": 962.45,
+                "payment_date": "2021-09-01",
+                "amount": 591.36,
                 "housing_cost_type": "mortgage",
-                "client_id": "582ebb1c-3f82-4270-abcb-cbe1c1ed3193"
+                "client_id": "32642280-3152-4c82-8cf1-5fb8e1aeebc5"
               }
             ]
           }
@@ -1367,49 +1074,7 @@
     {
       "title": "Default",
       "verb": "POST",
-      "path": "/assessments/0fea8cf9-6491-4750-9279-1dde4b3e432e/properties",
-      "versions": [
-        "1.0"
-      ],
-      "query": null,
-      "request_data": {
-        "properties": {
-          "main_home": {
-            "value": 500000,
-            "outstanding_mortgage": 200,
-            "percentage_owned": 15,
-            "shared_with_housing_assoc": true
-          },
-          "additional_properties": [
-            {
-              "value": 1000,
-              "outstanding_mortgage": 0,
-              "percentage_owned": 99,
-              "shared_with_housing_assoc": false
-            },
-            {
-              "value": 10000,
-              "outstanding_mortgage": 40,
-              "percentage_owned": 80,
-              "shared_with_housing_assoc": true
-            }
-          ]
-        }
-      },
-      "response_data": {
-        "success": true,
-        "errors": [
-
-        ]
-      },
-      "code": 200,
-      "show_in_doc": 1,
-      "recorded": true
-    },
-    {
-      "title": "Default",
-      "verb": "POST",
-      "path": "/assessments/768b6f55-6f1d-4171-8ec1-2046031ab65f/properties",
+      "path": "/assessments/988013c4-9be3-41bd-be7b-55e29f74d4b2/properties",
       "versions": [
         "1.0"
       ],
@@ -1445,6 +1110,48 @@
         ]
       },
       "code": 422,
+      "show_in_doc": 1,
+      "recorded": true
+    },
+    {
+      "title": "Default",
+      "verb": "POST",
+      "path": "/assessments/8e4fc40a-e390-452c-a202-dec8f71d4867/properties",
+      "versions": [
+        "1.0"
+      ],
+      "query": null,
+      "request_data": {
+        "properties": {
+          "main_home": {
+            "value": 500000,
+            "outstanding_mortgage": 200,
+            "percentage_owned": 15,
+            "shared_with_housing_assoc": true
+          },
+          "additional_properties": [
+            {
+              "value": 1000,
+              "outstanding_mortgage": 0,
+              "percentage_owned": 99,
+              "shared_with_housing_assoc": false
+            },
+            {
+              "value": 10000,
+              "outstanding_mortgage": 40,
+              "percentage_owned": 80,
+              "shared_with_housing_assoc": true
+            }
+          ]
+        }
+      },
+      "response_data": {
+        "success": true,
+        "errors": [
+
+        ]
+      },
+      "code": 200,
       "show_in_doc": 1,
       "recorded": true
     }
@@ -2023,95 +1730,30 @@
     {
       "title": "Default",
       "verb": "POST",
-      "path": "/assessments/da89333a-48ee-4120-81e2-39c1e456a2ea/state_benefits",
+      "path": "/assessments/79f15ca3-586a-4e5f-8591-e4615f3f8ce9/state_benefits",
       "versions": [
         "1.0"
       ],
       "query": null,
       "request_data": {
         "state_benefits": [
-          {
-            "name": "benefit_type_1",
-            "payments": [
-              {
-                "date": "2019-11-01",
-                "amount": 1046.44,
-                "client_id": "bda6da5f-69c0-4a18-a6cd-504f6b07392c"
-              },
-              {
-                "date": "2019-10-01",
-                "amount": 1034.33,
-                "client_id": "31e87809-f20b-47b7-9ed2-722c258f0f6c"
-              },
-              {
-                "date": "2019-09-01",
-                "amount": 1033.44,
-                "client_id": "f116dbfa-eb5e-449c-b1db-b300bb540bde"
-              }
-            ]
-          },
           {
             "name": "benefit_type_2",
             "payments": [
               {
                 "date": "2019-11-01",
-                "amount": 250.0,
-                "client_id": "bda6da5f-69c0-4a18-a6cd-504f6b07392c"
-              },
-              {
-                "date": "2019-10-01",
-                "amount": 266.02,
-                "client_id": "31e87809-f20b-47b7-9ed2-722c258f0f6c"
-              },
-              {
-                "date": "2019-09-01",
-                "amount": 250.0,
-                "client_id": "f116dbfa-eb5e-449c-b1db-b300bb540bde",
-                "flags": {
-                  "multi_benefit": true
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "response_data": {
-        "success": true,
-        "errors": [
-
-        ]
-      },
-      "code": 200,
-      "show_in_doc": 1,
-      "recorded": true
-    },
-    {
-      "title": "Default",
-      "verb": "POST",
-      "path": "/assessments/f0f01122-665c-49e7-ab9f-e13e828eee08/state_benefits",
-      "versions": [
-        "1.0"
-      ],
-      "query": null,
-      "request_data": {
-        "state_benefits": [
-          {
-            "name": "benefit_type_3",
-            "payments": [
-              {
-                "date": "2019-11-01",
                 "amount": 1046.44,
-                "client_id": "d52e1ab9-4de6-4a86-b113-df2ed08b04a8"
+                "client_id": "58a124f3-4342-43a7-ae58-dc938f38c9b0"
               },
               {
                 "date": "2019-10-01",
                 "amount": 1034.33,
-                "client_id": "de78dd62-0ee9-4677-978c-52de0e48b54a"
+                "client_id": "39fabe38-0fec-4e27-836a-cca258f538cb"
               },
               {
                 "date": "2019-09-01",
                 "amount": 1033.44,
-                "client_id": "44dd8b81-6950-447a-863e-24dde816e689"
+                "client_id": "81e2bb8d-c59f-4072-b9cd-6f670cc916bc"
               }
             ]
           },
@@ -2120,17 +1762,17 @@
               {
                 "date": "2019-11-01",
                 "amount": 250.0,
-                "client_id": "d52e1ab9-4de6-4a86-b113-df2ed08b04a8"
+                "client_id": "58a124f3-4342-43a7-ae58-dc938f38c9b0"
               },
               {
                 "date": "2019-10-01",
                 "amount": 266.02,
-                "client_id": "de78dd62-0ee9-4677-978c-52de0e48b54a"
+                "client_id": "39fabe38-0fec-4e27-836a-cca258f538cb"
               },
               {
                 "date": "2019-09-01",
                 "amount": 250.0,
-                "client_id": "44dd8b81-6950-447a-863e-24dde816e689",
+                "client_id": "81e2bb8d-c59f-4072-b9cd-6f670cc916bc",
                 "flags": {
                   "multi_benefit": true
                 }
@@ -2148,13 +1790,78 @@
       "code": 422,
       "show_in_doc": 1,
       "recorded": true
+    },
+    {
+      "title": "Default",
+      "verb": "POST",
+      "path": "/assessments/2d2a9b9d-5e86-4365-9471-31531116962f/state_benefits",
+      "versions": [
+        "1.0"
+      ],
+      "query": null,
+      "request_data": {
+        "state_benefits": [
+          {
+            "name": "benefit_type_4",
+            "payments": [
+              {
+                "date": "2019-11-01",
+                "amount": 1046.44,
+                "client_id": "73e68fd3-6f66-42b3-bb06-4ebb00cdeb0e"
+              },
+              {
+                "date": "2019-10-01",
+                "amount": 1034.33,
+                "client_id": "164e6070-6277-448c-9e9e-4caef2fb1c78"
+              },
+              {
+                "date": "2019-09-01",
+                "amount": 1033.44,
+                "client_id": "de3adc88-2ea4-4d44-ae93-96900249c3f4"
+              }
+            ]
+          },
+          {
+            "name": "benefit_type_5",
+            "payments": [
+              {
+                "date": "2019-11-01",
+                "amount": 250.0,
+                "client_id": "73e68fd3-6f66-42b3-bb06-4ebb00cdeb0e"
+              },
+              {
+                "date": "2019-10-01",
+                "amount": 266.02,
+                "client_id": "164e6070-6277-448c-9e9e-4caef2fb1c78"
+              },
+              {
+                "date": "2019-09-01",
+                "amount": 250.0,
+                "client_id": "de3adc88-2ea4-4d44-ae93-96900249c3f4",
+                "flags": {
+                  "multi_benefit": true
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "response_data": {
+        "success": true,
+        "errors": [
+
+        ]
+      },
+      "code": 200,
+      "show_in_doc": 1,
+      "recorded": true
     }
   ],
   "vehicles#create": [
     {
       "title": "Default",
       "verb": "POST",
-      "path": "/assessments/1dfa8da1-1c4b-48b7-8e29-f4f45298605d/vehicles",
+      "path": "/assessments/44062f85-39b9-4192-9a33-d8e9f208da34/vehicles",
       "versions": [
         "1.0"
       ],
@@ -2162,16 +1869,16 @@
       "request_data": {
         "vehicles": [
           {
-            "value": 8937.66,
-            "loan_amount_outstanding": 7697.38,
-            "date_of_purchase": "2018-01-11",
-            "in_regular_use": false
+            "value": 1260.81,
+            "loan_amount_outstanding": 5001.22,
+            "date_of_purchase": "2017-04-09",
+            "in_regular_use": true
           },
           {
-            "value": 9951.22,
-            "loan_amount_outstanding": 3123.62,
-            "date_of_purchase": "2020-09-28",
-            "in_regular_use": false
+            "value": 4132.09,
+            "loan_amount_outstanding": 5271.35,
+            "date_of_purchase": "2017-02-05",
+            "in_regular_use": true
           }
         ]
       },
@@ -2196,16 +1903,16 @@
       "request_data": {
         "vehicles": [
           {
-            "value": 1763.87,
-            "loan_amount_outstanding": 6321.56,
-            "date_of_purchase": "2019-06-26",
+            "value": 1468.88,
+            "loan_amount_outstanding": 8659.31,
+            "date_of_purchase": "2017-11-10",
             "in_regular_use": false
           },
           {
-            "value": 5789.02,
-            "loan_amount_outstanding": 7421.08,
-            "date_of_purchase": "2017-10-22",
-            "in_regular_use": false
+            "value": 8377.85,
+            "loan_amount_outstanding": 5629.69,
+            "date_of_purchase": "2017-07-27",
+            "in_regular_use": true
           }
         ]
       },

@@ -27,6 +27,8 @@ RSpec.describe 'IntegrationTests::TestRunner', type: :request do
 
   before { setup_test_data }
 
+  before(:each) { mock_lfa_responses }
+
   describe 'run integration_tests' do
     it 'processes all the tests on all the sheets' do
       failing_tests = []
@@ -42,7 +44,6 @@ RSpec.describe 'IntegrationTests::TestRunner', type: :request do
         failing_tests << worksheet.description unless pass
         result_message(failing_tests, test_count) unless silent?
       end
-
       expect(failing_tests).to be_empty, "Failing tests: #{failing_tests.join(', ')}"
     end
 

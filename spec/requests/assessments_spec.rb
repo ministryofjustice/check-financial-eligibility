@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe AssessmentsController, type: :request do
+  before(:each) { mock_lfa_responses }
   before { create :bank_holiday }
   describe 'POST assessments' do
     let(:ipaddr) { '127.0.0.1' }

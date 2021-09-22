@@ -14,6 +14,7 @@ end
 
 vcr_debug = ENV['VCR_DEBUG'].to_s == 'true'
 vcr_record_mode = ENV['VCR_RECORD_MODE'] ? ENV['VCR_RECORD_MODE'].to_sym : :once
+
 VCR.configure do |vcr_config|
   vcr_config.cassette_library_dir = 'spec/cassettes'
   vcr_config.hook_into :webmock

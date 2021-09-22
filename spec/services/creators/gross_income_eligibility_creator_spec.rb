@@ -2,6 +2,12 @@ require 'rails_helper'
 
 module Creators
   RSpec.describe GrossIncomeEligibilityCreator do
+    # before(:each) do
+    #   allow(LegalFrameworkQueryService).to receive(:waived?) { |ccms_code, _threshold_type| ccms_code.to_s =~ /^DA/ ? true : false }
+    #   allow(LegalFrameworkQueryService).to receive(:matter_type) { |ccms_code| ccms_code.to_s =~ /^DA/ ? 'domestic_abuse' : 'section8' }
+    # end
+    before(:each) { mock_lfa_responses }
+
     let(:assessment) { create :assessment, :with_gross_income_summary, proceeding_type_codes: codes }
     let(:summary) { assessment.gross_income_summary }
 
@@ -41,7 +47,7 @@ module Creators
           create_list :dependant, 4, :adult_relative, assessment: assessment
         end
 
-        it 'creates a record with no uplifed threshold' do
+        it 'creates a record with no uplifted threshold' do
           subject
           elig = summary.eligibilities.find_by(proceeding_type_code: codes.first)
           expect(elig.upper_threshold).to eq 2657.0

@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.describe 'Full Assessment with remarks' do
   let(:client_id) { 'uuid or any unique string' }
 
+  before(:each) { mock_lfa_responses }
+
   before do
     Dibber::Seeder.new(StateBenefitType,
                        'data/state_benefit_types.yml',
