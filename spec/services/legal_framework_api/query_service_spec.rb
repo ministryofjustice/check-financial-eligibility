@@ -67,16 +67,6 @@ module LegalFrameworkAPI
       end
     end
 
-    context 'exception posting request to LFA' do
-      let(:ccms_code) { :SE004 }
-      it 'records a SubmissionError' do
-        allow_any_instance_of(Faraday::Connection).to receive(:post).and_raise(Net::OpenTimeout)
-        expect {
-          described_class.matter_type(ccms_code)
-        }.to raise_error SubmissionError, /LegalFrameworkAPI::QueryService received Net::OpenTimeout/
-      end
-    end
-
     def request_body
       {
         request_id: request_id,

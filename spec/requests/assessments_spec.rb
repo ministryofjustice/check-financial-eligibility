@@ -131,51 +131,37 @@ RSpec.describe AssessmentsController, type: :request do
 
     subject { get assessment_path(assessment), headers: headers }
 
-    # NOTE: as from version 4, the version is specified when making the first POST, not when getting the result.
-    context 'no version specified' do
-      let(:headers) { { 'Accept' => 'application/json' } }
-      context 'passported' do
-        let(:assessment) { create :assessment, :passported, :with_everything, :with_eligibilities }
+    context 'calling the correct workflows assessors and decorators' do
+      before do
+        expect(Assessment).to receive(:find).with(assessment.id.to_s).and_return(assessment)
+        expect(Workflows::MainWorkflow).to receive(:call).with(assessment)
+        expect(Assessors::MainAssessor).to receive(:call).with(assessment)
+        expect(assessment).to receive(:version_3?).and_return(is_version3)
+      end
 
-        it 'returns http success', :show_in_doc, doc_title: 'GET Version 3 Passported Response' do
+      let(:assessment) { create :assessment, :passported, :with_everything, :with_eligibilities }
+
+      context 'version 3' do
+        let(:is_version3) { true }
+        let(:decorator) { double Decorators::V3::AssessmentDecorator }
+
+        it 'calls the required services and uses the V3 decorator' do
+          expect(Decorators::V3::AssessmentDecorator).to receive(:new).with(assessment).and_return(decorator)
+          expect(decorator).to receive(:as_json).and_return('')
+
           subject
-          expect(response).to have_http_status(:success)
-        end
-
-        it 'returns capital summary data as json' do
-          Timecop.freeze(now) do # freeze time so we don't have to worry about time differences between actual and expected results
-            subject
-            expected_response = Decorators::V3::AssessmentDecorator.new(assessment.reload).as_json.to_json
-            expected_response.gsub!('"-0.0"', '"0.0"')
-            expect(parsed_response).to eq(JSON.parse(expected_response, symbolize_names: true))
-          end
-        end
-
-        it 'has called the workflow and assessor' do
-          expect(Workflows::MainWorkflow).to receive(:call).with(assessment)
-          expect(Assessors::MainAssessor).to receive(:call).with(assessment)
-          subject
-        end
-
-        it 'has defaulted to using version 3' do
-          subject
-          expect(parsed_response[:version]).to eq '3'
         end
       end
 
-      context 'non-passported' do
-        let(:assessment) { create :assessment, :with_everything, :with_eligibilities }
-        it 'returns success' do
-          subject
-          expect(response).to have_http_status(:success)
-        end
+      context 'version 4' do
+        let(:is_version3) { false }
+        let(:decorator) { double Decorators::V4::AssessmentDecorator }
 
-        it 'returns capital summary data as json' do
-          Timecop.freeze(now) do # freeze time so we don't have to worry about time differences between actual and expected results
-            subject
-            expected_response = Decorators::V3::AssessmentDecorator.new(assessment.reload).as_json.to_json
-            expect(parsed_response).to eq(JSON.parse(expected_response, symbolize_names: true))
-          end
+        it 'calls the required services and uses the V3 decorator' do
+          expect(Decorators::V4::AssessmentDecorator).to receive(:new).with(assessment).and_return(decorator)
+          expect(decorator).to receive(:as_json).and_return('')
+
+          subject
         end
       end
     end

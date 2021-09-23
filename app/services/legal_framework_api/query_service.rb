@@ -109,8 +109,6 @@ module LegalFrameworkAPI
         request.headers['Content-Type'] = 'application/json'
         request.body = request_body
       end
-    rescue StandardError => e
-      catch_and_record_exception(e)
     end
 
     def host
@@ -126,21 +124,6 @@ module LegalFrameworkAPI
 
     def conn
       @conn ||= Faraday.new(url: host, headers: headers)
-    end
-
-    def catch_and_record_exception(error)
-      raise_exception_error(
-        message: formatted_error_message(error),
-        http_status: error.respond_to?(:http_status) ? error.http_status : nil
-      )
-    end
-
-    def raise_exception_error(message:, http_status: nil)
-      raise SubmissionError.new(message, http_status)
-    end
-
-    def formatted_error_message(err)
-      "#{self.class} received #{err.class}: #{err.message}"
     end
 
     def headers
