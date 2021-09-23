@@ -69,8 +69,8 @@ env:
         name: {{ template "app.fullname" . }}
         key: deployHost
   - name: LEGAL_FRAMEWORK_API_HOST
-   valueFrom:
-     secretKeyRef:
-       name: {{ template "app.fullname" . }}
-       key: legalFrameworkApiHost
+    valueFrom:
+      secretKeyRef:
+        name: {{ template "app.fullname" . }}
+        key: legalFrameworkApiHost
 {{- end }}
