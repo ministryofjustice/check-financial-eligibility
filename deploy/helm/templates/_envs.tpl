@@ -71,6 +71,6 @@ env:
   - name: LEGAL_FRAMEWORK_API_HOST
    valueFrom:
      secretKeyRef:
-       name: {{ template "apply-for-legal-aid.fullname" . }}
+       name: {{ template "app.fullname" . }}
        key: legalFrameworkApiHost
 {{- end }}
