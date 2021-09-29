@@ -100,11 +100,12 @@ module LegalFrameworkAPI
     end
 
     def headers
+      # The headers also include the Faraday version, but because that changes over time, we
+      # don't specify that.  It just matches the headers we specify here
       {
         'Accept' => '*/*',
         'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        'Content-Type' => 'application/json',
-        'User-Agent' => 'Faraday v1.7.2'
+        'Content-Type' => 'application/json'
       }
     end
   end
