@@ -48,6 +48,9 @@ gem 'descriptive_statistics', require: 'descriptive_statistics/safe'
 
 gem 'google_drive', '>= 3.0.7'
 
+# Improve backtrace in nested error recues
+gem 'nesty'
+
 # parse spreadsheets
 gem 'roo', '~> 2.8.3'
 

@@ -14,6 +14,8 @@ RSpec.describe 'contribution_required Full Assessment with remarks' do
   end
 
   it 'returns the expected payload with all remarks' do
+    mock_lfa_responses
+
     assessment_id = post_assessment
     post_applicant(assessment_id)
     post_capitals(assessment_id)

@@ -1,15 +1,20 @@
 require 'rails_helper'
 
 RSpec.describe ProceedingTypeThreshold do
+  before(:each) { mock_lfa_responses }
+
   let(:date) { Date.new(2021, 4, 9) }
   let(:waivable_codes) { %i[DA001 DA002 DA003 DA004 DA005 DA006 DA007 DA020] }
   let(:unwaivable_codes) { %i[SE003 SE004 SE013 SE014] }
   let(:all_codes) { waivable_codes + unwaivable_codes }
+  let(:threshold_types) { %i[capital_upper gross_income_upper disposable_income_upper] }
 
-  subject { described_class.value_for(ccms_code, threshold, date) }
+  subject do
+    described_class.value_for(ccms_code, threshold, date)
+  end
 
   describe '.value_for' do
-    let(:ccms_code) { all_codes.sample }
+    let(:ccms_code) { :DA005 }
     let(:threshold) { :capital_lower }
 
     context 'not a waivable threshold' do
@@ -24,9 +29,9 @@ RSpec.describe ProceedingTypeThreshold do
     end
 
     context 'waivable threshold' do
-      let(:threshold) { described_class::WAIVABLE_THRESHOLDS.sample }
+      let(:threshold) { :capital_upper }
       context 'waived ccms_code' do
-        let(:ccms_code) { waivable_codes.sample }
+        let(:ccms_code) { :DA020 }
 
         it 'gets the infinite_gross_income_upper from Threshold' do
           expect(Threshold).to receive(:value_for).with(:infinite_gross_income_upper, at: date)
@@ -39,7 +44,7 @@ RSpec.describe ProceedingTypeThreshold do
       end
 
       context 'un-waived ccms code' do
-        let(:ccms_code) { unwaivable_codes.sample }
+        let(:ccms_code) { :SE013 }
         it 'gets passes the call to Threshold' do
           expect(Threshold).to receive(:value_for).with(threshold, at: date)
           subject
@@ -50,16 +55,9 @@ RSpec.describe ProceedingTypeThreshold do
         end
       end
 
-      context 'invalid ccms_code' do
-        let(:ccms_code) { :XX999 }
-        it 'raises' do
-          expect { subject }.to raise_error KeyError, 'key not found: :XX999'
-        end
-      end
-
       context 'invalid threshold' do
         let(:threshold) { :minimum_wage }
-        let(:ccms_code) { waivable_codes.sample }
+        let(:ccms_code) { :DA003 }
         it 'passes the call to Threshold' do
           expect(Threshold).to receive(:value_for).with(threshold, at: date)
           subject

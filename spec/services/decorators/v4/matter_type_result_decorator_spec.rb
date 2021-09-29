@@ -3,6 +3,8 @@ require 'rails_helper'
 module Decorators
   module V4
     RSpec.describe MatterTypeResultDecorator do
+      before(:each) { mock_lfa_responses }
+
       subject { described_class.new(assessment).as_json }
 
       let(:assessment) { create :assessment, proceeding_type_codes: ptcs }

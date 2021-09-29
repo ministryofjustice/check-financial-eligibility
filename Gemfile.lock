@@ -206,6 +206,7 @@ GEM
     multi_json (1.15.0)
     multipart-post (2.1.1)
     nenv (0.3.0)
+    nesty (1.0.2)
     nio4r (2.5.8)
     nokogiri (1.12.5)
       mini_portile2 (~> 2.6.1)
@@ -410,6 +411,7 @@ DEPENDENCIES
   json-schema (>= 2.8.1)
   listen (>= 3.0.5, < 3.8)
   mimemagic (>= 0.4.3)
+  nesty
   pg (>= 0.18, < 2.0)
   pry-byebug
   pry-rescue

@@ -38,5 +38,7 @@ module CheckFinancialEligibility
     config.x.status.app_branch = ENV['APP_BRANCH'] || 'Not Available'
     config.x.use_test_threshold_data = ENV['USE_TEST_THRESHOLD_DATA']
     config.autoload_paths += %W[#{config.root}/app/validators]
+
+    config.x.legal_framework_api_host = ENV['LEGAL_FRAMEWORK_API_HOST']
   end
 end

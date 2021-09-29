@@ -102,9 +102,9 @@ RSpec.describe CashTransactionsController, type: :request do
       end
     end
 
-    def parsed_response
-      JSON.parse(response.body, symbolize_names: true)
-    end
+    # def parsed_response
+    #   JSON.parse(response.body, symbolize_names: true)
+    # end
 
     def valid_params
       {
