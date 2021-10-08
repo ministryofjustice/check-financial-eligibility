@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/ministryofjustice/check-financial-eligibility.svg?style=shield)](https://circleci.com/gh/ministryofjustice/check-financial-eligibility/tree/master)
+[![CircleCI](https://circleci.com/gh/ministryofjustice/check-financial-eligibility.svg?style=shield)](https://circleci.com/gh/ministryofjustice/check-financial-eligibility/tree/main)
 
 # Ministry of Justice
 
