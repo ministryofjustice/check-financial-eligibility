@@ -2,9 +2,10 @@ version: 2
 updates:
 - package-ecosystem: bundler
   directory: "/"
+  allow:
+    - dependency-type: "all"
   schedule:
-    interval: weekly
-    day: wednesday
+    interval: daily
     time: "03:00"
     timezone: Europe/London
   open-pull-requests-limit: 10
