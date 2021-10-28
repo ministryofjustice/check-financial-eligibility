@@ -92,7 +92,7 @@ GEM
       activerecord (>= 5.a)
       database_cleaner-core (~> 2.0.0)
     database_cleaner-core (2.0.1)
-    debug_inspector (1.0.0)
+    debug_inspector (1.1.0)
     declarative (0.0.20)
     descriptive_statistics (2.5.1)
     dibber (0.6.0)
