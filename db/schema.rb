@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_28_110741) do
+ActiveRecord::Schema.define(version: 2021_11_10_164710) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -146,6 +146,8 @@ ActiveRecord::Schema.define(version: 2021_04_28_110741) do
     t.decimal "lower_threshold", default: "0.0", null: false
     t.decimal "upper_threshold", default: "0.0", null: false
     t.string "assessment_result"
+    t.decimal "earned_income_deductions", default: "0.0", null: false
+    t.decimal "fixed_employment_allowance", default: "0.0", null: false
     t.index ["assessment_id"], name: "index_disposable_income_summaries_on_assessment_id"
   end
 
@@ -159,6 +161,28 @@ ActiveRecord::Schema.define(version: 2021_04_28_110741) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["parent_id", "type", "proceeding_type_code"], name: "eligibilities_unique_type_ptc", unique: true
+  end
+
+  create_table "employment_payments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "employment_id"
+    t.date "date", null: false
+    t.decimal "gross_income", default: "0.0", null: false
+    t.decimal "benefits_in_kind", default: "0.0", null: false
+    t.decimal "tax", default: "0.0", null: false
+    t.decimal "national_insurance", default: "0.0", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["employment_id"], name: "index_employment_payments_on_employment_id"
+  end
+
+  create_table "employments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "assessment_id"
+    t.string "name"
+    t.decimal "monthly_employment_income", default: "0.0", null: false
+    t.decimal "monthly_employment_deductions", default: "0.0", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["assessment_id"], name: "index_employments_on_assessment_id"
   end
 
   create_table "explicit_remarks", force: :cascade do |t|
@@ -200,6 +224,7 @@ ActiveRecord::Schema.define(version: 2021_04_28_110741) do
     t.decimal "pension_cash", default: "0.0"
     t.decimal "upper_threshold", default: "0.0", null: false
     t.string "assessment_result"
+    t.decimal "gross_earned_income", default: "0.0", null: false
     t.index ["assessment_id"], name: "index_gross_income_summaries_on_assessment_id"
   end
 
@@ -319,6 +344,8 @@ ActiveRecord::Schema.define(version: 2021_04_28_110741) do
   add_foreign_key "cash_transaction_categories", "gross_income_summaries"
   add_foreign_key "cash_transactions", "cash_transaction_categories"
   add_foreign_key "disposable_income_summaries", "assessments"
+  add_foreign_key "employment_payments", "employments"
+  add_foreign_key "employments", "assessments"
   add_foreign_key "gross_income_summaries", "assessments"
   add_foreign_key "irregular_income_payments", "gross_income_summaries"
   add_foreign_key "other_income_payments", "other_income_sources"
