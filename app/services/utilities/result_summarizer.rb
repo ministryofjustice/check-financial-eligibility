@@ -1,4 +1,5 @@
 module Utilities
+  # class to calculate the overall given an array of results (from the eligibility records for each proceeding type)
   class ResultSummarizer
     def self.call(individual_results)
       return :pending if individual_results.empty?
