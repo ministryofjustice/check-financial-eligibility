@@ -30,6 +30,8 @@ class Assessment < ApplicationRecord
            foreign_key: :parent_id,
            inverse_of: :assessment,
            dependent: :destroy
+  has_many :employments
+  # has_many :employment_payments, through: :employments
 
   enum matter_proceeding_type: enum_hash_for(:domestic_abuse)
 

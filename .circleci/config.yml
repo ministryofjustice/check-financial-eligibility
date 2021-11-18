@@ -13,7 +13,7 @@ executors:
           GITHUB_TEAM_NAME_SLUG: laa-apply-for-legal-aid
   linting-executor:
     docker:
-      - image: circleci/ruby:3.0.2-node-browsers
+      - image: circleci/ruby:3.0.deploy_uat2-node-browsers
         environment:
           - RAILS_ENV=test
           - TZ: "Europe/London"
