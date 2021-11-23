@@ -1,7 +1,7 @@
 # WorkingDayCalculator
 #
 # This class is used to determine whether two dates are  a set number of days apart, allowing for bank holidays etc.
-# It is called consecutively by RegularPeriodCalculator iterating through an array of payment dates.
+# It is called consecutively by RegularPeriodAnalyser iterating through an array of payment dates.
 #
 # It is initialised with the expected period between payment dates (either 7, 14, or 28).  In this explanation, we will assume 7, but
 # it will work equally well with 14 or 28.

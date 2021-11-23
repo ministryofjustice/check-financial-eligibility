@@ -63,3 +63,5 @@ disposable_income_contribution_bands:
     disregard: 616
     percentage: 70.0
     base: 121.85
+
+fixed_employment_allowance: 45.0

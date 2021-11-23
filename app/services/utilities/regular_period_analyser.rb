@@ -6,6 +6,9 @@ module Utilities
       28 => [3, 4]
     }.freeze
 
+    # Given a period (7, 14, 28) and an array of dates, returns true if those dates, after taking into account bank holidays,
+    # are every 7, 14, days, otherwise false
+    #
     def self.call(period, dates)
       new(period, dates).call
     end

@@ -24,6 +24,7 @@ class Assessment < ApplicationRecord
   has_many :capital_items, through: :capital_summary, dependent: :destroy
   has_many :assessment_errors, dependent: :destroy
   has_many :explicit_remarks, dependent: :destroy
+  has_many :employments, dependent: :destroy
   has_many :eligibilities,
            class_name: 'Eligibility::Assessment',
            foreign_key: :parent_id,
