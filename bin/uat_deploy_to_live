@@ -2,7 +2,7 @@
 
 deploy() {
   IMG_REPO="$ECR_ENDPOINT/laa-apply-for-legal-aid/check-financial-eligibility-service"
-  RELEASE_NAME=$(echo $CIRCLE_BRANCH | sed 's:^\w*\/::' | tr -s ' _/[]().' '-' | cut -c1-30 | sed 's/-$//')
+  RELEASE_NAME=$(echo $CIRCLE_BRANCH | tr '[:upper:]' '[:lower:]' | sed 's:^\w*\/::' | tr -s ' _/[]().' '-' | cut -c1-30 | sed 's/-$//')
   RELEASE_HOST="$RELEASE_NAME-check-financial-uat.apps.live-1.cloud-platform.service.justice.gov.uk"
   IDENTIFIER="$RELEASE_NAME-check-financial-eligibility-check-financial-eligibility-uat-green"
 
