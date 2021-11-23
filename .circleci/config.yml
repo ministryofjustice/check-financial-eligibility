@@ -71,6 +71,16 @@ references:
       command: |
         $(aws ecr get-login --region eu-west-2 --no-include-email)
         setup-kube-auth
+  setup_uat_kubectl_live: &setup_uat_kubectl_live
+    run:
+      name: Kubectl deployment setup UAT - live cluster
+      command: |
+        $(aws ecr get-login --region eu-west-2 --no-include-email)
+        echo -n ${K8S_CLUSTER_CERT_UAT_LIVE} | base64 -d > ./ca.crt
+        kubectl config set-cluster ${K8S_CLUSTER_NAME_UAT_LIVE} --certificate-authority=./ca.crt --server=https://${K8S_CLUSTER_NAME_UAT_LIVE}
+        kubectl config set-credentials circleci --token=${K8S_TOKEN_UAT_LIVE}
+        kubectl config set-context ${K8S_CLUSTER_NAME_UAT_LIVE} --cluster=${K8S_CLUSTER_NAME_UAT_LIVE} --user=circleci --namespace=${K8S_NAMESPACE_UAT_LIVE}
+        kubectl config use-context ${K8S_CLUSTER_NAME_UAT_LIVE}
   update_packages: &update_packages
     run:
       name: Update packages
@@ -192,6 +202,20 @@ jobs:
             ./bin/uat_deploy
   deploy_main_uat:
     <<: *deploy_uat
+  deploy_uat_live: &deploy_uat_live
+    executor: cloud-platform-executor
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - *setup_uat_kubectl_live
+      - *decrypt_secrets
+      - deploy:
+          name: Helm deployment to UAT - live cluster
+          command: |
+            ./bin/uat_deploy_to_live
+  deploy_main_uat_live:
+    <<: *deploy_uat_live
   delete_uat_branch:
     executor: cloud-platform-executor
     steps:
@@ -203,6 +227,16 @@ jobs:
           command: kubectl config use-context uat
       - run:
           name: Delete UAT release
+          command: |
+            ./bin/delete_uat_release.sh
+  delete_uat_branch_live:
+    executor: cloud-platform-executor
+    steps:
+      - checkout
+      - setup_remote_docker
+      - *setup_uat_kubectl_live
+      - run:
+          name: Delete UAT release from live cluster
           command: |
             ./bin/delete_uat_release.sh
   deploy_staging:
@@ -281,6 +315,11 @@ workflows:
             - lint_checks
             - unit_tests
             - build_and_push
+      - deploy_uat_live:
+          requires:
+            - lint_checks
+            - unit_tests
+            - build_and_push
   merge_pr:
     jobs:
       - lint_checks:
@@ -298,9 +337,15 @@ workflows:
       - deploy_main_uat:
           requires:
             - build_and_push
+      - deploy_main_uat_live:
+          requires:
+            - build_and_push
       - delete_uat_branch:
           requires:
             - deploy_main_uat
+      - delete_uat_branch_live:
+          requires:
+            - deploy_main_uat_live
       - deploy_staging:
           requires:
             - build_and_push
