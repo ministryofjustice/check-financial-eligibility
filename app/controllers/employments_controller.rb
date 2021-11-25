@@ -52,16 +52,5 @@ class EmploymentsController < ApplicationController
 
   def input
     @input ||= JSON.parse(request.raw_post, symbolize_names: true)
-  #  looks like this:
-  # => [{:name=>"Job 1",
-  #   :payments=>
-  #    [{:date=>"2021-10-30", :gross=>1046.0, :benefits_in_kind=>16.6, :tax=>-104.1, :national_insurance=>-18.66, :net_employment_income=>898.84},
-  #     {:date=>"2021-10-30", :gross=>1046.0, :benefits_in_kind=>16.6, :tax=>-104.1, :national_insurance=>-18.66, :net_employment_income=>898.84},
-  #     {:date=>"2021-10-30", :gross=>1046.0, :benefits_in_kind=>16.6, :tax=>-104.1, :national_insurance=>-18.66, :net_employment_income=>898.84}]},
-  #  {:name=>"Job 2",
-  #   :payments=>
-  #    [{:date=>"2021-10-30", :gross=>1046.0, :benefits_in_kind=>16.6, :tax=>-104.1, :national_insurance=>-18.66, :net_employment_income=>898.84},
-  #     {:date=>"2021-10-30", :gross=>1046.0, :benefits_in_kind=>16.6, :tax=>-104.1, :national_insurance=>-18.66, :net_employment_income=>898.84},
-  #     {:date=>"2021-10-30", :gross=>1046.0, :benefits_in_kind=>16.6, :tax=>-104.1, :national_insurance=>-18.66, :net_employment_income=>898.84}]}]
   end
 end

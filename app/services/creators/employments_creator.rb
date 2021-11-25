@@ -24,20 +24,19 @@ module Creators
       end
     end
 
-
     def create_employment
-      @employments_incomes.each do |job|
+      @employments_incomes.each do |employment|
         @assessment.employments.create!(assessment_id: assessment_id,
-                           name: job[:name])
+                                        name: employment[:name])
 
-        job[:payments].each do |payment|
-          emp = Employment.find_by(assessment_id: assessment_id, name: job[:name])
+        employment[:payments].each do |income|
+          emp = Employment.find_by(assessment_id: assessment_id, name: employment[:name])
           emp.employment_payments.create!(employment_id: emp.id,
-                                    date: payment[:date],
-                                    gross_income: payment[:gross],
-                                    benefits_in_kind: payment[:benefits_in_kind],
-                                    tax: payment[:tax],
-                                    national_insurance: payment[:national_insurance] )
+                                          date: income[:date],
+                                          gross_income: income[:gross],
+                                          benefits_in_kind: income[:benefits_in_kind],
+                                          tax: income[:tax],
+                                          national_insurance: income[:national_insurance])
         end
       end
     end
