@@ -17,12 +17,10 @@ RSpec.describe EmploymentsController, type: :request do
           expect(response).to have_http_status(:success)
         end
 
-        it 'creates two employment income records' do
-        # check the employment table to check count has increased by 2
-        # check employment_payments table has increased by 6 (3 for each employment)
-        subject
-        expect { subject }.to change { Employment.count }.by(2)
-        expect { subject }.to change { EmploymentPayment.count }.by(6)
+        it 'creates two employment income records with associated EmploymentPayment records' do
+          subject
+          expect(Employment.count).to eq 2
+          expect(EmploymentPayment.count).to eq 6
         end
 
         it 'generates a valid response' do
