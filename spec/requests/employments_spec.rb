@@ -39,7 +39,7 @@ RSpec.describe EmploymentsController, type: :request do
           new_hash
         end
 
-        it 'returns unsuccessful' do
+        it 'returns unsuccessful', :show_in_doc do
           subject
           expect(response.status).to eq 422
         end
