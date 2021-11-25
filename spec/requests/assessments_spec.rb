@@ -24,7 +24,7 @@ RSpec.describe AssessmentsController, type: :request do
         subject
       end
 
-      it 'returns http success' do
+      it 'returns http success', :show_in_doc do
         expect(response).to have_http_status(:success)
       end
 
