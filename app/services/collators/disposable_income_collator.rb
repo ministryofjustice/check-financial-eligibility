@@ -56,8 +56,17 @@ module Collators
       }
     end
 
+    def fixed_employment_allowance
+      @fixed_employment_allowance ||= disposable_income_summary.fixed_employment_allowance
+    end
+
+    def employment_income_deductions
+      @employment_income_deductions ||= disposable_income_summary.employment_income_deductions
+    end
+
     def total_outgoings_and_allowances
-      net_housing_costs + dependant_allowance + child_care_bank + maintenance_out_bank + legal_aid_bank + @monthly_cash_transactions_total
+      net_housing_costs + dependant_allowance + child_care_bank + maintenance_out_bank + legal_aid_bank\
+      + @monthly_cash_transactions_total + fixed_employment_allowance + employment_income_deductions
     end
 
     def disposable_income

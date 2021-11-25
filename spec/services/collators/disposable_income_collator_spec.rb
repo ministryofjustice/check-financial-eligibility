@@ -9,7 +9,8 @@ module Collators
     let(:legal_aid_bank) { Faker::Number.decimal(l_digits: 3, r_digits: 2).to_d(Float::DIG) }
     let(:housing_benefit) { Faker::Number.between(from: 1.25, to: gross_housing / 2).round(2) }
     let(:net_housing) { gross_housing - housing_benefit }
-    let(:total_outgoings) { child_care_bank + maintenance_out_bank + net_housing + dependant_allowance + legal_aid_bank }
+    let(:employment_income_deductions) { Faker::Number.decimal(l_digits: 3, r_digits: 2).to_d(Float::DIG) }
+    let(:fixed_employment_allowance) { 45.0 }
 
     let(:dependant_allowance) { 582.98 }
 
@@ -24,7 +25,9 @@ module Collators
                        net_housing_costs: net_housing,
                        total_outgoings_and_allowances: 0.0,
                        dependant_allowance: dependant_allowance,
-                       total_disposable_income: 0.0
+                       total_disposable_income: 0.0,
+                       employment_income_deductions: employment_income_deductions,
+                       fixed_employment_allowance: fixed_employment_allowance
       create :disposable_income_eligibility, disposable_income_summary: summary, proceeding_type_code: 'DA001'
       summary
     end
@@ -37,7 +40,9 @@ module Collators
         maintenance_out_bank +
         legal_aid_bank +
         net_housing +
-        dependant_allowance
+        dependant_allowance +
+        employment_income_deductions +
+        fixed_employment_allowance
     end
 
     let!(:gross_income_summary) { create :gross_income_summary, :with_all_records, assessment: assessment }
