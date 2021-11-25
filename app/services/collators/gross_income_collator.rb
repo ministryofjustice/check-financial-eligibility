@@ -5,6 +5,7 @@ module Collators
     INCOME_CATEGORIES = CFEConstants::VALID_INCOME_CATEGORIES.map(&:to_sym)
 
     def call
+      Calculators::EmploymentIncomeCalculator.call(assessment) if assessment.employments.any?
       gross_income_summary.update!(populate_attrs)
     end
 
@@ -14,13 +15,18 @@ module Collators
       attrs = default_attrs
 
       INCOME_CATEGORIES.each do |category|
-        attrs[:"#{category}_bank"] = category == :benefits ? monthly_state_benefits : categorised_income[category].to_d
-        attrs[:"#{category}_cash"] = monthly_transaction_amount_by(operation: :credit, category: category)
-        attrs[:"#{category}_all_sources"] = attrs[:"#{category}_bank"] + attrs[:"#{category}_cash"]
-        attrs[:total_gross_income] += attrs[:"#{category}_all_sources"]
+        populate_income_attrs(attrs, category)
       end
+      attrs[:total_gross_income] += gross_income_summary.gross_employment_income
 
       attrs
+    end
+
+    def populate_income_attrs(attrs, category)
+      attrs[:"#{category}_bank"] = category == :benefits ? monthly_state_benefits : categorised_income[category].to_d
+      attrs[:"#{category}_cash"] = monthly_transaction_amount_by(operation: :credit, category: category)
+      attrs[:"#{category}_all_sources"] = attrs[:"#{category}_bank"] + attrs[:"#{category}_cash"]
+      attrs[:total_gross_income] += attrs[:"#{category}_all_sources"]
     end
 
     def default_attrs
