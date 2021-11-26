@@ -40,13 +40,13 @@ module Calculators
     it 'updates the gross_income_summary iwth a sum of the employment income and biks' do
       create_payments
       described_class.call(assessment)
-      expect(gross_income_summary.gross_employment_income).to eq expected_gross_income.to_d
+      expect(gross_income_summary.gross_employment_income).to be_within(0.001).of(expected_gross_income.to_d)
     end
 
     it 'updates the disposable income summary with sum of employment ni conts and tax' do
       create_payments
       described_class.call(assessment)
-      expect(disposable_income_summary.employment_income_deductions).to eq expected_deductions.to_d
+      expect(disposable_income_summary.employment_income_deductions).to be_within(0.001).of(expected_deductions.to_d)
     end
 
     describe 'fixed income allowance' do
