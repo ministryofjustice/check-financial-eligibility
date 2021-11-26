@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     resources :state_benefits, only: [:create]
     resources :explicit_remarks, only: [:create]
     resources :cash_transactions, only: [:create]
+    resources :employments, only: [:create]
   end
   resources :state_benefit_type, only: [:index]
 

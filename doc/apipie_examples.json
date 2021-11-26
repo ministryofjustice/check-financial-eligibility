@@ -751,6 +751,724 @@
       "recorded": true
     }
   ],
+  "employments#create": [
+    {
+      "title": "Default",
+      "verb": "POST",
+      "path": "/assessments/f5d11894-f5c6-45b0-bf26-3ac234a66b92/employments",
+      "versions": [
+        "1.0"
+      ],
+      "query": null,
+      "request_data": {
+        "employment_income": [
+          {
+            "name": "Job 1",
+            "payments": [
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              },
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              },
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              }
+            ]
+          },
+          {
+            "name": "Job 2",
+            "payments": [
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              },
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              },
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              }
+            ]
+          }
+        ]
+      },
+      "response_data": {
+        "success": false,
+        "errors": [
+          "No such assessment id"
+        ]
+      },
+      "code": 422,
+      "show_in_doc": 1,
+      "recorded": true
+    },
+    {
+      "title": "Default",
+      "verb": "POST",
+      "path": "/assessments/fce5b53f-aed4-46dc-983a-b660e11b27eb/employments",
+      "versions": [
+        "1.0"
+      ],
+      "query": null,
+      "request_data": {
+        "employment_income": [
+          {
+            "name": "Job 1",
+            "payments": [
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              },
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              },
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              }
+            ]
+          },
+          {
+            "name": "Job 2",
+            "payments": [
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              },
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              },
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              }
+            ]
+          }
+        ]
+      },
+      "response_data": {
+        "success": false,
+        "errors": [
+          "No such assessment id"
+        ]
+      },
+      "code": 422,
+      "show_in_doc": 1,
+      "recorded": true
+    },
+    {
+      "title": "Default",
+      "verb": "POST",
+      "path": "/assessments/1c77d661-fc51-40ef-9552-f3de91a5259d/employments",
+      "versions": [
+        "1.0"
+      ],
+      "query": null,
+      "request_data": {
+        "employment_income": [
+          {
+            "name": "Job 1",
+            "payments": [
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              },
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              },
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              }
+            ]
+          },
+          {
+            "payments": [
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              },
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              },
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              }
+            ]
+          }
+        ]
+      },
+      "response_data": {
+        "success": false,
+        "errors": [
+          "Missing parameter name"
+        ]
+      },
+      "code": 422,
+      "show_in_doc": 1,
+      "recorded": true
+    },
+    {
+      "title": "Default",
+      "verb": "POST",
+      "path": "/assessments/38d51f7f-c70c-4c0e-833f-59eb78eb0161/employments",
+      "versions": [
+        "1.0"
+      ],
+      "query": null,
+      "request_data": {
+        "employment_income": [
+          {
+            "name": "Job 1",
+            "payments": [
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              },
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              },
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              }
+            ]
+          },
+          {
+            "payments": [
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              },
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              },
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              }
+            ]
+          }
+        ]
+      },
+      "response_data": {
+        "success": false,
+        "errors": [
+          "Missing parameter name"
+        ]
+      },
+      "code": 422,
+      "show_in_doc": 1,
+      "recorded": true
+    },
+    {
+      "title": "Default",
+      "verb": "POST",
+      "path": "/assessments/49e278c5-1904-4a5f-9318-3dde4d359c6b/employments",
+      "versions": [
+        "1.0"
+      ],
+      "query": null,
+      "request_data": {
+        "employment_income": [
+          {
+            "name": "Job 1",
+            "payments": [
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              },
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              },
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              }
+            ]
+          },
+          {
+            "payments": [
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              },
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              },
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              }
+            ]
+          }
+        ]
+      },
+      "response_data": {
+        "success": false,
+        "errors": [
+          "Missing parameter name"
+        ]
+      },
+      "code": 422,
+      "show_in_doc": 1,
+      "recorded": true
+    },
+    {
+      "title": "Default",
+      "verb": "POST",
+      "path": "/assessments/9aeba4b9-71a7-43c8-aaa7-75ca1eff5ed7/employments",
+      "versions": [
+        "1.0"
+      ],
+      "query": null,
+      "request_data": {
+        "employment_income": [
+          {
+            "name": "Job 1",
+            "payments": [
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              },
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              },
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              }
+            ]
+          },
+          {
+            "payments": [
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              },
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              },
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              }
+            ]
+          }
+        ]
+      },
+      "response_data": {
+        "success": false,
+        "errors": [
+          "Missing parameter name"
+        ]
+      },
+      "code": 422,
+      "show_in_doc": 1,
+      "recorded": true
+    },
+    {
+      "title": "Default",
+      "verb": "POST",
+      "path": "/assessments/f1f4e277-0b38-46fa-a93d-5b6e127b512a/employments",
+      "versions": [
+        "1.0"
+      ],
+      "query": null,
+      "request_data": {
+        "employment_income": [
+          {
+            "name": "Job 1",
+            "payments": [
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              },
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              },
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              }
+            ]
+          },
+          {
+            "name": "Job 2",
+            "payments": [
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              },
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              },
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              }
+            ]
+          }
+        ]
+      },
+      "response_data": {
+        "success": true,
+        "errors": [
+
+        ]
+      },
+      "code": 200,
+      "show_in_doc": 1,
+      "recorded": true
+    },
+    {
+      "title": "Default",
+      "verb": "POST",
+      "path": "/assessments/ec5b495e-6bbc-413e-be4f-c8cef6b75ad6/employments",
+      "versions": [
+        "1.0"
+      ],
+      "query": null,
+      "request_data": {
+        "employment_income": [
+          {
+            "name": "Job 1",
+            "payments": [
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              },
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              },
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              }
+            ]
+          },
+          {
+            "name": "Job 2",
+            "payments": [
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              },
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              },
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              }
+            ]
+          }
+        ]
+      },
+      "response_data": {
+        "success": true,
+        "errors": [
+
+        ]
+      },
+      "code": 200,
+      "show_in_doc": 1,
+      "recorded": true
+    },
+    {
+      "title": "Default",
+      "verb": "POST",
+      "path": "/assessments/60c625b8-4639-46c1-a0c4-e37b8ebcb973/employments",
+      "versions": [
+        "1.0"
+      ],
+      "query": null,
+      "request_data": {
+        "employment_income": [
+          {
+            "name": "Job 1",
+            "payments": [
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              },
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              },
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              }
+            ]
+          },
+          {
+            "name": "Job 2",
+            "payments": [
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              },
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              },
+              {
+                "date": "2021-10-30",
+                "gross": 1046.0,
+                "benefits_in_kind": 16.6,
+                "tax": -104.1,
+                "national_insurance": -18.66,
+                "net_employment_income": 898.84
+              }
+            ]
+          }
+        ]
+      },
+      "response_data": {
+        "success": true,
+        "errors": [
+
+        ]
+      },
+      "code": 200,
+      "show_in_doc": 1,
+      "recorded": true
+    }
+  ],
   "explicit_remarks#create": [
     {
       "title": "Default",
