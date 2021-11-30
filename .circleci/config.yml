@@ -198,23 +198,6 @@ jobs:
     - *build_docker_image
     - *setup_aws_login
     - *push_to_ecr
-  deploy_uat: &deploy_uat
-    executor: cloud-platform-executor
-    steps:
-      - checkout
-      - setup_remote_docker:
-          docker_layer_caching: true
-      - *setup_kubectl
-      - run:
-          name: Set kubectl context
-          command: kubectl config use-context uat
-      - *decrypt_secrets
-      - deploy:
-          name: Helm deployment to UAT
-          command: |
-            ./bin/uat_deploy
-  deploy_main_uat:
-    <<: *deploy_uat
   deploy_uat_live: &deploy_uat_live
     executor: cloud-platform-executor
     steps:
@@ -226,22 +209,9 @@ jobs:
       - deploy:
           name: Helm deployment to UAT - live cluster
           command: |
-            ./bin/uat_deploy_to_live
+            ./bin/uat_deploy
   deploy_main_uat_live:
     <<: *deploy_uat_live
-  delete_uat_branch:
-    executor: cloud-platform-executor
-    steps:
-      - checkout
-      - setup_remote_docker
-      - *setup_kubectl
-      - run:
-          name: Set kubectl context
-          command: kubectl config use-context uat
-      - run:
-          name: Delete UAT release
-          command: |
-            ./bin/delete_uat_release.sh
   delete_uat_branch_live:
     executor: cloud-platform-executor
     steps:
@@ -323,11 +293,6 @@ workflows:
           filters:
             branches:
               ignore: main
-      - deploy_uat:
-          requires:
-            - lint_checks
-            - unit_tests
-            - build_and_push
       - deploy_uat_live:
           requires:
             - lint_checks
@@ -347,15 +312,9 @@ workflows:
           requires:
             - lint_checks
             - unit_tests
-      - deploy_main_uat:
-          requires:
-            - build_and_push
       - deploy_main_uat_live:
           requires:
             - build_and_push
-      - delete_uat_branch:
-          requires:
-            - deploy_main_uat
       - delete_uat_branch_live:
           requires:
             - deploy_main_uat_live
@@ -364,12 +323,12 @@ workflows:
             - build_and_push
       - hold_production_notification:
           requires:
-            - delete_uat_branch
+            - delete_uat_branch_live
             - deploy_staging
       - hold_production:
           type: approval
           requires:
-            - delete_uat_branch
+            - delete_uat_branch_live
             - deploy_staging
       - deploy_production:
           requires:
