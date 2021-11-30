@@ -71,6 +71,12 @@ FactoryBot.define do
       end
     end
 
+    trait :with_employment do
+      after(:create) do |gross_income_summary|
+        create :employment, :with_monthly_payments, assessment: gross_income_summary.assessment
+      end
+    end
+
     trait :with_irregular_income_payments do
       after(:create) do |gross_income_summary|
         create :state_benefit, :with_monthly_payments, gross_income_summary: gross_income_summary

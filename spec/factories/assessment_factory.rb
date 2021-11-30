@@ -79,6 +79,12 @@ FactoryBot.define do
       end
     end
 
+    trait :with_gross_income_summary_and_employment do
+      after(:create) do |assessment|
+        create :gross_income_summary, :with_employment, assessment: assessment
+      end
+    end
+
     # NOTE: this ends up creating two assessments because the :with_non_passported_applicant trait
     # creates one too
     #

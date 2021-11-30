@@ -118,6 +118,30 @@ module Collators
             expect(gross_income_summary.total_gross_income).to eq all_sources_total
           end
         end
+
+        context 'gross_employment_income' do
+          let(:assessment) { create :assessment, :with_applicant, :with_gross_income_summary_and_employment, :with_disposable_income_summary }
+          let(:displosable_income_summary) { assessment.disposable_income_summary }
+
+          before do
+            subject
+            gross_income_summary.reload
+            displosable_income_summary.reload
+          end
+
+          it 'has a total gross employed income' do
+            expect(gross_income_summary.gross_employment_income).to eq 1500
+          end
+
+          it 'updates total gross income' do
+            expect(gross_income_summary.total_gross_income).to eq 1500
+          end
+
+          it 'updates disposable income summary' do
+            expect(displosable_income_summary.employment_income_deductions).to eq(-645)
+            expect(displosable_income_summary.fixed_employment_allowance).to eq 45.0
+          end
+        end
       end
     end
   end
