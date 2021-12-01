@@ -6,7 +6,7 @@
     "jquery": "^3.6.0"
   },
   "devDependencies": {
-    "webpack-dev-server": "^4.5.0"
+    "webpack-dev-server": "^4.6.0"
   },
   "resolutions": {
     "is-svg": "^4.2.2",
