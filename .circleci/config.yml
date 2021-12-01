@@ -13,7 +13,7 @@ executors:
           GITHUB_TEAM_NAME_SLUG: laa-apply-for-legal-aid
   linting-executor:
     docker:
-      - image: circleci/ruby:3.0.2-node-browsers
+      - image: cimg/ruby:3.0.2-node
         environment:
           - RAILS_ENV=test
           - TZ: "Europe/London"
@@ -25,14 +25,14 @@ executors:
     resource_class: small
   test-executor:
     docker:
-      - image: circleci/ruby:3.0.2-node-browsers
+      - image: cimg/ruby:3.0.2-node
         environment:
           - RAILS_ENV=test
           - PGHOST=localhost
           - PGUSER=user
           - TZ: "Europe/London"
           - ALLOW_FUTURE_SUBMISSION_DATE: true
-      - image: postgres:10.5
+      - image: cimg/postgres:10.18
         environment:
           - POSTGRES_USER=user
           - POSTGRES_DB=check_financial_eligibility_test
