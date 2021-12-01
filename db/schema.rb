@@ -148,8 +148,8 @@ ActiveRecord::Schema.define(version: 2021_12_01_095642) do
     t.string "assessment_result"
     t.decimal "employment_income_deductions", default: "0.0", null: false
     t.decimal "fixed_employment_allowance", default: "0.0", null: false
-    t.decimal "taxes", default: "0.0", null: false
-    t.decimal "ni_contributions", default: "0.0", null: false
+    t.decimal "tax", default: "0.0", null: false
+    t.decimal "national_insurance", default: "0.0", null: false
     t.index ["assessment_id"], name: "index_disposable_income_summaries_on_assessment_id"
   end
 
@@ -229,7 +229,7 @@ ActiveRecord::Schema.define(version: 2021_12_01_095642) do
     t.decimal "upper_threshold", default: "0.0", null: false
     t.string "assessment_result"
     t.decimal "gross_employment_income", default: "0.0", null: false
-    t.decimal "monthly_benefits_in_kind", default: "0.0", null: false
+    t.decimal "benefits_in_kind", default: "0.0", null: false
     t.index ["assessment_id"], name: "index_gross_income_summaries_on_assessment_id"
   end
 

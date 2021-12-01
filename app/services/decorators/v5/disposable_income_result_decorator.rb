@@ -38,6 +38,21 @@ module Decorators
           result: elig.assessment_result
         }
       end
+
+      def net_employment_income
+        gross_income_summary.gross_employment_income + summary.employment_income_deductions
+      end
+
+      def employment_income
+        {
+          gross_income: gross_income_summary.gross_employment_income.to_f,
+          benefits_in_kind: gross_income_summary.benefits_in_kind.to_f,
+          tax: summary.tax.to_f,
+          national_insurance: summary.national_insurance.to_f,
+          fixed_employment_deduction: summary.fixed_employment_allowance.to_f,
+          net_employment_income: net_employment_income.to_f
+        }
+      end
     end
   end
 end

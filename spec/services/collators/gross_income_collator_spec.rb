@@ -139,6 +139,8 @@ module Collators
 
           it 'updates disposable income summary' do
             expect(displosable_income_summary.employment_income_deductions).to eq(-645)
+            expect(displosable_income_summary.tax).to eq(-495)
+            expect(displosable_income_summary.national_insurance).to eq(-150)
             expect(displosable_income_summary.fixed_employment_allowance).to eq 45.0
           end
         end
