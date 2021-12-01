@@ -84,7 +84,7 @@ module Decorators
           pension: summary.__send__("pension_#{source}").to_f
         }
       end
-      p
+
       def state_benefits
         {
           monthly_equivalents: {

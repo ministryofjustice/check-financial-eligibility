@@ -14,6 +14,7 @@ module Decorators
           maintenance_allowance: summary.maintenance_out_all_sources.to_f,
           total_outgoings_and_allowances: summary.total_outgoings_and_allowances.to_f,
           total_disposable_income: summary.total_disposable_income.to_f,
+          employment_income: employment_income,
           income_contribution: summary.income_contribution.to_f,
           proceeding_types: proceeding_type_results
         }
@@ -23,6 +24,10 @@ module Decorators
 
       def summary
         @summary ||= @assessment.disposable_income_summary
+      end
+
+      def gross_income_summary
+        @gross_income_summary ||= @assessment.gross_income_summary
       end
 
       def proceeding_type_results
