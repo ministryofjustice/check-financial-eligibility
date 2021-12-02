@@ -1,6 +1,12 @@
 module Decorators
   module V5
     class ResultSummaryDecorator
+      # class aliases for V4
+      CapitalResultDecorator = ::Decorators::V4::CapitalResultDecorator
+      GrossIncomeResultDecorator = ::Decorators::V4::GrossIncomeResultDecorator
+      MatterTypeResultDecorator = ::Decorators::V4::MatterTypeResultDecorator
+      ProceedingTypesResultDecorator = ::Decorators::V4::ProceedingTypesResultDecorator
+
       attr_reader :assessment
 
       delegate :capital_summary,

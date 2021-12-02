@@ -1,6 +1,9 @@
 module Decorators
   module V5
     class GrossIncomeDecorator
+      # class aliases for V4
+      StateBenefitDecorator = ::Decorators::V4::StateBenefitDecorator
+
       include Transactions
 
       def initialize(assessment)

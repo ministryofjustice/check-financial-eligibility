@@ -103,7 +103,7 @@ RSpec.describe AssessmentsController, type: :request do
       let(:headers) do
         {
           'CONTENT_TYPE' => 'application/json',
-          'Accept' => 'application/json; version=5'
+          'Accept' => 'application/json; version=6'
         }
       end
       let(:params) do
@@ -143,6 +143,7 @@ RSpec.describe AssessmentsController, type: :request do
 
       context 'version 3' do
         let(:is_version3) { true }
+        let(:is_version5) { false }
         let(:decorator) { double Decorators::V3::AssessmentDecorator }
 
         it 'calls the required services and uses the V3 decorator' do
@@ -154,11 +155,27 @@ RSpec.describe AssessmentsController, type: :request do
       end
 
       context 'version 4' do
+        before { expect(assessment).to receive(:version_5?).and_return(is_version5) }
         let(:is_version3) { false }
+        let(:is_version5) { false }
         let(:decorator) { double Decorators::V4::AssessmentDecorator }
 
-        it 'calls the required services and uses the V3 decorator' do
+        it 'calls the required services and uses the V4 decorator' do
           expect(Decorators::V4::AssessmentDecorator).to receive(:new).with(assessment).and_return(decorator)
+          expect(decorator).to receive(:as_json).and_return('')
+
+          subject
+        end
+      end
+
+      context 'version 5' do
+        before { expect(assessment).to receive(:version_5?).and_return(is_version5) }
+        let(:is_version3) { false }
+        let(:is_version5) { true }
+        let(:decorator) { double Decorators::V5::AssessmentDecorator }
+
+        it 'calls the required services and uses the V5 decorator' do
+          expect(Decorators::V5::AssessmentDecorator).to receive(:new).with(assessment).and_return(decorator)
           expect(decorator).to receive(:as_json).and_return('')
 
           subject
@@ -280,6 +297,22 @@ RSpec.describe AssessmentsController, type: :request do
 
         it 'returns expected structure', :show_in_doc, doc_title: 'POST V4 Success Response' do
           expect(parsed_response).to eq expected_v4_result
+        end
+      end
+
+      context 'version 5' do
+        before do
+          assessment.update!(version: '5')
+          travel_to frozen_time
+          subject
+          travel_back
+        end
+
+        let(:headers) { { 'Accept' => 'application/json;version=5' } }
+        let(:frozen_time) { Time.zone.now }
+
+        it 'returns expected structure', :show_in_doc, doc_title: 'POST V5 Success Response' do
+          expect(parsed_response).to eq expected_v5_result
         end
       end
     end
@@ -469,6 +502,214 @@ RSpec.describe AssessmentsController, type: :request do
           self_employed: false
         },
         gross_income: {
+          irregular_income: {
+            monthly_equivalents: {
+              student_loan: 0.0
+            }
+          },
+          state_benefits: {
+            monthly_equivalents: {
+              all_sources: 200.0,
+              cash_transactions: 0.0,
+              bank_transactions: [
+                {
+                  name: 'Child Benefit',
+                  monthly_value: 200.0,
+                  excluded_from_income_assessment: false
+                }
+              ]
+            }
+          },
+          other_income: {
+            monthly_equivalents: {
+              all_sources: {
+                friends_or_family: 1415.0,
+                maintenance_in: 0.0,
+                property_or_lodger: 0.0,
+                pension: 0.0
+              },
+              bank_transactions: {
+                friends_or_family: 1415.0,
+                maintenance_in: 0.0,
+                property_or_lodger: 0.0,
+                pension: 0.0
+              },
+              cash_transactions: {
+                friends_or_family: 0.0,
+                maintenance_in: 0.0,
+                property_or_lodger: 0.0,
+                pension: 0.0
+              }
+            }
+          }
+        },
+        disposable_income: {
+          monthly_equivalents: {
+            all_sources: {
+              child_care: 0.0,
+              rent_or_mortgage: 50.0,
+              maintenance_out: 0.0,
+              legal_aid: 0.0
+            },
+            bank_transactions: {
+              child_care: 0.0,
+              rent_or_mortgage: 50.0,
+              maintenance_out: 0.0,
+              legal_aid: 0.0
+            },
+            cash_transactions: {
+              child_care: 0.0,
+              rent_or_mortgage: 0.0,
+              maintenance_out: 0.0,
+              legal_aid: 0.0
+            }
+          },
+          childcare_allowance: 0.0,
+          deductions: {
+            dependants_allowance: 1457.45,
+            disregarded_state_benefits: 0.0
+          }
+        },
+        capital: {
+          capital_items: {
+            liquid: [
+              { description: 'Bank acct 1', value: 0.0 },
+              { description: 'Bank acct 2', value: 0.0 },
+              { description: 'Bank acct 3', value: 0.0 }
+            ],
+            non_liquid: [],
+            vehicles: [
+              {
+                value: 9000.0,
+                loan_amount_outstanding: 0.0,
+                date_of_purchase: '2018-05-20',
+                in_regular_use: false,
+                included_in_assessment: true,
+                assessed_value: 9000.0
+              }
+            ],
+            properties: {
+              main_home: {
+                value: 500_000.0,
+                outstanding_mortgage: 150_000.0,
+                percentage_owned: 50.0,
+                main_home: true,
+                shared_with_housing_assoc: false,
+                transaction_allowance: 15_000.0,
+                allowable_outstanding_mortgage: 100_000.0,
+                net_value: 385_000.0,
+                net_equity: 192_500.0,
+                main_home_equity_disregard: 100_000.0,
+                assessed_equity: 92_500.0
+              },
+              additional_properties: []
+            }
+          }
+        },
+        remarks: {
+          state_benefit_payment: {
+            amount_variation: client_ids,
+            unknown_frequency: client_ids
+          }
+        }
+      }
+    }
+  end
+
+  def expected_v5_result
+    client_ids = StateBenefitPayment.order(:payment_date).map(&:client_id)
+    {
+      version: '5',
+      timestamp: frozen_time.strftime('%Y-%m-%dT%H:%M:%S.000Z'),
+      success: true,
+      result_summary: {
+        overall_result: {
+          result: 'contribution_required',
+          capital_contribution: 38_500.0,
+          income_contribution: 0.0,
+          matter_types: [
+            {
+              matter_type: 'domestic_abuse',
+              result: 'contribution_required'
+            }
+          ],
+          proceeding_types: [
+            {
+              ccms_code: 'DA001',
+              result: 'contribution_required'
+            }
+          ]
+        },
+        gross_income: {
+          total_gross_income: 1615.0,
+          proceeding_types: [
+            {
+              ccms_code: 'DA001',
+              upper_threshold: 999_999_999_999.0,
+              result: 'eligible'
+            }
+          ]
+        },
+        disposable_income: {
+          dependant_allowance: 1457.45,
+          gross_housing_costs: 50.0,
+          housing_benefit: 0.0,
+          net_housing_costs: 50.0,
+          maintenance_allowance: 0.0,
+          total_outgoings_and_allowances: 1507.45,
+          total_disposable_income: 107.55,
+          employment_income:
+            {
+              gross_income: 0.0,
+              benefits_in_kind: 0.0,
+              tax: 0.0,
+              national_insurance: 0.0,
+              fixed_employment_deduction: 0.0,
+              net_employment_income: 0.0
+            },
+          income_contribution: 0.0,
+          proceeding_types: [
+            {
+              ccms_code: 'DA001',
+              upper_threshold: 999_999_999_999.0,
+              lower_threshold: 315.0,
+              result: 'eligible'
+            }
+          ]
+        },
+        capital: {
+          total_liquid: 0.0,
+          total_non_liquid: 0.0,
+          total_vehicle: 9000.0,
+          total_property: 92_500.0,
+          total_mortgage_allowance: 100_000.0,
+          total_capital: 101_500.0,
+          pensioner_capital_disregard: 60_000.0,
+          capital_contribution: 38_500.0,
+          assessed_capital: 41_500.0,
+          proceeding_types: [
+            {
+              ccms_code: 'DA001',
+              lower_threshold: 3000.0,
+              upper_threshold: 999_999_999_999.0,
+              result: 'contribution_required'
+            }
+          ]
+        }
+      },
+      assessment: {
+        id: assessment.id,
+        client_reference_id: 'NPE6-1',
+        submission_date: '2019-05-29',
+        applicant: {
+          date_of_birth: '1958-05-29',
+          involvement_type: 'applicant',
+          has_partner_opponent: false,
+          receives_qualifying_benefit: false,
+          self_employed: false
+        },
+        gross_income: {
+          employment_income: [],
           irregular_income: {
             monthly_equivalents: {
               student_loan: 0.0

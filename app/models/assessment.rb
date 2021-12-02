@@ -48,6 +48,10 @@ class Assessment < ApplicationRecord
     version == '3'
   end
 
+  def version_5?
+    version == '5'
+  end
+
   private
 
   def matter_proceeding_type_required?
