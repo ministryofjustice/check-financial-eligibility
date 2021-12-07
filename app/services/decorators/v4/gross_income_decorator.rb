@@ -10,6 +10,7 @@ module Decorators
 
       def as_json
         {
+          employment_income: employment_incomes,
           irregular_income: irregular_income,
           state_benefits: state_benefits,
           other_income: other_income
@@ -24,6 +25,36 @@ module Decorators
 
       def summary
         @summary ||= @assessment.gross_income_summary
+      end
+
+      def employment_incomes
+        @assessment.employments.map { |employment| employment_income(employment) }
+      end
+
+      def employment_income(employment)
+        {
+          name: employment.name,
+          payments: employment_payments(employment)
+        }
+      end
+
+      def employment_payments(employment)
+        employment.employment_payments.map { |payment| employment_payment(payment) }
+      end
+
+      def employment_payment(payment)
+        {
+          date: payment.date.strftime('%Y-%m-%d'),
+          gross: payment.gross_income.to_f,
+          benefits_in_kind: payment.benefits_in_kind.to_f,
+          tax: payment.tax.to_f,
+          national_insurance: payment.national_insurance.to_f,
+          net_employment_income: net_employment_income(payment).to_f
+        }
+      end
+
+      def net_employment_income(payment)
+        payment.gross_income + payment.benefits_in_kind + payment.tax + payment.national_insurance
       end
 
       def irregular_income

@@ -18,10 +18,72 @@ module Decorators
                property_or_lodger_all_sources: 250,
                property_or_lodger_bank: 250
       end
+      let(:employment1) { create :employment, :with_monthly_payments, assessment: assessment }
+      let(:employment2) { create :employment, :with_monthly_payments, assessment: assessment }
       let(:universal_credit) { create :state_benefit_type, :universal_credit }
       let(:child_benefit) { create :state_benefit_type, :child_benefit }
       let(:expected_results) do
         {
+          employment_income: [
+            {
+              name: employment1.name,
+              payments: [
+                {
+                  date: Date.current.strftime('%Y-%m-%d'),
+                  benefits_in_kind: 0.0,
+                  gross: 1500.0,
+                  tax: -495.0,
+                  national_insurance: -150.0,
+                  net_employment_income: 855.0
+                },
+                {
+                  date: 1.month.ago.strftime('%Y-%m-%d'),
+                  benefits_in_kind: 0.0,
+                  gross: 1500.0,
+                  tax: -495.0,
+                  national_insurance: -150.0,
+                  net_employment_income: 855.0
+                },
+                {
+                  date: 2.months.ago.strftime('%Y-%m-%d'),
+                  benefits_in_kind: 0.0,
+                  gross: 1500.0,
+                  tax: -495.0,
+                  national_insurance: -150.0,
+                  net_employment_income: 855.0
+                }
+              ]
+            },
+            {
+              name: employment2.name,
+              payments: [
+                {
+                  date: Date.current.strftime('%Y-%m-%d'),
+                  benefits_in_kind: 0.0,
+                  gross: 1500.0,
+                  tax: -495.0,
+                  national_insurance: -150.0,
+                  net_employment_income: 855.0
+                },
+                {
+                  date: 1.month.ago.strftime('%Y-%m-%d'),
+                  benefits_in_kind: 0.0,
+                  gross: 1500.0,
+                  tax: -495.0,
+                  national_insurance: -150.0,
+                  net_employment_income: 855.0
+                },
+                {
+                  date: 2.months.ago.strftime('%Y-%m-%d'),
+                  benefits_in_kind: 0.0,
+                  gross: 1500.0,
+                  tax: -495.0,
+                  national_insurance: -150.0,
+                  net_employment_income: 855.0
+                }
+              ]
+            }
+          ],
           irregular_income: {
             monthly_equivalents:
               {
@@ -80,6 +142,8 @@ module Decorators
         subject { described_class.new(assessment).as_json }
 
         it 'returns the expected structure' do
+          employment1
+          employment2
           expect(subject).to eq expected_results
         end
       end
