@@ -427,6 +427,15 @@ RSpec.describe AssessmentsController, type: :request do
           maintenance_allowance: 0.0,
           total_outgoings_and_allowances: 1507.45,
           total_disposable_income: 107.55,
+          employment_income:
+            {
+              gross_income: 0.0,
+              benefits_in_kind: 0.0,
+              tax: 0.0,
+              national_insurance: 0.0,
+              fixed_employment_deduction: 0.0,
+              net_employment_income: 0.0
+            },
           income_contribution: 0.0,
           proceeding_types: [
             {
@@ -469,6 +478,7 @@ RSpec.describe AssessmentsController, type: :request do
           self_employed: false
         },
         gross_income: {
+          employment_income: [],
           irregular_income: {
             monthly_equivalents: {
               student_loan: 0.0

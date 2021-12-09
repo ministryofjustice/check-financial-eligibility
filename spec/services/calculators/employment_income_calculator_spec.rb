@@ -7,16 +7,19 @@ module Calculators
     let!(:disposable_income_summary) { create :disposable_income_summary, assessment: assessment }
     let(:employment1) { create :employment, assessment: assessment }
     let(:employment2) { create :employment, assessment: assessment }
-    let(:gross) { Faker::Number.between(from: 2022.35, to: 3096.52).round(2) }
+    let(:gross) { BigDecimal(rand(2022.35...3096.52), 2) }
     let(:tax) { (gross * 0.23).round(2) * -1 }
     let(:ni_cont) { (gross * 0.052).round(2) * -1 }
-    let(:benefits_in_kind) { Faker::Number.between(from: -77.0, to: -25.0).round(2) }
+    let(:benefits_in_kind) { BigDecimal(rand(-77.0...-25.0), 2) }
     let(:month1) { Date.parse('2021-04-30') }
     let(:month2) { Date.parse('2021-05-30') }
     let(:month3) { Date.parse('2021-06-30') }
     let(:dates) { [month1, month2, month3] }
     let(:expected_gross_income) { gross + benefits_in_kind + gross + benefits_in_kind }
     let(:expected_deductions) { tax + ni_cont + tax + ni_cont }
+    let(:expected_benefits_in_kind) { benefits_in_kind + benefits_in_kind }
+    let(:expected_tax) { tax + tax }
+    let(:expected_national_insurance) { ni_cont + ni_cont }
 
     it 'calls #calculate_monthly_amounts! on each employment record' do
       employment1
@@ -40,13 +43,16 @@ module Calculators
     it 'updates the gross_income_summary iwth a sum of the employment income and biks' do
       create_payments
       described_class.call(assessment)
-      expect(gross_income_summary.gross_employment_income).to be_within(0.001).of(expected_gross_income.to_d)
+      expect(gross_income_summary.gross_employment_income).to eq expected_gross_income.to_d
+      expect(gross_income_summary.benefits_in_kind).to eq expected_benefits_in_kind.to_d
     end
 
     it 'updates the disposable income summary with sum of employment ni conts and tax' do
       create_payments
       described_class.call(assessment)
-      expect(disposable_income_summary.employment_income_deductions).to be_within(0.001).of(expected_deductions.to_d)
+      expect(disposable_income_summary.employment_income_deductions).to eq expected_deductions.to_d
+      expect(disposable_income_summary.tax).to eq expected_tax.to_d
+      expect(disposable_income_summary.national_insurance).to eq expected_national_insurance.to_d
     end
 
     describe 'fixed income allowance' do

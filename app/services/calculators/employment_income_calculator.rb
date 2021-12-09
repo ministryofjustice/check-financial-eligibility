@@ -18,9 +18,12 @@ module Calculators
 
     def call
       employments.map(&:calculate_monthly_amounts!)
-      gross_income_summary.update!(gross_employment_income: gross_employment_income)
+      gross_income_summary.update!(gross_employment_income: gross_employment_income,
+                                   benefits_in_kind: monthly_benefits_in_kind)
       disposable_income_summary.update!(employment_income_deductions: deductions,
-                                        fixed_employment_allowance: allowance)
+                                        fixed_employment_allowance: allowance,
+                                        tax: taxes,
+                                        national_insurance: ni_contributions)
     end
 
     private
@@ -34,7 +37,7 @@ module Calculators
     end
 
     def monthly_benefits_in_kind
-      employments.sum(&:monthly_benefits_in_kind)
+      @monthly_benefits_in_kind ||= employments.sum(&:monthly_benefits_in_kind)
     end
 
     def deductions
@@ -42,7 +45,7 @@ module Calculators
     end
 
     def taxes
-      employments.sum(&:monthly_tax)
+      @taxes ||= employments.sum(&:monthly_tax)
     end
 
     def ni_contributions
