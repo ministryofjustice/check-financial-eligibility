@@ -239,10 +239,3 @@ Style/SoleNestedConditional:
 Naming/VariableNumber:
   Exclude:
     - app/services/calculators/dependant_allowance_calculator.rb
-
-# Style/OpenStructUse added Nov 16th 2021 - warnings around openstruct security mean we
-# should not add more OpenStructs but this is not a 5 minute fix and needs a ticket so
-# we ignore the three files until they can be removed but throw a warning if more are added
-Style/OpenStructUse:
-  Exclude:
-    - app/models/dated_struct.rb
