@@ -24,16 +24,10 @@ guard :rspec, cmd: 'VERBOSE=true bundle exec rspec', all_on_start: false do
   dsl.watch_spec_files_for(rails.app_files)
   dsl.watch_spec_files_for(rails.views)
 
-  watch(rails.controllers) do |m|
-    [
-      rspec.spec.call("routing/#{m[1]}_routing"),
-      rspec.spec.call("controllers/#{m[1]}_controller"),
-      rspec.spec.call("acceptance/#{m[1]}")
-    ]
-  end
+  watch(rails.controllers) { |m| rspec.spec.call("requests/#{m[1]}") }
 
   # Rails config changes
   watch(rails.spec_helper)     { rspec.spec_dir }
-  watch(rails.routes)          { "#{rspec.spec_dir}/routing" }
-  watch(rails.app_controller)  { "#{rspec.spec_dir}/controllers" }
+  watch(rails.routes)          { "#{rspec.spec_dir}/requests" }
+  watch(rails.app_controller)  { "#{rspec.spec_dir}/requests" }
 end
