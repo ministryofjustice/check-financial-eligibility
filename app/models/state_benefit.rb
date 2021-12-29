@@ -8,8 +8,6 @@ class StateBenefit < ApplicationRecord
   delegate :exclude_from_gross_income, :exclude_from_gross_income?, to: :state_benefit_type
   delegate :assessment, to: :gross_income_summary
 
-  validates :gross_income_summary_id, :state_benefit_type, presence: true
-
   def self.generate!(gross_income_summary, name)
     StateBenefitType.exists?(label: name) ? generate_for(gross_income_summary, name) : generate_other(gross_income_summary, name)
   end
