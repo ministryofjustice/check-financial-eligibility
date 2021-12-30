@@ -83,7 +83,7 @@ module Calculators
               expect(main_home.net_value).to eq 186_983.21 # 466,993 - 14,009.79 - 266_000.0
               expect(main_home.net_equity).to eq 186_983.21
               expect(main_home.main_home_equity_disregard).to eq 100_000.0
-              expect(main_home.assessed_equity).to eq 86_983.21.to_d(Float::DIG)
+              expect(main_home.assessed_equity).to eq BigDecimal('86_983.21', Float::DIG)
             end
           end
         end

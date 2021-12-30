@@ -34,7 +34,7 @@ module Calculators
           let(:housing_cost_amount) { 1500.00 }
 
           it 'should cap the return' do
-            expect(calculator.gross_housing_costs).to eq 750.00.to_d + monthly_cash_housing
+            expect(calculator.gross_housing_costs).to eq BigDecimal('750.00') + monthly_cash_housing
             expect(calculator.monthly_housing_benefit).to eq 0.0
             expect(calculator.net_housing_costs).to eq 545.00 # Cap applied
           end
@@ -43,7 +43,7 @@ module Calculators
             let(:housing_cost_amount) { 1088.00 }
 
             it 'should return the gross cost as net' do
-              expect(calculator.gross_housing_costs).to eq 544.00.to_d + monthly_cash_housing
+              expect(calculator.gross_housing_costs).to eq BigDecimal('544.00') + monthly_cash_housing
               expect(calculator.monthly_housing_benefit).to eq 0.0
               expect(calculator.net_housing_costs).to eq 545.00 # Cap applied
             end
@@ -53,9 +53,9 @@ module Calculators
             let(:housing_cost_amount) { 888.0 }
 
             it 'should return the gross cost as net' do
-              expect(calculator.gross_housing_costs).to eq 444.0.to_d + monthly_cash_housing # all variables are always decimals
+              expect(calculator.gross_housing_costs).to eq BigDecimal('444.0') + monthly_cash_housing # all variables are always decimals
               expect(calculator.monthly_housing_benefit).to eq 0.0
-              expect(calculator.net_housing_costs).to eq (444.0.to_d + monthly_cash_housing).to_f # net_housing_costs is always a float
+              expect(calculator.net_housing_costs).to eq (BigDecimal('444.0') + monthly_cash_housing).to_f # net_housing_costs is always a float
             end
           end
         end
@@ -64,7 +64,7 @@ module Calculators
           let(:housing_cost_type) { 'rent' }
 
           it 'should cap the return' do
-            expect(calculator.gross_housing_costs).to eq 1200.00.to_d + monthly_cash_housing
+            expect(calculator.gross_housing_costs).to eq BigDecimal('1200.00') + monthly_cash_housing
             expect(calculator.monthly_housing_benefit).to eq 0.0
             expect(calculator.net_housing_costs).to eq 545.00 # Cap applied
           end
@@ -73,7 +73,7 @@ module Calculators
             let(:housing_cost_amount) { 420.00 }
 
             it 'should return the net cost' do
-              expect(calculator.gross_housing_costs).to eq 420.00.to_d + monthly_cash_housing
+              expect(calculator.gross_housing_costs).to eq BigDecimal('420.00') + monthly_cash_housing
               expect(calculator.monthly_housing_benefit).to eq 0.0
               expect(calculator.net_housing_costs).to eq 420.00 + monthly_cash_housing
             end
@@ -84,7 +84,7 @@ module Calculators
           let(:housing_cost_type) { 'mortgage' }
 
           it 'should cap the return' do
-            expect(calculator.gross_housing_costs).to eq 1200.00.to_d + monthly_cash_housing
+            expect(calculator.gross_housing_costs).to eq BigDecimal('1200.00') + monthly_cash_housing
             expect(calculator.monthly_housing_benefit).to eq 0.0
             expect(calculator.net_housing_costs).to eq 545.00 # Cap applied
           end
@@ -93,9 +93,9 @@ module Calculators
             let(:housing_cost_amount) { 420.00 }
 
             it 'should return the net cost' do
-              expect(calculator.gross_housing_costs).to eq 420.00.to_d + monthly_cash_housing # all variables are always decimals
+              expect(calculator.gross_housing_costs).to eq BigDecimal('420.00') + monthly_cash_housing # all variables are always decimals
               expect(calculator.monthly_housing_benefit).to eq 0.0
-              expect(calculator.net_housing_costs).to eq (420.00.to_d + monthly_cash_housing).to_f # net_housing_costs is always a float
+              expect(calculator.net_housing_costs).to eq (BigDecimal('420.00') + monthly_cash_housing).to_f # net_housing_costs is always a float
             end
           end
         end
@@ -111,7 +111,7 @@ module Calculators
           let(:housing_benefit_amount) { 100.00 }
 
           it 'should cap the return' do
-            expect(calculator.gross_housing_costs).to eq 750.00.to_d + monthly_cash_housing
+            expect(calculator.gross_housing_costs).to eq BigDecimal('750.00') + monthly_cash_housing
             expect(calculator.monthly_housing_benefit).to eq 100.00
             expect(calculator.net_housing_costs).to eq 545.00 # Cap applied
           end
@@ -121,7 +121,7 @@ module Calculators
           let(:housing_cost_type) { 'rent' }
 
           it 'should cap the return' do
-            expect(calculator.gross_housing_costs).to eq 1200.00.to_d + monthly_cash_housing
+            expect(calculator.gross_housing_costs).to eq BigDecimal('1200.00') + monthly_cash_housing
             expect(calculator.monthly_housing_benefit).to eq 500.0
             expect(calculator.net_housing_costs).to eq 545.00 # Cap applied
           end
@@ -131,7 +131,7 @@ module Calculators
             let(:housing_benefit_amount) { 500.00 }
 
             it 'should cap the return' do
-              expect(calculator.gross_housing_costs).to eq 1200.00.to_d + monthly_cash_housing
+              expect(calculator.gross_housing_costs).to eq BigDecimal('1200.00') + monthly_cash_housing
               expect(calculator.monthly_housing_benefit).to eq 500.0
               expect(calculator.net_housing_costs).to eq 545.00 # Cap applied
             end
@@ -142,7 +142,7 @@ module Calculators
           let(:housing_cost_type) { 'mortgage' }
 
           it 'should cap the return' do
-            expect(calculator.gross_housing_costs).to eq 1200.00.to_d + monthly_cash_housing
+            expect(calculator.gross_housing_costs).to eq BigDecimal('1200.00') + monthly_cash_housing
             expect(calculator.monthly_housing_benefit).to eq 500.00
             expect(calculator.net_housing_costs).to eq 545.00 # Cap applied
           end
@@ -152,9 +152,9 @@ module Calculators
             let(:housing_benefit_amount) { 200.00 }
 
             it 'should return net as gross_cost minus housing_benefit' do
-              expect(calculator.gross_housing_costs).to eq 600.00.to_d + monthly_cash_housing
+              expect(calculator.gross_housing_costs).to eq BigDecimal('600.00') + monthly_cash_housing
               expect(calculator.monthly_housing_benefit).to eq 200.0
-              expect(calculator.net_housing_costs).to eq 400.00.to_d + monthly_cash_housing
+              expect(calculator.net_housing_costs).to eq BigDecimal('400.00') + monthly_cash_housing
             end
           end
         end
@@ -171,18 +171,18 @@ module Calculators
           let(:housing_cost_amount) { 1500.00 }
 
           it 'should record half the monthly housing cost' do
-            expect(calculator.gross_housing_costs).to eq 750.00.to_d + monthly_cash_housing
+            expect(calculator.gross_housing_costs).to eq BigDecimal('750.00') + monthly_cash_housing
             expect(calculator.monthly_housing_benefit).to eq 0.0
-            expect(calculator.net_housing_costs).to eq 750.00.to_d + monthly_cash_housing
+            expect(calculator.net_housing_costs).to eq BigDecimal('750.00') + monthly_cash_housing
           end
 
           context 'when net cost is below housing cap' do
             let(:housing_cost_amount) { 900.00 }
 
             it 'should return half the monthly housing cost' do
-              expect(calculator.gross_housing_costs).to eq 450.00.to_d + monthly_cash_housing
+              expect(calculator.gross_housing_costs).to eq BigDecimal('450.00') + monthly_cash_housing
               expect(calculator.monthly_housing_benefit).to eq 0.0
-              expect(calculator.net_housing_costs).to eq 450.00.to_d + monthly_cash_housing
+              expect(calculator.net_housing_costs).to eq BigDecimal('450.00') + monthly_cash_housing
             end
           end
         end
@@ -191,18 +191,18 @@ module Calculators
           let(:housing_cost_type) { 'rent' }
 
           it 'should record the full monthly housing costs' do
-            expect(calculator.gross_housing_costs).to eq 1200.00.to_d + monthly_cash_housing
+            expect(calculator.gross_housing_costs).to eq BigDecimal('1200.00') + monthly_cash_housing
             expect(calculator.monthly_housing_benefit).to eq 0.0
-            expect(calculator.net_housing_costs).to eq 1200.00.to_d + monthly_cash_housing
+            expect(calculator.net_housing_costs).to eq BigDecimal('1200.00') + monthly_cash_housing
           end
 
           context 'when net cost is below housing cap' do
             let(:housing_cost_amount) { 520.00 }
 
             it 'should return the net cost' do
-              expect(calculator.gross_housing_costs).to eq 520.00.to_d + monthly_cash_housing
+              expect(calculator.gross_housing_costs).to eq BigDecimal('520.00') + monthly_cash_housing
               expect(calculator.monthly_housing_benefit).to eq 0.0
-              expect(calculator.net_housing_costs).to eq 520.00.to_d + monthly_cash_housing
+              expect(calculator.net_housing_costs).to eq BigDecimal('520.00') + monthly_cash_housing
             end
           end
         end
@@ -210,18 +210,18 @@ module Calculators
         context 'mortgage' do
           let(:housing_cost_type) { 'mortgage' }
           it 'should record the full monthly housing costs' do
-            expect(calculator.gross_housing_costs).to eq 1200.00.to_d + monthly_cash_housing
+            expect(calculator.gross_housing_costs).to eq BigDecimal('1200.00') + monthly_cash_housing
             expect(calculator.monthly_housing_benefit).to eq 0.0
-            expect(calculator.net_housing_costs).to eq 1200.00.to_d + monthly_cash_housing
+            expect(calculator.net_housing_costs).to eq BigDecimal('1200.00') + monthly_cash_housing
           end
 
           context 'when net cost is below housing cap' do
             let(:housing_cost_amount) { 520.00 }
 
             it 'should return the gross cost as net' do
-              expect(calculator.gross_housing_costs).to eq 520.00.to_d + monthly_cash_housing
+              expect(calculator.gross_housing_costs).to eq BigDecimal('520.00') + monthly_cash_housing
               expect(calculator.monthly_housing_benefit).to eq 0.0
-              expect(calculator.net_housing_costs).to eq 520.00.to_d + monthly_cash_housing
+              expect(calculator.net_housing_costs).to eq BigDecimal('520.00') + monthly_cash_housing
             end
           end
         end
@@ -237,7 +237,7 @@ module Calculators
           let(:housing_benefit_amount) { 100.00 }
 
           it 'should record half the monthly outgoing less the housing benefit' do
-            expect(calculator.gross_housing_costs).to eq 600.00.to_d + monthly_cash_housing
+            expect(calculator.gross_housing_costs).to eq BigDecimal('600.00') + monthly_cash_housing
             expect(calculator.monthly_housing_benefit).to eq 100.000
             expect(calculator.net_housing_costs).to eq((housing_cost_amount.to_d + monthly_cash_housing - housing_benefit_amount.to_d) / 2)
           end
@@ -249,7 +249,7 @@ module Calculators
           let(:housing_benefit_amount) { 100.00 }
 
           it 'should record half the housing cost less the housing benefit' do
-            expect(calculator.gross_housing_costs).to eq 750.00.to_d + monthly_cash_housing
+            expect(calculator.gross_housing_costs).to eq BigDecimal('750.00') + monthly_cash_housing
             expect(calculator.monthly_housing_benefit).to eq 100.00
             expect(calculator.net_housing_costs).to eq((housing_cost_amount.to_d + monthly_cash_housing - housing_benefit_amount.to_d) / 2)
           end
@@ -259,9 +259,9 @@ module Calculators
           let(:housing_cost_type) { 'rent' }
 
           it 'should record the full monthly housing costs' do
-            expect(calculator.gross_housing_costs).to eq 1200.00.to_d + monthly_cash_housing
+            expect(calculator.gross_housing_costs).to eq BigDecimal('1200.00') + monthly_cash_housing
             expect(calculator.monthly_housing_benefit).to eq 500.00
-            expect(calculator.net_housing_costs).to eq 700.00.to_d + monthly_cash_housing
+            expect(calculator.net_housing_costs).to eq BigDecimal('700.00') + monthly_cash_housing
           end
 
           context 'when net cost is below housing cap' do
@@ -269,9 +269,9 @@ module Calculators
             let(:housing_benefit_amount) { 200.00 }
 
             it 'should return net as gross_cost minus housing_benefit' do
-              expect(calculator.gross_housing_costs).to eq 600.00.to_d + monthly_cash_housing
+              expect(calculator.gross_housing_costs).to eq BigDecimal('600.00') + monthly_cash_housing
               expect(calculator.monthly_housing_benefit).to eq 200.0
-              expect(calculator.net_housing_costs).to eq 400.00.to_d + monthly_cash_housing
+              expect(calculator.net_housing_costs).to eq BigDecimal('400.00') + monthly_cash_housing
             end
           end
         end
@@ -280,9 +280,9 @@ module Calculators
           let(:housing_cost_type) { 'mortgage' }
 
           it 'should record the full housing costs less the housing benefit' do
-            expect(calculator.gross_housing_costs).to eq 1200.00.to_d + monthly_cash_housing
+            expect(calculator.gross_housing_costs).to eq BigDecimal('1200.00') + monthly_cash_housing
             expect(calculator.monthly_housing_benefit).to eq 500.00
-            expect(calculator.net_housing_costs).to eq 700.00.to_d + monthly_cash_housing
+            expect(calculator.net_housing_costs).to eq BigDecimal('700.00') + monthly_cash_housing
           end
 
           context 'when net cost is below housing cap' do
@@ -290,9 +290,9 @@ module Calculators
             let(:housing_benefit_amount) { 200.00 }
 
             it 'should return net as gross_cost minus housing_benefit' do
-              expect(calculator.gross_housing_costs).to eq 600.00.to_d + monthly_cash_housing
+              expect(calculator.gross_housing_costs).to eq BigDecimal('600.00') + monthly_cash_housing
               expect(calculator.monthly_housing_benefit).to eq 200.0
-              expect(calculator.net_housing_costs).to eq 400.00.to_d + monthly_cash_housing
+              expect(calculator.net_housing_costs).to eq BigDecimal('400.00') + monthly_cash_housing
             end
           end
         end
