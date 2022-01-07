@@ -67,19 +67,19 @@ references:
         $(aws ecr get-login --region eu-west-2 --no-include-email)
   setup_kubectl: &setup_kubectl
     run:
-      name: Kubectl deployment setup UAT
+      name: Kubectl deployment setup
       command: |
         $(aws ecr get-login --region eu-west-2 --no-include-email)
         setup-kube-auth
-  setup_uat_kubectl_live: &setup_uat_kubectl_live
+  authenticate_k8s_live: &authenticate_k8s_live
     run:
-      name: Kubectl deployment setup UAT - live cluster
+      name: Authenticate with cluster
       command: |
-        $(aws ecr get-login --region eu-west-2 --no-include-email)
         echo -n ${K8S_CLUSTER_CERT_UAT_LIVE} | base64 -d > ./ca.crt
         kubectl config set-cluster ${K8S_CLUSTER_NAME_UAT_LIVE} --certificate-authority=./ca.crt --server=https://${K8S_CLUSTER_NAME_UAT_LIVE}
-        kubectl config set-credentials circleci --token=${K8S_TOKEN_UAT_LIVE}
-        kubectl config set-context ${K8S_CLUSTER_NAME_UAT_LIVE} --cluster=${K8S_CLUSTER_NAME_UAT_LIVE} --user=circleci --namespace=${K8S_NAMESPACE_UAT_LIVE}
+        kubectl config set-credentials circleci --token=${K8S_TOKEN}
+        kubectl config set-context ${K8S_CLUSTER_NAME_UAT_LIVE} --cluster=${K8S_CLUSTER_NAME_UAT_LIVE} --user=circleci --namespace=${K8S_NAMESPACE}
+        kubectl config use-context ${K8S_CLUSTER_NAME_UAT_LIVE}
         kubectl config use-context ${K8S_CLUSTER_NAME_UAT_LIVE}
   update_packages: &update_packages
     run:
@@ -182,7 +182,7 @@ jobs:
       - checkout
       - setup_remote_docker:
           docker_layer_caching: true
-      - *setup_uat_kubectl_live
+      - *authenticate_k8s_live
       - *decrypt_secrets
       - deploy:
           name: Helm deployment to UAT - live cluster
@@ -195,12 +195,12 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - *setup_uat_kubectl_live
+      - *authenticate_k8s_live
       - run:
           name: Delete UAT release from live cluster
           command: |
             ./bin/delete_uat_release.sh
-  deploy_staging:
+  deploy_staging_legacy:
     executor: cloud-platform-executor
     steps:
       - checkout
@@ -212,11 +212,28 @@ jobs:
           command: kubectl config use-context staging
       - *decrypt_secrets
       - deploy:
-          name: Helm deployment to staging
+          name: Helm deployment to staging - Legacy cluster
           command: |
             helm upgrade check-financial-eligibility ./deploy/helm/. \
                           --install --wait \
                           --namespace=${KUBE_ENV_STAGING_NAMESPACE} \
+                          --values ./deploy/helm/values-staging-legacy.yaml \
+                          --set image.repository="$ECR_ENDPOINT/laa-apply-for-legal-aid/check-financial-eligibility-service" \
+                          --set image.tag="${CIRCLE_SHA1}"
+  deploy_staging:
+    executor: cloud-platform-executor
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - *authenticate_k8s_live
+      - *decrypt_secrets
+      - deploy:
+          name: Helm deployment to staging
+          command: |
+            helm upgrade check-financial-eligibility ./deploy/helm/. \
+                          --install --wait \
+                          --namespace=${K8S_NAMESPACE} \
                           --values ./deploy/helm/values-staging.yaml \
                           --set image.repository="$ECR_ENDPOINT/laa-apply-for-legal-aid/check-financial-eligibility-service" \
                           --set image.tag="${CIRCLE_SHA1}"
@@ -278,6 +295,7 @@ workflows:
               ignore: main
           <<: *generic-slack-fail-post-step
       - deploy_uat_live:
+          context: check-financial-eligibility-uat
           requires:
             - lint_checks
             - unit_tests
@@ -302,14 +320,21 @@ workflows:
             - unit_tests
           <<: *generic-slack-fail-post-step
       - deploy_main_uat_live:
+          context: check-financial-eligibility-uat
           requires:
             - build_and_push
           <<: *generic-slack-fail-post-step
       - delete_uat_branch_live:
+          context: check-financial-eligibility-uat
           requires:
             - deploy_main_uat_live
           <<: *generic-slack-fail-post-step
       - deploy_staging:
+          context: check-financial-eligibility-staging
+          requires:
+            - build_and_push
+          <<: *generic-slack-fail-post-step
+      - deploy_staging_legacy:
           requires:
             - build_and_push
           <<: *generic-slack-fail-post-step
@@ -354,11 +379,13 @@ workflows:
             }
           requires:
             - deploy_staging
+            - deploy_staging_legacy
       - hold_production:
           type: approval
           requires:
             - delete_uat_branch_live
             - deploy_staging
+            - deploy_staging_legacy
             - slack/on-hold
       - deploy_production:
           requires:
