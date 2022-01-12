@@ -200,26 +200,6 @@ jobs:
           name: Delete UAT release from live cluster
           command: |
             ./bin/delete_uat_release.sh
-  deploy_staging_legacy:
-    executor: cloud-platform-executor
-    steps:
-      - checkout
-      - setup_remote_docker:
-          docker_layer_caching: true
-      - *setup_kubectl
-      - run:
-          name: Set kubectl context
-          command: kubectl config use-context staging
-      - *decrypt_secrets
-      - deploy:
-          name: Helm deployment to staging - Legacy cluster
-          command: |
-            helm upgrade check-financial-eligibility ./deploy/helm/. \
-                          --install --wait \
-                          --namespace=${KUBE_ENV_STAGING_NAMESPACE} \
-                          --values ./deploy/helm/values-staging-legacy.yaml \
-                          --set image.repository="$ECR_ENDPOINT/laa-apply-for-legal-aid/check-financial-eligibility-service" \
-                          --set image.tag="${CIRCLE_SHA1}"
   deploy_staging:
     executor: cloud-platform-executor
     steps:
@@ -351,10 +331,6 @@ workflows:
           requires:
             - build_and_push
           <<: *generic-slack-fail-post-step
-      - deploy_staging_legacy:
-          requires:
-            - build_and_push
-          <<: *generic-slack-fail-post-step
       - slack/on-hold:
           custom: |
             {
@@ -396,13 +372,11 @@ workflows:
             }
           requires:
             - deploy_staging
-            - deploy_staging_legacy
       - hold_production:
           type: approval
           requires:
             - delete_uat_branch_live
             - deploy_staging
-            - deploy_staging_legacy
             - slack/on-hold
       - deploy_production_legacy:
           requires:
