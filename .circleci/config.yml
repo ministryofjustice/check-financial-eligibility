@@ -71,7 +71,7 @@ references:
       command: |
         $(aws ecr get-login --region eu-west-2 --no-include-email)
         setup-kube-auth
-  authenticate_k8s_live: &authenticate_k8s_live
+  authenticate_k8s: &authenticate_k8s
     run:
       name: Authenticate with cluster
       command: |
@@ -176,28 +176,28 @@ jobs:
     - *build_docker_image
     - *setup_aws_login
     - *push_to_ecr
-  deploy_uat_live: &deploy_uat_live
+  deploy_uat: &deploy_uat
     executor: cloud-platform-executor
     steps:
       - checkout
       - setup_remote_docker:
           docker_layer_caching: true
-      - *authenticate_k8s_live
+      - *authenticate_k8s
       - *decrypt_secrets
       - deploy:
-          name: Helm deployment to UAT - live cluster
+          name: Helm deployment to UAT
           command: |
             ./bin/uat_deploy
-  deploy_main_uat_live:
-    <<: *deploy_uat_live
-  delete_uat_branch_live:
+  deploy_main_uat:
+    <<: *deploy_uat
+  delete_uat_branch:
     executor: cloud-platform-executor
     steps:
       - checkout
       - setup_remote_docker
-      - *authenticate_k8s_live
+      - *authenticate_k8s
       - run:
-          name: Delete UAT release from live cluster
+          name: Delete UAT release
           command: |
             ./bin/delete_uat_release.sh
   deploy_staging:
@@ -206,7 +206,7 @@ jobs:
       - checkout
       - setup_remote_docker:
           docker_layer_caching: true
-      - *authenticate_k8s_live
+      - *authenticate_k8s
       - *decrypt_secrets
       - deploy:
           name: Helm deployment to staging
@@ -217,37 +217,16 @@ jobs:
                           --values ./deploy/helm/values-staging.yaml \
                           --set image.repository="$ECR_ENDPOINT/laa-apply-for-legal-aid/check-financial-eligibility-service" \
                           --set image.tag="${CIRCLE_SHA1}"
-
-  deploy_production_legacy:
-    executor: cloud-platform-executor
-    steps:
-      - checkout
-      - setup_remote_docker:
-          docker_layer_caching: true
-      - *setup_kubectl
-      - run:
-          name: Set kubectl context
-          command: kubectl config use-context production
-      - *decrypt_secrets
-      - deploy:
-          name: Helm deployment to production
-          command: |
-            helm upgrade check-financial-eligibility ./deploy/helm/. \
-                        --install --wait \
-                        --namespace=${KUBE_ENV_PRODUCTION_NAMESPACE} \
-                        --values ./deploy/helm/values-production-legacy.yaml \
-                        --set image.repository="$ECR_ENDPOINT/laa-apply-for-legal-aid/check-financial-eligibility-service" \
-                        --set image.tag="${CIRCLE_SHA1}"
   deploy_production:
     executor: cloud-platform-executor
     steps:
       - checkout
       - setup_remote_docker:
           docker_layer_caching: true
-      - *authenticate_k8s_live
+      - *authenticate_k8s
       - *decrypt_secrets
       - deploy:
-          name: Helm deployment to production on new live cluster
+          name: Helm deployment to production
           command: |
             helm upgrade check-financial-eligibility ./deploy/helm/. \
                         --install --wait \
@@ -291,7 +270,7 @@ workflows:
             branches:
               ignore: main
           <<: *generic-slack-fail-post-step
-      - deploy_uat_live:
+      - deploy_uat:
           context: check-financial-eligibility-uat
           requires:
             - lint_checks
@@ -316,15 +295,15 @@ workflows:
             - lint_checks
             - unit_tests
           <<: *generic-slack-fail-post-step
-      - deploy_main_uat_live:
+      - deploy_main_uat:
           context: check-financial-eligibility-uat
           requires:
             - build_and_push
           <<: *generic-slack-fail-post-step
-      - delete_uat_branch_live:
+      - delete_uat_branch:
           context: check-financial-eligibility-uat
           requires:
-            - deploy_main_uat_live
+            - deploy_main_uat
           <<: *generic-slack-fail-post-step
       - deploy_staging:
           context: check-financial-eligibility-staging
@@ -375,13 +354,9 @@ workflows:
       - hold_production:
           type: approval
           requires:
-            - delete_uat_branch_live
+            - delete_uat_branch
             - deploy_staging
             - slack/on-hold
-      - deploy_production_legacy:
-          requires:
-            - hold_production
-          <<: *generic-slack-fail-post-step
       - deploy_production:
           context: check-financial-eligibility-production
           requires:
