@@ -37,7 +37,7 @@ module Calculators
                  state_benefit_type: another_state_benefit_type_included
         end
         it 'returns correct sum of both monthly and weekly benefits' do
-          expect(subject).to eq(216.67 + 88.3)
+          expect(subject).to eq 304.97
         end
       end
       context 'mixture of included and excluded benefits' do
