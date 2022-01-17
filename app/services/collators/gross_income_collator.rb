@@ -68,7 +68,7 @@ module Collators
     def categorise_income
       result = Hash.new(0.0)
       gross_income_summary.other_income_sources.each do |source|
-        monthly_income = source.calculate_monthly_income!
+        monthly_income = BigDecimal(source.calculate_monthly_income!, Float::DIG)
         result[source.name.to_sym] = monthly_income
         result[:total] += monthly_income
       end
