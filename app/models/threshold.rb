@@ -6,9 +6,9 @@ class Threshold
 
     def load_data
       data = {}
-      index = YAML.load_file(Rails.root.join(data_folder_path, 'values.yml'))
+      index = YAML.safe_load_file(Rails.root.join(data_folder_path, 'values.yml'), permitted_classes: [Date])
       index.each do |date, filename|
-        hash = YAML.load_file(Rails.root.join(filename)).deep_symbolize_keys
+        hash = YAML.safe_load_file(Rails.root.join(filename), permitted_classes: [Date]).deep_symbolize_keys
         data[date.beginning_of_day] = hash if threshold_loadable?(hash)
       end
       data
