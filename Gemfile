@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.0.2'
+ruby '3.1.0'
 
 gem 'active_model_serializers', '~> 0.10.13'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -58,6 +58,11 @@ gem 'roo', '~> 2.8.3'
 gem 'secure_headers'
 
 gem 'webpacker', '~> 5'
+
+# Required following upgrade to ruby 3.1.0
+gem 'net-imap'
+gem 'net-pop'
+gem 'net-smtp'
 
 group :development, :test do
   gem 'awesome_print'
