@@ -46,7 +46,7 @@ record the upper and lower thresholds for that proceeding type, and will eventua
 
 ### Usage
 
-The client will create as assessment by posting a payload to the `/assessments` endpoint, which will respond with an `assessment_id`.  This assessment id
+The client will create an assessment by posting a payload to the `/assessments` endpoint, which will respond with an `assessment_id`.  This assessment id
 is then given on all subsequent posts to the other endpoints to build up a record of capital, income and outgoings, finally requesting an assessment result
 by sending a GET request to the /assessments endpoint.
 
