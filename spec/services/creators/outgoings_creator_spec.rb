@@ -8,7 +8,7 @@ module Creators
       let(:housing_cost_type_rent) { 'rent' }
       let(:housing_cost_type_mortgage) { 'mortgage' }
 
-      subject { described_class.call(assessment_id: assessment.id, outgoings: outgoings) }
+      subject { described_class.call(assessment_id: assessment.id, outgoings:) }
 
       it 'creates a disposable_income_summary if one doesnt already exist' do
         expect { subject }.to change { DisposableIncomeSummary.count }.by(1)

@@ -35,8 +35,8 @@ module Creators
 
     def create_remark(category, remark)
       rec = ExplicitRemark.create(assessment_id: @assessment_id,
-                                  category: category,
-                                  remark: remark)
+                                  category:,
+                                  remark:)
       return if rec.valid?
 
       @errors = rec.errors.full_messages

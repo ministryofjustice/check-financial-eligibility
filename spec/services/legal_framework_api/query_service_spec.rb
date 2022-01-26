@@ -21,7 +21,7 @@ module LegalFrameworkAPI
           let(:ccms_code) { :DA001 }
 
           it 'returns true' do
-            stub_request(:post, api_endpoint).with(body: request_body, headers: headers).to_return(body: expected_response, status: 200)
+            stub_request(:post, api_endpoint).with(body: request_body, headers:).to_return(body: expected_response, status: 200)
             expect(described_class.waived?(ccms_code, :capital_upper)).to be true
           end
         end
@@ -30,7 +30,7 @@ module LegalFrameworkAPI
           let(:ccms_code) { :SE013 }
 
           it 'returns true' do
-            stub_request(:post, api_endpoint).with(body: request_body, headers: headers).to_return(body: expected_response, status: 200)
+            stub_request(:post, api_endpoint).with(body: request_body, headers:).to_return(body: expected_response, status: 200)
             expect(described_class.waived?(ccms_code, :disposable_income_upper)).to be false
           end
         end
@@ -38,7 +38,7 @@ module LegalFrameworkAPI
         context 'Unsuccessful response' do
           let(:ccms_code) { :DA003 }
           it 'raises a ResponseError' do
-            stub_request(:post, api_endpoint).with(body: request_body, headers: headers).to_return(body: '', status: 503)
+            stub_request(:post, api_endpoint).with(body: request_body, headers:).to_return(body: '', status: 503)
             expect {
               described_class.waived?(ccms_code, :gross_income_upper)
             }.to raise_error LegalFrameworkAPI::ResponseError
@@ -52,7 +52,7 @@ module LegalFrameworkAPI
         context 'a domestic abuse proceeding type' do
           let(:ccms_code) { :DA001 }
           it 'returns true' do
-            stub_request(:post, api_endpoint).with(body: request_body, headers: headers).to_return(body: expected_response, status: 200)
+            stub_request(:post, api_endpoint).with(body: request_body, headers:).to_return(body: expected_response, status: 200)
             expect(described_class.matter_type(ccms_code)).to eq 'domestic_abuse'
           end
         end
@@ -60,7 +60,7 @@ module LegalFrameworkAPI
         context 'a section8 proceeding type' do
           let(:ccms_code) { :SE004 }
           it 'returns true' do
-            stub_request(:post, api_endpoint).with(body: request_body, headers: headers).to_return(body: expected_response, status: 200)
+            stub_request(:post, api_endpoint).with(body: request_body, headers:).to_return(body: expected_response, status: 200)
             expect(described_class.matter_type(ccms_code)).to eq 'section8'
           end
         end
@@ -81,8 +81,8 @@ module LegalFrameworkAPI
         request_id: request_id,
         proceeding_types: [
           {
-            ccms_code: ccms_code,
-            matter_type: matter_type,
+            ccms_code:,
+            matter_type:,
             capital_upper: threshold_waived,
             disposable_income_upper: threshold_waived,
             gross_income_upper: threshold_waived

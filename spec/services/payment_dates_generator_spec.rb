@@ -49,7 +49,7 @@ describe PaymentDatesGenerator do
 
     subject do
       generator = described_class.new
-      date_set = generator.__send__(:generate_date_series, period: period, start_date: date, holiday_strategy: strategy)
+      date_set = generator.__send__(:generate_date_series, period:, start_date: date, holiday_strategy: strategy)
       date_set.db_dates
     end
 

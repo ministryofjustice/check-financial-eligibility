@@ -12,3 +12,10 @@ inherit_gem:
 inherit_mode:
   merge:
     - Exclude
+
+Style/HashSyntax:
+  Exclude:
+    - 'spec/factories/gross_income_summary_factory.rb'
+    - 'spec/integration/ap_1367_spec.rb'
+    - 'spec/integration/policy_disregards_spec.rb'
+    - 'spec/integration/remarks_spec.rb'

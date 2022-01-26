@@ -83,7 +83,7 @@ class AssessmentsController < ApplicationController
   end
 
   def assessment_creation_service
-    @assessment_creation_service ||= Creators::AssessmentCreator.call(remote_ip: request.remote_ip, raw_post: request.raw_post, version: version)
+    @assessment_creation_service ||= Creators::AssessmentCreator.call(remote_ip: request.remote_ip, raw_post: request.raw_post, version:)
   end
 
   def assessment

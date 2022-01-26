@@ -66,14 +66,14 @@ module Creators
     end
 
     def create_category(category_hash, operation)
-      cash_transaction_category = CashTransactionCategory.create!(gross_income_summary: gross_income_summary,
+      cash_transaction_category = CashTransactionCategory.create!(gross_income_summary:,
                                                                   name: category_hash[:category],
-                                                                  operation: operation)
+                                                                  operation:)
       category_hash[:payments].each { |payment| create_cash_transaction(payment, cash_transaction_category) }
     end
 
     def create_cash_transaction(payment, cash_transaction_category)
-      CashTransaction.create!(cash_transaction_category: cash_transaction_category,
+      CashTransaction.create!(cash_transaction_category:,
                               date: Date.parse(payment[:date]),
                               amount: payment[:amount],
                               client_id: payment[:client_id])

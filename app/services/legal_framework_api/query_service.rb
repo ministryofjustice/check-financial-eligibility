@@ -123,7 +123,7 @@ module LegalFrameworkAPI
     end
 
     def conn
-      @conn ||= Faraday.new(url: host, headers: headers)
+      @conn ||= Faraday.new(url: host, headers:)
     end
 
     def headers

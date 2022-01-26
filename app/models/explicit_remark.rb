@@ -5,7 +5,7 @@ class ExplicitRemark < ApplicationRecord
                                     message: '%<value>s is not a valid remark category' }
 
   def self.remarks_by_category(assessment_id)
-    where(assessment_id: assessment_id)
+    where(assessment_id:)
       .order(:category, :remark)
       .pluck(:category, :remark)
       .group_by(&:first)

@@ -21,7 +21,7 @@ RSpec.describe CashTransactionsController, type: :request do
       end
 
       it 'calls cash transactions creator' do
-        expect(creator_class).to receive(:call).with(assessment_id: assessment_id, income: params[:income], outgoings: params[:outgoings])
+        expect(creator_class).to receive(:call).with(assessment_id:, income: params[:income], outgoings: params[:outgoings])
         subject
       end
 

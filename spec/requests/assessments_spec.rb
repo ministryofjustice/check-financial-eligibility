@@ -86,7 +86,7 @@ RSpec.describe AssessmentsController, type: :request do
           client_reference_id: 'psr-123',
           submission_date: '2019-06-06',
           proceeding_types: {
-            ccms_codes: ccms_codes
+            ccms_codes:
           }
         }
       end
@@ -111,7 +111,7 @@ RSpec.describe AssessmentsController, type: :request do
           client_reference_id: 'psr-123',
           submission_date: '2019-06-06',
           proceeding_types: {
-            ccms_codes: ccms_codes
+            ccms_codes:
           }
         }
       end
@@ -308,7 +308,7 @@ RSpec.describe AssessmentsController, type: :request do
     assessment = create :assessment,
                         client_reference_id: 'NPE6-1',
                         submission_date: Date.parse('29/5/2019')
-    create :applicant, assessment: assessment, date_of_birth: Date.parse('29/5/1958')
+    create :applicant, assessment:, date_of_birth: Date.parse('29/5/1958')
     create_dependant(assessment, '2/2/2005', true, 'child_relative')
     create_dependant(assessment, '5/2/2008', true, 'child_relative')
     create_dependant(assessment, '5/2/2010', true, 'child_relative')
@@ -346,7 +346,7 @@ RSpec.describe AssessmentsController, type: :request do
     create :capital_eligibility, capital_summary: cs, proceeding_type_code: assessment.proceeding_type_codes.first
     create :gross_income_eligibility, gross_income_summary: gis, proceeding_type_code: assessment.proceeding_type_codes.first
     create :disposable_income_eligibility, disposable_income_summary: dis, proceeding_type_code: assessment.proceeding_type_codes.first
-    create :assessment_eligibility, assessment: assessment, proceeding_type_code: assessment.proceeding_type_codes.first
+    create :assessment_eligibility, assessment:, proceeding_type_code: assessment.proceeding_type_codes.first
 
     assessment
   end
