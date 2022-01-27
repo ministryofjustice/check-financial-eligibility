@@ -28,15 +28,6 @@ RSpec.describe CapitalsController, type: :request do
         end
       end
 
-      context 'with negative values' do
-        let(:params) do
-          {
-            bank_accounts: negative_bank_account_params,
-            non_liquid_capital: negative_non_liquid_params
-          }
-        end
-      end
-
       context 'with only bank_accounts' do
         let(:params) do
           {

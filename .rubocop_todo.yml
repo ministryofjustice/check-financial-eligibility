@@ -93,10 +93,10 @@ RSpec/ContextWording:
 #    - 'spec/services/utilities/regular_period_analyser_spec.rb'
 
 # Offense count: 2
-RSpec/EmptyExampleGroup:
-  Exclude:
-    - 'spec/requests/capitals_spec.rb'
-    - 'spec/services/creators/other_incomes_creator_spec.rb'
+#RSpec/EmptyExampleGroup:
+#  Exclude:
+#    - 'spec/requests/capitals_spec.rb'
+#    - 'spec/services/creators/other_incomes_creator_spec.rb'
 
 # Offense count: 4
 # Cop supports --auto-correct.
