@@ -6,53 +6,10 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 108
-# Cop supports --auto-correct.
-# Configuration parameters: IndentationWidth.
-# SupportedStyles: outdent, indent
-#Layout/AccessModifierIndentation:
-#  EnforcedStyle: indent
-
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: IndentationWidth.
-# SupportedStyles: special_inside_parentheses, consistent, align_brackets
-#Layout/FirstArrayElementIndentation:
-#  EnforcedStyle: special_inside_parentheses
-
-# Offense count: 5
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, IndentationWidth.
-# SupportedStyles: aligned, indented
-#Layout/MultilineOperationIndentation:
-#  Exclude:
-#    - 'spec/services/collators/gross_income_collator_spec.rb'
-
 # Offense count: 36
 # Configuration parameters: IgnoredMethods.
 Lint/AmbiguousBlockAssociation:
   Enabled: false
-
-# Offense count: 1
-#Lint/MissingSuper:
-#  Exclude:
-#    - 'app/services/assessors/assessment_proceeding_type_assessor.rb'
-
-# Offense count: 22
-# Cop supports --auto-correct.
-#Lint/RedundantCopDisableDirective:
-#  Enabled: false
-
-# Offense count: 5
-# Cop supports --auto-correct.
-# Configuration parameters: PreferredName.
-#Naming/RescuedExceptionsVariableName:
-#  Exclude:
-#    - 'app/controllers/assessments_controller.rb'
-#    - 'app/services/creators/cash_transactions_creator.rb'
-#    - 'lib/integration_helpers/test_case/outgoings_collection.rb'
-#    - 'spec/services/assessors/assessment_proceeding_type_assessor_spec.rb'
-#    - 'spec/services/decorators/error_decorator_spec.rb'
 
 # Offense count: 17
 RSpec/AnyInstance:
@@ -72,116 +29,6 @@ RSpec/AnyInstance:
 RSpec/ContextWording:
   Enabled: false
 
-# Offense count: 59
-# Cop supports --auto-correct.
-# Configuration parameters: SkipBlocks, EnforcedStyle.
-# SupportedStyles: described_class, explicit
-#RSpec/DescribedClass:
-#  Exclude:
-#    - 'spec/models/api_response_spec.rb'
-#    - 'spec/models/assessment_spec.rb'
-#    - 'spec/models/bank_holiday_spec.rb'
-#    - 'spec/models/cash_transaction_spec.rb'
-#    - 'spec/models/explicit_remark_spec.rb'
-#    - 'spec/models/state_benefit_spec.rb'
-#    - 'spec/models/threshold_spec.rb'
-#    - 'spec/services/calculators/vehicle_age_calculator_spec.rb'
-#    - 'spec/services/decorators/v3/assessment_decorator_spec.rb'
-#    - 'spec/services/decorators/v4/assessment_decorator_spec.rb'
-#    - 'spec/services/legal_framework_api/response_error_spec.rb'
-#    - 'spec/services/remarks_spec.rb'
-#    - 'spec/services/utilities/regular_period_analyser_spec.rb'
-
-# Offense count: 2
-#RSpec/EmptyExampleGroup:
-#  Exclude:
-#    - 'spec/requests/capitals_spec.rb'
-#    - 'spec/services/creators/other_incomes_creator_spec.rb'
-
-# Offense count: 4
-# Cop supports --auto-correct.
-# Configuration parameters: AllowConsecutiveOneLiners.
-#RSpec/EmptyLineAfterExample:
-#  Exclude:
-#    - 'spec/models/state_benefit_spec.rb'
-
-# Offense count: 11
-# Cop supports --auto-correct.
-#RSpec/EmptyLineAfterExampleGroup:
-#  Exclude:
-#    - 'spec/models/bank_holiday_spec.rb'
-#    - 'spec/models/state_benefit_spec.rb'
-#    - 'spec/requests/irregular_incomes_spec.rb'
-#    - 'spec/requests/status_spec.rb'
-#    - 'spec/services/calculators/dependant_allowance_calculator_spec.rb'
-#    - 'spec/services/calculators/state_benefits_calculator_spec.rb'
-#    - 'spec/services/creators/other_incomes_creator_spec.rb'
-#    - 'spec/services/utilities/calendar_monthly_period_analyser_spec.rb'
-
-# Offense count: 173
-# Cop supports --auto-correct.
-#RSpec/EmptyLineAfterFinalLet:
-#  Enabled: false
-
-# Offense count: 17
-# Cop supports --auto-correct.
-#RSpec/EmptyLineAfterHook:
-#  Exclude:
-#    - 'spec/db/migration_helpers/eligibility_populator_spec.rb'
-#    - 'spec/requests/application_controller_spec.rb'
-#    - 'spec/requests/assessments_spec.rb'
-#    - 'spec/services/assessors/non_liquid_capital_assessor_spec.rb'
-#    - 'spec/services/calculators/disregarded_state_benefits_calculator_spec.rb'
-#    - 'spec/services/calculators/state_benefits_calculator_spec.rb'
-#    - 'spec/services/collators/childcare_collator_spec.rb'
-#    - 'spec/services/collators/disposable_income_collator_spec.rb'
-#    - 'spec/services/collators/housing_costs_collator_spec.rb'
-#    - 'spec/services/creators/assessment_creator_spec.rb'
-#    - 'spec/services/decorators/v4/assessment_decorator_spec.rb'
-
-# Offense count: 3
-# Cop supports --auto-correct.
-#RSpec/EmptyLineAfterSubject:
-#  Exclude:
-#    - 'spec/services/calculators/pensioner_capital_disregard_calculator_spec.rb'
-#    - 'spec/services/creators/irregular_income_creator_spec.rb'
-#    - 'spec/services/payment_dates_generator_spec.rb'
-
-# Offense count: 44
-# Cop supports --auto-correct.
-# Configuration parameters: CustomTransform, IgnoredWords.
-#RSpec/ExampleWording:
-#  Exclude:
-#    - 'spec/requests/explicit_remarks_spec.rb'
-#    - 'spec/services/calculators/disregarded_state_benefits_calculator_spec.rb'
-#    - 'spec/services/calculators/housing_costs_calculator_spec.rb'
-#    - 'spec/services/collators/dependants_allowance_collator_spec.rb'
-#    - 'spec/services/collators/housing_costs_collator_spec.rb'
-#    - 'spec/services/creators/applicant_creator_spec.rb'
-#    - 'spec/services/utilities/calendar_monthly_period_analyser_spec.rb'
-
-# Offense count: 42
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: method_call, block
-#RSpec/ExpectChange:
-#  Exclude:
-#    - 'spec/models/other_income_source_spec.rb'
-#    - 'spec/requests/employments_spec.rb'
-#    - 'spec/requests/irregular_incomes_spec.rb'
-#    - 'spec/requests/other_incomes_spec.rb'
-#    - 'spec/requests/state_benefits_spec.rb'
-#    - 'spec/services/creators/applicant_creator_spec.rb'
-#    - 'spec/services/creators/assessment_creator_spec.rb'
-#    - 'spec/services/creators/capitals_creator_spec.rb'
-#    - 'spec/services/creators/cash_transactions_creator_spec.rb'
-#    - 'spec/services/creators/dependants_creator_spec.rb'
-#    - 'spec/services/creators/explicit_remarks_creator_spec.rb'
-#    - 'spec/services/creators/irregular_income_creator_spec.rb'
-#    - 'spec/services/creators/other_incomes_creator_spec.rb'
-#    - 'spec/services/creators/outgoings_creator_spec.rb'
-#    - 'spec/services/creators/properties_creator_spec.rb'
-
 # Offense count: 18
 RSpec/ExpectInHook:
   Exclude:
@@ -191,15 +38,6 @@ RSpec/ExpectInHook:
     - 'spec/requests/assessments_spec.rb'
     - 'spec/requests/outgoings_spec.rb'
     - 'spec/services/assessors/disposable_income_assessor_spec.rb'
-
-# Offense count: 8
-# Cop supports --auto-correct.
-# Configuration parameters: Include.
-# Include: spec/factories.rb, spec/factories/**/*.rb, features/support/factories/**/*.rb
-#RSpec/FactoryBot/FactoryClassName:
-#  Exclude:
-#    - 'spec/factories/eligibility_factory.rb'
-#    - 'spec/factories/outgoing_factory.rb'
 
 # Offense count: 16
 # Configuration parameters: Include, CustomTransform, IgnoreMethods, SpecSuffixOnly.
