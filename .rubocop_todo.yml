@@ -24,9 +24,9 @@
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, IndentationWidth.
 # SupportedStyles: aligned, indented
-Layout/MultilineOperationIndentation:
-  Exclude:
-    - 'spec/services/collators/gross_income_collator_spec.rb'
+#Layout/MultilineOperationIndentation:
+#  Exclude:
+#    - 'spec/services/collators/gross_income_collator_spec.rb'
 
 # Offense count: 36
 # Configuration parameters: IgnoredMethods.
