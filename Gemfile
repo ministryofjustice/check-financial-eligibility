@@ -9,7 +9,7 @@ gem 'rails', '~> 6.1.4'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
-gem 'puma', '~> 5.5'
+gem 'puma', '~> 5.6'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
@@ -73,7 +73,7 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'pry-byebug'
   gem 'rspec_junit_formatter'
-  gem 'rspec-rails', '~> 5.0'
+  gem 'rspec-rails', '~> 5.1'
   gem 'rubocop-govuk', require: false
   gem 'rubocop-performance'
   gem 'timecop'
