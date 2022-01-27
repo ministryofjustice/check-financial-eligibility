@@ -4,6 +4,7 @@ module Workflows
   RSpec.describe SelfEmployedWorkflow do
     describe '# call' do
       let(:assessment) { double Assessment }
+
       it 'raises' do
         expect {
           described_class.call(assessment)

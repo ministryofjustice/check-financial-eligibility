@@ -30,6 +30,7 @@ module Eligibility
 
       context 'invalid proceeding type code' do
         let(:proceeding_type_code) { 'SE115' }
+
         it 'is not valid' do
           rec = gis.eligibilities.create(attrs)
           expect(rec).not_to be_valid

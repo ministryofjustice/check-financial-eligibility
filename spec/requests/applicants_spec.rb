@@ -63,6 +63,7 @@ RSpec.describe ApplicantsController, type: :request do
 
     context 'invalid payload' do
       let(:non_existent_assessment_id) { SecureRandom.uuid }
+
       before do
         params[:assessment_id] = non_existent_assessment_id
         post assessment_applicant_path(non_existent_assessment_id), params: params.to_json, headers: headers

@@ -12,6 +12,7 @@ module Utilities
       context 'no bank holidays interfere with date sequence' do
         context 'too few dates' do
           let(:dates) { make_dates(%w[2020-03-15 2020-04-15]) }
+
           it 'returns false' do
             expect(subject).to be false
           end
@@ -19,6 +20,7 @@ module Utilities
 
         context 'regular dates each month' do
           let(:dates) { make_dates(%w[2020-03-03 2020-04-03 2020-05-03]) }
+
           it 'returns true' do
             expect(subject).to be true
           end
@@ -26,6 +28,7 @@ module Utilities
 
         context 'irregular dates' do
           let(:dates) { make_dates(%w[2020-03-03 2020-04-05 2020-05-01]) }
+
           it 'returns false' do
             expect(subject).to be false
           end
@@ -34,6 +37,7 @@ module Utilities
         context 'payment at end of month' do
           context 'always last day of month' do
             let(:dates) { make_dates(%w[2019-01-31 2019-02-28 2019-03-31]) }
+
             it 'returns true' do
               expect(subject).to be true
             end
@@ -41,6 +45,7 @@ module Utilities
 
           context 'last day of month falls on a weekend' do
             let(:dates) { make_dates(%w[2020-01-31 2020-02-28 2020-03-31]) }
+
             it 'allows payment on Fri 28 Feb instead of Sat 29th' do
               expect(subject).to be true
             end
@@ -54,6 +59,7 @@ module Utilities
             # would have been paid on the Fri 3rd April, Sunday 3rd May, Wed 3rd June of every month
             context 'paid early' do
               let(:dates) { make_dates(%w[2020-04-03 2020-05-01 2020-06-03]) }
+
               it 'should be true' do
                 expect(subject).to be true
               end
@@ -61,6 +67,7 @@ module Utilities
 
             context 'paid late' do
               let(:dates) { make_dates(%w[2020-04-03 2020-05-04 2020-06-03]) }
+
               it 'should be true' do
                 expect(subject).to be true
               end
@@ -71,6 +78,7 @@ module Utilities
             # would have been Wed 1st Jan, Sat 1st Feb, Sun 1st Mar
             context 'paid early' do
               let(:dates) { make_dates(%w[2020-01-01 2020-01-31 2020-02-28]) }
+
               it 'should be true' do
                 expect(subject).to be true
               end
@@ -78,6 +86,7 @@ module Utilities
 
             context 'paid late' do
               let(:dates) { make_dates(%w[2020-01-01 2020-02-03 2020-03-02]) }
+
               it 'should be true' do
                 expect(subject).to be true
               end
@@ -90,6 +99,7 @@ module Utilities
             # would have been paid on Tue 3rd Mar, Fri 3rd Apr, Sun 3rd May
             context 'paid early' do
               let(:dates) { make_dates(%w[2020-03-03 2020-04-03 2020-05-01]) }
+
               it 'should be true' do
                 expect(subject).to be true
               end
@@ -97,6 +107,7 @@ module Utilities
 
             context 'paid late' do
               let(:dates) { make_dates(%w[2020-03-03 2020-04-03 2020-05-04]) }
+
               it 'should be true' do
                 expect(subject).to be true
               end
@@ -109,6 +120,7 @@ module Utilities
             # would have been paid on Sat 6th Jun, Mon 6th Jul, Thu 6th Aug
             context 'paid early' do
               let(:dates) { make_dates(%w[2020-06-05 2020-07-06 2020-08-06]) }
+
               it 'should be true' do
                 expect(subject).to be true
               end
@@ -116,6 +128,7 @@ module Utilities
 
             context 'paid late' do
               let(:dates) { make_dates(%w[2020-06-08 2020-07-06 2020-08-06]) }
+
               it 'should be true' do
                 expect(subject).to be true
               end
@@ -128,6 +141,7 @@ module Utilities
         context 'bank holiday at beginning of date range' do
           context 'payment date is before holiday' do
             let(:dates) { make_dates(%w[2019-07-08 2019-08-09 2019-09-09]) }
+
             it 'should be true' do
               expect(subject).to be true
             end
@@ -135,6 +149,7 @@ module Utilities
 
           context 'payment date is after holiday' do
             let(:dates) { make_dates(%w[2019-07-10 2019-08-09 2019-09-09]) }
+
             it 'should be true' do
               expect(subject).to be true
             end
@@ -144,6 +159,7 @@ module Utilities
         context 'bank holiday in middle of date range' do
           context 'payment date is before holiday' do
             let(:dates) { make_dates(%w[2019-06-09 2019-07-08 2019-08-09]) }
+
             it 'returns true' do
               expect(subject).to be true
             end
@@ -151,6 +167,7 @@ module Utilities
 
           context 'payment date is after holiday' do
             let(:dates) { make_dates(%w[2019-06-09 2019-07-10 2019-08-09]) }
+
             it 'returns true' do
               expect(subject).to be true
             end
@@ -158,6 +175,7 @@ module Utilities
 
           context 'bank_holiday_adjustment is more than one day' do
             let(:dates) { make_dates(%w[2019-06-09 2019-07-13 2019-08-09]) }
+
             it 'returns false' do
               expect(subject).to be false
             end
@@ -167,6 +185,7 @@ module Utilities
         context 'bank holiday at end of date range' do
           context 'payment date is before holiday' do
             let(:dates) { make_dates(%w[2019-05-09 2019-06-09 2019-07-08]) }
+
             it 'returns true' do
               expect(subject).to be true
             end
@@ -174,6 +193,7 @@ module Utilities
 
           context 'payment date is after holiday'
           let(:dates) { make_dates(%w[2019-05-09 2019-06-09 2019-07-10]) }
+
           it 'returns true' do
             expect(subject).to be true
           end

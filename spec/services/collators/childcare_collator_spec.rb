@@ -65,6 +65,7 @@ module Collators
 
       context 'a dependant under 15' do
         let(:target_time) { Time.zone.local(2021, 4, 11) }
+
         before do
           create :dependant, assessment: assessment, date_of_birth: 16.years.ago
           create :dependant, assessment: assessment, date_of_birth: 14.years.ago

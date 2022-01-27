@@ -70,6 +70,7 @@ RSpec.describe VehiclesController, type: :request do
 
     context 'with service returning error' do
       let(:error) { double 'success?' => false, errors: ['Invalid: foo'] }
+
       before { allow(Creators::VehicleCreator).to receive(:call).and_return(error) }
 
       it_behaves_like 'an unprocessable entity', 'foo'

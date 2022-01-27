@@ -29,6 +29,7 @@ RSpec.describe CurrencyValidator do
 
     context 'option :not_negative' do
       let(:option) { :not_negative }
+
       context 'value is negative' do
         it 'is invalid' do
           expect(subject.validate(-33.44)).to be false
@@ -60,6 +61,7 @@ RSpec.describe CurrencyValidator do
   describe 'description' do
     context 'no currency option' do
       let(:option) { nil }
+
       it 'returns a general message' do
         expect(subject.description).to eq 'Must be a decimal with a maximum of two decimal places. For example: 123.34'
       end
@@ -67,6 +69,7 @@ RSpec.describe CurrencyValidator do
 
     context 'currency option :not_negative' do
       let(:option) { :not_negative }
+
       it 'returns a general message' do
         expect(subject.description).to eq 'Must be a decimal, zero or greater, with a maximum of two decimal places. For example: 123.34'
       end

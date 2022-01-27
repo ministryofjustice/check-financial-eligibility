@@ -13,6 +13,7 @@ module Calculators
       context 'non-passported' do
         context 'not a pensioner' do
           let(:applicant) { create :applicant, :without_qualifying_benefits, :under_pensionable_age }
+
           it 'returns zero' do
             expect(service.value).to eq 0.0
           end
@@ -57,6 +58,7 @@ module Calculators
 
       context 'passported' do
         let(:applicant) { create :applicant, :with_qualifying_benefits, :over_pensionable_age }
+
         it 'returns the passported value' do
           expect(service.value).to eq 100_000.0
         end

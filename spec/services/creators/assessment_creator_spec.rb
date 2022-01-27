@@ -30,6 +30,7 @@ module Creators
     context 'version 3' do
       let(:raw_post) { raw_post_v3 }
       let(:version) { '3' }
+
       context 'valid request' do
         it 'is successful' do
           expect(subject.success?).to eq true
@@ -107,6 +108,7 @@ module Creators
     context 'version 4' do
       let(:raw_post) { raw_post_v4 }
       let(:version) { '4' }
+
       context 'valid request' do
         it 'is successful' do
           expect(subject.success?).to eq true

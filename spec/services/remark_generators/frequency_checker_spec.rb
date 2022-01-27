@@ -90,6 +90,7 @@ module RemarkGenerators
               create(:childcare_outgoing, disposable_income_summary:, payment_date: dates[2], amount:)
             ]
           end
+
           context 'if the childcare costs are allowed as an outgoing' do
             before { disposable_income_summary.child_care_bank = 1 }
 

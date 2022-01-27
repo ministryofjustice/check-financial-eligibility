@@ -30,6 +30,7 @@ RSpec.describe ProceedingTypeThreshold do
 
     context 'waivable threshold' do
       let(:threshold) { :capital_upper }
+
       context 'waived ccms_code' do
         let(:ccms_code) { :DA020 }
 
@@ -45,6 +46,7 @@ RSpec.describe ProceedingTypeThreshold do
 
       context 'un-waived ccms code' do
         let(:ccms_code) { :SE013 }
+
         it 'gets passes the call to Threshold' do
           expect(Threshold).to receive(:value_for).with(threshold, at: date)
           subject
@@ -58,6 +60,7 @@ RSpec.describe ProceedingTypeThreshold do
       context 'invalid threshold' do
         let(:threshold) { :minimum_wage }
         let(:ccms_code) { :DA003 }
+
         it 'passes the call to Threshold' do
           expect(Threshold).to receive(:value_for).with(threshold, at: date)
           subject

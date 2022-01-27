@@ -76,6 +76,7 @@ module Utilities
 
         context 'payment is made after the weekend following bank holiday' do
           let(:dates) { weekly_payments_paid_after_bank_holiday_at_start }
+
           it 'returns true' do
             expect(subject).to be true
           end
@@ -108,6 +109,7 @@ module Utilities
 
       context 'regular 28 day intervals' do
         let(:dates) { make_dates(%w[2020-07-09 2020-08-06 2020-09-03]) }
+
         it 'returns true' do
           expect(subject).to be true
         end
@@ -115,6 +117,7 @@ module Utilities
 
       context 'irregular period' do
         let(:dates) { make_dates(%w[2020-07-10 2020-08-06 2020-09-03]) }
+
         it 'returns false' do
           expect(subject).to be false
         end
@@ -122,8 +125,10 @@ module Utilities
 
       context '28 day period with bank holidays at start of date range' do
         let(:bank_holidays) { make_dates(%w[2020-07-09 2020-09-24]) }
+
         context 'first date paid early because of holiday' do
           let(:dates) { make_dates(%w[2020-07-08 2020-08-06 2020-09-03]) }
+
           it 'returns true' do
             expect(subject).to be true
           end
@@ -131,6 +136,7 @@ module Utilities
 
         context 'first date paid late because of holiday' do
           let(:dates) { make_dates(%w[2020-07-10 2020-08-06 2020-09-03]) }
+
           it 'returns true' do
             expect(subject).to be true
           end
@@ -139,8 +145,10 @@ module Utilities
 
       context '28 day period with bank holidays in middle of date range' do
         let(:bank_holidays) { make_dates(%w[2020-08-06 2020-09-24]) }
+
         context 'first date paid early because of holiday' do
           let(:dates) { make_dates(%w[2020-07-09 2020-08-05 2020-09-03]) }
+
           it 'returns true' do
             expect(subject).to be true
           end
@@ -148,6 +156,7 @@ module Utilities
 
         context 'first date paid late because of holiday' do
           let(:dates) { make_dates(%w[2020-07-09 2020-08-07 2020-09-03]) }
+
           it 'returns true' do
             expect(subject).to be true
           end

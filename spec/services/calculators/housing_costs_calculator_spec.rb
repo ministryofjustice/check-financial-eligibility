@@ -103,6 +103,7 @@ module Calculators
 
       context 'and receives housing benefit' do
         let(:housing_benefit_amount) { 500.00 }
+
         before { create_benefit_payments(housing_benefit_amount) }
 
         context 'and pays board and lodging' do
@@ -209,6 +210,7 @@ module Calculators
 
         context 'mortgage' do
           let(:housing_cost_type) { 'mortgage' }
+
           it 'should record the full monthly housing costs' do
             expect(calculator.gross_housing_costs).to eq BigDecimal('1200.00') + monthly_cash_housing
             expect(calculator.monthly_housing_benefit).to eq 0.0
@@ -229,6 +231,7 @@ module Calculators
 
       context 'housing benefit' do
         let(:housing_benefit_amount) { 500.00 }
+
         before { create_benefit_payments(housing_benefit_amount) }
 
         context 'board and lodging' do

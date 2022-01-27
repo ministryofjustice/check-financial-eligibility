@@ -120,8 +120,8 @@ RSpec/ContextWording:
 
 # Offense count: 173
 # Cop supports --auto-correct.
-RSpec/EmptyLineAfterFinalLet:
-  Enabled: false
+#RSpec/EmptyLineAfterFinalLet:
+#  Enabled: false
 
 # Offense count: 17
 # Cop supports --auto-correct.

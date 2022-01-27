@@ -27,6 +27,7 @@ RSpec.describe ExplicitRemark do
           ]
         }
       end
+
       it 'returns the results in alphabetical order' do
         expect(described_class.remarks_by_category(assessment2.id)).to eq(expected_results)
       end

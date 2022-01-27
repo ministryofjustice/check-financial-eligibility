@@ -23,6 +23,7 @@ describe Creators::CashTransactionsCreator do
           %w[maintenance_in credit]
         ]
       end
+
       it 'creates the cash transaction category records' do
         expect { subject }.to change { CashTransactionCategory.count }.by(4)
         category_details = gross_income_summary.cash_transaction_categories.pluck(:name, :operation)
@@ -64,6 +65,7 @@ describe Creators::CashTransactionsCreator do
 
       context 'not exactly three occurrences of payments' do
         let(:params) { invalid_params_two_payments }
+
         before { subject }
 
         it_behaves_like 'it is unsuccessful'
@@ -75,6 +77,7 @@ describe Creators::CashTransactionsCreator do
 
       context 'not consecutive months' do
         let(:params) { invalid_params_not_consecutive_months }
+
         before { subject }
 
         it_behaves_like 'it is unsuccessful'
@@ -98,6 +101,7 @@ describe Creators::CashTransactionsCreator do
 
       context 'exception raised' do
         let(:params) { valid_params }
+
         before do
           allow(CashTransaction).to receive(:create!).and_raise(ArgumentError, 'xxxx')
           subject

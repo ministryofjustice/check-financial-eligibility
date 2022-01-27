@@ -8,6 +8,7 @@ module Calculators
 
     context 'monthly' do
       let(:frequency) { :monthly }
+
       describe 'error?' do
         it 'returns false' do
           expect(subject.error?).to be false
@@ -24,6 +25,7 @@ module Calculators
 
     context 'four_weekly' do
       let(:frequency) { :four_weekly }
+
       describe 'error?' do
         it 'returns false' do
           expect(subject.error?).to be false
@@ -40,6 +42,7 @@ module Calculators
 
     context 'two_weekly' do
       let(:frequency) { :two_weekly }
+
       describe 'error?' do
         it 'returns false' do
           expect(subject.error?).to be false
@@ -56,6 +59,7 @@ module Calculators
 
     context 'weekly' do
       let(:frequency) { :weekly }
+
       describe 'error?' do
         it 'returns false' do
           expect(subject.error?).to be false
@@ -73,6 +77,7 @@ module Calculators
     context 'unknown' do
       let(:frequency) { :unknown }
       let(:payments) { [203.44, 205.00, 205.00, 178.77, 290.12] }
+
       describe 'error?' do
         it 'returns false' do
           expect(subject.error?).to be false

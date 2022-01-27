@@ -10,6 +10,7 @@ module Utilities
 
         context 'passed as a symbol' do
           let(:code) { :DA002 }
+
           it 'returns domestic abuse' do
             expect(subject).to eq 'domestic_abuse'
           end
@@ -17,6 +18,7 @@ module Utilities
 
         context 'passsed as a string' do
           let(:code) { 'SE013' }
+
           it 'returns section8' do
             expect(subject).to eq 'section8'
           end
@@ -25,6 +27,7 @@ module Utilities
 
       context 'non-existing proceeding type' do
         let(:code) { 'XX024' }
+
         it 'raises' do
           expect { subject }.to raise_error KeyError, 'key not found: :XX024'
         end

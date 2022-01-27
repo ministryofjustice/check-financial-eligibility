@@ -8,6 +8,7 @@ module Collators
 
     let(:assessment) { create :assessment, :with_applicant, :with_gross_income_summary, proceeding_type_codes: proceeding_type_codes }
     let(:gross_income_summary) { assessment.gross_income_summary }
+
     before do
       assessment.proceeding_type_codes.each do |ptc|
         create :gross_income_eligibility,

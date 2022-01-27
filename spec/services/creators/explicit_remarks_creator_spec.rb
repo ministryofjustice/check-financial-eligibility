@@ -42,6 +42,7 @@ RSpec.describe Creators::ExplicitRemarksCreator do
 
   context 'unknown exception raised' do
     let(:params) { valid_params }
+
     it 'raises a Creation error' do
       allow_any_instance_of(described_class).to receive(:create_remark_category).and_raise(ArgumentError, 'Argument error detailed message')
       expect(subject.success?).to be false

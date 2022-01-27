@@ -25,6 +25,7 @@ module Utilities
     describe 'period_end' do
       context '31 May' do
         let(:submission_date) { Date.new(2019, 5, 31) }
+
         it 'is 30th May' do
           expect(period.period_end).to eq Date.new(2019, 5, 30)
         end

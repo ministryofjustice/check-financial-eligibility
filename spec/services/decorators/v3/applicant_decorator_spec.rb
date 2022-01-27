@@ -8,6 +8,7 @@ module Decorators
 
         context 'applicant is nil' do
           let(:applicant) { nil }
+
           it 'returns nil' do
             expect(subject).to be_nil
           end

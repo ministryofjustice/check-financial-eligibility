@@ -35,6 +35,7 @@ RSpec.describe Threshold do
 
           context 'date before date of test only file' do
             let(:time) { Time.zone.parse('1-Dec-2020 12:33') }
+
             it 'returns value from the April 2020 file' do
               expect(described_class.value_for(:property_maximum_mortgage_allowance, at: time)).to eq 666_666_666_666
             end
@@ -42,6 +43,7 @@ RSpec.describe Threshold do
 
           context 'date after date of test only file' do
             let(:time) { Time.zone.parse('15-Dec-2020 11:48') }
+
             it 'returns mortgage allowance Test file' do
               expect(described_class.value_for(:property_maximum_mortgage_allowance, at: time)).to eq 888_888_888_888
             end
@@ -49,6 +51,7 @@ RSpec.describe Threshold do
 
           context 'date after most recent file' do
             let(:time) { Time.zone.parse('1-Jan-2030 12:33') }
+
             it 'returns value from the Jan 2021 file' do
               expect(described_class.value_for(:property_maximum_mortgage_allowance, at: time)).to eq 999_999_999_999
             end
@@ -58,6 +61,7 @@ RSpec.describe Threshold do
         context "ENV['USE_TEST_THRESHOLD_DATA'] is absent" do
           context 'date before date of test only file' do
             let(:time) { Time.zone.parse('1-Dec-2020 12:33') }
+
             it 'returns value from the April 2020 file' do
               expect(described_class.value_for(:property_maximum_mortgage_allowance, at: time)).to eq 666_666_666_666
             end
@@ -65,6 +69,7 @@ RSpec.describe Threshold do
 
           context 'date after date of test only file' do
             let(:time) { Time.zone.parse('15-Dec-2020 11:48') }
+
             it 'returns value from the April 2020 file' do
               expect(described_class.value_for(:property_maximum_mortgage_allowance, at: time)).to eq 666_666_666_666
             end
@@ -72,6 +77,7 @@ RSpec.describe Threshold do
 
           context 'date after most recent file' do
             let(:time) { Time.zone.parse('1-Jan-2030 12:33') }
+
             it 'returns value from the Jan 2021 file' do
               expect(described_class.value_for(:property_maximum_mortgage_allowance, at: time)).to eq 999_999_999_999
             end

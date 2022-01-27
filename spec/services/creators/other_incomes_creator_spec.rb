@@ -50,6 +50,7 @@ module Creators
 
       context 'empty payload' do
         let(:other_income_params) { [] }
+
         it 'does not create any records' do
           expect { subject }.not_to change { OtherIncomeSource.count }
         end

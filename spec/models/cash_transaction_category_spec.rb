@@ -10,6 +10,7 @@ describe CashTransactionCategory do
     context 'no name' do
       let(:operation) { nil }
       let(:name) { nil }
+
       it 'is invalid' do
         expect(category).not_to be_valid
         expect(category.errors[:name]).to eq ["can't be blank"]
@@ -18,8 +19,10 @@ describe CashTransactionCategory do
 
     context 'operation credit' do
       let(:operation) { 'credit' }
+
       context 'invalid name' do
         let(:name) { 'housing_costs' }
+
         it 'is invalid' do
           expect(category).not_to be_valid
           expect(category.errors[:name]).to eq ['is not a valid credit category: housing_costs']
@@ -28,6 +31,7 @@ describe CashTransactionCategory do
 
       context 'valid name' do
         let(:name) { 'maintenance_in' }
+
         it 'is valid' do
           expect(category).to be_valid
         end
@@ -36,8 +40,10 @@ describe CashTransactionCategory do
 
     context 'operation debit' do
       let(:operation) { 'debit' }
+
       context 'invalid name' do
         let(:name) { 'benefits' }
+
         it 'is invalid' do
           expect(category).not_to be_valid
           expect(category.errors[:name]).to eq ['is not a valid debit category: benefits']
@@ -46,6 +52,7 @@ describe CashTransactionCategory do
 
       context 'valid name' do
         let(:name) { 'legal_aid' }
+
         it 'is valid' do
           expect(category).to be_valid
         end

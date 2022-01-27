@@ -8,6 +8,7 @@ module Decorators
 
         context 'record is nil' do
           let(:gross_income_summary) { nil }
+
           it 'returns nil' do
             expect(subject).to be_nil
           end

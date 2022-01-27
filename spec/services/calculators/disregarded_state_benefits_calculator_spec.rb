@@ -7,6 +7,7 @@ module Calculators
     let(:included_state_benefit_type) { create :state_benefit_type, :benefit_included }
     let(:excluded_state_benefit_type) { create :state_benefit_type, :benefit_excluded }
     let(:gross_income_summary) { assessment.gross_income_summary }
+
     subject { described_class.call(disposable_income_summary) }
 
     context 'no state benefit payments' do

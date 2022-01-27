@@ -15,6 +15,7 @@ RSpec.describe CashTransactionsController, type: :request do
 
     context 'valid payload' do
       let(:params) { valid_params }
+
       it 'returns http success', :show_in_doc do
         subject
         expect(response).to have_http_status(:success)
@@ -27,6 +28,7 @@ RSpec.describe CashTransactionsController, type: :request do
 
       context 'creation is valid' do
         let(:creator_service) { double Creators::CashTransactionsCreator, success?: true }
+
         before do
           allow(creator_class).to receive(:call).and_return(creator_service)
           subject
@@ -64,6 +66,7 @@ RSpec.describe CashTransactionsController, type: :request do
     context 'invalid payload' do
       context 'invalid income category' do
         let(:params) { invalid_income_category_params }
+
         it 'returns an error' do
           subject
           expect(parsed_response[:success]).to eq false

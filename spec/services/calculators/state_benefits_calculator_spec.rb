@@ -5,6 +5,7 @@ module Calculators
     before { create :bank_holiday }
     let(:assessment) { create :assessment, :with_gross_income_summary }
     let(:gross_income_summary) { assessment.gross_income_summary }
+
     subject { described_class.call(assessment) }
 
     context 'no state benefit records' do
@@ -22,6 +23,7 @@ module Calculators
                gross_income_summary: gross_income_summary,
                state_benefit_type: state_benefit_type_included
       end
+
       context 'weekly payments' do
         it 'returns correct total monthly state benefits' do
           expect(subject).to eq 216.67
@@ -36,6 +38,7 @@ module Calculators
                  gross_income_summary: gross_income_summary,
                  state_benefit_type: another_state_benefit_type_included
         end
+
         it 'returns correct sum of both monthly and weekly benefits' do
           expect(subject).to eq 304.97
         end
@@ -49,6 +52,7 @@ module Calculators
                  gross_income_summary: gross_income_summary,
                  state_benefit_type: state_benefit_type_excluded
         end
+
         it 'returns correct sum amounts of only included benefits' do
           expect(subject).to eq(216.67)
         end
