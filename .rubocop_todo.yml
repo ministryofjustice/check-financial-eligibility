@@ -196,10 +196,10 @@ RSpec/ExpectInHook:
 # Cop supports --auto-correct.
 # Configuration parameters: Include.
 # Include: spec/factories.rb, spec/factories/**/*.rb, features/support/factories/**/*.rb
-RSpec/FactoryBot/FactoryClassName:
-  Exclude:
-    - 'spec/factories/eligibility_factory.rb'
-    - 'spec/factories/outgoing_factory.rb'
+#RSpec/FactoryBot/FactoryClassName:
+#  Exclude:
+#    - 'spec/factories/eligibility_factory.rb'
+#    - 'spec/factories/outgoing_factory.rb'
 
 # Offense count: 16
 # Configuration parameters: Include, CustomTransform, IgnoreMethods, SpecSuffixOnly.
