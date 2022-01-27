@@ -3,6 +3,7 @@ require 'rails_helper'
 module Calculators
   RSpec.describe StateBenefitsCalculator do
     before { create :bank_holiday }
+
     let(:assessment) { create :assessment, :with_gross_income_summary }
     let(:gross_income_summary) { assessment.gross_income_summary }
 

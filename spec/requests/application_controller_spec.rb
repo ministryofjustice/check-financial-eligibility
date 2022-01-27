@@ -20,6 +20,7 @@ RSpec.describe ApplicationController, type: :request do
       get '/my_test', to: 'test#show'
     end
   end
+
   after do
     Rails.application.reload_routes!
   end

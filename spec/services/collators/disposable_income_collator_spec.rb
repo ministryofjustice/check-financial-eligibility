@@ -61,6 +61,7 @@ module Collators
         before do
           assessment.gross_income_summary.update!(total_gross_income: total_outgoings + 1500.0)
         end
+
         it 'is populated with result of gross income minus total outgoings and allowances' do
           subject
           result = assessment.gross_income_summary.total_gross_income - disposable_income_summary.reload.total_outgoings_and_allowances

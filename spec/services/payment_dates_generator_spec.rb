@@ -4,6 +4,7 @@ require_relative '../support/payment_dates_generator'
 describe PaymentDatesGenerator do
   describe 'private method #advance_one_month' do
     subject { described_class.new.__send__(:advance_one_month, date, desired_day).strftime('%Y-%m-%d') }
+
     let(:date) { Date.parse(date_string) }
     let(:desired_day) { date.day }
 

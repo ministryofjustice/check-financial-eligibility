@@ -20,6 +20,7 @@ module Calculators
       before do
         create :state_benefit, :with_monthly_payments, state_benefit_type: included_state_benefit_type, gross_income_summary: gross_income_summary
       end
+
       it 'should return zero' do
         expect(subject).to eq 0
       end
@@ -31,6 +32,7 @@ module Calculators
         create :state_benefit, :with_monthly_payments, state_benefit_type: included_state_benefit_type, gross_income_summary: gross_income_summary
         create :state_benefit, :with_monthly_payments, state_benefit_type: excluded_state_benefit_type, gross_income_summary: gross_income_summary
       end
+
       it 'should return value x 2' do
         expect(subject).to eq 176.6
       end

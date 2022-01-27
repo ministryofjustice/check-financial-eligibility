@@ -52,6 +52,7 @@ module Creators
 
         context 'capital summary record' do
           before { subject.success? }
+
           let(:capital_summary) { CapitalSummary.first }
 
           it 'creates all fields as zero' do
@@ -133,6 +134,7 @@ module Creators
 
         context 'capital summary record' do
           before { subject.success? }
+
           let(:capital_summary) { CapitalSummary.first }
 
           it 'creates all fields as zero' do

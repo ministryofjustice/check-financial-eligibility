@@ -47,6 +47,7 @@ module Collators
           context 'in receipt of Student grant' do
             context 'in irregular income payments' do
               before { create :irregular_income_payment, gross_income_summary: gross_income_summary }
+
               it 'does not update the childcare value on the disposable income summary' do
                 subject
                 expect(disposable_income_summary.childcare).to eq 0.0
@@ -73,6 +74,7 @@ module Collators
 
         context 'Employed' do
           before { allow_any_instance_of(described_class).to receive(:applicant_employed?).and_return(true) }
+
           context 'in receipt of Student grant in irregular income payments' do
             before { create :irregular_income_payment, gross_income_summary: gross_income_summary }
 
@@ -93,6 +95,7 @@ module Collators
         context 'not employed' do
           context 'in receipt of Student grant in irregular income payments' do
             before { create :irregular_income_payment, amount: 0.0, gross_income_summary: gross_income_summary }
+
             it 'updates the childcare value on the disposable income summary' do
               subject
               expect(disposable_income_summary.child_care_bank).to eq 155.63
@@ -101,6 +104,7 @@ module Collators
 
           context 'not in receipt of Student grant' do
             before { create :other_income_source, gross_income_summary: gross_income_summary, name: 'friends_or_family' }
+
             it 'does not update the childcare value on the disposable income summary' do
               subject
               expect(disposable_income_summary.child_care_bank).to eq 0.0

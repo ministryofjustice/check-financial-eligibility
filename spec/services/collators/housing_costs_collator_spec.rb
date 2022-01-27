@@ -26,6 +26,7 @@ module Collators
           create :housing_cost_outgoing, disposable_income_summary: disposable_income_summary, amount: 355.44, payment_date: 1.month.ago, housing_cost_type: housing_cost_type
           create :housing_cost_outgoing, disposable_income_summary: disposable_income_summary, amount: 355.44, payment_date: 2.months.ago, housing_cost_type: housing_cost_type
         end
+
         context 'no housing benefit' do
           context 'board and lodging' do
             let(:housing_cost_type) { 'board_and_lodging' }
