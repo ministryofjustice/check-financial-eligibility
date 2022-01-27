@@ -101,9 +101,9 @@ RSpec/ContextWording:
 # Offense count: 4
 # Cop supports --auto-correct.
 # Configuration parameters: AllowConsecutiveOneLiners.
-RSpec/EmptyLineAfterExample:
-  Exclude:
-    - 'spec/models/state_benefit_spec.rb'
+#RSpec/EmptyLineAfterExample:
+#  Exclude:
+#    - 'spec/models/state_benefit_spec.rb'
 
 # Offense count: 11
 # Cop supports --auto-correct.
