@@ -11,7 +11,7 @@ module Decorators
 
     private
 
-      def payload # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+      def payload
         {
           capital_items: {
             liquid: liquid_items,

@@ -19,7 +19,7 @@ module Decorators
 
     private
 
-      def payload # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+      def payload
         {
           version: assessment.version,
           timestamp: Time.current,

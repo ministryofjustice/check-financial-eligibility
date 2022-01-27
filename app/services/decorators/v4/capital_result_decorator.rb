@@ -5,7 +5,7 @@ module Decorators
         @assessment = assessment
       end
 
-      def as_json # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+      def as_json
         {
           total_liquid: summary.total_liquid.to_f,
           total_non_liquid: summary.total_non_liquid.to_f,

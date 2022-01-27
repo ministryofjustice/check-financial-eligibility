@@ -16,7 +16,7 @@ module Decorators
 
     private
 
-      def payload # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+      def payload
         {
           monthly_equivalents: all_transaction_types,
           childcare_allowance: record.child_care_all_sources,

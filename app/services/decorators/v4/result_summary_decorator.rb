@@ -11,7 +11,7 @@ module Decorators
         @assessment = assessment
       end
 
-      def as_json # rubocop:disable Metrics/MethodLength
+      def as_json
         {
           overall_result: {
             result: @assessment.assessment_result,

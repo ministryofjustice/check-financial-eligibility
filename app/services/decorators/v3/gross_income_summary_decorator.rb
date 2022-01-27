@@ -23,7 +23,7 @@ module Decorators
         CFEConstants::VALID_INCOME_CATEGORIES.map(&:to_sym) - [:benefits]
       end
 
-      def payload # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+      def payload
         {
           summary: {
             total_gross_income: record.total_gross_income,

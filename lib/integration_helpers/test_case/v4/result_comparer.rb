@@ -1,6 +1,6 @@
 module TestCase
   module V4
-    class ResultComparer # rubocop:disable Metrics/ClassLength
+    class ResultComparer
       def self.call(actual, expected, verbosity)
         new(actual, expected, verbosity).call
       end
@@ -81,7 +81,7 @@ module TestCase
         end
       end
 
-      def compare_proceeding_type_detail(code, expected_result_hash) # rubocop:disable Metrics/AbcSize
+      def compare_proceeding_type_detail(code, expected_result_hash)
         verbose "Proceeding_type #{code}", :green
         compare_and_print('result', actual_proceeding_type_result(code), expected_result_hash[:result])
         compare_and_print('capital lower threshold', actual_cap_result_for(code)[:lower_threshold], expected_result_hash[:capital_lower_threshold])
@@ -108,7 +108,7 @@ module TestCase
         compare_and_print('total gross income', actual_total_gross_income, expected_total_gross_income)
       end
 
-      def compare_disposable_income # rubocop:disable Metrics/AbcSize
+      def compare_disposable_income
         puts 'Disposable income >>>>>>>>>>>>>>>>>>>>>>'.green unless silent?
         compare_and_print('childcare', actual_disposable(:child_care), expected_disposable(:childcare))
         compare_and_print('dependant allowance', actual_dependant_allowance, expected_disposable(:dependant_allowance))

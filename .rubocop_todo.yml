@@ -40,8 +40,8 @@ Lint/AmbiguousBlockAssociation:
 
 # Offense count: 22
 # Cop supports --auto-correct.
-Lint/RedundantCopDisableDirective:
-  Enabled: false
+#Lint/RedundantCopDisableDirective:
+#  Enabled: false
 
 # Offense count: 5
 # Cop supports --auto-correct.

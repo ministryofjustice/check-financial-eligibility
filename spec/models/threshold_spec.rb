@@ -1,6 +1,5 @@
 require 'rails_helper'
 
-# rubocop:disable Naming/VariableNumber
 RSpec.describe Threshold do
   context 'using test data files' do
     let(:threshold_test_data_folder) { Rails.root.join('spec/data/thresholds') }
@@ -118,4 +117,3 @@ RSpec.describe Threshold do
     end
   end
 end
-# rubocop:enable Naming/VariableNumber

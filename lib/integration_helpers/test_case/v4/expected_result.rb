@@ -29,7 +29,7 @@ module TestCase
         row_index.nil? ? @rows : @rows.shift(row_index)
       end
 
-      def assessment(rows) # rubocop:disable Metrics/MethodLength
+      def assessment(rows)
         hash = {
           matter_types: [],
           proceeding_types: {}

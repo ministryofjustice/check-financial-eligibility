@@ -208,10 +208,8 @@ RSpec.describe CashTransactionsController, type: :request do
       params
     end
 
-    # rubocop:disable Layout/LineLength
     def invalid_income_category_error_message
       %(Invalid parameter 'category' value "xxxx": Must be one of: <code>benefits</code>, <code>friends_or_family</code>, <code>maintenance_in</code>, <code>property_or_lodger</code>, <code>pension</code>.)
     end
-    # rubocop:enable Layout/LineLength
   end
 end

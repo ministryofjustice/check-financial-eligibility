@@ -5,7 +5,7 @@ module Decorators
         @assessment = assessment
       end
 
-      def as_json # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+      def as_json
         {
           dependant_allowance: summary.dependant_allowance.to_f,
           gross_housing_costs: summary.gross_housing_costs.to_f,
