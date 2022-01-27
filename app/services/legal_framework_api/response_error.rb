@@ -4,7 +4,7 @@ module LegalFrameworkAPI
       super formatted_message(raw_response)
     end
 
-    private
+  private
 
     def formatted_message(raw_response)
       <<~END_OF_MESSAGE.chomp

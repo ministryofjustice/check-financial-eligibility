@@ -34,7 +34,7 @@ class PropertiesController < ApplicationController
     end
   end
 
-  private
+private
 
   def creation_service
     @creation_service ||= Creators::PropertiesCreator.call(

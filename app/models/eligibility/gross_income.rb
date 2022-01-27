@@ -11,7 +11,7 @@ module Eligibility
       update!(assessment_result: assessed_result)
     end
 
-    private
+  private
 
     def assessed_result
       total_gross_income < upper_threshold ? 'eligible' : 'ineligible'

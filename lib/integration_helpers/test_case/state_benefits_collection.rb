@@ -19,7 +19,7 @@ module TestCase
       @benefits.empty?
     end
 
-    private
+  private
 
     def benefit_type_payload(benefit_type)
       {

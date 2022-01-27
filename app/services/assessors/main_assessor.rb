@@ -7,7 +7,7 @@ module Assessors
       assessment.update!(assessment_result: summarized_result)
     end
 
-    private
+  private
 
     def summarized_result
       Utilities::ResultSummarizer.call(eligibilities.map(&:assessment_result))

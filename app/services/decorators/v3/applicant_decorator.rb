@@ -9,7 +9,7 @@ module Decorators
         payload unless @record.nil?
       end
 
-      private
+    private
 
       def payload
         {

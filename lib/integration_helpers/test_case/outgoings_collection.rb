@@ -26,7 +26,7 @@ module TestCase
       @outgoings.empty?
     end
 
-    private
+  private
 
     def populate_outgoings(rows)
       outgoings_rows = extract_outgoings_rows(rows)

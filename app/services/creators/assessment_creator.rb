@@ -27,7 +27,7 @@ module Creators
       new_assessment.errors.full_messages
     end
 
-    private
+  private
 
     def generate_assessment_hash(remote_ip)
       {

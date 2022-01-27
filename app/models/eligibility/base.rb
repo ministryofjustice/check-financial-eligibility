@@ -6,7 +6,7 @@ module Eligibility
 
     validate :proceeding_type_code_validation
 
-    private
+  private
 
     def proceeding_type_code_validation
       errors.add(:proceeding_type_code, "invalid: #{proceeding_type_code}") unless valid_proceeding_type_code?

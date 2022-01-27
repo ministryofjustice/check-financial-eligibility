@@ -12,7 +12,7 @@ module Calculators
       @thresholds ||= Threshold.value_for(:pensioner_capital_disregard, at: submission_date)
     end
 
-    private
+  private
 
     def pensioner?
       earliest_dob_for_pensioner >= applicant_dob

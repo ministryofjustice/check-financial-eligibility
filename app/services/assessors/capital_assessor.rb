@@ -7,7 +7,7 @@ module Assessors
       summary_result
     end
 
-    private
+  private
 
     def summary_result
       Utilities::ResultSummarizer.call(capital_summary.eligibilities.map(&:assessment_result))

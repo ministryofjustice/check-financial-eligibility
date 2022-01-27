@@ -17,7 +17,7 @@ class Property < ApplicationRecord
     save!
   end
 
-  private
+private
 
   def calculate_property_transaction_allowance
     self.transaction_allowance = (value * notional_transaction_cost_pctg).round(2)

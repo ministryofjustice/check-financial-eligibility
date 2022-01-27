@@ -41,7 +41,7 @@ class EmploymentsController < ApplicationController
     end
   end
 
-  private
+private
 
   def creation_service
     @creation_service ||= Creators::EmploymentsCreator.call(

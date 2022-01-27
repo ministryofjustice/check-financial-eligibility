@@ -24,7 +24,7 @@ module TestCase
       end
     end
 
-    private
+  private
 
     def parse_master_sheet
       master_spreadsheet = load_spreadsheet(MASTER_SHEET)

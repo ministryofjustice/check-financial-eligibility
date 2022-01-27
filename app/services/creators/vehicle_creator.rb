@@ -13,7 +13,7 @@ module Creators
       self
     end
 
-    private
+  private
 
     def create
       create_vehicles

@@ -12,7 +12,7 @@ module RemarkGenerators
       populate_remarks if residual_balance?
     end
 
-    private
+  private
 
     def residual_balance?
       current_accounts = assessment.capital_items.where(description: 'Current accounts')

@@ -10,15 +10,15 @@
 # Cop supports --auto-correct.
 # Configuration parameters: IndentationWidth.
 # SupportedStyles: outdent, indent
-Layout/AccessModifierIndentation:
-  EnforcedStyle: indent
+#Layout/AccessModifierIndentation:
+#  EnforcedStyle: indent
 
 # Offense count: 2
 # Cop supports --auto-correct.
 # Configuration parameters: IndentationWidth.
 # SupportedStyles: special_inside_parentheses, consistent, align_brackets
-Layout/FirstArrayElementIndentation:
-  EnforcedStyle: special_inside_parentheses
+#Layout/FirstArrayElementIndentation:
+#  EnforcedStyle: special_inside_parentheses
 
 # Offense count: 5
 # Cop supports --auto-correct.

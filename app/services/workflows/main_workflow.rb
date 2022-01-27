@@ -10,7 +10,7 @@ module Workflows
       Assessors::MainAssessor.call(assessment)
     end
 
-    private
+  private
 
     def applicant_passported?
       applicant.receives_qualifying_benefit?

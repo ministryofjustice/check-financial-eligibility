@@ -26,7 +26,7 @@ module Calculators
                                         national_insurance: ni_contributions)
     end
 
-    private
+  private
 
     def gross_employment_income
       monthly_incomes + monthly_benefits_in_kind

@@ -18,7 +18,7 @@ module TestCase
       @overall_result
     end
 
-    private
+  private
 
     def compare_and_print_result(key)
       if ignorable?(expected_value(key))

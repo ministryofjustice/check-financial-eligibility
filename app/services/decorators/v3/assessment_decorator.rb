@@ -17,7 +17,7 @@ module Decorators
         payload
       end
 
-      private
+    private
 
       def payload # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
         {

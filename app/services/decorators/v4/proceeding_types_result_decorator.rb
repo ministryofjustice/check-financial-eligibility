@@ -9,7 +9,7 @@ module Decorators
         @assessment.proceeding_type_codes.map { |ptc| ptc_result(ptc) }
       end
 
-      private
+    private
 
       def ptc_result(ptc)
         elig = @assessment.eligibilities.find_by(proceeding_type_code: ptc)

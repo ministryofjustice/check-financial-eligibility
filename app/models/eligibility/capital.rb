@@ -10,7 +10,7 @@ module Eligibility
       update!(assessment_result: assessed_result)
     end
 
-    private
+  private
 
     def assessed_result
       if assessed_capital <= lower_threshold

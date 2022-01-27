@@ -25,7 +25,7 @@ class ProceedingTypeThreshold
     VALID_CCMS_CODES
   end
 
-  private
+private
 
   def waived_threshold?
     LegalFrameworkAPI::QueryService.waived?(@ccms_code, @threshold_type)

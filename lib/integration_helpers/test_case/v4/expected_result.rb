@@ -14,7 +14,7 @@ module TestCase
         ResultComparer.call(actual_result, @result_set, verbosity_level)
       end
 
-      private
+    private
 
       def populate
         while @rows.any?

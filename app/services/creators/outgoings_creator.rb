@@ -13,7 +13,7 @@ module Creators
       self
     end
 
-    private
+  private
 
     def create_outgoing_collection(outgoing)
       klass = CFEConstants::OUTGOING_KLASSES[outgoing[:name].to_sym]

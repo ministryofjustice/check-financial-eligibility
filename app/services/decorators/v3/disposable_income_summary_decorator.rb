@@ -14,7 +14,7 @@ module Decorators
         payload unless record.nil?
       end
 
-      private
+    private
 
       def payload # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
         {

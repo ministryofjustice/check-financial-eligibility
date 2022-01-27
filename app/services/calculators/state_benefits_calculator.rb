@@ -4,7 +4,7 @@ module Calculators
       total_monthly_state_benefits
     end
 
-    private
+  private
 
     def total_monthly_state_benefits
       total = 0.0

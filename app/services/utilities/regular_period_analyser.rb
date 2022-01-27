@@ -27,7 +27,7 @@ module Utilities
       true
     end
 
-    private
+  private
 
     def expected_number_of_dates?
       expected_sizes = EXPECTED_NUMBER_OF_DATES[@period]

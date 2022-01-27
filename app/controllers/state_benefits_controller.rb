@@ -38,7 +38,7 @@ class StateBenefitsController < ApplicationController
     end
   end
 
-  private
+private
 
   def creation_service
     @creation_service ||= Creators::StateBenefitsCreator.call(

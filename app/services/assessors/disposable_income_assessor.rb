@@ -9,7 +9,7 @@ module Assessors
       end
     end
 
-    private
+  private
 
     def update_eligibility_records
       eligibilities.each do |elig|

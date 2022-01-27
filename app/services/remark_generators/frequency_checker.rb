@@ -6,7 +6,7 @@ module RemarkGenerators
       populate_remarks if unknown_frequency? && !exempt_from_checking
     end
 
-    private
+  private
 
     def unknown_frequency?
       Utilities::PaymentPeriodAnalyser.new(dates).period_pattern == :unknown

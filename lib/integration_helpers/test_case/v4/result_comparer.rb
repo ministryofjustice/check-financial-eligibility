@@ -24,7 +24,7 @@ module TestCase
         @result
       end
 
-      private
+    private
 
       def silent?
         @verbosity.zero?

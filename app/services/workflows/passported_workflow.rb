@@ -5,7 +5,7 @@ module Workflows
       Assessors::CapitalAssessor.call(assessment)
     end
 
-    private
+  private
 
     def collate_capitals
       data = Collators::CapitalCollator.call(assessment)

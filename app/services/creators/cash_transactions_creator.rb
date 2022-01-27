@@ -14,7 +14,7 @@ module Creators
       self
     end
 
-    private
+  private
 
     def valid_dates
       base_date = assessment.submission_date.beginning_of_month

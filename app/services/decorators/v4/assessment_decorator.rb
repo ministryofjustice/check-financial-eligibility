@@ -21,7 +21,7 @@ module Decorators
         payload
       end
 
-      private
+    private
 
       def payload
         {

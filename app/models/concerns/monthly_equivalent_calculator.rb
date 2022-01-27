@@ -26,7 +26,7 @@ module MonthlyEquivalentCalculator
     converter.monthly_amount
   end
 
-  private
+private
 
   def dates_and_amounts
     Utilities::PaymentPeriodDataExtractor.call(collection: @monthly_equivalent_calculator_collection,

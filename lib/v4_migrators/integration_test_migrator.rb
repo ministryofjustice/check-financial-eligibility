@@ -27,7 +27,7 @@ class IntegrationTestMigrator # rubocop:disable Metrics/ClassLength
     @workbook_names.each { |workbook_name| process_workbook(workbook_name) }
   end
 
-  private
+private
 
   def process_workbook(workbook_name)
     book = Roo::Spreadsheet.open(local_file_name_for(workbook_name))

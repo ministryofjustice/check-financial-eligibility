@@ -27,7 +27,7 @@ class DateValidator < Apipie::Validator::BaseValidator
     "#{text.to_sentence}. For example: '2019-05-23'"
   end
 
-  private
+private
 
   def validate_options(option, date)
     case option

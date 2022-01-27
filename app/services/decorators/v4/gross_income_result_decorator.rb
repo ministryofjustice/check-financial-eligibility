@@ -16,7 +16,7 @@ module Decorators
         }
       end
 
-      private
+    private
 
       def ptc_results(ptc)
         elig = gross_income_summary.eligibilities.find_by(proceeding_type_code: ptc)

@@ -11,7 +11,7 @@ module Calculators
       @remaining_mortgage_allowance ||= Threshold.value_for(:property_maximum_mortgage_allowance, at: submission_date)
     end
 
-    private
+  private
 
     def calculate_property
       Property.transaction do

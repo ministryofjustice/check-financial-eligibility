@@ -9,7 +9,7 @@ module RemarkGenerators
       @collection = collection
     end
 
-    private
+  private
 
     def record_type
       @collection.first.class.to_s.underscore.tr('/', '_').to_sym

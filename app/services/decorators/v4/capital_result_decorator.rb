@@ -20,7 +20,7 @@ module Decorators
         }
       end
 
-      private
+    private
 
       def summary
         @summary ||= @assessment.capital_summary

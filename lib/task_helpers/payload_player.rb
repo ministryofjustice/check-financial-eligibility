@@ -19,7 +19,7 @@ class PayloadPlayer
     end
   end
 
-  private
+private
 
   def play(request)
     case request[:method]

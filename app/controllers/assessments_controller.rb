@@ -66,7 +66,7 @@ class AssessmentsController < ApplicationController
     render json: Decorators::ErrorDecorator.new(err).as_json, status: :unprocessable_entity
   end
 
-  private
+private
 
   def perform_assessment
     Workflows::MainWorkflow.call(assessment)

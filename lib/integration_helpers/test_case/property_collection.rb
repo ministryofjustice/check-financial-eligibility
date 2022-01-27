@@ -24,7 +24,7 @@ module TestCase
       main_home.payload.nil? && additional_properties.empty?
     end
 
-    private
+  private
 
     def main_home
       @properties['main_home'].first

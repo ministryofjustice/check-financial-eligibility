@@ -17,7 +17,7 @@ module Decorators
         payload unless record.nil?
       end
 
-      private
+    private
 
       def income_categories_excluding_benefits
         CFEConstants::VALID_INCOME_CATEGORIES.map(&:to_sym) - [:benefits]

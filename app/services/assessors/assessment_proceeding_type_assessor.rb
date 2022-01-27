@@ -16,7 +16,7 @@ module Assessors
       assessment_eligibility.update!(assessment_result: result)
     end
 
-    private
+  private
 
     def result
       passported? ? passported_assessment : gross_income_assessment

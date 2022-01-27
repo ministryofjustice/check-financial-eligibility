@@ -12,7 +12,7 @@ module Decorators
         contribution_required? ? @record.as_json : @record.as_json.except!(:policy_disregards)
       end
 
-      private
+    private
 
       def contribution_required?
         @assessment.assessment_result == 'contribution_required'

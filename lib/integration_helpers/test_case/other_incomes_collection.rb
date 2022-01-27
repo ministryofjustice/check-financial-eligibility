@@ -19,7 +19,7 @@ module TestCase
       @other_incomes.empty?
     end
 
-    private
+  private
 
     def source_payload(payment_source)
       {

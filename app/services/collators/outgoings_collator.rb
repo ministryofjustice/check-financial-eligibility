@@ -4,7 +4,7 @@ module Collators
       collate_costs_and_allowances
     end
 
-    private
+  private
 
     def collate_costs_and_allowances
       Collators::ChildcareCollator.call(assessment)

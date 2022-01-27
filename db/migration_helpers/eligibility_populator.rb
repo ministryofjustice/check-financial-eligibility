@@ -13,7 +13,7 @@ module MigrationHelpers
       @klasses.each { |klass| populate_eligibility(klass) }
     end
 
-    private
+  private
 
     def populate_eligibility(klass)
       @assessment_ids.each { |assessment_id| populate_eligibility_for_assessment(klass, assessment_id) }

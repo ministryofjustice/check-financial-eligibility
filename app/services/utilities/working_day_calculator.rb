@@ -64,7 +64,7 @@ module Utilities
       result
     end
 
-    private
+  private
 
     def current_payment_date_around_holiday?(expected_date)
       @current_payment_date == previous_working_day(expected_date) || @current_payment_date == next_working_day(expected_date)
