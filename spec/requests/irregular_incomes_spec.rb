@@ -18,7 +18,7 @@ RSpec.describe IrregularIncomesController, type: :request do
 
       context 'student_loan' do
         it 'creates the required number of IrregularIncomePayment records' do
-          expect { subject }.to change { IrregularIncomePayment.count }.by(1)
+          expect { subject }.to change(IrregularIncomePayment, :count).by(1)
           payments = gross_income_summary.irregular_income_payments
           expect(payments[0].income_type).to eq CFEConstants::STUDENT_LOAN
           expect(payments[0].frequency).to eq CFEConstants::ANNUAL_FREQUENCY
@@ -52,7 +52,7 @@ RSpec.describe IrregularIncomesController, type: :request do
         end
 
         it 'does not create irregular income payment record' do
-          expect { subject }.not_to change { IrregularIncomePayment.count }
+          expect { subject }.not_to change(IrregularIncomePayment, :count)
         end
       end
 
@@ -84,7 +84,7 @@ RSpec.describe IrregularIncomesController, type: :request do
         end
 
         it 'does not create irregular income payments record' do
-          expect { subject }.not_to change { IrregularIncomePayment.count }
+          expect { subject }.not_to change(IrregularIncomePayment, :count)
         end
       end
     end

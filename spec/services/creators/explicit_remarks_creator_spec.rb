@@ -9,7 +9,7 @@ RSpec.describe Creators::ExplicitRemarksCreator do
     let(:params) { valid_params }
 
     it 'creates the expected number of records' do
-      expect { subject }.to change { ExplicitRemark.count }.by(2)
+      expect { subject }.to change(ExplicitRemark, :count).by(2)
     end
 
     it 'is successful' do
@@ -27,7 +27,7 @@ RSpec.describe Creators::ExplicitRemarksCreator do
       let(:params) { invalid_params }
 
       it 'does not write any records' do
-        expect { subject }.not_to change { ExplicitRemark.count }
+        expect { subject }.not_to change(ExplicitRemark, :count)
       end
 
       it 'is not successful' do

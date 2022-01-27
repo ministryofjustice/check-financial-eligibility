@@ -164,23 +164,23 @@ RSpec/ContextWording:
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle.
 # SupportedStyles: method_call, block
-RSpec/ExpectChange:
-  Exclude:
-    - 'spec/models/other_income_source_spec.rb'
-    - 'spec/requests/employments_spec.rb'
-    - 'spec/requests/irregular_incomes_spec.rb'
-    - 'spec/requests/other_incomes_spec.rb'
-    - 'spec/requests/state_benefits_spec.rb'
-    - 'spec/services/creators/applicant_creator_spec.rb'
-    - 'spec/services/creators/assessment_creator_spec.rb'
-    - 'spec/services/creators/capitals_creator_spec.rb'
-    - 'spec/services/creators/cash_transactions_creator_spec.rb'
-    - 'spec/services/creators/dependants_creator_spec.rb'
-    - 'spec/services/creators/explicit_remarks_creator_spec.rb'
-    - 'spec/services/creators/irregular_income_creator_spec.rb'
-    - 'spec/services/creators/other_incomes_creator_spec.rb'
-    - 'spec/services/creators/outgoings_creator_spec.rb'
-    - 'spec/services/creators/properties_creator_spec.rb'
+#RSpec/ExpectChange:
+#  Exclude:
+#    - 'spec/models/other_income_source_spec.rb'
+#    - 'spec/requests/employments_spec.rb'
+#    - 'spec/requests/irregular_incomes_spec.rb'
+#    - 'spec/requests/other_incomes_spec.rb'
+#    - 'spec/requests/state_benefits_spec.rb'
+#    - 'spec/services/creators/applicant_creator_spec.rb'
+#    - 'spec/services/creators/assessment_creator_spec.rb'
+#    - 'spec/services/creators/capitals_creator_spec.rb'
+#    - 'spec/services/creators/cash_transactions_creator_spec.rb'
+#    - 'spec/services/creators/dependants_creator_spec.rb'
+#    - 'spec/services/creators/explicit_remarks_creator_spec.rb'
+#    - 'spec/services/creators/irregular_income_creator_spec.rb'
+#    - 'spec/services/creators/other_incomes_creator_spec.rb'
+#    - 'spec/services/creators/outgoings_creator_spec.rb'
+#    - 'spec/services/creators/properties_creator_spec.rb'
 
 # Offense count: 18
 RSpec/ExpectInHook:

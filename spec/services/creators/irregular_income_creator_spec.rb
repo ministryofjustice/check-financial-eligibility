@@ -16,7 +16,7 @@ module Creators
     describe '.call' do
       context 'payload' do
         it 'creates an irregular income payment' do
-          expect { subject }.to change { IrregularIncomePayment.count }.by(1)
+          expect { subject }.to change(IrregularIncomePayment, :count).by(1)
         end
 
         it 'creates a student loan payment' do
@@ -32,7 +32,7 @@ module Creators
         let(:irregular_income) { { payments: [] } }
 
         it 'does not create any records' do
-          expect { subject }.not_to change { IrregularIncomePayment.count }
+          expect { subject }.not_to change(IrregularIncomePayment, :count)
         end
       end
 

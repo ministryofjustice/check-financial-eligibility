@@ -50,11 +50,11 @@ RSpec.describe EmploymentsController, type: :request do
         end
 
         it 'does not create any employment records' do
-          expect { subject }.not_to change { Employment.count }
+          expect { subject }.not_to change(Employment, :count)
         end
 
         it 'does not create employment payment records' do
-          expect { subject }.not_to change { EmploymentPayment.count }
+          expect { subject }.not_to change(EmploymentPayment, :count)
         end
       end
     end

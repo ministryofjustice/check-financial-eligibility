@@ -46,7 +46,7 @@ module Creators
         end
 
         it 'does not create a Dependant record' do
-          expect { subject }.not_to change { Dependant.count }
+          expect { subject }.not_to change(Dependant, :count)
         end
       end
 
@@ -67,7 +67,7 @@ module Creators
         end
 
         it 'does not create a Dependant record' do
-          expect { subject }.not_to change { Dependant.count }
+          expect { subject }.not_to change(Dependant, :count)
         end
       end
 

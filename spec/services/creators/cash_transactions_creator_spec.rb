@@ -25,13 +25,13 @@ describe Creators::CashTransactionsCreator do
       end
 
       it 'creates the cash transaction category records' do
-        expect { subject }.to change { CashTransactionCategory.count }.by(4)
+        expect { subject }.to change(CashTransactionCategory, :count).by(4)
         category_details = gross_income_summary.cash_transaction_categories.pluck(:name, :operation)
         expect(category_details).to match_array expected_category_details
       end
 
       it 'creates the payment records' do
-        expect { subject }.to change { CashTransaction.count }.by(12)
+        expect { subject }.to change(CashTransaction, :count).by(12)
         cat = gross_income_summary.cash_transaction_categories.find_by(name: 'child_care')
         trx_details = cat.cash_transactions.order(:date).pluck(:date, :amount, :client_id)
         expect(trx_details).to eq(
@@ -51,11 +51,11 @@ describe Creators::CashTransactionsCreator do
     context 'unhappy paths' do
       RSpec.shared_examples 'it is unsuccessful' do
         it 'does not create any CashTransactionCategory records' do
-          expect { subject }.not_to change { CashTransactionCategory.count }
+          expect { subject }.not_to change(CashTransactionCategory, :count)
         end
 
         it 'does not create any CashTransaction records' do
-          expect { subject }.not_to change { CashTransaction.count }
+          expect { subject }.not_to change(CashTransaction, :count)
         end
 
         it 'responds false to #success?' do

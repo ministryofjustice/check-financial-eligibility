@@ -32,7 +32,7 @@ RSpec.describe OtherIncomeSource, type: :model do
       end
 
       it 'does not write an assessment_error_record' do
-        expect { subject }.not_to change { AssessmentError.count }
+        expect { subject }.not_to change(AssessmentError, :count)
       end
     end
 
