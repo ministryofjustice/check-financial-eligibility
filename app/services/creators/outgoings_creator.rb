@@ -19,7 +19,7 @@ module Creators
       klass = CFEConstants::OUTGOING_KLASSES[outgoing[:name].to_sym]
       payments = outgoing[:payments]
       payments.each do |payment_params|
-        klass.create! payment_params.merge(disposable_income_summary: disposable_income_summary)
+        klass.create! payment_params.merge(disposable_income_summary:)
       end
     end
 

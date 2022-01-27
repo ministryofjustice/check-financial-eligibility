@@ -8,14 +8,14 @@ module Creators
       let(:date_of_birth) { Faker::Date.backward }
       let(:applicant_attributes) do
         {
-          date_of_birth: date_of_birth,
+          date_of_birth:,
           involvement_type: 'applicant',
           has_partner_opponent: true,
           receives_qualifying_benefit: true
         }
       end
 
-      subject { described_class.call(assessment_id: assessment_id, applicant_attributes: applicant_attributes) }
+      subject { described_class.call(assessment_id:, applicant_attributes:) }
 
       describe '.call' do
         context 'valid payload' do

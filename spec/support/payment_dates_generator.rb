@@ -42,8 +42,8 @@ class PaymentDatesGenerator
   def run
     %i[monthly four_weekly two_weekly weekly].each do |period|
       start_dates.each do |start_date|
-        @results << generate_date_series(period: period, start_date: start_date, holiday_strategy: :previous_working_day)
-        @results << generate_date_series(period: period, start_date: start_date, holiday_strategy: :next_working_day)
+        @results << generate_date_series(period:, start_date:, holiday_strategy: :previous_working_day)
+        @results << generate_date_series(period:, start_date:, holiday_strategy: :next_working_day)
       end
     end
     nil

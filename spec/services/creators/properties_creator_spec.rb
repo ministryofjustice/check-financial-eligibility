@@ -32,7 +32,7 @@ module Creators
 
     subject do
       described_class.call(
-        assessment_id: assessment_id,
+        assessment_id:,
         main_home_attributes: main_home,
         additional_properties_attributes: additional_properties
       )

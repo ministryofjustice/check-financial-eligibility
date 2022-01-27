@@ -11,7 +11,7 @@ describe Creators::CashTransactionsCreator do
     let(:month2) { Date.current.beginning_of_month - 2.months }
     let(:month3) { Date.current.beginning_of_month - 1.month }
 
-    subject { described_class.call(assessment_id: assessment.id, income: income, outgoings: outgoings) }
+    subject { described_class.call(assessment_id: assessment.id, income:, outgoings:) }
 
     context 'happy_path' do
       let(:params) { valid_params }

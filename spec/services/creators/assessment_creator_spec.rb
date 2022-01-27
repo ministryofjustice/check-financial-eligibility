@@ -23,7 +23,7 @@ module Creators
       }.to_json
     end
 
-    subject { described_class.call(remote_ip: remote_ip, raw_post: raw_post, version: version) }
+    subject { described_class.call(remote_ip:, raw_post:, version:) }
 
     before { stub_call_to_json_schema }
 

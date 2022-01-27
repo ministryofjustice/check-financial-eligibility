@@ -5,7 +5,7 @@ describe CashTransactionCategory do
   let(:gross_income_summary) { assessment.gross_income_summary }
 
   describe 'validation' do
-    let(:category) { described_class.new(gross_income_summary: gross_income_summary, operation: operation, name: name) }
+    let(:category) { described_class.new(gross_income_summary:, operation:, name:) }
 
     context 'no name' do
       let(:operation) { nil }

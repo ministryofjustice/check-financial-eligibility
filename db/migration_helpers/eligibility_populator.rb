@@ -21,7 +21,7 @@ module MigrationHelpers
 
     def populate_eligibility_for_assessment(klass, assessment_id)
       assessment = Assessment.find(assessment_id)
-      summary = klass.find_by(assessment_id: assessment_id)
+      summary = klass.find_by(assessment_id:)
       return if summary.nil?
       return if summary.assessment_result == 'migrated_to_eligibility'
 

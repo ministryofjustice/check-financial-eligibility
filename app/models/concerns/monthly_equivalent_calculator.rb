@@ -9,7 +9,7 @@ module MonthlyEquivalentCalculator
   # * amount_method: The method to call on each record in the collection to retrieve the payment amount
   #
   def calculate_monthly_equivalent!(target_field:, collection:, date_method: :payment_date, amount_method: :amount)
-    monthly_amount = calculate_monthly_equivalent(collection: collection, date_method: date_method, amount_method: amount_method)
+    monthly_amount = calculate_monthly_equivalent(collection:, date_method:, amount_method:)
 
     update!(target_field => monthly_amount)
     monthly_amount

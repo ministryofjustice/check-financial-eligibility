@@ -5,7 +5,7 @@ module Assessors
     def call
       ActiveRecord::Base.transaction do
         update_eligibility_records
-        disposable_income_summary.update!(income_contribution: income_contribution)
+        disposable_income_summary.update!(income_contribution:)
       end
     end
 

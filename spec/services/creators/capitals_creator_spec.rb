@@ -15,7 +15,7 @@ module Creators
 
     subject do
       described_class.call(
-        assessment_id: assessment_id,
+        assessment_id:,
         bank_accounts_attributes: bank_accounts,
         non_liquid_capitals_attributes: non_liquid_assets
       )

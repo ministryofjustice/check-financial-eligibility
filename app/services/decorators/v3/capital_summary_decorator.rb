@@ -16,10 +16,10 @@ module Decorators
           capital_items: {
             liquid: liquid_items,
             non_liquid: non_liquid_items,
-            vehicles: vehicles,
+            vehicles:,
             properties: {
               main_home: PropertyDecorator.new(@record.main_home)&.as_json,
-              additional_properties: additional_properties
+              additional_properties:
             }
           },
           total_liquid: @record.total_liquid,

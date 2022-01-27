@@ -6,7 +6,7 @@ RSpec.describe VehiclesController, type: :request do
     let(:vehicles) { attributes_for_list(:vehicle, 2) }
     let(:headers) { { 'CONTENT_TYPE' => 'application/json' } }
     let(:date_in_future) { 3.days.from_now.strftime('%Y-%m-%d') }
-    let(:params) { { vehicles: vehicles } }
+    let(:params) { { vehicles: } }
 
     subject { post assessment_vehicles_path(assessment), params: params.to_json, headers: headers }
 

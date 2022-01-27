@@ -46,7 +46,7 @@ module Collators
     end
 
     def monthly_cash_by_category(category)
-      monthly_transaction_amount_by(operation: :debit, category: category)
+      monthly_transaction_amount_by(operation: :debit, category:)
     end
 
     def default_attrs
