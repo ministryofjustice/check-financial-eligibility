@@ -16,7 +16,7 @@ RSpec.describe Assessment, type: :model do
       end
 
       it 'errors' do
-        assessment = Assessment.create param_hash
+        assessment = described_class.create param_hash
         expect(assessment.valid?).to be false
         expect(assessment.errors.full_messages).to include("Matter proceeding type can't be blank")
       end
@@ -39,7 +39,7 @@ RSpec.describe Assessment, type: :model do
 
       it 'errors' do
         param_hash.delete(:proceeding_type_codes)
-        assessment = Assessment.create param_hash
+        assessment = described_class.create param_hash
         expect(assessment.valid?).to be false
         expect(assessment.errors.full_messages).to include("Proceeding type codes can't be blank")
       end
@@ -49,7 +49,7 @@ RSpec.describe Assessment, type: :model do
       let(:ccms_codes) { [] }
 
       it 'errors' do
-        assessment = Assessment.create param_hash
+        assessment = described_class.create param_hash
         expect(assessment.valid?).to be false
         expect(assessment.errors.full_messages).to include("Proceeding type codes can't be blank")
       end
@@ -59,7 +59,7 @@ RSpec.describe Assessment, type: :model do
       let(:ccms_codes) { %w[DA005 SE014 XX999 SE003] }
 
       it 'errors' do
-        assessment = Assessment.create param_hash
+        assessment = described_class.create param_hash
         expect(assessment.valid?).to be false
         expect(assessment.errors.full_messages).to include('Proceeding type codes invalid: XX999')
       end
@@ -69,7 +69,7 @@ RSpec.describe Assessment, type: :model do
       let(:ccms_codes) { %w[DA005 SE014 SE003 DA020] }
 
       it 'writes a valid record' do
-        assessment = Assessment.create param_hash
+        assessment = described_class.create param_hash
         expect(assessment).to be_valid
       end
     end
@@ -86,7 +86,7 @@ RSpec.describe Assessment, type: :model do
     end
 
     it 'errors' do
-      assessment = Assessment.create param_hash
+      assessment = described_class.create param_hash
       expect(assessment.valid?).to be false
       expect(assessment.errors.full_messages).to include("Remote ip can't be blank")
     end

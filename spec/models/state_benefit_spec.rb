@@ -7,7 +7,7 @@ RSpec.describe StateBenefit do
 
   describe '.generate!' do
     context 'an excluded state benefit' do
-      subject { StateBenefit.generate!(gross_income_summary, excluded_state_benefit_type.name) }
+      subject { described_class.generate!(gross_income_summary, excluded_state_benefit_type.name) }
 
       it 'has a link to gross income summary' do
         expect(subject.gross_income_summary_id).to eq gross_income_summary.id
@@ -21,7 +21,7 @@ RSpec.describe StateBenefit do
     end
     context 'other state benefit' do
       let!(:other_state_benefit_type) { create :state_benefit_type, :other }
-      subject { StateBenefit.generate!(gross_income_summary, 'my_special_benefit') }
+      subject { described_class.generate!(gross_income_summary, 'my_special_benefit') }
 
       it 'has a link to gross income summary' do
         expect(subject.gross_income_summary_id).to eq gross_income_summary.id

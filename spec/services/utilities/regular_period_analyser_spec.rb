@@ -4,7 +4,7 @@ module Utilities
   RSpec.describe RegularPeriodAnalyser do
     let(:bank_holidays) { %w[2019-07-09 2019-07-16 2019-07-23] }
 
-    subject { RegularPeriodAnalyser.call(period, dates) }
+    subject { described_class.call(period, dates) }
 
     before do
       BankHoliday.create!(dates: bank_holidays)

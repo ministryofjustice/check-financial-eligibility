@@ -76,21 +76,21 @@ RSpec/ContextWording:
 # Cop supports --auto-correct.
 # Configuration parameters: SkipBlocks, EnforcedStyle.
 # SupportedStyles: described_class, explicit
-RSpec/DescribedClass:
-  Exclude:
-    - 'spec/models/api_response_spec.rb'
-    - 'spec/models/assessment_spec.rb'
-    - 'spec/models/bank_holiday_spec.rb'
-    - 'spec/models/cash_transaction_spec.rb'
-    - 'spec/models/explicit_remark_spec.rb'
-    - 'spec/models/state_benefit_spec.rb'
-    - 'spec/models/threshold_spec.rb'
-    - 'spec/services/calculators/vehicle_age_calculator_spec.rb'
-    - 'spec/services/decorators/v3/assessment_decorator_spec.rb'
-    - 'spec/services/decorators/v4/assessment_decorator_spec.rb'
-    - 'spec/services/legal_framework_api/response_error_spec.rb'
-    - 'spec/services/remarks_spec.rb'
-    - 'spec/services/utilities/regular_period_analyser_spec.rb'
+#RSpec/DescribedClass:
+#  Exclude:
+#    - 'spec/models/api_response_spec.rb'
+#    - 'spec/models/assessment_spec.rb'
+#    - 'spec/models/bank_holiday_spec.rb'
+#    - 'spec/models/cash_transaction_spec.rb'
+#    - 'spec/models/explicit_remark_spec.rb'
+#    - 'spec/models/state_benefit_spec.rb'
+#    - 'spec/models/threshold_spec.rb'
+#    - 'spec/services/calculators/vehicle_age_calculator_spec.rb'
+#    - 'spec/services/decorators/v3/assessment_decorator_spec.rb'
+#    - 'spec/services/decorators/v4/assessment_decorator_spec.rb'
+#    - 'spec/services/legal_framework_api/response_error_spec.rb'
+#    - 'spec/services/remarks_spec.rb'
+#    - 'spec/services/utilities/regular_period_analyser_spec.rb'
 
 # Offense count: 2
 RSpec/EmptyExampleGroup:

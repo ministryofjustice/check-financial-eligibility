@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe ApiResponse do
-  let(:response) { ApiResponse.new }
+  let(:response) { described_class.new }
 
   describe '.success' do
     let(:dummy_records) { %w[record_1 record_2] }
 
-    subject { ApiResponse.success(dummy_records) }
+    subject { described_class.success(dummy_records) }
 
     it 'sets success to true' do
       expect(subject.success?).to be true
@@ -26,7 +26,7 @@ RSpec.describe ApiResponse do
       assessment = create :assessment, :with_capital_summary
       assessment.capital_summary.liquid_capital_items << LiquidCapitalItem.new(description: 'sfdfdfd', value: 656.22)
       assessment.capital_summary.liquid_capital_items << LiquidCapitalItem.new(description: 'sfdfdfd', value: 656.22)
-      response = ApiResponse.success assessment.capital_summary
+      response = described_class.success assessment.capital_summary
       serializable_response = response.as_json
       expect(serializable_response).to be_instance_of(Hash)
       expect(serializable_response.keys).to match_array %w[success objects errors]
@@ -36,7 +36,7 @@ RSpec.describe ApiResponse do
   describe '.error' do
     let(:messages) { ['error 1', 'error 2'] }
 
-    subject { ApiResponse.error(messages) }
+    subject { described_class.error(messages) }
 
     it 'sets success to true' do
       expect(subject.success?).to be false

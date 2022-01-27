@@ -10,30 +10,30 @@ RSpec.describe BankHoliday, type: :model do
 
     context 'no existing bank holidays record' do
       it 'creates a record' do
-        expect(BankHoliday.count).to be_zero
-        BankHoliday.populate_dates
-        expect(BankHoliday.count).to eq 1
+        expect(described_class.count).to be_zero
+        described_class.populate_dates
+        expect(described_class.count).to eq 1
       end
 
       it 'stores the api dates on the record' do
-        BankHoliday.populate_dates
-        expect(BankHoliday.first.dates).to eq api_response
+        described_class.populate_dates
+        expect(described_class.first.dates).to eq api_response
       end
     end
 
     context 'pre-existing bank holidays record' do
       before do
-        BankHoliday.create!(dates: %w[2020-05-01 2020-04-03 2020-04-06])
+        described_class.create!(dates: %w[2020-05-01 2020-04-03 2020-04-06])
       end
 
       it 'updates the existing record with the new api response' do
-        BankHoliday.populate_dates
-        expect(BankHoliday.first.dates).to eq api_response
+        described_class.populate_dates
+        expect(described_class.first.dates).to eq api_response
       end
 
       it 'does not increase the record count' do
-        BankHoliday.populate_dates
-        expect(BankHoliday.count).to eq 1
+        described_class.populate_dates
+        expect(described_class.count).to eq 1
       end
     end
   end
@@ -41,35 +41,35 @@ RSpec.describe BankHoliday, type: :model do
   describe '.dates' do
     context 'no record' do
       before do
-        expect(BankHoliday.count).to be_zero
-        expect(BankHoliday).to receive(:populate_dates)
-        expect(BankHoliday).to receive(:first).at_least(1).and_return(double(BankHoliday, dates: api_response, updated_at: Time.zone.now))
+        expect(described_class.count).to be_zero
+        expect(described_class).to receive(:populate_dates)
+        expect(described_class).to receive(:first).at_least(1).and_return(double(described_class, dates: api_response, updated_at: Time.zone.now))
       end
 
       it 'populates dates and returns dates' do
-        expect(BankHoliday.dates).to eq api_response
+        expect(described_class.dates).to eq api_response
       end
     end
     context 'stale record' do
       before do
-        BankHoliday.create!(dates: api_response, updated_at: 11.days.ago)
-        expect(BankHoliday).to receive(:populate_dates)
-        expect(BankHoliday).to receive(:first).at_least(1).and_return(double(BankHoliday, dates: api_response, updated_at: 11.days.ago))
+        described_class.create!(dates: api_response, updated_at: 11.days.ago)
+        expect(described_class).to receive(:populate_dates)
+        expect(described_class).to receive(:first).at_least(1).and_return(double(described_class, dates: api_response, updated_at: 11.days.ago))
       end
 
       it 'populates dates and returns dates' do
-        expect(BankHoliday.dates).to eq api_response
+        expect(described_class.dates).to eq api_response
       end
     end
     context 'fresh record' do
       before do
-        BankHoliday.create!(dates: api_response, updated_at: 2.days.ago)
-        expect(BankHoliday).not_to receive(:populate_dates)
-        expect(BankHoliday).to receive(:first).at_least(1).and_return(double(BankHoliday, dates: api_response, updated_at: 2.days.ago))
+        described_class.create!(dates: api_response, updated_at: 2.days.ago)
+        expect(described_class).not_to receive(:populate_dates)
+        expect(described_class).to receive(:first).at_least(1).and_return(double(described_class, dates: api_response, updated_at: 2.days.ago))
       end
 
       it 'populates dates and returns dates' do
-        expect(BankHoliday.dates).to eq api_response
+        expect(described_class.dates).to eq api_response
       end
     end
   end

@@ -3,7 +3,7 @@ require 'rails_helper'
 module Calculators
   RSpec.describe VehicleAgeCalculator do
     let(:calculation_date) { Date.new(2019, 5, 25) }
-    let(:vac) { VehicleAgeCalculator.new(purchase_date, calculation_date) }
+    let(:vac) { described_class.new(purchase_date, calculation_date) }
 
     describe '#in_months' do
       context 'bought this month' do
