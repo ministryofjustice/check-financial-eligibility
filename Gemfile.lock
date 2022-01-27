@@ -182,7 +182,7 @@ GEM
       rubocop (< 2.0)
     hashdiff (1.0.1)
     httpclient (2.8.3)
-    i18n (1.8.11)
+    i18n (1.9.0)
       concurrent-ruby (~> 1.0)
     interception (0.5)
     io-wait (0.2.1)
