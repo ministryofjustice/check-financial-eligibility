@@ -33,8 +33,8 @@ module Decorators
 
         def generate_error
           raise 'My runtime error message'
-        rescue RuntimeError => err
-          err
+        rescue RuntimeError => e
+          e
         end
       end
     end

@@ -46,13 +46,13 @@ Lint/AmbiguousBlockAssociation:
 # Offense count: 5
 # Cop supports --auto-correct.
 # Configuration parameters: PreferredName.
-Naming/RescuedExceptionsVariableName:
-  Exclude:
-    - 'app/controllers/assessments_controller.rb'
-    - 'app/services/creators/cash_transactions_creator.rb'
-    - 'lib/integration_helpers/test_case/outgoings_collection.rb'
-    - 'spec/services/assessors/assessment_proceeding_type_assessor_spec.rb'
-    - 'spec/services/decorators/error_decorator_spec.rb'
+#Naming/RescuedExceptionsVariableName:
+#  Exclude:
+#    - 'app/controllers/assessments_controller.rb'
+#    - 'app/services/creators/cash_transactions_creator.rb'
+#    - 'lib/integration_helpers/test_case/outgoings_collection.rb'
+#    - 'spec/services/assessors/assessment_proceeding_type_assessor_spec.rb'
+#    - 'spec/services/decorators/error_decorator_spec.rb'
 
 # Offense count: 17
 RSpec/AnyInstance:

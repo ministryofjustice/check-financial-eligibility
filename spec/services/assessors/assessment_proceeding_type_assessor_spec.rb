@@ -163,10 +163,10 @@ module Assessors
 
         begin
           described_class.call(assessment, ptc)
-        rescue StandardError => err
-          raise "Unexpected exception: #{err.class}" unless err.is_a?(Assessors::AssessmentProceedingTypeAssessor::AssessmentError)
+        rescue StandardError => e
+          raise "Unexpected exception: #{e.class}" unless e.is_a?(Assessors::AssessmentProceedingTypeAssessor::AssessmentError)
 
-          return err.message
+          return e.message
         end
         nil
       end
