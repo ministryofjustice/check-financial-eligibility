@@ -40,6 +40,7 @@ module Calculators
           expect(subject).to eq 304.97
         end
       end
+
       context 'mixture of included and excluded benefits' do
         let(:state_benefit_type_excluded) { create :state_benefit_type, exclude_from_gross_income: true }
         let!(:monthly_state_benefits) do

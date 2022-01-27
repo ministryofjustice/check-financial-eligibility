@@ -50,6 +50,7 @@ RSpec.describe BankHoliday, type: :model do
         expect(described_class.dates).to eq api_response
       end
     end
+
     context 'stale record' do
       before do
         described_class.create!(dates: api_response, updated_at: 11.days.ago)
@@ -61,6 +62,7 @@ RSpec.describe BankHoliday, type: :model do
         expect(described_class.dates).to eq api_response
       end
     end
+
     context 'fresh record' do
       before do
         described_class.create!(dates: api_response, updated_at: 2.days.ago)

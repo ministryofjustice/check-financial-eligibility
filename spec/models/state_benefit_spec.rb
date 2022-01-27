@@ -21,6 +21,7 @@ RSpec.describe StateBenefit do
         expect(subject.name).to be_blank
       end
     end
+
     context 'other state benefit' do
       let!(:other_state_benefit_type) { create :state_benefit_type, :other }
       subject { described_class.generate!(gross_income_summary, 'my_special_benefit') }

@@ -58,6 +58,7 @@ module Utilities
                 expect(subject).to be true
               end
             end
+
             context 'paid late' do
               let(:dates) { make_dates(%w[2020-04-03 2020-05-04 2020-06-03]) }
               it 'should be true' do
@@ -74,6 +75,7 @@ module Utilities
                 expect(subject).to be true
               end
             end
+
             context 'paid late' do
               let(:dates) { make_dates(%w[2020-01-01 2020-02-03 2020-03-02]) }
               it 'should be true' do
@@ -111,6 +113,7 @@ module Utilities
                 expect(subject).to be true
               end
             end
+
             context 'paid late' do
               let(:dates) { make_dates(%w[2020-06-08 2020-07-06 2020-08-06]) }
               it 'should be true' do

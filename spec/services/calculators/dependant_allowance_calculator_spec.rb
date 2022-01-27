@@ -59,6 +59,7 @@ module Calculators
               expect(subject).to eq 333.33
             end
           end
+
           context 'with income' do
             let(:dependant) { create :dependant, :aged16or17, monthly_income: 100.01, in_full_time_education: true }
             it 'returns the child 16 or over with no income deduction' do

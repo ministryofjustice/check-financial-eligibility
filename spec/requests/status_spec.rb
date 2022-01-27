@@ -25,6 +25,7 @@ RSpec.describe StatusController, type: :request do
         expect(response.body).to eq(failed_healthcheck)
       end
     end
+
     context 'when everything is ok' do
       before do
         allow(ActiveRecord::Base.connection).to receive(:active?).and_return(true)

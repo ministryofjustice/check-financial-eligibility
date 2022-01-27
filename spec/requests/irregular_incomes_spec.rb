@@ -55,6 +55,7 @@ RSpec.describe IrregularIncomesController, type: :request do
           expect { subject }.not_to change { IrregularIncomePayment.count }
         end
       end
+
       context 'invalid irregular income payment type' do
         let(:params) do
           new_hash = irregular_income_params

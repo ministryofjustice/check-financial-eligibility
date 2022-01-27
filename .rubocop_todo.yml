@@ -107,16 +107,16 @@ RSpec/ContextWording:
 
 # Offense count: 11
 # Cop supports --auto-correct.
-RSpec/EmptyLineAfterExampleGroup:
-  Exclude:
-    - 'spec/models/bank_holiday_spec.rb'
-    - 'spec/models/state_benefit_spec.rb'
-    - 'spec/requests/irregular_incomes_spec.rb'
-    - 'spec/requests/status_spec.rb'
-    - 'spec/services/calculators/dependant_allowance_calculator_spec.rb'
-    - 'spec/services/calculators/state_benefits_calculator_spec.rb'
-    - 'spec/services/creators/other_incomes_creator_spec.rb'
-    - 'spec/services/utilities/calendar_monthly_period_analyser_spec.rb'
+#RSpec/EmptyLineAfterExampleGroup:
+#  Exclude:
+#    - 'spec/models/bank_holiday_spec.rb'
+#    - 'spec/models/state_benefit_spec.rb'
+#    - 'spec/requests/irregular_incomes_spec.rb'
+#    - 'spec/requests/status_spec.rb'
+#    - 'spec/services/calculators/dependant_allowance_calculator_spec.rb'
+#    - 'spec/services/calculators/state_benefits_calculator_spec.rb'
+#    - 'spec/services/creators/other_incomes_creator_spec.rb'
+#    - 'spec/services/utilities/calendar_monthly_period_analyser_spec.rb'
 
 # Offense count: 173
 # Cop supports --auto-correct.

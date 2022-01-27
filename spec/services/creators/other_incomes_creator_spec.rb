@@ -47,6 +47,7 @@ module Creators
           expect(source_record.other_income_payments.map(&:payment_date)).to match_array(humanized_expected_dates)
         end
       end
+
       context 'empty payload' do
         let(:other_income_params) { [] }
         it 'does not create any records' do
