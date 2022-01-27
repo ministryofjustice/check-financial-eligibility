@@ -73,7 +73,7 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'pry-byebug'
   gem 'rspec_junit_formatter'
-  gem 'rspec-rails', '~> 5.0'
+  gem 'rspec-rails', '~> 5.1'
   gem 'rubocop', require: false
   gem 'rubocop-performance'
   gem 'rubocop-rails', require: false
