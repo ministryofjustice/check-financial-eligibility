@@ -36,7 +36,7 @@ module Creators
           end
 
           describe '#errors' do
-            it 'should be empty' do
+            it 'is empty' do
               expect(subject.errors).to be_empty
             end
           end

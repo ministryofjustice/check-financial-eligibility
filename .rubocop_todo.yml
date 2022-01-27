@@ -150,15 +150,15 @@ RSpec/ContextWording:
 # Offense count: 44
 # Cop supports --auto-correct.
 # Configuration parameters: CustomTransform, IgnoredWords.
-RSpec/ExampleWording:
-  Exclude:
-    - 'spec/requests/explicit_remarks_spec.rb'
-    - 'spec/services/calculators/disregarded_state_benefits_calculator_spec.rb'
-    - 'spec/services/calculators/housing_costs_calculator_spec.rb'
-    - 'spec/services/collators/dependants_allowance_collator_spec.rb'
-    - 'spec/services/collators/housing_costs_collator_spec.rb'
-    - 'spec/services/creators/applicant_creator_spec.rb'
-    - 'spec/services/utilities/calendar_monthly_period_analyser_spec.rb'
+#RSpec/ExampleWording:
+#  Exclude:
+#    - 'spec/requests/explicit_remarks_spec.rb'
+#    - 'spec/services/calculators/disregarded_state_benefits_calculator_spec.rb'
+#    - 'spec/services/calculators/housing_costs_calculator_spec.rb'
+#    - 'spec/services/collators/dependants_allowance_collator_spec.rb'
+#    - 'spec/services/collators/housing_costs_collator_spec.rb'
+#    - 'spec/services/creators/applicant_creator_spec.rb'
+#    - 'spec/services/utilities/calendar_monthly_period_analyser_spec.rb'
 
 # Offense count: 42
 # Cop supports --auto-correct.

@@ -12,7 +12,7 @@ module Collators
       subject { described_class.call(assessment) }
 
       context 'no housing cost outgoings' do
-        it 'should record zero' do
+        it 'records zero' do
           subject
           expect(disposable_income_summary.gross_housing_costs).to eq 0.0
           expect(disposable_income_summary.housing_benefit).to eq 0.0
@@ -31,7 +31,7 @@ module Collators
           context 'board and lodging' do
             let(:housing_cost_type) { 'board_and_lodging' }
 
-            it 'should record half the monthly housing cost' do
+            it 'records half the monthly housing cost' do
               subject
               expect(disposable_income_summary.gross_housing_costs).to eq 177.72
               expect(disposable_income_summary.housing_benefit).to eq 0.0
@@ -42,7 +42,7 @@ module Collators
           context 'rent' do
             let(:housing_cost_type) { 'rent' }
 
-            it 'should record the full monthly housing costs' do
+            it 'records the full monthly housing costs' do
               subject
               expect(disposable_income_summary.gross_housing_costs).to eq 355.44
               expect(disposable_income_summary.housing_benefit).to eq 0.0
@@ -63,7 +63,7 @@ module Collators
           context 'board and lodging' do
             let(:housing_cost_type) { 'board_and_lodging' }
 
-            it 'should record half the housing cost less the housing benefit' do
+            it 'records half the housing cost less the housing benefit' do
               subject
               expect(disposable_income_summary.gross_housing_costs).to eq 177.72
               expect(disposable_income_summary.housing_benefit).to eq 101.02
@@ -74,7 +74,7 @@ module Collators
           context 'mortgage' do
             let(:housing_cost_type) { 'mortgage' }
 
-            it 'should record the full housing costs less the housing benefit' do
+            it 'records the full housing costs less the housing benefit' do
               subject
               expect(disposable_income_summary.gross_housing_costs).to eq 355.44
               expect(disposable_income_summary.housing_benefit).to eq 101.02

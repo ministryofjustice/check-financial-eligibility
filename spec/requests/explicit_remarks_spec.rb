@@ -26,7 +26,7 @@ RSpec.describe ExplicitRemarksController, type: :request do
       context ' success', :show_in_doc do
         let(:payload) { valid_payload }
 
-        it 'it successful' do
+        it 'successful' do
           expect(response).to be_successful
         end
       end
