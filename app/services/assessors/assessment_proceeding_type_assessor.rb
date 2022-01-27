@@ -8,7 +8,8 @@ module Assessors
     class AssessmentError < StandardError; end
 
     def initialize(assessment, proceeding_type_code)
-      @assessment = assessment
+      # @assessment = assessment
+      super(assessment)
       @proceeding_type_code = proceeding_type_code
     end
 

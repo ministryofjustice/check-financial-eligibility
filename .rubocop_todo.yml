@@ -34,9 +34,9 @@ Lint/AmbiguousBlockAssociation:
   Enabled: false
 
 # Offense count: 1
-Lint/MissingSuper:
-  Exclude:
-    - 'app/services/assessors/assessment_proceeding_type_assessor.rb'
+#Lint/MissingSuper:
+#  Exclude:
+#    - 'app/services/assessors/assessment_proceeding_type_assessor.rb'
 
 # Offense count: 22
 # Cop supports --auto-correct.
