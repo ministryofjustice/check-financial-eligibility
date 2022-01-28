@@ -11,7 +11,7 @@ module Creators
       travel_back
     end
 
-    before(:each) { mock_lfa_responses }
+    before { mock_lfa_responses }
 
     subject { described_class.call(assessment) }
 

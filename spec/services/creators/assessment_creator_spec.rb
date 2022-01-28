@@ -2,7 +2,7 @@ require "rails_helper"
 
 module Creators
   RSpec.describe AssessmentCreator do
-    before(:each) { mock_lfa_responses }
+    before { mock_lfa_responses }
 
     let(:remote_ip) { "127.0.0.1" }
     let(:raw_post_v3) do

@@ -4,7 +4,7 @@ module Collators
   RSpec.describe GrossIncomeCollator do
     before { create :bank_holiday }
 
-    before(:each) { mock_lfa_responses }
+    before { mock_lfa_responses }
 
     let(:assessment) { create :assessment, :with_applicant, :with_gross_income_summary, proceeding_type_codes: proceeding_type_codes }
     let(:gross_income_summary) { assessment.gross_income_summary }

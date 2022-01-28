@@ -13,7 +13,7 @@ RSpec.describe "Eligible Full Assessment with policy disregard remarks" do
     create :bank_holiday
   end
 
-  before(:each) { mock_lfa_responses }
+  before { mock_lfa_responses }
 
   it "returns the expected payload with no policy disregards remarks" do
     assessment_id = post_assessment

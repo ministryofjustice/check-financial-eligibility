@@ -40,24 +40,6 @@ RSpec/ExpectInHook:
     - 'spec/requests/outgoings_controller_spec.rb'
     - 'spec/requests/applicants_controller_spec.rb'
 
-# Offense count: 11
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: implicit, each, example
-RSpec/HookArgument:
-  Exclude:
-    - 'spec/integration/ap_1367_spec.rb'
-    - 'spec/integration/policy_disregards_spec.rb'
-    - 'spec/integration/test_runner_spec.rb'
-    - 'spec/models/proceeding_type_threshold_spec.rb'
-    - 'spec/requests/assessments_spec.rb'
-    - 'spec/services/collators/gross_income_collator_spec.rb'
-    - 'spec/services/creators/assessment_creator_spec.rb'
-    - 'spec/services/creators/capital_eligibility_creator_spec.rb'
-    - 'spec/services/creators/disposable_income_eligibiltiy_creator_spec.rb'
-    - 'spec/services/creators/gross_income_eligibility_creator_spec.rb'
-    - 'spec/services/decorators/v4/matter_type_result_decorator_spec.rb'
-
 # Offense count: 60
 # Cop supports --auto-correct.
 RSpec/LeadingSubject:

@@ -5,7 +5,7 @@ module Creators
     let(:assessment) { create :assessment, :with_disposable_income_summary, proceeding_type_codes: codes }
     let(:summary) { assessment.disposable_income_summary }
 
-    before(:each) { mock_lfa_responses }
+    before { mock_lfa_responses }
 
     around do |example|
       travel_to Date.new(2021, 4, 20)

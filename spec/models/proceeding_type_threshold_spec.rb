@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe ProceedingTypeThreshold do
-  before(:each) { mock_lfa_responses }
+  before { mock_lfa_responses }
 
   let(:date) { Date.new(2021, 4, 9) }
   let(:waivable_codes) { %i[DA001 DA002 DA003 DA004 DA005 DA006 DA007 DA020] }
