@@ -50,11 +50,11 @@ module Creators
     end
 
     def assessment
-      @assessment ||= Assessment.find_by(id: assessment_id) || (raise CreationError, ['No such assessment id'])
+      @assessment ||= Assessment.find_by(id: assessment_id) || (raise CreationError, ["No such assessment id"])
     end
 
     def normalize(name)
-      name.underscore.tr(' ', '_')
+      name.underscore.tr(" ", "_")
     end
   end
 end

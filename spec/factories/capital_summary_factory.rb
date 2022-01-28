@@ -3,11 +3,11 @@ FactoryBot.define do
     assessment
 
     trait :pending do
-      assessment_result { 'pending' }
+      assessment_result { "pending" }
     end
 
-    trait 'summarised' do
-      assessment_result { 'summarised' }
+    trait "summarised" do
+      assessment_result { "summarised" }
       total_liquid { Faker::Number.decimal }
       total_non_liquid { Faker::Number.decimal }
       total_vehicle { Faker::Number.decimal }

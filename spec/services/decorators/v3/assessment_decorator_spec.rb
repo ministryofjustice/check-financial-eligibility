@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 module Decorators
   module V3
@@ -12,10 +12,10 @@ module Decorators
                :with_eligibilities
       end
 
-      describe '#as_json' do
+      describe "#as_json" do
         subject { described_class.new(assessment).as_json }
 
-        it 'has the required keys in the returned hash' do
+        it "has the required keys in the returned hash" do
           expected_keys = %i[
             id
             client_reference_id
@@ -32,12 +32,12 @@ module Decorators
           expect(subject[:assessment].keys).to eq expected_keys
         end
 
-        it 'calls the decorators for associated records' do
-          expect(ApplicantDecorator).to receive(:new).and_return(double('ad', as_json: nil))
-          expect(GrossIncomeSummaryDecorator).to receive(:new).and_return(double('gisd', as_json: nil))
-          expect(DisposableIncomeSummaryDecorator).to receive(:new).and_return(double('disd', as_json: nil))
-          expect(CapitalSummaryDecorator).to receive(:new).and_return(double('csd', as_json: nil))
-          expect(RemarksDecorator).to receive(:new).and_return(double('rmk', as_json: nil))
+        it "calls the decorators for associated records" do
+          expect(ApplicantDecorator).to receive(:new).and_return(double("ad", as_json: nil))
+          expect(GrossIncomeSummaryDecorator).to receive(:new).and_return(double("gisd", as_json: nil))
+          expect(DisposableIncomeSummaryDecorator).to receive(:new).and_return(double("disd", as_json: nil))
+          expect(CapitalSummaryDecorator).to receive(:new).and_return(double("csd", as_json: nil))
+          expect(RemarksDecorator).to receive(:new).and_return(double("rmk", as_json: nil))
           subject
         end
       end

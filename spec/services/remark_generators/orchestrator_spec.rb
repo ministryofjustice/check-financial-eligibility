@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 module RemarkGenerators
   RSpec.describe Orchestrator do
@@ -18,7 +18,7 @@ module RemarkGenerators
       create :bank_holiday
     end
 
-    it 'calls the checkers with each collection' do
+    it "calls the checkers with each collection" do
       expect(MultiBenefitChecker).to receive(:call).with(assessment, state_benefit_payments)
       expect(AmountVariationChecker).to receive(:call).with(assessment, state_benefit_payments)
       expect(AmountVariationChecker).to receive(:call).with(assessment, other_income_payments)

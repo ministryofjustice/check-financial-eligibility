@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 module Workflows
   RSpec.describe PassportedWorkflow do
@@ -12,16 +12,16 @@ module Workflows
     let(:capital_summary) { assessment.capital_summary }
     let(:gross_income_summary) { assessment.gross_income_summary }
 
-    describe '.call' do
+    describe ".call" do
       subject { described_class.call(assessment) }
 
-      it 'calls Capital collator and updates capital summary record' do
+      it "calls Capital collator and updates capital summary record" do
         expect(Collators::CapitalCollator).to receive(:call).with(assessment).and_return(capital_data)
         subject
         expect(capital_summary.reload).to have_matching_attributes(capital_data)
       end
 
-      it 'calls CapitalAssessor and updates capital summary record with result' do
+      it "calls CapitalAssessor and updates capital summary record with result" do
         expect(Collators::CapitalCollator).to receive(:call).with(assessment).and_return(capital_data)
         expect(Assessors::CapitalAssessor).to receive(:call).with(assessment).and_call_original
         subject

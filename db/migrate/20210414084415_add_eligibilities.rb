@@ -6,7 +6,7 @@ class AddEligibilities < ActiveRecord::Migration[6.1]
       t.string :proceeding_type_code, null: false
       t.decimal :lower_threshold
       t.decimal :upper_threshold
-      t.string :assessment_result, null: false, default: 'pending'
+      t.string :assessment_result, null: false, default: "pending"
 
       t.timestamps
     end

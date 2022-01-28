@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 module Collators
   RSpec.describe DisposableIncomeCollator do
@@ -28,7 +28,7 @@ module Collators
                        total_disposable_income: 0.0,
                        employment_income_deductions: employment_income_deductions,
                        fixed_employment_allowance: fixed_employment_allowance
-      create :disposable_income_eligibility, disposable_income_summary: summary, proceeding_type_code: 'DA001'
+      create :disposable_income_eligibility, disposable_income_summary: summary, proceeding_type_code: "DA001"
       summary
     end
 
@@ -47,46 +47,46 @@ module Collators
 
     let!(:gross_income_summary) { create :gross_income_summary, :with_all_records, assessment: assessment }
 
-    describe '.call' do
+    describe ".call" do
       subject { described_class.call(assessment) }
 
-      context 'total_monthly_outgoings' do
-        it 'sums childcare, legal_aid, maintenance, net housing costs and allowances' do
+      context "total_monthly_outgoings" do
+        it "sums childcare, legal_aid, maintenance, net housing costs and allowances" do
           subject
           expect(disposable_income_summary.reload.total_outgoings_and_allowances).to eq total_outgoings
         end
       end
 
-      context 'total disposable income' do
+      context "total disposable income" do
         before do
           assessment.gross_income_summary.update!(total_gross_income: total_outgoings + 1500.0)
         end
 
-        it 'is populated with result of gross income minus total outgoings and allowances' do
+        it "is populated with result of gross income minus total outgoings and allowances" do
           subject
           result = assessment.gross_income_summary.total_gross_income - disposable_income_summary.reload.total_outgoings_and_allowances
           expect(disposable_income_summary.total_disposable_income).to eq result
         end
       end
 
-      context 'lower threshold' do
-        it 'populates the lower threshold' do
+      context "lower threshold" do
+        it "populates the lower threshold" do
           subject
           expect(disposable_income_summary.eligibilities.first.lower_threshold).to eq 315.0
         end
       end
 
-      context 'upper threshold' do
-        context 'domestic abuse' do
-          it 'populates it with infinity' do
+      context "upper threshold" do
+        context "domestic abuse" do
+          it "populates it with infinity" do
             subject
             expect(disposable_income_summary.eligibilities.first.upper_threshold).to eq 999_999_999_999.0
           end
         end
       end
 
-      context 'all transactions' do
-        it 'updates with totals for all categories based on bank and cash transactions' do
+      context "all transactions" do
+        it "updates with totals for all categories based on bank and cash transactions" do
           subject
           disposable_income_summary.reload
           child_care_total = disposable_income_summary.child_care_bank + disposable_income_summary.child_care_cash

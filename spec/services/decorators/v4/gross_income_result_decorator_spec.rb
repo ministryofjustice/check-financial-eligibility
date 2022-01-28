@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 module Decorators
   module V4
@@ -6,9 +6,9 @@ module Decorators
       let(:unlimited) { 999_999_999_999.0 }
       let(:ptc_results) do
         {
-          DA002: [unlimited, 'eligible'],
-          DA003: [unlimited, 'eligible'],
-          SE013: [8_000, 'ineligible']
+          DA002: [unlimited, "eligible"],
+          DA003: [unlimited, "eligible"],
+          SE013: [8_000, "ineligible"]
         }
       end
       let(:ptcs) { ptc_results.keys }
@@ -19,19 +19,19 @@ module Decorators
           total_gross_income: 16_615.40,
           proceeding_types: [
             {
-              ccms_code: 'DA002',
+              ccms_code: "DA002",
               upper_threshold: 999_999_999_999.0,
-              result: 'eligible'
+              result: "eligible"
             },
             {
-              ccms_code: 'DA003',
+              ccms_code: "DA003",
               upper_threshold: 999_999_999_999.0,
-              result: 'eligible'
+              result: "eligible"
             },
             {
-              ccms_code: 'SE013',
+              ccms_code: "SE013",
               upper_threshold: 8_000.0,
-              result: 'ineligible'
+              result: "ineligible"
             }
           ]
         }
@@ -46,7 +46,7 @@ module Decorators
         end
       end
 
-      it 'generates the expected hash' do
+      it "generates the expected hash" do
         expect(subject).to eq expected_hash
       end
     end

@@ -1,6 +1,6 @@
 class CapitalsController < ApplicationController
   resource_description do
-    short 'Add capital details to an assessment'
+    short "Add capital details to an assessment"
     formats(%w[json])
     description <<-END_OF_TEXT
     == Description
@@ -17,26 +17,26 @@ class CapitalsController < ApplicationController
           are added through separate endpoints.
     END_OF_TEXT
   end
-  api :POST, 'assessments/:assessment_id/capitals', 'Create capital declarations'
+  api :POST, "assessments/:assessment_id/capitals", "Create capital declarations"
   formats(%w[json])
   param :assessment_id, :uuid, required: true
-  param :bank_accounts, Array, desc: 'Collection of bank accounts' do
-    param :description, String, required: true, desc: 'An identifying name for this bank account'
-    param :value, :currency, required: true, desc: 'The lowest balance on this bank account during the calculation period'
+  param :bank_accounts, Array, desc: "Collection of bank accounts" do
+    param :description, String, required: true, desc: "An identifying name for this bank account"
+    param :value, :currency, required: true, desc: "The lowest balance on this bank account during the calculation period"
   end
 
-  param :non_liquid_capital, Array, desc: 'Collection of non-liquid capital assets' do
-    param :description, String, required: true, desc: 'An description of this non-liquid asset'
-    param :value, :currency, required: true, desc: 'Estimated value of this non-liquid asset'
+  param :non_liquid_capital, Array, desc: "Collection of non-liquid capital assets" do
+    param :description, String, required: true, desc: "An description of this non-liquid asset"
+    param :value, :currency, required: true, desc: "Estimated value of this non-liquid asset"
   end
 
-  returns code: :ok, desc: 'Successful response' do
-    property :success, ['true'], desc: 'Success flag shows true'
-    property :errors, [], desc: 'Empty array of error messages'
+  returns code: :ok, desc: "Successful response" do
+    property :success, ["true"], desc: "Success flag shows true"
+    property :errors, [], desc: "Empty array of error messages"
   end
   returns code: :unprocessable_entity do
-    property :success, ['false'], desc: 'Success flag shows false'
-    property :errors, array_of: String, desc: 'Description of why object invalid'
+    property :success, ["false"], desc: "Success flag shows false"
+    property :errors, array_of: String, desc: "Description of why object invalid"
   end
 
   def create

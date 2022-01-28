@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :applicant do
     assessment
     date_of_birth { Faker::Date.between(from: 18.years.ago, to: 70.years.ago) }
-    involvement_type { 'applicant' }
+    involvement_type { "applicant" }
     has_partner_opponent { false }
     receives_qualifying_benefit { false }
 

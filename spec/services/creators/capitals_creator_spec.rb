@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 module Creators
   RSpec.describe CapitalsCreator do
@@ -21,23 +21,23 @@ module Creators
       )
     end
 
-    describe '.call' do
-      context 'with empty bank_accounts and non_liquid_capital' do
-        it 'returns an instance of CapitalCreationObject' do
+    describe ".call" do
+      context "with empty bank_accounts and non_liquid_capital" do
+        it "returns an instance of CapitalCreationObject" do
           expect(subject).to be_instance_of(described_class)
         end
 
-        it 'does not create any capital item records' do
+        it "does not create any capital item records" do
           expect(assessment.capital_summary.capital_items).to be_empty
         end
       end
 
-      context 'with liquid assets only' do
+      context "with liquid assets only" do
         let(:bank_accounts) { liquid_assets_hash }
 
         before { subject }
 
-        it 'creates liquid capital items' do
+        it "creates liquid capital items" do
           expect(capital_summary.liquid_capital_items.size).to eq 2
           items = capital_summary.liquid_capital_items.order(:created_at)
 
@@ -47,17 +47,17 @@ module Creators
           expect(items.last.value).to eq value2
         end
 
-        it 'does not create non-liquid capital items' do
+        it "does not create non-liquid capital items" do
           expect(capital_summary.non_liquid_capital_items).to be_empty
         end
       end
 
-      context 'non_liquid_capital_items_only' do
+      context "non_liquid_capital_items_only" do
         let(:non_liquid_assets) { non_liquid_assets_hash }
 
         before { subject }
 
-        it 'creates non liquid capital items' do
+        it "creates non liquid capital items" do
           expect(capital_summary.non_liquid_capital_items.size).to eq 1
           expect(capital_summary.non_liquid_capital_items.first.description).to eq item1
           expect(capital_summary.non_liquid_capital_items.first.value).to eq value1
@@ -65,17 +65,17 @@ module Creators
       end
     end
 
-    describe '#success?' do
-      it 'returns true' do
+    describe "#success?" do
+      it "returns true" do
         expect(subject.success?).to be true
       end
     end
 
-    describe '#capital_summary' do
+    describe "#capital_summary" do
       let(:bank_accounts) { liquid_assets_hash }
       let(:non_liquid_assets) { non_liquid_assets_hash }
 
-      it 'returns the created capital summary record' do
+      it "returns the created capital summary record" do
         result = subject.capital_summary
         expect(result).to be_instance_of(CapitalSummary)
       end
@@ -103,23 +103,23 @@ module Creators
       ]
     end
 
-    context 'no such assessment id' do
+    context "no such assessment id" do
       let(:assessment_id) { SecureRandom.uuid }
 
-      it 'does not create capital_items' do
+      it "does not create capital_items" do
         expect { subject }.not_to change(CapitalItem, :count)
       end
 
-      describe '#success?' do
-        it 'returns false' do
+      describe "#success?" do
+        it "returns false" do
           expect(subject.success?).to be false
         end
       end
 
-      describe 'errors' do
-        it 'returns an error' do
+      describe "errors" do
+        it "returns an error" do
           expect(subject.errors.size).to eq 1
-          expect(subject.errors[0]).to eq 'No such assessment id'
+          expect(subject.errors[0]).to eq "No such assessment id"
         end
       end
     end

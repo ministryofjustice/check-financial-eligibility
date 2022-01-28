@@ -1,9 +1,9 @@
-require 'sentry-ruby'
-require 'sentry-rails'
+require "sentry-ruby"
+require "sentry-rails"
 
-if %w[production].include?(Rails.env) && ENV['SENTRY_DSN'].present?
+if %w[production].include?(Rails.env) && ENV["SENTRY_DSN"].present?
   Sentry.init do |config|
-    config.dsn = ENV['SENTRY_DSN']
+    config.dsn = ENV["SENTRY_DSN"]
 
     filter = ActiveSupport::ParameterFilter.new(Rails.application.config.filter_parameters.map(&:to_s))
 

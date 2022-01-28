@@ -4,14 +4,14 @@ module TestCase
       @expected = expected_result
       @actual = actual_result
       @verbosity_level = verbosity_level
-      @header_pattern = '%58s  %-23s %-23s'
+      @header_pattern = "%58s  %-23s %-23s"
       @overall_result = true
     end
 
     def compare
       print_result_headings
       @expected.result_set.each_key do |key|
-        next if key == 'assessment_passported'
+        next if key == "assessment_passported"
 
         compare_and_print_result(key)
       end
@@ -48,14 +48,14 @@ module TestCase
     end
 
     def ignorable?(expected_value)
-      expected_value.nil? || expected_value == '' || expected_value == 'n/a'
+      expected_value.nil? || expected_value == "" || expected_value == "n/a"
     end
 
     def print_result_headings
       return if @verbosity_level.zero?
 
-      puts format(@header_pattern, assessment[:client_reference_id], 'Expected', 'Actual')
-      puts format(@header_pattern, '', '=========', '=========')
+      puts format(@header_pattern, assessment[:client_reference_id], "Expected", "Actual")
+      puts format(@header_pattern, "", "=========", "=========")
     end
 
     def print_result(key, color)

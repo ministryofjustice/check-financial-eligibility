@@ -28,37 +28,37 @@ module Assessors
     end
 
     def passported_assessment
-      raise AssessmentError, 'Assessment not complete: Capital assessment still pending' if capital_result == 'pending'
-      raise AssessmentError, 'Invalid assessment status: for passported applicant' if disposable_income_summary && disposable_income_result != 'pending'
-      raise AssessmentError, 'Invalid assessment status: for passported applicant' if gross_income_summary && gross_income_result != 'pending'
+      raise AssessmentError, "Assessment not complete: Capital assessment still pending" if capital_result == "pending"
+      raise AssessmentError, "Invalid assessment status: for passported applicant" if disposable_income_summary && disposable_income_result != "pending"
+      raise AssessmentError, "Invalid assessment status: for passported applicant" if gross_income_summary && gross_income_result != "pending"
 
       capital_result
     end
 
     def gross_income_assessment
-      raise AssessmentError, 'Assessment not complete: Gross Income assessment still pending' if gross_income_result == 'pending'
+      raise AssessmentError, "Assessment not complete: Gross Income assessment still pending" if gross_income_result == "pending"
 
-      return 'ineligible' if gross_income_result == 'ineligible'
+      return "ineligible" if gross_income_result == "ineligible"
 
       disposble_income_assessment
     end
 
     def disposble_income_assessment
-      raise AssessmentError, 'Assessment not complete: Disposable Income assessment still pending' if disposable_income_result == 'pending'
+      raise AssessmentError, "Assessment not complete: Disposable Income assessment still pending" if disposable_income_result == "pending"
 
-      return disposable_income_result if disposable_income_result == 'ineligible'
+      return disposable_income_result if disposable_income_result == "ineligible"
 
       capital_assessment
     end
 
     def capital_assessment
-      raise AssessmentError, 'Assessment not complete: Capital assessment still pending' if capital_result == 'pending'
+      raise AssessmentError, "Assessment not complete: Capital assessment still pending" if capital_result == "pending"
 
-      return 'ineligible' if capital_result == 'ineligible'
+      return "ineligible" if capital_result == "ineligible"
 
-      return 'contribution_required' if 'contribution_required'.in?(combined_result)
+      return "contribution_required" if "contribution_required".in?(combined_result)
 
-      'eligible'
+      "eligible"
     end
 
     def assessment_eligibility

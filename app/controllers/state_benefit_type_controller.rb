@@ -1,6 +1,6 @@
 class StateBenefitTypeController < ApplicationController
   resource_description do
-    short 'Return state benefit types'
+    short "Return state benefit types"
     formats(%w[json])
     description <<-END_OF_TEXT
     == Description
@@ -8,7 +8,7 @@ class StateBenefitTypeController < ApplicationController
     END_OF_TEXT
   end
 
-  api :GET, 'state_benefit_type', 'List of state benefit types'
+  api :GET, "state_benefit_type", "List of state benefit types"
   formats(%w[json])
 
   def index

@@ -9,7 +9,7 @@ class Assessment < ApplicationRecord
             presence: true
   validates :matter_proceeding_type, presence: true, if: :matter_proceeding_type_required?
   validates :proceeding_type_codes, presence: true, if: :proceeding_types_codes_required?
-  validates :version, inclusion: { in: CFEConstants::VALID_ASSESSMENT_VERSIONS, message: 'not valid in Accept header' }
+  validates :version, inclusion: { in: CFEConstants::VALID_ASSESSMENT_VERSIONS, message: "not valid in Accept header" }
 
   validate :proceeding_type_codes_validations
 
@@ -26,7 +26,7 @@ class Assessment < ApplicationRecord
   has_many :explicit_remarks, dependent: :destroy
   has_many :employments, dependent: :destroy
   has_many :eligibilities,
-           class_name: 'Eligibility::Assessment',
+           class_name: "Eligibility::Assessment",
            foreign_key: :parent_id,
            inverse_of: :assessment,
            dependent: :destroy
@@ -39,13 +39,13 @@ class Assessment < ApplicationRecord
 
   # Always instantiate a new Remarks object from a nil value
   def remarks
-    attributes['remarks'] || Remarks.new(id)
+    attributes["remarks"] || Remarks.new(id)
   rescue StandardError
     Remarks.new(id)
   end
 
   def version_3?
-    version == '3'
+    version == "3"
   end
 
 private

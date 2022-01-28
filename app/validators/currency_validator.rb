@@ -18,9 +18,9 @@ class CurrencyValidator < Apipie::Validator::BaseValidator
 
   def description
     if @option == :not_negative
-      'Must be a decimal, zero or greater, with a maximum of two decimal places. For example: 123.34'
+      "Must be a decimal, zero or greater, with a maximum of two decimal places. For example: 123.34"
     else
-      'Must be a decimal with a maximum of two decimal places. For example: 123.34'
+      "Must be a decimal with a maximum of two decimal places. For example: 123.34"
     end
   end
 end

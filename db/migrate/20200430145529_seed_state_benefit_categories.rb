@@ -1,4 +1,4 @@
-require_relative '../migration_helpers/category_seeder'
+require_relative "../migration_helpers/category_seeder"
 
 class SeedStateBenefitCategories < ActiveRecord::Migration[6.0]
   def up

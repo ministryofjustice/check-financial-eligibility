@@ -27,11 +27,11 @@ module TestCase
   private
 
     def main_home
-      @properties['main_home'].first
+      @properties["main_home"].first
     end
 
     def additional_properties
-      @properties['additional_properties']
+      @properties["additional_properties"]
     end
 
     def populate_properties(rows)
@@ -46,7 +46,7 @@ module TestCase
     end
 
     def extract_property_rows(rows)
-      row_index = rows.index { |r| r.first.present? && r.first != 'properties' }
+      row_index = rows.index { |r| r.first.present? && r.first != "properties" }
       rows.shift(row_index)
     end
   end

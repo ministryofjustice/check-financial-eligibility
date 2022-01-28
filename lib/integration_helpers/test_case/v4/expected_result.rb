@@ -36,7 +36,7 @@ module TestCase
         }
         while rows.any?
           case rows.first[1]
-          when 'matter_types'
+          when "matter_types"
             store_matter_types(hash, extract_matter_type_rows(rows))
           when /^proceeding_type:/
             store_proceeding_types(hash, extract_proceeding_type_rows(rows))
@@ -71,7 +71,7 @@ module TestCase
       end
 
       def extract_matter_type_rows(rows)
-        row_index = rows.index { |r| r[1].present? && r[1] != 'matter_types' }
+        row_index = rows.index { |r| r[1].present? && r[1] != "matter_types" }
         rows.shift(row_index)
       end
 

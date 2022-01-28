@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 module Utilities
   RSpec.describe ResultSummarizer do
@@ -14,74 +14,74 @@ module Utilities
 
     subject { described_class.call(results) }
 
-    context 'no results' do
+    context "no results" do
       let(:results) { no_results }
 
-      it 'returns :pending' do
+      it "returns :pending" do
         expect(subject).to eq :pending
       end
     end
 
-    context 'one pending' do
+    context "one pending" do
       let(:results) { one_pending }
 
-      it 'returns :pending' do
+      it "returns :pending" do
         expect(subject).to eq :pending
       end
     end
 
-    context 'all eligible' do
+    context "all eligible" do
       let(:results) { all_eligible }
 
-      it 'returns :eligible' do
+      it "returns :eligible" do
         expect(subject).to eq :eligible
       end
     end
 
-    context 'all ineligible' do
+    context "all ineligible" do
       let(:results) { all_ineligible }
 
-      it 'returns :ineligible' do
+      it "returns :ineligible" do
         expect(subject).to eq :ineligible
       end
     end
 
-    context 'all eligible with contribution' do
+    context "all eligible with contribution" do
       let(:results) { all_contrib }
 
-      it 'returns :eligible_with_contribution' do
+      it "returns :eligible_with_contribution" do
         expect(subject).to eq :contribution_required
       end
     end
 
-    context 'eligble and ineligible mixed' do
+    context "eligble and ineligible mixed" do
       let(:results) { elig_and_inelig }
 
-      it 'returns :partially_eligible' do
+      it "returns :partially_eligible" do
         expect(subject).to eq :partially_eligible
       end
     end
 
-    context 'eligible and contribution_required mixed' do
+    context "eligible and contribution_required mixed" do
       let(:results) { elig_and_contrib }
 
-      it 'returns :eligible_with_contribution' do
+      it "returns :eligible_with_contribution" do
         expect(subject).to eq :contribution_required
       end
     end
 
-    context 'ineligble and contribution_required mixed' do
+    context "ineligble and contribution_required mixed" do
       let(:results) { inelig_and_contrib }
 
-      it 'returns :partially_eligible' do
+      it "returns :partially_eligible" do
         expect(subject).to eq :partially_eligible
       end
     end
 
-    context 'all three' do
+    context "all three" do
       let(:results) { all_three }
 
-      it 'returns :partially_eligible' do
+      it "returns :partially_eligible" do
         expect(subject).to eq :partially_eligible
       end
     end

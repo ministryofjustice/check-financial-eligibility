@@ -1,11 +1,11 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
-require 'spec_helper'
-ENV['RAILS_ENV'] ||= 'test'
-require File.expand_path('../config/environment', __dir__)
+require "spec_helper"
+ENV["RAILS_ENV"] ||= "test"
+require File.expand_path("../config/environment", __dir__)
 # Prevent database truncation if the environment is production
-abort('The Rails environment is running in production mode!') if Rails.env.production?
-require 'rspec/rails'
-require 'pry-rescue/rspec' if Rails.env.development?
+abort("The Rails environment is running in production mode!") if Rails.env.production?
+require "rspec/rails"
+require "pry-rescue/rspec" if Rails.env.development?
 
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -22,7 +22,7 @@ require 'pry-rescue/rspec' if Rails.env.development?
 # directory. Alternatively, in the individual `*_spec.rb` files, manually
 # require only the support files necessary.
 #
-Dir[Rails.root.join('spec/support/**/*.rb')].sort.each { |f| require f }
+Dir[Rails.root.join("spec/support/**/*.rb")].sort.each { |f| require f }
 
 # Checks for pending migrations and applies them before tests are run.
 # If you are not using ActiveRecord, you can remove these lines.
@@ -68,9 +68,9 @@ RSpec.configure do |config|
   config.include ActiveSupport::Testing::TimeHelpers
 
   # Allow apipie recording for API documentation
-  config.filter_run show_in_doc: true if ENV['APIPIE_RECORD']
+  config.filter_run show_in_doc: true if ENV["APIPIE_RECORD"]
   config.before(:suite) do
-    Faker::Config.locale = 'en-GB'
+    Faker::Config.locale = "en-GB"
     DatabaseCleaner.clean_with :truncation
   end
   config.after(:suite) do
@@ -78,25 +78,25 @@ RSpec.configure do |config|
   end
 end
 
-require 'webmock/rspec'
+require "webmock/rspec"
 
-require Rails.root.join('spec/fixtures/base_assessment_fixture')
-require Rails.root.join('spec/fixtures/assessment_request_fixture')
-require Rails.root.join('spec/fixtures/assessment_response_fixture')
+require Rails.root.join("spec/fixtures/base_assessment_fixture")
+require Rails.root.join("spec/fixtures/assessment_request_fixture")
+require Rails.root.join("spec/fixtures/assessment_response_fixture")
 
 # helper methods
 def stub_call_to_json_schema
-  stub_request(:get, 'http://localhost:3000/schemas/assessment_request.json')
+  stub_request(:get, "http://localhost:3000/schemas/assessment_request.json")
     .to_return(status: 200, body: json_schema_definitions)
 end
 
 def json_schema_definitions
-  File.read(Rails.root.join('public/schemas/assessment_request.json'))
+  File.read(Rails.root.join("public/schemas/assessment_request.json"))
 end
 
 def mock_lfa_responses
   allow(LegalFrameworkAPI::QueryService).to receive(:waived?) do |ccms_code, threshold_type|
     threshold_type.in?(%i[capital_upper disposable_income_upper gross_income_upper]) && ccms_code.to_s =~ /^DA/ ? true : false
   end
-  allow(LegalFrameworkAPI::QueryService).to receive(:matter_type) { |ccms_code| /^DA/.match?(ccms_code.to_s) ? 'domestic_abuse' : 'section8' }
+  allow(LegalFrameworkAPI::QueryService).to receive(:matter_type) { |ccms_code| /^DA/.match?(ccms_code.to_s) ? "domestic_abuse" : "section8" }
 end

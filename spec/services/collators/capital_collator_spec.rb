@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 module Collators
   RSpec.describe CapitalCollator do
@@ -8,15 +8,15 @@ module Collators
     let(:capital_summary) { assessment.capital_summary }
     let(:today) { Date.new(2019, 4, 2) }
 
-    describe '.call' do
+    describe ".call" do
       subject { described_class.call assessment }
 
-      it 'always returns a hash' do
+      it "always returns a hash" do
         expect(subject).to be_a Hash
       end
 
-      context 'liquid capital' do
-        it 'calls LiquidCapitalAssessment and updates capital summary with the result' do
+      context "liquid capital" do
+        it "calls LiquidCapitalAssessment and updates capital summary with the result" do
           liquid_capital_service = double Assessors::LiquidCapitalAssessor
           expect(Assessors::LiquidCapitalAssessor).to receive(:new).with(assessment).and_return(liquid_capital_service)
           expect(liquid_capital_service).to receive(:call).and_return(145.83)
@@ -24,8 +24,8 @@ module Collators
         end
       end
 
-      context 'property_assessment' do
-        it 'instantiates and calls the Property Assessment service' do
+      context "property_assessment" do
+        it "instantiates and calls the Property Assessment service" do
           property_service = double Calculators::PropertyCalculator
           expect(Calculators::PropertyCalculator).to receive(:new).and_return(property_service)
           expect(property_service).to receive(:call).and_return(23_000.0)
@@ -34,8 +34,8 @@ module Collators
         end
       end
 
-      context 'vehicle assessment' do
-        it 'instantiates and calls the Vehicle Assesment service' do
+      context "vehicle assessment" do
+        it "instantiates and calls the Vehicle Assesment service" do
           vehicle_service = double Assessors::VehicleAssessor
           expect(Assessors::VehicleAssessor).to receive(:new).with(assessment).and_return(vehicle_service)
           expect(vehicle_service).to receive(:call).and_return(2_500.0)
@@ -44,8 +44,8 @@ module Collators
         end
       end
 
-      context 'non_liquid_capital_assessment' do
-        it 'instantiates and calls NonLiquidCapitalAssessment' do
+      context "non_liquid_capital_assessment" do
+        it "instantiates and calls NonLiquidCapitalAssessment" do
           nlcas = double Assessors::NonLiquidCapitalAssessor
           expect(Assessors::NonLiquidCapitalAssessor).to receive(:new).with(assessment).and_return(nlcas)
           expect(nlcas).to receive(:call).and_return(500)
@@ -54,8 +54,8 @@ module Collators
         end
       end
 
-      context 'pensioner disregard' do
-        it 'instantiates and calls the PensionerCapitalDisregard service' do
+      context "pensioner disregard" do
+        it "instantiates and calls the PensionerCapitalDisregard service" do
           pcd = double Calculators::PensionerCapitalDisregardCalculator
           expect(Calculators::PensionerCapitalDisregardCalculator).to receive(:new).with(assessment).and_return(pcd)
           expect(pcd).to receive(:value).and_return(100_000)
@@ -64,8 +64,8 @@ module Collators
         end
       end
 
-      context 'summarization of result_fields' do
-        it 'summarizes the results it gets from the subservices' do
+      context "summarization of result_fields" do
+        it "summarizes the results it gets from the subservices" do
           liquid_capital_service = double Assessors::LiquidCapitalAssessor
           nlcas = double Assessors::NonLiquidCapitalAssessor
           vehicle_service = double Assessors::VehicleAssessor

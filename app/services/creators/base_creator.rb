@@ -15,7 +15,7 @@ module Creators
     end
 
     def assessment
-      @assessment ||= Assessment.find_by(id: @assessment_id) || (raise CreationError, ['No such assessment id'])
+      @assessment ||= Assessment.find_by(id: @assessment_id) || (raise CreationError, ["No such assessment id"])
     end
 
     class CreationError < StandardError

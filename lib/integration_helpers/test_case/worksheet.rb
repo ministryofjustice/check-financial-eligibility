@@ -38,7 +38,7 @@ module TestCase
       @verbosity_level = verbosity_level
       @rows = @worksheet.to_a
       @cash_transactions = CashTransactionsCollection.new
-      @headers = { 'CONTENT_TYPE' => 'application/json', 'Accept' => 'application/json;version=2' }
+      @headers = { "CONTENT_TYPE" => "application/json", "Accept" => "application/json;version=2" }
       @skippable = !@rows[0][1]
     end
 
@@ -63,7 +63,7 @@ module TestCase
     end
 
     def compare_results(actual_result)
-      if version == '3'
+      if version == "3"
         Result.new(@expected_results, actual_result, @verbosity_level).compare
       else
         @expected_results.compare(actual_result, @verbosity_level)
@@ -131,12 +131,12 @@ module TestCase
     end
 
     def populate_expected_results
-      @expected_results = version == '4' ? V4::ExpectedResult.new(@rows) : V3::ExpectedResult.new(@rows)
+      @expected_results = version == "4" ? V4::ExpectedResult.new(@rows) : V3::ExpectedResult.new(@rows)
     end
 
     def populate_earned_income
       # extract the earned income section and remove from the worksheet
-      row_index = @rows.index { |r| r.first.present? && r.first != 'earned_income' }
+      row_index = @rows.index { |r| r.first.present? && r.first != "earned_income" }
       @rows.shift(row_index)
       nil
     end

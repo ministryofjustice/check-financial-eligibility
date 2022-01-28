@@ -34,7 +34,7 @@ module TestCase
 
       while outgoings_rows.any?
         outgoings_type = outgoings_rows.first[1] if outgoings_rows.first[1].present?
-        number_of_rows_to_shift = outgoings_type == 'rent_or_mortgage' ? 4 : 3
+        number_of_rows_to_shift = outgoings_type == "rent_or_mortgage" ? 4 : 3
         outgoings_data = outgoings_rows.shift(number_of_rows_to_shift)
 
         add_outgoings(outgoings_type, outgoings_data)
@@ -42,12 +42,12 @@ module TestCase
     end
 
     def extract_outgoings_rows(rows)
-      row_index = rows.index { |r| r.first.present? && r.first != 'outgoings' }
+      row_index = rows.index { |r| r.first.present? && r.first != "outgoings" }
       rows.shift(row_index)
     end
 
     def add_outgoings(outgoings_type, outgoings_data)
-      payment = outgoings_type == 'rent_or_mortgage' ? payment_with_meta(outgoings_data) : payment_without_meta(outgoings_data)
+      payment = outgoings_type == "rent_or_mortgage" ? payment_with_meta(outgoings_data) : payment_without_meta(outgoings_data)
       @outgoings[outgoings_type] << payment unless payment.all_nil?
     end
 

@@ -1,5 +1,5 @@
-require 'rails_helper'
-Dir[Rails.root.join('lib/integration_helpers/**/*.rb')].sort.each { |f| require f }
+require "rails_helper"
+Dir[Rails.root.join("lib/integration_helpers/**/*.rb")].sort.each { |f| require f }
 
 ##### NOTE #####
 #
@@ -13,24 +13,24 @@ Dir[Rails.root.join('lib/integration_helpers/**/*.rb')].sort.each { |f| require 
 #
 #    bin/ispec -h # show help text
 #
-RSpec.describe 'IntegrationTests::TestRunner', type: :request do
-  let(:spreadsheet_title) { 'CFE Integration Test V3' }
+RSpec.describe "IntegrationTests::TestRunner", type: :request do
+  let(:spreadsheet_title) { "CFE Integration Test V3" }
 
-  let(:spreadsheet_file) { Rails.root.join('tmp/integration_test_data.xlsx') }
+  let(:spreadsheet_file) { Rails.root.join("tmp/integration_test_data.xlsx") }
   let(:spreadsheet) { Roo::Spreadsheet.open(spreadsheet_file.to_s) }
   let(:worksheet_names) { spreadsheet.sheets }
-  let(:headers) { { 'CONTENT_TYPE' => 'application/json', 'Accept' => 'application/json;version=3' } }
-  let(:target_worksheet) { ENV['TARGET_WORKSHEET'] }
-  let(:verbosity_level) { (ENV['VERBOSE'] || '0').to_i }
+  let(:headers) { { "CONTENT_TYPE" => "application/json", "Accept" => "application/json;version=3" } }
+  let(:target_worksheet) { ENV["TARGET_WORKSHEET"] }
+  let(:verbosity_level) { (ENV["VERBOSE"] || "0").to_i }
 
-  let(:refresh) { (ENV['REFRESH'] || 'false') }
+  let(:refresh) { (ENV["REFRESH"] || "false") }
 
   before { setup_test_data }
 
   before(:each) { mock_lfa_responses }
 
-  describe 'run integration_tests' do
-    it 'processes all the tests on all the sheets' do
+  describe "run integration_tests" do
+    it "processes all the tests on all the sheets" do
       failing_tests = []
       test_count = 0
       group_runner = TestCase::GroupRunner.new(verbosity_level, refresh)
@@ -69,7 +69,7 @@ RSpec.describe 'IntegrationTests::TestRunner', type: :request do
       puts ">>>>>>>>>>>> #{assessment_path(assessment_id)} #{__FILE__}:#{__LINE__} <<<<<<<<<<<<".yellow unless silent?
       get assessment_path(assessment_id), headers: headers(version)
       pp parsed_response if noisy?
-      raise 'Unsuccessful response' unless parsed_response[:success]
+      raise "Unsuccessful response" unless parsed_response[:success]
 
       parsed_response
     end
@@ -110,12 +110,12 @@ RSpec.describe 'IntegrationTests::TestRunner', type: :request do
     end
 
     def headers(version)
-      { 'CONTENT_TYPE' => 'application/json', 'Accept' => "application/json;version=#{version}" }
+      { "CONTENT_TYPE" => "application/json", "Accept" => "application/json;version=#{version}" }
     end
 
     def setup_test_data
       create :bank_holiday
-      Dibber::Seeder.new(StateBenefitType, 'data/state_benefit_types.yml', name_method: :label, overwrite: true).build
+      Dibber::Seeder.new(StateBenefitType, "data/state_benefit_types.yml", name_method: :label, overwrite: true).build
     end
   end
 end

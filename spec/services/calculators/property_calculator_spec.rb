@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 module Calculators
   RSpec.describe PropertyCalculator do
@@ -7,9 +7,9 @@ module Calculators
     let(:submission_date) { Time.zone.local(2020, 10, 10) }
     let(:service) { described_class.new(assessment) }
 
-    describe '#call' do
-      context 'no properties' do
-        it 'does not create any property records' do
+    describe "#call" do
+      context "no properties" do
+        it "does not create any property records" do
           expect(capital_summary.properties).to be_empty
           expect {
             service.call
@@ -17,9 +17,9 @@ module Calculators
         end
       end
 
-      context 'main_home_only' do
-        context '100% owned' do
-          context 'with mortgage > £100,000' do
+      context "main_home_only" do
+        context "100% owned" do
+          context "with mortgage > £100,000" do
             let!(:main_home) do
               create :property,
                      :main_home,
@@ -30,7 +30,7 @@ module Calculators
                      percentage_owned: 100.0
             end
 
-            it 'only deducts first 100k of mortgage' do
+            it "only deducts first 100k of mortgage" do
               service.call
               main_home.reload
               expect(main_home.transaction_allowance).to eq 14_009.79 # 3% of 466,993
@@ -42,7 +42,7 @@ module Calculators
             end
           end
 
-          context 'with_mortgage less than 100k' do
+          context "with_mortgage less than 100k" do
             let!(:main_home) do
               create :property,
                      :main_home,
@@ -53,7 +53,7 @@ module Calculators
                      percentage_owned: 100.0
             end
 
-            it 'only deducts the actual outstanding amount' do
+            it "only deducts the actual outstanding amount" do
               service.call
               main_home.reload
               expect(main_home.transaction_allowance).to eq 14_009.79 # 3% of 466,993
@@ -65,7 +65,7 @@ module Calculators
             end
           end
 
-          context 'on or after 28th Jan 2021' do
+          context "on or after 28th Jan 2021" do
             let(:day) { [28, 30].sample }
             let(:submission_date) { Time.zone.local(2021, 1, day) }
             let!(:main_home) do
@@ -78,7 +78,7 @@ module Calculators
                      percentage_owned: 100.0
             end
 
-            it 'deducts outstanding_mortgage instead of mortgage cap' do
+            it "deducts outstanding_mortgage instead of mortgage cap" do
               service.call
               main_home.reload
               expect(main_home.transaction_allowance).to eq 14_009.79 # 3% of 466,993
@@ -86,13 +86,13 @@ module Calculators
               expect(main_home.net_value).to eq 186_983.21 # 466,993 - 14,009.79 - 266_000.0
               expect(main_home.net_equity).to eq 186_983.21
               expect(main_home.main_home_equity_disregard).to eq 100_000.0
-              expect(main_home.assessed_equity).to eq BigDecimal('86_983.21', Float::DIG)
+              expect(main_home.assessed_equity).to eq BigDecimal("86_983.21", Float::DIG)
             end
           end
         end
 
-        context '66.66% owned' do
-          context 'with mortgage > £100,000' do
+        context "66.66% owned" do
+          context "with mortgage > £100,000" do
             let!(:main_home) do
               create :property,
                      :main_home,
@@ -103,7 +103,7 @@ module Calculators
                      percentage_owned: 66.66
             end
 
-            it 'only deducts first 100k of mortgage' do
+            it "only deducts first 100k of mortgage" do
               service.call
               main_home.reload
               expect(main_home.transaction_allowance).to eq 14_009.79 # 3% of 466,993
@@ -115,7 +115,7 @@ module Calculators
             end
           end
 
-          context 'with mortgage < £100,000' do
+          context "with mortgage < £100,000" do
             let!(:main_home) do
               create :property,
                      :main_home,
@@ -126,7 +126,7 @@ module Calculators
                      percentage_owned: 66.66
             end
 
-            it 'only deducts the actual outstanding amount' do
+            it "only deducts the actual outstanding amount" do
               service.call
               main_home.reload
               expect(main_home.transaction_allowance).to eq 14_009.79 # 3% of 466,993
@@ -138,7 +138,7 @@ module Calculators
             end
           end
 
-          context 'on or after 28th Jan 2021' do
+          context "on or after 28th Jan 2021" do
             let(:day) { [28, 30].sample }
             let(:submission_date) { Time.zone.local(2021, 1, day) }
             let!(:main_home) do
@@ -151,7 +151,7 @@ module Calculators
                      percentage_owned: 66.66
             end
 
-            it 'deducts outstanding_mortgage instead of mortgage cap' do
+            it "deducts outstanding_mortgage instead of mortgage cap" do
               service.call
               main_home.reload
               expect(main_home.transaction_allowance).to eq 14_009.79 # 3% of 466,993
@@ -164,7 +164,7 @@ module Calculators
           end
         end
 
-        context '50% shared with housing association' do
+        context "50% shared with housing association" do
           let!(:main_home) do
             create :property,
                    :main_home,
@@ -175,7 +175,7 @@ module Calculators
                    percentage_owned: 50.0
           end
 
-          it 'subtracts the housing association share as a %age of market value' do
+          it "subtracts the housing association share as a %age of market value" do
             service.call
             main_home.reload
             expect(main_home.transaction_allowance).to eq 4_800.0 # 3% of 160,000
@@ -186,7 +186,7 @@ module Calculators
             expect(main_home.assessed_equity).to eq 0
           end
 
-          context 'on or after 28th Jan 2021' do
+          context "on or after 28th Jan 2021" do
             let(:day) { [28, 30].sample }
             let(:submission_date) { Time.zone.local(2021, 1, day) }
             let!(:main_home) do
@@ -199,7 +199,7 @@ module Calculators
                      percentage_owned: 66.66
             end
 
-            it 'deducts outstanding_mortgage instead of mortgage cap' do
+            it "deducts outstanding_mortgage instead of mortgage cap" do
               service.call
               main_home.reload
               expect(main_home.transaction_allowance).to eq 14_009.79 # 3% of 466,993
@@ -213,7 +213,7 @@ module Calculators
         end
       end
 
-      context 'additional_properties and main dwelling' do
+      context "additional_properties and main dwelling" do
         let!(:main_home) do
           create :property,
                  :main_home,
@@ -244,8 +244,8 @@ module Calculators
                  percentage_owned: 100.0
         end
 
-        context 'main dwelling wholly owned and additional properties wholly owned' do
-          it 'deducts a maximum of £100k mortgage over all properties' do
+        context "main dwelling wholly owned and additional properties wholly owned" do
+          it "deducts a maximum of £100k mortgage over all properties" do
             service.call
             ap1.reload
             expect(ap1.transaction_allowance).to eq 10_500.0
@@ -272,11 +272,11 @@ module Calculators
             expect(main_home.assessed_equity).to eq 108_400.0
           end
 
-          context 'on or after 28th Jan 2021' do
+          context "on or after 28th Jan 2021" do
             let(:day) { [28, 30].sample }
             let(:submission_date) { Time.zone.local(2021, 1, day) }
 
-            it 'deducts outstanding_mortgage instead of mortgage cap' do
+            it "deducts outstanding_mortgage instead of mortgage cap" do
               service.call
               ap1.reload
               expect(ap1.transaction_allowance).to eq 10_500.0
@@ -306,7 +306,7 @@ module Calculators
         end
       end
 
-      context 'additional property but no main dwelling' do
+      context "additional property but no main dwelling" do
         let!(:additional_property) do
           create :property,
                  :additional_property,
@@ -317,7 +317,7 @@ module Calculators
                  percentage_owned: 100.0
         end
 
-        it 'calculates the additional property correctly' do
+        it "calculates the additional property correctly" do
           service.call
           additional_property.reload
           expect(additional_property.transaction_allowance).to eq 10_500.0
@@ -329,7 +329,7 @@ module Calculators
           expect(capital_summary.main_home).to be_nil
         end
 
-        context 'on or after 28th Jan 2021' do
+        context "on or after 28th Jan 2021" do
           let(:day) { [28, 30].sample }
           let(:submission_date) { Time.zone.local(2021, 1, day) }
           let!(:additional_property) do
@@ -342,7 +342,7 @@ module Calculators
                    percentage_owned: 100.0
           end
 
-          it 'deducts outstanding_mortgage instead of mortgage cap' do
+          it "deducts outstanding_mortgage instead of mortgage cap" do
             service.call
             additional_property.reload
             expect(additional_property.transaction_allowance).to eq 10_500.0
@@ -357,16 +357,16 @@ module Calculators
       end
     end
 
-    describe '#remaining_mortgage_allowance' do
-      it 'returns 100_000' do
+    describe "#remaining_mortgage_allowance" do
+      it "returns 100_000" do
         expect(service.remaining_mortgage_allowance).to eq 100_000
       end
 
-      context 'submission date on or after 28/1/2021' do
+      context "submission date on or after 28/1/2021" do
         let(:day) { [28, 30].sample }
         let(:submission_date) { Time.zone.local(2021, 1, day) }
 
-        it 'returns 999_999_999_999' do
+        it "returns 999_999_999_999" do
           expect(service.remaining_mortgage_allowance).to eq 999_999_999_999
         end
       end

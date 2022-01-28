@@ -16,9 +16,9 @@ module Decorators
 
     def standardize_message
       case @message_or_error.class.to_s
-      when 'String'
+      when "String"
         @message_or_error
-      when 'CheckFinancialEligibilityError'
+      when "CheckFinancialEligibilityError"
         @message_or_error.message
       else
         "#{@message_or_error.class}: #{@message_or_error.message}\n#{@message_or_error.backtrace}"

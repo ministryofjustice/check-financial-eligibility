@@ -1,7 +1,7 @@
 class IrregularIncomesController < ApplicationController
   resource_description do
-    name 'Irregular incomes'
-    short 'Add irregular types of income details to an assessment'
+    name "Irregular incomes"
+    short "Add irregular types of income details to an assessment"
     formats(%w[json])
     description <<-END_OF_TEXT
     == Description
@@ -9,22 +9,22 @@ class IrregularIncomesController < ApplicationController
     END_OF_TEXT
   end
 
-  api :POST, 'assessments/:assessment_id/irregular_incomes', 'Create irregular incomes'
+  api :POST, "assessments/:assessment_id/irregular_incomes", "Create irregular incomes"
   formats(%w[json])
   param :assessment_id, :uuid, required: true
-  param :payments, Array, of: Hash, desc: 'Collection of payment types, frequencies and amounts' do
-    param :income_type, CFEConstants::VALID_IRREGULAR_INCOME_TYPES, required: true, desc: 'An identifying name for this irregular income payment'
-    param :frequency, CFEConstants::VALID_IRREGULAR_INCOME_FREQUENCIES, required: true, desc: 'The frequency of the payment received'
-    param :amount, :currency, currency_option: :not_negative, required: true, desc: 'Amount of payment'
+  param :payments, Array, of: Hash, desc: "Collection of payment types, frequencies and amounts" do
+    param :income_type, CFEConstants::VALID_IRREGULAR_INCOME_TYPES, required: true, desc: "An identifying name for this irregular income payment"
+    param :frequency, CFEConstants::VALID_IRREGULAR_INCOME_FREQUENCIES, required: true, desc: "The frequency of the payment received"
+    param :amount, :currency, currency_option: :not_negative, required: true, desc: "Amount of payment"
   end
 
-  returns code: :ok, desc: 'Successful response' do
-    property :success, ['true'], desc: 'Success flag shows true'
-    property :errors, [], desc: 'Empty array of error messages'
+  returns code: :ok, desc: "Successful response" do
+    property :success, ["true"], desc: "Success flag shows true"
+    property :errors, [], desc: "Empty array of error messages"
   end
   returns code: :unprocessable_entity do
-    property :success, ['false'], desc: 'Success flag shows false'
-    property :errors, array_of: String, desc: 'Description of why object invalid'
+    property :success, ["false"], desc: "Success flag shows false"
+    property :errors, array_of: String, desc: "Description of why object invalid"
   end
 
   def create

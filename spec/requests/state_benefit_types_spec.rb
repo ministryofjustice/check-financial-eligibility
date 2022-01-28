@@ -1,16 +1,16 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe StateBenefitTypeController, type: :request do
-  describe 'GET state benefit types' do
+  describe "GET state benefit types" do
     let!(:state_benefit_type1) { create :state_benefit_type }
     let!(:state_benefit_type2) { create :state_benefit_type }
 
-    it 'returns http success' do
+    it "returns http success" do
       get state_benefit_type_index_path
       expect(response).to have_http_status(:success)
     end
 
-    it 'returns an array of state benefit types' do
+    it "returns an array of state benefit types" do
       get state_benefit_type_index_path
       expected_values = {
         name: state_benefit_type1.name,
@@ -24,10 +24,10 @@ RSpec.describe StateBenefitTypeController, type: :request do
     end
   end
 
-  context 'full list for documentation' do
-    it 'returns http success', :show_in_doc do
+  context "full list for documentation" do
+    it "returns http success", :show_in_doc do
       StateBenefitType.delete_all
-      Dibber::Seeder.new(StateBenefitType, 'data/state_benefit_types.yml', name_method: :label, overwrite: true).build
+      Dibber::Seeder.new(StateBenefitType, "data/state_benefit_types.yml", name_method: :label, overwrite: true).build
       get state_benefit_type_index_path
       expect(response).to have_http_status(:success)
       StateBenefitType.delete_all

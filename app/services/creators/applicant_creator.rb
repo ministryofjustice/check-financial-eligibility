@@ -22,14 +22,14 @@ module Creators
     end
 
     def create_applicant
-      (raise CreationError, ['There is already an applicant for this assesssment']) if assessment.applicant.present?
+      (raise CreationError, ["There is already an applicant for this assesssment"]) if assessment.applicant.present?
       self.applicant = assessment.create_applicant!(applicant_attributes)
     rescue ActiveRecord::RecordInvalid => e
       raise CreationError, e.record.errors.full_messages
     end
 
     def assessment
-      @assessment ||= Assessment.find_by(id: assessment_id) || (raise CreationError, ['No such assessment id'])
+      @assessment ||= Assessment.find_by(id: assessment_id) || (raise CreationError, ["No such assessment id"])
     end
   end
 end

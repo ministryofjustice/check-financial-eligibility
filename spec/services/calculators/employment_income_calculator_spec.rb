@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 module Calculators
   RSpec.describe EmploymentIncomeCalculator, :vcr do
@@ -11,9 +11,9 @@ module Calculators
     let(:tax) { (gross * 0.23).round(2) * -1 }
     let(:ni_cont) { (gross * 0.052).round(2) * -1 }
     let(:benefits_in_kind) { BigDecimal(rand(-77.0...-25.0), 2) }
-    let(:month1) { Date.parse('2021-04-30') }
-    let(:month2) { Date.parse('2021-05-30') }
-    let(:month3) { Date.parse('2021-06-30') }
+    let(:month1) { Date.parse("2021-04-30") }
+    let(:month2) { Date.parse("2021-05-30") }
+    let(:month3) { Date.parse("2021-06-30") }
     let(:dates) { [month1, month2, month3] }
     let(:expected_gross_income) { gross + benefits_in_kind + gross + benefits_in_kind }
     let(:expected_deductions) { tax + ni_cont + tax + ni_cont }
@@ -21,7 +21,7 @@ module Calculators
     let(:expected_tax) { tax + tax }
     let(:expected_national_insurance) { ni_cont + ni_cont }
 
-    it 'calls #calculate_monthly_amounts! on each employment record' do
+    it "calls #calculate_monthly_amounts! on each employment record" do
       employment1
       employment2
       allow(employment1).to receive(:calculate_monthly_amounts!)
@@ -29,7 +29,7 @@ module Calculators
       described_class.call(assessment)
     end
 
-    it 'updates both employment records' do
+    it "updates both employment records" do
       create_payments
       described_class.call(assessment)
       [employment1.reload, employment2.reload].each do |emp|
@@ -40,14 +40,14 @@ module Calculators
       end
     end
 
-    it 'updates the gross_income_summary iwth a sum of the employment income and biks' do
+    it "updates the gross_income_summary iwth a sum of the employment income and biks" do
       create_payments
       described_class.call(assessment)
       expect(gross_income_summary.gross_employment_income).to eq expected_gross_income.to_d
       expect(gross_income_summary.benefits_in_kind).to eq expected_benefits_in_kind.to_d
     end
 
-    it 'updates the disposable income summary with sum of employment ni conts and tax' do
+    it "updates the disposable income summary with sum of employment ni conts and tax" do
       create_payments
       described_class.call(assessment)
       expect(disposable_income_summary.employment_income_deductions).to eq expected_deductions.to_d
@@ -55,17 +55,17 @@ module Calculators
       expect(disposable_income_summary.national_insurance).to eq expected_national_insurance.to_d
     end
 
-    describe 'fixed income allowance' do
-      context 'at least one employment record exists' do
-        it 'adds the fixed employment allowance from the threshold files' do
+    describe "fixed income allowance" do
+      context "at least one employment record exists" do
+        it "adds the fixed employment allowance from the threshold files" do
           create_payments
           described_class.call(assessment)
           expect(disposable_income_summary.fixed_employment_allowance).to eq 45.0
         end
       end
 
-      context 'no employment records exist' do
-        it 'leaves the fixed employment allowance as zero' do
+      context "no employment records exist" do
+        it "leaves the fixed employment allowance as zero" do
           described_class.call(assessment)
           expect(disposable_income_summary.fixed_employment_allowance).to eq 0.0
         end

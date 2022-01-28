@@ -22,8 +22,8 @@ class DateValidator < Apipie::Validator::BaseValidator
   end
 
   def description
-    text = ['Date must be parsable']
-    text << 'in the past' if option == :today_or_older
+    text = ["Date must be parsable"]
+    text << "in the past" if option == :today_or_older
     "#{text.to_sentence}. For example: '2019-05-23'"
   end
 

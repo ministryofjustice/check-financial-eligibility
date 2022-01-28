@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 module Decorators
   module V4
@@ -29,7 +29,7 @@ module Decorators
               name: employment1.name,
               payments: [
                 {
-                  date: Date.current.strftime('%Y-%m-%d'),
+                  date: Date.current.strftime("%Y-%m-%d"),
                   benefits_in_kind: 0.0,
                   gross: 1500.0,
                   tax: -495.0,
@@ -37,7 +37,7 @@ module Decorators
                   net_employment_income: 855.0
                 },
                 {
-                  date: 1.month.ago.strftime('%Y-%m-%d'),
+                  date: 1.month.ago.strftime("%Y-%m-%d"),
                   benefits_in_kind: 0.0,
                   gross: 1500.0,
                   tax: -495.0,
@@ -45,7 +45,7 @@ module Decorators
                   net_employment_income: 855.0
                 },
                 {
-                  date: 2.months.ago.strftime('%Y-%m-%d'),
+                  date: 2.months.ago.strftime("%Y-%m-%d"),
                   benefits_in_kind: 0.0,
                   gross: 1500.0,
                   tax: -495.0,
@@ -58,7 +58,7 @@ module Decorators
               name: employment2.name,
               payments: [
                 {
-                  date: Date.current.strftime('%Y-%m-%d'),
+                  date: Date.current.strftime("%Y-%m-%d"),
                   benefits_in_kind: 0.0,
                   gross: 1500.0,
                   tax: -495.0,
@@ -66,7 +66,7 @@ module Decorators
                   net_employment_income: 855.0
                 },
                 {
-                  date: 1.month.ago.strftime('%Y-%m-%d'),
+                  date: 1.month.ago.strftime("%Y-%m-%d"),
                   benefits_in_kind: 0.0,
                   gross: 1500.0,
                   tax: -495.0,
@@ -74,7 +74,7 @@ module Decorators
                   net_employment_income: 855.0
                 },
                 {
-                  date: 2.months.ago.strftime('%Y-%m-%d'),
+                  date: 2.months.ago.strftime("%Y-%m-%d"),
                   benefits_in_kind: 0.0,
                   gross: 1500.0,
                   tax: -495.0,
@@ -96,12 +96,12 @@ module Decorators
               cash_transactions: 0.0,
               bank_transactions: [
                 {
-                  name: 'Universal Credit',
+                  name: "Universal Credit",
                   monthly_value: 979.33,
                   excluded_from_income_assessment: false
                 },
                 {
-                  name: 'Child Benefit',
+                  name: "Child Benefit",
                   monthly_value: 343.27,
                   excluded_from_income_assessment: false
                 }
@@ -133,7 +133,7 @@ module Decorators
         }
       end
 
-      describe '#as_json' do
+      describe "#as_json" do
         before do
           create :state_benefit, state_benefit_type: universal_credit, gross_income_summary: summary, monthly_value: 979.33
           create :state_benefit, state_benefit_type: child_benefit, gross_income_summary: summary, monthly_value: 343.27
@@ -141,7 +141,7 @@ module Decorators
 
         subject { described_class.new(assessment).as_json }
 
-        it 'returns the expected structure' do
+        it "returns the expected structure" do
           employment1
           employment2
           expect(subject).to eq expected_results

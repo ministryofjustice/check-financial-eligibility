@@ -19,7 +19,7 @@ module Creators
       @summary.eligibilities.create!(
         proceeding_type_code: ptc,
         upper_threshold: upper_threshold(ptc),
-        assessment_result: 'pending'
+        assessment_result: "pending"
       )
     end
 
@@ -37,7 +37,7 @@ module Creators
     end
 
     def number_of_child_dependants
-      @assessment.dependants.where(relationship: 'child_relative').count
+      @assessment.dependants.where(relationship: "child_relative").count
     end
 
     def dependant_increase_starts_after

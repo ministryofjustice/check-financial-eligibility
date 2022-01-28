@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 module Collators
   RSpec.describe DependantsAllowanceCollator do
@@ -7,20 +7,20 @@ module Collators
 
     subject { described_class.call(assessment) }
 
-    describe '.call' do
-      context 'no dependants' do
-        it 'leaves the monthly dependants allowance as zero' do
+    describe ".call" do
+      context "no dependants" do
+        it "leaves the monthly dependants allowance as zero" do
           expect(assessment.dependants).to be_empty
           subject
           expect(disposable_income_summary.dependant_allowance).to eq 0.0
         end
       end
 
-      context 'with dependants' do
+      context "with dependants" do
         let(:dependant1) { create :dependant, assessment: assessment }
         let(:dependant2) { create :dependant, assessment: assessment }
 
-        it 'updates the dependant records and writes the sum to the diposable income summary' do
+        it "updates the dependant records and writes the sum to the diposable income summary" do
           expect(Calculators::DependantAllowanceCalculator).to receive(:new)
             .with(dependant1)
             .and_return(double(Calculators::DependantAllowanceCalculator, call: 123.45))

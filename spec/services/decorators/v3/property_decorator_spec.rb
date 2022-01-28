@@ -1,20 +1,20 @@
-require 'rails_helper'
+require "rails_helper"
 
 module Decorators
   module V3
     RSpec.describe PropertyDecorator do
-      describe '#as_json' do
+      describe "#as_json" do
         subject { described_class.new(record).as_json }
 
-        context 'property is nil' do
+        context "property is nil" do
           let(:record) { nil }
 
-          it 'returns nil' do
+          it "returns nil" do
             expect(subject).to be_nil
           end
         end
 
-        context 'property_exists' do
+        context "property_exists" do
           let(:record) do
             create :property,
                    value: 785_900.0,
@@ -30,7 +30,7 @@ module Decorators
                    assessed_equity: 597_523.0
           end
 
-          it 'returns the expected hash' do
+          it "returns the expected hash" do
             expected_hash = {
               value: 785_900.0,
               outstanding_mortgage: 454_533.64,

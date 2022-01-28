@@ -20,7 +20,7 @@ class ApiResponse
   end
 
   def success?
-    raise 'ApiResponse object is in incomplete state' if @success.nil?
+    raise "ApiResponse object is in incomplete state" if @success.nil?
 
     @success
   end
