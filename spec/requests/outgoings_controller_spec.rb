@@ -116,11 +116,11 @@ RSpec.describe OutgoingsController, type: :request do
       end
     end
 
-    context "with a failure to save" do
-      let(:service) { double "success?" => false, errors: [:foo] }
+    context 'with a failure to save' do
+      let(:service) { instance_double Creators::OutgoingsCreator, success?: false, errors: [:foo] }
 
       before do
-        expect(Creators::OutgoingsCreator).to receive(:call).and_return(service)
+        allow(Creators::OutgoingsCreator).to receive(:call).and_return(service)
         subject
       end
 

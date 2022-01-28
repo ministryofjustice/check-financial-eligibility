@@ -58,8 +58,8 @@ RSpec.describe DependantsController, type: :request do
         expect(response).to have_http_status(:unprocessable_entity)
       end
 
-      it "errors and is shown in apidocs", :show_in_doc do
-        expect(response).to have_http_status(422)
+      it 'errors and is shown in apidocs', :show_in_doc do
+        expect(response).to have_http_status(:unprocessable_entity)
       end
 
       it_behaves_like "it fails with message", "No such assessment id"

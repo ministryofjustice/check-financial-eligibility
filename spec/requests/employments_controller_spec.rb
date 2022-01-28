@@ -31,9 +31,9 @@ RSpec.describe EmploymentsController, type: :request do
       end
     end
 
-    context "invalid_payload" do
-      context "missing data in the second employment" do
-        let!(:params) do
+    context 'invalid_payload' do
+      context 'missing data in the second employment' do
+        let(:params) do
           new_hash = employment_income_params
           new_hash[:employment_income].last.delete(:name)
           new_hash

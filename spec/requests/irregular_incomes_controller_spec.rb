@@ -78,7 +78,7 @@ RSpec.describe IrregularIncomesController, type: :request do
           expect(parsed_response[:errors].first).to match(/Invalid parameter 'income_type'/)
         end
 
-        it "contains success false in the response body" do
+        it 'returns an error response' do
           subject
           expect(parsed_response).to eq(errors: ["Invalid parameter 'income_type' value \"imagined_type\": Must be one of: <code>student_loan</code>."], success: false)
         end

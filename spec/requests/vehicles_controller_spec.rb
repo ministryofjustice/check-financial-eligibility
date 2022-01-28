@@ -68,8 +68,8 @@ RSpec.describe VehiclesController, type: :request do
       it_behaves_like "an unprocessable entity", "date_of_purchase"
     end
 
-    context "with service returning error" do
-      let(:error) { double "success?" => false, errors: ["Invalid: foo"] }
+    context 'with service returning error' do
+      let(:error) { instance_double Creators::VehicleCreator, 'success?' => false, errors: ['Invalid: foo'] }
 
       before { allow(Creators::VehicleCreator).to receive(:call).and_return(error) }
 

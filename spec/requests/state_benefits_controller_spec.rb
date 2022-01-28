@@ -81,10 +81,6 @@ RSpec.describe StateBenefitsController, type: :request do
         it "does not create any state benefit records" do
           expect { subject }.not_to change(StateBenefit, :count)
         end
-
-        it "does not create any state benefit records" do
-          expect { subject }.not_to change(StateBenefitPayment, :count)
-        end
       end
 
       context "missing required parameter client_id" do

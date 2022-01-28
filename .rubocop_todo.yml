@@ -7,6 +7,7 @@
 # versions of RuboCop, may require this file to be generated again.
 
 # Offense count: 17
+# **** LEAVE FOR NOW ****
 RSpec/AnyInstance:
   Exclude:
     - 'spec/requests/explicit_remarks_spec.rb'
@@ -17,14 +18,17 @@ RSpec/AnyInstance:
     - 'spec/services/remark_generators/frequency_checker_spec.rb'
     - 'spec/services/remark_generators/multi_benefit_checker_spec.rb'
     - 'spec/services/remark_generators/residual_balance_checker_spec.rb'
+    - 'spec/requests/explicit_remarks_controller_spec.rb'
 
 # Offense count: 516
 # Configuration parameters: Prefixes.
 # Prefixes: when, with, without
+# **** LEAVE FOR NOW ****
 RSpec/ContextWording:
   Enabled: false
 
 # Offense count: 18
+# **** LEAVE FOR NOW ****
 RSpec/ExpectInHook:
   Exclude:
     - 'spec/models/bank_holiday_spec.rb'
@@ -33,12 +37,8 @@ RSpec/ExpectInHook:
     - 'spec/requests/assessments_spec.rb'
     - 'spec/requests/outgoings_spec.rb'
     - 'spec/services/assessors/disposable_income_assessor_spec.rb'
-
-# Offense count: 16
-# Configuration parameters: Include, CustomTransform, IgnoreMethods, SpecSuffixOnly.
-# Include: **/*_spec*rb*, **/spec/**/*
-RSpec/FilePath:
-  Enabled: false
+    - 'spec/requests/outgoings_controller_spec.rb'
+    - 'spec/requests/applicants_controller_spec.rb'
 
 # Offense count: 11
 # Cop supports --auto-correct.
