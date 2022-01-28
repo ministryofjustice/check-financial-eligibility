@@ -49,12 +49,6 @@ RSpec/ExpectInHook:
 RSpec/LeadingSubject:
   Enabled: false
 
-# Offense count: 1
-# Cop supports --auto-correct.
-RSpec/MultipleSubjects:
-  Exclude:
-    - 'spec/services/creators/irregular_income_creator_spec.rb'
-
 # Offense count: 506
 # Configuration parameters: IgnoreSharedExamples.
 RSpec/NamedSubject:

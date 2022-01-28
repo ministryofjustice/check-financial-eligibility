@@ -9,8 +9,6 @@ module Creators
     let(:assessment_id) { assessment.id }
     let(:irregular_income) { irregular_income_params }
 
-    subject { post assessment_irregular_income_path(assessment_id), params: params.to_json, headers: headers }
-
     subject { described_class.call(assessment_id:, irregular_income:) }
 
     describe ".call" do
