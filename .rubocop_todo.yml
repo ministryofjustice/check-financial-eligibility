@@ -49,20 +49,6 @@ RSpec/ExpectInHook:
 RSpec/LeadingSubject:
   Enabled: false
 
-# Offense count: 26
-RSpec/LetSetup:
-  Exclude:
-    - 'spec/models/other_income_source_spec.rb'
-    - 'spec/requests/employments_spec.rb'
-    - 'spec/requests/state_benefit_types_spec.rb'
-    - 'spec/services/assessors/disposable_income_assessor_spec.rb'
-    - 'spec/services/calculators/state_benefits_calculator_spec.rb'
-    - 'spec/services/collators/disposable_income_collator_spec.rb'
-    - 'spec/services/collators/gross_income_collator_spec.rb'
-    - 'spec/services/decorators/v3/disposable_income_summary_decorator_spec.rb'
-    - 'spec/services/decorators/v4/proceeding_types_result_decorator_spec.rb'
-    - 'spec/services/remark_generators/residual_balance_checker_spec.rb'
-
 # Offense count: 1
 # Cop supports --auto-correct.
 RSpec/MultipleSubjects:

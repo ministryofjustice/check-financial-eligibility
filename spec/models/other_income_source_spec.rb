@@ -3,9 +3,6 @@ require "rails_helper"
 RSpec.describe OtherIncomeSource, type: :model do
   describe "#calculate_monthly_income" do
     let(:source) { create :other_income_source }
-    let!(:payment1) { create :other_income_payment, other_income_source: source, payment_date: 3.months.ago.to_date, amount: 301.0 }
-    let!(:payment2) { create :other_income_payment, other_income_source: source, payment_date: 2.months.ago.to_date, amount: 302.0 }
-    let!(:payment3) { create :other_income_payment, other_income_source: source, payment_date: 1.month.ago.to_date, amount: 301.50 }
     let(:analyser) { double Utilities::PaymentPeriodAnalyser }
 
     before do
@@ -15,6 +12,9 @@ RSpec.describe OtherIncomeSource, type: :model do
               amount_method: :amount)
         .and_return([%i[dummy_date1 dummy_amount1], %i[dummy_date2 dummy_amount2]])
       expect(Utilities::PaymentPeriodAnalyser).to receive(:new).and_return(analyser)
+      create :other_income_payment, other_income_source: source, payment_date: 3.months.ago.to_date, amount: 301.0
+      create :other_income_payment, other_income_source: source, payment_date: 2.months.ago.to_date, amount: 302.0
+      create :other_income_payment, other_income_source: source, payment_date: 1.month.ago.to_date, amount: 301.50
     end
 
     subject { source.calculate_monthly_income! }
@@ -36,16 +36,18 @@ RSpec.describe OtherIncomeSource, type: :model do
       end
     end
 
-    context "unknown payment frequency" do
-      before { expect(analyser).to receive(:period_pattern).and_return(:unknown) }
+    context 'unknown payment frequency' do
+      before do
+        expect(analyser).to receive(:period_pattern).and_return(:unknown)
+        OtherIncomePayment.delete_all
+        create :other_income_payment, other_income_source: source, payment_date: 1.day.ago.to_date, amount: 301.0
+        create :other_income_payment, other_income_source: source, payment_date: 5.days.ago.to_date, amount: 123.45
+        create :other_income_payment, other_income_source: source, payment_date: 45.days.ago.to_date, amount: 87.10
+        create :other_income_payment, other_income_source: source, payment_date: 45.days.ago.to_date, amount: 30.0
+      end
 
-      let!(:payment1) { create :other_income_payment, other_income_source: source, payment_date: 1.day.ago.to_date, amount: 301.0 }
-      let!(:payment2) { create :other_income_payment, other_income_source: source, payment_date: 5.days.ago.to_date, amount: 123.45 }
-      let!(:payment3) { create :other_income_payment, other_income_source: source, payment_date: 45.days.ago.to_date, amount: 87.10 }
-      let!(:payment4) { create :other_income_payment, other_income_source: source, payment_date: 45.days.ago.to_date, amount: 30.0 }
-
-      it "returns the average monthly payment over three months" do
-        expect(subject).to eq 180.52
+      it 'returns the average monthly payment over three months' do
+        expect(source.reload.calculate_monthly_income!).to eq 180.52
       end
     end
   end

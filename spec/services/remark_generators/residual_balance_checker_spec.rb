@@ -5,8 +5,13 @@ module RemarkGenerators
     let(:assessment) { create :assessment, capital_summary: capital_summary }
     let(:capital_summary) { create :capital_summary, :with_eligibilities, lower_threshold: 3000, assessed_capital: 4000 }
 
+<<<<<<< HEAD
     context "when a residual balance exists and assessed capital is above the lower threshold" do
       let!(:current_account) { create :liquid_capital_item, description: "Current accounts", value: 100, capital_summary: capital_summary }
+=======
+    context 'when a residual balance exists and assessed capital is above the lower threshold' do
+      before { create :liquid_capital_item, description: 'Current accounts', value: 100, capital_summary: capital_summary }
+>>>>>>> 14f4c4d (fix cop RSpec/LetSetup)
 
       it "adds the remark when a residual balance exists" do
         expect_any_instance_of(Remarks).to receive(:add).with(:current_account_balance, :residual_balance, [])
@@ -20,10 +25,9 @@ module RemarkGenerators
       end
     end
 
-    context "when there is no residual balance" do
-      let!(:current_account) { create :liquid_capital_item, description: "Current accounts", value: 0, capital_summary: capital_summary }
 
-      it "does not update the remarks class" do
+    context 'when there is no residual balance' do
+      it 'does not update the remarks class' do
         original_remarks = assessment.remarks.as_json
         described_class.call(assessment)
         expect(assessment.reload.remarks.as_json).to eq original_remarks
@@ -40,9 +44,11 @@ module RemarkGenerators
       end
     end
 
-    context "when there is no residual balance and assessed capital is below the lower threshold" do
+
+    context 'when there is no residual balance and assessed capital is below the lower threshold' do
+      before { create :liquid_capital_item, description: 'Current accounts', value: 0, capital_summary: capital_summary }
+
       let(:capital_summary) { create :capital_summary, :with_eligibilities, lower_threshold: 3000, assessed_capital: 1000 }
-      let!(:current_account) { create :liquid_capital_item, description: "Current accounts", value: 0, capital_summary: capital_summary }
 
       it "does not update the remarks class" do
         original_remarks = assessment.remarks.as_json
@@ -51,10 +57,13 @@ module RemarkGenerators
       end
     end
 
-    context "with multiple current accounts" do
-      context "when there is a residual_balance in any account" do
-        let!(:current_account1) { create :liquid_capital_item, description: "Current accounts", value: 100, capital_summary: capital_summary }
-        let!(:current_account2) { create :liquid_capital_item, description: "Current accounts", value: -200, capital_summary: capital_summary }
+
+    context 'with multiple current accounts' do
+      context 'when there is a residual_balance in any account' do
+        before do
+          create :liquid_capital_item, description: 'Current accounts', value: 100, capital_summary: capital_summary
+          create :liquid_capital_item, description: 'Current accounts', value: -200, capital_summary: capital_summary
+        end
 
         it "adds the remark when a residual balance exists" do
           expect_any_instance_of(Remarks).to receive(:add).with(:current_account_balance, :residual_balance, [])
@@ -62,9 +71,12 @@ module RemarkGenerators
         end
       end
 
-      context "when there is no residual_balance in any account" do
-        let!(:current_account1) { create :liquid_capital_item, description: "Current accounts", value: 0, capital_summary: capital_summary }
-        let!(:current_account2) { create :liquid_capital_item, description: "Current accounts", value: -100, capital_summary: capital_summary }
+
+      context 'when there is no residual_balance in any account' do
+        before do
+          create :liquid_capital_item, description: 'Current accounts', value: 0, capital_summary: capital_summary
+          create :liquid_capital_item, description: 'Current accounts', value: -100, capital_summary: capital_summary
+        end
 
         it "does not update the remarks class" do
           original_remarks = assessment.remarks.as_json

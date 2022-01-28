@@ -5,9 +5,12 @@ module Decorators
     RSpec.describe ProceedingTypesResultDecorator do
       let(:ptcs) { %w[DA003 DA005 SE013] }
       let(:assessment) { create :assessment, proceeding_type_codes: ptcs }
-      let!(:elig_da003) { create :assessment_eligibility, assessment: assessment, proceeding_type_code: "DA003", assessment_result: "eligible" }
-      let!(:elig_da005) { create :assessment_eligibility, assessment: assessment, proceeding_type_code: "DA005", assessment_result: "eligible" }
-      let!(:elig_se013) { create :assessment_eligibility, assessment: assessment, proceeding_type_code: "SE013", assessment_result: "eligible" }
+
+      before do
+        create :assessment_eligibility, assessment: assessment, proceeding_type_code: 'DA003', assessment_result: 'eligible'
+        create :assessment_eligibility, assessment: assessment, proceeding_type_code: 'DA005', assessment_result: 'eligible'
+        create :assessment_eligibility, assessment: assessment, proceeding_type_code: 'SE013', assessment_result: 'eligible'
+      end
 
       subject { described_class.new(assessment).as_json }
 

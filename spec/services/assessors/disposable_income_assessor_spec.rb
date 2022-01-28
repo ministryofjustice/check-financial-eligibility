@@ -5,7 +5,8 @@ module Assessors
     describe ".call" do
       let(:assessment) { disposable_income_summary.assessment }
       let(:disposable_income_summary) { create :disposable_income_summary, total_disposable_income: total_disposable_income }
-      let!(:elig) do
+
+      before do
         create :disposable_income_eligibility,
                disposable_income_summary: disposable_income_summary,
                proceeding_type_code: assessment.proceeding_type_codes.first,
