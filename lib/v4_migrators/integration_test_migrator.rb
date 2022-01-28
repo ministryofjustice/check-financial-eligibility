@@ -1,4 +1,4 @@
-class IntegrationTestMigrator # rubocop:disable Metrics/ClassLength
+class IntegrationTestMigrator
   DATA_DIR = Rails.root.join('tmp/integration_test_data').freeze
   MASTER_SHEET = 'AAA - CFE Integration Test master spreadsheet'.freeze
   VALID_SECTION_NAMES = [
@@ -27,7 +27,7 @@ class IntegrationTestMigrator # rubocop:disable Metrics/ClassLength
     @workbook_names.each { |workbook_name| process_workbook(workbook_name) }
   end
 
-  private
+private
 
   def process_workbook(workbook_name)
     book = Roo::Spreadsheet.open(local_file_name_for(workbook_name))
@@ -67,7 +67,7 @@ class IntegrationTestMigrator # rubocop:disable Metrics/ClassLength
     v4_csv
   end
 
-  def convert_results_section # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  def convert_results_section
     v3_results = hasherize_v3_results
     v4_results = []
     v4_results << results_header
@@ -122,7 +122,7 @@ class IntegrationTestMigrator # rubocop:disable Metrics/ClassLength
     rows.first[3].strftime('%F')
   end
 
-  def convert_sheet(worksheet, sheet_name) # rubocop:disable Metrics/MethodLength
+  def convert_sheet(worksheet, sheet_name)
     rows = sheet_to_array(worksheet)
     @data_hash['headers'] = rows.slice!(0, 4)
 

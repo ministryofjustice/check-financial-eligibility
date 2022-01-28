@@ -10,7 +10,7 @@ module Decorators
         collate_results
       end
 
-      private
+    private
 
       def collate_results
         @assessment.proceeding_type_codes.each { |ptc| add_matter_type(ptc) }

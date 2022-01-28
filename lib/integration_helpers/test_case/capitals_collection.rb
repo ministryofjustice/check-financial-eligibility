@@ -20,7 +20,7 @@ module TestCase
       false
     end
 
-    private
+  private
 
     def capital_payload(type)
       @capital[type].map(&:payload)

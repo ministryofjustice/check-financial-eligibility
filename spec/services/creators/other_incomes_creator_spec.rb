@@ -20,7 +20,7 @@ module Creators
         let(:other_income_params) { standard_params }
 
         it 'creates two income source records' do
-          expect { subject }.to change { OtherIncomeSource.count }.by(2)
+          expect { subject }.to change(OtherIncomeSource, :count).by(2)
         end
 
         it 'creates a maintenance_in source with three payments' do
@@ -36,7 +36,7 @@ module Creators
         let(:other_income_params) { humanized_params }
 
         it 'creates one income source record' do
-          expect { subject }.to change { OtherIncomeSource.count }.by(1)
+          expect { subject }.to change(OtherIncomeSource, :count).by(1)
         end
 
         it 'creates a property_or_lodger with two payments' do
@@ -47,22 +47,12 @@ module Creators
           expect(source_record.other_income_payments.map(&:payment_date)).to match_array(humanized_expected_dates)
         end
       end
+
       context 'empty payload' do
         let(:other_income_params) { [] }
-        it 'does not create any records' do
-          expect { subject }.not_to change { OtherIncomeSource.count }
-        end
-      end
 
-      context 'invalid assessment id' do
-        let(:other_income_params) { humanized_params }
-        let(:params) do
-          {
-            assessment_id: 'abcd',
-            other_incomes: {
-              other_incomes: other_income_params
-            }
-          }
+        it 'does not create any records' do
+          expect { subject }.not_to change(OtherIncomeSource, :count)
         end
       end
 

@@ -23,7 +23,7 @@ module Utilities
       false
     end
 
-    private
+  private
 
     def all_same_day_of_month?
       @dates.map(&:day).uniq.size == 1

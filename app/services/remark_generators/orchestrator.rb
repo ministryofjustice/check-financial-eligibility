@@ -25,7 +25,7 @@ module RemarkGenerators
       check_flags
     end
 
-    private
+  private
 
     def check_amount_variations
       check_state_benefit_variations

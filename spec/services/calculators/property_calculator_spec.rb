@@ -29,6 +29,7 @@ module Calculators
                      outstanding_mortgage: 266_000,
                      percentage_owned: 100.0
             end
+
             it 'only deducts first 100k of mortgage' do
               service.call
               main_home.reload
@@ -51,6 +52,7 @@ module Calculators
                      outstanding_mortgage: 37_256.44,
                      percentage_owned: 100.0
             end
+
             it 'only deducts the actual outstanding amount' do
               service.call
               main_home.reload
@@ -75,6 +77,7 @@ module Calculators
                      outstanding_mortgage: 266_000,
                      percentage_owned: 100.0
             end
+
             it 'deducts outstanding_mortgage instead of mortgage cap' do
               service.call
               main_home.reload
@@ -99,6 +102,7 @@ module Calculators
                      outstanding_mortgage: 266_000.44,
                      percentage_owned: 66.66
             end
+
             it 'only deducts first 100k of mortgage' do
               service.call
               main_home.reload
@@ -121,6 +125,7 @@ module Calculators
                      outstanding_mortgage: 37_256.44,
                      percentage_owned: 66.66
             end
+
             it 'only deducts the actual outstanding amount' do
               service.call
               main_home.reload
@@ -145,6 +150,7 @@ module Calculators
                      outstanding_mortgage: 266_000,
                      percentage_owned: 66.66
             end
+
             it 'deducts outstanding_mortgage instead of mortgage cap' do
               service.call
               main_home.reload
@@ -168,6 +174,7 @@ module Calculators
                    outstanding_mortgage: 70_000,
                    percentage_owned: 50.0
           end
+
           it 'subtracts the housing association share as a %age of market value' do
             service.call
             main_home.reload
@@ -191,6 +198,7 @@ module Calculators
                      outstanding_mortgage: 266_000,
                      percentage_owned: 66.66
             end
+
             it 'deducts outstanding_mortgage instead of mortgage cap' do
               service.call
               main_home.reload

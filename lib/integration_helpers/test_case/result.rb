@@ -1,5 +1,5 @@
 module TestCase
-  class Result # rubocop:disable Metrics/ClassLength Rails/Output
+  class Result
     def initialize(expected_result, actual_result, verbosity_level)
       @expected = expected_result
       @actual = actual_result
@@ -18,7 +18,7 @@ module TestCase
       @overall_result
     end
 
-    private
+  private
 
     def compare_and_print_result(key)
       if ignorable?(expected_value(key))

@@ -9,7 +9,7 @@ module TestCase
         populate
       end
 
-      private
+    private
 
       def populate
         @rows.shift

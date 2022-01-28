@@ -14,6 +14,7 @@ describe Applicant do
 
     context 'with old assessment' do
       let(:submission_date) { 8.months.ago }
+
       it 'returns age at submission' do
         expect(applicant.age_at_submission).to eq(age - 1)
       end

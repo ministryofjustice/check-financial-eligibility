@@ -19,7 +19,7 @@ module TestCase
       @dependants.empty?
     end
 
-    private
+  private
 
     def populate_dependants(rows)
       loop do

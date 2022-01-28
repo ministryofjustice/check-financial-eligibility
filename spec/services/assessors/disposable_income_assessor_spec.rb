@@ -71,6 +71,7 @@ module Assessors
         let(:total_disposable_income) { 733.0 }
         let(:lower_threshold) { 316.0 }
         let(:upper_threshold) { 733.0 }
+
         it 'is ineligible' do
           subject
           expect(disposable_income_summary.summarized_assessment_result).to eq :contribution_required
@@ -87,6 +88,7 @@ module Assessors
         let(:total_disposable_income) { 734.0 }
         let(:lower_threshold) { 316.0 }
         let(:upper_threshold) { 733.0 }
+
         it 'is ineligible' do
           subject
           expect(disposable_income_summary.summarized_assessment_result).to eq :ineligible

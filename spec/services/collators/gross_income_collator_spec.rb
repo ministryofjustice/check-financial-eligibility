@@ -8,6 +8,7 @@ module Collators
 
     let(:assessment) { create :assessment, :with_applicant, :with_gross_income_summary, proceeding_type_codes: proceeding_type_codes }
     let(:gross_income_summary) { assessment.gross_income_summary }
+
     before do
       assessment.proceeding_type_codes.each do |ptc|
         create :gross_income_eligibility,
@@ -109,11 +110,11 @@ module Collators
 
           it 'has a total gross income based on all sources and monthly student loan' do
             all_sources_total = gross_income_summary.benefits_all_sources +
-                                gross_income_summary.friends_or_family_all_sources +
-                                gross_income_summary.maintenance_in_all_sources +
-                                gross_income_summary.property_or_lodger_all_sources +
-                                gross_income_summary.pension_all_sources +
-                                gross_income_summary.monthly_student_loan
+              gross_income_summary.friends_or_family_all_sources +
+              gross_income_summary.maintenance_in_all_sources +
+              gross_income_summary.property_or_lodger_all_sources +
+              gross_income_summary.pension_all_sources +
+              gross_income_summary.monthly_student_loan
 
             expect(gross_income_summary.total_gross_income).to eq all_sources_total
           end

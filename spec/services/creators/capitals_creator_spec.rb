@@ -107,7 +107,7 @@ module Creators
       let(:assessment_id) { SecureRandom.uuid }
 
       it 'does not create capital_items' do
-        expect { subject }.not_to change { CapitalItem.count }
+        expect { subject }.not_to change(CapitalItem, :count)
       end
 
       describe '#success?' do

@@ -6,7 +6,7 @@ module Collators
       disposable_income_summary.calculate_monthly_childcare_amount!(eligible_for_childcare_costs?, monthly_child_care_cash)
     end
 
-    private
+  private
 
     def eligible_for_childcare_costs?
       applicant_has_dependent_child? && (applicant_employed? || applicant_has_student_loan?)

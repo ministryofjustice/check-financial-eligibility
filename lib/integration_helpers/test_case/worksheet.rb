@@ -1,5 +1,5 @@
 module TestCase
-  class Worksheet # rubocop:disable Metrics/ClassLength
+  class Worksheet
     attr_reader :assessment,
                 :applicant,
                 :capitals,
@@ -70,7 +70,7 @@ module TestCase
       end
     end
 
-    private
+  private
 
     # def post_payload(obj)
     #   post obj.path, params: obj.payload.to_json, headers: @headers

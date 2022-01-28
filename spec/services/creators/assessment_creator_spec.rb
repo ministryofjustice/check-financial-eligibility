@@ -30,13 +30,14 @@ module Creators
     context 'version 3' do
       let(:raw_post) { raw_post_v3 }
       let(:version) { '3' }
+
       context 'valid request' do
         it 'is successful' do
           expect(subject.success?).to eq true
         end
 
         it 'creates an Assessment record' do
-          expect { subject.success? }.to change { Assessment.count }.by(1)
+          expect { subject.success? }.to change(Assessment, :count).by(1)
         end
 
         it 'writes the dummy proceeding type code on the assessment record' do
@@ -46,11 +47,12 @@ module Creators
         end
 
         it 'creates a CapitalSummary record' do
-          expect { subject.success? }.to change { CapitalSummary.count }.by(1)
+          expect { subject.success? }.to change(CapitalSummary, :count).by(1)
         end
 
         context 'capital summary record' do
           before { subject.success? }
+
           let(:capital_summary) { CapitalSummary.first }
 
           it 'creates all fields as zero' do
@@ -95,7 +97,7 @@ module Creators
         end
 
         it 'does not create an Assessment record' do
-          expect { subject.success? }.not_to change { Assessment.count }
+          expect { subject.success? }.not_to change(Assessment, :count)
         end
 
         it 'has  errors' do
@@ -107,13 +109,14 @@ module Creators
     context 'version 4' do
       let(:raw_post) { raw_post_v4 }
       let(:version) { '4' }
+
       context 'valid request' do
         it 'is successful' do
           expect(subject.success?).to eq true
         end
 
         it 'creates an Assessment record' do
-          expect { subject.success? }.to change { Assessment.count }.by(1)
+          expect { subject.success? }.to change(Assessment, :count).by(1)
         end
 
         it 'populates the assessment record with expected values' do
@@ -126,11 +129,12 @@ module Creators
         end
 
         it 'creates a CapitalSummary record' do
-          expect { subject.success? }.to change { CapitalSummary.count }.by(1)
+          expect { subject.success? }.to change(CapitalSummary, :count).by(1)
         end
 
         context 'capital summary record' do
           before { subject.success? }
+
           let(:capital_summary) { CapitalSummary.first }
 
           it 'creates all fields as zero' do
@@ -176,7 +180,7 @@ module Creators
         end
 
         it 'does not create an Assessment record' do
-          expect { subject.success? }.not_to change { Assessment.count }
+          expect { subject.success? }.not_to change(Assessment, :count)
         end
 
         it 'has  errors' do

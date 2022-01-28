@@ -12,7 +12,7 @@ module Decorators
       }
     end
 
-    private
+  private
 
     def standardize_message
       case @message_or_error.class.to_s

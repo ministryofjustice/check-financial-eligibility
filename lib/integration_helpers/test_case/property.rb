@@ -19,7 +19,7 @@ module TestCase
       }
     end
 
-    private
+  private
 
     def empty_values?
       @value.nil? && @outstanding_mortgage.nil? && @percentage_owned.nil? && @shared_with_housing_assoc.nil?

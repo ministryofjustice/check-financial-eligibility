@@ -31,7 +31,7 @@ class OutgoingsController < ApplicationController
     end
   end
 
-  private
+private
 
   def outgoing_creation_service
     @outgoing_creation_service ||= Creators::OutgoingsCreator.call(

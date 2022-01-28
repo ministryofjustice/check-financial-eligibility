@@ -24,7 +24,7 @@ module TestCase
       end
     end
 
-    private
+  private
 
     def parse_master_sheet
       master_spreadsheet = load_spreadsheet(MASTER_SHEET)
@@ -64,7 +64,6 @@ module TestCase
       google_sheet.export_as_file(local_file_name, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     end
 
-    # rubocop:disable Metrics/MethodLength
     def google_secret
       {
         type: 'service_account',
@@ -79,6 +78,5 @@ module TestCase
         client_x509_cert_url: 'https://www.googleapis.com/robot/v1/metadata/x509/laa-apply-service%40laa-apply-for-legal-aid.iam.gserviceaccount.com'
       }
     end
-    # rubocop:enable Metrics/MethodLength
   end
 end

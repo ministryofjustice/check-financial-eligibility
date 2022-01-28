@@ -8,6 +8,7 @@ module Decorators
 
         context 'property is nil' do
           let(:record) { nil }
+
           it 'returns nil' do
             expect(subject).to be_nil
           end

@@ -8,6 +8,6 @@ module ApipieRecorderPatch
   end
 end
 
-class Apipie::Extractor::Recorder # rubocop:disable Style/ClassAndModuleChildren
+class Apipie::Extractor::Recorder
   prepend ApipieRecorderPatch
 end

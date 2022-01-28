@@ -85,6 +85,7 @@ RSpec.describe OutgoingsController, type: :request do
           outgoings: new_hash
         }
       end
+
       it 'returns unsuccessful' do
         subject
         expect(response.status).to eq 422
@@ -117,6 +118,7 @@ RSpec.describe OutgoingsController, type: :request do
 
     context 'with a failure to save' do
       let(:service) { double 'success?' => false, errors: [:foo] }
+
       before do
         expect(Creators::OutgoingsCreator).to receive(:call).and_return(service)
         subject

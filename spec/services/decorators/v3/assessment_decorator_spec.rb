@@ -13,7 +13,7 @@ module Decorators
       end
 
       describe '#as_json' do
-        subject { AssessmentDecorator.new(assessment).as_json }
+        subject { described_class.new(assessment).as_json }
 
         it 'has the required keys in the returned hash' do
           expected_keys = %i[

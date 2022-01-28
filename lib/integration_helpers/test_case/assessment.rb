@@ -34,7 +34,7 @@ module TestCase
       }
     end
 
-    private
+  private
 
     def populate_assessment(rows)
       assessment_rows = extract_assessment_rows(rows)

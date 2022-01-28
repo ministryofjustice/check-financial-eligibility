@@ -61,12 +61,12 @@ class AssessmentsController < ApplicationController
 
   def show
     perform_assessment
-  rescue StandardError => err
-    Sentry.capture_exception(err)
-    render json: Decorators::ErrorDecorator.new(err).as_json, status: :unprocessable_entity
+  rescue StandardError => e
+    Sentry.capture_exception(e)
+    render json: Decorators::ErrorDecorator.new(e).as_json, status: :unprocessable_entity
   end
 
-  private
+private
 
   def perform_assessment
     Workflows::MainWorkflow.call(assessment)

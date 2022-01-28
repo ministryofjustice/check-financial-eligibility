@@ -9,7 +9,7 @@ RSpec.describe Creators::ExplicitRemarksCreator do
     let(:params) { valid_params }
 
     it 'creates the expected number of records' do
-      expect { subject }.to change { ExplicitRemark.count }.by(2)
+      expect { subject }.to change(ExplicitRemark, :count).by(2)
     end
 
     it 'is successful' do
@@ -27,7 +27,7 @@ RSpec.describe Creators::ExplicitRemarksCreator do
       let(:params) { invalid_params }
 
       it 'does not write any records' do
-        expect { subject }.not_to change { ExplicitRemark.count }
+        expect { subject }.not_to change(ExplicitRemark, :count)
       end
 
       it 'is not successful' do
@@ -42,6 +42,7 @@ RSpec.describe Creators::ExplicitRemarksCreator do
 
   context 'unknown exception raised' do
     let(:params) { valid_params }
+
     it 'raises a Creation error' do
       allow_any_instance_of(described_class).to receive(:create_remark_category).and_raise(ArgumentError, 'Argument error detailed message')
       expect(subject.success?).to be false

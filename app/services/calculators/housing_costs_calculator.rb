@@ -25,7 +25,7 @@ module Calculators
       @monthly_housing_benefit = disposable_income_summary.calculate_monthly_equivalent(collection: housing_benefit_records)
     end
 
-    private
+  private
 
     def gross_housing_costs_cash
       monthly_transaction_amount_by(operation: :debit, category: :rent_or_mortgage)

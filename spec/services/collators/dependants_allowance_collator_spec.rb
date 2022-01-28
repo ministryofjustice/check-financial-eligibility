@@ -9,7 +9,7 @@ module Collators
 
     describe '.call' do
       context 'no dependants' do
-        it 'should leave the monthly dependants allowance as zero' do
+        it 'leaves the monthly dependants allowance as zero' do
           expect(assessment.dependants).to be_empty
           subject
           expect(disposable_income_summary.dependant_allowance).to eq 0.0

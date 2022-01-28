@@ -35,7 +35,7 @@ module LegalFrameworkAPI
       QueryService.proceeding_types.fetch(@ccms_code)[:matter_type]
     end
 
-    private
+  private
 
     def populate_proceeding_types(ccms_code)
       return if QueryService.proceeding_types.key?(ccms_code)

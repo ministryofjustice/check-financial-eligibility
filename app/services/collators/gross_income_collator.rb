@@ -9,7 +9,7 @@ module Collators
       gross_income_summary.update!(populate_attrs)
     end
 
-    private
+  private
 
     def populate_attrs
       attrs = default_attrs

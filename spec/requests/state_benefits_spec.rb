@@ -34,7 +34,7 @@ RSpec.describe StateBenefitsController, type: :request do
         end
 
         it 'creates state benefit payment records' do
-          expect { subject }.to change { StateBenefitPayment.count }.by(6)
+          expect { subject }.to change(StateBenefitPayment, :count).by(6)
         end
 
         it 'creates payment records with correct values' do
@@ -79,11 +79,11 @@ RSpec.describe StateBenefitsController, type: :request do
         end
 
         it 'does not create any state benefit records' do
-          expect { subject }.not_to change { StateBenefit.count }
+          expect { subject }.not_to change(StateBenefit, :count)
         end
 
         it 'does not create any state benefit records' do
-          expect { subject }.not_to change { StateBenefitPayment.count }
+          expect { subject }.not_to change(StateBenefitPayment, :count)
         end
       end
 
@@ -105,11 +105,11 @@ RSpec.describe StateBenefitsController, type: :request do
         end
 
         it 'does not create any other income source records' do
-          expect { subject }.not_to change { OtherIncomeSource.count }
+          expect { subject }.not_to change(OtherIncomeSource, :count)
         end
 
         it 'does not create any other income payment records' do
-          expect { subject }.not_to change { OtherIncomePayment.count }
+          expect { subject }.not_to change(OtherIncomePayment, :count)
         end
       end
     end

@@ -13,7 +13,7 @@ module Decorators
         payload unless @summary.nil?
       end
 
-      private
+    private
 
       def payload
         {

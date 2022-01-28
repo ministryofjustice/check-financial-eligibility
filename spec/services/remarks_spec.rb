@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Remarks do
   let(:assessment) { create :assessment }
-  let(:remarks) { Remarks.new(assessment.id) }
+  let(:remarks) { described_class.new(assessment.id) }
 
   describe '#remarks_hash' do
     context 'no remarks' do

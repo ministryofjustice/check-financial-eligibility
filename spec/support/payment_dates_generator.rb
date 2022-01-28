@@ -60,7 +60,7 @@ class PaymentDatesGenerator
     end
   end
 
-  private
+private
 
   def start_dates
     @start_dates ||= generate_start_dates

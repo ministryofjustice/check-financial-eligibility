@@ -16,7 +16,7 @@ module Collators
       RETURN_VALUES.deep_transform_values { |value| send(value) }
     end
 
-    private
+  private
 
     def assessed_capital
       total_capital - pensioner_capital_disregard

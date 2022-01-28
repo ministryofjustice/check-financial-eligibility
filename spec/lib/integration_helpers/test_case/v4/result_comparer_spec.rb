@@ -49,6 +49,7 @@ module TestCase
       context 'proceeding_types' do
         context 'mismatched proceeding type codes' do
           let(:actual) { actual_modified_proceeding_type_codes }
+
           it 'outputs the expected error messages' do
             expect(instance).to receive(:verbose).with('Proceeding type codes do not match expected', :red)
             expect(instance).to receive(:verbose).with('  Expected: DA001, SE013', :red)
@@ -61,6 +62,7 @@ module TestCase
 
       context 'overall results' do
         let(:verbosity) { 0 }
+
         context 'all well' do
           it 'returns does not have any red text' do
             expect(instance).to receive(:verbose).with(instance_of(String), :green).at_least(1)

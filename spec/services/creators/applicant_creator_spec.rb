@@ -25,7 +25,7 @@ module Creators
             end
 
             it 'creates an applicant' do
-              expect { subject.success? }.to change { Applicant.count }.by 1
+              expect { subject.success? }.to change(Applicant, :count).by 1
             end
           end
 
@@ -36,7 +36,7 @@ module Creators
           end
 
           describe '#errors' do
-            it 'should be empty' do
+            it 'is empty' do
               expect(subject.errors).to be_empty
             end
           end
@@ -66,7 +66,7 @@ module Creators
             end
 
             it 'does not create an applicant' do
-              expect { subject }.not_to change { Applicant.count }
+              expect { subject }.not_to change(Applicant, :count)
             end
           end
 
@@ -94,7 +94,7 @@ module Creators
             end
 
             it 'does not create an applicant' do
-              expect { subject }.not_to change { Applicant.count }
+              expect { subject }.not_to change(Applicant, :count)
             end
 
             describe '#errors' do

@@ -8,7 +8,8 @@ module Assessors
     class AssessmentError < StandardError; end
 
     def initialize(assessment, proceeding_type_code)
-      @assessment = assessment
+      # @assessment = assessment
+      super(assessment)
       @proceeding_type_code = proceeding_type_code
     end
 
@@ -16,7 +17,7 @@ module Assessors
       assessment_eligibility.update!(assessment_result: result)
     end
 
-    private
+  private
 
     def result
       passported? ? passported_assessment : gross_income_assessment

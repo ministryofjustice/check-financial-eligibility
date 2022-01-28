@@ -11,12 +11,12 @@ module Creators
       subject { described_class.call(assessment_id: assessment.id, outgoings:) }
 
       it 'creates a disposable_income_summary if one doesnt already exist' do
-        expect { subject }.to change { DisposableIncomeSummary.count }.by(1)
+        expect { subject }.to change(DisposableIncomeSummary, :count).by(1)
       end
 
       it 'does not create an additional disposable_income_summary if one exists already' do
         assessment.create_disposable_income_summary
-        expect { subject }.not_to change { DisposableIncomeSummary.count }
+        expect { subject }.not_to change(DisposableIncomeSummary, :count)
       end
 
       it 'creates all the required outgoing records' do

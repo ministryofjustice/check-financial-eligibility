@@ -29,6 +29,7 @@ module Assessors
           context 'purchased less than 36 months ago' do
             let(:date_of_purchase) { 35.months.ago.to_date }
             let(:loan_amount_outstanding) { 0.0 }
+
             it 'is not included in the assessment' do
               expect(vehicle.included_in_assessment).to be false
               expect(vehicle.assessed_value).to eq 0.0
@@ -38,6 +39,7 @@ module Assessors
           context 'purchased more than 36 months ago' do
             let(:date_of_purchase) { 37.months.ago.to_date }
             let(:loan_amount_outstanding) { 0.0 }
+
             it 'is not included in the assessment' do
               expect(vehicle.included_in_assessment).to be false
               expect(vehicle.assessed_value).to eq 0.0
@@ -53,6 +55,7 @@ module Assessors
 
             context 'purchased more than 36 moths ago' do
               let(:date_of_purchase) { 37.months.ago.to_date }
+
               it 'is not included in the assessment' do
                 expect(vehicle.included_in_assessment).to be false
                 expect(vehicle.assessed_value).to eq 0.0
@@ -61,6 +64,7 @@ module Assessors
 
             context 'purchased less than 36 months ago' do
               let(:date_of_purchase) { 3.months.ago.to_date }
+
               it 'is not included in the assessment' do
                 expect(vehicle.included_in_assessment).to be false
                 expect(vehicle.assessed_value).to eq 0.0
@@ -73,6 +77,7 @@ module Assessors
 
             context 'purchased more than 36 months ago' do
               let(:date_of_purchase) { 40.months.ago.to_date }
+
               it 'is not included in the assessment' do
                 expect(vehicle.included_in_assessment).to be false
                 expect(vehicle.assessed_value).to eq 0.0
@@ -81,6 +86,7 @@ module Assessors
 
             context 'purchased less than 36 months ago' do
               let(:date_of_purchase) { 10.months.ago.to_date }
+
               it 'is assessed at estimated value - loan amount outstanding - 15,000' do
                 expect(vehicle.included_in_assessment).to be true
                 expect(vehicle.assessed_value).to eq 4_000.0
@@ -93,11 +99,13 @@ module Assessors
       context 'vehicle not in regular use' do
         let(:in_regular_use) { false }
         let(:estimated_value)  { 18_450.0 }
+
         context 'vehicle purchased less than 36 months ago' do
           let(:date_of_purchase) { 26.months.ago.to_date }
 
           context 'net equity greater than threshold' do
             let(:loan_amount_outstanding) { 1_000.0 }
+
             it 'is assessed at the estimated value' do
               expect(vehicle.included_in_assessment).to be true
               expect(vehicle.assessed_value).to eq 18_450.0
@@ -106,6 +114,7 @@ module Assessors
 
           context 'net equity less than threshold' do
             let(:loan_amount_outstanding) { 12_000 }
+
             it 'is assessed at the estimated value' do
               expect(vehicle.included_in_assessment).to be true
               expect(vehicle.assessed_value).to eq 18_450.0
@@ -127,6 +136,7 @@ module Assessors
 
           context 'net equity less than threshold' do
             let(:loan_amount_outstanding) { 10_900.0 }
+
             it 'is assessed at the estimated value' do
               expect(vehicle.included_in_assessment).to be true
               expect(vehicle.assessed_value).to eq 18_450.0

@@ -16,6 +16,7 @@ module Utilities
 
     context 'no results' do
       let(:results) { no_results }
+
       it 'returns :pending' do
         expect(subject).to eq :pending
       end
@@ -23,6 +24,7 @@ module Utilities
 
     context 'one pending' do
       let(:results) { one_pending }
+
       it 'returns :pending' do
         expect(subject).to eq :pending
       end
@@ -30,6 +32,7 @@ module Utilities
 
     context 'all eligible' do
       let(:results) { all_eligible }
+
       it 'returns :eligible' do
         expect(subject).to eq :eligible
       end
@@ -37,6 +40,7 @@ module Utilities
 
     context 'all ineligible' do
       let(:results) { all_ineligible }
+
       it 'returns :ineligible' do
         expect(subject).to eq :ineligible
       end
@@ -44,6 +48,7 @@ module Utilities
 
     context 'all eligible with contribution' do
       let(:results) { all_contrib }
+
       it 'returns :eligible_with_contribution' do
         expect(subject).to eq :contribution_required
       end
@@ -51,6 +56,7 @@ module Utilities
 
     context 'eligble and ineligible mixed' do
       let(:results) { elig_and_inelig }
+
       it 'returns :partially_eligible' do
         expect(subject).to eq :partially_eligible
       end
@@ -58,6 +64,7 @@ module Utilities
 
     context 'eligible and contribution_required mixed' do
       let(:results) { elig_and_contrib }
+
       it 'returns :eligible_with_contribution' do
         expect(subject).to eq :contribution_required
       end
@@ -65,6 +72,7 @@ module Utilities
 
     context 'ineligble and contribution_required mixed' do
       let(:results) { inelig_and_contrib }
+
       it 'returns :partially_eligible' do
         expect(subject).to eq :partially_eligible
       end
@@ -72,6 +80,7 @@ module Utilities
 
     context 'all three' do
       let(:results) { all_three }
+
       it 'returns :partially_eligible' do
         expect(subject).to eq :partially_eligible
       end

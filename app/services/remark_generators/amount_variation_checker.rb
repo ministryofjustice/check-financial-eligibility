@@ -6,7 +6,7 @@ module RemarkGenerators
       populate_remarks unless unique_amounts || exempt_from_checking
     end
 
-    private
+  private
 
     def unique_amounts
       @collection.map(&:amount).uniq.size == 1

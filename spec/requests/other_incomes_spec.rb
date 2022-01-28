@@ -27,7 +27,7 @@ RSpec.describe OtherIncomesController, type: :request do
         end
 
         it 'creates the required number of OtherIncomePayment record for each source' do
-          expect { subject }.to change { OtherIncomePayment.count }.by(6)
+          expect { subject }.to change(OtherIncomePayment, :count).by(6)
           source = gross_income_summary.other_income_sources.order(:name).first
           expect(source.other_income_payments.count).to eq 3
           payments = source.other_income_payments.order(:payment_date)
@@ -80,11 +80,11 @@ RSpec.describe OtherIncomesController, type: :request do
         end
 
         it 'does not create any other income source records' do
-          expect { subject }.not_to change { OtherIncomeSource.count }
+          expect { subject }.not_to change(OtherIncomeSource, :count)
         end
 
         it 'does not create any other income payment records' do
-          expect { subject }.not_to change { OtherIncomePayment.count }
+          expect { subject }.not_to change(OtherIncomePayment, :count)
         end
       end
 
@@ -106,11 +106,11 @@ RSpec.describe OtherIncomesController, type: :request do
         end
 
         it 'does not create any other income source records' do
-          expect { subject }.not_to change { OtherIncomeSource.count }
+          expect { subject }.not_to change(OtherIncomeSource, :count)
         end
 
         it 'does not create any other income payment records' do
-          expect { subject }.not_to change { OtherIncomePayment.count }
+          expect { subject }.not_to change(OtherIncomePayment, :count)
         end
       end
 

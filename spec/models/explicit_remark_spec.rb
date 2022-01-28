@@ -13,7 +13,7 @@ RSpec.describe ExplicitRemark do
 
     context 'no remarks for specified assessment' do
       it 'returns an empty hash' do
-        expect(ExplicitRemark.remarks_by_category(assessment1.id)).to eq({})
+        expect(described_class.remarks_by_category(assessment1.id)).to eq({})
       end
     end
 
@@ -27,8 +27,9 @@ RSpec.describe ExplicitRemark do
           ]
         }
       end
+
       it 'returns the results in alphabetical order' do
-        expect(ExplicitRemark.remarks_by_category(assessment2.id)).to eq(expected_results)
+        expect(described_class.remarks_by_category(assessment2.id)).to eq(expected_results)
       end
     end
   end

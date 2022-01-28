@@ -9,9 +9,9 @@ module Decorators
         payload unless @record.nil?
       end
 
-      private
+    private
 
-      def payload # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+      def payload
         {
           value: @record.value.to_f,
           outstanding_mortgage: @record.outstanding_mortgage.to_f,

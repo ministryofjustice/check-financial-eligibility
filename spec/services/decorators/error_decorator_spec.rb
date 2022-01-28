@@ -7,6 +7,7 @@ module Decorators
 
       context 'String' do
         let(:param) { 'This is an error' }
+
         it 'puts the string in the response struct' do
           expect(subject).to eq(errors: ['This is an error'], success: false)
         end
@@ -14,6 +15,7 @@ module Decorators
 
       context 'CheckFinancialEligibilityError' do
         let(:param) { CheckFinancialEligibilityError.new('my message') }
+
         it 'puts the error message in the response struct' do
           expect(subject).to eq(errors: ['my message'], success: false)
         end
@@ -21,6 +23,7 @@ module Decorators
 
       context 'Other exceptions' do
         let(:param) { generate_error }
+
         it 'generates a response struct with the correct keys' do
           expect(subject.keys).to eq(%i[errors success])
         end
@@ -33,8 +36,8 @@ module Decorators
 
         def generate_error
           raise 'My runtime error message'
-        rescue RuntimeError => err
-          err
+        rescue RuntimeError => e
+          e
         end
       end
     end

@@ -10,6 +10,7 @@ module Assessors
       before do
         create_list :non_liquid_capital_item, 3, capital_summary: capital_summary
       end
+
       it 'adds them all together' do
         expect(service.call).to eq capital_summary.non_liquid_capital_items.sum(&:value)
       end

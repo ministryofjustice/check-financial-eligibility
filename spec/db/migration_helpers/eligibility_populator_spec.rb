@@ -51,6 +51,7 @@ RSpec.describe MigrationHelpers::EligibilityPopulator do
 
   context 'migration has already run once' do
     before { subject }
+
     it 'does not create additional eligibility records' do
       expect { subject }.not_to change { Eligibility::GrossIncome.count }
       expect { subject }.not_to change { Eligibility::DisposableIncome.count }

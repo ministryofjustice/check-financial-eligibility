@@ -2,10 +2,13 @@ require 'rails_helper'
 
 RSpec.describe AssessmentsController, type: :request do
   before(:each) { mock_lfa_responses }
+
   before { create :bank_holiday }
+
   describe 'POST assessments' do
     let(:ipaddr) { '127.0.0.1' }
     let(:ccms_codes) { %w[DA005 SE003 SE014] }
+
     context 'version 3' do
       let(:params) do
         {
@@ -168,6 +171,7 @@ RSpec.describe AssessmentsController, type: :request do
 
     context 'untrapped error during processing' do
       let(:assessment) { create :assessment, :with_everything, :with_eligibilities }
+
       it 'call sentry and returns error response' do
         allow(Assessors::MainAssessor).to receive(:call).and_raise(RuntimeError, 'Oops')
         expect(Sentry).to receive(:capture_exception)

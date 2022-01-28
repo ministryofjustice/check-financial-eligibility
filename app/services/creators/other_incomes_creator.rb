@@ -18,7 +18,7 @@ module Creators
       self
     end
 
-    private
+  private
 
     def create
       ActiveRecord::Base.transaction do

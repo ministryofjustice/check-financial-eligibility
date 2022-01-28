@@ -14,7 +14,7 @@ module Workflows
       # collate_and_assess_capital if disposable_income_summary.summarized_assessment_result.in?([:eligible, :contribution_required, :partially_eligible])
     end
 
-    private
+  private
 
     def collate_and_assess_gross_income
       Collators::GrossIncomeCollator.call(assessment)

@@ -21,7 +21,7 @@ module Calculators
       @error
     end
 
-    private
+  private
 
     def process_monthly
       payment_average.round(2)

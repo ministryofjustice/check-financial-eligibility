@@ -26,7 +26,7 @@ module TestCase
       @outgoings.empty?
     end
 
-    private
+  private
 
     def populate_outgoings(rows)
       outgoings_rows = extract_outgoings_rows(rows)
@@ -56,9 +56,9 @@ module TestCase
                   client_id: outgoings_data[2][3],
                   amount: outgoings_data[3][3],
                   meta: outgoings_data[1][3])
-    rescue StandardError => err
-      puts err.class
-      puts err.message
+    rescue StandardError => e
+      puts e.class
+      puts e.message
       pp outgoings_data
     end
 

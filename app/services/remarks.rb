@@ -35,7 +35,7 @@ class Remarks
     @remarks_hash.merge! ExplicitRemark.remarks_by_category(@assessment_id)
   end
 
-  private
+private
 
   def validate_type_and_issue(type, issue)
     raise ArgumentError, "Invalid type: #{type}" unless CFEConstants::VALID_REMARK_TYPES.include?(type)

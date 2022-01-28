@@ -14,7 +14,7 @@ module Creators
       self
     end
 
-    private
+  private
 
     def valid_dates
       base_date = assessment.submission_date.beginning_of_month
@@ -33,8 +33,8 @@ module Creators
       ActiveRecord::Base.transaction do
         @income.each { |category_hash| create_category(category_hash, 'credit') }
         @outgoings.each { |category_hash| create_category(category_hash, 'debit') }
-      rescue StandardError => error
-        errors << "#{error.class} :: #{error.message}\n#{error.backtrace.join("\n")}"
+      rescue StandardError => e
+        errors << "#{e.class} :: #{e.message}\n#{e.backtrace.join("\n")}"
       end
     end
 

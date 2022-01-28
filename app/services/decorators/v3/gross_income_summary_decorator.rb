@@ -17,13 +17,13 @@ module Decorators
         payload unless record.nil?
       end
 
-      private
+    private
 
       def income_categories_excluding_benefits
         CFEConstants::VALID_INCOME_CATEGORIES.map(&:to_sym) - [:benefits]
       end
 
-      def payload # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+      def payload
         {
           summary: {
             total_gross_income: record.total_gross_income,

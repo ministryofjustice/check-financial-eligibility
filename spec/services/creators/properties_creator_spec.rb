@@ -85,7 +85,7 @@ module Creators
         end
 
         it 'does not create any property records' do
-          expect { subject }.not_to change { Property.count }
+          expect { subject }.not_to change(Property, :count)
         end
       end
     end

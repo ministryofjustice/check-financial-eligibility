@@ -10,12 +10,13 @@ module Creators
     let(:irregular_income) { irregular_income_params }
 
     subject { post assessment_irregular_income_path(assessment_id), params: params.to_json, headers: headers }
+
     subject { described_class.call(assessment_id:, irregular_income:) }
 
     describe '.call' do
       context 'payload' do
         it 'creates an irregular income payment' do
-          expect { subject }.to change { IrregularIncomePayment.count }.by(1)
+          expect { subject }.to change(IrregularIncomePayment, :count).by(1)
         end
 
         it 'creates a student loan payment' do
@@ -31,7 +32,7 @@ module Creators
         let(:irregular_income) { { payments: [] } }
 
         it 'does not create any records' do
-          expect { subject }.not_to change { IrregularIncomePayment.count }
+          expect { subject }.not_to change(IrregularIncomePayment, :count)
         end
       end
 

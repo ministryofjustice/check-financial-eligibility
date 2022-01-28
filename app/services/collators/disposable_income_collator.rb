@@ -28,7 +28,7 @@ module Collators
       disposable_income_summary.update!(populate_attrs)
     end
 
-    private
+  private
 
     def populate_attrs
       attrs = {}
