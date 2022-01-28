@@ -1,23 +1,22 @@
 require "rails_helper"
 
-RSpec.describe ApplicationController, type: :request do
-  # rubocop:disable Lint/ConstantDefinitionInBlock
-  class TestController < ::ApplicationController
-    def show
-      if params[:raise_error]
-        35 / 0
-      elsif params[:param_error]
-        raise Apipie::ParamError, "The param error message"
-      else
-        render_success
-      end
+class TestMockController < ::ApplicationController
+  def show
+    if params[:raise_error]
+      35 / 0
+    elsif params[:param_error]
+      raise Apipie::ParamError, 'The param error message'
+    else
+      render_success
     end
   end
-  # rubocop:enable Lint/ConstantDefinitionInBlock
+end
+
+RSpec.describe ApplicationController, type: :request do
 
   before do
     Rails.application.routes.draw do
-      get "/my_test", to: "test#show"
+      get '/my_test', to: 'test_mock#show'
     end
   end
 

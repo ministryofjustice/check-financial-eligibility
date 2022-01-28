@@ -42,13 +42,12 @@ RSpec/ExpectInHook:
 
 # Offense count: 60
 # Cop supports --auto-correct.
+# ****
+# **** Removing this will break specs.  It removes all the explicti subject declarations that it thinks aren't necessary, but doesn't always get it right.
+# **** Better to leave the explicit subject declarations in.
+# ****
 RSpec/LeadingSubject:
   Enabled: false
-
-# Offense count: 1
-RSpec/LeakyConstantDeclaration:
-  Exclude:
-    - 'spec/requests/application_controller_spec.rb'
 
 # Offense count: 1
 # Cop supports --auto-correct.
