@@ -96,8 +96,8 @@ RSpec.describe OutgoingsController, type: :request do
         expect(parsed_response).to eq(errors: ["Missing parameter client_id"], success: false)
       end
 
-      it "does not create outgoing records" do
-        expect { subject }.not_to change { Outgoings::BaseOutgoing.count }
+      it 'does not create outgoing records' do
+        expect { subject }.not_to change(Outgoings::BaseOutgoing, :count)
       end
     end
 

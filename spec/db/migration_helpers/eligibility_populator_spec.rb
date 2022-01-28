@@ -52,10 +52,10 @@ RSpec.describe MigrationHelpers::EligibilityPopulator do
   context "migration has already run once" do
     before { subject }
 
-    it "does not create additional eligibility records" do
-      expect { subject }.not_to change { Eligibility::GrossIncome.count }
-      expect { subject }.not_to change { Eligibility::DisposableIncome.count }
-      expect { subject }.not_to change { Eligibility::Capital.count }
+    it 'does not create additional eligibility records' do
+      expect { subject }.not_to change(Eligibility::GrossIncome, :count)
+      expect { subject }.not_to change(Eligibility::DisposableIncome, :count)
+      expect { subject }.not_to change(Eligibility::Capital, :count)
     end
   end
 
@@ -65,9 +65,9 @@ RSpec.describe MigrationHelpers::EligibilityPopulator do
       GrossIncomeSummary.all.each { |rec| rec.update(assessment_result: "migrated_to_eligibility") }
       DisposableIncomeSummary.all.each { |rec| rec.update(assessment_result: "migrated_to_eligibility") }
 
-      expect { subject }.not_to change { Eligibility::GrossIncome.count }
-      expect { subject }.not_to change { Eligibility::DisposableIncome.count }
-      expect { subject }.not_to change { Eligibility::Capital.count }
+      expect { subject }.not_to change(Eligibility::GrossIncome, :count)
+      expect { subject }.not_to change(Eligibility::DisposableIncome, :count)
+      expect { subject }.not_to change(Eligibility::Capital, :count)
     end
   end
 
