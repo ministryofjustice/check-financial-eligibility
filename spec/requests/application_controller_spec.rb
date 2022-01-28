@@ -13,7 +13,6 @@ class TestMockController < ::ApplicationController
 end
 
 RSpec.describe ApplicationController, type: :request do
-
   before do
     Rails.application.routes.draw do
       get '/my_test', to: 'test_mock#show'

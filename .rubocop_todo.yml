@@ -49,12 +49,6 @@ RSpec/ExpectInHook:
 RSpec/LeadingSubject:
   Enabled: false
 
-# Offense count: 1
-# Cop supports --auto-correct.
-RSpec/LetBeforeExamples:
-  Exclude:
-    - 'spec/services/utilities/calendar_monthly_period_analyser_spec.rb'
-
 # Offense count: 26
 RSpec/LetSetup:
   Exclude:
