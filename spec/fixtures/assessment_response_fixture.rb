@@ -12,7 +12,7 @@ class AssessmentResponseFixture < BaseAssessmentFixture
           upper_income_threshold: 2_567.00,
           monthly_disposable_income: 220.55,
           disposable_income_lower_threshold: 310.00,
-          disposable_income_upper_threshold: 733.00
+          disposable_income_upper_threshold: 733.00,
         },
         capital: {
           liquid_capital_assessment: 45.00,
@@ -27,7 +27,7 @@ class AssessmentResponseFixture < BaseAssessmentFixture
               shared_with_housing_assoc: false,
               net_equity_value: 201_000.00,
               property_disregard: 100_000,
-              assessed_capital_value: 101_000
+              assessed_capital_value: 101_000,
             },
             additional_properties: [
               {
@@ -39,7 +39,7 @@ class AssessmentResponseFixture < BaseAssessmentFixture
                 shared_with_housing_assoc: false,
                 net_equity_value: 201_000.00,
                 property_disregard: 100_000,
-                assessed_capital_value: 101_000
+                assessed_capital_value: 101_000,
               },
               {
                 notional_sale_costs_pctg: 3.0,
@@ -50,9 +50,9 @@ class AssessmentResponseFixture < BaseAssessmentFixture
                 shared_with_housing_assoc: false,
                 net_equity_value: 201_000.00,
                 property_disregard: 100_000,
-                assessed_capital_value: 101_000
+                assessed_capital_value: 101_000,
               }
-            ]
+            ],
           },
           vehicles: [
             {
@@ -60,31 +60,31 @@ class AssessmentResponseFixture < BaseAssessmentFixture
               loan_amount_outstanding: 7_200,
               date_of_purchase: 34.months.ago.to_date,
               in_regular_use: true,
-              assessed_value: 5_300
+              assessed_value: 5_300,
             },
             {
               value: 4_300,
               loan_amount_outstanding: 0,
               date_of_purchase: 40.months.ago.to_date,
               in_regular_use: true,
-              assessed_value: 0
+              assessed_value: 0,
             }
           ],
           single_capital_assessment: 75_000.0,
           pensioner_disregard: 100_000.0,
           disposable_capital_assessment: 25_000.0,
           total_capital_lower_threshold: 3_000.0,
-          total_capital_upper_threshold: 8_000.0
+          total_capital_upper_threshold: 8_000.0,
         },
         contributions: {
           monthly_contribution: 0.00,
-          capital_contribution: 0.00
-        }
+          capital_contribution: 0.00,
+        },
       },
       errors: [
         "This is error message 1",
         "This is error message 2"
-      ]
+      ],
     }
   end
 end

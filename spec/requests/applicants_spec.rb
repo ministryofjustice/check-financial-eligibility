@@ -11,8 +11,8 @@ RSpec.describe ApplicantsController, type: :request do
           date_of_birth: 20.years.ago.to_date,
           involvement_type: "applicant",
           has_partner_opponent: false,
-          receives_qualifying_benefit: true
-        }
+          receives_qualifying_benefit: true,
+        },
       }
     end
 
@@ -42,8 +42,8 @@ RSpec.describe ApplicantsController, type: :request do
               date_of_birth: future_date,
               involvement_type: "applicant",
               has_partner_opponent: false,
-              receives_qualifying_benefit: true
-            }
+              receives_qualifying_benefit: true,
+            },
           }
         end
         let(:expected_message) do

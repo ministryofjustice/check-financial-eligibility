@@ -19,8 +19,8 @@ module Decorators
             vehicles:,
             properties: {
               main_home: PropertyDecorator.new(@record.main_home)&.as_json,
-              additional_properties:
-            }
+              additional_properties:,
+            },
           },
           total_liquid: @record.total_liquid,
           total_non_liquid: @record.total_non_liquid,
@@ -33,7 +33,7 @@ module Decorators
           lower_threshold: @record.eligibilities.first.lower_threshold,
           upper_threshold: @record.eligibilities.first.upper_threshold,
           assessment_result: @record.summarized_assessment_result,
-          capital_contribution: @record.capital_contribution
+          capital_contribution: @record.capital_contribution,
         }
       end
 

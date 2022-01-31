@@ -13,7 +13,7 @@ module Decorators
           employment_income: employment_incomes,
           irregular_income: irregular_income,
           state_benefits: state_benefits,
-          other_income: other_income
+          other_income: other_income,
         }
       end
 
@@ -34,7 +34,7 @@ module Decorators
       def employment_income(employment)
         {
           name: employment.name,
-          payments: employment_payments(employment)
+          payments: employment_payments(employment),
         }
       end
 
@@ -49,7 +49,7 @@ module Decorators
           benefits_in_kind: payment.benefits_in_kind.to_f,
           tax: payment.tax.to_f,
           national_insurance: payment.national_insurance.to_f,
-          net_employment_income: net_employment_income(payment).to_f
+          net_employment_income: net_employment_income(payment).to_f,
         }
       end
 
@@ -61,8 +61,8 @@ module Decorators
         {
           monthly_equivalents:
             {
-              student_loan: summary.monthly_student_loan.to_f
-            }
+              student_loan: summary.monthly_student_loan.to_f,
+            },
         }
       end
 
@@ -71,8 +71,8 @@ module Decorators
           monthly_equivalents: {
             all_sources: transactions(:all_sources),
             bank_transactions: transactions(:bank),
-            cash_transactions: transactions(:cash)
-          }
+            cash_transactions: transactions(:cash),
+          },
         }
       end
 
@@ -81,7 +81,7 @@ module Decorators
           friends_or_family: summary.__send__("friends_or_family_#{source}").to_f,
           maintenance_in: summary.__send__("maintenance_in_#{source}").to_f,
           property_or_lodger: summary.__send__("property_or_lodger_#{source}").to_f,
-          pension: summary.__send__("pension_#{source}").to_f
+          pension: summary.__send__("pension_#{source}").to_f,
         }
       end
 
@@ -90,8 +90,8 @@ module Decorators
           monthly_equivalents: {
             all_sources: summary.benefits_all_sources.to_f,
             cash_transactions: summary.benefits_cash.to_f,
-            bank_transactions: summary.state_benefits.map { |sb| StateBenefitDecorator.new(sb).as_json }
-          }
+            bank_transactions: summary.state_benefits.map { |sb| StateBenefitDecorator.new(sb).as_json },
+          },
         }
       end
     end

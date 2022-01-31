@@ -9,7 +9,7 @@ module Decorators
         {
           name: @state_benefit.state_benefit_name,
           monthly_value: @state_benefit.monthly_value,
-          excluded_from_income_assessment: @state_benefit.exclude_from_gross_income
+          excluded_from_income_assessment: @state_benefit.exclude_from_gross_income,
         }
       end
     end

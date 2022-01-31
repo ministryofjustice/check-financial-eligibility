@@ -9,12 +9,12 @@ class CashTransactionCategory < ApplicationRecord
 
   validates :name, inclusion: {
     in: CFEConstants::VALID_INCOME_CATEGORIES,
-    message: "is not a valid credit category: %<value>s"
+    message: "is not a valid credit category: %<value>s",
   }, if: :credit?
 
   validates :name, inclusion: {
     in: CFEConstants::VALID_OUTGOING_CATEGORIES,
-    message: "is not a valid debit category: %<value>s"
+    message: "is not a valid debit category: %<value>s",
   }, if: :debit?
 
   def credit?

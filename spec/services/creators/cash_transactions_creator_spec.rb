@@ -125,19 +125,19 @@ describe Creators::CashTransactionsCreator do
               {
                 date: month1.strftime("%F"),
                 amount: 1046.44,
-                client_id: "05459c0f-a620-4743-9f0c-b3daa93e5711"
+                client_id: "05459c0f-a620-4743-9f0c-b3daa93e5711",
               },
               {
                 date: month2.strftime("%F"),
                 amount: 1034.33,
-                client_id: "10318f7b-289a-4fa5-a986-fc6f499fecd0"
+                client_id: "10318f7b-289a-4fa5-a986-fc6f499fecd0",
               },
               {
                 date: month3.strftime("%F"),
                 amount: 1033.44,
-                client_id: "5cf62a12-c92b-4cc1-b8ca-eeb4efbcce21"
+                client_id: "5cf62a12-c92b-4cc1-b8ca-eeb4efbcce21",
               }
-            ]
+            ],
           },
           {
             category: "friends_or_family",
@@ -145,19 +145,19 @@ describe Creators::CashTransactionsCreator do
               {
                 date: month2.strftime("%F"),
                 amount: 250.0,
-                client_id: "e47b707b-d795-47c2-8b39-ccf022eae33b"
+                client_id: "e47b707b-d795-47c2-8b39-ccf022eae33b",
               },
               {
                 date: month3.strftime("%F"),
                 amount: 266.02,
-                client_id: "b0c46cc7-8478-4658-a7f9-85ec85d420b1"
+                client_id: "b0c46cc7-8478-4658-a7f9-85ec85d420b1",
               },
               {
                 date: month1.strftime("%F"),
                 amount: 250.0,
-                client_id: "f3ec68a3-8748-4ed5-971a-94d133e0efa0"
+                client_id: "f3ec68a3-8748-4ed5-971a-94d133e0efa0",
               }
-            ]
+            ],
           }
         ],
         outgoings:
@@ -168,19 +168,19 @@ describe Creators::CashTransactionsCreator do
                 {
                   date: month2.strftime("%F"),
                   amount: 256.0,
-                  client_id: "347b707b-d795-47c2-8b39-ccf022eae33b"
+                  client_id: "347b707b-d795-47c2-8b39-ccf022eae33b",
                 },
                 {
                   date: month3.strftime("%F"),
                   amount: 256.0,
-                  client_id: "722b707b-d795-47c2-8b39-ccf022eae33b"
+                  client_id: "722b707b-d795-47c2-8b39-ccf022eae33b",
                 },
                 {
                   date: month1.strftime("%F"),
                   amount: 256.0,
-                  client_id: "abcb707b-d795-47c2-8b39-ccf022eae33b"
+                  client_id: "abcb707b-d795-47c2-8b39-ccf022eae33b",
                 }
-              ]
+              ],
             },
             {
               category: "child_care",
@@ -188,21 +188,21 @@ describe Creators::CashTransactionsCreator do
                 {
                   date: month3.strftime("%F"),
                   amount: 258.0,
-                  client_id: "ff7b707b-d795-47c2-8b39-ccf022eae33b"
+                  client_id: "ff7b707b-d795-47c2-8b39-ccf022eae33b",
                 },
                 {
                   date: month2.strftime("%F"),
                   amount: 257.0,
-                  client_id: "ee7b707b-d795-47c2-8b39-ccf022eae33b"
+                  client_id: "ee7b707b-d795-47c2-8b39-ccf022eae33b",
                 },
                 {
                   date: month1.strftime("%F"),
                   amount: 256.0,
-                  client_id: "ec7b707b-d795-47c2-8b39-ccf022eae33b"
+                  client_id: "ec7b707b-d795-47c2-8b39-ccf022eae33b",
                 }
-              ]
+              ],
             }
-          ]
+          ],
       }
     end
 

@@ -34,8 +34,8 @@ module Decorators
             gross_income: GrossIncomeSummaryDecorator.new(gross_income_summary).as_json,
             disposable_income: DisposableIncomeSummaryDecorator.new(disposable_income_summary).as_json,
             capital: CapitalSummaryDecorator.new(capital_summary).as_json,
-            remarks: RemarksDecorator.new(remarks, assessment).as_json
-          }
+            remarks: RemarksDecorator.new(remarks, assessment).as_json,
+          },
         }
       end
     end

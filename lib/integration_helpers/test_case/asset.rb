@@ -12,7 +12,7 @@ module TestCase
     def payload
       {
         description: @description,
-        value: @amount
+        value: @amount,
       }
     end
   end

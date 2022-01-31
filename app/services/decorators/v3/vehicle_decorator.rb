@@ -12,7 +12,7 @@ module Decorators
           date_of_purchase: @record.date_of_purchase,
           in_regular_use: @record.in_regular_use,
           included_in_assessment: @record.included_in_assessment,
-          assessed_value: @record.assessed_value
+          assessed_value: @record.assessed_value,
         }
       end
     end

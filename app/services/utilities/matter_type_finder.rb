@@ -12,7 +12,7 @@ module Utilities
       SE003: "section8",
       SE004: "section8",
       SE013: "section8",
-      SE014: "section8"
+      SE014: "section8",
     }.freeze
 
     def self.call(proceeding_type_code)

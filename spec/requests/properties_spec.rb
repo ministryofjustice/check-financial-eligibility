@@ -13,23 +13,23 @@ RSpec.describe PropertiesController, type: :request do
             value: 500_000,
             outstanding_mortgage: 200,
             percentage_owned: 15,
-            shared_with_housing_assoc: true
+            shared_with_housing_assoc: true,
           },
           additional_properties: [
             {
               value: 1000,
               outstanding_mortgage: 0,
               percentage_owned: 99,
-              shared_with_housing_assoc: false
+              shared_with_housing_assoc: false,
             },
             {
               value: 10_000,
               outstanding_mortgage: 40,
               percentage_owned: 80,
-              shared_with_housing_assoc: true
+              shared_with_housing_assoc: true,
             }
-          ]
-        }
+          ],
+        },
       }
     end
 

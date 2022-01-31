@@ -31,7 +31,7 @@ module Decorators
           lower_threshold: record.eligibilities.first.lower_threshold,
           upper_threshold: record.eligibilities.first.upper_threshold,
           assessment_result: record.summarized_assessment_result,
-          income_contribution: record.income_contribution
+          income_contribution: record.income_contribution,
         }
       end
     end

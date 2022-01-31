@@ -16,7 +16,7 @@ module Decorators
           expected_hash = {
             name: "Childcare allowance",
             monthly_value: 88.3,
-            excluded_from_income_assessment: excluded
+            excluded_from_income_assessment: excluded,
           }
           expect(subject).to eq expected_hash
         end

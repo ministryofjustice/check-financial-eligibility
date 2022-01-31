@@ -11,7 +11,7 @@ module TestCase
 
     def payload
       {
-        employment_income: employment_payload
+        employment_income: employment_payload,
       }
     end
 
@@ -19,7 +19,7 @@ module TestCase
       @employment_earnings.empty?
     end
 
-    private
+  private
 
     def employment_payload
       payload = []
@@ -32,7 +32,7 @@ module TestCase
     def employments_hash_to_payload(job_name, payments_array)
       {
         name: job_name,
-        payments: payments_array
+        payments: payments_array,
       }
     end
 
@@ -48,12 +48,12 @@ module TestCase
     end
 
     def extract_employment_rows(rows)
-      row_index = rows.index { |r| r.first.present? && r.first != 'employment_income' }
+      row_index = rows.index { |r| r.first.present? && r.first != "employment_income" }
       rows.shift(row_index)
     end
 
     def add_employment_earnings(job_name, data_rows)
-      raise 'No job name specified in column B for employment data' if job_name.blank?
+      raise "No job name specified in column B for employment data" if job_name.blank?
 
       @employment_earnings[job_name] = [] unless @employment_earnings.key?(job_name)
 
@@ -69,17 +69,17 @@ module TestCase
       payment_hash
     end
 
-    def transform_row_to_hash(row, payment_hash) # rubocop:disable Metrics/MethodLength
+    def transform_row_to_hash(row, payment_hash)
       case row[2].strip
-      when 'date'
-        payment_hash[:date] = row[3].strftime('%F')
-      when 'gross pay'
+      when "date"
+        payment_hash[:date] = row[3].strftime("%F")
+      when "gross pay"
         payment_hash[:gross] = row[3]
-      when 'benefits in kind'
+      when "benefits in kind"
         payment_hash[:benefits_in_kind] = row[3]
-      when 'tax'
+      when "tax"
         payment_hash[:tax] = row[3]
-      when 'national insurance'
+      when "national insurance"
         payment_hash[:national_insurance] = row[3]
       else
         raise "Unexpected key '#{row[2]}' in column C of employment data"

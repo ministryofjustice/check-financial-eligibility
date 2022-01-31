@@ -3,7 +3,7 @@ module Transactions
     {
       bank_transactions: transactions_by(transaction_type: :bank),
       cash_transactions: transactions_by(transaction_type: :cash),
-      all_sources: transactions_by(transaction_type: :all_sources)
+      all_sources: transactions_by(transaction_type: :all_sources),
     }
   end
 

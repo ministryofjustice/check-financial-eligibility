@@ -105,7 +105,7 @@ module TestCase
                 capital_upper_threshold: 999_999_999_999.0,
                 gross_income_upper_threshold: 999_999_999_999.0,
                 disposable_income_lower_threshold: 315.0,
-                disposable_income_upper_threshold: 999_999_999_999.0
+                disposable_income_upper_threshold: 999_999_999_999.0,
               },
               "SE013" => {
                 result: "ineligible",
@@ -113,17 +113,17 @@ module TestCase
                 capital_upper_threshold: 8000.0,
                 gross_income_upper_threshold: 2657.0,
                 disposable_income_lower_threshold: 315.0,
-                disposable_income_upper_threshold: 733.0
-              }
+                disposable_income_upper_threshold: 733.0,
+              },
             },
             passported: false,
-            assessment_result: "partially_eligible"
+            assessment_result: "partially_eligible",
           },
           gross_income_summary: {
             monthly_other_income: 1244.0,
             monthly_state_benefits: 234.0,
             monthly_student_loan: 100.0,
-            total_gross_income: 76_633.0
+            total_gross_income: 76_633.0,
           },
           disposable_income_summary: {
             childcare: 255.0,
@@ -134,7 +134,7 @@ module TestCase
             net_housing_costs: 1100.0,
             total_outgoings_and_allowances: 1288.0,
             total_disposable_income: 4788.0,
-            income_contribution: 0.0
+            income_contribution: 0.0,
           },
           capital: {
             total_liquid: 0.0,
@@ -144,25 +144,25 @@ module TestCase
             total_capital: 0.0,
             pensioner_capital_disregard: 0.0,
             assessed_capital: 0.0,
-            capital_contribution: 0.0
+            capital_contribution: 0.0,
           },
           monthly_income_equivalents: {
             friends_or_family: 0.0,
             maintenance_in: 0.0,
             property_or_lodger: 0.0,
             student_loan: 0.0,
-            pension: 0.0
+            pension: 0.0,
           },
           monthly_outgoing_equivalents: {
             maintenance_out: 0.0,
             child_care: 0.0,
             rent_or_mortgage: 0.0,
-            legal_aid: 0.0
+            legal_aid: 0.0,
           },
           deductions: {
             dependants_allowance: 0.0,
-            disregarded_state_benefits: 0.0
-          }
+            disregarded_state_benefits: 0.0,
+          },
         }
       end
 
@@ -179,23 +179,23 @@ module TestCase
               matter_types: [
                 {
                   matter_type: "domestic_abuse",
-                  result: "eligible"
+                  result: "eligible",
                 },
                 {
                   matter_type: "section8",
-                  result: "ineligible"
+                  result: "ineligible",
                 }
               ],
               proceeding_types: [
                 {
                   ccms_code: "DA001",
-                  result: "eligible"
+                  result: "eligible",
                 },
                 {
                   ccms_code: "SE013",
-                  result: "ineligible"
+                  result: "ineligible",
                 }
-              ]
+              ],
             },
             gross_income: {
               total_gross_income: "76633.0",
@@ -203,14 +203,14 @@ module TestCase
                 {
                   ccms_code: "DA001",
                   upper_threshold: "999999999999.0",
-                  result: "eligible"
+                  result: "eligible",
                 },
                 {
                   ccms_code: "SE013",
                   upper_threshold: "2657.0",
-                  result: "eligble_with_contribution"
+                  result: "eligble_with_contribution",
                 }
-              ]
+              ],
             },
             disposable_income: {
               dependant_allowance: "1457.45",
@@ -226,15 +226,15 @@ module TestCase
                   ccms_code: "DA001",
                   lower_threshold: "315.0",
                   upper_threshold: "999999999999.0",
-                  result: "eligible"
+                  result: "eligible",
                 },
                 {
                   ccms_code: "SE013",
                   lower_threshold: "315.0",
                   upper_threshold: "733.0",
-                  result: "eligble_with_contribution"
+                  result: "eligble_with_contribution",
                 }
-              ]
+              ],
             },
             capital: {
               total_liquid: "0.0",
@@ -251,16 +251,16 @@ module TestCase
                   ccms_code: "DA001",
                   lower_threshold: "3000.0",
                   upper_threshold: "999999999999.0",
-                  result: "eligible"
+                  result: "eligible",
                 },
                 {
                   ccms_code: "SE013",
                   lower_threshold: "3000.0",
                   upper_threshold: "8000.0",
-                  result: "ineligible"
+                  result: "ineligible",
                 }
-              ]
-            }
+              ],
+            },
           },
           assessment: {
             id: "052c2dbc-947f-4d13-8b6f-9abc1a10cac2",
@@ -272,13 +272,13 @@ module TestCase
               involvement_type: "applicant",
               has_partner_opponent: false,
               receives_qualifying_benefit: false,
-              self_employed: false
+              self_employed: false,
             },
             gross_income: {
               irregular_income: {
                 monthly_equivalents: {
-                  student_loan: "100.0"
-                }
+                  student_loan: "100.0",
+                },
               },
               state_benefits: {
                 monthly_equivalents: {
@@ -288,10 +288,10 @@ module TestCase
                     {
                       name: "Child Benefit",
                       monthly_value: "200.0",
-                      excluded_from_income_assessment: false
+                      excluded_from_income_assessment: false,
                     }
-                  ]
-                }
+                  ],
+                },
               },
               other_income: {
                 monthly_equivalents: {
@@ -299,10 +299,10 @@ module TestCase
                     friends_or_family: "1244.0",
                     maintenance_in: "0.0",
                     property_or_lodger: "0.0",
-                    pension: "0.0"
-                  }
-                }
-              }
+                    pension: "0.0",
+                  },
+                },
+              },
             },
             disposable_income: {
               monthly_equivalents: {
@@ -310,26 +310,26 @@ module TestCase
                   child_care: "0.0",
                   rent_or_mortgage: "50.0",
                   maintenance_out: "0.0",
-                  legal_aid: "0.0"
+                  legal_aid: "0.0",
                 },
                 cash_transactions: {
                   child_care: "255.0",
                   rent_or_mortgage: "0.0",
                   maintenance_out: "0.0",
-                  legal_aid: "0.0"
+                  legal_aid: "0.0",
                 },
                 all_sources: {
                   child_care: "255.0",
                   rent_or_mortgage: "50.0",
                   maintenance_out: "400.0",
-                  legal_aid: "0.0"
-                }
+                  legal_aid: "0.0",
+                },
               },
               childcare_allowance: "0.0",
               deductions: {
                 dependants_allowance: "300.0",
-                disregarded_state_benefits: 0.0
-              }
+                disregarded_state_benefits: 0.0,
+              },
             },
             capital: {
               capital_items: {
@@ -346,7 +346,7 @@ module TestCase
                     date_of_purchase: "2018-05-20",
                     in_regular_use: false,
                     included_in_assessment: true,
-                    assessed_value: "9000.0"
+                    assessed_value: "9000.0",
                   }
                 ],
                 properties: {
@@ -361,11 +361,11 @@ module TestCase
                     net_value: "385000.0",
                     net_equity: "192500.0",
                     main_home_equity_disregard: "100000.0",
-                    assessed_equity: "92500.0"
+                    assessed_equity: "92500.0",
                   },
-                  additional_properties: []
-                }
-              }
+                  additional_properties: [],
+                },
+              },
 
             },
             remarks: {
@@ -379,10 +379,10 @@ module TestCase
                   e9260a99-db84-46ef-8c00-2682ac3bb9e1
                   9a6f8de4-f229-4816-9e67-5dcb04239a5f
                   424b9372-97d2-4bae-8c7c-91b803415ac1
-                ]
-              }
-            }
-          }
+                ],
+              },
+            },
+          },
         }
       end
 
@@ -391,11 +391,11 @@ module TestCase
         new_actual[:result_summary][:overall_result][:matter_types] = [
           {
             matter_type: "domestic_abuse",
-            result: "eligible"
+            result: "eligible",
           },
           {
             matter_type: "housing",
-            result: "eligible_with_contribution"
+            result: "eligible_with_contribution",
           }
         ]
         new_actual

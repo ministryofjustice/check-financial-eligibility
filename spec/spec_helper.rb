@@ -20,7 +20,7 @@ VCR.configure do |vcr_config|
   vcr_config.hook_into :webmock
   vcr_config.default_cassette_options = {
     record: vcr_record_mode,
-    match_requests_on: [:method, VCR.request_matchers.uri_without_param(:key)]
+    match_requests_on: [:method, VCR.request_matchers.uri_without_param(:key)],
   }
   vcr_config.ignore_hosts "www.googleapis.com"
   vcr_config.configure_rspec_metadata!

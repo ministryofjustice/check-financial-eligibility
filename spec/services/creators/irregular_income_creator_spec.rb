@@ -51,9 +51,9 @@ module Creators
           {
             income_type: student_loan,
             frequency:,
-            amount: 123_456.78
+            amount: 123_456.78,
           }
-        ]
+        ],
       }
     end
   end

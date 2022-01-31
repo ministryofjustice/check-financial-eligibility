@@ -23,7 +23,7 @@ module Decorators
           net_value: @record.net_value.to_f,
           net_equity: @record.net_equity.to_f,
           main_home_equity_disregard: @record.main_home_equity_disregard.to_f,
-          assessed_equity: @record.assessed_equity.to_f
+          assessed_equity: @record.assessed_equity.to_f,
         }
       end
     end

@@ -23,7 +23,7 @@ module Decorators
               DA003: "eligible",
               SE013: "ineligible",
               DA005: "eligible",
-              SE003: "ineligible"
+              SE003: "ineligible",
             }
           end
 
@@ -40,7 +40,7 @@ module Decorators
             {
               DA003: "contribution_required",
               SE013: "ineligible",
-              DA005: "eligible"
+              DA005: "eligible",
             }
           end
 

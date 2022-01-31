@@ -40,7 +40,7 @@ module Workflows
           assessed_capital: 0.0,
           lower_threshold: 3_000.0,
           upper_threshold: 8_000.0,
-          capital_contribution: 0.0
+          capital_contribution: 0.0,
         }
       end
     end

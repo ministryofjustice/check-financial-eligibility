@@ -15,7 +15,7 @@ module TestCase
         value: @value,
         outstanding_mortgage: @outstanding_mortgage,
         percentage_owned: @percentage_owned,
-        shared_with_housing_assoc: @shared_with_housing_assoc
+        shared_with_housing_assoc: @shared_with_housing_assoc,
       }
     end
 

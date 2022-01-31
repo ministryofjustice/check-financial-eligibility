@@ -29,7 +29,7 @@ module Decorators
           timestamp: Time.current,
           success: true,
           result_summary: ResultSummaryDecorator.new(assessment).as_json,
-          assessment: assessment_details
+          assessment: assessment_details,
         }
       end
 
@@ -42,7 +42,7 @@ module Decorators
           gross_income: GrossIncomeDecorator.new(@assessment).as_json,
           disposable_income: DisposableIncomeDecorator.new(@assessment).as_json,
           capital: CapitalDecorator.new(@assessment).as_json,
-          remarks: RemarksDecorator.new(remarks, assessment).as_json
+          remarks: RemarksDecorator.new(remarks, assessment).as_json,
         }
       end
     end

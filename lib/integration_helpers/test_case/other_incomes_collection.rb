@@ -11,7 +11,7 @@ module TestCase
 
     def payload
       {
-        other_incomes: @other_incomes.keys.map { |source| source_payload(source) }
+        other_incomes: @other_incomes.keys.map { |source| source_payload(source) },
       }
     end
 
@@ -24,7 +24,7 @@ module TestCase
     def source_payload(payment_source)
       {
         source: payment_source,
-        payments: @other_incomes[payment_source].map(&:payload)
+        payments: @other_incomes[payment_source].map(&:payload),
       }
     end
 

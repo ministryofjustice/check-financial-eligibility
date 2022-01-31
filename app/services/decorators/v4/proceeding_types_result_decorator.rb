@@ -15,7 +15,7 @@ module Decorators
         elig = @assessment.eligibilities.find_by(proceeding_type_code: ptc)
         {
           ccms_code: ptc,
-          result: elig.assessment_result
+          result: elig.assessment_result,
         }
       end
     end

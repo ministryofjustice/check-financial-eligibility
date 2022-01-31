@@ -34,7 +34,7 @@ module Decorators
                   gross: 1500.0,
                   tax: -495.0,
                   national_insurance: -150.0,
-                  net_employment_income: 855.0
+                  net_employment_income: 855.0,
                 },
                 {
                   date: 1.month.ago.strftime("%Y-%m-%d"),
@@ -42,7 +42,7 @@ module Decorators
                   gross: 1500.0,
                   tax: -495.0,
                   national_insurance: -150.0,
-                  net_employment_income: 855.0
+                  net_employment_income: 855.0,
                 },
                 {
                   date: 2.months.ago.strftime("%Y-%m-%d"),
@@ -50,9 +50,9 @@ module Decorators
                   gross: 1500.0,
                   tax: -495.0,
                   national_insurance: -150.0,
-                  net_employment_income: 855.0
+                  net_employment_income: 855.0,
                 }
-              ]
+              ],
             },
             {
               name: employment2.name,
@@ -63,7 +63,7 @@ module Decorators
                   gross: 1500.0,
                   tax: -495.0,
                   national_insurance: -150.0,
-                  net_employment_income: 855.0
+                  net_employment_income: 855.0,
                 },
                 {
                   date: 1.month.ago.strftime("%Y-%m-%d"),
@@ -71,7 +71,7 @@ module Decorators
                   gross: 1500.0,
                   tax: -495.0,
                   national_insurance: -150.0,
-                  net_employment_income: 855.0
+                  net_employment_income: 855.0,
                 },
                 {
                   date: 2.months.ago.strftime("%Y-%m-%d"),
@@ -79,16 +79,16 @@ module Decorators
                   gross: 1500.0,
                   tax: -495.0,
                   national_insurance: -150.0,
-                  net_employment_income: 855.0
+                  net_employment_income: 855.0,
                 }
-              ]
+              ],
             }
           ],
           irregular_income: {
             monthly_equivalents:
               {
-                student_loan: 250.0
-              }
+                student_loan: 250.0,
+              },
           },
           state_benefits: {
             monthly_equivalents: {
@@ -98,15 +98,15 @@ module Decorators
                 {
                   name: "Universal Credit",
                   monthly_value: 979.33,
-                  excluded_from_income_assessment: false
+                  excluded_from_income_assessment: false,
                 },
                 {
                   name: "Child Benefit",
                   monthly_value: 343.27,
-                  excluded_from_income_assessment: false
+                  excluded_from_income_assessment: false,
                 }
-              ]
-            }
+              ],
+            },
           },
           other_income: {
             monthly_equivalents: {
@@ -114,22 +114,22 @@ module Decorators
                 friends_or_family: 50.0,
                 maintenance_in: 350.0,
                 property_or_lodger: 250.0,
-                pension: 0.0
+                pension: 0.0,
               },
               bank_transactions: {
                 friends_or_family: 0.0,
                 maintenance_in: 200.0,
                 property_or_lodger: 250.0,
-                pension: 0.0
+                pension: 0.0,
               },
               cash_transactions: {
                 friends_or_family: 50.0,
                 maintenance_in: 150.0,
                 property_or_lodger: 0.0,
-                pension: 0.0
-              }
-            }
-          }
+                pension: 0.0,
+              },
+            },
+          },
         }
       end
 

@@ -12,7 +12,7 @@ module Decorators
           expect(Calculators::DisregardedStateBenefitsCalculator).to receive(:call).with(record).and_return(587.00)
           expected_hash = {
             dependants_allowance: 1283.66,
-            disregarded_state_benefits: 587.00
+            disregarded_state_benefits: 587.00,
           }
           expect(subject).to eq expected_hash
         end

@@ -284,13 +284,6 @@ Style/TrailingCommaInArguments:
 Style/TrailingCommaInArrayLiteral:
   Enabled: false
 
-# Offense count: 510
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyleForMultiline.
-# SupportedStylesForMultiline: comma, consistent_comma, no_comma
-Style/TrailingCommaInHashLiteral:
-  Enabled: false
-
 # Offense count: 49
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, MinSize, WordRegex.

@@ -18,9 +18,9 @@ module TestCase
           {
             income_type: @description,
             frequency: @frequency,
-            amount: @amount
+            amount: @amount,
           }
-        ]
+        ],
       }
     end
 

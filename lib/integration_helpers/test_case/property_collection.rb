@@ -15,8 +15,8 @@ module TestCase
       {
         properties: {
           main_home: main_home.payload,
-          additional_properties: additional_properties.map(&:payload)
-        }
+          additional_properties: additional_properties.map(&:payload),
+        },
       }
     end
 

@@ -11,7 +11,7 @@ RSpec.describe Assessment, type: :model do
           client_reference_id: "client-ref-1",
           submission_date: Date.current,
           remote_ip: "127.0.0.1",
-          version: "3"
+          version: "3",
         }
       end
 
@@ -30,7 +30,7 @@ RSpec.describe Assessment, type: :model do
         submission_date: Date.current,
         proceeding_type_codes: ccms_codes,
         remote_ip: "127.0.0.1",
-        version: "4"
+        version: "4",
       }
     end
 
@@ -81,7 +81,7 @@ RSpec.describe Assessment, type: :model do
         client_reference_id: "client-ref-1",
         submission_date: Date.current,
         matter_proceeding_type: "domestic_abuse",
-        version: "3"
+        version: "3",
       }
     end
 

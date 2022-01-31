@@ -16,7 +16,7 @@ module Decorators
           pensioner_capital_disregard: summary.pensioner_capital_disregard.to_f,
           capital_contribution: summary.capital_contribution.to_f,
           assessed_capital: summary.assessed_capital.to_f,
-          proceeding_types: proceeding_type_results
+          proceeding_types: proceeding_type_results,
         }
       end
 
@@ -36,7 +36,7 @@ module Decorators
           ccms_code: ptc.to_s,
           lower_threshold: elig.lower_threshold.to_f,
           upper_threshold: elig.upper_threshold.to_f,
-          result: elig.assessment_result
+          result: elig.assessment_result,
         }
       end
     end

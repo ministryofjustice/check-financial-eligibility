@@ -42,7 +42,7 @@ module Decorators
               net_value: 697_523.0,
               net_equity: 697_523.0,
               main_home_equity_disregard: 100_000,
-              assessed_equity: 597_523.0
+              assessed_equity: 597_523.0,
             }
             expect(subject).to eq expected_hash
           end

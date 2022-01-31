@@ -9,7 +9,7 @@ module Collators
       pensioner_capital_disregard: "pensioner_capital_disregard",
       total_capital: "total_capital",
       assessed_capital: "assessed_capital",
-      capital_contribution: "capital_contribution"
+      capital_contribution: "capital_contribution",
     }.freeze
 
     def call

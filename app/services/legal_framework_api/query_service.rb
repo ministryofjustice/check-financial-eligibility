@@ -3,7 +3,7 @@ module LegalFrameworkAPI
     ENDPOINT = "proceeding_types/threshold_waivers".freeze
     MATTER_TYPES_MAP = {
       "Domestic abuse" => "domestic_abuse",
-      "Children - section 8" => "section8"
+      "Children - section 8" => "section8",
     }.freeze
 
     @proceeding_types = {}
@@ -118,7 +118,7 @@ module LegalFrameworkAPI
     def request_body
       {
         request_id: SecureRandom.uuid,
-        proceeding_types: [@ccms_code]
+        proceeding_types: [@ccms_code],
       }.to_json
     end
 
@@ -128,7 +128,7 @@ module LegalFrameworkAPI
 
     def headers
       {
-        "Content-Type" => "application/json"
+        "Content-Type" => "application/json",
       }
     end
   end

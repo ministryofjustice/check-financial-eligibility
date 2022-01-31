@@ -8,7 +8,7 @@ RSpec.describe DependantsController, type: :request do
     let(:headers) { { "CONTENT_TYPE" => "application/json" } }
     let(:request_payload) do
       {
-        dependants: dependants_attributes
+        dependants: dependants_attributes,
       }
     end
 

@@ -3,7 +3,7 @@ module Utilities
     EXPECTED_NUMBER_OF_DATES = {
       7 => [12, 13],
       14 => [6, 7],
-      28 => [3, 4]
+      28 => [3, 4],
     }.freeze
 
     # Given a period (7, 14, 28) and an array of dates, returns true if those dates, after taking into account bank holidays,

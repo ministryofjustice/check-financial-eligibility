@@ -8,7 +8,7 @@ module Decorators
       def as_json
         {
           description: @record.description,
-          value: @record.value
+          value: @record.value,
         }
       end
     end
