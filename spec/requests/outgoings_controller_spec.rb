@@ -96,7 +96,7 @@ RSpec.describe OutgoingsController, type: :request do
         expect(parsed_response).to eq(errors: ["Missing parameter client_id"], success: false)
       end
 
-      it 'does not create outgoing records' do
+      it "does not create outgoing records" do
         expect { subject }.not_to change(Outgoings::BaseOutgoing, :count)
       end
     end
@@ -116,7 +116,7 @@ RSpec.describe OutgoingsController, type: :request do
       end
     end
 
-    context 'with a failure to save' do
+    context "with a failure to save" do
       let(:service) { instance_double Creators::OutgoingsCreator, success?: false, errors: [:foo] }
 
       before do

@@ -43,11 +43,11 @@ RSpec.describe AssessmentsController, type: :request do
 
       context "Active Record Error in service" do
         let(:before_request) do
-          creation_service = instance_double Creators::AssessmentCreator, success?: false, errors: ['error creating record']
+          creation_service = instance_double Creators::AssessmentCreator, success?: false, errors: ["error creating record"]
           allow(Creators::AssessmentCreator).to receive(:call).and_return(creation_service)
         end
 
-        it 'returns http unprocessable_entity' do
+        it "returns http unprocessable_entity" do
           expect(response).to have_http_status(:unprocessable_entity)
         end
 
@@ -149,15 +149,9 @@ RSpec.describe AssessmentsController, type: :request do
         let(:is_version3) { true }
         let(:decorator) { instance_double Decorators::V3::AssessmentDecorator }
 
-<<<<<<< HEAD:spec/requests/assessments_spec.rb
         it "calls the required services and uses the V3 decorator" do
-          expect(Decorators::V3::AssessmentDecorator).to receive(:new).with(assessment).and_return(decorator)
-          expect(decorator).to receive(:as_json).and_return("")
-=======
-        it 'calls the required services and uses the V3 decorator' do
           allow(Decorators::V3::AssessmentDecorator).to receive(:new).with(assessment).and_return(decorator)
-          allow(decorator).to receive(:as_json).and_return('')
->>>>>>> 330cbae (fix cop RSpec/FilePath and failures arising from those files now being linted):spec/requests/assessments_controller_spec.rb
+          allow(decorator).to receive(:as_json).and_return("")
 
           subject
         end
@@ -167,15 +161,9 @@ RSpec.describe AssessmentsController, type: :request do
         let(:is_version3) { false }
         let(:decorator) { instance_double Decorators::V4::AssessmentDecorator }
 
-<<<<<<< HEAD:spec/requests/assessments_spec.rb
         it "calls the required services and uses the V3 decorator" do
-          expect(Decorators::V4::AssessmentDecorator).to receive(:new).with(assessment).and_return(decorator)
-          expect(decorator).to receive(:as_json).and_return("")
-=======
-        it 'calls the required services and uses the V3 decorator' do
           allow(Decorators::V4::AssessmentDecorator).to receive(:new).with(assessment).and_return(decorator)
-          allow(decorator).to receive(:as_json).and_return('')
->>>>>>> 330cbae (fix cop RSpec/FilePath and failures arising from those files now being linted):spec/requests/assessments_controller_spec.rb
+          allow(decorator).to receive(:as_json).and_return("")
 
           subject
         end

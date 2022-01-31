@@ -7,9 +7,9 @@ module Decorators
       let(:assessment) { create :assessment, proceeding_type_codes: ptcs }
 
       before do
-        create :assessment_eligibility, assessment: assessment, proceeding_type_code: 'DA003', assessment_result: 'eligible'
-        create :assessment_eligibility, assessment: assessment, proceeding_type_code: 'DA005', assessment_result: 'eligible'
-        create :assessment_eligibility, assessment: assessment, proceeding_type_code: 'SE013', assessment_result: 'eligible'
+        create :assessment_eligibility, assessment: assessment, proceeding_type_code: "DA003", assessment_result: "eligible"
+        create :assessment_eligibility, assessment: assessment, proceeding_type_code: "DA005", assessment_result: "eligible"
+        create :assessment_eligibility, assessment: assessment, proceeding_type_code: "SE013", assessment_result: "eligible"
       end
 
       subject { described_class.new(assessment).as_json }

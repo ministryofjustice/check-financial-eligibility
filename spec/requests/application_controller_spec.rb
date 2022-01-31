@@ -5,7 +5,7 @@ class TestMockController < ::ApplicationController
     if params[:raise_error]
       35 / 0
     elsif params[:param_error]
-      raise Apipie::ParamError, 'The param error message'
+      raise Apipie::ParamError, "The param error message"
     else
       render_success
     end
@@ -15,7 +15,7 @@ end
 RSpec.describe ApplicationController, type: :request do
   before do
     Rails.application.routes.draw do
-      get '/my_test', to: 'test_mock#show'
+      get "/my_test", to: "test_mock#show"
     end
   end
 

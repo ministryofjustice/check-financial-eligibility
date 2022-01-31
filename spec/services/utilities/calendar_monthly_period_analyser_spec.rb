@@ -182,10 +182,10 @@ module Utilities
           end
         end
 
-        context 'bank holiday at end of date range' do
+        context "bank holiday at end of date range" do
           let(:dates) { make_dates(%w[2019-05-09 2019-06-09 2019-07-10]) }
 
-          context 'payment date is before holiday' do
+          context "payment date is before holiday" do
             let(:dates) { make_dates(%w[2019-05-09 2019-06-09 2019-07-08]) }
 
             it "returns true" do

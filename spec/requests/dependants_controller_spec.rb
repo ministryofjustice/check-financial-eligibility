@@ -58,7 +58,7 @@ RSpec.describe DependantsController, type: :request do
         expect(response).to have_http_status(:unprocessable_entity)
       end
 
-      it 'errors and is shown in apidocs', :show_in_doc do
+      it "errors and is shown in apidocs", :show_in_doc do
         expect(response).to have_http_status(:unprocessable_entity)
       end
 

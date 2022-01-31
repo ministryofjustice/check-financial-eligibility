@@ -53,6 +53,7 @@ RSpec/LeadingSubject:
 # Configuration parameters: IgnoreSharedExamples.
 RSpec/NamedSubject:
   Exclude:
+    - 'spec/integration_helpers/test_case/employment_collection_spec.rb'
     - 'spec/validators/uuid_validator_spec.rb'
     - 'spec/validators/date_validator_spec.rb'
     - 'spec/validators/currency_validator_spec.rb'

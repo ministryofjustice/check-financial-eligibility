@@ -36,7 +36,7 @@ RSpec.describe OtherIncomeSource, type: :model do
       end
     end
 
-    context 'unknown payment frequency' do
+    context "unknown payment frequency" do
       before do
         expect(analyser).to receive(:period_pattern).and_return(:unknown)
         OtherIncomePayment.delete_all
@@ -46,7 +46,7 @@ RSpec.describe OtherIncomeSource, type: :model do
         create :other_income_payment, other_income_source: source, payment_date: 45.days.ago.to_date, amount: 30.0
       end
 
-      it 'returns the average monthly payment over three months' do
+      it "returns the average monthly payment over three months" do
         expect(source.reload.calculate_monthly_income!).to eq 180.52
       end
     end

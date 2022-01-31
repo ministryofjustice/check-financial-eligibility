@@ -68,7 +68,7 @@ module Collators
             end
           end
 
-          context 'monthly_student_loan exists' do
+          context "monthly_student_loan exists" do
             before { create :irregular_income_payment, gross_income_summary: gross_income_summary, amount: 12_000 }
 
             it "updates the gross income record with categorised monthly incomes" do
