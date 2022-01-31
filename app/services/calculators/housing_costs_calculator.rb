@@ -53,7 +53,7 @@ module Calculators
     end
 
     def all_board_and_lodging?
-      housing_cost_outgoings.map(&:housing_cost_type).all?('board_and_lodging')
+      housing_cost_outgoings.map(&:housing_cost_type).all?("board_and_lodging")
     end
 
     def should_halve_full_cost_minus_benefits?

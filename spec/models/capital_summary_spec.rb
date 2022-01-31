@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe CapitalSummary do
   let(:assessment) { create :assessment }
@@ -8,16 +8,16 @@ RSpec.describe CapitalSummary do
     create :capital_summary, assessment: assessment, properties: properties
   end
 
-  describe '#own_home' do
-    it 'returns nil' do
+  describe "#own_home" do
+    it "returns nil" do
       expect(capital_summary.main_home).to be_nil
     end
 
-    context 'a main home exists' do
+    context "a main home exists" do
       let(:main_home) { create :property, :main_home }
       let(:properties) { [main_home] + additional_properties }
 
-      it 'returns the main home property' do
+      it "returns the main home property" do
         expect(capital_summary.main_home).to eq main_home
       end
     end

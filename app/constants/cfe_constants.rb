@@ -1,8 +1,8 @@
 module CFEConstants
   # Versions
   #
-  DEFAULT_ASSESSMENT_VERSION = '3'.freeze
-  VALID_ASSESSMENT_VERSIONS = [DEFAULT_ASSESSMENT_VERSION, '4'].freeze
+  DEFAULT_ASSESSMENT_VERSION = "3".freeze
+  VALID_ASSESSMENT_VERSIONS = [DEFAULT_ASSESSMENT_VERSION, "4"].freeze
 
   # Income categories
   #
@@ -38,16 +38,16 @@ module CFEConstants
 
   # Irregular income categories and frequencies
   #
-  ANNUAL_FREQUENCY = 'annual'.freeze
-  STUDENT_LOAN = 'student_loan'.freeze
+  ANNUAL_FREQUENCY = "annual".freeze
+  STUDENT_LOAN = "student_loan".freeze
   VALID_IRREGULAR_INCOME_FREQUENCIES = [ANNUAL_FREQUENCY].freeze
   VALID_IRREGULAR_INCOME_TYPES = [STUDENT_LOAN].freeze
 
   # Date and bank holidays
   #
   DATE_REGEX = /^([12][9|0][0-9]{2}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01]))$/.freeze
-  GOVUK_BANK_HOLIDAY_API_URL = 'https://www.gov.uk/bank-holidays.json'.freeze
-  GOVUK_BANK_HOLIDAY_DEFAULT_GROUP = 'england-and-wales'.freeze
+  GOVUK_BANK_HOLIDAY_API_URL = "https://www.gov.uk/bank-holidays.json".freeze
+  GOVUK_BANK_HOLIDAY_DEFAULT_GROUP = "england-and-wales".freeze
 
   # Frequencies
   #

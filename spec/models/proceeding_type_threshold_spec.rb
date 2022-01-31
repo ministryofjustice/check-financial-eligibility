@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe ProceedingTypeThreshold do
   before(:each) { mock_lfa_responses }
@@ -13,60 +13,60 @@ RSpec.describe ProceedingTypeThreshold do
     described_class.value_for(ccms_code, threshold, date)
   end
 
-  describe '.value_for' do
+  describe ".value_for" do
     let(:ccms_code) { :DA005 }
     let(:threshold) { :capital_lower }
 
-    context 'not a waivable threshold' do
-      it 'forwards the request on to Threshold' do
+    context "not a waivable threshold" do
+      it "forwards the request on to Threshold" do
         expect(Threshold).to receive(:value_for).with(threshold, at: date)
         subject
       end
 
-      it 'gets standard value' do
+      it "gets standard value" do
         expect(subject).to eq 3_000
       end
     end
 
-    context 'waivable threshold' do
+    context "waivable threshold" do
       let(:threshold) { :capital_upper }
 
-      context 'waived ccms_code' do
+      context "waived ccms_code" do
         let(:ccms_code) { :DA020 }
 
-        it 'gets the infinite_gross_income_upper from Threshold' do
+        it "gets the infinite_gross_income_upper from Threshold" do
           expect(Threshold).to receive(:value_for).with(:infinite_gross_income_upper, at: date)
           subject
         end
 
-        it 'returns the infinite upper value' do
+        it "returns the infinite upper value" do
           expect(subject).to eq 999_999_999_999
         end
       end
 
-      context 'un-waived ccms code' do
+      context "un-waived ccms code" do
         let(:ccms_code) { :SE013 }
 
-        it 'gets passes the call to Threshold' do
+        it "gets passes the call to Threshold" do
           expect(Threshold).to receive(:value_for).with(threshold, at: date)
           subject
         end
 
-        it 'returns the threshold value' do
+        it "returns the threshold value" do
           expect(subject).to eq Threshold.value_for(threshold, at: date)
         end
       end
 
-      context 'invalid threshold' do
+      context "invalid threshold" do
         let(:threshold) { :minimum_wage }
         let(:ccms_code) { :DA003 }
 
-        it 'passes the call to Threshold' do
+        it "passes the call to Threshold" do
           expect(Threshold).to receive(:value_for).with(threshold, at: date)
           subject
         end
 
-        it 'returns the value that Threshold returned: nil' do
+        it "returns the value that Threshold returned: nil" do
           expect(subject).to be_nil
         end
       end

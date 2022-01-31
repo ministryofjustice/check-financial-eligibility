@@ -19,11 +19,11 @@ module Assessors
 
     def assessment_result(elig)
       if total_disposable_income <= elig.lower_threshold
-        'eligible'
+        "eligible"
       elsif total_disposable_income <= elig.upper_threshold
-        'contribution_required'
+        "contribution_required"
       else
-        'ineligible'
+        "ineligible"
       end
     end
 
@@ -36,7 +36,7 @@ module Assessors
     end
 
     def contribution_required?
-      eligibilities.map(&:assessment_result).include?('contribution_required')
+      eligibilities.map(&:assessment_result).include?("contribution_required")
     end
   end
 end

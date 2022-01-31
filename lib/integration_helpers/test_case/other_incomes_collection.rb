@@ -40,7 +40,7 @@ module TestCase
     end
 
     def extract_other_income_rows(rows)
-      row_index = rows.index { |r| r.first.present? && r.first != 'other_incomes' }
+      row_index = rows.index { |r| r.first.present? && r.first != "other_incomes" }
       rows.shift(row_index)
     end
 

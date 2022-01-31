@@ -1,8 +1,8 @@
-require 'rails_helper'
+require "rails_helper"
 
 module Utilities
   RSpec.describe PaymentPeriodDataExtractor do
-    it 'returns an array of dates and amounts' do
+    it "returns an array of dates and amounts" do
       payments = [
         create(:other_income_payment, payment_date: 2.months.ago.to_date, amount: 501.77),
         create(:other_income_payment, payment_date: 1.month.ago.to_date, amount: 502.66),

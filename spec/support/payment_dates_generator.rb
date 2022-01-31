@@ -1,4 +1,4 @@
-require 'date'
+require "date"
 
 # This class generates various payment frequences for all dates between RANGE_START and RANGE_END
 # and writes them to a CSV fixtures file for use by the payment_period_analyser_spec.rb
@@ -7,7 +7,7 @@ require 'date'
 #
 
 class PaymentDatesGenerator
-  FIXTURE_FILE = Rails.root.join('spec/fixtures/generated_payment_dates.csv')
+  FIXTURE_FILE = Rails.root.join("spec/fixtures/generated_payment_dates.csv")
 
   DateSet = Struct.new(:example_number, :period, :strategy, :dates) do
     def expected_result
@@ -15,11 +15,11 @@ class PaymentDatesGenerator
     end
 
     def to_a
-      [example_number, expected_result, period, description, strategy] + dates.map { |d| d.strftime('%Y-%m-%d') }
+      [example_number, expected_result, period, description, strategy] + dates.map { |d| d.strftime("%Y-%m-%d") }
     end
 
     def db_dates
-      dates.map { |d| d.strftime('%Y-%m-%d') }
+      dates.map { |d| d.strftime("%Y-%m-%d") }
     end
 
     def description
@@ -54,7 +54,7 @@ class PaymentDatesGenerator
   end
 
   def to_csv
-    CSV.open(FIXTURE_FILE, 'wb') do |csv|
+    CSV.open(FIXTURE_FILE, "wb") do |csv|
       csv << %w[test_number expected_result period description holiday_strategy date date date date date date date date date date date date date date date date]
       to_a.each { |line_array| csv << line_array }
     end
@@ -136,7 +136,7 @@ private
     when :next_working_day
       next_working_day(date)
     else
-      raise 'Unrecognised holiday_strategy'
+      raise "Unrecognised holiday_strategy"
     end
   end
 

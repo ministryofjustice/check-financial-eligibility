@@ -15,7 +15,7 @@ module Creators
   private
 
     def create_eligibility(ptc)
-      @assessment.eligibilities.create!(proceeding_type_code: ptc, assessment_result: 'pending')
+      @assessment.eligibilities.create!(proceeding_type_code: ptc, assessment_result: "pending")
     end
   end
 end

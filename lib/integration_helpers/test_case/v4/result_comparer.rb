@@ -10,7 +10,7 @@ module TestCase
         @expected = expected
         @verbosity = verbosity
         @result = true
-        @header_pattern = '%58s  %-26s %-s'
+        @header_pattern = "%58s  %-26s %-s"
       end
 
       def call
@@ -31,18 +31,18 @@ module TestCase
       end
 
       def print_headings
-        verbose format(@header_pattern, client_reference_id, 'Expected', 'Actual')
-        verbose format(@header_pattern, '', '=========', '=========')
+        verbose format(@header_pattern, client_reference_id, "Expected", "Actual")
+        verbose format(@header_pattern, "", "=========", "=========")
       end
 
       def print_mismatched_matter_types
-        verbose 'Matter type names do not match expected', :red
+        verbose "Matter type names do not match expected", :red
         verbose "  Expected: #{expected_matter_type_names.join(', ')}", :red
         verbose "  Actual  : #{actual_matter_type_names.join(', ')}", :red
       end
 
       def print_mismatched_proceeding_type_codes
-        verbose 'Proceeding type codes do not match expected', :red
+        verbose "Proceeding type codes do not match expected", :red
         verbose "  Expected: #{expected_proceeding_type_codes.join(', ')}", :red
         verbose "  Actual  : #{actual_proceeding_type_codes.join(', ')}", :red
       end
@@ -62,7 +62,7 @@ module TestCase
       end
 
       def compare_assessment
-        compare_and_print('assessment_result', actual_overall_result[:result], expected_assessment[:assessment_result])
+        compare_and_print("assessment_result", actual_overall_result[:result], expected_assessment[:assessment_result])
       end
 
       def compare_matter_types
@@ -83,13 +83,13 @@ module TestCase
 
       def compare_proceeding_type_detail(code, expected_result_hash)
         verbose "Proceeding_type #{code}", :green
-        compare_and_print('result', actual_proceeding_type_result(code), expected_result_hash[:result])
-        compare_and_print('capital lower threshold', actual_cap_result_for(code)[:lower_threshold], expected_result_hash[:capital_lower_threshold])
-        compare_and_print('capital upper threshold', actual_cap_result_for(code)[:upper_threshold], expected_result_hash[:capital_upper_threshold])
-        compare_and_print('gross income upper threshold', actual_gross_income_result_for(code)[:upper_threshold], expected_result_hash[:gross_income_upper_threshold])
-        compare_and_print('disposable income lower threshold', actual_disposable_income_result_for(code)[:lower_threshold],
+        compare_and_print("result", actual_proceeding_type_result(code), expected_result_hash[:result])
+        compare_and_print("capital lower threshold", actual_cap_result_for(code)[:lower_threshold], expected_result_hash[:capital_lower_threshold])
+        compare_and_print("capital upper threshold", actual_cap_result_for(code)[:upper_threshold], expected_result_hash[:capital_upper_threshold])
+        compare_and_print("gross income upper threshold", actual_gross_income_result_for(code)[:upper_threshold], expected_result_hash[:gross_income_upper_threshold])
+        compare_and_print("disposable income lower threshold", actual_disposable_income_result_for(code)[:lower_threshold],
                           expected_result_hash[:disposable_income_lower_threshold])
-        compare_and_print('disposable income upper threshold', actual_disposable_income_result_for(code)[:upper_threshold],
+        compare_and_print("disposable income upper threshold", actual_disposable_income_result_for(code)[:upper_threshold],
                           expected_result_hash[:disposable_income_upper_threshold])
       end
 
@@ -101,28 +101,28 @@ module TestCase
       end
 
       def compare_gross_income
-        puts 'Gross income >>>>>>>>>>>>>>>>>>>>>>>>>'.green unless silent?
-        compare_and_print('monthly other income', actual_gross_other_income, expected_gi_other_income)
-        compare_and_print('monthly state benefits', actual_gross_state_benefits, expected_gi_state_benefits)
-        compare_and_print('monthly student loan', actual_student_loan, expected_gi_student_loan)
-        compare_and_print('total gross income', actual_total_gross_income, expected_total_gross_income)
+        puts "Gross income >>>>>>>>>>>>>>>>>>>>>>>>>".green unless silent?
+        compare_and_print("monthly other income", actual_gross_other_income, expected_gi_other_income)
+        compare_and_print("monthly state benefits", actual_gross_state_benefits, expected_gi_state_benefits)
+        compare_and_print("monthly student loan", actual_student_loan, expected_gi_student_loan)
+        compare_and_print("total gross income", actual_total_gross_income, expected_total_gross_income)
       end
 
       def compare_disposable_income
-        puts 'Disposable income >>>>>>>>>>>>>>>>>>>>>>'.green unless silent?
-        compare_and_print('childcare', actual_disposable(:child_care), expected_disposable(:childcare))
-        compare_and_print('dependant allowance', actual_dependant_allowance, expected_disposable(:dependant_allowance))
-        compare_and_print('maintenance', actual_disposable(:maintenance_out), expected_disposable(:maintenance))
-        compare_and_print('gross_housing_costs', actual_disposable(:rent_or_mortgage), expected_disposable(:gross_housing_costs))
-        compare_and_print('housing benefit', disposable_income_result[:housing_benefit], expected_disposable(:housing_benefit))
-        compare_and_print('net housing costs', disposable_income_result[:net_housing_costs], expected_disposable(:net_housing_costs))
-        compare_and_print('total outgoings and allowances', disposable_income_result[:total_outgoings_and_allowances], expected_disposable(:total_outgoings_and_allowances))
-        compare_and_print('total disposable income', disposable_income_result[:total_disposable_income], expected_disposable(:total_disposable_income))
-        compare_and_print('income contribution', disposable_income_result[:income_contribution], expected_disposable(:income_contribution))
+        puts "Disposable income >>>>>>>>>>>>>>>>>>>>>>".green unless silent?
+        compare_and_print("childcare", actual_disposable(:child_care), expected_disposable(:childcare))
+        compare_and_print("dependant allowance", actual_dependant_allowance, expected_disposable(:dependant_allowance))
+        compare_and_print("maintenance", actual_disposable(:maintenance_out), expected_disposable(:maintenance))
+        compare_and_print("gross_housing_costs", actual_disposable(:rent_or_mortgage), expected_disposable(:gross_housing_costs))
+        compare_and_print("housing benefit", disposable_income_result[:housing_benefit], expected_disposable(:housing_benefit))
+        compare_and_print("net housing costs", disposable_income_result[:net_housing_costs], expected_disposable(:net_housing_costs))
+        compare_and_print("total outgoings and allowances", disposable_income_result[:total_outgoings_and_allowances], expected_disposable(:total_outgoings_and_allowances))
+        compare_and_print("total disposable income", disposable_income_result[:total_disposable_income], expected_disposable(:total_disposable_income))
+        compare_and_print("income contribution", disposable_income_result[:income_contribution], expected_disposable(:income_contribution))
       end
 
       def compare_capital
-        puts 'Capital >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'.green unless silent?
+        puts "Capital >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>".green unless silent?
         expected_capital.each do |key, value|
           compare_and_print(key, actual_capital[key], value)
         end

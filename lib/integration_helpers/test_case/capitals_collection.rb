@@ -27,7 +27,7 @@ module TestCase
     end
 
     def non_liquid_capital_payload
-      @capital['non_liquid_capital'].map(&:payload)
+      @capital["non_liquid_capital"].map(&:payload)
     end
 
     def populate_capitals(rows)
@@ -42,7 +42,7 @@ module TestCase
     end
 
     def extract_capital_rows(rows)
-      row_index = rows.index { |r| r.first.present? && r.first != 'capitals' }
+      row_index = rows.index { |r| r.first.present? && r.first != "capitals" }
       rows.shift(row_index)
     end
 

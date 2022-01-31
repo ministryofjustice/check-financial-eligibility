@@ -23,7 +23,7 @@ module MigrationHelpers
       assessment = Assessment.find(assessment_id)
       summary = klass.find_by(assessment_id:)
       return if summary.nil?
-      return if summary.assessment_result == 'migrated_to_eligibility'
+      return if summary.assessment_result == "migrated_to_eligibility"
 
       return unless summary.eligibilities.empty?
 
@@ -35,8 +35,8 @@ module MigrationHelpers
         summary.eligibilities.create!(proceeding_type_code: ptc,
                                       lower_threshold: summary.has_attribute?(:lower_threshold) ? summary.lower_threshold : nil,
                                       upper_threshold: summary.upper_threshold,
-                                      assessment_result: summary.assessment_result || 'pending')
-        summary.update!(assessment_result: 'migrated_to_eligibility')
+                                      assessment_result: summary.assessment_result || "pending")
+        summary.update!(assessment_result: "migrated_to_eligibility")
       end
     end
   end

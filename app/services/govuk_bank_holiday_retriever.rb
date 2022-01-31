@@ -16,7 +16,7 @@ class GovukBankHolidayRetriever
   def dates(group)
     return if data.empty?
 
-    data.dig(group, 'events')&.pluck('date')
+    data.dig(group, "events")&.pluck("date")
   end
 
 private

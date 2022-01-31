@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 module Decorators
   module V4
@@ -22,10 +22,10 @@ module Decorators
       let(:codes) { pt_results.keys }
       let(:pt_results) do
         {
-          DA003: [315, unlimited, 'contribution_required'],
-          DA005: [315, unlimited, 'contribution_required'],
-          SE003: [315, 733, 'ineligible'],
-          SE014: [315, 733, 'ineligible']
+          DA003: [315, unlimited, "contribution_required"],
+          DA005: [315, unlimited, "contribution_required"],
+          SE003: [315, 733, "ineligible"],
+          SE014: [315, 733, "ineligible"]
         }
       end
 
@@ -50,28 +50,28 @@ module Decorators
           income_contribution: 75.0,
           proceeding_types: [
             {
-              ccms_code: 'DA003',
+              ccms_code: "DA003",
               lower_threshold: 315.0,
               upper_threshold: 999_999_999_999.0,
-              result: 'contribution_required'
+              result: "contribution_required"
             },
             {
-              ccms_code: 'DA005',
+              ccms_code: "DA005",
               lower_threshold: 315.0,
               upper_threshold: 999_999_999_999.0,
-              result: 'contribution_required'
+              result: "contribution_required"
             },
             {
-              ccms_code: 'SE003',
+              ccms_code: "SE003",
               lower_threshold: 315.0,
               upper_threshold: 733.0,
-              result: 'ineligible'
+              result: "ineligible"
             },
             {
-              ccms_code: 'SE014',
+              ccms_code: "SE014",
               lower_threshold: 315.0,
               upper_threshold: 733.0,
-              result: 'ineligible'
+              result: "ineligible"
             }
           ]
         }
@@ -91,8 +91,8 @@ module Decorators
         end
       end
 
-      describe '#as_json' do
-        it 'returns the expected structure' do
+      describe "#as_json" do
+        it "returns the expected structure" do
           employment1
           employment2
           Calculators::EmploymentIncomeCalculator.call(assessment)

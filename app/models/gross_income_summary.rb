@@ -5,7 +5,7 @@ class GrossIncomeSummary < ApplicationRecord
   has_many :irregular_income_payments, dependent: :destroy
   has_many :cash_transaction_categories, dependent: :destroy
   has_many :eligibilities,
-           class_name: 'Eligibility::GrossIncome',
+           class_name: "Eligibility::GrossIncome",
            inverse_of: :gross_income_summary,
            foreign_key: :parent_id,
            dependent: :destroy

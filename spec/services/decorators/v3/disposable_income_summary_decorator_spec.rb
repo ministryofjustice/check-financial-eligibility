@@ -1,24 +1,24 @@
-require 'rails_helper'
+require "rails_helper"
 
 module Decorators
   module V3
     RSpec.describe DisposableIncomeSummaryDecorator do
-      describe '#as_json' do
+      describe "#as_json" do
         subject { described_class.new(disposable_income_summary).as_json }
 
-        context 'disposable income summary is nil' do
+        context "disposable income summary is nil" do
           let(:disposable_income_summary) { nil }
 
-          it 'returns nil' do
+          it "returns nil" do
             expect(subject).to be_nil
           end
         end
 
-        context 'disposable income summary exists' do
+        context "disposable income summary exists" do
           let(:disposable_income_summary) { create :disposable_income_summary, :with_everything, :with_eligibilities }
           let!(:gross_income_summary) { create :gross_income_summary, assessment: disposable_income_summary.assessment }
 
-          it 'has the expected keys in the response structure' do
+          it "has the expected keys in the response structure" do
             expected_keys = %i[
               monthly_equivalents
               childcare_allowance
@@ -39,7 +39,7 @@ module Decorators
             expect(subject[:monthly_equivalents].keys).to eq %i[bank_transactions cash_transactions all_sources]
           end
 
-          it 'has transaction types which contain all transaction categories' do
+          it "has transaction types which contain all transaction categories" do
             outgoings_keys = CFEConstants::VALID_OUTGOING_CATEGORIES.map(&:to_sym)
             expect(subject[:monthly_equivalents][:bank_transactions].keys).to eq outgoings_keys
             expect(subject[:monthly_equivalents][:cash_transactions].keys).to eq outgoings_keys

@@ -1,11 +1,11 @@
-require 'rails_helper'
+require "rails_helper"
 
 module Creators
   RSpec.describe IrregularIncomeCreator do
     let(:gross_income_summary) { create :gross_income_summary }
     let(:assessment) { gross_income_summary.assessment }
-    let(:frequency) { 'annual' }
-    let(:student_loan) { 'student_loan' }
+    let(:frequency) { "annual" }
+    let(:student_loan) { "student_loan" }
     let(:assessment_id) { assessment.id }
     let(:irregular_income) { irregular_income_params }
 
@@ -13,13 +13,13 @@ module Creators
 
     subject { described_class.call(assessment_id:, irregular_income:) }
 
-    describe '.call' do
-      context 'payload' do
-        it 'creates an irregular income payment' do
+    describe ".call" do
+      context "payload" do
+        it "creates an irregular income payment" do
           expect { subject }.to change(IrregularIncomePayment, :count).by(1)
         end
 
-        it 'creates a student loan payment' do
+        it "creates a student loan payment" do
           subject
           payment = IrregularIncomePayment.find_by(gross_income_summary_id: gross_income_summary.id)
           expect(payment.frequency).to eq frequency
@@ -28,19 +28,19 @@ module Creators
         end
       end
 
-      context 'empty payload' do
+      context "empty payload" do
         let(:irregular_income) { { payments: [] } }
 
-        it 'does not create any records' do
+        it "does not create any records" do
           expect { subject }.not_to change(IrregularIncomePayment, :count)
         end
       end
 
-      context 'invalid assessment id' do
-        let(:assessment_id) { 'abcd' }
+      context "invalid assessment id" do
+        let(:assessment_id) { "abcd" }
 
-        it 'returns an error' do
-          expect(subject.errors).to eq ['No such assessment id']
+        it "returns an error" do
+          expect(subject.errors).to eq ["No such assessment id"]
         end
       end
     end

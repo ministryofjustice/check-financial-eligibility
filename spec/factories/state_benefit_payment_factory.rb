@@ -7,7 +7,7 @@ FactoryBot.define do
     flags { nil }
 
     trait :with_multi_benefit_flag do
-      flags { ['multi_benefit'] }
+      flags { ["multi_benefit"] }
     end
   end
 end

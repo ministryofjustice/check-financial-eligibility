@@ -8,6 +8,6 @@ class CreateIrregularIncomePayments < ActiveRecord::Migration[6.0]
 
       t.timestamps
     end
-    add_index :irregular_income_payments, %i[gross_income_summary_id income_type], unique: true, name: 'irregular_income_payments_unique'
+    add_index :irregular_income_payments, %i[gross_income_summary_id income_type], unique: true, name: "irregular_income_payments_unique"
   end
 end

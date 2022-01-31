@@ -8,8 +8,8 @@ FactoryBot.define do
 
     after(:create) do |result, evaluator|
       if evaluator.disposable_monthly_income.present?
-        result.details['income'] = {} if result.details['income'].nil?
-        result.details['income']['monthly_disposable_income'] = evaluator.disposable_monthly_income
+        result.details["income"] = {} if result.details["income"].nil?
+        result.details["income"]["monthly_disposable_income"] = evaluator.disposable_monthly_income
       end
       result.save!
     end

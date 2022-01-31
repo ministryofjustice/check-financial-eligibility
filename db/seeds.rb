@@ -5,7 +5,7 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-Rails.logger.info 'Seeding started'
+Rails.logger.info "Seeding started"
 Seeder = Dibber::Seeder
 
 DELETED_STATE_BENEFITS = %w[
@@ -19,8 +19,8 @@ DELETED_STATE_BENEFITS = %w[
 
 StateBenefitType.where(label: DELETED_STATE_BENEFITS).map(&:destroy!)
 
-Seeder.new(StateBenefitType, 'data/state_benefit_types.yml', name_method: :label, overwrite: true).build
+Seeder.new(StateBenefitType, "data/state_benefit_types.yml", name_method: :label, overwrite: true).build
 
 puts Seeder.report
 Rails.logger.info Seeder.report.join("\n")
-Rails.logger.info 'Seeding completed'
+Rails.logger.info "Seeding completed"

@@ -4,8 +4,8 @@ module TestCase
   # and instantiate them as a TestCase::Workbook object, making each available through a .each method
   #
   class GroupRunner
-    DATA_DIR = Rails.root.join('tmp/integration_test_data')
-    MASTER_SHEET = 'AAA - CFE Integration Test master spreadsheet'.freeze
+    DATA_DIR = Rails.root.join("tmp/integration_test_data")
+    MASTER_SHEET = "AAA - CFE Integration Test master spreadsheet".freeze
 
     def initialize(verbosity_level, refresh)
       @verbosity_level = verbosity_level
@@ -28,14 +28,14 @@ module TestCase
 
     def parse_master_sheet
       master_spreadsheet = load_spreadsheet(MASTER_SHEET)
-      sheet = master_spreadsheet.sheet('Sheets to process')
+      sheet = master_spreadsheet.sheet("Sheets to process")
       sheet.map(&:first)
     end
 
     def local_spreadsheet_needs_replacing?(local, remote)
       return true unless File.exist?(local)
 
-      return true if @refresh == 'true'
+      return true if @refresh == "true"
 
       remote.modified_time > File.mtime(local)
     end
@@ -61,21 +61,21 @@ module TestCase
       return unless local_spreadsheet_needs_replacing?(local_file_name, google_sheet)
 
       puts "Refreshing spreadsheet #{google_sheet.name}"
-      google_sheet.export_as_file(local_file_name, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+      google_sheet.export_as_file(local_file_name, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
     end
 
     def google_secret
       {
-        type: 'service_account',
-        project_id: 'laa-apply-for-legal-aid',
+        type: "service_account",
+        project_id: "laa-apply-for-legal-aid",
         private_key_id: Rails.configuration.x.google_sheets.private_key_id,
         private_key: Rails.configuration.x.google_sheets.private_key,
         client_email: Rails.configuration.x.google_sheets.client_email,
         client_id: Rails.configuration.x.google_sheets.client_id,
-        auth_uri: 'https://accounts.google.com/o/oauth2/auth',
-        token_uri: 'https://oauth2.googleapis.com/token',
-        auth_provider_x509_cert_url: 'https://www.googleapis.com/oauth2/v1/certs',
-        client_x509_cert_url: 'https://www.googleapis.com/robot/v1/metadata/x509/laa-apply-service%40laa-apply-for-legal-aid.iam.gserviceaccount.com'
+        auth_uri: "https://accounts.google.com/o/oauth2/auth",
+        token_uri: "https://oauth2.googleapis.com/token",
+        auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs",
+        client_x509_cert_url: "https://www.googleapis.com/robot/v1/metadata/x509/laa-apply-service%40laa-apply-for-legal-aid.iam.gserviceaccount.com"
       }
     end
   end

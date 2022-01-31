@@ -1,11 +1,11 @@
 FactoryBot.define do
   factory :assessment do
-    sequence(:client_reference_id) { |n| format('CLIENT-REF-%<number>04d', number: n) }
+    sequence(:client_reference_id) { |n| format("CLIENT-REF-%<number>04d", number: n) }
     remote_ip { Faker::Internet.ip_v4_address }
     submission_date { Date.current }
-    matter_proceeding_type { 'domestic_abuse' }
-    proceeding_type_codes { ['DA001'] }
-    version { '3' }
+    matter_proceeding_type { "domestic_abuse" }
+    proceeding_type_codes { ["DA001"] }
+    version { "3" }
 
     trait :with_applicant do
       applicant { create :applicant, :under_pensionable_age }

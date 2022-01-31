@@ -1,9 +1,9 @@
 class AssessmentResponseFixture < BaseAssessmentFixture
   def self.ruby_hash
     {
-      assessment_id: 'e34ce98e-8cfa-4a41-a011-7a15a6724b82',
-      client_reference_id: 'client-ref-1',
-      result: 'eligible',
+      assessment_id: "e34ce98e-8cfa-4a41-a011-7a15a6724b82",
+      client_reference_id: "client-ref-1",
+      result: "eligible",
       details: {
         passported: true,
         self_employed: false,
@@ -82,8 +82,8 @@ class AssessmentResponseFixture < BaseAssessmentFixture
         }
       },
       errors: [
-        'This is error message 1',
-        'This is error message 2'
+        "This is error message 1",
+        "This is error message 2"
       ]
     }
   end

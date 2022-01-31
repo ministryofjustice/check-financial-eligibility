@@ -15,7 +15,7 @@ Rails.application.configure do
   # Configure public file server for tests with Cache-Control for performance.
   config.public_file_server.enabled = true
   config.public_file_server.headers = {
-    'Cache-Control' => "public, max-age=#{1.hour.to_i}"
+    "Cache-Control" => "public, max-age=#{1.hour.to_i}"
   }
 
   # Show full error reports and disable caching.
@@ -44,8 +44,8 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
-  config.x.google_sheets.private_key_id = ENV['PRIVATE_KEY_ID']
-  config.x.google_sheets.private_key =  ENV['PRIVATE_KEY'].gsub('\\n', "\n")
-  config.x.google_sheets.client_email = ENV['CLIENT_EMAIL']
-  config.x.google_sheets.client_id = ENV['CLIENT_ID']
+  config.x.google_sheets.private_key_id = ENV["PRIVATE_KEY_ID"]
+  config.x.google_sheets.private_key =  ENV["PRIVATE_KEY"].gsub('\\n', "\n")
+  config.x.google_sheets.client_email = ENV["CLIENT_EMAIL"]
+  config.x.google_sheets.client_id = ENV["CLIENT_ID"]
 end

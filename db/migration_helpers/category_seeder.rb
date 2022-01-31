@@ -15,10 +15,10 @@ module MigrationHelpers
 
     def run
       StateBenefitType.where(label: DELETED_STATE_BENEFITS).map(&:destroy!)
-      Dibber::Seeder.new(StateBenefitType, 'data/state_benefit_types.yml', name_method: :label, overwrite: true).build
+      Dibber::Seeder.new(StateBenefitType, "data/state_benefit_types.yml", name_method: :label, overwrite: true).build
       puts Dibber::Seeder.report
       Rails.logger.info Dibber::Seeder.report.join("\n")
-      Rails.logger.info 'Seeding completed'
+      Rails.logger.info "Seeding completed"
     end
   end
 end

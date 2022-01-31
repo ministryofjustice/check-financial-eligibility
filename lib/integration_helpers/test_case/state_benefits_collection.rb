@@ -42,7 +42,7 @@ module TestCase
     end
 
     def extract_benefits_rows(rows)
-      row_index = rows.index { |r| r.first.present? && r.first != 'state_benefits' }
+      row_index = rows.index { |r| r.first.present? && r.first != "state_benefits" }
       rows.shift(row_index)
     end
 

@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 module Collators
   RSpec.describe GrossIncomeCollator do
@@ -15,28 +15,28 @@ module Collators
                gross_income_summary: gross_income_summary,
                proceeding_type_code: ptc,
                upper_threshold: ProceedingTypeThreshold.value_for(ptc.to_sym, :gross_income_upper, assessment.submission_date),
-               assessment_result: 'pending'
+               assessment_result: "pending"
       end
     end
 
-    describe '.call' do
+    describe ".call" do
       subject { described_class.call assessment }
 
-      context 'only domestic abuse proceeding type codes' do
-        let(:proceeding_type_codes) { ['DA001'] }
+      context "only domestic abuse proceeding type codes" do
+        let(:proceeding_type_codes) { ["DA001"] }
 
-        context 'monthly_other_income' do
-          context 'there are no other income records' do
-            it 'set monthly other income to zero' do
+        context "monthly_other_income" do
+          context "there are no other income records" do
+            it "set monthly other income to zero" do
               subject
               expect(gross_income_summary.reload.monthly_other_income).to eq 0.0
             end
           end
 
-          context 'monthly_other_income_sources_exist' do
+          context "monthly_other_income_sources_exist" do
             before do
-              source1 = create :other_income_source, gross_income_summary: gross_income_summary, name: 'friends_or_family'
-              source2 = create :other_income_source, gross_income_summary: gross_income_summary, name: 'property_or_lodger'
+              source1 = create :other_income_source, gross_income_summary: gross_income_summary, name: "friends_or_family"
+              source2 = create :other_income_source, gross_income_summary: gross_income_summary, name: "property_or_lodger"
               create :other_income_payment, other_income_source: source1, payment_date: Date.current, amount: 105.13
               create :other_income_payment, other_income_source: source1, payment_date: 1.month.ago.to_date, amount: 105.23
               create :other_income_payment, other_income_source: source1, payment_date: 1.month.ago.to_date, amount: 105.03
@@ -46,7 +46,7 @@ module Collators
               create :other_income_payment, other_income_source: source2, payment_date: 1.month.ago.to_date, amount: 66.45
             end
 
-            it 'updates the gross income record with categorised monthly incomes' do
+            it "updates the gross income record with categorised monthly incomes" do
               subject
               gross_income_summary.reload
               expect(gross_income_summary.benefits_all_sources).to be_zero
@@ -60,20 +60,20 @@ module Collators
           end
         end
 
-        context 'monthly_student_loan' do
-          context 'there are no irregular income payments' do
-            it 'set monthly student loan to zero' do
+        context "monthly_student_loan" do
+          context "there are no irregular income payments" do
+            it "set monthly student loan to zero" do
               subject
               expect(gross_income_summary.reload.monthly_student_loan).to eq 0.0
             end
           end
 
-          context 'monthly_student_loan exists' do
+          context "monthly_student_loan exists" do
             let!(:irregular_income_payments) do
               create :irregular_income_payment, gross_income_summary: gross_income_summary, amount: 12_000
             end
 
-            it 'updates the gross income record with categorised monthly incomes' do
+            it "updates the gross income record with categorised monthly incomes" do
               subject
               gross_income_summary.reload
               expect(gross_income_summary.benefits_all_sources).to be_zero
@@ -86,7 +86,7 @@ module Collators
           end
         end
 
-        context 'bank and cash transactions' do
+        context "bank and cash transactions" do
           let(:assessment) { create :assessment, :with_applicant, :with_gross_income_summary_and_records }
 
           before do
@@ -94,7 +94,7 @@ module Collators
             gross_income_summary.reload
           end
 
-          it 'updates with totals for all categories based on bank and cash transactions' do
+          it "updates with totals for all categories based on bank and cash transactions" do
             benefits_total = gross_income_summary.benefits_bank + gross_income_summary.benefits_cash
             friends_or_family_total = gross_income_summary.friends_or_family_bank + gross_income_summary.friends_or_family_cash
             maintenance_in_total = gross_income_summary.maintenance_in_bank + gross_income_summary.maintenance_in_cash
@@ -108,7 +108,7 @@ module Collators
             expect(gross_income_summary.pension_all_sources).to eq pension_total
           end
 
-          it 'has a total gross income based on all sources and monthly student loan' do
+          it "has a total gross income based on all sources and monthly student loan" do
             all_sources_total = gross_income_summary.benefits_all_sources +
               gross_income_summary.friends_or_family_all_sources +
               gross_income_summary.maintenance_in_all_sources +
@@ -120,7 +120,7 @@ module Collators
           end
         end
 
-        context 'gross_employment_income' do
+        context "gross_employment_income" do
           let(:assessment) { create :assessment, :with_applicant, :with_gross_income_summary_and_employment, :with_disposable_income_summary }
           let(:displosable_income_summary) { assessment.disposable_income_summary }
 
@@ -130,15 +130,15 @@ module Collators
             displosable_income_summary.reload
           end
 
-          it 'has a total gross employed income' do
+          it "has a total gross employed income" do
             expect(gross_income_summary.gross_employment_income).to eq 1500
           end
 
-          it 'updates total gross income' do
+          it "updates total gross income" do
             expect(gross_income_summary.total_gross_income).to eq 1500
           end
 
-          it 'updates disposable income summary' do
+          it "updates disposable income summary" do
             expect(displosable_income_summary.employment_income_deductions).to eq(-645)
             expect(displosable_income_summary.tax).to eq(-495)
             expect(displosable_income_summary.national_insurance).to eq(-150)

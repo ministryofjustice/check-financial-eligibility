@@ -11,7 +11,7 @@ module Calculators
     end
 
     def run
-      raise 'Unrecognized frequency' unless @frequency.in?(CFEConstants::VALID_FREQUENCIES)
+      raise "Unrecognized frequency" unless @frequency.in?(CFEConstants::VALID_FREQUENCIES)
 
       @monthly_amount = __send__("process_#{@frequency}")
     end

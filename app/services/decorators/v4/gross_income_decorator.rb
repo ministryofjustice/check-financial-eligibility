@@ -44,7 +44,7 @@ module Decorators
 
       def employment_payment(payment)
         {
-          date: payment.date.strftime('%Y-%m-%d'),
+          date: payment.date.strftime("%Y-%m-%d"),
           gross: payment.gross_income.to_f,
           benefits_in_kind: payment.benefits_in_kind.to_f,
           tax: payment.tax.to_f,

@@ -3,7 +3,7 @@ module TestCase
     def initialize(row)
       @description = row[1]
       @amount = row[3]
-      @frequency = 'annual'
+      @frequency = "annual"
     end
 
     def url_method

@@ -6,10 +6,10 @@ class CapitalSummary < ApplicationRecord
   has_many :non_liquid_capital_items, dependent: :destroy
   has_many :vehicles, dependent: :destroy
   has_many :properties, dependent: :destroy
-  has_many :additional_properties, -> { additional }, inverse_of: :capital_summary, class_name: 'Property', dependent: :destroy
-  has_one :main_home, -> { main_home }, inverse_of: :capital_summary, class_name: 'Property', dependent: :destroy
+  has_many :additional_properties, -> { additional }, inverse_of: :capital_summary, class_name: "Property", dependent: :destroy
+  has_one :main_home, -> { main_home }, inverse_of: :capital_summary, class_name: "Property", dependent: :destroy
   has_many :eligibilities,
-           class_name: 'Eligibility::Capital',
+           class_name: "Eligibility::Capital",
            foreign_key: :parent_id,
            inverse_of: :capital_summary,
            dependent: :destroy

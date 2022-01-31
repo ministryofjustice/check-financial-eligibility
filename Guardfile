@@ -3,8 +3,8 @@ guard :rubocop, all_on_start: false do
   watch(%r{(?:.+/)?\.(rubocop|rubocop_todo)\.yml$}) { |m| File.dirname(m[0]) }
 end
 
-guard :rspec, cmd: 'VERBOSE=true bundle exec rspec', all_on_start: false do
-  require 'guard/rspec/dsl'
+guard :rspec, cmd: "VERBOSE=true bundle exec rspec", all_on_start: false do
+  require "guard/rspec/dsl"
   dsl = Guard::RSpec::Dsl.new(self)
 
   # Feel free to open issues for suggestions and improvements

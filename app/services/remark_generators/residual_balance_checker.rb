@@ -15,7 +15,7 @@ module RemarkGenerators
   private
 
     def residual_balance?
-      current_accounts = assessment.capital_items.where(description: 'Current accounts')
+      current_accounts = assessment.capital_items.where(description: "Current accounts")
       highest_current_account_balance = current_accounts.map(&:value).max || 0
       capital_exceeds_lower_threshold? && highest_current_account_balance.positive?
     end

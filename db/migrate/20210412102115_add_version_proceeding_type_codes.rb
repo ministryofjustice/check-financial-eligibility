@@ -4,7 +4,7 @@ class AddVersionProceedingTypeCodes < ActiveRecord::Migration[6.1]
     add_column :assessments, :proceeding_type_codes, :string
     change_column :assessments, :matter_proceeding_type, :string, null: true
 
-    execute 'UPDATE assessments SET version = 3'
+    execute "UPDATE assessments SET version = 3"
   end
 
   def down

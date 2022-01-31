@@ -1,9 +1,9 @@
 module LegalFrameworkAPI
   class QueryService
-    ENDPOINT = 'proceeding_types/threshold_waivers'.freeze
+    ENDPOINT = "proceeding_types/threshold_waivers".freeze
     MATTER_TYPES_MAP = {
-      'Domestic abuse' => 'domestic_abuse',
-      'Children - section 8' => 'section8'
+      "Domestic abuse" => "domestic_abuse",
+      "Children - section 8" => "section8"
     }.freeze
 
     @proceeding_types = {}
@@ -106,7 +106,7 @@ module LegalFrameworkAPI
     def post_request
       conn.post do |request|
         request.url ENDPOINT
-        request.headers['Content-Type'] = 'application/json'
+        request.headers["Content-Type"] = "application/json"
         request.body = request_body
       end
     end
@@ -128,7 +128,7 @@ module LegalFrameworkAPI
 
     def headers
       {
-        'Content-Type' => 'application/json'
+        "Content-Type" => "application/json"
       }
     end
   end

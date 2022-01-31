@@ -13,7 +13,7 @@ module TestCase
 
     def payload(date_field: :date)
       {
-        "#{date_field}": @date.strftime('%F'),
+        "#{date_field}": @date.strftime("%F"),
         amount: @amount,
         client_id: @client_id
       }

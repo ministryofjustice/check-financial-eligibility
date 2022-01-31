@@ -31,8 +31,8 @@ module Creators
       return unless errors.empty?
 
       ActiveRecord::Base.transaction do
-        @income.each { |category_hash| create_category(category_hash, 'credit') }
-        @outgoings.each { |category_hash| create_category(category_hash, 'debit') }
+        @income.each { |category_hash| create_category(category_hash, "credit") }
+        @outgoings.each { |category_hash| create_category(category_hash, "debit") }
       rescue StandardError => e
         errors << "#{e.class} :: #{e.message}\n#{e.backtrace.join("\n")}"
       end

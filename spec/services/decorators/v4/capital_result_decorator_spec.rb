@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 module Decorators
   module V4
@@ -7,8 +7,8 @@ module Decorators
       let(:assessment) { create :assessment, proceeding_type_codes: pt_results.keys }
       let(:pt_results) do
         {
-          DA001: [3000, unlimited, 'eligible'],
-          SE013: [3000, 8000, 'ineligible']
+          DA001: [3000, unlimited, "eligible"],
+          SE013: [3000, 8000, "ineligible"]
         }
       end
       let(:summary) do
@@ -38,16 +38,16 @@ module Decorators
           assessed_capital: 9_355,
           proceeding_types: [
             {
-              ccms_code: 'DA001',
+              ccms_code: "DA001",
               lower_threshold: 3_000.0,
               upper_threshold: 999_999_999_999.0,
-              result: 'eligible'
+              result: "eligible"
             },
             {
-              ccms_code: 'SE013',
+              ccms_code: "SE013",
               lower_threshold: 3_000.0,
               upper_threshold: 8_000.0,
-              result: 'ineligible'
+              result: "ineligible"
             }
           ]
         }
@@ -67,8 +67,8 @@ module Decorators
 
       subject { described_class.new(assessment).as_json }
 
-      describe '#as_json' do
-        it 'returns the expected structure' do
+      describe "#as_json" do
+        it "returns the expected structure" do
           expect(subject).to eq expected_result
         end
       end

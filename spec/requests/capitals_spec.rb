@@ -1,7 +1,7 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe CapitalsController, type: :request do
-  describe 'POST capital' do
+  describe "POST capital" do
     let(:assessment) { create :assessment, :with_capital_summary }
     let(:assessment_id) { assessment.id }
     let(:params) do
@@ -10,113 +10,113 @@ RSpec.describe CapitalsController, type: :request do
         non_liquid_capital: non_liquid_params
       }
     end
-    let(:headers) { { 'CONTENT_TYPE' => 'application/json' } }
+    let(:headers) { { "CONTENT_TYPE" => "application/json" } }
 
     subject { post assessment_capitals_path(assessment_id), params: params.to_json, headers: headers }
 
     before { subject }
 
-    context 'valid payload' do
-      context 'with both types of assets' do
-        it 'returns http success', :show_in_doc do
+    context "valid payload" do
+      context "with both types of assets" do
+        it "returns http success", :show_in_doc do
           expect(response).to have_http_status(:success)
         end
 
-        it 'generates a valid response' do
+        it "generates a valid response" do
           expect(parsed_response[:success]).to eq(true)
           expect(parsed_response[:errors]).to be_empty
         end
       end
 
-      context 'with only bank_accounts' do
+      context "with only bank_accounts" do
         let(:params) do
           {
             bank_accounts: bank_account_params
           }
         end
 
-        it 'returns http success' do
+        it "returns http success" do
           expect(response).to have_http_status(:success)
         end
 
-        it 'generates a valid response' do
+        it "generates a valid response" do
           expect(parsed_response[:success]).to eq(true)
           expect(parsed_response[:errors]).to be_empty
         end
 
-        it 'creates two LiquidCapitalItem records' do
+        it "creates two LiquidCapitalItem records" do
           expect(assessment.capital_summary.liquid_capital_items.size).to eq 2
         end
       end
 
-      context 'with only non-liquid assets' do
+      context "with only non-liquid assets" do
         let(:params) do
           {
             non_liquid_capital: non_liquid_params
           }
         end
 
-        it 'returns http success' do
+        it "returns http success" do
           expect(response).to have_http_status(:success)
         end
 
-        it 'generates a valid response' do
+        it "generates a valid response" do
           expect(parsed_response[:success]).to eq(true)
           expect(parsed_response[:errors]).to be_empty
         end
 
-        it 'creates 2 NonLiquidCapitalItem records' do
+        it "creates 2 NonLiquidCapitalItem records" do
           expect(assessment.capital_summary.non_liquid_capital_items.size).to eq 2
         end
       end
 
-      context 'empty payload' do
+      context "empty payload" do
         let(:params) { {} }
 
-        it 'returns http unprocessable entity' do
+        it "returns http unprocessable entity" do
           expect(response).to have_http_status(:success)
         end
 
-        it 'returns error payload' do
+        it "returns error payload" do
           expect(parsed_response[:success]).to eq(true)
           expect(parsed_response[:errors]).to be_empty
         end
       end
 
-      context 'Active Record error' do
+      context "Active Record error" do
         let(:assessment_id) { SecureRandom.uuid }
 
-        it 'errors and is shown in apidocs', :show_in_doc do
+        it "errors and is shown in apidocs", :show_in_doc do
           expect(response).to have_http_status(422)
         end
 
-        it_behaves_like 'it fails with message', 'No such assessment id'
+        it_behaves_like "it fails with message", "No such assessment id"
       end
     end
 
-    context 'invalid payload' do
-      context 'missing name on bank account' do
+    context "invalid payload" do
+      context "missing name on bank account" do
         let(:bank_account_params) { attributes_for_list(:liquid_capital_item, 2).map { |account| account.tap { |item| item.delete(:description) } } }
 
-        it_behaves_like 'it fails with message', 'Missing parameter description'
+        it_behaves_like "it fails with message", "Missing parameter description"
       end
 
-      context 'missing lowest balance on bank account' do
+      context "missing lowest balance on bank account" do
         let(:bank_account_params) { attributes_for_list(:liquid_capital_item, 2).map { |account| account.tap { |item| item.delete(:value) } } }
 
-        it_behaves_like 'it fails with message', 'Missing parameter value'
+        it_behaves_like "it fails with message", "Missing parameter value"
       end
 
-      context 'missing description on non_liquid capital' do
+      context "missing description on non_liquid capital" do
         let(:non_liquid_params) { attributes_for_list(:non_liquid_capital_item, 2).map { |nlc| nlc.tap { |item| item.delete(:description) } } }
 
-        it_behaves_like 'it fails with message', 'Missing parameter description'
+        it_behaves_like "it fails with message", "Missing parameter description"
       end
 
-      context 'missing value on non-liquid capital' do
+      context "missing value on non-liquid capital" do
         let(:non_liquid_params) { attributes_for_list(:non_liquid_capital_item, 2).map { |nlc| nlc.tap { |item| item.delete(:value) } } }
 
-        it_behaves_like 'it fails with message', 'Missing parameter value'
+        it_behaves_like "it fails with message", "Missing parameter value"
       end
     end
 
@@ -174,12 +174,12 @@ RSpec.describe CapitalsController, type: :request do
 
     def fake_asset_name
       [
-        'R.J.Ewing Trust',
-        'Ming Vase',
-        'Van Gogh Sunflowers',
-        'Aramco shares',
-        'FTSE tracker unit trust',
-        'Life Endowment Policy'
+        "R.J.Ewing Trust",
+        "Ming Vase",
+        "Van Gogh Sunflowers",
+        "Aramco shares",
+        "FTSE tracker unit trust",
+        "Life Endowment Policy"
       ].sample
     end
   end

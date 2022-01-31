@@ -1,6 +1,6 @@
 module Creators
   class AssessmentCreator < BaseCreator
-    SCHEMA_PATH = Rails.root.join('public/schemas/assessment.json').to_s
+    SCHEMA_PATH = Rails.root.join("public/schemas/assessment.json").to_s
 
     attr_reader :assessment_hash, :raw_post
 
@@ -41,7 +41,7 @@ module Creators
     end
 
     def ccms_codes_for_application
-      @version == '3' ? dummy_code_for_domestic_abuse : codes_from_post
+      @version == "3" ? dummy_code_for_domestic_abuse : codes_from_post
     end
 
     # For version 3, which are all single_proceeding type (domestic abuse),
@@ -49,7 +49,7 @@ module Creators
     # This allows us to treat both versions the same for determining thresholds.
     #
     def dummy_code_for_domestic_abuse
-      ['DA001']
+      ["DA001"]
     end
 
     def codes_from_post
