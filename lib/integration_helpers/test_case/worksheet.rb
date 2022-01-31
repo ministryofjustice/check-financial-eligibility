@@ -5,6 +5,7 @@ module TestCase
                 :capitals,
                 :cash_transactions,
                 :dependants,
+                :employment_income,
                 :expected_results,
                 :irregular_income,
                 :other_incomes,
@@ -21,6 +22,7 @@ module TestCase
       capitals
       cash_transactions
       dependants
+      employment_income
       irregular_income
       other_incomes
       outgoings
@@ -90,6 +92,10 @@ module TestCase
 
     def populate_dependants
       @dependants = TestCase::DependantCollection.new(@rows)
+    end
+
+    def populate_employment_income
+      @employment_income = TestCase::EmploymentCollection.new(@rows)
     end
 
     def populate_other_incomes

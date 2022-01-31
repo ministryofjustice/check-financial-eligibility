@@ -25,6 +25,7 @@ class Ispec
     display_help if @help
 
     command = "#{verbosity} #{freshness} #{target} bundle exec rspec spec/integration/test_runner_spec.rb"
+    puts command
     system command
   end
 
