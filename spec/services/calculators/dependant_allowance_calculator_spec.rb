@@ -3,7 +3,7 @@ require "rails_helper"
 module Calculators
   RSpec.describe DependantAllowanceCalculator do
     describe "#call" do
-      subject { described_class.new(dependant).call }
+      subject(:calculator) { described_class.new(dependant).call }
 
       before do
         allow_any_instance_of(described_class).to receive(:child_under_15_allowance).and_return 111.11
@@ -17,7 +17,7 @@ module Calculators
           let(:dependant) { create :dependant, :under15, monthly_income: 25.00 }
 
           it "returns the child under 15 allowance and does not subtract the income" do
-            expect(subject).to eq 111.11
+            expect(calculator).to eq 111.11
           end
         end
 
@@ -25,7 +25,7 @@ module Calculators
           let(:dependant) { create :dependant, :under15, monthly_income: 0.0 }
 
           it "returns the child under 15 allowance" do
-            expect(subject).to eq 111.11
+            expect(calculator).to eq 111.11
           end
         end
       end
@@ -35,7 +35,7 @@ module Calculators
           let(:dependant) { create :dependant, :aged15, monthly_income: 25.50 }
 
           it "returns the aged 15 allowance less the monthly income" do
-            expect(subject).to eq(222.22 - 25.50)
+            expect(calculator).to eq(222.22 - 25.50)
           end
         end
 
@@ -43,7 +43,7 @@ module Calculators
           let(:dependant) { create :dependant, :aged15, monthly_income: 250.00 }
 
           it "returns zero" do
-            expect(subject).to be_zero
+            expect(calculator).to be_zero
           end
         end
 
@@ -51,7 +51,7 @@ module Calculators
           let(:dependant) { create :dependant, :aged15, monthly_income: 30.55 }
 
           it "returns the aged 15 allowance less the monthly income" do
-            expect(subject).to eq(222.22 - 30.55)
+            expect(calculator).to eq(222.22 - 30.55)
           end
         end
       end
@@ -62,7 +62,7 @@ module Calculators
             let(:dependant) { create :dependant, :aged16or17, monthly_income: 0.0, in_full_time_education: true }
 
             it "returns the child 16 or over allowance with no income deduction" do
-              expect(subject).to eq 333.33
+              expect(calculator).to eq 333.33
             end
           end
 
@@ -70,7 +70,7 @@ module Calculators
             let(:dependant) { create :dependant, :aged16or17, monthly_income: 100.01, in_full_time_education: true }
 
             it "returns the child 16 or over with no income deduction" do
-              expect(subject).to eq(333.33 - 100.01)
+              expect(calculator).to eq(333.33 - 100.01)
             end
           end
 
@@ -78,7 +78,7 @@ module Calculators
             let(:dependant) { create :dependant, :aged16or17, monthly_income: 350.00, in_full_time_education: true }
 
             it "returns zero" do
-              expect(subject).to be_zero
+              expect(calculator).to be_zero
             end
           end
         end
@@ -88,7 +88,7 @@ module Calculators
             let(:dependant) { create :dependant, :aged16or17, monthly_income: 0.0, in_full_time_education: false }
 
             it "returns the adult allowance with no income deduction" do
-              expect(subject).to eq 444.44
+              expect(calculator).to eq 444.44
             end
           end
 
@@ -96,7 +96,7 @@ module Calculators
             let(:dependant) { create :dependant, :aged16or17, monthly_income: 100.22, in_full_time_education: false }
 
             it "returns the adult allowance with no income deduction" do
-              expect(subject).to eq(444.44 - 100.22)
+              expect(calculator).to eq(444.44 - 100.22)
             end
           end
         end
@@ -108,7 +108,7 @@ module Calculators
             let(:dependant) { create :dependant, :over18, monthly_income: 0.0, assets_value: 4_470 }
 
             it "returns the adult allowance with no deduction" do
-              expect(subject).to eq 444.44
+              expect(calculator).to eq 444.44
             end
           end
 
@@ -116,7 +116,7 @@ module Calculators
             let(:dependant) { create :dependant, :over18, monthly_income: 0.0, assets_value: 8_100 }
 
             it "returns the allowance of zero" do
-              expect(subject).to be_zero
+              expect(calculator).to be_zero
             end
           end
         end
@@ -126,7 +126,7 @@ module Calculators
             let(:dependant) { create :dependant, :over18, monthly_income: 0.0, assets_value: 8_100 }
 
             it "returns the allowance of zero" do
-              expect(subject).to eq 0.0
+              expect(calculator).to eq 0.0
             end
           end
         end
@@ -135,7 +135,7 @@ module Calculators
           let(:dependant) { create :dependant, :over18, monthly_income: 203.37, assets_value: 5_000 }
 
           it "returns the adult allowance with income deducted" do
-            expect(subject).to eq(444.44 - 203.37)
+            expect(calculator).to eq(444.44 - 203.37)
           end
         end
       end
@@ -145,7 +145,7 @@ module Calculators
     describe "retrieving threshold values" do
       let(:dependant) { create :dependant }
 
-      subject { described_class.new(dependant) }
+      subject(:calculator) { described_class.new(dependant) }
 
       context "before new allowances date" do
         before do
@@ -154,25 +154,25 @@ module Calculators
 
         describe "child_under_15_allowance" do
           it "returns the threshold value" do
-            expect(subject.child_under_15_allowance).to eq 296.65
+            expect(calculator.child_under_15_allowance).to eq 296.65
           end
         end
 
         describe "child_aged_15_allowance" do
           it "returns the threshold value" do
-            expect(subject.child_aged_15_allowance).to eq 296.65
+            expect(calculator.child_aged_15_allowance).to eq 296.65
           end
         end
 
         describe "child_16_and_over_allowance" do
           it "returns the threshold value" do
-            expect(subject.child_16_and_over_allowance).to eq 296.65
+            expect(calculator.child_16_and_over_allowance).to eq 296.65
           end
         end
 
         describe "adult_allowance" do
           it "returns the threshold value" do
-            expect(subject.adult_allowance).to eq 296.65
+            expect(calculator.adult_allowance).to eq 296.65
           end
         end
       end
@@ -184,25 +184,25 @@ module Calculators
 
         describe "child_under_15_allowance" do
           it "returns the threshold value" do
-            expect(subject.child_under_15_allowance).to eq 298.08
+            expect(calculator.child_under_15_allowance).to eq 298.08
           end
         end
 
         describe "child_aged_15_allowance" do
           it "returns the threshold value" do
-            expect(subject.child_aged_15_allowance).to eq 298.08
+            expect(calculator.child_aged_15_allowance).to eq 298.08
           end
         end
 
         describe "child_16_and_over_allowance" do
           it "returns the threshold value" do
-            expect(subject.child_16_and_over_allowance).to eq 298.08
+            expect(calculator.child_16_and_over_allowance).to eq 298.08
           end
         end
 
         describe "adult_allowance" do
           it "returns the threshold value" do
-            expect(subject.adult_allowance).to eq 298.08
+            expect(calculator.adult_allowance).to eq 298.08
           end
         end
       end

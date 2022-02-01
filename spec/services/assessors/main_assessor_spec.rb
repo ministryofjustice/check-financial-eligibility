@@ -12,13 +12,13 @@ module Assessors
              proceeding_type_codes: %w[DA003 SE014]
     end
 
-    subject { described_class.call(assessment) }
+    subject(:assessor) { described_class.call(assessment) }
 
     context "AssessmentProceedingTypeAssessor" do
       it "calls AssessmentProceedingTypeAssessor for each proceeding type code" do
         expect(AssessmentProceedingTypeAssessor).to receive(:call).with(assessment, "DA003")
         expect(AssessmentProceedingTypeAssessor).to receive(:call).with(assessment, "SE014")
-        subject
+        assessor
       end
     end
 
@@ -33,7 +33,7 @@ module Assessors
       it "calls the Results summarizer to update the assessment result" do
         expect(Utilities::ResultSummarizer).to receive(:call).with(%w[eligible ineligible]).and_call_original
 
-        subject
+        assessor
         expect(assessment.assessment_result).to eq "partially_eligible"
       end
     end

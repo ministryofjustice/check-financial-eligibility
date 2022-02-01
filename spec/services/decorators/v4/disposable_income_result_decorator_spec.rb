@@ -77,7 +77,7 @@ module Decorators
         }
       end
 
-      subject { described_class.new(assessment).as_json }
+      subject(:decorator) { described_class.new(assessment).as_json }
 
       before do
         pt_results.each do |ptc, details|
@@ -96,7 +96,7 @@ module Decorators
           employment1
           employment2
           Calculators::EmploymentIncomeCalculator.call(assessment)
-          expect(subject).to eq expected_result
+          expect(decorator).to eq expected_result
         end
       end
     end

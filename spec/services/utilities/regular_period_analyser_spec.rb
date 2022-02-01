@@ -4,7 +4,7 @@ module Utilities
   RSpec.describe RegularPeriodAnalyser do
     let(:bank_holidays) { %w[2019-07-09 2019-07-16 2019-07-23] }
 
-    subject { described_class.call(period, dates) }
+    subject(:analyser) { described_class.call(period, dates) }
 
     before do
       BankHoliday.create!(dates: bank_holidays)
@@ -17,7 +17,7 @@ module Utilities
         let(:dates) { regular_weekly_dates }
 
         it "returns true" do
-          expect(subject).to be true
+          expect(analyser).to be true
         end
       end
 
@@ -25,7 +25,7 @@ module Utilities
         let(:dates) { not_enough_weekly_dates }
 
         it "returns false" do
-          expect(subject).to be false
+          expect(analyser).to be false
         end
       end
 
@@ -33,7 +33,7 @@ module Utilities
         let(:dates) { not_regular_weekly_intervals }
 
         it "returns false" do
-          expect(subject).to be false
+          expect(analyser).to be false
         end
       end
 
@@ -44,7 +44,7 @@ module Utilities
           let(:dates) { weekly_payments_paid_before_bank_holiday }
 
           it "returns true" do
-            expect(subject).to be true
+            expect(analyser).to be true
           end
         end
 
@@ -52,7 +52,7 @@ module Utilities
           let(:dates) { weekly_payments_paid_after_bank_holiday }
 
           it "returns true" do
-            expect(subject).to be true
+            expect(analyser).to be true
           end
         end
       end
@@ -70,7 +70,7 @@ module Utilities
           let(:dates) { weekly_payments_paid_before_bank_holiday_at_start }
 
           it "returns true" do
-            expect(subject).to be true
+            expect(analyser).to be true
           end
         end
 
@@ -78,7 +78,7 @@ module Utilities
           let(:dates) { weekly_payments_paid_after_bank_holiday_at_start }
 
           it "returns true" do
-            expect(subject).to be true
+            expect(analyser).to be true
           end
         end
       end
@@ -90,7 +90,7 @@ module Utilities
           let(:dates) { weekly_payments_paid_before_bank_holiday_at_end }
 
           it "returns true" do
-            expect(subject).to be true
+            expect(analyser).to be true
           end
         end
 
@@ -98,7 +98,7 @@ module Utilities
           let(:dates) { weekly_payments_paid_after_bank_holiday_at_end }
 
           it "returns true" do
-            expect(subject).to be true
+            expect(analyser).to be true
           end
         end
       end
@@ -111,7 +111,7 @@ module Utilities
         let(:dates) { make_dates(%w[2020-07-09 2020-08-06 2020-09-03]) }
 
         it "returns true" do
-          expect(subject).to be true
+          expect(analyser).to be true
         end
       end
 
@@ -119,7 +119,7 @@ module Utilities
         let(:dates) { make_dates(%w[2020-07-10 2020-08-06 2020-09-03]) }
 
         it "returns false" do
-          expect(subject).to be false
+          expect(analyser).to be false
         end
       end
 
@@ -130,7 +130,7 @@ module Utilities
           let(:dates) { make_dates(%w[2020-07-08 2020-08-06 2020-09-03]) }
 
           it "returns true" do
-            expect(subject).to be true
+            expect(analyser).to be true
           end
         end
 
@@ -138,7 +138,7 @@ module Utilities
           let(:dates) { make_dates(%w[2020-07-10 2020-08-06 2020-09-03]) }
 
           it "returns true" do
-            expect(subject).to be true
+            expect(analyser).to be true
           end
         end
       end
@@ -150,7 +150,7 @@ module Utilities
           let(:dates) { make_dates(%w[2020-07-09 2020-08-05 2020-09-03]) }
 
           it "returns true" do
-            expect(subject).to be true
+            expect(analyser).to be true
           end
         end
 
@@ -158,7 +158,7 @@ module Utilities
           let(:dates) { make_dates(%w[2020-07-09 2020-08-07 2020-09-03]) }
 
           it "returns true" do
-            expect(subject).to be true
+            expect(analyser).to be true
           end
         end
       end

@@ -8,17 +8,17 @@ RSpec.describe IrregularIncomesController, type: :request do
     let(:params) { irregular_income_params }
     let(:headers) { { "CONTENT_TYPE" => "application/json" } }
 
-    subject { post assessment_irregular_incomes_path(assessment_id), params: params.to_json, headers: headers }
+    subject(:post_payload) { post assessment_irregular_incomes_path(assessment_id), params: params.to_json, headers: headers }
 
     context "valid payload" do
       it "returns http success", :show_in_doc do
-        subject
+        post_payload
         expect(response).to have_http_status(:success)
       end
 
       context "student_loan" do
         it "creates the required number of IrregularIncomePayment records" do
-          expect { subject }.to change(IrregularIncomePayment, :count).by(1)
+          expect { post_payload }.to change(IrregularIncomePayment, :count).by(1)
           payments = gross_income_summary.irregular_income_payments
           expect(payments[0].income_type).to eq CFEConstants::STUDENT_LOAN
           expect(payments[0].frequency).to eq CFEConstants::ANNUAL_FREQUENCY
@@ -27,7 +27,7 @@ RSpec.describe IrregularIncomesController, type: :request do
       end
 
       it "generates a valid response" do
-        subject
+        post_payload
         expect(parsed_response[:success]).to eq true
         expect(parsed_response[:errors]).to be_empty
       end
@@ -42,17 +42,17 @@ RSpec.describe IrregularIncomesController, type: :request do
         end
 
         it "returns unprocessable", :show_in_doc do
-          subject
+          post_payload
           expect(response).to have_http_status(:unprocessable_entity)
         end
 
         it "contains success false in the response body" do
-          subject
+          post_payload
           expect(parsed_response).to eq(errors: ["Missing parameter income_type"], success: false)
         end
 
         it "does not create irregular income payment record" do
-          expect { subject }.not_to change(IrregularIncomePayment, :count)
+          expect { post_payload }.not_to change(IrregularIncomePayment, :count)
         end
       end
 
@@ -64,27 +64,27 @@ RSpec.describe IrregularIncomesController, type: :request do
         end
 
         it "returns unsuccessful" do
-          subject
+          post_payload
           expect(response.status).to eq 422
         end
 
         it "contains success false in the response body" do
-          subject
+          post_payload
           expect(parsed_response[:success]).to be false
         end
 
         it "contains an error message" do
-          subject
+          post_payload
           expect(parsed_response[:errors].first).to match(/Invalid parameter 'income_type'/)
         end
 
         it "returns an error response" do
-          subject
+          post_payload
           expect(parsed_response).to eq(errors: ["Invalid parameter 'income_type' value \"imagined_type\": Must be one of: <code>student_loan</code>."], success: false)
         end
 
         it "does not create irregular income payments record" do
-          expect { subject }.not_to change(IrregularIncomePayment, :count)
+          expect { post_payload }.not_to change(IrregularIncomePayment, :count)
         end
       end
     end
@@ -93,12 +93,12 @@ RSpec.describe IrregularIncomesController, type: :request do
       let(:assessment_id) { SecureRandom.uuid }
 
       it "returns unsuccessful" do
-        subject
+        post_payload
         expect(response.status).to eq 422
       end
 
       it "contains success false in the response body" do
-        subject
+        post_payload
         expect(parsed_response).to eq(errors: ["No such assessment id"], success: false)
       end
     end

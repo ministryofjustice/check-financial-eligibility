@@ -4,13 +4,13 @@ module Decorators
   module V4
     RSpec.describe PropertyDecorator do
       describe "#as_json" do
-        subject { described_class.new(record).as_json }
+        subject(:decorator) { described_class.new(record).as_json }
 
         context "property is nil" do
           let(:record) { nil }
 
           it "returns nil" do
-            expect(subject).to be_nil
+            expect(decorator).to be_nil
           end
         end
 
@@ -44,7 +44,7 @@ module Decorators
               main_home_equity_disregard: 100_000,
               assessed_equity: 597_523.0,
             }
-            expect(subject).to eq expected_hash
+            expect(decorator).to eq expected_hash
           end
         end
       end

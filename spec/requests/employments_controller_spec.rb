@@ -8,23 +8,23 @@ RSpec.describe EmploymentsController, type: :request do
     let(:params) { employment_income_params }
     let(:headers) { { "CONTENT_TYPE" => "application/json" } }
 
-    subject { post assessment_employments_path(assessment_id), params: params.to_json, headers: headers }
+    subject(:post_payload) { post assessment_employments_path(assessment_id), params: params.to_json, headers: headers }
 
     context "valid payload" do
       context "with two employments" do
         it "returns http success", :show_in_doc do
-          subject
+          post_payload
           expect(response).to have_http_status(:success)
         end
 
         it "creates two employment income records with associated EmploymentPayment records" do
-          subject
+          post_payload
           expect(Employment.count).to eq 2
           expect(EmploymentPayment.count).to eq 6
         end
 
         it "generates a valid response" do
-          subject
+          post_payload
           expect(parsed_response[:success]).to eq true
           expect(parsed_response[:errors]).to be_empty
         end
@@ -40,21 +40,21 @@ RSpec.describe EmploymentsController, type: :request do
         end
 
         it "returns unsuccessful", :show_in_doc do
-          subject
+          post_payload
           expect(response.status).to eq 422
         end
 
         it "contains success false in the response body" do
-          subject
+          post_payload
           expect(parsed_response).to eq(errors: ["Missing parameter name"], success: false)
         end
 
         it "does not create any employment records" do
-          expect { subject }.not_to change(Employment, :count)
+          expect { post_payload }.not_to change(Employment, :count)
         end
 
         it "does not create employment payment records" do
-          expect { subject }.not_to change(EmploymentPayment, :count)
+          expect { post_payload }.not_to change(EmploymentPayment, :count)
         end
       end
     end
@@ -63,12 +63,12 @@ RSpec.describe EmploymentsController, type: :request do
       let(:assessment_id) { SecureRandom.uuid }
 
       it "returns unsuccessful" do
-        subject
+        post_payload
         expect(response.status).to eq 422
       end
 
       it "contains success false in the response body" do
-        subject
+        post_payload
         expect(parsed_response).to eq(errors: ["No such assessment id"], success: false)
       end
     end

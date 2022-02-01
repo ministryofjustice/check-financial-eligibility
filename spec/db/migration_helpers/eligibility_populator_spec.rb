@@ -7,11 +7,11 @@ RSpec.describe MigrationHelpers::EligibilityPopulator do
   let!(:assessment3) { create :assessment, :with_gross_income_summary, :with_disposable_income_summary, :with_capital_summary }
   let(:assessments) { [assessment1, assessment2, assessment3] }
 
-  subject { described_class.call }
+  subject(:populator) { described_class.call }
 
   context "migration has not yet been run" do
     it "has created a gross_income eligibility for each assessment" do
-      expect { subject }.to change { Eligibility::GrossIncome.count }.by(3)
+      expect { populator }.to change { Eligibility::GrossIncome.count }.by(3)
       assessments.each do |assessment|
         gis = assessment.gross_income_summary
         expect(gis.eligibilities.count).to eq 1
@@ -23,7 +23,7 @@ RSpec.describe MigrationHelpers::EligibilityPopulator do
     end
 
     it "has created a disposable income eligibility record for each assessment" do
-      expect { subject }.to change { Eligibility::DisposableIncome.count }.by(3)
+      expect { populator }.to change { Eligibility::DisposableIncome.count }.by(3)
       assessments.each do |assessment|
         dis = assessment.disposable_income_summary
         expect(dis.eligibilities.count).to eq 1
@@ -36,7 +36,7 @@ RSpec.describe MigrationHelpers::EligibilityPopulator do
     end
 
     it "has created a capital eligibility record for each assessment" do
-      expect { subject }.to change { Eligibility::Capital.count }.by(3)
+      expect { populator }.to change { Eligibility::Capital.count }.by(3)
       assessments.each do |assessment|
         cap = assessment.capital_summary
         expect(cap.eligibilities.count).to eq 1
@@ -50,12 +50,12 @@ RSpec.describe MigrationHelpers::EligibilityPopulator do
   end
 
   context "migration has already run once" do
-    before { subject }
+    before { populator }
 
     it "does not create additional eligibility records" do
-      expect { subject }.not_to change(Eligibility::GrossIncome, :count)
-      expect { subject }.not_to change(Eligibility::DisposableIncome, :count)
-      expect { subject }.not_to change(Eligibility::Capital, :count)
+      expect { populator }.not_to change(Eligibility::GrossIncome, :count)
+      expect { populator }.not_to change(Eligibility::DisposableIncome, :count)
+      expect { populator }.not_to change(Eligibility::Capital, :count)
     end
   end
 
@@ -65,9 +65,9 @@ RSpec.describe MigrationHelpers::EligibilityPopulator do
       GrossIncomeSummary.all.each { |rec| rec.update(assessment_result: "migrated_to_eligibility") }
       DisposableIncomeSummary.all.each { |rec| rec.update(assessment_result: "migrated_to_eligibility") }
 
-      expect { subject }.not_to change(Eligibility::GrossIncome, :count)
-      expect { subject }.not_to change(Eligibility::DisposableIncome, :count)
-      expect { subject }.not_to change(Eligibility::Capital, :count)
+      expect { populator }.not_to change(Eligibility::GrossIncome, :count)
+      expect { populator }.not_to change(Eligibility::DisposableIncome, :count)
+      expect { populator }.not_to change(Eligibility::Capital, :count)
     end
   end
 
@@ -79,7 +79,7 @@ RSpec.describe MigrationHelpers::EligibilityPopulator do
       expect(Eligibility::DisposableIncome.count).to eq 0
       expect(Eligibility::Capital.count).to eq 0
 
-      subject
+      populator
 
       # Eligibility records are only created for those assessments with summary records
       expect(Eligibility::GrossIncome.count).to eq 3

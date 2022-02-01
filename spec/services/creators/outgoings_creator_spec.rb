@@ -8,19 +8,19 @@ module Creators
       let(:housing_cost_type_rent) { "rent" }
       let(:housing_cost_type_mortgage) { "mortgage" }
 
-      subject { described_class.call(assessment_id: assessment.id, outgoings:) }
+      subject(:creator) { described_class.call(assessment_id: assessment.id, outgoings:) }
 
       it "creates a disposable_income_summary if one doesnt already exist" do
-        expect { subject }.to change(DisposableIncomeSummary, :count).by(1)
+        expect { creator }.to change(DisposableIncomeSummary, :count).by(1)
       end
 
       it "does not create an additional disposable_income_summary if one exists already" do
         assessment.create_disposable_income_summary
-        expect { subject }.not_to change(DisposableIncomeSummary, :count)
+        expect { creator }.not_to change(DisposableIncomeSummary, :count)
       end
 
       it "creates all the required outgoing records" do
-        expect { subject }.to change { Outgoings::BaseOutgoing.count }.by(6)
+        expect { creator }.to change { Outgoings::BaseOutgoing.count }.by(6)
 
         childcares = assessment.disposable_income_summary.childcare_outgoings.order(:payment_date)
         expect(childcares.first.payment_date).to eq Date.parse("2019-11-09")
@@ -47,7 +47,7 @@ module Creators
         let(:housing_cost_type_rent) { "xxxx" }
 
         it "doesnt create any outgoing records if there is an error" do
-          expect { subject }.to raise_error ArgumentError, "'xxxx' is not a valid housing_cost_type"
+          expect { creator }.to raise_error ArgumentError, "'xxxx' is not a valid housing_cost_type"
           expect(Outgoings::BaseOutgoing.count).to eq 0
         end
       end

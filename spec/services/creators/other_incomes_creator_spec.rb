@@ -6,7 +6,7 @@ module Creators
     let(:assessment) { gross_income_summary.assessment }
     let(:client_id) { [SecureRandom.uuid, SecureRandom.uuid].sample }
 
-    subject do
+    subject(:creator) do
       described_class.call(
         assessment_id: assessment.id,
         other_incomes: {
@@ -20,11 +20,11 @@ module Creators
         let(:other_income_params) { standard_params }
 
         it "creates two income source records" do
-          expect { subject }.to change(OtherIncomeSource, :count).by(2)
+          expect { creator }.to change(OtherIncomeSource, :count).by(2)
         end
 
         it "creates a maintenance_in source with three payments" do
-          subject
+          creator
           source_record = OtherIncomeSource.find_by(gross_income_summary_id: gross_income_summary.id, name: "pension")
           expect(source_record.other_income_payments.count).to eq 3
           expect(source_record.other_income_payments.map(&:amount)).to match_array([1046.44, 1034.33, 1033.44])
@@ -36,11 +36,11 @@ module Creators
         let(:other_income_params) { humanized_params }
 
         it "creates one income source record" do
-          expect { subject }.to change(OtherIncomeSource, :count).by(1)
+          expect { creator }.to change(OtherIncomeSource, :count).by(1)
         end
 
         it "creates a property_or_lodger with two payments" do
-          subject
+          creator
           source_record = OtherIncomeSource.find_by(gross_income_summary_id: gross_income_summary.id, name: "property_or_lodger")
           expect(source_record.other_income_payments.count).to eq 2
           expect(source_record.other_income_payments.map(&:amount)).to match_array([1200.0, 1200.01])
@@ -52,7 +52,7 @@ module Creators
         let(:other_income_params) { [] }
 
         it "does not create any records" do
-          expect { subject }.not_to change(OtherIncomeSource, :count)
+          expect { creator }.not_to change(OtherIncomeSource, :count)
         end
       end
 

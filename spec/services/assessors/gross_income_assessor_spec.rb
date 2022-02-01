@@ -6,13 +6,13 @@ module Assessors
     let(:gross_income_summary) { assessment.gross_income_summary }
 
     describe ".call" do
-      subject { described_class.call(assessment) }
+      subject(:assessor) { described_class.call(assessment) }
 
       context "gross income has been summarised" do
         context "monthly income below upper threshold" do
           it "is eligible" do
             set_gross_income_values gross_income_summary, 1_023, 0.0, 45.3, 2_567
-            subject
+            assessor
             expect(gross_income_summary.summarized_assessment_result).to eq :eligible
           end
         end
@@ -20,7 +20,7 @@ module Assessors
         context "monthly income equals upper threshold" do
           it "is not eligible" do
             set_gross_income_values gross_income_summary, 2_000, 0.0, 567.00, 2_567.00
-            subject
+            assessor
             expect(gross_income_summary.summarized_assessment_result).to eq :ineligible
           end
         end
@@ -28,7 +28,7 @@ module Assessors
         context "monthly income above upper threshold" do
           it "is not eligible" do
             set_gross_income_values gross_income_summary, 2_100.0, 0.0, 500.2, 2_567
-            subject
+            assessor
             expect(gross_income_summary.summarized_assessment_result).to eq :ineligible
           end
         end

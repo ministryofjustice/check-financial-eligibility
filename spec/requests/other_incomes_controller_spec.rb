@@ -10,24 +10,24 @@ RSpec.describe OtherIncomesController, type: :request do
     let(:params) { other_income_params  }
     let(:headers) { { "CONTENT_TYPE" => "application/json" } }
 
-    subject { post assessment_other_incomes_path(assessment_id), params: params.to_json, headers: headers }
+    subject(:post_payload) { post assessment_other_incomes_path(assessment_id), params: params.to_json, headers: headers }
 
     context "valid payload" do
       context "with two sources" do
         it "returns http success", :show_in_doc do
-          subject
+          post_payload
           expect(response).to have_http_status(:success)
         end
 
         it "creates two other income source records" do
-          expect { subject }.to change { gross_income_summary.other_income_sources.count }.by(2)
+          expect { post_payload }.to change { gross_income_summary.other_income_sources.count }.by(2)
           sources = gross_income_summary.other_income_sources.order(:name)
           expect(sources.first.name).to eq "friends_or_family"
           expect(sources.last.name).to eq "maintenance_in"
         end
 
         it "creates the required number of OtherIncomePayment record for each source" do
-          expect { subject }.to change(OtherIncomePayment, :count).by(6)
+          expect { post_payload }.to change(OtherIncomePayment, :count).by(6)
           source = gross_income_summary.other_income_sources.order(:name).first
           expect(source.other_income_payments.count).to eq 3
           payments = source.other_income_payments.order(:payment_date)
@@ -46,7 +46,7 @@ RSpec.describe OtherIncomesController, type: :request do
         end
 
         it "creates records with client id where specified" do
-          subject
+          post_payload
           source = gross_income_summary.other_income_sources.order(:name).last
           source.other_income_payments.each do |rec|
             expect(rec.client_id).to match UUID_REGEX
@@ -54,7 +54,7 @@ RSpec.describe OtherIncomesController, type: :request do
         end
 
         it "generates a valid response" do
-          subject
+          post_payload
           expect(parsed_response[:success]).to eq true
           expect(parsed_response[:errors]).to be_empty
         end
@@ -70,21 +70,21 @@ RSpec.describe OtherIncomesController, type: :request do
         end
 
         it "returns unsuccessful" do
-          subject
+          post_payload
           expect(response.status).to eq 422
         end
 
         it "contains success false in the response body" do
-          subject
+          post_payload
           expect(parsed_response).to eq(errors: ["Missing parameter source"], success: false)
         end
 
         it "does not create any other income source records" do
-          expect { subject }.not_to change(OtherIncomeSource, :count)
+          expect { post_payload }.not_to change(OtherIncomeSource, :count)
         end
 
         it "does not create any other income payment records" do
-          expect { subject }.not_to change(OtherIncomePayment, :count)
+          expect { post_payload }.not_to change(OtherIncomePayment, :count)
         end
       end
 
@@ -96,21 +96,21 @@ RSpec.describe OtherIncomesController, type: :request do
         end
 
         it "returns unsuccessful" do
-          subject
+          post_payload
           expect(response.status).to eq 422
         end
 
         it "contains success false in the response body" do
-          subject
+          post_payload
           expect(parsed_response).to eq(errors: ["Missing parameter client_id"], success: false)
         end
 
         it "does not create any other income source records" do
-          expect { subject }.not_to change(OtherIncomeSource, :count)
+          expect { post_payload }.not_to change(OtherIncomeSource, :count)
         end
 
         it "does not create any other income payment records" do
-          expect { subject }.not_to change(OtherIncomePayment, :count)
+          expect { post_payload }.not_to change(OtherIncomePayment, :count)
         end
       end
 
@@ -122,17 +122,17 @@ RSpec.describe OtherIncomesController, type: :request do
         end
 
         it "returns unsuccessful" do
-          subject
+          post_payload
           expect(response.status).to eq 422
         end
 
         it "contains success false in the response body" do
-          subject
+          post_payload
           expect(parsed_response[:success]).to be false
         end
 
         it "contains an error message" do
-          subject
+          post_payload
           expect(parsed_response[:errors].first).to match(/Invalid parameter 'source'/)
         end
       end
@@ -142,12 +142,12 @@ RSpec.describe OtherIncomesController, type: :request do
       let(:assessment_id) { SecureRandom.uuid }
 
       it "returns unsuccessful" do
-        subject
+        post_payload
         expect(response.status).to eq 422
       end
 
       it "contains success false in the response body" do
-        subject
+        post_payload
         expect(parsed_response).to eq(errors: ["No such assessment id"], success: false)
       end
     end

@@ -20,7 +20,7 @@ module Calculators
                housing_cost_type: housing_cost_type
       end
 
-      subject
+      calculator
       assessment.disposable_income_summary.reload
       @assessment = assessment
     end

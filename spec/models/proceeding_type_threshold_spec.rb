@@ -9,7 +9,7 @@ RSpec.describe ProceedingTypeThreshold do
   let(:all_codes) { waivable_codes + unwaivable_codes }
   let(:threshold_types) { %i[capital_upper gross_income_upper disposable_income_upper] }
 
-  subject do
+  subject(:threshold_value) do
     described_class.value_for(ccms_code, threshold, date)
   end
 
@@ -20,11 +20,11 @@ RSpec.describe ProceedingTypeThreshold do
     context "not a waivable threshold" do
       it "forwards the request on to Threshold" do
         expect(Threshold).to receive(:value_for).with(threshold, at: date)
-        subject
+        threshold_value
       end
 
       it "gets standard value" do
-        expect(subject).to eq 3_000
+        expect(threshold_value).to eq 3_000
       end
     end
 
@@ -36,11 +36,11 @@ RSpec.describe ProceedingTypeThreshold do
 
         it "gets the infinite_gross_income_upper from Threshold" do
           expect(Threshold).to receive(:value_for).with(:infinite_gross_income_upper, at: date)
-          subject
+          threshold_value
         end
 
         it "returns the infinite upper value" do
-          expect(subject).to eq 999_999_999_999
+          expect(threshold_value).to eq 999_999_999_999
         end
       end
 
@@ -49,11 +49,11 @@ RSpec.describe ProceedingTypeThreshold do
 
         it "gets passes the call to Threshold" do
           expect(Threshold).to receive(:value_for).with(threshold, at: date)
-          subject
+          threshold_value
         end
 
         it "returns the threshold value" do
-          expect(subject).to eq Threshold.value_for(threshold, at: date)
+          expect(threshold_value).to eq Threshold.value_for(threshold, at: date)
         end
       end
 
@@ -63,11 +63,11 @@ RSpec.describe ProceedingTypeThreshold do
 
         it "passes the call to Threshold" do
           expect(Threshold).to receive(:value_for).with(threshold, at: date)
-          subject
+          threshold_value
         end
 
         it "returns the value that Threshold returned: nil" do
-          expect(subject).to be_nil
+          expect(threshold_value).to be_nil
         end
       end
     end

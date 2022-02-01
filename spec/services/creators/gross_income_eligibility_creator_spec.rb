@@ -13,17 +13,17 @@ module Creators
       travel_back
     end
 
-    subject { described_class.call(assessment) }
+    subject(:creator) { described_class.call(assessment) }
 
     context "domestic abuse only" do
       let(:codes) { %w[DA001] }
 
       it "creates one eligibility record" do
-        expect { subject }.to change { Eligibility::GrossIncome.count }.by(1)
+        expect { creator }.to change { Eligibility::GrossIncome.count }.by(1)
       end
 
       it "creates a record with the expected thresholds" do
-        subject
+        creator
         elig = summary.eligibilities.find_by(proceeding_type_code: codes.first)
         expect(elig.upper_threshold).to eq 999_999_999_999.0
         expect(elig.assessment_result).to eq "pending"
@@ -34,7 +34,7 @@ module Creators
       let(:codes) { %w[SE013] }
 
       it "creates one eligibility record" do
-        expect { subject }.to change { Eligibility::GrossIncome.count }.by(1)
+        expect { creator }.to change { Eligibility::GrossIncome.count }.by(1)
       end
 
       context "two children" do
@@ -44,7 +44,7 @@ module Creators
         end
 
         it "creates a record with no uplifted threshold" do
-          subject
+          creator
           elig = summary.eligibilities.find_by(proceeding_type_code: codes.first)
           expect(elig.upper_threshold).to eq 2657.0
           expect(elig.assessment_result).to eq "pending"
@@ -59,7 +59,7 @@ module Creators
         end
 
         it "creates a record with the uplifted threshold" do
-          subject
+          creator
           elig = summary.eligibilities.find_by(proceeding_type_code: codes.first)
           expect(elig.upper_threshold).to eq expected_threshold
           expect(elig.assessment_result).to eq "pending"
@@ -71,7 +71,7 @@ module Creators
       let(:codes) { %w[DA001 DA005 SE003] }
 
       it "creates one eligibility record for each proceeding type" do
-        expect { subject }.to change { Eligibility::GrossIncome.count }.by(codes.size)
+        expect { creator }.to change { Eligibility::GrossIncome.count }.by(codes.size)
       end
     end
   end

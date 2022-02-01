@@ -7,11 +7,11 @@ module Calculators
     let(:assessment) { create :assessment, :with_gross_income_summary }
     let(:gross_income_summary) { assessment.gross_income_summary }
 
-    subject { described_class.call(assessment) }
+    subject(:collator) { described_class.call(assessment) }
 
     context "no state benefit records" do
       it "leaves the monthly state benefit value as zero" do
-        subject
+        collator
         expect(gross_income_summary.reload.monthly_state_benefits).to eq 0.0
       end
     end
@@ -28,7 +28,7 @@ module Calculators
 
       context "weekly payments" do
         it "returns correct total monthly state benefits" do
-          expect(subject).to eq 216.67
+          expect(collator).to eq 216.67
         end
       end
 
@@ -43,7 +43,7 @@ module Calculators
         end
 
         it "returns correct sum of both monthly and weekly benefits" do
-          expect(subject).to eq 304.97
+          expect(collator).to eq 304.97
         end
       end
 
@@ -58,7 +58,7 @@ module Calculators
         end
 
         it "returns correct sum amounts of only included benefits" do
-          expect(subject).to eq(216.67)
+          expect(collator).to eq(216.67)
         end
       end
     end

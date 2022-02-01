@@ -12,11 +12,11 @@ module Decorators
         create :assessment_eligibility, assessment: assessment, proceeding_type_code: "SE013", assessment_result: "eligible"
       end
 
-      subject { described_class.new(assessment).as_json }
+      subject(:decorator) { described_class.new(assessment).as_json }
 
       describe "#as_json" do
         it "returns an array with three elements" do
-          expect(subject).to eq [
+          expect(decorator).to eq [
             { ccms_code: "DA003", result: "eligible" },
             { ccms_code: "DA005", result: "eligible" },
             { ccms_code: "SE013", result: "eligible" }

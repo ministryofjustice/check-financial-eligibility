@@ -139,12 +139,12 @@ module Decorators
           create :state_benefit, state_benefit_type: child_benefit, gross_income_summary: summary, monthly_value: 343.27
         end
 
-        subject { described_class.new(assessment).as_json }
+        subject(:decorator) { described_class.new(assessment).as_json }
 
         it "returns the expected structure" do
           employment1
           employment2
-          expect(subject).to eq expected_results
+          expect(decorator).to eq expected_results
         end
       end
     end

@@ -12,47 +12,47 @@ RSpec.describe StateBenefitsController, type: :request do
     let!(:state_benefit_type1) { create :state_benefit_type }
     let!(:state_benefit_type2) { create :state_benefit_type }
 
-    subject { post assessment_state_benefits_path(assessment_id), params: params.to_json, headers: headers }
+    subject(:post_payload) { post assessment_state_benefits_path(assessment_id), params: params.to_json, headers: headers }
 
     context "valid payload" do
       context "with two state benefits" do
         it "returns http success", :show_in_doc do
-          subject
+          post_payload
           expect(response).to have_http_status(:success)
         end
 
         it "generates a valid response" do
-          subject
+          post_payload
           expect(parsed_response[:success]).to eq true
           expect(parsed_response[:errors]).to be_empty
         end
 
         it "creates two state benefit records" do
-          expect { subject }.to change { gross_income_summary.state_benefits.count }.by(2)
+          expect { post_payload }.to change { gross_income_summary.state_benefits.count }.by(2)
           state_benefit_types = gross_income_summary.state_benefits.map(&:state_benefit_type)
           expect(state_benefit_types).to match_array([state_benefit_type1, state_benefit_type2])
         end
 
         it "creates state benefit payment records" do
-          expect { subject }.to change(StateBenefitPayment, :count).by(6)
+          expect { post_payload }.to change(StateBenefitPayment, :count).by(6)
         end
 
         it "creates payment records with correct values" do
-          subject
+          post_payload
           state_benefit = gross_income_summary.state_benefits.detect { |sb| sb.state_benefit_type == state_benefit_type1 }
           payments = state_benefit.state_benefit_payments.order(:payment_date)
           expect(payments.first.payment_date).to eq Date.parse("2019-09-01")
         end
 
         it "stores the given client id if provided in the params" do
-          subject
+          post_payload
           state_benefit = gross_income_summary.state_benefits.detect { |sb| sb.state_benefit_type == state_benefit_type1 }
           expect(state_benefit.state_benefit_payments.map(&:client_id)).to match client_ids
         end
 
         context "when the flags field contains multi_benefit" do
           it "sets the multi_benefit flag" do
-            subject
+            post_payload
             state_benefit = gross_income_summary.state_benefits.detect { |sb| sb.state_benefit_type == state_benefit_type2 }
             expect(state_benefit.state_benefit_payments.map(&:flags)).to match [false, false, %w[multi_benefit]]
           end
@@ -69,17 +69,17 @@ RSpec.describe StateBenefitsController, type: :request do
         end
 
         it "returns unsuccessful", :show_in_doc do
-          subject
+          post_payload
           expect(response.status).to eq 422
         end
 
         it "contains success false in the response body" do
-          subject
+          post_payload
           expect(parsed_response).to eq(errors: ["Missing parameter name"], success: false)
         end
 
         it "does not create any state benefit records" do
-          expect { subject }.not_to change(StateBenefit, :count)
+          expect { post_payload }.not_to change(StateBenefit, :count)
         end
       end
 
@@ -91,21 +91,21 @@ RSpec.describe StateBenefitsController, type: :request do
         end
 
         it "returns unsuccessful" do
-          subject
+          post_payload
           expect(response.status).to eq 422
         end
 
         it "contains success false in the response body" do
-          subject
+          post_payload
           expect(parsed_response).to eq(errors: ["Missing parameter client_id"], success: false)
         end
 
         it "does not create any other income source records" do
-          expect { subject }.not_to change(OtherIncomeSource, :count)
+          expect { post_payload }.not_to change(OtherIncomeSource, :count)
         end
 
         it "does not create any other income payment records" do
-          expect { subject }.not_to change(OtherIncomePayment, :count)
+          expect { post_payload }.not_to change(OtherIncomePayment, :count)
         end
       end
     end
@@ -114,12 +114,12 @@ RSpec.describe StateBenefitsController, type: :request do
       let(:assessment_id) { SecureRandom.uuid }
 
       it "returns unsuccessful" do
-        subject
+        post_payload
         expect(response.status).to eq 422
       end
 
       it "contains success false in the response body" do
-        subject
+        post_payload
         expect(parsed_response).to eq(errors: ["No such assessment id"], success: false)
       end
     end

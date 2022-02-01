@@ -8,11 +8,11 @@ module Calculators
     let(:excluded_state_benefit_type) { create :state_benefit_type, :benefit_excluded }
     let(:gross_income_summary) { assessment.gross_income_summary }
 
-    subject { described_class.call(disposable_income_summary) }
+    subject(:calculator) { described_class.call(disposable_income_summary) }
 
     context "no state benefit payments" do
       it " should return zero" do
-        expect(subject).to eq 0
+        expect(calculator).to eq 0
       end
     end
 
@@ -22,7 +22,7 @@ module Calculators
       end
 
       it "returns zero" do
-        expect(subject).to eq 0
+        expect(calculator).to eq 0
       end
     end
 
@@ -34,7 +34,7 @@ module Calculators
       end
 
       it "returns value x 2" do
-        expect(subject).to eq 176.6
+        expect(calculator).to eq 176.6
       end
     end
   end

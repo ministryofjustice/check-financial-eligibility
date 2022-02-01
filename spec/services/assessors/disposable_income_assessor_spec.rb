@@ -14,7 +14,7 @@ module Assessors
                upper_threshold: upper_threshold
       end
 
-      subject { described_class.call(assessment) }
+      subject(:assessor) { described_class.call(assessment) }
 
       context "disposable income below lower threshold" do
         let(:total_disposable_income) { 310.0 }
@@ -22,13 +22,13 @@ module Assessors
         let(:upper_threshold) { 733.0 }
 
         it "is eligible" do
-          subject
+          assessor
           expect(disposable_income_summary.summarized_assessment_result).to eq :eligible
         end
 
         it "does not call the income contribution calculator" do
           expect(Calculators::IncomeContributionCalculator).not_to receive(:call)
-          subject
+          assessor
           expect(disposable_income_summary.income_contribution).to eq 0.0
         end
       end
@@ -39,13 +39,13 @@ module Assessors
         let(:upper_threshold) { 733.0 }
 
         it "is eligible" do
-          subject
+          assessor
           expect(disposable_income_summary.summarized_assessment_result).to eq :eligible
         end
 
         it "does call the income contribution calculator and updates the contribution with the result" do
           expect(Calculators::IncomeContributionCalculator).not_to receive(:call)
-          subject
+          assessor
           expect(disposable_income_summary.income_contribution).to eq 0.0
         end
       end
@@ -58,12 +58,12 @@ module Assessors
         before { expect(Calculators::IncomeContributionCalculator).to receive(:call).and_return(125.94) }
 
         it "is eligible with a contribution" do
-          subject
+          assessor
           expect(disposable_income_summary.summarized_assessment_result).to eq :contribution_required
         end
 
         it "updates the contribution with the result from the Calculators::IncomeContributionCalculator" do
-          subject
+          assessor
           expect(disposable_income_summary.income_contribution).to eq 125.94
         end
       end
@@ -74,13 +74,13 @@ module Assessors
         let(:upper_threshold) { 733.0 }
 
         it "is ineligible" do
-          subject
+          assessor
           expect(disposable_income_summary.summarized_assessment_result).to eq :contribution_required
         end
 
         it "does call the income contribution calculator" do
           expect(Calculators::IncomeContributionCalculator).to receive(:call).and_call_original
-          subject
+          assessor
           expect(disposable_income_summary.income_contribution).to eq 203.75
         end
       end
@@ -91,13 +91,13 @@ module Assessors
         let(:upper_threshold) { 733.0 }
 
         it "is ineligible" do
-          subject
+          assessor
           expect(disposable_income_summary.summarized_assessment_result).to eq :ineligible
         end
 
         it "does not call the income contribution calculator" do
           expect(Calculators::IncomeContributionCalculator).not_to receive(:call)
-          subject
+          assessor
           expect(disposable_income_summary.income_contribution).to eq 0.0
         end
       end

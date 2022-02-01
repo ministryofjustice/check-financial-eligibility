@@ -9,16 +9,16 @@ module Creators
     let(:assessment_id) { assessment.id }
     let(:irregular_income) { irregular_income_params }
 
-    subject { described_class.call(assessment_id:, irregular_income:) }
+    subject(:creator) { described_class.call(assessment_id:, irregular_income:) }
 
     describe ".call" do
       context "payload" do
         it "creates an irregular income payment" do
-          expect { subject }.to change(IrregularIncomePayment, :count).by(1)
+          expect { creator }.to change(IrregularIncomePayment, :count).by(1)
         end
 
         it "creates a student loan payment" do
-          subject
+          creator
           payment = IrregularIncomePayment.find_by(gross_income_summary_id: gross_income_summary.id)
           expect(payment.frequency).to eq frequency
           expect(payment.income_type).to eq student_loan
@@ -30,7 +30,7 @@ module Creators
         let(:irregular_income) { { payments: [] } }
 
         it "does not create any records" do
-          expect { subject }.not_to change(IrregularIncomePayment, :count)
+          expect { creator }.not_to change(IrregularIncomePayment, :count)
         end
       end
 
@@ -38,7 +38,7 @@ module Creators
         let(:assessment_id) { "abcd" }
 
         it "returns an error" do
-          expect(subject.errors).to eq ["No such assessment id"]
+          expect(creator.errors).to eq ["No such assessment id"]
         end
       end
     end

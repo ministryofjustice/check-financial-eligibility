@@ -4,13 +4,13 @@ module Decorators
   module V3
     RSpec.describe CapitalSummaryDecorator do
       describe "#as_json" do
-        subject { described_class.new(record).as_json }
+        subject(:decorator) { described_class.new(record).as_json }
 
         context "capital summary record is nil" do
           let(:record) { nil }
 
           it "returns nil" do
-            expect(subject).to be_nil
+            expect(decorator).to be_nil
           end
         end
 
@@ -33,23 +33,23 @@ module Decorators
               assessment_result
               capital_contribution
             ]
-            expect(subject.keys).to eq expected_keys
+            expect(decorator.keys).to eq expected_keys
           end
 
           it "has expected keys int he capital items sections" do
             expected_keys = %i[liquid non_liquid vehicles properties]
-            expect(subject[:capital_items].keys).to eq expected_keys
+            expect(decorator[:capital_items].keys).to eq expected_keys
           end
 
           it "has expected_keys in the properties section" do
             expected_keys = %i[main_home additional_properties]
-            expect(subject[:capital_items][:properties].keys).to eq expected_keys
+            expect(decorator[:capital_items][:properties].keys).to eq expected_keys
           end
 
           it "calls property decorator expected numnber of times" do
             expected_count = record.additional_properties.count + 1 # add 1 for main home
             expect(PropertyDecorator).to receive(:new).and_return(double("property_dec")).exactly(expected_count).times
-            subject
+            decorator
           end
         end
       end

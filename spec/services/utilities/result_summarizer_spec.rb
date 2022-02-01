@@ -12,13 +12,13 @@ module Utilities
     let(:inelig_and_contrib) { %i[ineligible contribution_required contribution_required] }
     let(:all_three) { %i[eligible contribution_required ineligible] }
 
-    subject { described_class.call(results) }
+    subject(:summarizer) { described_class.call(results) }
 
     context "no results" do
       let(:results) { no_results }
 
       it "returns :pending" do
-        expect(subject).to eq :pending
+        expect(summarizer).to eq :pending
       end
     end
 
@@ -26,7 +26,7 @@ module Utilities
       let(:results) { one_pending }
 
       it "returns :pending" do
-        expect(subject).to eq :pending
+        expect(summarizer).to eq :pending
       end
     end
 
@@ -34,7 +34,7 @@ module Utilities
       let(:results) { all_eligible }
 
       it "returns :eligible" do
-        expect(subject).to eq :eligible
+        expect(summarizer).to eq :eligible
       end
     end
 
@@ -42,7 +42,7 @@ module Utilities
       let(:results) { all_ineligible }
 
       it "returns :ineligible" do
-        expect(subject).to eq :ineligible
+        expect(summarizer).to eq :ineligible
       end
     end
 
@@ -50,7 +50,7 @@ module Utilities
       let(:results) { all_contrib }
 
       it "returns :eligible_with_contribution" do
-        expect(subject).to eq :contribution_required
+        expect(summarizer).to eq :contribution_required
       end
     end
 
@@ -58,7 +58,7 @@ module Utilities
       let(:results) { elig_and_inelig }
 
       it "returns :partially_eligible" do
-        expect(subject).to eq :partially_eligible
+        expect(summarizer).to eq :partially_eligible
       end
     end
 
@@ -66,7 +66,7 @@ module Utilities
       let(:results) { elig_and_contrib }
 
       it "returns :eligible_with_contribution" do
-        expect(subject).to eq :contribution_required
+        expect(summarizer).to eq :contribution_required
       end
     end
 
@@ -74,7 +74,7 @@ module Utilities
       let(:results) { inelig_and_contrib }
 
       it "returns :partially_eligible" do
-        expect(subject).to eq :partially_eligible
+        expect(summarizer).to eq :partially_eligible
       end
     end
 
@@ -82,7 +82,7 @@ module Utilities
       let(:results) { all_three }
 
       it "returns :partially_eligible" do
-        expect(subject).to eq :partially_eligible
+        expect(summarizer).to eq :partially_eligible
       end
     end
   end

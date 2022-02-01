@@ -8,11 +8,11 @@ module Collators
     let(:disposable_income_summary) { assessment.disposable_income_summary }
 
     describe ".call" do
-      subject { described_class.call(assessment) }
+      subject(:collator) { described_class.call(assessment) }
 
       context "when there are no legal_aid outgoings" do
         it "leaves the monthly maintenance field on the disposable income summary as zero" do
-          subject
+          collator
           expect(disposable_income_summary.reload.legal_aid_bank).to be_zero
         end
       end
@@ -31,7 +31,7 @@ module Collators
         end
 
         it "calculates the monthly equivalent and updates the disposable income summary" do
-          subject
+          collator
           expect(disposable_income_summary.reload.legal_aid_bank).to eq 112.08
         end
       end

@@ -9,7 +9,7 @@ module TestCase
       let(:actual) { actual_hash }
       let(:expected) { expected_hash }
 
-      subject { instance.call }
+      subject(:comparer) { instance.call }
 
       context "matter types" do
         context "mismatched matter type names" do
@@ -21,7 +21,7 @@ module TestCase
             expect(instance).to receive(:verbose).with("  Expected: domestic_abuse, section8", :red)
             expect(instance).to receive(:verbose).at_least(1)
 
-            subject
+            comparer
           end
         end
 
@@ -32,7 +32,7 @@ module TestCase
             expect(instance).to receive(:verbose).with("                               Matter type: domestic_abuse  eligible                   eligible", :green)
             expect(instance).to receive(:verbose).with("                                     Matter type: section8  ineligible                 eligible_with_contribution", :red)
             expect(instance).to receive(:verbose).at_least(1)
-            subject
+            comparer
           end
         end
 
@@ -41,7 +41,7 @@ module TestCase
             expect(instance).to receive(:verbose).with("                               Matter type: domestic_abuse  eligible                   eligible", :green)
             expect(instance).to receive(:verbose).with("                                     Matter type: section8  ineligible                 ineligible", :green)
             expect(instance).to receive(:verbose).at_least(1)
-            subject
+            comparer
           end
         end
       end
@@ -55,7 +55,7 @@ module TestCase
             expect(instance).to receive(:verbose).with("  Expected: DA001, SE013", :red)
             expect(instance).to receive(:verbose).with("  Actual  : SE013, SE014", :red)
             expect(instance).to receive(:verbose).at_least(1)
-            subject
+            comparer
           end
         end
       end
@@ -67,11 +67,11 @@ module TestCase
           it "returns does not have any red text" do
             expect(instance).to receive(:verbose).with(instance_of(String), :green).at_least(1)
             expect(instance).not_to receive(:verbose).with(instance_of(String), :green)
-            subject
+            comparer
           end
 
           it "returns true" do
-            expect(subject).to be true
+            expect(comparer).to be true
           end
         end
 
@@ -79,7 +79,7 @@ module TestCase
           let(:actual) { actual_modified_net_housing_costs }
 
           it "returns false" do
-            expect(subject).to be false
+            expect(comparer).to be false
           end
 
           it "highlights the line in error in red" do
@@ -87,7 +87,7 @@ module TestCase
             allow(instance).to receive(:verbose).with(instance_of(String), :green).at_least(1)
             allow(instance).to receive(:verbose).with(instance_of(String)).at_least(1)
             allow(instance).to receive(:verbose).with(instance_of(String), :blue).at_least(1)
-            subject
+            comparer
           end
         end
       end

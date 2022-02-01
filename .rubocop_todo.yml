@@ -6,10 +6,80 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 507
-# Configuration parameters: IgnoreSharedExamples.
-RSpec/NamedSubject:
+# Offense count: 17
+# **** LEAVE FOR NOW ****
+RSpec/AnyInstance:
+  Exclude:
+    - 'spec/requests/explicit_remarks_spec.rb'
+    - 'spec/services/calculators/dependant_allowance_calculator_spec.rb'
+    - 'spec/services/collators/childcare_collator_spec.rb'
+    - 'spec/services/creators/explicit_remarks_creator_spec.rb'
+    - 'spec/services/remark_generators/amount_variation_checker_spec.rb'
+    - 'spec/services/remark_generators/frequency_checker_spec.rb'
+    - 'spec/services/remark_generators/multi_benefit_checker_spec.rb'
+    - 'spec/services/remark_generators/residual_balance_checker_spec.rb'
+    - 'spec/requests/explicit_remarks_controller_spec.rb'
+
+# Offense count: 516
+# Configuration parameters: Prefixes.
+# Prefixes: when, with, without
+# **** LEAVE FOR NOW ****
+RSpec/ContextWording:
   Enabled: false
+
+# Offense count: 18
+# **** LEAVE FOR NOW ****
+RSpec/ExpectInHook:
+  Exclude:
+    - 'spec/models/bank_holiday_spec.rb'
+    - 'spec/models/other_income_source_spec.rb'
+    - 'spec/requests/applicants_spec.rb'
+    - 'spec/requests/assessments_spec.rb'
+    - 'spec/requests/outgoings_spec.rb'
+    - 'spec/services/assessors/disposable_income_assessor_spec.rb'
+    - 'spec/requests/outgoings_controller_spec.rb'
+    - 'spec/requests/applicants_controller_spec.rb'
+
+# Offense count: 60
+# Cop supports --auto-correct.
+# ****
+# **** Removing this will break specs.  It removes all the explicit subject declarations that it thinks aren't necessary, but doesn't always get it right.
+# **** Better to leave the explicit subject declarations in.  May be fixed when all Rspec/NamedSubject offences are fixed.
+# ****
+RSpec/LeadingSubject:
+  Enabled: false
+
+
+# Offense count: 1
+# Cop supports --auto-correct.
+# Configuration parameters: EnforcedStyle.
+# SupportedStyles: not_to, to_not
+RSpec/NotToNot:
+  Exclude:
+    - 'spec/integration/policy_disregards_spec.rb'
+
+# Offense count: 1
+RSpec/OverwritingSetup:
+  Exclude:
+    - 'spec/services/creators/irregular_income_creator_spec.rb'
+
+# Offense count: 5
+# Cop supports --auto-correct.
+# Configuration parameters: EnforcedStyle.
+# SupportedStyles: numeric, symbolic
+RSpec/Rails/HttpStatus:
+  Exclude:
+    - 'spec/requests/applicants_spec.rb'
+    - 'spec/requests/assessments_spec.rb'
+    - 'spec/requests/capitals_spec.rb'
+    - 'spec/requests/dependants_spec.rb'
+    - 'spec/support/shared_examples.rb'
+
+# Offense count: 4
+RSpec/RepeatedDescription:
+  Exclude:
+    - 'spec/requests/irregular_incomes_spec.rb'
+    - 'spec/requests/state_benefits_spec.rb'
 
 # Offense count: 11
 RSpec/ScatteredSetup:

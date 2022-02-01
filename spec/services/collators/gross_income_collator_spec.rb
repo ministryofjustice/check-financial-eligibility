@@ -20,7 +20,7 @@ module Collators
     end
 
     describe ".call" do
-      subject { described_class.call assessment }
+      subject(:collator) { described_class.call assessment }
 
       context "only domestic abuse proceeding type codes" do
         let(:proceeding_type_codes) { %w[DA001] }
@@ -28,7 +28,7 @@ module Collators
         context "monthly_other_income" do
           context "there are no other income records" do
             it "set monthly other income to zero" do
-              subject
+              collator
               expect(gross_income_summary.reload.monthly_other_income).to eq 0.0
             end
           end
@@ -47,7 +47,7 @@ module Collators
             end
 
             it "updates the gross income record with categorised monthly incomes" do
-              subject
+              collator
               gross_income_summary.reload
               expect(gross_income_summary.benefits_all_sources).to be_zero
               expect(gross_income_summary.maintenance_in_all_sources).to be_zero
@@ -63,7 +63,7 @@ module Collators
         context "monthly_student_loan" do
           context "there are no irregular income payments" do
             it "set monthly student loan to zero" do
-              subject
+              collator
               expect(gross_income_summary.reload.monthly_student_loan).to eq 0.0
             end
           end
@@ -72,7 +72,7 @@ module Collators
             before { create :irregular_income_payment, gross_income_summary: gross_income_summary, amount: 12_000 }
 
             it "updates the gross income record with categorised monthly incomes" do
-              subject
+              collator
               gross_income_summary.reload
               expect(gross_income_summary.benefits_all_sources).to be_zero
               expect(gross_income_summary.maintenance_in_all_sources).to be_zero
@@ -88,7 +88,7 @@ module Collators
           let(:assessment) { create :assessment, :with_applicant, :with_gross_income_summary_and_records }
 
           before do
-            subject
+            collator
             gross_income_summary.reload
           end
 
@@ -123,7 +123,7 @@ module Collators
           let(:displosable_income_summary) { assessment.disposable_income_summary }
 
           before do
-            subject
+            collator
             gross_income_summary.reload
             displosable_income_summary.reload
           end

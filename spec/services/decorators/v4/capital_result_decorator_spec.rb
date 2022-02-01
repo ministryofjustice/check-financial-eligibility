@@ -65,11 +65,11 @@ module Decorators
         end
       end
 
-      subject { described_class.new(assessment).as_json }
+      subject(:decorator) { described_class.new(assessment).as_json }
 
       describe "#as_json" do
         it "returns the expected structure" do
-          expect(subject).to eq expected_result
+          expect(decorator).to eq expected_result
         end
       end
     end

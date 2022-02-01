@@ -17,22 +17,22 @@ RSpec.describe OtherIncomeSource, type: :model do
       create :other_income_payment, other_income_source: source, payment_date: 1.month.ago.to_date, amount: 301.50
     end
 
-    subject { source.calculate_monthly_income! }
+    subject(:monthly_income) { source.calculate_monthly_income! }
 
     context "valid payment frequency" do
       before { expect(analyser).to receive(:period_pattern).and_return(:monthly) }
 
       it "updates the monthly_income field with the result" do
-        subject
+        monthly_income
         expect(source.reload.monthly_income).to eq 301.5
       end
 
       it "returns the result" do
-        expect(subject).to eq 301.5
+        expect(monthly_income).to eq 301.5
       end
 
       it "does not write an assessment_error_record" do
-        expect { subject }.not_to change(AssessmentError, :count)
+        expect { monthly_income }.not_to change(AssessmentError, :count)
       end
     end
 

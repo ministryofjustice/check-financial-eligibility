@@ -4,7 +4,7 @@ module Collators
   RSpec.describe OutgoingsCollator do
     let(:assessment) { create :assessment }
 
-    subject { described_class.call(assessment) }
+    subject(:collator) { described_class.call(assessment) }
 
     describe ".call" do
       it "calls all the collators and calculators" do
@@ -13,7 +13,7 @@ module Collators
         expect(Collators::MaintenanceCollator).to receive(:call).with(assessment).exactly(1)
         expect(Collators::HousingCostsCollator).to receive(:call).with(assessment).exactly(1)
         expect(Collators::LegalAidCollator).to receive(:call).with(assessment).exactly(1)
-        subject
+        collator
       end
     end
   end
