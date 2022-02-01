@@ -29,7 +29,7 @@ RSpec.describe "Eligible Full Assessment with policy disregard remarks" do
     get assessment_path(assessment_id), headers: v3_headers
     output_response(:get, :assessment)
 
-    expect(parsed_response[:assessment][:remarks]).to_not include(:policy_disregards)
+    expect(parsed_response[:assessment][:remarks]).not_to include(:policy_disregards)
   end
 
   def post_assessment

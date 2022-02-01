@@ -134,15 +134,6 @@ RSpec/NamedSubject:
     - 'spec/lib/integration_helpers/test_case/v4/result_comparer_spec.rb'
     - 'spec/db/migration_helpers/eligibility_populator_spec.rb'
 
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: not_to, to_not
-RSpec/NotToNot:
-  Exclude:
-    - 'spec/integration/policy_disregards_spec.rb'
-
 # Offense count: 1
 RSpec/OverwritingSetup:
   Exclude:
