@@ -194,8 +194,6 @@ module Utilities
           end
 
           context "payment date is after holiday" do
-            let(:dates) { make_dates(%w[2019-05-09 2019-06-09 2019-07-10]) }
-
             it "returns true" do
               expect(subject).to be true
             end
