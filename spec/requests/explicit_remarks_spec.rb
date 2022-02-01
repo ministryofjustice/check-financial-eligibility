@@ -12,9 +12,9 @@ RSpec.describe ExplicitRemarksController, type: :request do
             details: %w[
               employment
               charity
-            ]
+            ],
           }
-        ]
+        ],
       }
     end
 
@@ -65,9 +65,9 @@ RSpec.describe ExplicitRemarksController, type: :request do
             details: %w[
               employment
               charity
-            ]
+            ],
           }
-        ]
+        ],
       }
     end
 
@@ -79,9 +79,9 @@ RSpec.describe ExplicitRemarksController, type: :request do
             details: %w[
               employment
               charity
-            ]
+            ],
           }
-        ]
+        ],
       }
     end
   end

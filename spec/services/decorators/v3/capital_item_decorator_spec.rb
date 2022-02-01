@@ -11,7 +11,7 @@ module Decorators
         it "returns expected hash" do
           expected_hash = {
             description: "Ming vase",
-            value: 1283.66
+            value: 1283.66,
           }
           expect(subject).to eq expected_hash
         end

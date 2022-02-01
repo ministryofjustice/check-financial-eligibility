@@ -12,7 +12,7 @@ module TestCase
     def payload
       {
         bank_accounts: capital_payload(:bank_accounts),
-        non_liquid_capital: capital_payload(:non_liquid_capital)
+        non_liquid_capital: capital_payload(:non_liquid_capital),
       }
     end
 

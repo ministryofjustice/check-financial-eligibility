@@ -39,21 +39,21 @@ RSpec.describe GovukBankHolidayRetriever do
               "title" => "New Year’s Day",
               "date" => "2015-01-01",
               "notes" => "",
-              "bunting" => true
+              "bunting" => true,
             },
             {
               "title" => "Good Friday",
               "date" => "2015-04-03",
               "notes" => "",
-              "bunting" => false
+              "bunting" => false,
             },
             {
               "title" => "Easter Monday",
               "date" => "2015-04-06",
               "notes" => "",
-              "bunting" => true
+              "bunting" => true,
             }
-          ]
+          ],
         },
         "scotland" => {
           "division" => "scotland",
@@ -62,22 +62,22 @@ RSpec.describe GovukBankHolidayRetriever do
               "title" => "New Year’s Day",
               "date" => "2015-01-01",
               "notes" => "",
-              "bunting" => true
+              "bunting" => true,
             },
             {
               "title" => "2nd January",
               "date" => "2015-01-02",
               "notes" => "",
-              "bunting" => true
+              "bunting" => true,
             },
             {
               "title" => "Good Friday",
               "date" => "2015-04-03",
               "notes" => "",
-              "bunting" => false
+              "bunting" => false,
             }
-          ]
-        }
+          ],
+        },
       }.to_json
     end
   end

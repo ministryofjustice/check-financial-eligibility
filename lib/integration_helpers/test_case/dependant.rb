@@ -22,7 +22,7 @@ module TestCase
         in_full_time_education: @in_full_time_education,
         relationship: @relationship,
         monthly_income: @monthly_income,
-        assets_value: @assets_value
+        assets_value: @assets_value,
       }
     end
   end

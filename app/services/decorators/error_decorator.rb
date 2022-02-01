@@ -8,7 +8,7 @@ module Decorators
     def as_json
       {
         errors: [@message],
-        success: false
+        success: false,
       }
     end
 

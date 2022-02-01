@@ -15,7 +15,7 @@ module TestCase
       {
         "#{date_field}": @date.strftime("%F"),
         amount: @amount,
-        client_id: @client_id
+        client_id: @client_id,
       }
     end
   end

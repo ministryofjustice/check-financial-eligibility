@@ -24,7 +24,7 @@ RSpec.describe ExplicitRemark do
             "Remark no. 1",
             "Remark no. 2",
             "Remark no. 3"
-          ]
+          ],
         }
       end
 

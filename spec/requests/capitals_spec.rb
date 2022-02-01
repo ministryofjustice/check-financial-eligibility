@@ -7,7 +7,7 @@ RSpec.describe CapitalsController, type: :request do
     let(:params) do
       {
         bank_accounts: bank_account_params,
-        non_liquid_capital: non_liquid_params
+        non_liquid_capital: non_liquid_params,
       }
     end
     let(:headers) { { "CONTENT_TYPE" => "application/json" } }
@@ -31,7 +31,7 @@ RSpec.describe CapitalsController, type: :request do
       context "with only bank_accounts" do
         let(:params) do
           {
-            bank_accounts: bank_account_params
+            bank_accounts: bank_account_params,
           }
         end
 
@@ -52,7 +52,7 @@ RSpec.describe CapitalsController, type: :request do
       context "with only non-liquid assets" do
         let(:params) do
           {
-            non_liquid_capital: non_liquid_params
+            non_liquid_capital: non_liquid_params,
           }
         end
 
@@ -124,11 +124,11 @@ RSpec.describe CapitalsController, type: :request do
       [
         {
           description: "#{Faker::Bank.name} #{Faker::Bank.account_number(digits: 8)}",
-          value: Faker::Number.decimal(r_digits: 2)
+          value: Faker::Number.decimal(r_digits: 2),
         },
         {
           description: "#{Faker::Bank.name} #{Faker::Bank.account_number(digits: 8)}",
-          value: Faker::Number.decimal(r_digits: 2)
+          value: Faker::Number.decimal(r_digits: 2),
         }
       ]
     end
@@ -137,11 +137,11 @@ RSpec.describe CapitalsController, type: :request do
       [
         {
           description: "#{Faker::Bank.name} #{Faker::Bank.account_number(digits: 8)}",
-          value: (Faker::Number.decimal(r_digits: 2) * -1)
+          value: (Faker::Number.decimal(r_digits: 2) * -1),
         },
         {
           description: "#{Faker::Bank.name} #{Faker::Bank.account_number(digits: 8)}",
-          value: (Faker::Number.decimal(r_digits: 2) * -1)
+          value: (Faker::Number.decimal(r_digits: 2) * -1),
         }
       ]
     end
@@ -150,11 +150,11 @@ RSpec.describe CapitalsController, type: :request do
       [
         {
           description: fake_asset_name,
-          value: Faker::Number.decimal(r_digits: 2)
+          value: Faker::Number.decimal(r_digits: 2),
         },
         {
           description: fake_asset_name,
-          value: Faker::Number.decimal(r_digits: 2)
+          value: Faker::Number.decimal(r_digits: 2),
         }
       ]
     end
@@ -163,11 +163,11 @@ RSpec.describe CapitalsController, type: :request do
       [
         {
           description: fake_asset_name,
-          value: (Faker::Number.decimal(r_digits: 2) * -1)
+          value: (Faker::Number.decimal(r_digits: 2) * -1),
         },
         {
           description: fake_asset_name,
-          value: (Faker::Number.decimal(r_digits: 2) * -1)
+          value: (Faker::Number.decimal(r_digits: 2) * -1),
         }
       ]
     end

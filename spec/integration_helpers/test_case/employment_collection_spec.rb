@@ -133,7 +133,7 @@ module TestCase
                 benefits_in_kind: 0.0,
                 tax: -745.31,
                 national_insurance: -144.06,
-                net_employment_income: 1660.96
+                net_employment_income: 1660.96,
               },
               {
                 date: "2021-11-30",
@@ -141,7 +141,7 @@ module TestCase
                 benefits_in_kind: 0.0,
                 tax: -745.31,
                 national_insurance: -144.06,
-                net_employment_income: 1660.96
+                net_employment_income: 1660.96,
               },
               {
                 date: "2021-10-30",
@@ -149,11 +149,11 @@ module TestCase
                 benefits_in_kind: 0.0,
                 tax: -745.31,
                 national_insurance: -144.06,
-                net_employment_income: 1660.96
+                net_employment_income: 1660.96,
               }
-            ]
+            ],
           }
-        ]
+        ],
       }
     end
 
@@ -169,7 +169,7 @@ module TestCase
                 benefits_in_kind: 0.0,
                 tax: -745.31,
                 national_insurance: -144.06,
-                net_employment_income: 1660.96
+                net_employment_income: 1660.96,
               },
               {
                 date: "2021-11-30",
@@ -177,7 +177,7 @@ module TestCase
                 benefits_in_kind: 0.0,
                 tax: -745.31,
                 national_insurance: -144.06,
-                net_employment_income: 1660.96
+                net_employment_income: 1660.96,
               },
               {
                 date: "2021-10-30",
@@ -185,9 +185,9 @@ module TestCase
                 benefits_in_kind: 0.0,
                 tax: -745.31,
                 national_insurance: -144.06,
-                net_employment_income: 1660.96
+                net_employment_income: 1660.96,
               }
-            ]
+            ],
           },
           {
             name: "Job 2",
@@ -198,7 +198,7 @@ module TestCase
                 benefits_in_kind: 0.0,
                 tax: -98,
                 national_insurance: 0,
-                net_employment_income: 252.2
+                net_employment_income: 252.2,
               },
               {
                 date: "2021-12-15",
@@ -206,11 +206,11 @@ module TestCase
                 benefits_in_kind: 0.0,
                 tax: -45.87,
                 national_insurance: 0,
-                net_employment_income: 344.13
+                net_employment_income: 344.13,
               }
-            ]
+            ],
           }
-        ]
+        ],
       }
     end
   end

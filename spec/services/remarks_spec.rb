@@ -45,8 +45,8 @@ RSpec.describe Remarks do
           expected_hash = {
             other_income_payment: {
               unknown_frequency: ["abc"],
-              amount_variation: %w[def ghi]
-            }
+              amount_variation: %w[def ghi],
+            },
           }
           expect(remarks.remarks_hash).to eq expected_hash
         end
@@ -57,11 +57,11 @@ RSpec.describe Remarks do
           remarks.add(:state_benefit_payment, :amount_variation, %w[def ghi])
           expected_hash = {
             other_income_payment: {
-              unknown_frequency: ["abc"]
+              unknown_frequency: ["abc"],
             },
             state_benefit_payment: {
-              amount_variation: %w[def ghi]
-            }
+              amount_variation: %w[def ghi],
+            },
           }
           expect(remarks.remarks_hash).to eq expected_hash
         end

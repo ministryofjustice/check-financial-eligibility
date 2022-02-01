@@ -17,7 +17,7 @@ module Decorators
         @matter_types_hash.keys.sort.map do |matter_type|
           {
             matter_type:,
-            result: @matter_types_hash[matter_type]
+            result: @matter_types_hash[matter_type],
           }
         end
       end

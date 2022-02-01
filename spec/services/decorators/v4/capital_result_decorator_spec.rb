@@ -8,7 +8,7 @@ module Decorators
       let(:pt_results) do
         {
           DA001: [3000, unlimited, "eligible"],
-          SE013: [3000, 8000, "ineligible"]
+          SE013: [3000, 8000, "ineligible"],
         }
       end
       let(:summary) do
@@ -41,15 +41,15 @@ module Decorators
               ccms_code: "DA001",
               lower_threshold: 3_000.0,
               upper_threshold: 999_999_999_999.0,
-              result: "eligible"
+              result: "eligible",
             },
             {
               ccms_code: "SE013",
               lower_threshold: 3_000.0,
               upper_threshold: 8_000.0,
-              result: "ineligible"
+              result: "ineligible",
             }
-          ]
+          ],
         }
       end
 

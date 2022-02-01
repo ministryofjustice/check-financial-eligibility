@@ -8,7 +8,7 @@ module Decorators
         {
           DA002: [unlimited, "eligible"],
           DA003: [unlimited, "eligible"],
-          SE013: [8_000, "ineligible"]
+          SE013: [8_000, "ineligible"],
         }
       end
       let(:ptcs) { ptc_results.keys }
@@ -21,19 +21,19 @@ module Decorators
             {
               ccms_code: "DA002",
               upper_threshold: 999_999_999_999.0,
-              result: "eligible"
+              result: "eligible",
             },
             {
               ccms_code: "DA003",
               upper_threshold: 999_999_999_999.0,
-              result: "eligible"
+              result: "eligible",
             },
             {
               ccms_code: "SE013",
               upper_threshold: 8_000.0,
-              result: "ineligible"
+              result: "ineligible",
             }
-          ]
+          ],
         }
       end
 

@@ -9,7 +9,7 @@ module Creators
       {
         client_reference_id: "psr-123",
         submission_date: "2019-06-06",
-        matter_proceeding_type: "domestic_abuse"
+        matter_proceeding_type: "domestic_abuse",
       }.to_json
     end
 
@@ -18,8 +18,8 @@ module Creators
         client_reference_id: "psr-123",
         submission_date: "2019-06-06",
         proceeding_types: {
-          ccms_codes: %w[DA005 SE003 SE014]
-        }
+          ccms_codes: %w[DA005 SE003 SE014],
+        },
       }.to_json
     end
 
@@ -82,7 +82,7 @@ module Creators
             expected_response = {
               success: true,
               assessment_id: Assessment.last.id,
-              errors: []
+              errors: [],
             }
             expect(subject.as_json).to eq expected_response
           end
@@ -165,7 +165,7 @@ module Creators
             expected_response = {
               success: true,
               assessment_id: Assessment.last.id,
-              errors: []
+              errors: [],
             }
             expect(subject.as_json).to eq expected_response
           end

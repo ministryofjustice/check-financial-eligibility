@@ -54,7 +54,7 @@ RSpec.describe Creators::ExplicitRemarksCreator do
     [
       {
         category: "policy_disregards",
-        details: %w[disregard_1 disregard_2]
+        details: %w[disregard_1 disregard_2],
       }
     ]
   end
@@ -63,11 +63,11 @@ RSpec.describe Creators::ExplicitRemarksCreator do
     [
       {
         category: "policy_disregards",
-        details: %w[xxxx zzzzz]
+        details: %w[xxxx zzzzz],
       },
       {
         category: "other_stuff",
-        details: %w[xxxx zzzzz]
+        details: %w[xxxx zzzzz],
       }
     ]
   end

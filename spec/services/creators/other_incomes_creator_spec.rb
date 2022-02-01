@@ -10,7 +10,7 @@ module Creators
       described_class.call(
         assessment_id: assessment.id,
         other_incomes: {
-          other_incomes: other_income_params
+          other_incomes: other_income_params,
         }
       )
     end
@@ -79,19 +79,19 @@ module Creators
               {
                 date: "2019-11-01",
                 amount: 1046.44,
-                client_id:
+                client_id:,
               },
               {
                 date: "2019-10-01",
                 amount: 1034.33,
-                client_id:
+                client_id:,
               },
               {
                 date: "2019-09-01",
                 amount: 1033.44,
-                client_id:
+                client_id:,
               }
-            ]
+            ],
           },
           {
             source: "friends_or_family",
@@ -99,19 +99,19 @@ module Creators
               {
                 date: "2019-11-01",
                 amount: 250.0,
-                client_id:
+                client_id:,
               },
               {
                 date: "2019-10-01",
                 amount: 266.02,
-                client_id:
+                client_id:,
               },
               {
                 date: "2019-09-01",
                 amount: 250.0,
-                client_id:
+                client_id:,
               }
-            ]
+            ],
           }
         ]
       end
@@ -124,14 +124,14 @@ module Creators
               {
                 date: "2019-11-12",
                 amount: 1200.0,
-                client_id:
+                client_id:,
               },
               {
                 date: "2019-10-09",
                 amount: 1200.01,
-                client_id:
+                client_id:,
               }
-            ]
+            ],
           }
         ]
       end

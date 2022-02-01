@@ -12,7 +12,7 @@ module Decorators
       def as_json
         {
           total_gross_income: gross_income_summary.total_gross_income.to_f,
-          proceeding_types: @assessment.proceeding_type_codes.map { |ptc| ptc_results(ptc) }
+          proceeding_types: @assessment.proceeding_type_codes.map { |ptc| ptc_results(ptc) },
         }
       end
 
@@ -23,7 +23,7 @@ module Decorators
         {
           ccms_code: ptc.to_s,
           upper_threshold: elig.upper_threshold.to_f,
-          result: elig.assessment_result
+          result: elig.assessment_result,
         }
       end
     end

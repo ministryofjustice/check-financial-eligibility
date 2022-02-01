@@ -11,7 +11,7 @@ RSpec.describe OutgoingsController, type: :request do
 
     let(:params) do
       {
-        outgoings: outgoings_params
+        outgoings: outgoings_params,
       }
     end
 
@@ -82,7 +82,7 @@ RSpec.describe OutgoingsController, type: :request do
         new_hash = outgoings_params
         new_hash.last[:payments].first.delete(:client_id)
         {
-          outgoings: new_hash
+          outgoings: new_hash,
         }
       end
 
@@ -104,7 +104,7 @@ RSpec.describe OutgoingsController, type: :request do
     context "without housing costs or maintenance payments" do
       let(:params) do
         {
-          outgoings: outgoings_params.select { |p| p[:name] == "child_care" }
+          outgoings: outgoings_params.select { |p| p[:name] == "child_care" },
         }
       end
 
@@ -145,14 +145,14 @@ RSpec.describe OutgoingsController, type: :request do
             {
               payment_date:,
               amount: Faker::Number.decimal(l_digits: 3, r_digits: 2),
-              client_id: client_ids.first
+              client_id: client_ids.first,
             },
             {
               payment_date:,
               amount: Faker::Number.decimal(l_digits: 3, r_digits: 2),
-              client_id: client_ids.last
+              client_id: client_ids.last,
             }
-          ]
+          ],
         },
         {
           name: "maintenance_out",
@@ -160,14 +160,14 @@ RSpec.describe OutgoingsController, type: :request do
             {
               payment_date:,
               amount: Faker::Number.decimal(l_digits: 3, r_digits: 2),
-              client_id: client_ids.first
+              client_id: client_ids.first,
             },
             {
               payment_date:,
               amount: Faker::Number.decimal(l_digits: 3, r_digits: 2),
-              client_id: client_ids.last
+              client_id: client_ids.last,
             }
-          ]
+          ],
         },
         {
           name: "rent_or_mortgage",
@@ -176,15 +176,15 @@ RSpec.describe OutgoingsController, type: :request do
               payment_date:,
               amount: Faker::Number.decimal(l_digits: 3, r_digits: 2),
               housing_cost_type:,
-              client_id: client_ids.first
+              client_id: client_ids.first,
             },
             {
               payment_date:,
               amount: Faker::Number.decimal(l_digits: 3, r_digits: 2),
               housing_cost_type:,
-              client_id: client_ids.last
+              client_id: client_ids.last,
             }
-          ]
+          ],
         }
       ]
     end

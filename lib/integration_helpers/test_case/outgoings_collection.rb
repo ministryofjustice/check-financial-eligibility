@@ -11,14 +11,14 @@ module TestCase
 
     def payload
       {
-        outgoings: @outgoings.keys.map { |type| type_payload(type) }
+        outgoings: @outgoings.keys.map { |type| type_payload(type) },
       }
     end
 
     def type_payload(type)
       {
         name: type,
-        payments: @outgoings[type].map { |payment| payment.payload(date_field: :payment_date) }
+        payments: @outgoings[type].map { |payment| payment.payload(date_field: :payment_date) },
       }
     end
 

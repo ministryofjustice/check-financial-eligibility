@@ -11,7 +11,7 @@ module TestCase
 
     def payload
       {
-        employment_income: employment_payload
+        employment_income: employment_payload,
       }
     end
 
@@ -32,7 +32,7 @@ module TestCase
     def employments_hash_to_payload(job_name, payments_array)
       {
         name: job_name,
-        payments: payments_array
+        payments: payments_array,
       }
     end
 

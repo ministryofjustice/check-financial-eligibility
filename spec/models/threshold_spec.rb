@@ -96,7 +96,7 @@ RSpec.describe Threshold do
           child_aged_15: 291.49,
           child_16_and_over: 291.49,
           adult: 291.49,
-          adult_capital_threshold: 8_000
+          adult_capital_threshold: 8_000,
         }
       end
 
@@ -113,7 +113,7 @@ RSpec.describe Threshold do
           child_aged_15: 296.65,
           child_16_and_over: 296.65,
           adult: 296.65,
-          adult_capital_threshold: 8_000
+          adult_capital_threshold: 8_000,
         }
       end
 

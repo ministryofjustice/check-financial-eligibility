@@ -161,19 +161,19 @@ RSpec.describe OtherIncomesController, type: :request do
               {
                 date: "2019-11-01",
                 amount: 1046.44,
-                client_id: SecureRandom.uuid
+                client_id: SecureRandom.uuid,
               },
               {
                 date: "2019-10-01",
                 amount: 1034.33,
-                client_id: SecureRandom.uuid
+                client_id: SecureRandom.uuid,
               },
               {
                 date: "2019-09-01",
                 amount: 1033.44,
-                client_id: SecureRandom.uuid
+                client_id: SecureRandom.uuid,
               }
-            ]
+            ],
           },
           {
             source: "friends_or_family",
@@ -181,21 +181,21 @@ RSpec.describe OtherIncomesController, type: :request do
               {
                 date: "2019-11-01",
                 amount: 250.00,
-                client_id: SecureRandom.uuid
+                client_id: SecureRandom.uuid,
               },
               {
                 date: "2019-10-01",
                 amount: 266.02,
-                client_id: SecureRandom.uuid
+                client_id: SecureRandom.uuid,
               },
               {
                 date: "2019-09-01",
                 amount: 250.00,
-                client_id: SecureRandom.uuid
+                client_id: SecureRandom.uuid,
               }
-            ]
+            ],
           }
-        ]
+        ],
       }
     end
   end

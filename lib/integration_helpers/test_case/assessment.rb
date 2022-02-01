@@ -20,7 +20,7 @@ module TestCase
       {
         client_reference_id: @worksheet_name,
         submission_date: @submission_date,
-        matter_proceeding_type: @matter_proceeding_type
+        matter_proceeding_type: @matter_proceeding_type,
       }
     end
 
@@ -29,8 +29,8 @@ module TestCase
         client_reference_id: @worksheet_name,
         submission_date: @submission_date,
         proceeding_types: {
-          ccms_codes: @proceeding_type_codes
-        }
+          ccms_codes: @proceeding_type_codes,
+        },
       }
     end
 

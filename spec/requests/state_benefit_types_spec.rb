@@ -17,7 +17,7 @@ RSpec.describe StateBenefitTypeController, type: :request do
         label: state_benefit_type1.label,
         dwp_code: state_benefit_type1.dwp_code,
         exclude_from_gross_income: state_benefit_type1.exclude_from_gross_income,
-        category: state_benefit_type1.category
+        category: state_benefit_type1.category,
       }.stringify_keys
 
       expect(JSON.parse(response.body).first).to include(expected_values)

@@ -29,7 +29,7 @@ RSpec.describe ApplicationController, type: :request do
     it "returns json success response" do
       expected_response = {
         success: true,
-        errors: []
+        errors: [],
       }.to_json
       get "/my_test"
       expect(parsed_response).to eq JSON.parse(expected_response, symbolize_names: true)
@@ -40,7 +40,7 @@ RSpec.describe ApplicationController, type: :request do
     it "returns standard error response" do
       expected_response = {
         success: false,
-        errors: ["ZeroDivisionError: divided by 0"]
+        errors: ["ZeroDivisionError: divided by 0"],
       }.to_json
       get "/my_test?raise_error=1"
       expect(parsed_response).to eq JSON.parse(expected_response, symbolize_names: true)
@@ -55,7 +55,7 @@ RSpec.describe ApplicationController, type: :request do
       it "returns standard error response" do
         expected_response = {
           success: false,
-          errors: ["The param error message"]
+          errors: ["The param error message"],
         }.to_json
         get "/my_test?param_error=1"
         expect(parsed_response).to eq JSON.parse(expected_response, symbolize_names: true)

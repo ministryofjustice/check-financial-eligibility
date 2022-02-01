@@ -11,7 +11,7 @@ module TestCase
 
     def payload
       {
-        dependants: @dependants.map(&:payload)
+        dependants: @dependants.map(&:payload),
       }
     end
 

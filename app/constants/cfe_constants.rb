@@ -15,7 +15,7 @@ module CFEConstants
     child_care: Outgoings::Childcare,
     rent_or_mortgage: Outgoings::HousingCost,
     maintenance_out: Outgoings::Maintenance,
-    legal_aid: Outgoings::LegalAid
+    legal_aid: Outgoings::LegalAid,
   }.freeze
   VALID_OUTGOING_CATEGORIES = OUTGOING_KLASSES.keys.map(&:to_s).freeze
 

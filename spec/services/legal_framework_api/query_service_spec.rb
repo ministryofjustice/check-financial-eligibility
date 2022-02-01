@@ -73,7 +73,7 @@ module LegalFrameworkAPI
     def request_body
       {
         request_id: request_id,
-        proceeding_types: [ccms_code]
+        proceeding_types: [ccms_code],
       }.to_json
     end
 
@@ -88,9 +88,9 @@ module LegalFrameworkAPI
             matter_type:,
             capital_upper: threshold_waived,
             disposable_income_upper: threshold_waived,
-            gross_income_upper: threshold_waived
+            gross_income_upper: threshold_waived,
           }
-        ]
+        ],
       }.to_json
     end
 
@@ -108,7 +108,7 @@ module LegalFrameworkAPI
       {
         "Accept" => "*/*",
         "Accept-Encoding" => "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
-        "Content-Type" => "application/json"
+        "Content-Type" => "application/json",
       }
     end
   end

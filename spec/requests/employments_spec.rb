@@ -85,7 +85,7 @@ RSpec.describe EmploymentsController, type: :request do
                 benefits_in_kind: 16.60,
                 tax: -104.10,
                 national_insurance: -18.66,
-                net_employment_income: 898.84
+                net_employment_income: 898.84,
               },
               {
                 date: "2021-10-30",
@@ -93,7 +93,7 @@ RSpec.describe EmploymentsController, type: :request do
                 benefits_in_kind: 16.60,
                 tax: -104.10,
                 national_insurance: -18.66,
-                net_employment_income: 898.84
+                net_employment_income: 898.84,
               },
               {
                 date: "2021-10-30",
@@ -101,9 +101,9 @@ RSpec.describe EmploymentsController, type: :request do
                 benefits_in_kind: 16.60,
                 tax: -104.10,
                 national_insurance: -18.66,
-                net_employment_income: 898.84
+                net_employment_income: 898.84,
               }
-            ]
+            ],
           },
           {
             name: "Job 2",
@@ -114,7 +114,7 @@ RSpec.describe EmploymentsController, type: :request do
                 benefits_in_kind: 16.60,
                 tax: -104.10,
                 national_insurance: -18.66,
-                net_employment_income: 898.84
+                net_employment_income: 898.84,
               },
               {
                 date: "2021-10-30",
@@ -122,7 +122,7 @@ RSpec.describe EmploymentsController, type: :request do
                 benefits_in_kind: 16.60,
                 tax: -104.10,
                 national_insurance: -18.66,
-                net_employment_income: 898.84
+                net_employment_income: 898.84,
               },
               {
                 date: "2021-10-30",
@@ -130,11 +130,11 @@ RSpec.describe EmploymentsController, type: :request do
                 benefits_in_kind: 16.60,
                 tax: -104.10,
                 national_insurance: -18.66,
-                net_employment_income: 898.84
+                net_employment_income: 898.84,
               }
-            ]
+            ],
           }
-        ]
+        ],
       }
     end
   end

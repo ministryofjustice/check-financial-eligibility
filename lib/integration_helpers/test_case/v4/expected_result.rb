@@ -32,7 +32,7 @@ module TestCase
       def assessment(rows)
         hash = {
           matter_types: [],
-          proceeding_types: {}
+          proceeding_types: {},
         }
         while rows.any?
           case rows.first[1]

@@ -17,7 +17,7 @@ module Decorators
           involvement_type: @record.involvement_type,
           has_partner_opponent: @record.has_partner_opponent,
           receives_qualifying_benefit: @record.receives_qualifying_benefit,
-          self_employed: @record.self_employed
+          self_employed: @record.self_employed,
         }
       end
     end

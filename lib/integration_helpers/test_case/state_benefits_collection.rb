@@ -11,7 +11,7 @@ module TestCase
 
     def payload
       {
-        state_benefits: @benefits.keys.map { |benefit_type| benefit_type_payload(benefit_type) }
+        state_benefits: @benefits.keys.map { |benefit_type| benefit_type_payload(benefit_type) },
       }
     end
 
@@ -24,7 +24,7 @@ module TestCase
     def benefit_type_payload(benefit_type)
       {
         name: benefit_type,
-        payments: @benefits[benefit_type].map(&:payload)
+        payments: @benefits[benefit_type].map(&:payload),
       }
     end
 

@@ -85,11 +85,11 @@ module Creators
       [
         {
           description: bank_name1,
-          value: value1
+          value: value1,
         },
         {
           description: bank_name2,
-          value: value2
+          value: value2,
         }
       ]
     end
@@ -98,7 +98,7 @@ module Creators
       [
         {
           description: item1,
-          value: value1
+          value: value1,
         }
       ]
     end

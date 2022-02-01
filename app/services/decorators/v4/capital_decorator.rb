@@ -14,7 +14,7 @@ module Decorators
 
       def payload
         {
-          capital_items: capital_items
+          capital_items: capital_items,
         }
       end
 
@@ -23,14 +23,14 @@ module Decorators
           liquid: liquid_items,
           non_liquid: non_liquid_items,
           vehicles: vehicles,
-          properties: properties
+          properties: properties,
         }
       end
 
       def properties
         {
           main_home: PropertyDecorator.new(@summary.main_home)&.as_json,
-          additional_properties: additional_properties
+          additional_properties: additional_properties,
         }
       end
 

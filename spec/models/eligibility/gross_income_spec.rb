@@ -11,7 +11,7 @@ module Eligibility
       {
         proceeding_type_code: proceeding_type_code,
         upper_threshold: upper_threshold,
-        assessment_result: assessment_result
+        assessment_result: assessment_result,
       }
     end
 

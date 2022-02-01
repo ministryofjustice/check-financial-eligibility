@@ -14,7 +14,7 @@ RSpec.describe AssessmentsController, type: :request do
         {
           client_reference_id: "psr-123",
           submission_date: "2019-06-06",
-          matter_proceeding_type: "domestic_abuse"
+          matter_proceeding_type: "domestic_abuse",
         }
       end
       let(:headers) { { "CONTENT_TYPE" => "application/json" } }
@@ -35,7 +35,7 @@ RSpec.describe AssessmentsController, type: :request do
         expected_response = {
           success: true,
           assessment_id: Assessment.last.id,
-          errors: []
+          errors: [],
         }.to_json
         expect(parsed_response).to eq JSON.parse(expected_response, symbolize_names: true)
       end
@@ -53,7 +53,7 @@ RSpec.describe AssessmentsController, type: :request do
         it "returns error json payload", :show_in_doc, doc_title: "POST Error Response" do
           expected_response = {
             success: false,
-            errors: ["error creating record"]
+            errors: ["error creating record"],
           }
           expect(parsed_response).to eq expected_response
         end
@@ -69,7 +69,7 @@ RSpec.describe AssessmentsController, type: :request do
         let(:params) do
           {
             matter_proceeding_type: "domestic_abuse",
-            client_reference_id: "psr-123"
+            client_reference_id: "psr-123",
           }
         end
 
@@ -81,7 +81,7 @@ RSpec.describe AssessmentsController, type: :request do
       let(:headers) do
         {
           "CONTENT_TYPE" => "application/json",
-          "Accept" => "application/json; version=4"
+          "Accept" => "application/json; version=4",
         }
       end
       let(:params) do
@@ -89,8 +89,8 @@ RSpec.describe AssessmentsController, type: :request do
           client_reference_id: "psr-123",
           submission_date: "2019-06-06",
           proceeding_types: {
-            ccms_codes:
-          }
+            ccms_codes:,
+          },
         }
       end
 
@@ -106,7 +106,7 @@ RSpec.describe AssessmentsController, type: :request do
       let(:headers) do
         {
           "CONTENT_TYPE" => "application/json",
-          "Accept" => "application/json; version=5"
+          "Accept" => "application/json; version=5",
         }
       end
       let(:params) do
@@ -114,8 +114,8 @@ RSpec.describe AssessmentsController, type: :request do
           client_reference_id: "psr-123",
           submission_date: "2019-06-06",
           proceeding_types: {
-            ccms_codes:
-          }
+            ccms_codes:,
+          },
         }
       end
 
@@ -403,15 +403,15 @@ RSpec.describe AssessmentsController, type: :request do
           matter_types: [
             {
               matter_type: "domestic_abuse",
-              result: "contribution_required"
+              result: "contribution_required",
             }
           ],
           proceeding_types: [
             {
               ccms_code: "DA001",
-              result: "contribution_required"
+              result: "contribution_required",
             }
-          ]
+          ],
         },
         gross_income: {
           total_gross_income: 1615.0,
@@ -419,9 +419,9 @@ RSpec.describe AssessmentsController, type: :request do
             {
               ccms_code: "DA001",
               upper_threshold: 999_999_999_999.0,
-              result: "eligible"
+              result: "eligible",
             }
-          ]
+          ],
         },
         disposable_income: {
           dependant_allowance: 1457.45,
@@ -438,7 +438,7 @@ RSpec.describe AssessmentsController, type: :request do
               tax: 0.0,
               national_insurance: 0.0,
               fixed_employment_deduction: 0.0,
-              net_employment_income: 0.0
+              net_employment_income: 0.0,
             },
           income_contribution: 0.0,
           proceeding_types: [
@@ -446,9 +446,9 @@ RSpec.describe AssessmentsController, type: :request do
               ccms_code: "DA001",
               upper_threshold: 999_999_999_999.0,
               lower_threshold: 315.0,
-              result: "eligible"
+              result: "eligible",
             }
-          ]
+          ],
         },
         capital: {
           total_liquid: 0.0,
@@ -465,10 +465,10 @@ RSpec.describe AssessmentsController, type: :request do
               ccms_code: "DA001",
               lower_threshold: 3000.0,
               upper_threshold: 999_999_999_999.0,
-              result: "contribution_required"
+              result: "contribution_required",
             }
-          ]
-        }
+          ],
+        },
       },
       assessment: {
         id: assessment.id,
@@ -479,14 +479,14 @@ RSpec.describe AssessmentsController, type: :request do
           involvement_type: "applicant",
           has_partner_opponent: false,
           receives_qualifying_benefit: false,
-          self_employed: false
+          self_employed: false,
         },
         gross_income: {
           employment_income: [],
           irregular_income: {
             monthly_equivalents: {
-              student_loan: 0.0
-            }
+              student_loan: 0.0,
+            },
           },
           state_benefits: {
             monthly_equivalents: {
@@ -496,10 +496,10 @@ RSpec.describe AssessmentsController, type: :request do
                 {
                   name: "Child Benefit",
                   monthly_value: 200.0,
-                  excluded_from_income_assessment: false
+                  excluded_from_income_assessment: false,
                 }
-              ]
-            }
+              ],
+            },
           },
           other_income: {
             monthly_equivalents: {
@@ -507,22 +507,22 @@ RSpec.describe AssessmentsController, type: :request do
                 friends_or_family: 1415.0,
                 maintenance_in: 0.0,
                 property_or_lodger: 0.0,
-                pension: 0.0
+                pension: 0.0,
               },
               bank_transactions: {
                 friends_or_family: 1415.0,
                 maintenance_in: 0.0,
                 property_or_lodger: 0.0,
-                pension: 0.0
+                pension: 0.0,
               },
               cash_transactions: {
                 friends_or_family: 0.0,
                 maintenance_in: 0.0,
                 property_or_lodger: 0.0,
-                pension: 0.0
-              }
-            }
-          }
+                pension: 0.0,
+              },
+            },
+          },
         },
         disposable_income: {
           monthly_equivalents: {
@@ -530,26 +530,26 @@ RSpec.describe AssessmentsController, type: :request do
               child_care: 0.0,
               rent_or_mortgage: 50.0,
               maintenance_out: 0.0,
-              legal_aid: 0.0
+              legal_aid: 0.0,
             },
             bank_transactions: {
               child_care: 0.0,
               rent_or_mortgage: 50.0,
               maintenance_out: 0.0,
-              legal_aid: 0.0
+              legal_aid: 0.0,
             },
             cash_transactions: {
               child_care: 0.0,
               rent_or_mortgage: 0.0,
               maintenance_out: 0.0,
-              legal_aid: 0.0
-            }
+              legal_aid: 0.0,
+            },
           },
           childcare_allowance: 0.0,
           deductions: {
             dependants_allowance: 1457.45,
-            disregarded_state_benefits: 0.0
-          }
+            disregarded_state_benefits: 0.0,
+          },
         },
         capital: {
           capital_items: {
@@ -566,7 +566,7 @@ RSpec.describe AssessmentsController, type: :request do
                 date_of_purchase: "2018-05-20",
                 in_regular_use: false,
                 included_in_assessment: true,
-                assessed_value: 9000.0
+                assessed_value: 9000.0,
               }
             ],
             properties: {
@@ -581,19 +581,19 @@ RSpec.describe AssessmentsController, type: :request do
                 net_value: 385_000.0,
                 net_equity: 192_500.0,
                 main_home_equity_disregard: 100_000.0,
-                assessed_equity: 92_500.0
+                assessed_equity: 92_500.0,
               },
-              additional_properties: []
-            }
-          }
+              additional_properties: [],
+            },
+          },
         },
         remarks: {
           state_benefit_payment: {
             amount_variation: client_ids,
-            unknown_frequency: client_ids
-          }
-        }
-      }
+            unknown_frequency: client_ids,
+          },
+        },
+      },
     }
   end
 end

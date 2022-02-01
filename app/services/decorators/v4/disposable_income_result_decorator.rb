@@ -16,7 +16,7 @@ module Decorators
           total_disposable_income: summary.total_disposable_income.to_f,
           employment_income: employment_income,
           income_contribution: summary.income_contribution.to_f,
-          proceeding_types: proceeding_type_results
+          proceeding_types: proceeding_type_results,
         }
       end
 
@@ -40,7 +40,7 @@ module Decorators
           ccms_code: ptc.to_s,
           upper_threshold: elig.upper_threshold.to_f,
           lower_threshold: elig.lower_threshold.to_f,
-          result: elig.assessment_result
+          result: elig.assessment_result,
         }
       end
 
@@ -55,7 +55,7 @@ module Decorators
           tax: summary.tax.to_f,
           national_insurance: summary.national_insurance.to_f,
           fixed_employment_deduction: summary.fixed_employment_allowance.to_f,
-          net_employment_income: net_employment_income.to_f
+          net_employment_income: net_employment_income.to_f,
         }
       end
     end

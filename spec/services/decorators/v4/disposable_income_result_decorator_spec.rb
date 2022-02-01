@@ -25,7 +25,7 @@ module Decorators
           DA003: [315, unlimited, "contribution_required"],
           DA005: [315, unlimited, "contribution_required"],
           SE003: [315, 733, "ineligible"],
-          SE014: [315, 733, "ineligible"]
+          SE014: [315, 733, "ineligible"],
         }
       end
 
@@ -45,7 +45,7 @@ module Decorators
               gross_income: 3000.0,
               national_insurance: -300.0,
               net_employment_income: 1710.0,
-              tax: -990.0
+              tax: -990.0,
             },
           income_contribution: 75.0,
           proceeding_types: [
@@ -53,27 +53,27 @@ module Decorators
               ccms_code: "DA003",
               lower_threshold: 315.0,
               upper_threshold: 999_999_999_999.0,
-              result: "contribution_required"
+              result: "contribution_required",
             },
             {
               ccms_code: "DA005",
               lower_threshold: 315.0,
               upper_threshold: 999_999_999_999.0,
-              result: "contribution_required"
+              result: "contribution_required",
             },
             {
               ccms_code: "SE003",
               lower_threshold: 315.0,
               upper_threshold: 733.0,
-              result: "ineligible"
+              result: "ineligible",
             },
             {
               ccms_code: "SE014",
               lower_threshold: 315.0,
               upper_threshold: 733.0,
-              result: "ineligible"
+              result: "ineligible",
             }
-          ]
+          ],
         }
       end
 

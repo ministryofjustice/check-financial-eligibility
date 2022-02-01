@@ -3,7 +3,7 @@ module TestCase
     def initialize
       @collection = {
         income: hash_with_array_as_default,
-        outgoings: hash_with_array_as_default
+        outgoings: hash_with_array_as_default,
       }
     end
 
@@ -18,7 +18,7 @@ module TestCase
     def payload
       {
         income: @collection[:income].keys.map { |category| payload_for_category(:income, category) },
-        outgoings: @collection[:outgoings].keys.map { |category| payload_for_category(:outgoings, category) }
+        outgoings: @collection[:outgoings].keys.map { |category| payload_for_category(:outgoings, category) },
       }
     end
 
@@ -31,7 +31,7 @@ module TestCase
     def payload_for_category(in_out, category)
       {
         category: category,
-        payments: @collection[in_out][category].map(&:payload)
+        payments: @collection[in_out][category].map(&:payload),
       }
     end
 

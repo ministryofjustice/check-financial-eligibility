@@ -17,8 +17,8 @@ module TestCase
           date_of_birth: @date_of_birth,
           involvement_type: @involvement_type,
           has_partner_opponent: @has_partner_opponent,
-          receives_qualifying_benefit: @receives_qualifying_benefit
-        }
+          receives_qualifying_benefit: @receives_qualifying_benefit,
+        },
       }
     end
 
