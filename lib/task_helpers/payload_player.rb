@@ -1,7 +1,7 @@
 class PayloadPlayer
   POST_HEADERS = { "Content-Type" => "application/json" }.freeze
-  GET_ASSESSMENT_REGEX = %r{^/assessments/[0-9a-f-]{36}$}.freeze
-  POST_ASSESSMENT_REGEX = %r{^/assessments/([0-9a-f-]{36})}.freeze
+  GET_ASSESSMENT_REGEX = %r{^/assessments/[0-9a-f-]{36}$}
+  POST_ASSESSMENT_REGEX = %r{^/assessments/([0-9a-f-]{36})}
   SERVER_HOST = "http://localhost:4000".freeze
 
   def self.call

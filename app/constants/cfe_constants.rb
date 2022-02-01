@@ -45,7 +45,7 @@ module CFEConstants
 
   # Date and bank holidays
   #
-  DATE_REGEX = /^([12][9|0][0-9]{2}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01]))$/.freeze
+  DATE_REGEX = /^([12][9|0][0-9]{2}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01]))$/
   GOVUK_BANK_HOLIDAY_API_URL = "https://www.gov.uk/bank-holidays.json".freeze
   GOVUK_BANK_HOLIDAY_DEFAULT_GROUP = "england-and-wales".freeze
 

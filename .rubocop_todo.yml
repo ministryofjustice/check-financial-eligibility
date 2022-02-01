@@ -254,15 +254,6 @@ Style/FormatString:
 Style/HashSyntax:
   EnforcedStyle: ruby19
 
-# Offense count: 6
-# Cop supports --auto-correct.
-Style/RedundantFreeze:
-  Exclude:
-    - 'app/constants/cfe_constants.rb'
-    - 'app/validators/currency_validator.rb'
-    - 'lib/task_helpers/payload_player.rb'
-    - 'spec/requests/other_incomes_spec.rb'
-
 # Offense count: 31
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyleForMultiline.
