@@ -1,5 +1,5 @@
-require 'rails_helper'
-require Rails.root.join('lib/integration_helpers/test_case/employment_collection.rb')
+require "rails_helper"
+require Rails.root.join("lib/integration_helpers/test_case/employment_collection.rb")
 
 module TestCase
   RSpec.describe EmploymentCollection do
@@ -11,33 +11,37 @@ module TestCase
 
     subject { described_class.new(rows).payload }
 
-    context 'well formed spreadsheet' do
-      context 'single job' do
+    context "well formed spreadsheet" do
+      context "single job" do
         let(:rows) { single_job_rows }
-        it 'returns expected payload' do
+
+        it "returns expected payload" do
           expect(subject).to eq expected_single_job_payload
         end
       end
 
-      context 'multiple jobs' do
+      context "multiple jobs" do
         let(:rows) { multi_job_rows }
-        it 'returns expected payload' do
+
+        it "returns expected payload" do
           expect(subject).to eq expected_multi_job_payload
         end
       end
     end
 
-    context 'malformed_spreadsheet' do
-      context 'no job name specified on first row' do
+    context "malformed_spreadsheet" do
+      context "no job name specified on first row" do
         let(:rows) { missing_job_name_rows }
-        it 'raises' do
-          expect { subject }.to raise_error RuntimeError, 'No job name specified in column B for employment data'
+
+        it "raises" do
+          expect { subject }.to raise_error RuntimeError, "No job name specified in column B for employment data"
         end
       end
 
-      context 'unknown key in column C of spreadsheet' do
+      context "unknown key in column C of spreadsheet" do
         let(:rows) { unknown_key_rows }
-        it 'raises' do
+
+        it "raises" do
           expect { subject }.to raise_error RuntimeError, "Unexpected key 'XXX-YYY-ZZZ' in column C of employment data"
         end
       end
@@ -45,75 +49,75 @@ module TestCase
 
     def single_job_rows
       [
-        ['employment_income', 'Job 1', 'date', dec, 'date as xx/xx/xx'],
-        ['', '', 'gross pay', 2550.33],
-        ['', '', 'benefits in kind', 0.0],
-        ['', '', 'tax', -745.31, 'Enter as negative value unless refund'],
-        ['', '', 'national insurance', -144.06, 'enter as negative figure for NIC deduction, positive for refund'],
-        ['', '', 'date', nov, 'date as xx/xx/xx'],
-        ['', '', 'gross pay', 2550.33],
-        ['', '', 'benefits in kind', 0.0],
-        ['', '', 'tax', -745.31, 'Enter as negative value unless refund'],
-        ['', '', 'national insurance', -144.06, 'enter as negative figure for NIC deduction, positive for refund'],
-        ['', '', 'date', oct, 'date as xx/xx/xx'],
-        ['', '', 'gross pay', 2550.33],
-        ['', '', 'benefits in kind', 0.0],
-        ['', '', 'tax', -745.31, 'Enter as negative value unless refund'],
-        ['', '', 'national insurance', -144.06, 'enter as negative figure for NIC deduction, positive for refund'],
-        ['some other section']
+        ["employment_income", "Job 1", "date", dec, "date as xx/xx/xx"],
+        ["", "", "gross pay", 2550.33],
+        ["", "", "benefits in kind", 0.0],
+        ["", "", "tax", -745.31, "Enter as negative value unless refund"],
+        ["", "", "national insurance", -144.06, "enter as negative figure for NIC deduction, positive for refund"],
+        ["", "", "date", nov, "date as xx/xx/xx"],
+        ["", "", "gross pay", 2550.33],
+        ["", "", "benefits in kind", 0.0],
+        ["", "", "tax", -745.31, "Enter as negative value unless refund"],
+        ["", "", "national insurance", -144.06, "enter as negative figure for NIC deduction, positive for refund"],
+        ["", "", "date", oct, "date as xx/xx/xx"],
+        ["", "", "gross pay", 2550.33],
+        ["", "", "benefits in kind", 0.0],
+        ["", "", "tax", -745.31, "Enter as negative value unless refund"],
+        ["", "", "national insurance", -144.06, "enter as negative figure for NIC deduction, positive for refund"],
+        ["some other section"]
       ]
     end
 
     def multi_job_rows
       [
-        ['employment_income', 'Job 1', 'date', dec, 'date as xx/xx/xx'],
-        ['', '', 'gross pay', 2550.33],
-        ['', '', 'benefits in kind', 0.0],
-        ['', '', 'tax', -745.31, 'Enter as negative value unless refund'],
-        ['', '', 'national insurance', -144.06, 'enter as negative figure for NIC deduction, positive for refund'],
-        ['', '', 'date', nov, 'date as xx/xx/xx'],
-        ['', '', 'gross pay', 2550.33],
-        ['', '', 'benefits in kind', 0.0],
-        ['', '', 'tax', -745.31, 'Enter as negative value unless refund'],
-        ['', '', 'national insurance', -144.06, 'enter as negative figure for NIC deduction, positive for refund'],
-        ['', '', 'date', oct, 'date as xx/xx/xx'],
-        ['', '', 'gross pay', 2550.33],
-        ['', '', 'benefits in kind', 0.0],
-        ['', '', 'tax', -745.31, 'Enter as negative value unless refund'],
-        ['', '', 'national insurance', -144.06, 'enter as negative figure for NIC deduction, positive for refund'],
-        ['', 'Job 2', 'date', early_dec, 'date as xx/xx/xx'],
-        ['', '', 'gross pay', 350.20],
-        ['', '', 'benefits in kind', 0.0],
-        ['', '', 'tax', -98, 44, 'Enter as negative value unless refund'],
-        ['', '', 'national insurance', 0, 'enter as negative figure for NIC deduction, positive for refund'],
-        ['', '', 'date', mid_dec, 'date as xx/xx/xx'],
-        ['', '', 'gross pay', 390],
-        ['', '', 'benefits in kind', 0.0],
-        ['', '', 'tax', -45.87, 'Enter as negative value unless refund'],
-        ['', '', 'national insurance', 0, 'enter as negative figure for NIC deduction, positive for refund'],
-        ['some other section']
+        ["employment_income", "Job 1", "date", dec, "date as xx/xx/xx"],
+        ["", "", "gross pay", 2550.33],
+        ["", "", "benefits in kind", 0.0],
+        ["", "", "tax", -745.31, "Enter as negative value unless refund"],
+        ["", "", "national insurance", -144.06, "enter as negative figure for NIC deduction, positive for refund"],
+        ["", "", "date", nov, "date as xx/xx/xx"],
+        ["", "", "gross pay", 2550.33],
+        ["", "", "benefits in kind", 0.0],
+        ["", "", "tax", -745.31, "Enter as negative value unless refund"],
+        ["", "", "national insurance", -144.06, "enter as negative figure for NIC deduction, positive for refund"],
+        ["", "", "date", oct, "date as xx/xx/xx"],
+        ["", "", "gross pay", 2550.33],
+        ["", "", "benefits in kind", 0.0],
+        ["", "", "tax", -745.31, "Enter as negative value unless refund"],
+        ["", "", "national insurance", -144.06, "enter as negative figure for NIC deduction, positive for refund"],
+        ["", "Job 2", "date", early_dec, "date as xx/xx/xx"],
+        ["", "", "gross pay", 350.20],
+        ["", "", "benefits in kind", 0.0],
+        ["", "", "tax", -98, 44, "Enter as negative value unless refund"],
+        ["", "", "national insurance", 0, "enter as negative figure for NIC deduction, positive for refund"],
+        ["", "", "date", mid_dec, "date as xx/xx/xx"],
+        ["", "", "gross pay", 390],
+        ["", "", "benefits in kind", 0.0],
+        ["", "", "tax", -45.87, "Enter as negative value unless refund"],
+        ["", "", "national insurance", 0, "enter as negative figure for NIC deduction, positive for refund"],
+        ["some other section"]
       ]
     end
 
     def missing_job_name_rows
       [
-        ['employment_income', '', 'date', dec, 'date as xx/xx/xx'],
-        ['', '', 'gross pay', 2550.33],
-        ['', '', 'benefits in kind', 0.0],
-        ['', '', 'tax', -745.31, 'Enter as negative value unless refund'],
-        ['', '', 'national insurance', -144.06, 'enter as negative figure for NIC deduction, positive for refund'],
-        ['some other section']
+        ["employment_income", "", "date", dec, "date as xx/xx/xx"],
+        ["", "", "gross pay", 2550.33],
+        ["", "", "benefits in kind", 0.0],
+        ["", "", "tax", -745.31, "Enter as negative value unless refund"],
+        ["", "", "national insurance", -144.06, "enter as negative figure for NIC deduction, positive for refund"],
+        ["some other section"]
       ]
     end
 
     def unknown_key_rows
       [
-        ['employment_income', 'Job 1', 'date', dec, 'date as xx/xx/xx'],
-        ['', '', 'gross pay', 2550.33],
-        ['', '', 'XXX-YYY-ZZZ', 0.0],
-        ['', '', 'tax', -745.31, 'Enter as negative value unless refund'],
-        ['', '', 'national insurance', -144.06, 'enter as negative figure for NIC deduction, positive for refund'],
-        ['some other section']
+        ["employment_income", "Job 1", "date", dec, "date as xx/xx/xx"],
+        ["", "", "gross pay", 2550.33],
+        ["", "", "XXX-YYY-ZZZ", 0.0],
+        ["", "", "tax", -745.31, "Enter as negative value unless refund"],
+        ["", "", "national insurance", -144.06, "enter as negative figure for NIC deduction, positive for refund"],
+        ["some other section"]
       ]
     end
 
@@ -121,10 +125,10 @@ module TestCase
       {
         employment_income: [
           {
-            name: 'Job 1',
+            name: "Job 1",
             payments: [
               {
-                date: '2021-12-20',
+                date: "2021-12-20",
                 gross: 2550.33,
                 benefits_in_kind: 0.0,
                 tax: -745.31,
@@ -132,7 +136,7 @@ module TestCase
                 net_employment_income: 1660.96
               },
               {
-                date: '2021-11-30',
+                date: "2021-11-30",
                 gross: 2550.33,
                 benefits_in_kind: 0.0,
                 tax: -745.31,
@@ -140,7 +144,7 @@ module TestCase
                 net_employment_income: 1660.96
               },
               {
-                date: '2021-10-30',
+                date: "2021-10-30",
                 gross: 2550.33,
                 benefits_in_kind: 0.0,
                 tax: -745.31,
@@ -157,10 +161,10 @@ module TestCase
       {
         employment_income: [
           {
-            name: 'Job 1',
+            name: "Job 1",
             payments: [
               {
-                date: '2021-12-20',
+                date: "2021-12-20",
                 gross: 2550.33,
                 benefits_in_kind: 0.0,
                 tax: -745.31,
@@ -168,7 +172,7 @@ module TestCase
                 net_employment_income: 1660.96
               },
               {
-                date: '2021-11-30',
+                date: "2021-11-30",
                 gross: 2550.33,
                 benefits_in_kind: 0.0,
                 tax: -745.31,
@@ -176,7 +180,7 @@ module TestCase
                 net_employment_income: 1660.96
               },
               {
-                date: '2021-10-30',
+                date: "2021-10-30",
                 gross: 2550.33,
                 benefits_in_kind: 0.0,
                 tax: -745.31,
@@ -186,10 +190,10 @@ module TestCase
             ]
           },
           {
-            name: 'Job 2',
+            name: "Job 2",
             payments: [
               {
-                date: '2021-12-07',
+                date: "2021-12-07",
                 gross: 350.2,
                 benefits_in_kind: 0.0,
                 tax: -98,
@@ -197,7 +201,7 @@ module TestCase
                 net_employment_income: 252.2
               },
               {
-                date: '2021-12-15',
+                date: "2021-12-15",
                 gross: 390,
                 benefits_in_kind: 0.0,
                 tax: -45.87,
