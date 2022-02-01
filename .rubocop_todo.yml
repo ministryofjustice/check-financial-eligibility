@@ -139,18 +139,6 @@ RSpec/OverwritingSetup:
   Exclude:
     - 'spec/services/creators/irregular_income_creator_spec.rb'
 
-# Offense count: 5
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: numeric, symbolic
-RSpec/Rails/HttpStatus:
-  Exclude:
-    - 'spec/requests/applicants_spec.rb'
-    - 'spec/requests/assessments_spec.rb'
-    - 'spec/requests/capitals_spec.rb'
-    - 'spec/requests/dependants_spec.rb'
-    - 'spec/support/shared_examples.rb'
-
 # Offense count: 4
 RSpec/RepeatedDescription:
   Exclude:
