@@ -4,7 +4,7 @@ module Collators
   RSpec.describe GrossIncomeCollator do
     before { create :bank_holiday }
 
-    before(:each) { mock_lfa_responses }
+    before { mock_lfa_responses }
 
     let(:assessment) { create :assessment, :with_applicant, :with_gross_income_summary, proceeding_type_codes: proceeding_type_codes }
     let(:gross_income_summary) { assessment.gross_income_summary }
@@ -69,9 +69,7 @@ module Collators
           end
 
           context "monthly_student_loan exists" do
-            let!(:irregular_income_payments) do
-              create :irregular_income_payment, gross_income_summary: gross_income_summary, amount: 12_000
-            end
+            before { create :irregular_income_payment, gross_income_summary: gross_income_summary, amount: 12_000 }
 
             it "updates the gross income record with categorised monthly incomes" do
               subject

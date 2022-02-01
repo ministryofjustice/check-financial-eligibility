@@ -69,7 +69,7 @@ RSpec.describe VehiclesController, type: :request do
     end
 
     context "with service returning error" do
-      let(:error) { double "success?" => false, errors: ["Invalid: foo"] }
+      let(:error) { instance_double Creators::VehicleCreator, "success?" => false, errors: ["Invalid: foo"] }
 
       before { allow(Creators::VehicleCreator).to receive(:call).and_return(error) }
 

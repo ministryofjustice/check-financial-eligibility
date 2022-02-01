@@ -27,7 +27,7 @@ RSpec.describe "IntegrationTests::TestRunner", type: :request do
 
   before { setup_test_data }
 
-  before(:each) { mock_lfa_responses }
+  before { mock_lfa_responses }
 
   describe "run integration_tests" do
     it "processes all the tests on all the sheets" do

@@ -12,9 +12,9 @@ RSpec.describe DependantsController, type: :request do
       }
     end
 
-    subject { post assessment_dependants_path(assessment_id), params: request_payload.to_json, headers: headers }
+    subject(:post_dependants) { post assessment_dependants_path(assessment_id), params: request_payload.to_json, headers: headers }
 
-    before { subject }
+    before { post_dependants }
 
     context "valid payload" do
       it "returns http success", :show_in_doc do
@@ -59,7 +59,7 @@ RSpec.describe DependantsController, type: :request do
       end
 
       it "errors and is shown in apidocs", :show_in_doc do
-        expect(response).to have_http_status(422)
+        expect(response).to have_http_status(:unprocessable_entity)
       end
 
       it_behaves_like "it fails with message", "No such assessment id"

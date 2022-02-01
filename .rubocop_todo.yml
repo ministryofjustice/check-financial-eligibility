@@ -6,12 +6,8 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 36
-# Configuration parameters: IgnoredMethods.
-Lint/AmbiguousBlockAssociation:
-  Enabled: false
-
 # Offense count: 17
+# **** LEAVE FOR NOW ****
 RSpec/AnyInstance:
   Exclude:
     - 'spec/requests/explicit_remarks_spec.rb'
@@ -22,14 +18,17 @@ RSpec/AnyInstance:
     - 'spec/services/remark_generators/frequency_checker_spec.rb'
     - 'spec/services/remark_generators/multi_benefit_checker_spec.rb'
     - 'spec/services/remark_generators/residual_balance_checker_spec.rb'
+    - 'spec/requests/explicit_remarks_controller_spec.rb'
 
 # Offense count: 516
 # Configuration parameters: Prefixes.
 # Prefixes: when, with, without
+# **** LEAVE FOR NOW ****
 RSpec/ContextWording:
   Enabled: false
 
 # Offense count: 18
+# **** LEAVE FOR NOW ****
 RSpec/ExpectInHook:
   Exclude:
     - 'spec/models/bank_holiday_spec.rb'
@@ -38,71 +37,103 @@ RSpec/ExpectInHook:
     - 'spec/requests/assessments_spec.rb'
     - 'spec/requests/outgoings_spec.rb'
     - 'spec/services/assessors/disposable_income_assessor_spec.rb'
-
-# Offense count: 16
-# Configuration parameters: Include, CustomTransform, IgnoreMethods, SpecSuffixOnly.
-# Include: **/*_spec*rb*, **/spec/**/*
-RSpec/FilePath:
-  Enabled: false
-
-# Offense count: 11
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: implicit, each, example
-RSpec/HookArgument:
-  Exclude:
-    - 'spec/integration/ap_1367_spec.rb'
-    - 'spec/integration/policy_disregards_spec.rb'
-    - 'spec/integration/test_runner_spec.rb'
-    - 'spec/models/proceeding_type_threshold_spec.rb'
-    - 'spec/requests/assessments_spec.rb'
-    - 'spec/services/collators/gross_income_collator_spec.rb'
-    - 'spec/services/creators/assessment_creator_spec.rb'
-    - 'spec/services/creators/capital_eligibility_creator_spec.rb'
-    - 'spec/services/creators/disposable_income_eligibiltiy_creator_spec.rb'
-    - 'spec/services/creators/gross_income_eligibility_creator_spec.rb'
-    - 'spec/services/decorators/v4/matter_type_result_decorator_spec.rb'
+    - 'spec/requests/outgoings_controller_spec.rb'
+    - 'spec/requests/applicants_controller_spec.rb'
 
 # Offense count: 60
 # Cop supports --auto-correct.
+# ****
+# **** Removing this will break specs.  It removes all the explicit subject declarations that it thinks aren't necessary, but doesn't always get it right.
+# **** Better to leave the explicit subject declarations in.  May be fixed when all Rspec/NamedSubject offences are fixed.
+# ****
 RSpec/LeadingSubject:
   Enabled: false
-
-# Offense count: 1
-RSpec/LeakyConstantDeclaration:
-  Exclude:
-    - 'spec/requests/application_controller_spec.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-RSpec/LetBeforeExamples:
-  Exclude:
-    - 'spec/services/utilities/calendar_monthly_period_analyser_spec.rb'
-
-# Offense count: 26
-RSpec/LetSetup:
-  Exclude:
-    - 'spec/models/other_income_source_spec.rb'
-    - 'spec/requests/employments_spec.rb'
-    - 'spec/requests/state_benefit_types_spec.rb'
-    - 'spec/services/assessors/disposable_income_assessor_spec.rb'
-    - 'spec/services/calculators/state_benefits_calculator_spec.rb'
-    - 'spec/services/collators/disposable_income_collator_spec.rb'
-    - 'spec/services/collators/gross_income_collator_spec.rb'
-    - 'spec/services/decorators/v3/disposable_income_summary_decorator_spec.rb'
-    - 'spec/services/decorators/v4/proceeding_types_result_decorator_spec.rb'
-    - 'spec/services/remark_generators/residual_balance_checker_spec.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-RSpec/MultipleSubjects:
-  Exclude:
-    - 'spec/services/creators/irregular_income_creator_spec.rb'
 
 # Offense count: 506
 # Configuration parameters: IgnoreSharedExamples.
 RSpec/NamedSubject:
-  Enabled: false
+  Exclude:
+    - 'spec/integration_helpers/test_case/employment_collection_spec.rb'
+    - 'spec/validators/uuid_validator_spec.rb'
+    - 'spec/validators/date_validator_spec.rb'
+    - 'spec/validators/currency_validator_spec.rb'
+    - 'spec/services/workflows/passported_workflow_spec.rb'
+    - 'spec/services/workflows/non_passported_workflow_spec.rb'
+    - 'spec/services/workflows/main_workflow_spec.rb'
+    - 'spec/services/utilities/result_summarizer_spec.rb'
+    - 'spec/services/utilities/regular_period_analyser_spec.rb'
+    - 'spec/services/utilities/matter_type_finder_spec.rb'
+    - 'spec/services/utilities/calendar_monthly_period_analyser_spec.rb'
+    - 'spec/services/remark_generators/multi_benefit_checker_spec.rb'
+    - 'spec/services/payment_dates_generator_spec.rb'
+    - 'spec/services/decorators/v4/property_decorator_spec.rb'
+    - 'spec/services/decorators/v3/state_benefit_decorator_spec.rb'
+    - 'spec/services/decorators/v3/disposable_income_summary_decorator_spec.rb'
+    - 'spec/services/decorators/v3/capital_summary_decorator_spec.rb'
+    - 'spec/services/decorators/v4/proceeding_types_result_decorator_spec.rb'
+    - 'spec/services/decorators/v4/matter_type_result_decorator_spec.rb'
+    - 'spec/services/decorators/v4/gross_income_result_decorator_spec.rb'
+    - 'spec/services/decorators/v4/gross_income_decorator_spec.rb'
+    - 'spec/services/decorators/v4/disposable_income_result_decorator_spec.rb'
+    - 'spec/services/decorators/v4/capital_result_decorator_spec.rb'
+    - 'spec/services/decorators/v4/assessment_decorator_spec.rb'
+    - 'spec/services/decorators/v3/property_decorator_spec.rb'
+    - 'spec/services/decorators/v3/property_decorator_spec.rb'
+    - 'spec/services/decorators/v3/gross_income_summary_decorator_spec.rb'
+    - 'spec/services/decorators/v3/deductions_decorator_spec.rb'
+    - 'spec/services/decorators/v3/capital_item_decorator_spec.rb'
+    - 'spec/services/decorators/v3/assessment_decorator_spec.rb'
+    - 'spec/services/decorators/v3/applicant_decorator_spec.rb'
+    - 'spec/services/decorators/error_decorator_spec.rb'
+    - 'spec/services/creators/vehicle_creation_service_spec.rb'
+    - 'spec/services/creators/properties_creator_spec.rb'
+    - 'spec/services/creators/outgoings_creator_spec.rb'
+    - 'spec/services/creators/other_incomes_creator_spec.rb'
+    - 'spec/services/creators/irregular_income_creator_spec.rb'
+    - 'spec/services/creators/gross_income_eligibility_creator_spec.rb'
+    - 'spec/services/creators/explicit_remarks_creator_spec.rb'
+    - 'spec/services/creators/disposable_income_eligibiltiy_creator_spec.rb'
+    - 'spec/services/creators/dependants_creator_spec.rb'
+    - 'spec/services/creators/cash_transactions_creator_spec.rb'
+    - 'spec/services/creators/capitals_creator_spec.rb'
+    - 'spec/services/creators/capital_eligibility_creator_spec.rb'
+    - 'spec/services/creators/assessment_eligibility_creator_spec.rb'
+    - 'spec/services/creators/assessment_creator_spec.rb'
+    - 'spec/services/creators/applicant_creator_spec.rb'
+    - 'spec/services/collators/outgoings_collator_spec.rb'
+    - 'spec/services/collators/maintenance_collator_spec.rb'
+    - 'spec/services/collators/legal_aid_collator_spec.rb'
+    - 'spec/services/collators/housing_costs_collator_spec.rb'
+    - 'spec/services/collators/gross_income_collator_spec.rb'
+    - 'spec/services/collators/disposable_income_collator_spec.rb'
+    - 'spec/services/collators/dependants_allowance_collator_spec.rb'
+    - 'spec/services/collators/childcare_collator_spec.rb'
+    - 'spec/services/collators/capital_collator_spec.rb'
+    - 'spec/services/calculators/state_benefits_calculator_spec.rb'
+    - 'spec/services/calculators/monthly_income_converter_spec.rb'
+    - 'spec/services/calculators/income_contribution_calculator_spec.rb'
+    - 'spec/services/calculators/housing_costs_calculator_spec.rb'
+    - 'spec/services/calculators/disregarded_state_benefits_calculator_spec.rb'
+    - 'spec/services/calculators/dependant_allowance_calculator_spec.rb'
+    - 'spec/services/assessors/main_assessor_spec.rb'
+    - 'spec/services/assessors/gross_income_assessor_spec.rb'
+    - 'spec/services/assessors/disposable_income_assessor_spec.rb'
+    - 'spec/requests/vehicles_controller_spec.rb'
+    - 'spec/requests/state_benefits_controller_spec.rb'
+    - 'spec/requests/outgoings_controller_spec.rb'
+    - 'spec/requests/other_incomes_controller_spec.rb'
+    - 'spec/requests/irregular_incomes_controller_spec.rb'
+    - 'spec/requests/employments_controller_spec.rb'
+    - 'spec/requests/cash_transactions_controller_spec.rb'
+    - 'spec/requests/capitals_controller_spec.rb'
+    - 'spec/requests/assessments_controller_spec.rb'
+    - 'spec/models/state_benefit_spec.rb'
+    - 'spec/models/proceeding_type_threshold_spec.rb'
+    - 'spec/models/other_income_source_spec.rb'
+    - 'spec/models/api_response_spec.rb'
+    - 'spec/lib/integration_helpers/test_case/v4/result_comparer_spec.rb'
+    - 'spec/db/migration_helpers/eligibility_populator_spec.rb'
+
 
 # Offense count: 1
 # Cop supports --auto-correct.

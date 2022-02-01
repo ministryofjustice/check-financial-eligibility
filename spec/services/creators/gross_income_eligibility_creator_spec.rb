@@ -2,7 +2,7 @@ require "rails_helper"
 
 module Creators
   RSpec.describe GrossIncomeEligibilityCreator do
-    before(:each) { mock_lfa_responses }
+    before { mock_lfa_responses }
 
     let(:assessment) { create :assessment, :with_gross_income_summary, proceeding_type_codes: codes }
     let(:summary) { assessment.gross_income_summary }

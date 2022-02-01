@@ -18,7 +18,8 @@ module Calculators
 
     context "state benefit records exist" do
       let(:state_benefit_type_included) { create :state_benefit_type, exclude_from_gross_income: false }
-      let!(:weekly_state_benefits) do
+
+      before do
         create :state_benefit,
                :with_weekly_payments,
                gross_income_summary: gross_income_summary,
@@ -33,7 +34,8 @@ module Calculators
 
       context "monthly and weekly payments" do
         let(:another_state_benefit_type_included) { create :state_benefit_type, exclude_from_gross_income: false }
-        let!(:monthly_state_benefits) do
+
+        before do
           create :state_benefit,
                  :with_monthly_payments,
                  gross_income_summary: gross_income_summary,
@@ -47,7 +49,8 @@ module Calculators
 
       context "mixture of included and excluded benefits" do
         let(:state_benefit_type_excluded) { create :state_benefit_type, exclude_from_gross_income: true }
-        let!(:monthly_state_benefits) do
+
+        before do
           create :state_benefit,
                  :with_monthly_payments,
                  gross_income_summary: gross_income_summary,

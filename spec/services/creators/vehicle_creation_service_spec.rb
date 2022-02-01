@@ -30,7 +30,7 @@ module Creators
         let(:vehicles_attributes) { attributes_for_list(:vehicle, 2, date_of_purchase: Faker::Date.between(from: 2.months.from_now, to: 6.years.from_now)) }
 
         it "does not generates two vehicles" do
-          expect { subject }.not_to change { assessment.vehicles.count }
+          expect { subject }.not_to change(assessment.vehicles, :count)
         end
 
         it "is unsuccessful" do

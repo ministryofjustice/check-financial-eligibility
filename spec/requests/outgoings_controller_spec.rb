@@ -97,7 +97,7 @@ RSpec.describe OutgoingsController, type: :request do
       end
 
       it "does not create outgoing records" do
-        expect { subject }.not_to change { Outgoings::BaseOutgoing.count }
+        expect { subject }.not_to change(Outgoings::BaseOutgoing, :count)
       end
     end
 
@@ -117,10 +117,10 @@ RSpec.describe OutgoingsController, type: :request do
     end
 
     context "with a failure to save" do
-      let(:service) { double "success?" => false, errors: [:foo] }
+      let(:service) { instance_double Creators::OutgoingsCreator, success?: false, errors: [:foo] }
 
       before do
-        expect(Creators::OutgoingsCreator).to receive(:call).and_return(service)
+        allow(Creators::OutgoingsCreator).to receive(:call).and_return(service)
         subject
       end
 

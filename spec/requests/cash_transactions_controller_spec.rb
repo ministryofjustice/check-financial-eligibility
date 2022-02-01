@@ -27,7 +27,7 @@ RSpec.describe CashTransactionsController, type: :request do
       end
 
       context "creation is valid" do
-        let(:creator_service) { double Creators::CashTransactionsCreator, success?: true }
+        let(:creator_service) { instance_double Creators::CashTransactionsCreator, success?: true }
 
         before do
           allow(creator_class).to receive(:call).and_return(creator_service)
@@ -45,7 +45,7 @@ RSpec.describe CashTransactionsController, type: :request do
       end
 
       context "creation is invalid" do
-        let(:creator_service) { double Creators::CashTransactionsCreator, success?: false, errors: ["error 1", "error 2"] }
+        let(:creator_service) { instance_double Creators::CashTransactionsCreator, success?: false, errors: ["error 1", "error 2"] }
 
         before do
           allow(creator_class).to receive(:call).and_return(creator_service)
@@ -104,10 +104,6 @@ RSpec.describe CashTransactionsController, type: :request do
         end
       end
     end
-
-    # def parsed_response
-    #   JSON.parse(response.body, symbolize_names: true)
-    # end
 
     def valid_params
       {

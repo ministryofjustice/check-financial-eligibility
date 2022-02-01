@@ -13,7 +13,7 @@ module Calculators
           expect(capital_summary.properties).to be_empty
           expect {
             service.call
-          }.not_to change { capital_summary.properties.count }
+          }.not_to change(capital_summary.properties, :count)
         end
       end
 

@@ -127,7 +127,7 @@ RSpec.describe ApplicantsController, type: :request do
         it "fails with a message", :show_in_doc do
           params[:applicant][:receives_qualifying_benefit] = "yes"
           post assessment_applicant_path(assessment.id), params: params.to_json, headers: headers
-          expect(response).to have_http_status(422)
+          expect(response).to have_http_status(:unprocessable_entity)
         end
       end
     end
