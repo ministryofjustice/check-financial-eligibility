@@ -105,6 +105,11 @@ module TestCase
         compare_and_print("monthly other income", actual_gross_other_income, expected_gi_other_income)
         compare_and_print("monthly state benefits", actual_gross_state_benefits, expected_gi_state_benefits)
         compare_and_print("monthly student loan", actual_student_loan, expected_gi_student_loan)
+        compare_and_print("employment_income_gross", actual_employment_income[:gross_income], expected_employment_income_gross)
+        compare_and_print("employment_income_benefits_in_kind", actual_employment_income[:benefits_in_kind], expected_employment_income_benefits_in_kind)
+        compare_and_print("employment_income_tax",  actual_employment_income[:tax], expected_employment_income_tax)
+        compare_and_print("employment_income_nic",  actual_employment_income[:national_insurance], expected_employment_income_nic)
+        compare_and_print("fixed_employment_allowance", actual_employment_income[:fixed_employment_deduction], expected_fixed_employment_allowance)
         compare_and_print("total gross income", actual_total_gross_income, expected_total_gross_income)
       end
 
@@ -250,6 +255,10 @@ module TestCase
         @actual[:result_summary][:capital]
       end
 
+      def actual_employment_income
+        disposable_income_result[:employment_income]
+      end
+
       def expected_assessment
         @expected[:assessment]
       end
@@ -300,6 +309,26 @@ module TestCase
 
       def expected_capital
         @expected[:capital]
+      end
+
+      def expected_employment_income_gross
+        expected_gross_income[:employment_income_gross]
+      end
+
+      def expected_employment_income_benefits_in_kind
+        expected_gross_income[:employment_income_benefits_in_kind]
+      end
+
+      def expected_employment_income_tax
+        expected_gross_income[:employment_income_tax]
+      end
+
+      def expected_employment_income_nic
+        expected_gross_income[:employment_income_nic]
+      end
+
+      def expected_fixed_employment_allowance
+        expected_gross_income[:fixed_employment_allowance]
       end
     end
   end
