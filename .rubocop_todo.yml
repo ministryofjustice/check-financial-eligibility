@@ -254,15 +254,6 @@ Style/FormatString:
 Style/HashSyntax:
   EnforcedStyle: ruby19
 
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: line_count_dependent, lambda, literal
-Style/Lambda:
-  Exclude:
-    - 'app/models/cash_transaction.rb'
-    - 'config/initializers/sentry.rb'
-
 # Offense count: 6
 # Cop supports --auto-correct.
 Style/RedundantFreeze:
