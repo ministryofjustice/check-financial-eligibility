@@ -36,7 +36,7 @@ private
   def outgoing_creation_service
     @outgoing_creation_service ||= Creators::OutgoingsCreator.call(
       outgoings: input[:outgoings],
-      assessment_id: params[:assessment_id]
+      assessment_id: params[:assessment_id],
     )
   end
 

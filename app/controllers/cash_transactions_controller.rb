@@ -53,7 +53,7 @@ private
     @creation_service ||= Creators::CashTransactionsCreator.call(
       assessment_id: params[:assessment_id],
       income: input[:income],
-      outgoings: input[:outgoings]
+      outgoings: input[:outgoings],
     )
   end
 

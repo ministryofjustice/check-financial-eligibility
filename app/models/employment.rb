@@ -16,7 +16,7 @@ class Employment < ApplicationRecord
       monthly_gross_income: gross_income,
       monthly_benefits_in_kind: benefits,
       monthly_tax: tax,
-      monthly_national_insurance: national_insurance
+      monthly_national_insurance: national_insurance,
     )
   end
 end

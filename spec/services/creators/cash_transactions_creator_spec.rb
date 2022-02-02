@@ -39,7 +39,7 @@ describe Creators::CashTransactionsCreator do
             [month1, 256.0, "ec7b707b-d795-47c2-8b39-ccf022eae33b"],
             [month2, 257.0, "ee7b707b-d795-47c2-8b39-ccf022eae33b"],
             [month3, 258.0, "ff7b707b-d795-47c2-8b39-ccf022eae33b"]
-          ]
+          ],
         )
       end
 

@@ -40,7 +40,7 @@ private
   def creation_service
     @creation_service ||= Creators::ExplicitRemarksCreator.call(
       assessment_id: params[:assessment_id],
-      remarks_attributes: params[:explicit_remarks]
+      remarks_attributes: params[:explicit_remarks],
     )
   end
 end

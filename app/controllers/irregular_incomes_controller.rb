@@ -40,7 +40,7 @@ private
   def creation_service
     @creation_service ||= Creators::IrregularIncomeCreator.call(
       assessment_id: params[:assessment_id],
-      irregular_income: irregular_income_params
+      irregular_income: irregular_income_params,
     )
   end
 

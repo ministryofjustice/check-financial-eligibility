@@ -53,7 +53,7 @@ private
     @creation_service ||= Creators::CapitalsCreator.call(
       assessment_id: params[:assessment_id],
       bank_accounts_attributes: input[:bank_accounts],
-      non_liquid_capitals_attributes: input[:non_liquid_capital]
+      non_liquid_capitals_attributes: input[:non_liquid_capital],
     )
   end
 

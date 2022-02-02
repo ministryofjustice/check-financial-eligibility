@@ -90,7 +90,7 @@ RSpec.describe CashTransactionsController, type: :request do
           subject
           expect(parsed_response[:success]).to eq false
           expect(parsed_response[:errors]).to eq(
-            ["Invalid parameter 'amount' value -100: Must be a decimal, zero or greater, with a maximum of two decimal places. For example: 123.34"]
+            ["Invalid parameter 'amount' value -100: Must be a decimal, zero or greater, with a maximum of two decimal places. For example: 123.34"],
           )
         end
 

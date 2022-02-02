@@ -44,7 +44,7 @@ module Creators
           payment_date: payment_params[:date],
           amount: payment_params[:amount],
           client_id: payment_params[:client_id],
-          flags: generate_flags(payment_params)
+          flags: generate_flags(payment_params),
         )
       end
       state_benefit

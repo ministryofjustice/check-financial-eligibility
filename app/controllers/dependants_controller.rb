@@ -31,7 +31,7 @@ private
   def creation_service
     @creation_service ||= Creators::DependantsCreator.call(
       assessment_id: params[:assessment_id],
-      dependants_attributes: input[:dependants]
+      dependants_attributes: input[:dependants],
     )
   end
 

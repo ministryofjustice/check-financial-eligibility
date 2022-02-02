@@ -46,7 +46,7 @@ private
   def creation_service
     @creation_service ||= Creators::EmploymentsCreator.call(
       assessment_id: params[:assessment_id],
-      employments_attributes: input[:employment_income]
+      employments_attributes: input[:employment_income],
     )
   end
 

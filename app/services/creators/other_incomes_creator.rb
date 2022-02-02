@@ -43,7 +43,7 @@ module Creators
         other_income_source.other_income_payments.create!(
           payment_date: payment_params[:date],
           amount: payment_params[:amount],
-          client_id: payment_params[:client_id]
+          client_id: payment_params[:client_id],
         )
       end
       other_income_source

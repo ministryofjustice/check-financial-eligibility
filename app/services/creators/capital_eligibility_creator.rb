@@ -20,7 +20,7 @@ module Creators
         proceeding_type_code: ptc,
         upper_threshold: upper_threshold(ptc),
         lower_threshold: lower_threshold(ptc),
-        assessment_result: "pending"
+        assessment_result: "pending",
       )
     end
 

@@ -15,7 +15,7 @@ class StateBenefit < ApplicationRecord
   def self.generate_for(gross_income_summary, name)
     create!(
       gross_income_summary:,
-      state_benefit_type: StateBenefitType.find_by(label: name)
+      state_benefit_type: StateBenefitType.find_by(label: name),
     )
   end
 
@@ -23,7 +23,7 @@ class StateBenefit < ApplicationRecord
     create!(
       gross_income_summary:,
       state_benefit_type: StateBenefitType.find_by(label: "other"),
-      name:
+      name:,
     )
   end
 

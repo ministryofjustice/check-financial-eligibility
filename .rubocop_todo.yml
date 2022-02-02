@@ -243,13 +243,6 @@ Rake/DuplicateTask:
 Style/HashSyntax:
   EnforcedStyle: ruby19
 
-# Offense count: 31
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyleForMultiline.
-# SupportedStylesForMultiline: comma, consistent_comma, no_comma
-Style/TrailingCommaInArguments:
-  Enabled: false
-
 # Offense count: 132
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyleForMultiline.

@@ -6,7 +6,7 @@ class VehiclesController < ApplicationController
     :vehicles,
     Array,
     desc: "An array of vehicles owned by the applicant",
-    required: true
+    required: true,
   ) do
     param :value, :currency, currency_option: :not_negative, required: true, desc: "Value of the vehicle"
     param :loan_amount_outstanding, :currency, required: false, desc: "Amount, if any, of a loan used to purchase the vehicle which is still left to pay"
@@ -36,7 +36,7 @@ private
   def creation_service
     @creation_service ||= Creators::VehicleCreator.call(
       assessment_id: params[:assessment_id],
-      vehicles_attributes: input[:vehicles]
+      vehicles_attributes: input[:vehicles],
     )
   end
 
