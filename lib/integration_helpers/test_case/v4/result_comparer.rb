@@ -31,8 +31,8 @@ module TestCase
       end
 
       def print_headings
-        verbose format(@header_pattern, client_reference_id, "Expected", "Actual")
-        verbose format(@header_pattern, "", "=========", "=========")
+        verbose sprintf(@header_pattern, client_reference_id, "Expected", "Actual")
+        verbose sprintf(@header_pattern, "", "=========", "=========")
       end
 
       def print_mismatched_matter_types
@@ -53,7 +53,7 @@ module TestCase
           expected_result = matter_type_hash[name]
           actual_result = actual_matter_type_result_for(name)
           color = actual_result == expected_result ? :green : :red
-          verbose format(@header_pattern, "Matter type: #{name}", expected_result, actual_result), color
+          verbose sprintf(@header_pattern, "Matter type: #{name}", expected_result, actual_result), color
         end
       end
 
@@ -97,7 +97,7 @@ module TestCase
         color = :green
         color = :red unless actual.to_s == expected.to_s
         color = :blue if expected.nil?
-        verbose format(@header_pattern, legend, expected, actual), color
+        verbose sprintf(@header_pattern, legend, expected, actual), color
       end
 
       def compare_gross_income

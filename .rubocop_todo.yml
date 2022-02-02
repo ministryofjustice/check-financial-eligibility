@@ -235,17 +235,6 @@ Rake/DuplicateTask:
   Exclude:
     - 'Rakefile'
 
-# Offense count: 9
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: format, sprintf, percent
-Style/FormatString:
-  Exclude:
-    - 'lib/integration_helpers/test_case/result.rb'
-    - 'lib/integration_helpers/test_case/v4/result_comparer.rb'
-    - 'spec/factories/assessment_factory.rb'
-    - 'spec/support/integration_test_result_matcher.rb'
-
 # Offense count: 150
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedShorthandSyntax, UseHashRocketsWithSymbolValues, PreferHashRocketsForNonAlnumEndingSymbols.

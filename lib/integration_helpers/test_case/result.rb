@@ -54,14 +54,14 @@ module TestCase
     def print_result_headings
       return if @verbosity_level.zero?
 
-      puts format(@header_pattern, assessment[:client_reference_id], "Expected", "Actual")
-      puts format(@header_pattern, "", "=========", "=========")
+      puts sprintf(@header_pattern, assessment[:client_reference_id], "Expected", "Actual")
+      puts sprintf(@header_pattern, "", "=========", "=========")
     end
 
     def print_result(key, color)
       return if @verbosity_level.zero?
 
-      puts format(@header_pattern, key, @expected.result_set[key], __send__(key)).__send__(color)
+      puts sprintf(@header_pattern, key, @expected.result_set[key], __send__(key)).__send__(color)
     end
 
     def assessment
