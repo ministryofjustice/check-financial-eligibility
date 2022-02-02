@@ -19,3 +19,39 @@ Style/HashSyntax:
     - 'spec/integration/ap_1367_spec.rb'
     - 'spec/integration/policy_disregards_spec.rb'
     - 'spec/integration/remarks_spec.rb'
+
+# **** LEAVE FOR NOW ****
+RSpec/AnyInstance:
+  Exclude:
+    - 'spec/requests/explicit_remarks_spec.rb'
+    - 'spec/services/calculators/dependant_allowance_calculator_spec.rb'
+    - 'spec/services/collators/childcare_collator_spec.rb'
+    - 'spec/services/creators/explicit_remarks_creator_spec.rb'
+    - 'spec/services/remark_generators/amount_variation_checker_spec.rb'
+    - 'spec/services/remark_generators/frequency_checker_spec.rb'
+    - 'spec/services/remark_generators/multi_benefit_checker_spec.rb'
+    - 'spec/services/remark_generators/residual_balance_checker_spec.rb'
+    - 'spec/requests/explicit_remarks_controller_spec.rb'
+
+# **** LEAVE FOR NOW ****
+RSpec/ContextWording:
+  Enabled: false
+
+# **** LEAVE FOR NOW ****
+RSpec/ExpectInHook:
+  Exclude:
+    - 'spec/models/bank_holiday_spec.rb'
+    - 'spec/models/other_income_source_spec.rb'
+    - 'spec/requests/applicants_spec.rb'
+    - 'spec/requests/assessments_spec.rb'
+    - 'spec/requests/outgoings_spec.rb'
+    - 'spec/services/assessors/disposable_income_assessor_spec.rb'
+    - 'spec/requests/outgoings_controller_spec.rb'
+    - 'spec/requests/applicants_controller_spec.rb'
+
+# ****
+# **** Removing this will break specs.  It removes all the explicit subject declarations that it thinks aren't necessary, but doesn't always get it right.
+# **** Better to leave the explicit subject declarations in.  May be fixed when all Rspec/NamedSubject offences are fixed.
+# ****
+RSpec/LeadingSubject:
+  Enabled: false

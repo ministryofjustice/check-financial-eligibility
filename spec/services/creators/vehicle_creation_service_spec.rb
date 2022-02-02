@@ -10,7 +10,7 @@ module Creators
       subject do
         described_class.call(
           assessment_id: assessment.id,
-          vehicles_attributes:
+          vehicles_attributes:,
         )
       end
 

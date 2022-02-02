@@ -16,7 +16,7 @@ module Creators
     subject { described_class.call(assessment) }
 
     context "domestic abuse only" do
-      let(:codes) { ["DA001"] }
+      let(:codes) { %w[DA001] }
 
       it "creates one eligibility record" do
         expect { subject }.to change { Eligibility::GrossIncome.count }.by(1)
@@ -31,7 +31,7 @@ module Creators
     end
 
     context "non_domestic_abuse only" do
-      let(:codes) { ["SE013"] }
+      let(:codes) { %w[SE013] }
 
       it "creates one eligibility record" do
         expect { subject }.to change { Eligibility::GrossIncome.count }.by(1)

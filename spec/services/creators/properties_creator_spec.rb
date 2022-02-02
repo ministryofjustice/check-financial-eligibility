@@ -34,7 +34,7 @@ module Creators
       described_class.call(
         assessment_id:,
         main_home_attributes: main_home,
-        additional_properties_attributes: additional_properties
+        additional_properties_attributes: additional_properties,
       )
     end
 

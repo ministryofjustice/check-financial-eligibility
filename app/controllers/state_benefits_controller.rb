@@ -22,11 +22,11 @@ class StateBenefitsController < ApplicationController
   end
 
   returns code: :ok, desc: "Successful response" do
-    property :success, ["true"], desc: "Success flag shows true"
+    property :success, %w[true], desc: "Success flag shows true"
     property :errors, [], desc: "Empty array of error messages"
   end
   returns code: :unprocessable_entity do
-    property :success, ["false"], desc: "Success flag shows false"
+    property :success, %w[false], desc: "Success flag shows false"
     property :errors, array_of: String, desc: "Description of why object invalid"
   end
 
@@ -43,7 +43,7 @@ private
   def creation_service
     @creation_service ||= Creators::StateBenefitsCreator.call(
       assessment_id: params[:assessment_id],
-      state_benefits: state_benefit_params
+      state_benefits: state_benefit_params,
     )
   end
 

@@ -6,7 +6,7 @@ class VehiclesController < ApplicationController
     :vehicles,
     Array,
     desc: "An array of vehicles owned by the applicant",
-    required: true
+    required: true,
   ) do
     param :value, :currency, currency_option: :not_negative, required: true, desc: "Value of the vehicle"
     param :loan_amount_outstanding, :currency, required: false, desc: "Amount, if any, of a loan used to purchase the vehicle which is still left to pay"
@@ -15,11 +15,11 @@ class VehiclesController < ApplicationController
   end
 
   returns code: :ok, desc: "Successful response" do
-    property :success, ["true"], desc: "Success flag shows true"
+    property :success, %w[true], desc: "Success flag shows true"
     property :errors, [], desc: "Empty array of error messages"
   end
   returns code: :unprocessable_entity do
-    property :success, ["false"], desc: "Success flag shows false"
+    property :success, %w[false], desc: "Success flag shows false"
     property :errors, array_of: String, desc: "Description of why object invalid"
   end
 
@@ -36,7 +36,7 @@ private
   def creation_service
     @creation_service ||= Creators::VehicleCreator.call(
       assessment_id: params[:assessment_id],
-      vehicles_attributes: input[:vehicles]
+      vehicles_attributes: input[:vehicles],
     )
   end
 

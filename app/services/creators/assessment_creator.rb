@@ -49,7 +49,7 @@ module Creators
     # This allows us to treat both versions the same for determining thresholds.
     #
     def dummy_code_for_domestic_abuse
-      ["DA001"]
+      %w[DA001]
     end
 
     def codes_from_post

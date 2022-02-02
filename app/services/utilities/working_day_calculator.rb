@@ -39,7 +39,7 @@ module Utilities
       @period = period
       @calendar = Business::Calendar.new(
         working_days: %w[mon tue wed thu fri],
-        holidays: BankHoliday.dates
+        holidays: BankHoliday.dates,
       )
     end
 

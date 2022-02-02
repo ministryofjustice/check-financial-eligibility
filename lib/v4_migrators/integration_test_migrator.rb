@@ -47,7 +47,7 @@ private
     csv = @data_hash["headers"]
     csv += convert_assessment_section
 
-    (VALID_SECTION_NAMES - ["assessment"]).each do |section|
+    (VALID_SECTION_NAMES - %w[assessment]).each do |section|
       csv += @data_hash[section] if @data_hash.key?(section)
     end
 
