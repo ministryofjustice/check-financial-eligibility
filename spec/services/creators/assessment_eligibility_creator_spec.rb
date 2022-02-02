@@ -15,7 +15,7 @@ module Creators
 
       it "sets the assessment result to pending on all of them" do
         creator
-        expect(assessment.eligibilities.map(&:assessment_result).uniq).to eq ["pending"]
+        expect(assessment.eligibilities.map(&:assessment_result).uniq).to eq %w[pending]
       end
 
       it "sets all thresholds to nil" do
