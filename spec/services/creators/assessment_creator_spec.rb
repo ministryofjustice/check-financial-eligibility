@@ -43,7 +43,7 @@ module Creators
         it "writes the dummy proceeding type code on the assessment record" do
           subject.success?
           assessment = Assessment.first
-          expect(assessment.proceeding_type_codes).to eq ["DA001"]
+          expect(assessment.proceeding_type_codes).to eq %w[DA001]
         end
 
         it "creates a CapitalSummary record" do

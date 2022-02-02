@@ -7,7 +7,7 @@ module RemarkGenerators
   private
 
     def flagged?
-      @collection.map(&:flags).any?(["multi_benefit"])
+      @collection.map(&:flags).any?(%w[multi_benefit])
     end
 
     def populate_remarks

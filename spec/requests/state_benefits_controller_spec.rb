@@ -54,7 +54,7 @@ RSpec.describe StateBenefitsController, type: :request do
           it "sets the multi_benefit flag" do
             subject
             state_benefit = gross_income_summary.state_benefits.detect { |sb| sb.state_benefit_type == state_benefit_type2 }
-            expect(state_benefit.state_benefit_payments.map(&:flags)).to match [false, false, ["multi_benefit"]]
+            expect(state_benefit.state_benefit_payments.map(&:flags)).to match [false, false, %w[multi_benefit]]
           end
         end
       end

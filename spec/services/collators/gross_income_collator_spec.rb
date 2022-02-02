@@ -23,7 +23,7 @@ module Collators
       subject { described_class.call assessment }
 
       context "only domestic abuse proceeding type codes" do
-        let(:proceeding_type_codes) { ["DA001"] }
+        let(:proceeding_type_codes) { %w[DA001] }
 
         context "monthly_other_income" do
           context "there are no other income records" do
