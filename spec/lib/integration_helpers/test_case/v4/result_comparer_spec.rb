@@ -83,9 +83,10 @@ module TestCase
           end
 
           it "highlights the line in error in red" do
-            expect(instance).to receive(:verbose).with("                                         net housing costs  1100.0                     1100.01", :red)
-            expect(instance).to receive(:verbose).with(instance_of(String), :green).at_least(1)
-            expect(instance).to receive(:verbose).with(instance_of(String)).at_least(1)
+            expect(instance).to receive(:verbose).with("                                         net housing costs  1100.0                     1100.01", :red).and_call_original
+            allow(instance).to receive(:verbose).with(instance_of(String), :green).at_least(1)
+            allow(instance).to receive(:verbose).with(instance_of(String)).at_least(1)
+            allow(instance).to receive(:verbose).with(instance_of(String), :blue).at_least(1)
             subject
           end
         end
@@ -135,6 +136,7 @@ module TestCase
             total_outgoings_and_allowances: 1288.0,
             total_disposable_income: 4788.0,
             income_contribution: 0.0,
+
           },
           capital: {
             total_liquid: 0.0,
@@ -218,6 +220,14 @@ module TestCase
               gross_housing_costs: "50.0",
               housing_benefit: "600.0",
               net_housing_costs: "1100.0",
+              employment_income: {
+                gross_income: 2717.0,
+                benefits_in_kind: 0.0,
+                tax: -798.64,
+                national_insurance: -144.06,
+                fixed_employment_deduction: -45.0,
+                net_employment_income: 1774.3,
+              },
               total_outgoings_and_allowances: "1288.0",
               income_contribution: "0.0",
               total_disposable_income: "4788.0",
