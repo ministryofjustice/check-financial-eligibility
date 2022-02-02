@@ -5,7 +5,7 @@ class SalaryPatternGenerator
 
   attr_reader :period, :salary, :day_offset, :salary_offset, :start_at
 
-  def initialize(period:, salary: 100, day_offset: nil, salary_offset: nil, start_at: Time.now.utc)
+  def initialize(period:, salary: 100, day_offset: nil, salary_offset: nil, start_at: Time.zone.now.utc)
     @period = period
     @salary = salary
     @salary_offset = salary_offset
@@ -86,7 +86,7 @@ class SalaryPatternGenerator
   end
 
   def start_offset
-    @start_offset ||= start_at_normalized - Time.now.utc.beginning_of_day
+    @start_offset ||= start_at_normalized - Time.zone.now.utc.beginning_of_day
   end
 
   def start_at_normalized

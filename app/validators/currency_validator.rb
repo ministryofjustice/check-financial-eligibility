@@ -1,6 +1,6 @@
 class CurrencyValidator < Apipie::Validator::BaseValidator
-  STANDARD_REGEX =  /\A^[-+]?\d+(\.\d{1,2})?\Z$/.freeze
-  NO_NEGATIVE_REGEX = /\A^[+]?\d+(\.\d{1,2})?\Z$/.freeze
+  STANDARD_REGEX =  /\A^[-+]?\d+(\.\d{1,2})?\Z$/
+  NO_NEGATIVE_REGEX = /\A^[+]?\d+(\.\d{1,2})?\Z$/
 
   def self.build(param_description, argument, options, _block)
     new(param_description, options[:currency_option]) if argument == :currency

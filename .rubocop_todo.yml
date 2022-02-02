@@ -134,31 +134,10 @@ RSpec/NamedSubject:
     - 'spec/lib/integration_helpers/test_case/v4/result_comparer_spec.rb'
     - 'spec/db/migration_helpers/eligibility_populator_spec.rb'
 
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: not_to, to_not
-RSpec/NotToNot:
-  Exclude:
-    - 'spec/integration/policy_disregards_spec.rb'
-
 # Offense count: 1
 RSpec/OverwritingSetup:
   Exclude:
     - 'spec/services/creators/irregular_income_creator_spec.rb'
-
-# Offense count: 5
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: numeric, symbolic
-RSpec/Rails/HttpStatus:
-  Exclude:
-    - 'spec/requests/applicants_spec.rb'
-    - 'spec/requests/assessments_spec.rb'
-    - 'spec/requests/capitals_spec.rb'
-    - 'spec/requests/dependants_spec.rb'
-    - 'spec/support/shared_examples.rb'
 
 # Offense count: 4
 RSpec/RepeatedDescription:
@@ -251,14 +230,6 @@ Rails/SaveBang:
     - 'spec/models/assessment_spec.rb'
     - 'spec/models/eligibility/gross_income_spec.rb'
 
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: strict, flexible
-Rails/TimeZone:
-  Exclude:
-    - 'spec/support/salary_pattern_generator.rb'
-
 # Offense count: 1
 Rake/DuplicateTask:
   Exclude:
@@ -282,24 +253,6 @@ Style/FormatString:
 # SupportedShorthandSyntax: always, never, either
 Style/HashSyntax:
   EnforcedStyle: ruby19
-
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: line_count_dependent, lambda, literal
-Style/Lambda:
-  Exclude:
-    - 'app/models/cash_transaction.rb'
-    - 'config/initializers/sentry.rb'
-
-# Offense count: 6
-# Cop supports --auto-correct.
-Style/RedundantFreeze:
-  Exclude:
-    - 'app/constants/cfe_constants.rb'
-    - 'app/validators/currency_validator.rb'
-    - 'lib/task_helpers/payload_player.rb'
-    - 'spec/requests/other_incomes_spec.rb'
 
 # Offense count: 31
 # Cop supports --auto-correct.

@@ -7,8 +7,8 @@ if %w[production].include?(Rails.env) && ENV["SENTRY_DSN"].present?
 
     filter = ActiveSupport::ParameterFilter.new(Rails.application.config.filter_parameters.map(&:to_s))
 
-    config.before_send = ->(event, _hint) do
+    config.before_send = lambda { |event, _hint|
       filter.filter(event.to_hash)
-    end
+    }
   end
 end
