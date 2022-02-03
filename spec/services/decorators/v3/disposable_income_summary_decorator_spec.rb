@@ -4,13 +4,13 @@ module Decorators
   module V3
     RSpec.describe DisposableIncomeSummaryDecorator do
       describe "#as_json" do
-        subject { described_class.new(disposable_income_summary).as_json }
+        subject(:decorator) { described_class.new(disposable_income_summary).as_json }
 
         context "disposable income summary is nil" do
           let(:disposable_income_summary) { nil }
 
           it "returns nil" do
-            expect(subject).to be_nil
+            expect(decorator).to be_nil
           end
         end
 
@@ -36,15 +36,15 @@ module Decorators
               assessment_result
               income_contribution
             ]
-            expect(subject.keys).to eq expected_keys
-            expect(subject[:monthly_equivalents].keys).to eq %i[bank_transactions cash_transactions all_sources]
+            expect(decorator.keys).to eq expected_keys
+            expect(decorator[:monthly_equivalents].keys).to eq %i[bank_transactions cash_transactions all_sources]
           end
 
           it "has transaction types which contain all transaction categories" do
             outgoings_keys = CFEConstants::VALID_OUTGOING_CATEGORIES.map(&:to_sym)
-            expect(subject[:monthly_equivalents][:bank_transactions].keys).to eq outgoings_keys
-            expect(subject[:monthly_equivalents][:cash_transactions].keys).to eq outgoings_keys
-            expect(subject[:monthly_equivalents][:all_sources].keys).to eq outgoings_keys
+            expect(decorator[:monthly_equivalents][:bank_transactions].keys).to eq outgoings_keys
+            expect(decorator[:monthly_equivalents][:cash_transactions].keys).to eq outgoings_keys
+            expect(decorator[:monthly_equivalents][:all_sources].keys).to eq outgoings_keys
           end
         end
       end

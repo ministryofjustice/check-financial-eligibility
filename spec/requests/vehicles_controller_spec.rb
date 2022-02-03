@@ -8,29 +8,29 @@ RSpec.describe VehiclesController, type: :request do
     let(:date_in_future) { 3.days.from_now.strftime("%Y-%m-%d") }
     let(:params) { { vehicles: } }
 
-    subject { post assessment_vehicles_path(assessment), params: params.to_json, headers: headers }
+    subject(:post_payload) { post assessment_vehicles_path(assessment), params: params.to_json, headers: headers }
 
     it "returns http success", :show_in_doc do
-      subject
+      post_payload
       expect(response).to have_http_status(:success)
     end
 
     it "creates vehicles" do
-      expect { subject }.to change { assessment.vehicles.count }.by(2)
+      expect { post_payload }.to change { assessment.vehicles.count }.by(2)
     end
 
     it "sets success flag to true" do
-      subject
+      post_payload
       expect(parsed_response[:success]).to be true
     end
 
     it "returns blank errors" do
-      subject
+      post_payload
       expect(parsed_response[:errors]).to be_empty
     end
 
     shared_examples "an unprocessable entity" do |invalid_item|
-      before { subject }
+      before { post_payload }
 
       it "returns unprocessable" do
         expect(response).to have_http_status(:unprocessable_entity)
@@ -49,7 +49,7 @@ RSpec.describe VehiclesController, type: :request do
       let(:assessment) { 33 }
 
       it "returns unprocessable", :show_in_doc do
-        subject
+        post_payload
         expect(response).to have_http_status(:unprocessable_entity)
       end
 

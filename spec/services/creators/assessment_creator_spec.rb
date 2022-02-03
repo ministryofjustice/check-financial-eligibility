@@ -23,7 +23,7 @@ module Creators
       }.to_json
     end
 
-    subject { described_class.call(remote_ip:, raw_post:, version:) }
+    subject(:creator) { described_class.call(remote_ip:, raw_post:, version:) }
 
     before { stub_call_to_json_schema }
 
@@ -33,25 +33,25 @@ module Creators
 
       context "valid request" do
         it "is successful" do
-          expect(subject.success?).to eq true
+          expect(creator.success?).to eq true
         end
 
         it "creates an Assessment record" do
-          expect { subject.success? }.to change(Assessment, :count).by(1)
+          expect { creator.success? }.to change(Assessment, :count).by(1)
         end
 
         it "writes the dummy proceeding type code on the assessment record" do
-          subject.success?
+          creator.success?
           assessment = Assessment.first
           expect(assessment.proceeding_type_codes).to eq %w[DA001]
         end
 
         it "creates a CapitalSummary record" do
-          expect { subject.success? }.to change(CapitalSummary, :count).by(1)
+          expect { creator.success? }.to change(CapitalSummary, :count).by(1)
         end
 
         context "capital summary record" do
-          before { subject.success? }
+          before { creator.success? }
 
           let(:capital_summary) { CapitalSummary.first }
 
@@ -73,18 +73,18 @@ module Creators
         end
 
         it "has no errors" do
-          expect(subject.errors).to be_empty
+          expect(creator.errors).to be_empty
         end
 
         describe "#as_json" do
           it "returns a successful json struct including the assessment it has created" do
-            subject.success?
+            creator.success?
             expected_response = {
               success: true,
               assessment_id: Assessment.last.id,
               errors: [],
             }
-            expect(subject.as_json).to eq expected_response
+            expect(creator.as_json).to eq expected_response
           end
         end
       end
@@ -93,15 +93,15 @@ module Creators
         let(:remote_ip) { nil }
 
         it "is not successful" do
-          expect(subject.success?).to be false
+          expect(creator.success?).to be false
         end
 
         it "does not create an Assessment record" do
-          expect { subject.success? }.not_to change(Assessment, :count)
+          expect { creator.success? }.not_to change(Assessment, :count)
         end
 
         it "has  errors" do
-          expect(subject.errors).to eq ["Remote ip can't be blank"]
+          expect(creator.errors).to eq ["Remote ip can't be blank"]
         end
       end
     end
@@ -112,15 +112,15 @@ module Creators
 
       context "valid request" do
         it "is successful" do
-          expect(subject.success?).to eq true
+          expect(creator.success?).to eq true
         end
 
         it "creates an Assessment record" do
-          expect { subject.success? }.to change(Assessment, :count).by(1)
+          expect { creator.success? }.to change(Assessment, :count).by(1)
         end
 
         it "populates the assessment record with expected values" do
-          subject.success?
+          creator.success?
           assessment = Assessment.first
           expect(assessment.version).to eq "4"
           expect(assessment.remote_ip).to eq "127.0.0.1"
@@ -129,11 +129,11 @@ module Creators
         end
 
         it "creates a CapitalSummary record" do
-          expect { subject.success? }.to change(CapitalSummary, :count).by(1)
+          expect { creator.success? }.to change(CapitalSummary, :count).by(1)
         end
 
         context "capital summary record" do
-          before { subject.success? }
+          before { creator.success? }
 
           let(:capital_summary) { CapitalSummary.first }
 
@@ -155,19 +155,19 @@ module Creators
         end
 
         it "has no errors" do
-          expect(subject.errors).to be_empty
+          expect(creator.errors).to be_empty
         end
 
         describe "#as_json" do
           it "returns a successful json struct including the assessment it has created" do
-            subject.success?
+            creator.success?
 
             expected_response = {
               success: true,
               assessment_id: Assessment.last.id,
               errors: [],
             }
-            expect(subject.as_json).to eq expected_response
+            expect(creator.as_json).to eq expected_response
           end
         end
       end
@@ -176,15 +176,15 @@ module Creators
         let(:remote_ip) { nil }
 
         it "is not successful" do
-          expect(subject.success?).to be false
+          expect(creator.success?).to be false
         end
 
         it "does not create an Assessment record" do
-          expect { subject.success? }.not_to change(Assessment, :count)
+          expect { creator.success? }.not_to change(Assessment, :count)
         end
 
         it "has  errors" do
-          expect(subject.errors).to include("Remote ip can't be blank")
+          expect(creator.errors).to include("Remote ip can't be blank")
         end
       end
     end

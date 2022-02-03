@@ -9,14 +9,14 @@ module TestCase
     let(:early_dec) { Date.new(2021, 12, 7) }
     let(:mid_dec) { Date.new(2021, 12, 15) }
 
-    subject { described_class.new(rows).payload }
+    subject(:payload) { described_class.new(rows).payload }
 
     context "well formed spreadsheet" do
       context "single job" do
         let(:rows) { single_job_rows }
 
         it "returns expected payload" do
-          expect(subject).to eq expected_single_job_payload
+          expect(payload).to eq expected_single_job_payload
         end
       end
 
@@ -24,7 +24,7 @@ module TestCase
         let(:rows) { multi_job_rows }
 
         it "returns expected payload" do
-          expect(subject).to eq expected_multi_job_payload
+          expect(payload).to eq expected_multi_job_payload
         end
       end
     end
@@ -34,7 +34,7 @@ module TestCase
         let(:rows) { missing_job_name_rows }
 
         it "raises" do
-          expect { subject }.to raise_error RuntimeError, "No job name specified in column B for employment data"
+          expect { payload }.to raise_error RuntimeError, "No job name specified in column B for employment data"
         end
       end
 
@@ -42,7 +42,7 @@ module TestCase
         let(:rows) { unknown_key_rows }
 
         it "raises" do
-          expect { subject }.to raise_error RuntimeError, "Unexpected key 'XXX-YYY-ZZZ' in column C of employment data"
+          expect { payload }.to raise_error RuntimeError, "Unexpected key 'XXX-YYY-ZZZ' in column C of employment data"
         end
       end
     end

@@ -9,11 +9,11 @@ module Collators
       let(:disposable_income_summary) { assessment.disposable_income_summary }
       let(:gross_income_summary) { assessment.gross_income_summary }
 
-      subject { described_class.call(assessment) }
+      subject(:collator) { described_class.call(assessment) }
 
       context "no housing cost outgoings" do
         it "records zero" do
-          subject
+          collator
           expect(disposable_income_summary.gross_housing_costs).to eq 0.0
           expect(disposable_income_summary.housing_benefit).to eq 0.0
           expect(disposable_income_summary.net_housing_costs).to eq 0.0
@@ -32,7 +32,7 @@ module Collators
             let(:housing_cost_type) { "board_and_lodging" }
 
             it "records half the monthly housing cost" do
-              subject
+              collator
               expect(disposable_income_summary.gross_housing_costs).to eq 177.72
               expect(disposable_income_summary.housing_benefit).to eq 0.0
               expect(disposable_income_summary.net_housing_costs).to eq 177.72
@@ -43,7 +43,7 @@ module Collators
             let(:housing_cost_type) { "rent" }
 
             it "records the full monthly housing costs" do
-              subject
+              collator
               expect(disposable_income_summary.gross_housing_costs).to eq 355.44
               expect(disposable_income_summary.housing_benefit).to eq 0.0
               expect(disposable_income_summary.net_housing_costs).to eq 355.44
@@ -64,7 +64,7 @@ module Collators
             let(:housing_cost_type) { "board_and_lodging" }
 
             it "records half the housing cost less the housing benefit" do
-              subject
+              collator
               expect(disposable_income_summary.gross_housing_costs).to eq 177.72
               expect(disposable_income_summary.housing_benefit).to eq 101.02
               expect(disposable_income_summary.net_housing_costs).to eq 76.70 # 177.72 - 101.02
@@ -75,7 +75,7 @@ module Collators
             let(:housing_cost_type) { "mortgage" }
 
             it "records the full housing costs less the housing benefit" do
-              subject
+              collator
               expect(disposable_income_summary.gross_housing_costs).to eq 355.44
               expect(disposable_income_summary.housing_benefit).to eq 101.02
               expect(disposable_income_summary.net_housing_costs).to eq 254.42 # 355.44 - 101.02

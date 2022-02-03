@@ -3,21 +3,21 @@ require "rails_helper"
 RSpec.describe Creators::ExplicitRemarksCreator do
   let(:assessment) { create :assessment }
 
-  subject { described_class.call(assessment_id: assessment.id, remarks_attributes: params) }
+  subject(:creator) { described_class.call(assessment_id: assessment.id, remarks_attributes: params) }
 
   context "valid payload" do
     let(:params) { valid_params }
 
     it "creates the expected number of records" do
-      expect { subject }.to change(ExplicitRemark, :count).by(2)
+      expect { creator }.to change(ExplicitRemark, :count).by(2)
     end
 
     it "is successful" do
-      expect(subject.success?).to be true
+      expect(creator.success?).to be true
     end
 
     it "creates the right records" do
-      subject
+      creator
       expect(ExplicitRemark.where(assessment_id: assessment.id, category: "policy_disregards").map(&:remark)).to match_array(%w[disregard_1 disregard_2])
     end
   end
@@ -27,15 +27,15 @@ RSpec.describe Creators::ExplicitRemarksCreator do
       let(:params) { invalid_params }
 
       it "does not write any records" do
-        expect { subject }.not_to change(ExplicitRemark, :count)
+        expect { creator }.not_to change(ExplicitRemark, :count)
       end
 
       it "is not successful" do
-        expect(subject.success?).to be false
+        expect(creator.success?).to be false
       end
 
       it "updates the error array" do
-        expect(subject.errors).to eq ["Category other_stuff is not a valid remark category"]
+        expect(creator.errors).to eq ["Category other_stuff is not a valid remark category"]
       end
     end
   end
@@ -45,8 +45,8 @@ RSpec.describe Creators::ExplicitRemarksCreator do
 
     it "raises a Creation error" do
       allow_any_instance_of(described_class).to receive(:create_remark_category).and_raise(ArgumentError, "Argument error detailed message")
-      expect(subject.success?).to be false
-      expect(subject.errors).to eq ["ArgumentError - Argument error detailed message"]
+      expect(creator.success?).to be false
+      expect(creator.errors).to eq ["ArgumentError - Argument error detailed message"]
     end
   end
 

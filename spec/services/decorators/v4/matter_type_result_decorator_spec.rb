@@ -5,7 +5,7 @@ module Decorators
     RSpec.describe MatterTypeResultDecorator do
       before { mock_lfa_responses }
 
-      subject { described_class.new(assessment).as_json }
+      subject(:decorator) { described_class.new(assessment).as_json }
 
       let(:assessment) { create :assessment, proceeding_type_codes: ptcs }
       let(:ptcs) { results.keys }
@@ -28,7 +28,7 @@ module Decorators
           end
 
           it "returns an array of matter type results" do
-            expect(subject).to eq [
+            expect(decorator).to eq [
               { matter_type: "domestic_abuse", result: "eligible" },
               { matter_type: "section8", result: "ineligible" }
             ]
@@ -45,7 +45,7 @@ module Decorators
           end
 
           it "raises an error" do
-            expect { subject }.to raise_error RuntimeError, "Different results for matter type domestic_abuse"
+            expect { decorator }.to raise_error RuntimeError, "Different results for matter type domestic_abuse"
           end
         end
       end

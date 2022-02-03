@@ -11,19 +11,19 @@ RSpec.describe CashTransactionsController, type: :request do
     let(:month2) { Date.current.beginning_of_month - 2.months }
     let(:month3) { Date.current.beginning_of_month - 1.month }
 
-    subject { post assessment_cash_transactions_path(assessment_id), params: params.to_json, headers: headers }
+    subject(:post_payload) { post assessment_cash_transactions_path(assessment_id), params: params.to_json, headers: headers }
 
     context "valid payload" do
       let(:params) { valid_params }
 
       it "returns http success", :show_in_doc do
-        subject
+        post_payload
         expect(response).to have_http_status(:success)
       end
 
       it "calls cash transactions creator" do
         expect(creator_class).to receive(:call).with(assessment_id:, income: params[:income], outgoings: params[:outgoings])
-        subject
+        post_payload
       end
 
       context "creation is valid" do
@@ -31,7 +31,7 @@ RSpec.describe CashTransactionsController, type: :request do
 
         before do
           allow(creator_class).to receive(:call).and_return(creator_service)
-          subject
+          post_payload
         end
 
         it "returns a success response body" do
@@ -49,7 +49,7 @@ RSpec.describe CashTransactionsController, type: :request do
 
         before do
           allow(creator_class).to receive(:call).and_return(creator_service)
-          subject
+          post_payload
         end
 
         it "returns a error response" do
@@ -68,13 +68,13 @@ RSpec.describe CashTransactionsController, type: :request do
         let(:params) { invalid_income_category_params }
 
         it "returns an error" do
-          subject
+          post_payload
           expect(parsed_response[:success]).to eq false
           expect(parsed_response[:errors]).to eq [invalid_income_category_error_message]
         end
 
         it "returns unprocessable" do
-          subject
+          post_payload
           expect(response.status).to eq 422
         end
 
@@ -87,7 +87,7 @@ RSpec.describe CashTransactionsController, type: :request do
         let(:params) { invalid_negative_amount_params }
 
         it "returns an error" do
-          subject
+          post_payload
           expect(parsed_response[:success]).to eq false
           expect(parsed_response[:errors]).to eq(
             ["Invalid parameter 'amount' value -100: Must be a decimal, zero or greater, with a maximum of two decimal places. For example: 123.34"],
@@ -95,7 +95,7 @@ RSpec.describe CashTransactionsController, type: :request do
         end
 
         it "returns unprocessable" do
-          subject
+          post_payload
           expect(response.status).to eq 422
         end
 

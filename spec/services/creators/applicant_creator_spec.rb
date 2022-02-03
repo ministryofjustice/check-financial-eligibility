@@ -15,29 +15,29 @@ module Creators
         }
       end
 
-      subject { described_class.call(assessment_id:, applicant_attributes:) }
+      subject(:creator) { described_class.call(assessment_id:, applicant_attributes:) }
 
       describe ".call" do
         context "valid payload" do
           describe "#success?" do
             it "returns true" do
-              expect(subject.success?).to be true
+              expect(creator.success?).to be true
             end
 
             it "creates an applicant" do
-              expect { subject.success? }.to change(Applicant, :count).by 1
+              expect { creator.success? }.to change(Applicant, :count).by 1
             end
           end
 
           describe "#applicant" do
             it "returns the applicant" do
-              expect(subject.applicant).to be_a Applicant
+              expect(creator.applicant).to be_a Applicant
             end
           end
 
           describe "#errors" do
             it "is empty" do
-              expect(subject.errors).to be_empty
+              expect(creator.errors).to be_empty
             end
           end
         end
@@ -48,25 +48,25 @@ module Creators
 
             describe "#success?" do
               it "returns false" do
-                expect(subject.success?).to be false
+                expect(creator.success?).to be false
               end
             end
 
             describe "#applicant" do
               it "returns empty array" do
-                expect(subject.applicant).to be_nil
+                expect(creator.applicant).to be_nil
               end
             end
 
             describe "#errors" do
               it "returns error" do
-                expect(subject.errors.size).to eq 1
-                expect(subject.errors[0]).to eq "Date of birth cannot be in future"
+                expect(creator.errors.size).to eq 1
+                expect(creator.errors[0]).to eq "Date of birth cannot be in future"
               end
             end
 
             it "does not create an applicant" do
-              expect { subject }.not_to change(Applicant, :count)
+              expect { creator }.not_to change(Applicant, :count)
             end
           end
 
@@ -74,7 +74,7 @@ module Creators
             let(:assessment_id) { SecureRandom.uuid }
 
             it "returns an error" do
-              expect(subject.errors).to eq ["No such assessment id"]
+              expect(creator.errors).to eq ["No such assessment id"]
             end
           end
 
@@ -83,23 +83,23 @@ module Creators
 
             describe "#success?" do
               it "returns false" do
-                expect(subject.success?).to be false
+                expect(creator.success?).to be false
               end
             end
 
             describe "#applicant" do
               it "returns empty array" do
-                expect(subject.applicant).to be_nil
+                expect(creator.applicant).to be_nil
               end
             end
 
             it "does not create an applicant" do
-              expect { subject }.not_to change(Applicant, :count)
+              expect { creator }.not_to change(Applicant, :count)
             end
 
             describe "#errors" do
               it "returns error" do
-                expect(subject.errors[0]).to eq "There is already an applicant for this assesssment"
+                expect(creator.errors[0]).to eq "There is already an applicant for this assesssment"
               end
             end
           end

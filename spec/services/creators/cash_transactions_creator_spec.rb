@@ -11,7 +11,7 @@ describe Creators::CashTransactionsCreator do
     let(:month2) { Date.current.beginning_of_month - 2.months }
     let(:month3) { Date.current.beginning_of_month - 1.month }
 
-    subject { described_class.call(assessment_id: assessment.id, income:, outgoings:) }
+    subject(:creator) { described_class.call(assessment_id: assessment.id, income:, outgoings:) }
 
     context "happy_path" do
       let(:params) { valid_params }
@@ -25,13 +25,13 @@ describe Creators::CashTransactionsCreator do
       end
 
       it "creates the cash transaction category records" do
-        expect { subject }.to change(CashTransactionCategory, :count).by(4)
+        expect { creator }.to change(CashTransactionCategory, :count).by(4)
         category_details = gross_income_summary.cash_transaction_categories.pluck(:name, :operation)
         expect(category_details).to match_array expected_category_details
       end
 
       it "creates the payment records" do
-        expect { subject }.to change(CashTransaction, :count).by(12)
+        expect { creator }.to change(CashTransaction, :count).by(12)
         cat = gross_income_summary.cash_transaction_categories.find_by(name: "child_care")
         trx_details = cat.cash_transactions.order(:date).pluck(:date, :amount, :client_id)
         expect(trx_details).to eq(
@@ -44,58 +44,58 @@ describe Creators::CashTransactionsCreator do
       end
 
       it "responds true to #success?" do
-        expect(subject.success?).to be true
+        expect(creator.success?).to be true
       end
     end
 
     context "unhappy paths" do
       RSpec.shared_examples "it is unsuccessful" do
         it "does not create any CashTransactionCategory records" do
-          expect { subject }.not_to change(CashTransactionCategory, :count)
+          expect { creator }.not_to change(CashTransactionCategory, :count)
         end
 
         it "does not create any CashTransaction records" do
-          expect { subject }.not_to change(CashTransaction, :count)
+          expect { creator }.not_to change(CashTransaction, :count)
         end
 
         it "responds false to #success?" do
-          expect(subject.success?).to be false
+          expect(creator.success?).to be false
         end
       end
 
       context "not exactly three occurrences of payments" do
         let(:params) { invalid_params_two_payments }
 
-        before { subject }
+        before { creator }
 
         it_behaves_like "it is unsuccessful"
 
         it "returns expected errors" do
-          expect(subject.errors).to eq ["There must be exactly 3 payments for category maintenance_in"]
+          expect(creator.errors).to eq ["There must be exactly 3 payments for category maintenance_in"]
         end
       end
 
       context "not consecutive months" do
         let(:params) { invalid_params_not_consecutive_months }
 
-        before { subject }
+        before { creator }
 
         it_behaves_like "it is unsuccessful"
 
         it "returns expected errors" do
-          expect(subject.errors).to eq ["Expecting payment dates for category maintenance_in to be 1st of three of the previous 3 months"]
+          expect(creator.errors).to eq ["Expecting payment dates for category maintenance_in to be 1st of three of the previous 3 months"]
         end
       end
 
       context "not the expected dates" do
         let(:params) { invalid_params_wrong_dates }
 
-        before { subject }
+        before { creator }
 
         it_behaves_like "it is unsuccessful"
 
         it "returns expected errors" do
-          expect(subject.errors).to eq ["Expecting payment dates for category child_care to be 1st of three of the previous 3 months"]
+          expect(creator.errors).to eq ["Expecting payment dates for category child_care to be 1st of three of the previous 3 months"]
         end
       end
 
@@ -104,14 +104,14 @@ describe Creators::CashTransactionsCreator do
 
         before do
           allow(CashTransaction).to receive(:create!).and_raise(ArgumentError, "xxxx")
-          subject
+          creator
         end
 
         it_behaves_like "it is unsuccessful"
 
         it "returns details of exception in errors" do
-          expect(subject.errors.first).to match(/^ArgumentError :: xxxx/)
-          expect(subject.errors.first).to match(/in `create_cash_transaction/)
+          expect(creator.errors.first).to match(/^ArgumentError :: xxxx/)
+          expect(creator.errors.first).to match(/in `create_cash_transaction/)
         end
       end
     end

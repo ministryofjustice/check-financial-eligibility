@@ -6,18 +6,18 @@ RSpec.describe ApiResponse do
   describe ".success" do
     let(:dummy_records) { %w[record_1 record_2] }
 
-    subject { described_class.success(dummy_records) }
+    subject(:api_response) { described_class.success(dummy_records) }
 
     it "sets success to true" do
-      expect(subject.success?).to be true
+      expect(api_response.success?).to be true
     end
 
     it "populates the objects array" do
-      expect(subject.objects).to eq dummy_records
+      expect(api_response.objects).to eq dummy_records
     end
 
     it "sets errors to nil" do
-      expect(subject.errors).to be_empty
+      expect(api_response.errors).to be_empty
     end
   end
 
@@ -36,18 +36,18 @@ RSpec.describe ApiResponse do
   describe ".error" do
     let(:messages) { ["error 1", "error 2"] }
 
-    subject { described_class.error(messages) }
+    subject(:error_response) { described_class.error(messages) }
 
     it "sets success to true" do
-      expect(subject.success?).to be false
+      expect(error_response.success?).to be false
     end
 
     it "populates the objects array" do
-      expect(subject.objects).to be_nil
+      expect(error_response.objects).to be_nil
     end
 
     it "sets errors to nil" do
-      expect(subject.errors).to eq messages
+      expect(error_response.errors).to eq messages
     end
   end
 end

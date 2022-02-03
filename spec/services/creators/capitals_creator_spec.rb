@@ -13,7 +13,7 @@ module Creators
     let(:value1) { BigDecimal(Faker::Number.decimal(r_digits: 2), 2) }
     let(:value2) { BigDecimal(Faker::Number.decimal(r_digits: 2), 2) }
 
-    subject do
+    subject(:creator) do
       described_class.call(
         assessment_id:,
         bank_accounts_attributes: bank_accounts,
@@ -24,7 +24,7 @@ module Creators
     describe ".call" do
       context "with empty bank_accounts and non_liquid_capital" do
         it "returns an instance of CapitalCreationObject" do
-          expect(subject).to be_instance_of(described_class)
+          expect(creator).to be_instance_of(described_class)
         end
 
         it "does not create any capital item records" do
@@ -35,7 +35,7 @@ module Creators
       context "with liquid assets only" do
         let(:bank_accounts) { liquid_assets_hash }
 
-        before { subject }
+        before { creator }
 
         it "creates liquid capital items" do
           expect(capital_summary.liquid_capital_items.size).to eq 2
@@ -55,7 +55,7 @@ module Creators
       context "non_liquid_capital_items_only" do
         let(:non_liquid_assets) { non_liquid_assets_hash }
 
-        before { subject }
+        before { creator }
 
         it "creates non liquid capital items" do
           expect(capital_summary.non_liquid_capital_items.size).to eq 1
@@ -67,7 +67,7 @@ module Creators
 
     describe "#success?" do
       it "returns true" do
-        expect(subject.success?).to be true
+        expect(creator.success?).to be true
       end
     end
 
@@ -76,7 +76,7 @@ module Creators
       let(:non_liquid_assets) { non_liquid_assets_hash }
 
       it "returns the created capital summary record" do
-        result = subject.capital_summary
+        result = creator.capital_summary
         expect(result).to be_instance_of(CapitalSummary)
       end
     end
@@ -107,19 +107,19 @@ module Creators
       let(:assessment_id) { SecureRandom.uuid }
 
       it "does not create capital_items" do
-        expect { subject }.not_to change(CapitalItem, :count)
+        expect { creator }.not_to change(CapitalItem, :count)
       end
 
       describe "#success?" do
         it "returns false" do
-          expect(subject.success?).to be false
+          expect(creator.success?).to be false
         end
       end
 
       describe "errors" do
         it "returns an error" do
-          expect(subject.errors.size).to eq 1
-          expect(subject.errors[0]).to eq "No such assessment id"
+          expect(creator.errors.size).to eq 1
+          expect(creator.errors[0]).to eq "No such assessment id"
         end
       end
     end

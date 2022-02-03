@@ -13,14 +13,14 @@ module Workflows
     end
 
     describe ".call" do
-      subject { described_class.call(assessment) }
+      subject(:workflow_call) { described_class.call(assessment) }
 
       context "self_employed" do
         let(:applicant) { create :applicant, self_employed: true }
 
         it "calls the self-employed workflow" do
           expect(SelfEmployedWorkflow).to receive(:call).with(assessment)
-          subject
+          workflow_call
         end
       end
 
@@ -36,7 +36,7 @@ module Workflows
           expect(Assessors::GrossIncomeAssessor).to receive(:call).with(assessment)
           expect(Assessors::DisposableIncomeAssessor).not_to receive(:call)
 
-          subject
+          workflow_call
         end
       end
 
@@ -53,7 +53,7 @@ module Workflows
           expect(Collators::OutgoingsCollator).to receive(:call).with(assessment)
           expect(Assessors::DisposableIncomeAssessor).to receive(:call).with(assessment)
 
-          subject
+          workflow_call
         end
       end
     end

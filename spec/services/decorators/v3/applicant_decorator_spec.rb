@@ -4,13 +4,13 @@ module Decorators
   module V3
     RSpec.describe ApplicantDecorator do
       describe "#as_json" do
-        subject { described_class.new(applicant).as_json }
+        subject(:decorator) { described_class.new(applicant).as_json }
 
         context "applicant is nil" do
           let(:applicant) { nil }
 
           it "returns nil" do
-            expect(subject).to be_nil
+            expect(decorator).to be_nil
           end
         end
 
@@ -25,7 +25,7 @@ module Decorators
               receives_qualifying_benefit
               self_employed
             ]
-            expect(subject.keys).to eq expected_keys
+            expect(decorator.keys).to eq expected_keys
           end
         end
       end

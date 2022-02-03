@@ -21,11 +21,11 @@ RSpec.describe AssessmentsController, type: :request do
       let(:headers) { { "CONTENT_TYPE" => "application/json" } }
       let(:before_request) { nil }
 
-      subject { post assessments_path, params: params.to_json, headers: headers }
+      subject(:post_payload) { post assessments_path, params: params.to_json, headers: headers }
 
       before do
         before_request
-        subject
+        post_payload
       end
 
       it "returns http success", :show_in_doc do
@@ -133,7 +133,7 @@ RSpec.describe AssessmentsController, type: :request do
     let(:option) { :below_lower_threshold }
     let(:now) { Time.zone.now }
 
-    subject { get assessment_path(assessment), headers: headers }
+    subject(:get_assessment) { get assessment_path(assessment), headers: headers }
 
     context "calling the correct workflows assessors and decorators" do
       before do
@@ -153,7 +153,7 @@ RSpec.describe AssessmentsController, type: :request do
           allow(Decorators::V3::AssessmentDecorator).to receive(:new).with(assessment).and_return(decorator)
           allow(decorator).to receive(:as_json).and_return("")
 
-          subject
+          get_assessment
         end
       end
 
@@ -165,7 +165,7 @@ RSpec.describe AssessmentsController, type: :request do
           allow(Decorators::V4::AssessmentDecorator).to receive(:new).with(assessment).and_return(decorator)
           allow(decorator).to receive(:as_json).and_return("")
 
-          subject
+          get_assessment
         end
       end
     end
@@ -176,7 +176,7 @@ RSpec.describe AssessmentsController, type: :request do
       it "call sentry and returns error response" do
         allow(Assessors::MainAssessor).to receive(:call).and_raise(RuntimeError, "Oops")
         expect(Sentry).to receive(:capture_exception)
-        subject
+        get_assessment
         expect(response).to have_http_status(:unprocessable_entity)
         expect(parsed_response[:success]).to be false
         expect(parsed_response[:errors].first).to match(/^RuntimeError: Oops/)
@@ -187,7 +187,7 @@ RSpec.describe AssessmentsController, type: :request do
       let(:assessment) { create_assessment_npe61 }
 
       context "VERSION 3" do
-        before { subject }
+        before { get_assessment }
 
         let(:headers) { { "Accept" => "application/json;version=3" } }
 
@@ -276,7 +276,7 @@ RSpec.describe AssessmentsController, type: :request do
         before do
           assessment.update!(version: "4")
           travel_to frozen_time
-          subject
+          get_assessment
           travel_back
         end
 

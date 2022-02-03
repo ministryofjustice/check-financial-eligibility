@@ -13,17 +13,17 @@ module Creators
 
     before { mock_lfa_responses }
 
-    subject { described_class.call(assessment) }
+    subject(:creator) { described_class.call(assessment) }
 
     context "domestic abuse only" do
       let(:codes) { %w[DA001] }
 
       it "creates one eligibility record" do
-        expect { subject }.to change { Eligibility::Capital.count }.by(1)
+        expect { creator }.to change { Eligibility::Capital.count }.by(1)
       end
 
       it "creates a record with the expected thresholds" do
-        subject
+        creator
         elig = summary.eligibilities.find_by(proceeding_type_code: codes.first)
         expect(elig.lower_threshold).to eq 3_000.0
         expect(elig.upper_threshold).to eq 999_999_999_999.0
@@ -35,11 +35,11 @@ module Creators
       let(:codes) { %w[SE013] }
 
       it "creates one eligibility record" do
-        expect { subject }.to change { Eligibility::Capital.count }.by(1)
+        expect { creator }.to change { Eligibility::Capital.count }.by(1)
       end
 
       it "creates a record with the expected thresholds" do
-        subject
+        creator
         elig = summary.eligibilities.find_by(proceeding_type_code: codes.first)
         expect(elig.lower_threshold).to eq 3_000.0
         expect(elig.upper_threshold).to eq 8_000.0
@@ -51,7 +51,7 @@ module Creators
       let(:codes) { %w[DA001 DA005 SE003] }
 
       it "creates one eligibility record for each proceeding type" do
-        expect { subject }.to change { Eligibility::Capital.count }.by(codes.size)
+        expect { creator }.to change { Eligibility::Capital.count }.by(codes.size)
       end
     end
   end

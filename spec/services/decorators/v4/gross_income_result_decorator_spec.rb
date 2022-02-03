@@ -37,7 +37,7 @@ module Decorators
         }
       end
 
-      subject { described_class.new(assessment).as_json }
+      subject(:decorator) { described_class.new(assessment).as_json }
 
       before do
         ptc_results.each do |ptc, thresh_and_result|
@@ -47,7 +47,7 @@ module Decorators
       end
 
       it "generates the expected hash" do
-        expect(subject).to eq expected_hash
+        expect(decorator).to eq expected_hash
       end
     end
   end

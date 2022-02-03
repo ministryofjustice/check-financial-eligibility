@@ -9,10 +9,10 @@ module Collators
     let(:today) { Date.new(2019, 4, 2) }
 
     describe ".call" do
-      subject { described_class.call assessment }
+      subject(:collator) { described_class.call assessment }
 
       it "always returns a hash" do
-        expect(subject).to be_a Hash
+        expect(collator).to be_a Hash
       end
 
       context "liquid capital" do
@@ -20,7 +20,7 @@ module Collators
           liquid_capital_service = double Assessors::LiquidCapitalAssessor
           expect(Assessors::LiquidCapitalAssessor).to receive(:new).with(assessment).and_return(liquid_capital_service)
           expect(liquid_capital_service).to receive(:call).and_return(145.83)
-          expect(subject[:total_liquid]).to eq 145.83
+          expect(collator[:total_liquid]).to eq 145.83
         end
       end
 
@@ -29,8 +29,8 @@ module Collators
           property_service = double Calculators::PropertyCalculator
           expect(Calculators::PropertyCalculator).to receive(:new).and_return(property_service)
           expect(property_service).to receive(:call).and_return(23_000.0)
-          subject
-          expect(subject[:total_property]).to eq 23_000.0
+          collator
+          expect(collator[:total_property]).to eq 23_000.0
         end
       end
 
@@ -39,8 +39,8 @@ module Collators
           vehicle_service = double Assessors::VehicleAssessor
           expect(Assessors::VehicleAssessor).to receive(:new).with(assessment).and_return(vehicle_service)
           expect(vehicle_service).to receive(:call).and_return(2_500.0)
-          subject
-          expect(subject[:total_vehicle]).to eq 2_500.0
+          collator
+          expect(collator[:total_vehicle]).to eq 2_500.0
         end
       end
 
@@ -49,8 +49,8 @@ module Collators
           nlcas = double Assessors::NonLiquidCapitalAssessor
           expect(Assessors::NonLiquidCapitalAssessor).to receive(:new).with(assessment).and_return(nlcas)
           expect(nlcas).to receive(:call).and_return(500)
-          subject
-          expect(subject[:total_non_liquid]).to eq 500.0
+          collator
+          expect(collator[:total_non_liquid]).to eq 500.0
         end
       end
 
@@ -59,8 +59,8 @@ module Collators
           pcd = double Calculators::PensionerCapitalDisregardCalculator
           expect(Calculators::PensionerCapitalDisregardCalculator).to receive(:new).with(assessment).and_return(pcd)
           expect(pcd).to receive(:value).and_return(100_000)
-          subject
-          expect(subject[:pensioner_capital_disregard]).to eq 100_000
+          collator
+          expect(collator[:pensioner_capital_disregard]).to eq 100_000
         end
       end
 
@@ -84,16 +84,16 @@ module Collators
           expect(property_service).to receive(:call).and_return(23_000.0)
           expect(pcd).to receive(:value).and_return(100_000)
 
-          subject
+          collator
 
-          expect(subject[:total_liquid]).to eq 145.83
-          expect(subject[:total_non_liquid]).to eq 500
-          expect(subject[:total_vehicle]).to eq 2_500
-          expect(subject[:total_property]).to eq 23_000
-          expect(subject[:total_mortgage_allowance]).to eq 999_999_999_999
-          expect(subject[:total_capital]).to eq 26_145.83
-          expect(subject[:pensioner_capital_disregard]).to eq 100_000
-          expect(subject[:assessed_capital]).to eq(-73_854.17)
+          expect(collator[:total_liquid]).to eq 145.83
+          expect(collator[:total_non_liquid]).to eq 500
+          expect(collator[:total_vehicle]).to eq 2_500
+          expect(collator[:total_property]).to eq 23_000
+          expect(collator[:total_mortgage_allowance]).to eq 999_999_999_999
+          expect(collator[:total_capital]).to eq 26_145.83
+          expect(collator[:pensioner_capital_disregard]).to eq 100_000
+          expect(collator[:assessed_capital]).to eq(-73_854.17)
         end
       end
     end

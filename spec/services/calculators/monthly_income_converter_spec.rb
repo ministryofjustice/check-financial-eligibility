@@ -2,7 +2,7 @@ require "rails_helper"
 
 module Calculators
   RSpec.describe MonthlyIncomeConverter do
-    subject { described_class.new(frequency, payments) }
+    subject(:converter) { described_class.new(frequency, payments) }
 
     let(:payments) { [203.44, 205.00, 205.00] }
 
@@ -11,14 +11,14 @@ module Calculators
 
       describe "error?" do
         it "returns false" do
-          expect(subject.error?).to be false
+          expect(converter.error?).to be false
         end
       end
 
       describe "monthly_amount" do
         it "returns the average monthly amount" do
-          subject.error?
-          expect(subject.monthly_amount).to eq 204.48
+          converter.error?
+          expect(converter.monthly_amount).to eq 204.48
         end
       end
     end
@@ -28,14 +28,14 @@ module Calculators
 
       describe "error?" do
         it "returns false" do
-          expect(subject.error?).to be false
+          expect(converter.error?).to be false
         end
       end
 
       describe "monthly_amount" do
         it "returns the average for the calendar month" do
-          subject.error?
-          expect(subject.monthly_amount).to eq 221.52
+          converter.error?
+          expect(converter.monthly_amount).to eq 221.52
         end
       end
     end
@@ -45,14 +45,14 @@ module Calculators
 
       describe "error?" do
         it "returns false" do
-          expect(subject.error?).to be false
+          expect(converter.error?).to be false
         end
       end
 
       describe "monthly_amount" do
         it "returns the average for the calendar month" do
-          subject.error?
-          expect(subject.monthly_amount).to eq 443.04
+          converter.error?
+          expect(converter.monthly_amount).to eq 443.04
         end
       end
     end
@@ -62,14 +62,14 @@ module Calculators
 
       describe "error?" do
         it "returns false" do
-          expect(subject.error?).to be false
+          expect(converter.error?).to be false
         end
       end
 
       describe "monthly_amount" do
         it "returns the average for the calendar month" do
-          subject.error?
-          expect(subject.monthly_amount).to eq 886.08
+          converter.error?
+          expect(converter.monthly_amount).to eq 886.08
         end
       end
     end
@@ -80,14 +80,14 @@ module Calculators
 
       describe "error?" do
         it "returns false" do
-          expect(subject.error?).to be false
+          expect(converter.error?).to be false
         end
       end
 
       describe "monthly_amount" do
         it "returns the sum of payments divided by 3" do
-          subject.error?
-          expect(subject.monthly_amount).to eq 360.78
+          converter.error?
+          expect(converter.monthly_amount).to eq 360.78
         end
       end
     end
@@ -96,7 +96,7 @@ module Calculators
       let(:frequency) { :abcd }
 
       it "raises an error" do
-        expect { subject.error? }.to raise_error("Unrecognized frequency")
+        expect { converter.error? }.to raise_error("Unrecognized frequency")
       end
     end
   end
