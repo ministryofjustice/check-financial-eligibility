@@ -60,7 +60,7 @@ module Calculators
         it "adds the fixed employment allowance from the threshold files" do
           create_payments
           described_class.call(assessment)
-          expect(disposable_income_summary.fixed_employment_allowance).to eq (-45.0)
+          expect(disposable_income_summary.fixed_employment_allowance).to eq(-45)
         end
       end
 
