@@ -57,7 +57,7 @@ module Calculators
     end
 
     def fixed_employment_allowance
-      Threshold.value_for(:fixed_employment_allowance, at: submission_date)
+      -Threshold.value_for(:fixed_employment_allowance, at: submission_date)
     end
   end
 end

@@ -45,7 +45,7 @@ module Decorators
       end
 
       def net_employment_income
-        gross_income_summary.gross_employment_income + summary.employment_income_deductions
+        gross_income_summary.gross_employment_income + summary.employment_income_deductions + summary.fixed_employment_allowance
       end
 
       def employment_income
