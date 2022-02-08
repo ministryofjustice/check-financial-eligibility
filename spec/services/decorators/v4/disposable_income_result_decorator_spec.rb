@@ -41,10 +41,10 @@ module Decorators
           employment_income:
             {
               benefits_in_kind: 0.0,
-              fixed_employment_deduction: 45.0,
+              fixed_employment_deduction: -45.0,
               gross_income: 3000.0,
               national_insurance: -300.0,
-              net_employment_income: 1710.0,
+              net_employment_income: 1665.0,
               tax: -990.0,
             },
           income_contribution: 75.0,
