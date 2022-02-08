@@ -70,7 +70,7 @@ private
 
   def perform_assessment
     Workflows::MainWorkflow.call(assessment)
-    Assessors::MainAssessor.call(assessment)
+    # Assessors::MainAssessor.call(assessment)
     decorator_klass = assessment.version_3? ? Decorators::V3::AssessmentDecorator : Decorators::V4::AssessmentDecorator
     render json: decorator_klass.new(assessment).as_json
   end
