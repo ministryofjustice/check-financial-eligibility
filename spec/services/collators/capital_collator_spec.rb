@@ -18,8 +18,8 @@ module Collators
       context "liquid capital" do
         it "calls LiquidCapitalAssessment and updates capital summary with the result" do
           liquid_capital_service = double Assessors::LiquidCapitalAssessor
-          expect(Assessors::LiquidCapitalAssessor).to receive(:new).with(assessment).and_return(liquid_capital_service)
-          expect(liquid_capital_service).to receive(:call).and_return(145.83)
+          allow(Assessors::LiquidCapitalAssessor).to receive(:new).with(assessment).and_return(liquid_capital_service)
+          allow(liquid_capital_service).to receive(:call).and_return(145.83)
           expect(collator[:total_liquid]).to eq 145.83
         end
       end
@@ -27,8 +27,8 @@ module Collators
       context "property_assessment" do
         it "instantiates and calls the Property Assessment service" do
           property_service = double Calculators::PropertyCalculator
-          expect(Calculators::PropertyCalculator).to receive(:new).and_return(property_service)
-          expect(property_service).to receive(:call).and_return(23_000.0)
+          allow(Calculators::PropertyCalculator).to receive(:new).and_return(property_service)
+          allow(property_service).to receive(:call).and_return(23_000.0)
           collator
           expect(collator[:total_property]).to eq 23_000.0
         end
@@ -37,8 +37,8 @@ module Collators
       context "vehicle assessment" do
         it "instantiates and calls the Vehicle Assesment service" do
           vehicle_service = double Assessors::VehicleAssessor
-          expect(Assessors::VehicleAssessor).to receive(:new).with(assessment).and_return(vehicle_service)
-          expect(vehicle_service).to receive(:call).and_return(2_500.0)
+          allow(Assessors::VehicleAssessor).to receive(:new).with(assessment).and_return(vehicle_service)
+          allow(vehicle_service).to receive(:call).and_return(2_500.0)
           collator
           expect(collator[:total_vehicle]).to eq 2_500.0
         end
@@ -47,8 +47,8 @@ module Collators
       context "non_liquid_capital_assessment" do
         it "instantiates and calls NonLiquidCapitalAssessment" do
           nlcas = double Assessors::NonLiquidCapitalAssessor
-          expect(Assessors::NonLiquidCapitalAssessor).to receive(:new).with(assessment).and_return(nlcas)
-          expect(nlcas).to receive(:call).and_return(500)
+          allow(Assessors::NonLiquidCapitalAssessor).to receive(:new).with(assessment).and_return(nlcas)
+          allow(nlcas).to receive(:call).and_return(500)
           collator
           expect(collator[:total_non_liquid]).to eq 500.0
         end
@@ -57,8 +57,8 @@ module Collators
       context "pensioner disregard" do
         it "instantiates and calls the PensionerCapitalDisregard service" do
           pcd = double Calculators::PensionerCapitalDisregardCalculator
-          expect(Calculators::PensionerCapitalDisregardCalculator).to receive(:new).with(assessment).and_return(pcd)
-          expect(pcd).to receive(:value).and_return(100_000)
+          allow(Calculators::PensionerCapitalDisregardCalculator).to receive(:new).with(assessment).and_return(pcd)
+          allow(pcd).to receive(:value).and_return(100_000)
           collator
           expect(collator[:pensioner_capital_disregard]).to eq 100_000
         end
@@ -72,17 +72,17 @@ module Collators
           property_service = double Calculators::PropertyCalculator
           pcd = double Calculators::PensionerCapitalDisregardCalculator
 
-          expect(Assessors::LiquidCapitalAssessor).to receive(:new).with(assessment).and_return(liquid_capital_service)
-          expect(Assessors::NonLiquidCapitalAssessor).to receive(:new).with(assessment).and_return(nlcas)
-          expect(Assessors::VehicleAssessor).to receive(:new).with(assessment).and_return(vehicle_service)
-          expect(Calculators::PropertyCalculator).to receive(:new).and_return(property_service)
-          expect(Calculators::PensionerCapitalDisregardCalculator).to receive(:new).and_return(pcd)
+          allow(Assessors::LiquidCapitalAssessor).to receive(:new).with(assessment).and_return(liquid_capital_service)
+          allow(Assessors::NonLiquidCapitalAssessor).to receive(:new).with(assessment).and_return(nlcas)
+          allow(Assessors::VehicleAssessor).to receive(:new).with(assessment).and_return(vehicle_service)
+          allow(Calculators::PropertyCalculator).to receive(:new).and_return(property_service)
+          allow(Calculators::PensionerCapitalDisregardCalculator).to receive(:new).and_return(pcd)
 
-          expect(liquid_capital_service).to receive(:call).and_return(145.83)
-          expect(nlcas).to receive(:call).and_return(500)
-          expect(vehicle_service).to receive(:call).and_return(2_500.0)
-          expect(property_service).to receive(:call).and_return(23_000.0)
-          expect(pcd).to receive(:value).and_return(100_000)
+          allow(liquid_capital_service).to receive(:call).and_return(145.83)
+          allow(nlcas).to receive(:call).and_return(500)
+          allow(vehicle_service).to receive(:call).and_return(2_500.0)
+          allow(property_service).to receive(:call).and_return(23_000.0)
+          allow(pcd).to receive(:value).and_return(100_000)
 
           collator
 

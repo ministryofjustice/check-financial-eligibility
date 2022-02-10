@@ -55,7 +55,7 @@ module Assessors
         let(:lower_threshold) { 316.0 }
         let(:upper_threshold) { 733.0 }
 
-        before { expect(Calculators::IncomeContributionCalculator).to receive(:call).and_return(125.94) }
+        before { allow(Calculators::IncomeContributionCalculator).to receive(:call).and_return(125.94) }
 
         it "is eligible with a contribution" do
           assessor

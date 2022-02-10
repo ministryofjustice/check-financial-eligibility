@@ -33,11 +33,11 @@ module Decorators
         end
 
         it "calls the decorators for associated records" do
-          expect(::Decorators::V3::ApplicantDecorator).to receive(:new).and_return(double("ad", as_json: nil))
-          expect(GrossIncomeDecorator).to receive(:new).and_return(double("gisd", as_json: nil))
-          expect(DisposableIncomeDecorator).to receive(:new).and_return(double("disd", as_json: nil))
-          expect(CapitalDecorator).to receive(:new).and_return(double("csd", as_json: nil))
-          expect(::Decorators::V3::RemarksDecorator).to receive(:new).and_return(double("rmk", as_json: nil))
+          allow(::Decorators::V3::ApplicantDecorator).to receive(:new).and_return(double("ad", as_json: nil))
+          allow(GrossIncomeDecorator).to receive(:new).and_return(double("gisd", as_json: nil))
+          allow(DisposableIncomeDecorator).to receive(:new).and_return(double("disd", as_json: nil))
+          allow(CapitalDecorator).to receive(:new).and_return(double("csd", as_json: nil))
+          allow(::Decorators::V3::RemarksDecorator).to receive(:new).and_return(double("rmk", as_json: nil))
           decorator
         end
       end

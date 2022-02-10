@@ -16,13 +16,15 @@ module Workflows
       subject(:workflow_call) { described_class.call(assessment) }
 
       it "calls Capital collator and updates capital summary record" do
-        expect(Collators::CapitalCollator).to receive(:call).with(assessment).and_return(capital_data)
+        allow(Collators::CapitalCollator).to receive(:call).with(assessment).and_return(capital_data)
+        expect(Collators::CapitalCollator).to receive(:call).with(assessment)
         workflow_call
         expect(capital_summary.reload).to have_matching_attributes(capital_data)
       end
 
       it "calls CapitalAssessor and updates capital summary record with result" do
-        expect(Collators::CapitalCollator).to receive(:call).with(assessment).and_return(capital_data)
+        allow(Collators::CapitalCollator).to receive(:call).with(assessment).and_return(capital_data)
+        expect(Collators::CapitalCollator).to receive(:call).with(assessment)
         expect(Assessors::CapitalAssessor).to receive(:call).with(assessment).and_call_original
         workflow_call
         expect(capital_summary.summarized_assessment_result).to eq :eligible
