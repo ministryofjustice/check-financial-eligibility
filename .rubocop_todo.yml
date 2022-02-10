@@ -6,14 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 11
-RSpec/ScatteredSetup:
-  Exclude:
-    - 'spec/integration/ap_1367_spec.rb'
-    - 'spec/integration/policy_disregards_spec.rb'
-    - 'spec/integration/test_runner_spec.rb'
-    - 'spec/services/collators/gross_income_collator_spec.rb'
-    - 'spec/services/creators/assessment_creator_spec.rb'
 
 # Offense count: 54
 RSpec/StubbedMock:
