@@ -5,11 +5,11 @@ ruby "3.1.0"
 
 gem "active_model_serializers", "~> 0.10.13"
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem "rails", "~> 6.1.4"
+gem "rails", "~> 6.1.4", ">= 6.1.4.6"
 # Use postgresql as the database for Active Record
 gem "pg", ">= 0.18", "< 2.0"
 # Use Puma as the app server
-gem "puma", "~> 5.6"
+gem "puma", "~> 5.6", ">= 5.6.2"
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
@@ -20,7 +20,7 @@ gem "puma", "~> 5.6"
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 
-gem "sentry-rails", ">= 4.4.0"
+gem "sentry-rails", ">= 5.0.2"
 gem "sentry-ruby"
 
 # Use Capistrano for deployment
@@ -41,7 +41,7 @@ gem "json-schema", ">= 2.8.1"
 gem "dibber"
 
 # Api documentation
-gem "apipie-rails", ">= 0.5.18"
+gem "apipie-rails", ">= 0.5.19"
 
 # Adds Statistical methods to objects such as arrays
 gem "descriptive_statistics", require: "descriptive_statistics/safe"
@@ -57,7 +57,7 @@ gem "roo", "~> 2.8.3"
 # Manage security headers
 gem "secure_headers"
 
-gem "webpacker", "~> 5"
+gem "webpacker", "~> 5", ">= 5.4.3"
 
 # Required following upgrade to ruby 3.1.0
 gem "net-imap"
@@ -73,7 +73,7 @@ group :development, :test do
   gem "byebug", platforms: %i[mri mingw x64_mingw]
   gem "pry-byebug"
   gem "rspec_junit_formatter"
-  gem "rspec-rails", "~> 5.1"
+  gem "rspec-rails", "~> 5.1", ">= 5.1.0"
   gem "rubocop-govuk", require: false
   gem "rubocop-performance"
   gem "timecop"
