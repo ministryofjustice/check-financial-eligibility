@@ -11,9 +11,8 @@ RSpec.describe "Eligible Full Assessment with policy disregard remarks" do
 
     ENV["VERBOSE"] = "false"
     create :bank_holiday
+    mock_lfa_responses
   end
-
-  before { mock_lfa_responses }
 
   it "returns the expected payload with no policy disregards remarks" do
     assessment_id = post_assessment

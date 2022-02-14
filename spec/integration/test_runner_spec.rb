@@ -25,9 +25,10 @@ RSpec.describe "IntegrationTests::TestRunner", type: :request do
 
   let(:refresh) { (ENV["REFRESH"] || "false") }
 
-  before { setup_test_data }
-
-  before { mock_lfa_responses }
+  before do
+    setup_test_data
+    mock_lfa_responses
+  end
 
   describe "run integration_tests" do
     it "processes all the tests on all the sheets" do

@@ -21,10 +21,10 @@ module Collators
         let(:dependant2) { create :dependant, assessment: assessment }
 
         it "updates the dependant records and writes the sum to the diposable income summary" do
-          expect(Calculators::DependantAllowanceCalculator).to receive(:new)
+          allow(Calculators::DependantAllowanceCalculator).to receive(:new)
             .with(dependant1)
             .and_return(double(Calculators::DependantAllowanceCalculator, call: 123.45))
-          expect(Calculators::DependantAllowanceCalculator).to receive(:new)
+          allow(Calculators::DependantAllowanceCalculator).to receive(:new)
             .with(dependant2)
             .and_return(double(Calculators::DependantAllowanceCalculator, call: 456.78))
           collator

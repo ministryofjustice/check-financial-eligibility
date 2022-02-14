@@ -6,28 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 11
-RSpec/ScatteredSetup:
-  Exclude:
-    - 'spec/integration/ap_1367_spec.rb'
-    - 'spec/integration/policy_disregards_spec.rb'
-    - 'spec/integration/test_runner_spec.rb'
-    - 'spec/services/collators/gross_income_collator_spec.rb'
-    - 'spec/services/creators/assessment_creator_spec.rb'
-
-# Offense count: 54
-RSpec/StubbedMock:
-  Exclude:
-    - 'spec/models/other_income_source_spec.rb'
-    - 'spec/services/assessors/disposable_income_assessor_spec.rb'
-    - 'spec/services/collators/capital_collator_spec.rb'
-    - 'spec/services/collators/dependants_allowance_collator_spec.rb'
-    - 'spec/services/decorators/v3/assessment_decorator_spec.rb'
-    - 'spec/services/decorators/v3/deductions_decorator_spec.rb'
-    - 'spec/services/decorators/v4/assessment_decorator_spec.rb'
-    - 'spec/services/utilities/payment_period_analyser_spec.rb'
-    - 'spec/services/workflows/passported_workflow_spec.rb'
-
 # Offense count: 30
 # Configuration parameters: IgnoreNameless, IgnoreSymbolicNames.
 RSpec/VerifiedDoubles:

@@ -2,7 +2,10 @@ require "rails_helper"
 
 module Creators
   RSpec.describe AssessmentCreator do
-    before { mock_lfa_responses }
+    before do
+      mock_lfa_responses
+      stub_call_to_json_schema
+    end
 
     let(:remote_ip) { "127.0.0.1" }
     let(:raw_post_v3) do
@@ -24,8 +27,6 @@ module Creators
     end
 
     subject(:creator) { described_class.call(remote_ip:, raw_post:, version:) }
-
-    before { stub_call_to_json_schema }
 
     context "version 3" do
       let(:raw_post) { raw_post_v3 }

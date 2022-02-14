@@ -1,11 +1,13 @@
 FactoryBot.define do
   factory :state_benefit_type do
     sequence :label do |n|
-      "benefit_type_#{n}"
+      "benefit_type_#{n + 100}"
     end
     # the name passed in is the same as the label in the state benefit type table except for seeded data
     name { label }
-    dwp_code { [nil, ("A".."Z").to_a.sample(2).join].sample }
+    sequence :dwp_code do |n|
+      [nil, "#{('A'..'Z').to_a.sample(2).join}#{n}"].sample
+    end
     exclude_from_gross_income { [true, false].sample }
     category { (%w[carer_disability low_income other uncategorised] + [nil]).sample }
 
