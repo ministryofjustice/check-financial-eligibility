@@ -21,6 +21,15 @@ module Calculators
     let(:expected_tax) { tax + tax }
     let(:expected_national_insurance) { ni_cont + ni_cont }
 
+    context "when there is more than one employment" do
+      it "calls the Multiple Employments Calculator" do
+        employment1
+        employment2
+        expect(Calculators::MultipleEmploymentsCalculator).to receive(:call).with(assessment)
+        described_class.call(assessment)
+      end
+    end
+
     it "calls #calculate_monthly_amounts! on each employment record" do
       employment1
       employment2
