@@ -27,7 +27,8 @@ module Creators
     def create_employment
       @employments_incomes.each do |employment|
         @assessment.employments.create!(assessment_id:,
-                                        name: employment[:name])
+                                        name: employment[:name],
+                                        client_id: employment[:client_id])
         create_payments(employment)
       end
     end
@@ -36,6 +37,7 @@ module Creators
       employment[:payments].each do |income|
         emp = Employment.find_by(assessment_id:, name: employment[:name])
         emp.employment_payments.create!(employment_id: emp.id,
+                                        client_id: income[:client_id],
                                         date: income[:date],
                                         gross_income: income[:gross],
                                         benefits_in_kind: income[:benefits_in_kind],
