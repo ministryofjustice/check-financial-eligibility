@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_07_112406) do
+ActiveRecord::Schema.define(version: 2022_02_17_113523) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -174,6 +174,7 @@ ActiveRecord::Schema.define(version: 2021_12_07_112406) do
     t.decimal "national_insurance", default: "0.0", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "client_id"
     t.index ["employment_id"], name: "index_employment_payments_on_employment_id"
   end
 
@@ -186,6 +187,7 @@ ActiveRecord::Schema.define(version: 2021_12_07_112406) do
     t.decimal "monthly_benefits_in_kind", default: "0.0", null: false
     t.decimal "monthly_tax", default: "0.0", null: false
     t.decimal "monthly_national_insurance", default: "0.0", null: false
+    t.string "client_id"
     t.index ["assessment_id"], name: "index_employments_on_assessment_id"
   end
 

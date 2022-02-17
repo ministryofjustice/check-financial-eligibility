@@ -11,8 +11,31 @@ RSpec.describe EmploymentsController, type: :request do
     subject(:post_payload) { post assessment_employments_path(assessment_id), params: params.to_json, headers: headers }
 
     context "valid payload" do
-      context "with two employments" do
-        it "returns http success", :show_in_doc do
+      context "with client ids" do
+        context "with two employments" do
+          it "returns http success", :show_in_doc do
+            post_payload
+            expect(response).to have_http_status(:success)
+          end
+
+          it "creates two employment income records with associated EmploymentPayment records" do
+            post_payload
+            expect(Employment.count).to eq 2
+            expect(EmploymentPayment.count).to eq 6
+          end
+
+          it "generates a valid response" do
+            post_payload
+            expect(parsed_response[:success]).to eq true
+            expect(parsed_response[:errors]).to be_empty
+          end
+        end
+      end
+
+      context "without client ids" do
+        let(:params) { employment_income_params_without_client_ids }
+
+        it "returns http success" do
           post_payload
           expect(response).to have_http_status(:success)
         end
@@ -78,8 +101,10 @@ RSpec.describe EmploymentsController, type: :request do
         employment_income: [
           {
             name: "Job 1",
+            client_id: SecureRandom.uuid,
             payments: [
               {
+                client_id: SecureRandom.uuid,
                 date: "2021-10-30",
                 gross: 1046.00,
                 benefits_in_kind: 16.60,
@@ -88,6 +113,7 @@ RSpec.describe EmploymentsController, type: :request do
                 net_employment_income: 898.84,
               },
               {
+                client_id: SecureRandom.uuid,
                 date: "2021-10-30",
                 gross: 1046.00,
                 benefits_in_kind: 16.60,
@@ -96,6 +122,7 @@ RSpec.describe EmploymentsController, type: :request do
                 net_employment_income: 898.84,
               },
               {
+                client_id: SecureRandom.uuid,
                 date: "2021-10-30",
                 gross: 1046.00,
                 benefits_in_kind: 16.60,
@@ -107,8 +134,10 @@ RSpec.describe EmploymentsController, type: :request do
           },
           {
             name: "Job 2",
+            client_id: SecureRandom.uuid,
             payments: [
               {
+                client_id: SecureRandom.uuid,
                 date: "2021-10-30",
                 gross: 1046.00,
                 benefits_in_kind: 16.60,
@@ -117,6 +146,7 @@ RSpec.describe EmploymentsController, type: :request do
                 net_employment_income: 898.84,
               },
               {
+                client_id: SecureRandom.uuid,
                 date: "2021-10-30",
                 gross: 1046.00,
                 benefits_in_kind: 16.60,
@@ -125,6 +155,7 @@ RSpec.describe EmploymentsController, type: :request do
                 net_employment_income: 898.84,
               },
               {
+                client_id: SecureRandom.uuid,
                 date: "2021-10-30",
                 gross: 1046.00,
                 benefits_in_kind: 16.60,
@@ -136,6 +167,15 @@ RSpec.describe EmploymentsController, type: :request do
           }
         ],
       }
+    end
+
+    def employment_income_params_without_client_ids
+      params = employment_income_params
+      params[:employment_income].each do |employment|
+        employment.delete(:client_id)
+        employment[:payments].each { |paymt| paymt.delete(:client_id) }
+      end
+      params
     end
   end
 end
