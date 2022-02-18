@@ -72,7 +72,6 @@ module Calculators
           expect(emp.monthly_benefits_in_kind).to eq 0
         end
       end
-
     end
 
     it "updates the gross_income_summary with a sum of the employment income and biks" do
