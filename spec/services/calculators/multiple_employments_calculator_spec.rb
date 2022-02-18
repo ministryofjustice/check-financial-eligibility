@@ -35,7 +35,7 @@ module Calculators
 
     it "sets fixed employment allowance to 45" do
       described_class.call(assessment)
-      expect(assessment.disposable_income_summary.fixed_employment_allowance).to eq -45
+      expect(assessment.disposable_income_summary.fixed_employment_allowance).to eq(-45)
     end
   end
 end

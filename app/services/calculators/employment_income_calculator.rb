@@ -16,7 +16,6 @@ module Calculators
       @assessment = assessment
     end
 
-
     def call
       if employments.count > 1
         Calculators::MultipleEmploymentsCalculator.call(assessment)
@@ -25,7 +24,7 @@ module Calculators
       end
     end
 
-    private
+  private
 
     def process_single_employment
       employments.map(&:calculate_monthly_amounts!)
