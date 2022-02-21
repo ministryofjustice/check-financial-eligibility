@@ -1,6 +1,5 @@
 module Calculators
   class TaxNiRefundCalculator
-
     def self.call(employment)
       new(employment).call
     end
@@ -19,7 +18,7 @@ module Calculators
       end
     end
 
-    private
+  private
 
     def update_and_add_remarks(attrs, payment)
       payment.update!(attrs)
@@ -30,6 +29,5 @@ module Calculators
     def remarks
       @employment.assessment.remarks
     end
-
   end
 end

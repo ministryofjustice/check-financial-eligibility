@@ -23,7 +23,7 @@ RSpec.describe Employment do
         end
 
         it "does not add a remark" do
-          assessment_double = instance_double(Assessment, submission_date: Date.today, marked_for_destruction?: false)
+          assessment_double = instance_double(Assessment, submission_date: Time.zone.today, marked_for_destruction?: false)
           remarks_double = instance_double(Remarks)
           allow(employment).to receive(:assessment).and_return(assessment_double)
           allow(assessment_double).to receive(:remarks).and_return(remarks_double)
@@ -46,7 +46,7 @@ RSpec.describe Employment do
         end
 
         it "adds a remark" do
-          assessment_double = instance_double(Assessment, submission_date: Date.today, marked_for_destruction?: false)
+          assessment_double = instance_double(Assessment, submission_date: Time.zone.today, marked_for_destruction?: false)
           remarks_double = instance_double(Remarks)
           allow(employment).to receive(:assessment).and_return(assessment_double)
           allow(assessment_double).to receive(:remarks).and_return(remarks_double)
@@ -61,14 +61,13 @@ RSpec.describe Employment do
       end
     end
 
-    describe '.calculate_monthly_ni_tax!' do
+    describe ".calculate_monthly_ni_tax!" do
       before { setup_ni_and_tax }
 
       context "when using the blunt average" do
         let(:calculation_method) { "blunt_average" }
         let(:tax_amounts) { [100, 200.01, 120] }
         let(:ni_amounts) { [10.94, 10.33, 12.88] }
-
 
         it "uses the blunt average to calculate monthly NI" do
           employment.__send__(:calculate_monthly_ni_tax!)
@@ -86,7 +85,6 @@ RSpec.describe Employment do
         let(:tax_amounts) { [100, 200.01, 120] }
         let(:ni_amounts) { [10.94, 10.33, 12.88] }
 
-
         it "uses the most recent payment for monthly NI" do
           employment.__send__(:calculate_monthly_ni_tax!)
           expect(employment.monthly_national_insurance).to eq 12.88
@@ -97,7 +95,6 @@ RSpec.describe Employment do
           expect(employment.monthly_tax).to eq 120
         end
       end
-
     end
 
     describe ".calculate!" do

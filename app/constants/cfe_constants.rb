@@ -44,7 +44,8 @@ module CFEConstants
     residual_balance
     multi_benefit
     multiple_employments
-    refunds].freeze
+    refunds
+  ].freeze
 
   # Irregular income categories and frequencies
   #

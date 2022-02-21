@@ -15,18 +15,18 @@ class Employment < ApplicationRecord
     calculate_monthly_ni_tax!
   end
 
-  private
+private
 
   def calculate_monthly_gross_income!
     if Utilities::EmploymentIncomeVariationChecker.new(self).below_threshold?
       update!(
         monthly_gross_income: employment_payments.order(:date).last.gross_income_monthly_equiv,
-        calculation_method: "most_recent"
+        calculation_method: "most_recent",
       )
     else
       update!(
         monthly_gross_income: blunt_average(:gross_income_monthly_equiv),
-        calculation_method: "blunt_average"
+        calculation_method: "blunt_average",
       )
       add_amount_variation_remarks
     end
@@ -39,14 +39,14 @@ class Employment < ApplicationRecord
     when "most_recent"
       use_ni_tax_most_recent
     else
-      raise RuntimeError, "invalid calculation method: #{calculation_method}"
+      raise "invalid calculation method: #{calculation_method}"
     end
   end
 
   def use_ni_tax_blunt_average
     update!(
       monthly_national_insurance: blunt_average(:national_insurance),
-      monthly_tax: blunt_average(:tax)
+      monthly_tax: blunt_average(:tax),
     )
   end
 
@@ -55,7 +55,7 @@ class Employment < ApplicationRecord
 
     update!(
       monthly_national_insurance: most_recent_payment.national_insurance,
-      monthly_tax: most_recent_payment.tax
+      monthly_tax: most_recent_payment.tax,
     )
   end
 
