@@ -25,6 +25,6 @@ class Employment < ApplicationRecord
   end
 
   def add_amount_variation_remarks
-    assessment.remarks.add(:employment, :amount_variation, employment_payments.map(&:client_id))
+    assessment.remarks.add(:employment_gross_income, :amount_variation, employment_payments.map(&:client_id))
   end
 end

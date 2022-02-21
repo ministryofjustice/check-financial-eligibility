@@ -33,9 +33,17 @@ module CFEConstants
     outgoings_housing_cost
     outgoings_rent_or_mortgage
     current_account_balance
-    employment
+    employment_gross_income
+    employment_tax
+    employment_nic
   ].freeze
-  VALID_REMARK_ISSUES = %i[unknown_frequency amount_variation residual_balance multi_benefit multiple_employments].freeze
+  VALID_REMARK_ISSUES = %i[
+    unknown_frequency
+    amount_variation
+    residual_balance
+    multi_benefit
+    multiple_employments
+    refunds].freeze
 
   # Irregular income categories and frequencies
   #
