@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :employment do
     assessment
+    client_id { SecureRandom.uuid }
     sequence(:name) { |n| "Job #{n}" }
   end
 

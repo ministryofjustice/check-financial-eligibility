@@ -27,7 +27,8 @@ module Calculators
   private
 
     def process_single_employment
-      employments.map(&:calculate_monthly_amounts!)
+      employments.map(&:calculate!)
+
       gross_income_summary.update!(gross_employment_income:,
                                    benefits_in_kind: monthly_benefits_in_kind)
       disposable_income_summary.update!(employment_income_deductions: deductions,

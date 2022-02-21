@@ -23,17 +23,16 @@ module Calculators
 
     context "when there is more than one employment" do
       it "calls the Multiple Employments Calculator" do
-        employment1
-        employment2
+        allow(assessment).to receive(:employments).and_return([employment1, employment2])
         expect(Calculators::MultipleEmploymentsCalculator).to receive(:call).with(assessment)
         described_class.call(assessment)
       end
 
-      it "calls #calculate_monthly_amounts! on each employment record" do
-        employment1
-        employment2
-        allow(employment1).to receive(:calculate_monthly_amounts!)
-        allow(employment2).to receive(:calculate_monthly_amounts!)
+      it "does not call #calculate! on each employment record" do
+        allow(assessment).to receive(:employments).and_return([employment1, employment2])
+        expect(employment1).not_to receive(:calculate!)
+        expect(employment2).not_to receive(:calculate!)
+        allow(Calculators::MultipleEmploymentsCalculator).to receive(:call).with(assessment)
         described_class.call(assessment)
       end
 
@@ -51,14 +50,15 @@ module Calculators
 
     context "when there is only one employment" do
       it "does not call the Multiple Employments Calculator" do
-        employment1
+        allow(assessment).to receive(:employments).and_return([employment1])
+        allow(assessment.employments.first).to receive(:calculate!)
         expect(Calculators::MultipleEmploymentsCalculator).not_to receive(:call)
         described_class.call(assessment)
       end
 
-      it "calls #calculate_monthly_amounts! on each employment record" do
-        employment1
-        allow(employment1).to receive(:calculate_monthly_amounts!)
+      it "calls #calculate! on each employment record" do
+        allow(assessment).to receive(:employments).and_return([employment1])
+        allow(assessment.employments.first).to receive(:calculate!)
         described_class.call(assessment)
       end
 

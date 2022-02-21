@@ -36,6 +36,7 @@ module CFEConstants
     employment_gross_income
     employment_tax
     employment_nic
+    employment
   ].freeze
   VALID_REMARK_ISSUES = %i[
     unknown_frequency
