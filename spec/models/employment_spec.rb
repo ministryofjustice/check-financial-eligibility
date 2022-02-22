@@ -95,6 +95,18 @@ RSpec.describe Employment do
           expect(employment.monthly_tax).to eq 120
         end
       end
+
+      context "calculation method not populated" do
+        let(:calculation_method) { nil }
+        let(:tax_amounts) { [100, 200.01, 120] }
+        let(:ni_amounts) { [10.94, 10.33, 12.88] }
+
+        it "raises" do
+          expect {
+            employment.__send__(:calculate_monthly_ni_tax!)
+          }.to raise_error RuntimeError, "invalid calculation method: nil"
+        end
+      end
     end
 
     describe ".calculate!" do

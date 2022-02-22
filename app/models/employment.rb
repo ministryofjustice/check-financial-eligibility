@@ -39,7 +39,7 @@ private
     when "most_recent"
       use_ni_tax_most_recent
     else
-      raise "invalid calculation method: #{calculation_method}"
+      raise "invalid calculation method: #{calculation_method.inspect}"
     end
   end
 
