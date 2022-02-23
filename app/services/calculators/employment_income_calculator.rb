@@ -17,7 +17,18 @@ module Calculators
     end
 
     def call
-      employments.map(&:calculate_monthly_amounts!)
+      if employments.count > 1
+        Calculators::MultipleEmploymentsCalculator.call(assessment)
+      else
+        process_single_employment
+      end
+    end
+
+  private
+
+    def process_single_employment
+      employments.map(&:calculate!)
+
       gross_income_summary.update!(gross_employment_income:,
                                    benefits_in_kind: monthly_benefits_in_kind)
       disposable_income_summary.update!(employment_income_deductions: deductions,
@@ -25,8 +36,6 @@ module Calculators
                                         tax: taxes,
                                         national_insurance: ni_contributions)
     end
-
-  private
 
     def gross_employment_income
       monthly_incomes + monthly_benefits_in_kind

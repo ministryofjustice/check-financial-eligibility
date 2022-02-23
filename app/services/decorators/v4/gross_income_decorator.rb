@@ -28,7 +28,7 @@ module Decorators
       end
 
       def employment_incomes
-        @assessment.employments.map { |employment| employment_income(employment) }
+        @assessment.employments.order(:name).map { |employment| employment_income(employment) }
       end
 
       def employment_income(employment)
