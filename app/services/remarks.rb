@@ -1,6 +1,6 @@
 class Remarks
   attr_reader :remarks_hash
-  
+
   def initialize(assessment_id)
     @assessment_id = assessment_id
     @remarks_hash = {}
