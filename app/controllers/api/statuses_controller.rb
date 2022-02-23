@@ -1,4 +1,4 @@
-module Api
+module API
   class StatusesController < ApplicationController
     def index
       responses = Status.order(created_at: :desc)
