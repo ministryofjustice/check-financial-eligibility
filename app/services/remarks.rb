@@ -1,10 +1,6 @@
 class Remarks
   attr_reader :remarks_hash
-
-  # The types outgoings_childcare, outgoings_maintenance_out and outgoings_rent_or_mortgage are retained for compatibility with earlier versions of integration test spreadsheet
-  # TODO:
-  # Remove the above types when no longer required
-
+  
   def initialize(assessment_id)
     @assessment_id = assessment_id
     @remarks_hash = {}
