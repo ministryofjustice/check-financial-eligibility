@@ -130,10 +130,6 @@ module Collators
             expect(gross_income_summary.gross_employment_income).to eq 1500
           end
 
-          it "updates total gross income" do
-            expect(gross_income_summary.total_gross_income).to eq 1500
-          end
-
           it "updates disposable income summary" do
             expect(displosable_income_summary.employment_income_deductions).to eq(-645)
             expect(displosable_income_summary.tax).to eq(-495)

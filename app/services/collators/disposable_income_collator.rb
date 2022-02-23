@@ -17,7 +17,8 @@ module Collators
              :legal_aid_bank,
              :legal_aid_cash, to: :disposable_income_summary
 
-    delegate :total_gross_income, to: :gross_income_summary
+    delegate :total_gross_income,
+             :gross_employment_income, to: :gross_income_summary
 
     def initialize(assessment)
       super(assessment)
@@ -66,11 +67,11 @@ module Collators
 
     def total_outgoings_and_allowances
       net_housing_costs + dependant_allowance + child_care_bank + maintenance_out_bank + legal_aid_bank\
-      + @monthly_cash_transactions_total + fixed_employment_allowance + employment_income_deductions
+      + @monthly_cash_transactions_total - fixed_employment_allowance - employment_income_deductions
     end
 
     def disposable_income
-      [0, total_gross_income - total_outgoings_and_allowances].max
+      [0, total_gross_income + gross_employment_income - total_outgoings_and_allowances].max
     end
   end
 end

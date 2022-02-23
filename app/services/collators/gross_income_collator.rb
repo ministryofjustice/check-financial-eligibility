@@ -17,7 +17,6 @@ module Collators
       INCOME_CATEGORIES.each do |category|
         populate_income_attrs(attrs, category)
       end
-      attrs[:total_gross_income] += gross_income_summary.gross_employment_income
 
       attrs
     end

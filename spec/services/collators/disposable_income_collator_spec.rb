@@ -40,8 +40,8 @@ module Collators
         maintenance_out_bank +
         legal_aid_bank +
         net_housing +
-        dependant_allowance +
-        employment_income_deductions +
+        dependant_allowance -
+        employment_income_deductions -
         fixed_employment_allowance
     end
 
@@ -64,7 +64,7 @@ module Collators
 
         it "is populated with result of gross income minus total outgoings and allowances" do
           collator
-          result = assessment.gross_income_summary.total_gross_income - disposable_income_summary.reload.total_outgoings_and_allowances
+          result = assessment.gross_income_summary.total_gross_income + assessment.gross_income_summary.gross_employment_income - disposable_income_summary.reload.total_outgoings_and_allowances
           expect(disposable_income_summary.total_disposable_income).to eq result
         end
       end
