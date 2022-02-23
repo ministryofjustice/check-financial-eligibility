@@ -388,10 +388,7 @@ GEM
     simplecov-rcov (0.2.3)
       simplecov (>= 0.4.1)
     simplecov_json_formatter (0.1.4)
-    spring (2.1.1)
-    spring-watcher-listen (2.0.1)
-      listen (>= 2.7, < 4.0)
-      spring (>= 1.2, < 3.0)
+    spring (3.0.0)
     strscan (3.0.1)
     thor (1.2.1)
     timecop (0.9.4)
@@ -465,7 +462,6 @@ DEPENDENCIES
   simplecov
   simplecov-rcov
   spring
-  spring-watcher-listen (~> 2.0.0)
   timecop
   tzinfo-data
   vcr
