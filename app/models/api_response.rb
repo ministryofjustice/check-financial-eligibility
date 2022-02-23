@@ -1,4 +1,4 @@
-class ApiResponse
+class APIResponse
   include ActiveModel::Serialization
 
   attr_accessor :success, :objects, :errors
@@ -20,7 +20,7 @@ class ApiResponse
   end
 
   def success?
-    raise "ApiResponse object is in incomplete state" if @success.nil?
+    raise "APIResponse object is in incomplete state" if @success.nil?
 
     @success
   end

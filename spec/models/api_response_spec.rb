@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe ApiResponse do
+RSpec.describe APIResponse do
   let(:response) { described_class.new }
 
   describe ".success" do
