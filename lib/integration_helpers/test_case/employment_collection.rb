@@ -40,7 +40,7 @@ module TestCase
       employment_rows = extract_employment_rows(rows)
 
       while employment_rows.any?
-        payment_data = employment_rows.shift(5)
+        payment_data = employment_rows.shift(6)
         job_name = payment_data.first[1] if payment_data.first[1].present?
         add_employment_earnings(job_name, payment_data)
 
@@ -71,6 +71,8 @@ module TestCase
 
     def transform_row_to_hash(row, payment_hash)
       case row[2].strip
+      when "client_id"
+        payment_hash[:client_id] = row[3]
       when "date"
         payment_hash[:date] = row[3].strftime("%F")
       when "gross pay"
