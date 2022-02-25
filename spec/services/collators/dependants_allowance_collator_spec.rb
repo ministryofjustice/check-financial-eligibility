@@ -23,10 +23,10 @@ module Collators
         it "updates the dependant records and writes the sum to the diposable income summary" do
           allow(Calculators::DependantAllowanceCalculator).to receive(:new)
             .with(dependant1)
-            .and_return(double(Calculators::DependantAllowanceCalculator, call: 123.45))
+            .and_return(instance_double(Calculators::DependantAllowanceCalculator, call: 123.45))
           allow(Calculators::DependantAllowanceCalculator).to receive(:new)
             .with(dependant2)
-            .and_return(double(Calculators::DependantAllowanceCalculator, call: 456.78))
+            .and_return(instance_double(Calculators::DependantAllowanceCalculator, call: 456.78))
           collator
           expect(dependant1.reload.dependant_allowance).to eq 123.45
           expect(dependant2.reload.dependant_allowance).to eq 456.78
