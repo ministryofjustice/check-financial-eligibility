@@ -34,15 +34,6 @@ Rails/BulkChangeTable:
     - 'db/migrate/20211117161654_update_fields_on_employment.rb'
     - 'db/migrate/20211207112406_add_additional_fields_to_summaries.rb'
 
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: Include.
-# Include: app/**/*.rb, config/**/*.rb, db/**/*.rb, lib/**/*.rb
-Rails/Output:
-  Exclude:
-    - 'db/migration_helpers/category_seeder.rb'
-    - 'db/seeds.rb'
-
 # Offense count: 20
 # Cop supports --auto-correct.
 # Configuration parameters: AllowImplicitReturn, AllowedReceivers.

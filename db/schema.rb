@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_21_144104) do
-
+ActiveRecord::Schema[7.0].define(version: 2022_02_21_144104) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -22,8 +21,8 @@ ActiveRecord::Schema.define(version: 2022_02_21_144104) do
     t.string "involvement_type"
     t.boolean "has_partner_opponent"
     t.boolean "receives_qualifying_benefit"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "self_employed", default: false
     t.index ["assessment_id"], name: "index_applicants_on_assessment_id"
   end
@@ -39,8 +38,8 @@ ActiveRecord::Schema.define(version: 2022_02_21_144104) do
   create_table "assessments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "client_reference_id"
     t.inet "remote_ip", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.date "submission_date", null: false
     t.string "matter_proceeding_type"
     t.string "assessment_result", default: "pending", null: false
@@ -52,8 +51,8 @@ ActiveRecord::Schema.define(version: 2022_02_21_144104) do
 
   create_table "bank_holidays", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "dates"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "capital_items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -61,8 +60,8 @@ ActiveRecord::Schema.define(version: 2022_02_21_144104) do
     t.string "type", null: false
     t.string "description", null: false
     t.decimal "value", default: "0.0", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["capital_summary_id"], name: "index_capital_items_on_capital_summary_id"
   end
 
@@ -77,8 +76,8 @@ ActiveRecord::Schema.define(version: 2022_02_21_144104) do
     t.decimal "pensioner_capital_disregard", default: "0.0", null: false
     t.decimal "assessed_capital", default: "0.0", null: false
     t.decimal "capital_contribution", default: "0.0", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.decimal "lower_threshold", default: "0.0", null: false
     t.decimal "upper_threshold", default: "0.0", null: false
     t.string "assessment_result"
@@ -89,8 +88,8 @@ ActiveRecord::Schema.define(version: 2022_02_21_144104) do
     t.uuid "gross_income_summary_id"
     t.string "operation"
     t.string "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["gross_income_summary_id", "name", "operation"], name: "index_cash_transaction_categories_uniqueness", unique: true
     t.index ["gross_income_summary_id"], name: "index_cash_transaction_categories_on_gross_income_summary_id"
   end
@@ -100,8 +99,8 @@ ActiveRecord::Schema.define(version: 2022_02_21_144104) do
     t.date "date"
     t.decimal "amount"
     t.string "client_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["cash_transaction_category_id"], name: "index_cash_transactions_on_cash_transaction_category_id"
   end
 
@@ -109,8 +108,8 @@ ActiveRecord::Schema.define(version: 2022_02_21_144104) do
     t.uuid "assessment_id"
     t.date "date_of_birth"
     t.boolean "in_full_time_education"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "relationship"
     t.decimal "monthly_income"
     t.decimal "assets_value"
@@ -125,8 +124,8 @@ ActiveRecord::Schema.define(version: 2022_02_21_144104) do
     t.decimal "gross_housing_costs", default: "0.0", null: false
     t.decimal "total_outgoings_and_allowances", default: "0.0", null: false
     t.decimal "total_disposable_income", default: "0.0", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.decimal "net_housing_costs", default: "0.0"
     t.decimal "housing_benefit", default: "0.0"
     t.decimal "income_contribution", default: "0.0"
@@ -160,8 +159,8 @@ ActiveRecord::Schema.define(version: 2022_02_21_144104) do
     t.decimal "lower_threshold"
     t.decimal "upper_threshold"
     t.string "assessment_result", default: "pending", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["parent_id", "type", "proceeding_type_code"], name: "eligibilities_unique_type_ptc", unique: true
   end
 
@@ -172,8 +171,8 @@ ActiveRecord::Schema.define(version: 2022_02_21_144104) do
     t.decimal "benefits_in_kind", default: "0.0", null: false
     t.decimal "tax", default: "0.0", null: false
     t.decimal "national_insurance", default: "0.0", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "client_id"
     t.decimal "gross_income_monthly_equiv", default: "0.0", null: false
     t.index ["employment_id"], name: "index_employment_payments_on_employment_id"
@@ -182,8 +181,8 @@ ActiveRecord::Schema.define(version: 2022_02_21_144104) do
   create_table "employments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "assessment_id"
     t.string "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.decimal "monthly_gross_income", default: "0.0", null: false
     t.decimal "monthly_benefits_in_kind", default: "0.0", null: false
     t.decimal "monthly_tax", default: "0.0", null: false
@@ -197,14 +196,14 @@ ActiveRecord::Schema.define(version: 2022_02_21_144104) do
     t.uuid "assessment_id"
     t.string "category"
     t.string "remark"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "gross_income_summaries", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "assessment_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.decimal "monthly_other_income"
     t.boolean "assessment_error", default: false
     t.decimal "monthly_state_benefits", default: "0.0", null: false
@@ -242,8 +241,8 @@ ActiveRecord::Schema.define(version: 2022_02_21_144104) do
     t.string "income_type", null: false
     t.string "frequency", null: false
     t.decimal "amount", default: "0.0"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["gross_income_summary_id", "income_type"], name: "irregular_income_payments_unique", unique: true
     t.index ["gross_income_summary_id"], name: "index_irregular_income_payments_on_gross_income_summary_id"
   end
@@ -253,8 +252,8 @@ ActiveRecord::Schema.define(version: 2022_02_21_144104) do
     t.date "payment_date", null: false
     t.decimal "amount", null: false
     t.boolean "assessment_error", default: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "client_id"
     t.index ["other_income_source_id"], name: "index_other_income_payments_on_other_income_source_id"
   end
@@ -262,8 +261,8 @@ ActiveRecord::Schema.define(version: 2022_02_21_144104) do
   create_table "other_income_sources", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "gross_income_summary_id", null: false
     t.string "name", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.decimal "monthly_income"
     t.boolean "assessment_error", default: false
     t.index ["gross_income_summary_id"], name: "index_other_income_sources_on_gross_income_summary_id"
@@ -275,8 +274,8 @@ ActiveRecord::Schema.define(version: 2022_02_21_144104) do
     t.date "payment_date", null: false
     t.decimal "amount", null: false
     t.string "housing_cost_type"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "client_id"
     t.index ["disposable_income_summary_id"], name: "index_outgoings_on_disposable_income_summary_id"
   end
@@ -287,8 +286,8 @@ ActiveRecord::Schema.define(version: 2022_02_21_144104) do
     t.decimal "percentage_owned"
     t.boolean "main_home"
     t.boolean "shared_with_housing_assoc"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.uuid "capital_summary_id"
     t.decimal "transaction_allowance", default: "0.0", null: false
     t.decimal "allowable_outstanding_mortgage", default: "0.0", null: false
@@ -303,8 +302,8 @@ ActiveRecord::Schema.define(version: 2022_02_21_144104) do
     t.uuid "state_benefit_id", null: false
     t.date "payment_date", null: false
     t.decimal "amount", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "client_id"
     t.json "flags"
     t.index ["state_benefit_id"], name: "index_state_benefit_payments_on_state_benefit_id"
@@ -314,8 +313,8 @@ ActiveRecord::Schema.define(version: 2022_02_21_144104) do
     t.string "label"
     t.text "name"
     t.boolean "exclude_from_gross_income"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "dwp_code"
     t.string "category"
     t.index ["dwp_code"], name: "index_state_benefit_types_on_dwp_code", unique: true
@@ -326,8 +325,8 @@ ActiveRecord::Schema.define(version: 2022_02_21_144104) do
     t.uuid "gross_income_summary_id", null: false
     t.uuid "state_benefit_type_id", null: false
     t.string "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.decimal "monthly_value", default: "0.0", null: false
     t.index ["gross_income_summary_id"], name: "index_state_benefits_on_gross_income_summary_id"
     t.index ["state_benefit_type_id"], name: "index_state_benefits_on_state_benefit_type_id"
@@ -338,8 +337,8 @@ ActiveRecord::Schema.define(version: 2022_02_21_144104) do
     t.decimal "loan_amount_outstanding"
     t.date "date_of_purchase"
     t.boolean "in_regular_use"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.uuid "capital_summary_id"
     t.boolean "included_in_assessment", default: false, null: false
     t.decimal "assessed_value", default: "0.0", null: false
