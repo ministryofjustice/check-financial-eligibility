@@ -23,13 +23,13 @@ class AssessmentRequestFixture < BaseAssessmentFixture
               {
                 date_of_payment: Date.parse("20 Mar 2019"),
                 amount: 40.35,
-              }
+              },
             ],
           },
           {
             date_of_birth: Date.parse("04 Mar 1997"),
             in_full_time_education: true,
-          }
+          },
         ],
       },
       applicant_income: {
@@ -45,7 +45,7 @@ class AssessmentRequestFixture < BaseAssessmentFixture
             gross_pay: 12_345.22,
             paye: 456.79,
             national_insurance_contribution: 45.67,
-          }
+          },
         ],
         benefits: [
           {
@@ -57,7 +57,7 @@ class AssessmentRequestFixture < BaseAssessmentFixture
             benefit_name: "jobseekers_allowance",
             payment_date: Date.parse("15 Jan 2019"),
             amount: 100.44,
-          }
+          },
         ],
       },
       applicant_outgoings: [
@@ -70,7 +70,7 @@ class AssessmentRequestFixture < BaseAssessmentFixture
           outgoing_type: "maintenance",
           payment_date: Date.parse("22 Jan 2019"),
           amount: 166.98,
-        }
+        },
       ],
       applicant_capital: {
         property: {
@@ -92,7 +92,7 @@ class AssessmentRequestFixture < BaseAssessmentFixture
               outstanding_mortgage: 266_000,
               percentage_owned: 33.33,
               shared_with_housing_assoc: false,
-            }
+            },
           ],
         },
         vehicles: [
@@ -101,7 +101,7 @@ class AssessmentRequestFixture < BaseAssessmentFixture
             loan_amount_outstanding: 6000,
             date_of_purchase: Date.parse("13 Aug 2015"),
             in_regular_use: true,
-          }
+          },
         ],
         liquid_capital: {
           bank_accounts: [
@@ -112,7 +112,7 @@ class AssessmentRequestFixture < BaseAssessmentFixture
             {
               account_name: "Account #2",
               lowest_balance: 256.44,
-            }
+            },
           ],
         },
         non_liquid_capital: [
@@ -127,7 +127,7 @@ class AssessmentRequestFixture < BaseAssessmentFixture
           {
             item_description: "jewllery",
             value: 2_225,
-          }
+          },
         ],
       },
     }

@@ -51,7 +51,7 @@ class AssessmentResponseFixture < BaseAssessmentFixture
                 net_equity_value: 201_000.00,
                 property_disregard: 100_000,
                 assessed_capital_value: 101_000,
-              }
+              },
             ],
           },
           vehicles: [
@@ -68,7 +68,7 @@ class AssessmentResponseFixture < BaseAssessmentFixture
               date_of_purchase: 40.months.ago.to_date,
               in_regular_use: true,
               assessed_value: 0,
-            }
+            },
           ],
           single_capital_assessment: 75_000.0,
           pensioner_disregard: 100_000.0,
@@ -83,7 +83,7 @@ class AssessmentResponseFixture < BaseAssessmentFixture
       },
       errors: [
         "This is error message 1",
-        "This is error message 2"
+        "This is error message 2",
       ],
     }
   end

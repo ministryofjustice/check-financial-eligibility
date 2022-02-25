@@ -48,7 +48,7 @@ module Decorators
               lower_threshold: 3_000.0,
               upper_threshold: 8_000.0,
               result: "ineligible",
-            }
+            },
           ],
         }
       end

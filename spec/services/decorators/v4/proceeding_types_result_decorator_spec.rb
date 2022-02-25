@@ -19,7 +19,7 @@ module Decorators
           expect(decorator).to eq [
             { ccms_code: "DA003", result: "eligible" },
             { ccms_code: "DA005", result: "eligible" },
-            { ccms_code: "SE013", result: "eligible" }
+            { ccms_code: "SE013", result: "eligible" },
           ]
         end
       end

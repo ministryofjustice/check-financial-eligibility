@@ -64,7 +64,7 @@ module TestCase
         ["", "", "benefits in kind", 0.0],
         ["", "", "tax", -745.31, "Enter as negative value unless refund"],
         ["", "", "national insurance", -144.06, "enter as negative figure for NIC deduction, positive for refund"],
-        ["some other section"]
+        ["some other section"],
       ]
     end
 
@@ -95,7 +95,7 @@ module TestCase
         ["", "", "benefits in kind", 0.0],
         ["", "", "tax", -45.87, "Enter as negative value unless refund"],
         ["", "", "national insurance", 0, "enter as negative figure for NIC deduction, positive for refund"],
-        ["some other section"]
+        ["some other section"],
       ]
     end
 
@@ -106,7 +106,7 @@ module TestCase
         ["", "", "benefits in kind", 0.0],
         ["", "", "tax", -745.31, "Enter as negative value unless refund"],
         ["", "", "national insurance", -144.06, "enter as negative figure for NIC deduction, positive for refund"],
-        ["some other section"]
+        ["some other section"],
       ]
     end
 
@@ -117,7 +117,7 @@ module TestCase
         ["", "", "XXX-YYY-ZZZ", 0.0],
         ["", "", "tax", -745.31, "Enter as negative value unless refund"],
         ["", "", "national insurance", -144.06, "enter as negative figure for NIC deduction, positive for refund"],
-        ["some other section"]
+        ["some other section"],
       ]
     end
 
@@ -150,9 +150,9 @@ module TestCase
                 tax: -745.31,
                 national_insurance: -144.06,
                 net_employment_income: 1660.96,
-              }
+              },
             ],
-          }
+          },
         ],
       }
     end
@@ -186,7 +186,7 @@ module TestCase
                 tax: -745.31,
                 national_insurance: -144.06,
                 net_employment_income: 1660.96,
-              }
+              },
             ],
           },
           {
@@ -207,9 +207,9 @@ module TestCase
                 tax: -45.87,
                 national_insurance: 0,
                 net_employment_income: 344.13,
-              }
+              },
             ],
-          }
+          },
         ],
       }
     end

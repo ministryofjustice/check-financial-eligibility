@@ -89,7 +89,7 @@ module LegalFrameworkAPI
             capital_upper: threshold_waived,
             disposable_income_upper: threshold_waived,
             gross_income_upper: threshold_waived,
-          }
+          },
         ],
       }.to_json
     end

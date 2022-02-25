@@ -19,7 +19,7 @@ module TestCase
             date_of_purchase: @date_of_purchase,
             loan_amount_outstanding: @loan_amount_outstanding,
             in_regular_use: @in_regular_use,
-          }
+          },
         ],
       }
     end

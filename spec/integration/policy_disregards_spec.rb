@@ -252,9 +252,9 @@ RSpec.describe "Eligible Full Assessment with policy disregard remarks" do
           category: "policy_disregards",
           details: [
             "Grenfell tower fund",
-            "Some other fund"
+            "Some other fund",
           ],
-        }
+        },
       ],
     }.to_json
   end

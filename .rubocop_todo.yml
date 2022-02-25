@@ -67,9 +67,3 @@ Rake/DuplicateTask:
   Exclude:
     - 'Rakefile'
 
-# Offense count: 141
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyleForMultiline.
-# SupportedStylesForMultiline: comma, consistent_comma, no_comma
-Style/TrailingCommaInArrayLiteral:
-  Enabled: false

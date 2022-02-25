@@ -129,7 +129,7 @@ RSpec.describe CapitalsController, type: :request do
         {
           description: "#{Faker::Bank.name} #{Faker::Bank.account_number(digits: 8)}",
           value: Faker::Number.decimal(r_digits: 2),
-        }
+        },
       ]
     end
 
@@ -142,7 +142,7 @@ RSpec.describe CapitalsController, type: :request do
         {
           description: "#{Faker::Bank.name} #{Faker::Bank.account_number(digits: 8)}",
           value: (Faker::Number.decimal(r_digits: 2) * -1),
-        }
+        },
       ]
     end
 
@@ -155,7 +155,7 @@ RSpec.describe CapitalsController, type: :request do
         {
           description: fake_asset_name,
           value: Faker::Number.decimal(r_digits: 2),
-        }
+        },
       ]
     end
 
@@ -168,7 +168,7 @@ RSpec.describe CapitalsController, type: :request do
         {
           description: fake_asset_name,
           value: (Faker::Number.decimal(r_digits: 2) * -1),
-        }
+        },
       ]
     end
 
@@ -179,7 +179,7 @@ RSpec.describe CapitalsController, type: :request do
         "Van Gogh Sunflowers",
         "Aramco shares",
         "FTSE tracker unit trust",
-        "Life Endowment Policy"
+        "Life Endowment Policy",
       ].sample
     end
   end
