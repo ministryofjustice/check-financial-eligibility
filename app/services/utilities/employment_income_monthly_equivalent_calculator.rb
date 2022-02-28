@@ -26,6 +26,8 @@ module Utilities
         :two_weekly_to_monthly
       when :weekly
         :weekly_to_monthly
+      when :unknown
+        :blunt_average
       else
         raise ArgumentError, "unexpected period #{period}"
       end
@@ -45,6 +47,10 @@ module Utilities
 
     def weekly_to_monthly(value)
       (value * 52 / 12).round(2)
+    end
+
+    def blunt_average(_value)
+      @employment.employment_payments.sum(&:gross_income) / 3
     end
 
     def update_payments(calc_method)

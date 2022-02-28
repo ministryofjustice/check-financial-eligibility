@@ -22,8 +22,10 @@ module Calculators
 
     def update_and_add_remarks(attrs, payment)
       payment.update!(attrs)
-      remarks.add(:employment_tax, :refunds, [payment.client_id]) if attrs.key?(:tax)
-      remarks.add(:employment_nic, :refunds, [payment.client_id]) if attrs.key?(:national_insurance)
+      my_remarks = @employment.assessment.remarks
+      my_remarks.add(:employment_tax, :refunds, [payment.client_id]) if attrs.key?(:tax)
+      my_remarks.add(:employment_nic, :refunds, [payment.client_id]) if attrs.key?(:national_insurance)
+      @employment.assessment.update!(remarks: my_remarks)
     end
 
     def remarks

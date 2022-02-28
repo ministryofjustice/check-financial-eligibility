@@ -42,7 +42,9 @@ module Calculators
     end
 
     def add_remarks
-      assessment.remarks.add(:employment, :multiple_employments, employment_client_ids)
+      my_remarks = assessment.remarks
+      my_remarks.add(:employment, :multiple_employments, employment_client_ids)
+      assessment.update!(remarks: my_remarks)
     end
 
     def employment_client_ids
