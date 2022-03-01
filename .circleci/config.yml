@@ -110,7 +110,7 @@ references:
     run:
       name: Install ruby gems
       command: |
-        gem install bundler -v 2.0.2
+        gem update --system
         bundle install --without development --path=vendor/bundle --jobs=4 && bundle clean
   save_gems_cache: &save_gems_cache
     save_cache:
