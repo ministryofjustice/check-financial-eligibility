@@ -32,6 +32,7 @@ module TestCase
     def employments_hash_to_payload(job_name, payments_array)
       {
         name: job_name,
+        client_id: 'thidishwhrhthehgthejf',
         payments: payments_array,
       }
     end
@@ -70,21 +71,25 @@ module TestCase
     end
 
     def transform_row_to_hash(row, payment_hash)
-      case row[2].strip
+      ap row
+      puts ">>>>>>>>>  #{__FILE__}:#{__LINE__} <<<<<<<<<<".yellow
+      puts "row 2 below me"
+      ap row[3]
+      case row[3].strip
       when "client_id"
-        payment_hash[:client_id] = row[3]
+        payment_hash[:client_id] = row[4]
       when "date"
-        payment_hash[:date] = row[3].strftime("%F")
+        payment_hash[:date] = row[4].strftime("%F")
       when "gross pay"
-        payment_hash[:gross] = row[3]
+        payment_hash[:gross] = row[4]
       when "benefits in kind"
-        payment_hash[:benefits_in_kind] = row[3]
+        payment_hash[:benefits_in_kind] = row[4]
       when "tax"
-        payment_hash[:tax] = row[3]
+        payment_hash[:tax] = row[4]
       when "national insurance"
-        payment_hash[:national_insurance] = row[3]
+        payment_hash[:national_insurance] = row[4]
       else
-        raise "Unexpected key '#{row[2]}' in column C of employment data"
+        raise "Unexpected key '#{row[3]}' in column C of employment data"
       end
     end
 
