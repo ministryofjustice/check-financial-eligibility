@@ -151,7 +151,7 @@ RSpec.describe OutgoingsController, type: :request do
               payment_date:,
               amount: Faker::Number.decimal(l_digits: 3, r_digits: 2),
               client_id: client_ids.last,
-            }
+            },
           ],
         },
         {
@@ -166,7 +166,7 @@ RSpec.describe OutgoingsController, type: :request do
               payment_date:,
               amount: Faker::Number.decimal(l_digits: 3, r_digits: 2),
               client_id: client_ids.last,
-            }
+            },
           ],
         },
         {
@@ -183,9 +183,9 @@ RSpec.describe OutgoingsController, type: :request do
               amount: Faker::Number.decimal(l_digits: 3, r_digits: 2),
               housing_cost_type:,
               client_id: client_ids.last,
-            }
+            },
           ],
-        }
+        },
       ]
     end
   end

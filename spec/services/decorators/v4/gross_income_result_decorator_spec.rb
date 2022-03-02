@@ -32,7 +32,7 @@ module Decorators
               ccms_code: "SE013",
               upper_threshold: 8_000.0,
               result: "ineligible",
-            }
+            },
           ],
         }
       end

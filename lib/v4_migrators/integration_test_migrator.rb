@@ -14,7 +14,7 @@ class IntegrationTestMigrator
     "state_benefits",
     "cash_transactions_income",
     "cash_transactions_outgoings",
-    "irregular_income"
+    "irregular_income",
   ].freeze
 
   def initialize

@@ -60,14 +60,14 @@ module Creators
         [
           Date.parse("2019-11-01"),
           Date.parse("2019-10-01"),
-          Date.parse("2019-09-01")
+          Date.parse("2019-09-01"),
         ]
       end
 
       def humanized_expected_dates
         [
           Date.parse("2019-11-12"),
-          Date.parse("2019-10-09")
+          Date.parse("2019-10-09"),
         ]
       end
 
@@ -90,7 +90,7 @@ module Creators
                 date: "2019-09-01",
                 amount: 1033.44,
                 client_id:,
-              }
+              },
             ],
           },
           {
@@ -110,9 +110,9 @@ module Creators
                 date: "2019-09-01",
                 amount: 250.0,
                 client_id:,
-              }
+              },
             ],
-          }
+          },
         ]
       end
 
@@ -130,9 +130,9 @@ module Creators
                 date: "2019-10-09",
                 amount: 1200.01,
                 client_id:,
-              }
+              },
             ],
-          }
+          },
         ]
       end
     end

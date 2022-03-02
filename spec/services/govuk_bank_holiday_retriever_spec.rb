@@ -52,7 +52,7 @@ RSpec.describe GovukBankHolidayRetriever do
               "date" => "2015-04-06",
               "notes" => "",
               "bunting" => true,
-            }
+            },
           ],
         },
         "scotland" => {
@@ -75,7 +75,7 @@ RSpec.describe GovukBankHolidayRetriever do
               "date" => "2015-04-03",
               "notes" => "",
               "bunting" => false,
-            }
+            },
           ],
         },
       }.to_json

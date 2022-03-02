@@ -54,7 +54,7 @@ module RemarkGenerators
         [
           create(:legal_aid_outgoing, disposable_income_summary:, payment_date: dates[0], amount:),
           create(:legal_aid_outgoing, disposable_income_summary:, payment_date: dates[1], amount:),
-          create(:legal_aid_outgoing, disposable_income_summary:, payment_date: dates[2], amount:)
+          create(:legal_aid_outgoing, disposable_income_summary:, payment_date: dates[2], amount:),
         ]
       end
 
@@ -87,7 +87,7 @@ module RemarkGenerators
             [
               create(:childcare_outgoing, disposable_income_summary:, payment_date: dates[0], amount:),
               create(:childcare_outgoing, disposable_income_summary:, payment_date: dates[1], amount: amount + 0.01),
-              create(:childcare_outgoing, disposable_income_summary:, payment_date: dates[2], amount:)
+              create(:childcare_outgoing, disposable_income_summary:, payment_date: dates[2], amount:),
             ]
           end
 

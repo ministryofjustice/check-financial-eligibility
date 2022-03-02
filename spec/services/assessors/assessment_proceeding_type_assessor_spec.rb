@@ -25,7 +25,7 @@ module Assessors
           [
             [:p, :p, :e, "eligible"],
             [:p, :p, :i, "ineligible"],
-            [:p, :p, :cr, "contribution_required"]
+            [:p, :p, :cr, "contribution_required"],
           ].each do |params|
             it "updates the assessment eligibility record with the correct result" do
               gross, disposable, capital, expected_result = params
@@ -63,7 +63,7 @@ module Assessors
             [:i, :p, :cr, "ineligible"],
             [:i, :p, :e, "ineligible"],
             [:i, :p, :i, "ineligible"],
-            [:i, :p, :p, "ineligible"]
+            [:i, :p, :p, "ineligible"],
           ].each do |params|
             it "updates the assessment eligibility record with the correct result" do
               gross, disposable, capital, expected_result = params

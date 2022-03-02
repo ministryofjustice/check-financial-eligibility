@@ -127,7 +127,7 @@ RSpec.describe "contribution_required Full Assessment with remarks" do
         {
           description: "#{Faker::Bank.name} #{Faker::Bank.account_number(digits: 8)}",
           value: Faker::Number.decimal(r_digits: 2),
-        }
+        },
       ],
       non_liquid_capital: [
         {
@@ -137,7 +137,7 @@ RSpec.describe "contribution_required Full Assessment with remarks" do
         {
           description: "Aramco shares",
           value: Faker::Number.decimal(r_digits: 2),
-        }
+        },
       ],
     }.to_json
   end
@@ -162,7 +162,7 @@ RSpec.describe "contribution_required Full Assessment with remarks" do
               date: "2019-09-01",
               amount: 1033.44,
               client_id: "OISL-003",
-            }
+            },
           ],
         },
         {
@@ -182,9 +182,9 @@ RSpec.describe "contribution_required Full Assessment with remarks" do
               date: "2019-09-06",
               amount: 250.00,
               client_id: client_id,
-            }
+            },
           ],
-        }
+        },
       ],
     }.to_json
   end
@@ -209,7 +209,7 @@ RSpec.describe "contribution_required Full Assessment with remarks" do
               payment_date: "2019-09-01",
               amount: 256.00,
               client_id: client_id,
-            }
+            },
           ],
         },
         {
@@ -229,7 +229,7 @@ RSpec.describe "contribution_required Full Assessment with remarks" do
               payment_date: "2019-09-12",
               amount: 202.45,
               client_id: client_id,
-            }
+            },
           ],
         },
         {
@@ -252,9 +252,9 @@ RSpec.describe "contribution_required Full Assessment with remarks" do
               amount: 1203.65,
               housing_cost_type: "mortgage",
               client_id: client_id,
-            }
+            },
           ],
-        }
+        },
       ],
     }.to_json
   end
@@ -279,7 +279,7 @@ RSpec.describe "contribution_required Full Assessment with remarks" do
               date: "2019-09-04",
               amount: 1033.44,
               client_id: "CHB003",
-            }
+            },
           ],
         },
         {
@@ -299,9 +299,9 @@ RSpec.describe "contribution_required Full Assessment with remarks" do
               date: "2019-09-01",
               amount: 250.00,
               client_id: client_id,
-            }
+            },
           ],
-        }
+        },
       ],
     }.to_json
   end
@@ -313,9 +313,9 @@ RSpec.describe "contribution_required Full Assessment with remarks" do
           category: "policy_disregards",
           details: [
             "Grenfell tower fund",
-            "Some other fund"
+            "Some other fund",
           ],
-        }
+        },
       ],
     }.to_json
   end
@@ -333,31 +333,31 @@ RSpec.describe "contribution_required Full Assessment with remarks" do
           "OISL-003",
           client_id,
           client_id,
-          client_id
+          client_id,
         ],
         unknown_frequency: [
           client_id,
           client_id,
-          client_id
+          client_id,
         ],
       },
       outgoings_housing_cost: {
         amount_variation: [
           client_id,
           client_id,
-          client_id
+          client_id,
         ],
       },
       outgoings_maintenance: {
         unknown_frequency: [
           client_id,
           client_id,
-          client_id
+          client_id,
         ],
       },
       policy_disregards: [
         "Grenfell tower fund",
-        "Some other fund"
+        "Some other fund",
       ],
     }
   end

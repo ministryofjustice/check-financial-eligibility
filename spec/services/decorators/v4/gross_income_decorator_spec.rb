@@ -51,7 +51,7 @@ module Decorators
                   tax: -495.0,
                   national_insurance: -150.0,
                   net_employment_income: 855.0,
-                }
+                },
               ],
             },
             {
@@ -80,9 +80,9 @@ module Decorators
                   tax: -495.0,
                   national_insurance: -150.0,
                   net_employment_income: 855.0,
-                }
+                },
               ],
-            }
+            },
           ],
           irregular_income: {
             monthly_equivalents:
@@ -104,7 +104,7 @@ module Decorators
                   name: "Child Benefit",
                   monthly_value: 343.27,
                   excluded_from_income_assessment: false,
-                }
+                },
               ],
             },
           },

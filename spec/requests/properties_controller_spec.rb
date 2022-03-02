@@ -27,7 +27,7 @@ RSpec.describe PropertiesController, type: :request do
               outstanding_mortgage: 40,
               percentage_owned: 80,
               shared_with_housing_assoc: true,
-            }
+            },
           ],
         },
       }

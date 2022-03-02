@@ -144,7 +144,7 @@ RSpec.describe StateBenefitsController, type: :request do
                 date: "2019-09-01",
                 amount: 1033.44,
                 client_id: client_ids[2],
-              }
+              },
             ],
           },
           {
@@ -167,9 +167,9 @@ RSpec.describe StateBenefitsController, type: :request do
                 flags: {
                   multi_benefit: true,
                 },
-              }
+              },
             ],
-          }
+          },
         ],
       }
     end

@@ -172,7 +172,7 @@ RSpec.describe OtherIncomesController, type: :request do
                 date: "2019-09-01",
                 amount: 1033.44,
                 client_id: SecureRandom.uuid,
-              }
+              },
             ],
           },
           {
@@ -192,9 +192,9 @@ RSpec.describe OtherIncomesController, type: :request do
                 date: "2019-09-01",
                 amount: 250.00,
                 client_id: SecureRandom.uuid,
-              }
+              },
             ],
-          }
+          },
         ],
       }
     end

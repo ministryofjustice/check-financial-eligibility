@@ -19,7 +19,7 @@ module TestCase
             income_type: @description,
             frequency: @frequency,
             amount: @amount,
-          }
+          },
         ],
       }
     end
