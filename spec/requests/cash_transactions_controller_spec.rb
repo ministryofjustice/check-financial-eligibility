@@ -125,7 +125,7 @@ RSpec.describe CashTransactionsController, type: :request do
                 date: month3.strftime("%F"),
                 amount: 1033.44,
                 client_id: "5cf62a12-c92b-4cc1-b8ca-eeb4efbcce21",
-              }
+              },
             ],
           },
           {
@@ -145,9 +145,9 @@ RSpec.describe CashTransactionsController, type: :request do
                 date: month1.strftime("%F"),
                 amount: 250.0,
                 client_id: "f3ec68a3-8748-4ed5-971a-94d133e0efa0",
-              }
+              },
             ],
-          }
+          },
         ],
         outgoings:
           [
@@ -168,7 +168,7 @@ RSpec.describe CashTransactionsController, type: :request do
                   date: month1.strftime("%F"),
                   amount: 256.0,
                   client_id: "abcb707b-d795-47c2-8b39-ccf022eae33b",
-                }
+                },
               ],
             },
             {
@@ -188,9 +188,9 @@ RSpec.describe CashTransactionsController, type: :request do
                   date: month1.strftime("%F"),
                   amount: 256.0,
                   client_id: "ec7b707b-d795-47c2-8b39-ccf022eae33b",
-                }
+                },
               ],
-            }
+            },
           ],
       }
     end

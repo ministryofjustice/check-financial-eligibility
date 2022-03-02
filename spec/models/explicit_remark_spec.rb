@@ -23,7 +23,7 @@ RSpec.describe ExplicitRemark do
           policy_disregards: [
             "Remark no. 1",
             "Remark no. 2",
-            "Remark no. 3"
+            "Remark no. 3",
           ],
         }
       end

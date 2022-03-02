@@ -70,7 +70,7 @@ RSpec.describe Creators::EmploymentsCreator do
               tax: -104.10,
               national_insurance: -18.66,
               net_employment_income: 898.84,
-            }
+            },
           ],
         },
         {
@@ -103,9 +103,9 @@ RSpec.describe Creators::EmploymentsCreator do
               tax: -104.10,
               national_insurance: -18.66,
               net_employment_income: 898.84,
-            }
+            },
           ],
-        }
+        },
       ],
     }
   end

@@ -30,7 +30,7 @@ module Decorators
           it "returns an array of matter type results" do
             expect(decorator).to eq [
               { matter_type: "domestic_abuse", result: "eligible" },
-              { matter_type: "section8", result: "ineligible" }
+              { matter_type: "section8", result: "ineligible" },
             ]
           end
         end

@@ -97,7 +97,7 @@ module TestCase
           assessment: {
             matter_types: [
               { domestic_abuse: "eligible" },
-              { section8: "ineligible" }
+              { section8: "ineligible" },
             ],
             proceeding_types: {
               "DA001" => {
@@ -186,7 +186,7 @@ module TestCase
                 {
                   matter_type: "section8",
                   result: "ineligible",
-                }
+                },
               ],
               proceeding_types: [
                 {
@@ -196,7 +196,7 @@ module TestCase
                 {
                   ccms_code: "SE013",
                   result: "ineligible",
-                }
+                },
               ],
             },
             gross_income: {
@@ -211,7 +211,7 @@ module TestCase
                   ccms_code: "SE013",
                   upper_threshold: "2657.0",
                   result: "eligble_with_contribution",
-                }
+                },
               ],
             },
             disposable_income: {
@@ -243,7 +243,7 @@ module TestCase
                   lower_threshold: "315.0",
                   upper_threshold: "733.0",
                   result: "eligble_with_contribution",
-                }
+                },
               ],
             },
             capital: {
@@ -268,7 +268,7 @@ module TestCase
                   lower_threshold: "3000.0",
                   upper_threshold: "8000.0",
                   result: "ineligible",
-                }
+                },
               ],
             },
           },
@@ -299,7 +299,7 @@ module TestCase
                       name: "Child Benefit",
                       monthly_value: "200.0",
                       excluded_from_income_assessment: false,
-                    }
+                    },
                   ],
                 },
               },
@@ -346,7 +346,7 @@ module TestCase
                 liquid: [
                   { description: "Bank acct 1", value: "0.0" },
                   { description: "Bank acct 2", value: "0.0" },
-                  { description: "Bank acct 3", value: "0.0" }
+                  { description: "Bank acct 3", value: "0.0" },
                 ],
                 non_liquid: [],
                 vehicles: [
@@ -357,7 +357,7 @@ module TestCase
                     in_regular_use: false,
                     included_in_assessment: true,
                     assessed_value: "9000.0",
-                  }
+                  },
                 ],
                 properties: {
                   main_home: {
@@ -406,7 +406,7 @@ module TestCase
           {
             matter_type: "housing",
             result: "eligible_with_contribution",
-          }
+          },
         ]
         new_actual
       end

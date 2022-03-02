@@ -13,7 +13,7 @@ RSpec.describe ExplicitRemarksController, type: :request do
               employment
               charity
             ],
-          }
+          },
         ],
       }
     end
@@ -66,7 +66,7 @@ RSpec.describe ExplicitRemarksController, type: :request do
               employment
               charity
             ],
-          }
+          },
         ],
       }
     end
@@ -80,7 +80,7 @@ RSpec.describe ExplicitRemarksController, type: :request do
               employment
               charity
             ],
-          }
+          },
         ],
       }
     end

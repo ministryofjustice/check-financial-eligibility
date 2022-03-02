@@ -20,7 +20,7 @@ describe Creators::CashTransactionsCreator do
           %w[child_care debit],
           %w[maintenance_out debit],
           %w[friends_or_family credit],
-          %w[maintenance_in credit]
+          %w[maintenance_in credit],
         ]
       end
 
@@ -38,7 +38,7 @@ describe Creators::CashTransactionsCreator do
           [
             [month1, 256.0, "ec7b707b-d795-47c2-8b39-ccf022eae33b"],
             [month2, 257.0, "ee7b707b-d795-47c2-8b39-ccf022eae33b"],
-            [month3, 258.0, "ff7b707b-d795-47c2-8b39-ccf022eae33b"]
+            [month3, 258.0, "ff7b707b-d795-47c2-8b39-ccf022eae33b"],
           ],
         )
       end
@@ -136,7 +136,7 @@ describe Creators::CashTransactionsCreator do
                 date: month3.strftime("%F"),
                 amount: 1033.44,
                 client_id: "5cf62a12-c92b-4cc1-b8ca-eeb4efbcce21",
-              }
+              },
             ],
           },
           {
@@ -156,9 +156,9 @@ describe Creators::CashTransactionsCreator do
                 date: month1.strftime("%F"),
                 amount: 250.0,
                 client_id: "f3ec68a3-8748-4ed5-971a-94d133e0efa0",
-              }
+              },
             ],
-          }
+          },
         ],
         outgoings:
           [
@@ -179,7 +179,7 @@ describe Creators::CashTransactionsCreator do
                   date: month1.strftime("%F"),
                   amount: 256.0,
                   client_id: "abcb707b-d795-47c2-8b39-ccf022eae33b",
-                }
+                },
               ],
             },
             {
@@ -199,9 +199,9 @@ describe Creators::CashTransactionsCreator do
                   date: month1.strftime("%F"),
                   amount: 256.0,
                   client_id: "ec7b707b-d795-47c2-8b39-ccf022eae33b",
-                }
+                },
               ],
-            }
+            },
           ],
       }
     end

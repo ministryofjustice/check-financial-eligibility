@@ -405,13 +405,13 @@ RSpec.describe AssessmentsController, type: :request do
             {
               matter_type: "domestic_abuse",
               result: "contribution_required",
-            }
+            },
           ],
           proceeding_types: [
             {
               ccms_code: "DA001",
               result: "contribution_required",
-            }
+            },
           ],
         },
         gross_income: {
@@ -421,7 +421,7 @@ RSpec.describe AssessmentsController, type: :request do
               ccms_code: "DA001",
               upper_threshold: 999_999_999_999.0,
               result: "eligible",
-            }
+            },
           ],
         },
         disposable_income: {
@@ -448,7 +448,7 @@ RSpec.describe AssessmentsController, type: :request do
               upper_threshold: 999_999_999_999.0,
               lower_threshold: 315.0,
               result: "eligible",
-            }
+            },
           ],
         },
         capital: {
@@ -467,7 +467,7 @@ RSpec.describe AssessmentsController, type: :request do
               lower_threshold: 3000.0,
               upper_threshold: 999_999_999_999.0,
               result: "contribution_required",
-            }
+            },
           ],
         },
       },
@@ -498,7 +498,7 @@ RSpec.describe AssessmentsController, type: :request do
                   name: "Child Benefit",
                   monthly_value: 200.0,
                   excluded_from_income_assessment: false,
-                }
+                },
               ],
             },
           },
@@ -557,7 +557,7 @@ RSpec.describe AssessmentsController, type: :request do
             liquid: [
               { description: "Bank acct 1", value: 0.0 },
               { description: "Bank acct 2", value: 0.0 },
-              { description: "Bank acct 3", value: 0.0 }
+              { description: "Bank acct 3", value: 0.0 },
             ],
             non_liquid: [],
             vehicles: [
@@ -568,7 +568,7 @@ RSpec.describe AssessmentsController, type: :request do
                 in_regular_use: false,
                 included_in_assessment: true,
                 assessed_value: 9000.0,
-              }
+              },
             ],
             properties: {
               main_home: {

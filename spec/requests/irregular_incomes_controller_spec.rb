@@ -110,7 +110,7 @@ RSpec.describe IrregularIncomesController, type: :request do
             income_type: "student_loan",
             frequency: "annual",
             amount: 123_456.78,
-          }
+          },
         ],
       }
     end

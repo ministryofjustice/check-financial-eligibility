@@ -8,7 +8,7 @@ module Faker
       "Rental income",
       "Bank interest",
       "Maintenance received",
-      "Investment income"
+      "Investment income",
     ].freeze
     class << self
       def name

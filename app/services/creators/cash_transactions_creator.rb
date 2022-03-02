@@ -22,7 +22,7 @@ module Creators
         base_date - 4.months,
         base_date - 3.months,
         base_date - 2.months,
-        base_date - 1.month
+        base_date - 1.month,
       ]
     end
 
