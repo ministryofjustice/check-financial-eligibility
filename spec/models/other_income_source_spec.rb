@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe OtherIncomeSource, type: :model do
   describe "#calculate_monthly_income" do
     let(:source) { create :other_income_source }
-    let(:analyser) { double Utilities::PaymentPeriodAnalyser }
+    let(:analyser) { instance_double Utilities::PaymentPeriodAnalyser }
 
     before do
       allow(Utilities::PaymentPeriodDataExtractor).to receive(:call)

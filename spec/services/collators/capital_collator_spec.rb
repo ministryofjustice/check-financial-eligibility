@@ -17,7 +17,7 @@ module Collators
 
       context "liquid capital" do
         it "calls LiquidCapitalAssessment and updates capital summary with the result" do
-          liquid_capital_service = double Assessors::LiquidCapitalAssessor
+          liquid_capital_service = instance_double Assessors::LiquidCapitalAssessor
           allow(Assessors::LiquidCapitalAssessor).to receive(:new).with(assessment).and_return(liquid_capital_service)
           allow(liquid_capital_service).to receive(:call).and_return(145.83)
           expect(collator[:total_liquid]).to eq 145.83
@@ -26,7 +26,7 @@ module Collators
 
       context "property_assessment" do
         it "instantiates and calls the Property Assessment service" do
-          property_service = double Calculators::PropertyCalculator
+          property_service = instance_double Calculators::PropertyCalculator
           allow(Calculators::PropertyCalculator).to receive(:new).and_return(property_service)
           allow(property_service).to receive(:call).and_return(23_000.0)
           collator
@@ -36,7 +36,7 @@ module Collators
 
       context "vehicle assessment" do
         it "instantiates and calls the Vehicle Assesment service" do
-          vehicle_service = double Assessors::VehicleAssessor
+          vehicle_service = instance_double Assessors::VehicleAssessor
           allow(Assessors::VehicleAssessor).to receive(:new).with(assessment).and_return(vehicle_service)
           allow(vehicle_service).to receive(:call).and_return(2_500.0)
           collator
@@ -46,7 +46,7 @@ module Collators
 
       context "non_liquid_capital_assessment" do
         it "instantiates and calls NonLiquidCapitalAssessment" do
-          nlcas = double Assessors::NonLiquidCapitalAssessor
+          nlcas = instance_double Assessors::NonLiquidCapitalAssessor
           allow(Assessors::NonLiquidCapitalAssessor).to receive(:new).with(assessment).and_return(nlcas)
           allow(nlcas).to receive(:call).and_return(500)
           collator
@@ -56,7 +56,7 @@ module Collators
 
       context "pensioner disregard" do
         it "instantiates and calls the PensionerCapitalDisregard service" do
-          pcd = double Calculators::PensionerCapitalDisregardCalculator
+          pcd = instance_double Calculators::PensionerCapitalDisregardCalculator
           allow(Calculators::PensionerCapitalDisregardCalculator).to receive(:new).with(assessment).and_return(pcd)
           allow(pcd).to receive(:value).and_return(100_000)
           collator
@@ -66,11 +66,11 @@ module Collators
 
       context "summarization of result_fields" do
         it "summarizes the results it gets from the subservices" do
-          liquid_capital_service = double Assessors::LiquidCapitalAssessor
-          nlcas = double Assessors::NonLiquidCapitalAssessor
-          vehicle_service = double Assessors::VehicleAssessor
-          property_service = double Calculators::PropertyCalculator
-          pcd = double Calculators::PensionerCapitalDisregardCalculator
+          liquid_capital_service = instance_double Assessors::LiquidCapitalAssessor
+          nlcas = instance_double Assessors::NonLiquidCapitalAssessor
+          vehicle_service = instance_double Assessors::VehicleAssessor
+          property_service = instance_double Calculators::PropertyCalculator
+          pcd = instance_double Calculators::PensionerCapitalDisregardCalculator
 
           allow(Assessors::LiquidCapitalAssessor).to receive(:new).with(assessment).and_return(liquid_capital_service)
           allow(Assessors::NonLiquidCapitalAssessor).to receive(:new).with(assessment).and_return(nlcas)

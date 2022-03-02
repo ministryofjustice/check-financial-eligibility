@@ -1,7 +1,7 @@
 module LegalFrameworkAPI
   RSpec.describe ResponseError do
     describe "#message" do
-      let(:bad_response) { double Faraday::Response, status: 500, body: "This is the body of the response" }
+      let(:bad_response) { instance_double Faraday::Response, status: 500, body: "This is the body of the response" }
 
       it "formats the message" do
         error = described_class.new(bad_response)

@@ -43,7 +43,7 @@ RSpec.describe BankHoliday, type: :model do
       before do
         expect(described_class.count).to be_zero
         expect(described_class).to receive(:populate_dates)
-        expect(described_class).to receive(:first).at_least(1).and_return(double(described_class, dates: api_response, updated_at: Time.zone.now))
+        expect(described_class).to receive(:first).at_least(1).and_return(instance_double(described_class, dates: api_response, updated_at: Time.zone.now))
       end
 
       it "populates dates and returns dates" do
@@ -55,7 +55,7 @@ RSpec.describe BankHoliday, type: :model do
       before do
         described_class.create!(dates: api_response, updated_at: 11.days.ago)
         expect(described_class).to receive(:populate_dates)
-        expect(described_class).to receive(:first).at_least(1).and_return(double(described_class, dates: api_response, updated_at: 11.days.ago))
+        expect(described_class).to receive(:first).at_least(1).and_return(instance_double(described_class, dates: api_response, updated_at: 11.days.ago))
       end
 
       it "populates dates and returns dates" do
@@ -67,7 +67,7 @@ RSpec.describe BankHoliday, type: :model do
       before do
         described_class.create!(dates: api_response, updated_at: 2.days.ago)
         expect(described_class).not_to receive(:populate_dates)
-        expect(described_class).to receive(:first).at_least(1).and_return(double(described_class, dates: api_response, updated_at: 2.days.ago))
+        expect(described_class).to receive(:first).at_least(1).and_return(instance_double(described_class, dates: api_response, updated_at: 2.days.ago))
       end
 
       it "populates dates and returns dates" do
