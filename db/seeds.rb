@@ -21,6 +21,6 @@ StateBenefitType.where(label: DELETED_STATE_BENEFITS).map(&:destroy!)
 
 Seeder.new(StateBenefitType, "data/state_benefit_types.yml", name_method: :label, overwrite: true).build
 
-puts Seeder.report
+Rails.logger.debug Seeder.report
 Rails.logger.info Seeder.report.join("\n")
 Rails.logger.info "Seeding completed"
