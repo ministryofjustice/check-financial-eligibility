@@ -3,7 +3,7 @@ require "rails_helper"
 module Workflows
   RSpec.describe SelfEmployedWorkflow do
     describe "# call" do
-      let(:assessment) { double Assessment }
+      let(:assessment) { instance_double Assessment }
 
       it "raises" do
         expect {

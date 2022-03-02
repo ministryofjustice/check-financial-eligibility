@@ -57,7 +57,7 @@ module Decorators
 
             it "calls StateBenefitDecorator for each state benefit" do
               expected_count = gross_income_summary.state_benefits.count
-              expect(StateBenefitDecorator).to receive(:new).and_return(double("oisd", as_json: nil)).exactly(expected_count).times
+              expect(StateBenefitDecorator).to receive(:new).and_return(instance_double("oisd", as_json: nil)).exactly(expected_count).times
               decorator
             end
           end

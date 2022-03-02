@@ -48,7 +48,7 @@ module Decorators
 
           it "calls property decorator expected numnber of times" do
             expected_count = record.additional_properties.count + 1 # add 1 for main home
-            expect(PropertyDecorator).to receive(:new).and_return(double("property_dec")).exactly(expected_count).times
+            expect(PropertyDecorator).to receive(:new).and_return(instance_double("property_dec")).exactly(expected_count).times
             decorator
           end
         end

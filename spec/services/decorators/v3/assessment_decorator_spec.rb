@@ -33,11 +33,11 @@ module Decorators
         end
 
         it "calls the decorators for associated records" do
-          allow(ApplicantDecorator).to receive(:new).and_return(double("ad", as_json: nil))
-          allow(GrossIncomeSummaryDecorator).to receive(:new).and_return(double("gisd", as_json: nil))
-          allow(DisposableIncomeSummaryDecorator).to receive(:new).and_return(double("disd", as_json: nil))
-          allow(CapitalSummaryDecorator).to receive(:new).and_return(double("csd", as_json: nil))
-          allow(RemarksDecorator).to receive(:new).and_return(double("rmk", as_json: nil))
+          allow(ApplicantDecorator).to receive(:new).and_return(instance_double("ad", as_json: nil))
+          allow(GrossIncomeSummaryDecorator).to receive(:new).and_return(instance_double("gisd", as_json: nil))
+          allow(DisposableIncomeSummaryDecorator).to receive(:new).and_return(instance_double("disd", as_json: nil))
+          allow(CapitalSummaryDecorator).to receive(:new).and_return(instance_double("csd", as_json: nil))
+          allow(RemarksDecorator).to receive(:new).and_return(instance_double("rmk", as_json: nil))
           decorator
         end
       end
