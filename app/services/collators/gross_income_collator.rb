@@ -5,7 +5,10 @@ module Collators
     INCOME_CATEGORIES = CFEConstants::VALID_INCOME_CATEGORIES.map(&:to_sym)
 
     def call
-      Calculators::EmploymentIncomeCalculator.call(assessment) if assessment.employments.any?
+      if assessment.employments.any?
+        assessment.employments.each { |employment| Utilities::EmploymentIncomeMonthlyEquivalentCalculator.call(employment) }
+        Calculators::EmploymentIncomeCalculator.call(assessment)
+      end
       gross_income_summary.update!(populate_attrs)
     end
 
@@ -17,7 +20,6 @@ module Collators
       INCOME_CATEGORIES.each do |category|
         populate_income_attrs(attrs, category)
       end
-      attrs[:total_gross_income] += gross_income_summary.gross_employment_income
 
       attrs
     end
