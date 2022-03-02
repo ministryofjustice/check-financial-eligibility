@@ -32,7 +32,6 @@ module TestCase
     def employments_hash_to_payload(job_name, payments_array)
       {
         name: job_name,
-        client_id: 'thidishwhrhthehgthejf',
         payments: payments_array,
       }
     end
@@ -42,8 +41,9 @@ module TestCase
 
       while employment_rows.any?
         payment_data = employment_rows.shift(6)
-        job_name = payment_data.first[1] if payment_data.first[1].present?
-        add_employment_earnings(job_name, payment_data)
+        job_name_and_job_id = payment_data.first[1] if payment_data.first[1].present?
+        job_name, job_id = job_name_and_job_id.split(':')
+        add_employment_earnings(job_name, payment_data, job_id)
 
       end
     end
@@ -53,16 +53,16 @@ module TestCase
       rows.shift(row_index)
     end
 
-    def add_employment_earnings(job_name, data_rows)
+    def add_employment_earnings(job_name, data_rows, job_id)
       raise "No job name specified in column B for employment data" if job_name.blank?
 
       @employment_earnings[job_name] = [] unless @employment_earnings.key?(job_name)
 
-      @employment_earnings[job_name] << employment_payment(data_rows)
+      @employment_earnings[job_name] << employment_payment(data_rows, job_id)
     end
 
-    def employment_payment(data_rows)
-      payment_hash = {}
+    def employment_payment(data_rows, job_id)
+      payment_hash = {client_id: job_id}
       data_rows.each do |row|
         transform_row_to_hash(row, payment_hash)
       end
@@ -71,25 +71,25 @@ module TestCase
     end
 
     def transform_row_to_hash(row, payment_hash)
-      ap row
-      puts ">>>>>>>>>  #{__FILE__}:#{__LINE__} <<<<<<<<<<".yellow
-      puts "row 2 below me"
-      ap row[3]
-      case row[3].strip
+      # ap row
+      # puts ">>>>>>>>>  #{__FILE__}:#{__LINE__} <<<<<<<<<<".yellow
+      # puts "row 2 below me"
+      # ap row[3]
+      case row[2].strip
       when "client_id"
-        payment_hash[:client_id] = row[4]
+        payment_hash[:client_id] = row[3]
       when "date"
-        payment_hash[:date] = row[4].strftime("%F")
+        payment_hash[:date] = row[3].strftime("%F")
       when "gross pay"
-        payment_hash[:gross] = row[4]
+        payment_hash[:gross] = row[3]
       when "benefits in kind"
-        payment_hash[:benefits_in_kind] = row[4]
+        payment_hash[:benefits_in_kind] = row[3]
       when "tax"
-        payment_hash[:tax] = row[4]
+        payment_hash[:tax] = row[3]
       when "national insurance"
-        payment_hash[:national_insurance] = row[4]
+        payment_hash[:national_insurance] = row[3]
       else
-        raise "Unexpected key '#{row[3]}' in column C of employment data"
+        raise "Unexpected key '#{row[2]}' in column C of employment data"
       end
     end
 

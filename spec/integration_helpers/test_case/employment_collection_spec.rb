@@ -126,8 +126,10 @@ module TestCase
         employment_income: [
           {
             name: "Job 1",
+            client_id: 'id1',
             payments: [
               {
+                client_id: 'id1',
                 date: "2021-12-20",
                 gross: 2550.33,
                 benefits_in_kind: 0.0,
@@ -136,6 +138,7 @@ module TestCase
                 net_employment_income: 1660.96,
               },
               {
+                client_id: 'id1',
                 date: "2021-11-30",
                 gross: 2550.33,
                 benefits_in_kind: 0.0,
@@ -144,6 +147,7 @@ module TestCase
                 net_employment_income: 1660.96,
               },
               {
+                client_id: 'id1',
                 date: "2021-10-30",
                 gross: 2550.33,
                 benefits_in_kind: 0.0,
@@ -162,8 +166,10 @@ module TestCase
         employment_income: [
           {
             name: "Job 1",
+            client_id: 'id1',
             payments: [
               {
+                client_id: 'id1',
                 date: "2021-12-20",
                 gross: 2550.33,
                 benefits_in_kind: 0.0,
@@ -172,6 +178,7 @@ module TestCase
                 net_employment_income: 1660.96,
               },
               {
+                client_id: 'id1',
                 date: "2021-11-30",
                 gross: 2550.33,
                 benefits_in_kind: 0.0,
@@ -180,6 +187,7 @@ module TestCase
                 net_employment_income: 1660.96,
               },
               {
+                client_id: 'id1',
                 date: "2021-10-30",
                 gross: 2550.33,
                 benefits_in_kind: 0.0,
@@ -191,8 +199,10 @@ module TestCase
           },
           {
             name: "Job 2",
+            client_id: 'id1',
             payments: [
               {
+                client_id: 'id1',
                 date: "2021-12-07",
                 gross: 350.2,
                 benefits_in_kind: 0.0,
@@ -201,6 +211,7 @@ module TestCase
                 net_employment_income: 252.2,
               },
               {
+                client_id: 'id1',
                 date: "2021-12-15",
                 gross: 390,
                 benefits_in_kind: 0.0,
