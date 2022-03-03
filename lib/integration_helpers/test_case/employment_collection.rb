@@ -24,7 +24,6 @@ module TestCase
     def employment_payload
       payload = []
       @employment_earnings.each do |job_name, job_hash|
-
         payload << job_hash_to_payload(job_name, job_hash)
       end
       payload
@@ -46,7 +45,7 @@ module TestCase
         job_name_and_job_id = payment_data.first[1] if payment_data.first[1].present?
         raise "No job name specified in column B for employment data" if job_name_and_job_id.blank?
 
-        job_name, job_id = job_name_and_job_id.split(':')
+        job_name, job_id = job_name_and_job_id.split(":")
         add_employment_earnings(job_name, payment_data, job_id)
 
       end
@@ -59,13 +58,13 @@ module TestCase
 
     def add_employment_earnings(job_name, data_rows, job_id)
       # raise "No job name specified in column B for employment data" if job_name.blank?
-      @employment_earnings[job_name] = {client_id: job_id, payments: []} unless @employment_earnings.key?(job_name)
+      @employment_earnings[job_name] = { client_id: job_id, payments: [] } unless @employment_earnings.key?(job_name)
 
       @employment_earnings[job_name][:payments] << employment_payment(data_rows, job_id)
     end
 
     def employment_payment(data_rows, job_id)
-      payment_hash = {client_id: job_id}
+      payment_hash = { client_id: job_id }
       data_rows.each do |row|
         transform_row_to_hash(row, payment_hash)
       end
