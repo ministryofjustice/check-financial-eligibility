@@ -8,6 +8,8 @@ module TestCase
         @result_set = {}
         @rows.shift
         populate
+        puts ">>>>>>>>>  #{__FILE__}:#{__LINE__} <<<<<<<<<<".yellow
+        ap @result_set
       end
 
       def compare(actual_result, verbosity_level)
@@ -22,6 +24,27 @@ module TestCase
           extracted_rows = extract_rows
           __send__(col1, extracted_rows)
         end
+      end
+
+      def remarks(rows)
+        hash = {}
+        current_issue = nil
+        current_type = nil
+        while rows.any?
+          row = rows.shift
+          _unused, type, issue, id = row
+          if type.present?
+            current_type = type.to_sym
+            hash[current_type] = {}
+          end
+          if issue.present?
+            current_issue = issue.to_sym
+            hash[current_type][current_issue] = []
+          end
+
+          hash[current_type][current_issue] << id
+        end
+        @result_set[:remarks] = hash
       end
 
       def extract_rows

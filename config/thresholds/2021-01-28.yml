@@ -64,3 +64,4 @@ disposable_income_contribution_bands:
     base: 121.85
 
 fixed_employment_allowance: 45.0
+employment_income_variance: 60.0
