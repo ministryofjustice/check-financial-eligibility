@@ -8,8 +8,6 @@ module TestCase
         @result_set = {}
         @rows.shift
         populate
-        puts ">>>>>>>>>  #{__FILE__}:#{__LINE__} <<<<<<<<<<".yellow
-        ap @result_set
       end
 
       def compare(actual_result, verbosity_level)

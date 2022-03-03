@@ -21,6 +21,7 @@ module TestCase
         compare_gross_income
         compare_disposable_income
         compare_capital
+        compare_remarks
         @result
       end
 
@@ -64,6 +65,27 @@ module TestCase
       def compare_assessment
         compare_and_print("assessment_result", actual_overall_result[:result], expected_assessment[:assessment_result])
       end
+
+      def compare_remarks
+        return unless @expected.key?(:remarks)
+
+        puts "Remarks >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>".green unless silent?
+
+        @expected[:remarks].each { |remark_type, remark_type_hash| compare_remark_type(remark_type, remark_type_hash) }
+      end
+
+      def compare_remark_type(type, hash)
+        hash.each { |issue, _ids|  print_remark_line("#{type}/#{issue}") }
+      end
+
+      def print_remark_line(key)
+        color = :green
+        # color = :red unless actual.to_s == expected.to_s
+        # color = :blue if expected.nil?
+        verbose sprintf(@header_pattern, key, '', ''), color
+      end
+
+
 
       def compare_matter_types
         if expected_matter_type_names == actual_matter_type_names
