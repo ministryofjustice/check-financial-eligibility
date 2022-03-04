@@ -1,3 +1,5 @@
+require_relative "remarks_comparer"
+
 module TestCase
   module V4
     class ResultComparer
@@ -21,7 +23,7 @@ module TestCase
         compare_gross_income
         compare_disposable_income
         compare_capital
-        @result = false if RemarksComparer.call(@expected[:remarks], @actual[:remarks], @verbosity) == false
+        @result = false if RemarksComparer.call(@expected[:remarks], @actual[:assessment][:remarks], @verbosity) == false
         @result
       end
 

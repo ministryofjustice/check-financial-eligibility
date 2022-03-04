@@ -34,8 +34,9 @@ module TestCase
       def compare_remark_type(type, hash)
         hash.each do |issue, _ids|
           next if @actual&.dig(type)&.dig(issue) == @expected[type][issue]
+
           @result = false
-          print_remark_line(type, issue)
+          print_remark_line(type, issue) unless silent?
         end
       end
 
