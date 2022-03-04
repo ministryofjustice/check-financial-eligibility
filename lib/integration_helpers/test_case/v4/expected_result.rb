@@ -24,6 +24,27 @@ module TestCase
         end
       end
 
+      def remarks(rows)
+        hash = {}
+        current_issue = nil
+        current_type = nil
+        while rows.any?
+          row = rows.shift
+          _unused, type, issue, id = row
+          if type.present?
+            current_type = type.to_sym
+            hash[current_type] = {}
+          end
+          if issue.present?
+            current_issue = issue.to_sym
+            hash[current_type][current_issue] = []
+          end
+
+          hash[current_type][current_issue] << id
+        end
+        @result_set[:remarks] = hash
+      end
+
       def extract_rows
         row_index = @rows.index { |r| r.first.present? && r.first != @rows.first.first }
         row_index.nil? ? @rows : @rows.shift(row_index)

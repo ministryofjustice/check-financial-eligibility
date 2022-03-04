@@ -165,6 +165,15 @@ module TestCase
             dependants_allowance: 0.0,
             disregarded_state_benefits: 0.0,
           },
+          remarks: {
+            employments: {
+              multiple_employments: %w[id1 id2],
+            },
+            employment_gross_income: {
+              amount_variation: %w[id2 id3],
+              unknown_frequency: %w[id2 id3],
+            },
+          },
         }
       end
 
@@ -379,6 +388,13 @@ module TestCase
 
             },
             remarks: {
+              employments: {
+                multiple_employments: %w[id1 id2],
+              },
+              employment_gross_income: {
+                amount_variation: %w[id2 id3],
+                unknown_frequency: %w[id2 id3],
+              },
               state_benefit_payment: {
                 amount_variation: %w[
                   e9260a99-db84-46ef-8c00-2682ac3bb9e1

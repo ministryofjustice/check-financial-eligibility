@@ -23,16 +23,17 @@ module TestCase
 
     def employment_payload
       payload = []
-      @employment_earnings.each do |job_name, payment_hash|
-        payload << employments_hash_to_payload(job_name, payment_hash)
+      @employment_earnings.each do |job_name, job_hash|
+        payload << job_hash_to_payload(job_name, job_hash)
       end
       payload
     end
 
-    def employments_hash_to_payload(job_name, payments_array)
+    def job_hash_to_payload(job_name, job_hash)
       {
         name: job_name,
-        payments: payments_array,
+        client_id: job_hash[:client_id],
+        payments: job_hash[:payments],
       }
     end
 
@@ -40,9 +41,12 @@ module TestCase
       employment_rows = extract_employment_rows(rows)
 
       while employment_rows.any?
-        payment_data = employment_rows.shift(5)
-        job_name = payment_data.first[1] if payment_data.first[1].present?
-        add_employment_earnings(job_name, payment_data)
+        payment_data = employment_rows.shift(6)
+        job_name_and_job_id = payment_data.first[1] if payment_data.first[1].present?
+        raise "No job name specified in column B for employment data" if job_name_and_job_id.blank?
+
+        job_name, job_id = job_name_and_job_id.split(":")
+        add_employment_earnings(job_name, payment_data, job_id)
 
       end
     end
@@ -52,16 +56,14 @@ module TestCase
       rows.shift(row_index)
     end
 
-    def add_employment_earnings(job_name, data_rows)
-      raise "No job name specified in column B for employment data" if job_name.blank?
+    def add_employment_earnings(job_name, data_rows, job_id)
+      @employment_earnings[job_name] = { client_id: job_id, payments: [] } unless @employment_earnings.key?(job_name)
 
-      @employment_earnings[job_name] = [] unless @employment_earnings.key?(job_name)
-
-      @employment_earnings[job_name] << employment_payment(data_rows)
+      @employment_earnings[job_name][:payments] << employment_payment(data_rows, job_id)
     end
 
-    def employment_payment(data_rows)
-      payment_hash = {}
+    def employment_payment(data_rows, job_id)
+      payment_hash = { client_id: job_id }
       data_rows.each do |row|
         transform_row_to_hash(row, payment_hash)
       end
@@ -71,6 +73,8 @@ module TestCase
 
     def transform_row_to_hash(row, payment_hash)
       case row[2].strip
+      when "client_id"
+        payment_hash[:client_id] = row[3]
       when "date"
         payment_hash[:date] = row[3].strftime("%F")
       when "gross pay"
