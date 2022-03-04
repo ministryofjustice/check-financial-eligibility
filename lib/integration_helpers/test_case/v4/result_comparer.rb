@@ -21,7 +21,7 @@ module TestCase
         compare_gross_income
         compare_disposable_income
         compare_capital
-        @result = false if (RemarksComparer.call(@expected[:remarks], @actual[:remarks], @verbosity) == false)
+        @result = false if RemarksComparer.call(@expected[:remarks], @actual[:remarks], @verbosity) == false
         @result
       end
 
@@ -84,8 +84,6 @@ module TestCase
       #   # color = :blue if expected.nil?
       #   verbose sprintf(@header_pattern, key, '', ''), color
       # end
-
-
 
       def compare_matter_types
         if expected_matter_type_names == actual_matter_type_names

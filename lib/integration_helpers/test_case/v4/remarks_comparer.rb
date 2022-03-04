@@ -1,7 +1,6 @@
 module TestCase
   module V4
     class RemarksComparer
-
       def self.call(expected, actual, verbosity)
         new(expected, actual, verbosity).call
       end
@@ -43,7 +42,7 @@ module TestCase
         color = :green
         # color = :red unless actual.to_s == expected.to_s
         # color = :blue if expected.nil?
-        verbose sprintf(@header_pattern, key, '', ''), color
+        verbose sprintf(@header_pattern, key, "", ""), color
       end
 
       def verbose(string, color = :green)
