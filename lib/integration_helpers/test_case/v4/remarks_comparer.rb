@@ -33,16 +33,20 @@ module TestCase
 
       def compare_remark_type(type, hash)
         hash.each do |issue, _ids|
-          print_remark_line("#{type}/#{issue}")
-          @result = false unless @actual&.dig(type)&.dig(issue) == @expected[type][issue]
+          next if @actual&.dig(type)&.dig(issue) == @expected[type][issue]
+          @result = false
+          print_remark_line(type, issue)
         end
       end
 
-      def print_remark_line(key)
-        color = :green
-        # color = :red unless actual.to_s == expected.to_s
-        # color = :blue if expected.nil?
-        verbose sprintf(@header_pattern, key, "", ""), color
+      def print_remark_line(type, issue)
+        color = :red
+        puts "#{type}/#{issue}".__send__(color)
+        puts "  expected:"
+        @expected[type][issue].each { |id| puts "    #{id}" }
+        puts "  actual:"
+        @actual&.dig(type)&.dig(issue)&.each { |id| puts "    #{id}" }
+        puts "  "
       end
 
       def verbose(string, color = :green)
