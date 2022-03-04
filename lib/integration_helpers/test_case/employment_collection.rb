@@ -57,7 +57,6 @@ module TestCase
     end
 
     def add_employment_earnings(job_name, data_rows, job_id)
-      # raise "No job name specified in column B for employment data" if job_name.blank?
       @employment_earnings[job_name] = { client_id: job_id, payments: [] } unless @employment_earnings.key?(job_name)
 
       @employment_earnings[job_name][:payments] << employment_payment(data_rows, job_id)
@@ -73,10 +72,6 @@ module TestCase
     end
 
     def transform_row_to_hash(row, payment_hash)
-      # ap row
-      # puts ">>>>>>>>>  #{__FILE__}:#{__LINE__} <<<<<<<<<<".yellow
-      # puts "row 2 below me"
-      # ap row[3]
       case row[2].strip
       when "client_id"
         payment_hash[:client_id] = row[3]
