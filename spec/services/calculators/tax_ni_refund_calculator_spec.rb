@@ -12,7 +12,6 @@ RSpec.describe Calculators::TaxNiRefundCalculator do
   let(:assessment_double) { instance_double(Assessment, submission_date: Time.zone.today, marked_for_destruction?: false, update!: nil) }
 
   let(:remarks_double) do
-    # assessment_double = instance_double(Assessment, submission_date: Time.zone.today, marked_for_destruction?: false)
     remarks_double = instance_double(Remarks)
     allow(employment).to receive(:assessment).and_return(assessment_double)
     allow(assessment_double).to receive(:remarks).and_return(remarks_double)

@@ -47,6 +47,7 @@ module TestCase
 
         job_name, job_id = job_name_and_job_id.split(":")
         add_employment_earnings(job_name, payment_data, job_id)
+
       end
     end
 
@@ -84,8 +85,6 @@ module TestCase
         payment_hash[:tax] = row[3]
       when "national insurance"
         payment_hash[:national_insurance] = row[3]
-      when "client_id"
-        payment_hash[:client_id] = row[3]
       else
         raise "Unexpected key '#{row[2]}' in column C of employment data"
       end
