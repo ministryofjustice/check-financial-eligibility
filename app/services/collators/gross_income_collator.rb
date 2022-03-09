@@ -20,6 +20,11 @@ module Collators
       INCOME_CATEGORIES.each do |category|
         populate_income_attrs(attrs, category)
       end
+      # this should only be added if there is a single employment
+      # if there are multiple employments we need to ignore this line
+      if assessment.employments.count < 2
+        attrs[:total_gross_income] += gross_income_summary[:gross_employment_income]
+      end
 
       attrs
     end
@@ -33,6 +38,8 @@ module Collators
 
     def default_attrs
       {
+        # total_gross_income: monthly_student_loan
+        # this looks wrong, monthly_student_loan is used for total gross income
         total_gross_income: monthly_student_loan,
         monthly_student_loan: monthly_student_loan,
         student_loan: categorised_income[:student_loan],

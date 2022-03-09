@@ -40,6 +40,10 @@ module Decorators
           total_disposable_income: 732.55,
           employment_income:
             {
+              # these negative figures break the tests
+              # check with dave, should they be positive or negative
+              # in the threshold they are positive, but then in some methods
+              # we make them negative, but then if we take away a negative, we are essentially adding the positive, i.e. - -45
               benefits_in_kind: 0.0,
               fixed_employment_deduction: -45.0,
               gross_income: 0.0,

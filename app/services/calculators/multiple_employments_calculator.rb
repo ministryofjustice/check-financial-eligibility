@@ -37,7 +37,7 @@ module Calculators
         employment_income_deductions: 0.0,
         tax: 0.0,
         national_insurance: 0.0,
-        fixed_employment_allowance: Threshold.value_for(:fixed_employment_allowance, at: submission_date),
+        fixed_employment_allowance: -Threshold.value_for(:fixed_employment_allowance, at: submission_date),
       )
     end
 
