@@ -79,7 +79,6 @@ module TestCase
       end
 
       def store_proceeding_types(hash, rows)
-        # hash[:proceeding_types][ptc] = { result: rows.first[3]}
         while rows.any?
           row = rows.shift
           if row[1] =~ /^proceeding_type:\s([A-Z]{2}[0-9]{3})$/

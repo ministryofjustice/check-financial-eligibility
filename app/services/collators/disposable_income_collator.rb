@@ -71,9 +71,7 @@ module Collators
     end
 
     def disposable_income
-      # remove gross_employment_income as it should be included in total_gross_income already
-      # total_gross_income + gross_employment_income - total_outgoings_and_allowances
-      total_gross_income - total_outgoings_and_allowances
+      [0, total_gross_income - total_outgoings_and_allowances].max
     end
   end
 end

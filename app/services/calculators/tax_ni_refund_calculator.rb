@@ -27,9 +27,5 @@ module Calculators
       my_remarks.add(:employment_nic, :refunds, [payment.client_id]) if attrs.key?(:national_insurance)
       @employment.assessment.update!(remarks: my_remarks)
     end
-
-    def remarks
-      @employment.assessment.remarks
-    end
   end
 end

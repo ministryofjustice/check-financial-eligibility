@@ -6,9 +6,7 @@ RSpec.describe Calculators::TaxNiRefundCalculator do
   subject(:calculator) { described_class.call(employment) }
 
   let(:employment) { create :employment }
-
   let(:date_strings) { %w[2021-09-30 2021-10-29 2021-11-30] }
-
   let(:assessment_double) { instance_double(Assessment, submission_date: Time.zone.today, marked_for_destruction?: false, update!: nil) }
 
   let(:remarks_double) do

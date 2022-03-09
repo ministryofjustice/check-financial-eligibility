@@ -35,7 +35,6 @@ module Assessors
 
         def set_gross_income_values(record, other_income, monthly_student_loan, state_benefits, threshold)
           record.update!(monthly_other_income: other_income,
-                         # why is the value below empty should we pass in monthly_student_loan?
                          monthly_student_loan:,
                          monthly_state_benefits: state_benefits,
                          total_gross_income: other_income + state_benefits + monthly_student_loan,
