@@ -157,7 +157,7 @@ jobs:
           name: Run ruby tests
           command: |
             ./tmp/cc-test-reporter before-build
-            bundle exec rspec --format progress --format RspecJunitFormatter -o /tmp/test-results/rspec/rspec.xml
+            bundle exec rspec --seed 2527 --format progress --format RspecJunitFormatter -o /tmp/test-results/rspec/rspec.xml
             ./tmp/cc-test-reporter format-coverage -t simplecov -o tmp/coverage/codeclimate.json
             ./tmp/cc-test-reporter upload-coverage -i tmp/coverage/codeclimate.json
       - store_test_results:
