@@ -38,8 +38,8 @@ module TestCase
           next if @actual&.dig(type)&.dig(issue) == @expected[type][issue]
 
           @result = false
-          print_remark_line(type, issue)
-          # print_remark_line(type, issue) unless silent?
+          # print_remark_line(type, issue)
+          print_remark_line(type, issue) unless silent?
         end
       end
 
