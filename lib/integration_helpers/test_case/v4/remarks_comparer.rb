@@ -33,7 +33,6 @@ module TestCase
 
       def compare_remark_type(type, hash)
         hash.each do |issue, _ids|
-          puts "before check"
           print_remark_line(type, issue)
           next if @actual&.dig(type)&.dig(issue) == @expected[type][issue]
 
@@ -45,22 +44,22 @@ module TestCase
 
       def print_remark_line(type, issue)
         # # OLD STYLE
-        actual = @actual&.dig(type)&.dig(issue)&.each { |id| puts "    #{id}" }
-        expected = @expected[type][issue].each { |id| puts "    #{id}" }
-        color = :green
-        color = :red unless actual.to_s == expected.to_s
-        color = :blue if expected.nil?
-        legend = "application employment remarks"
-        verbose sprintf(@header_pattern, legend, expected, actual), color
+        # actual = @actual&.dig(type)&.dig(issue)&.each { |id| puts "    #{id}" }
+        # expected = @expected[type][issue].each { |id| puts "    #{id}" }
+        # color = :green
+        # color = :red unless actual.to_s == expected.to_s
+        # color = :blue if expected.nil?
+        # legend = "application employment remarks"
+        # verbose sprintf(@header_pattern, legend, expected, actual), color
 
-        # # NEW STYLE
-        # color = :red
-        # puts "#{type}/#{issue}".__send__(color)
-        # puts "  expected:"
-        # @expected[type][issue].each { |id| puts "    #{id}" }
-        # puts "  actual:"
-        # @actual&.dig(type)&.dig(issue)&.each { |id| puts "    #{id}" }
-        # puts "  "
+        # NEW STYLE
+        color = :red
+        puts "#{type}/#{issue}".__send__(color)
+        puts "  expected:"
+        @expected[type][issue].each { |id| puts "    #{id}" }
+        puts "  actual:"
+        @actual&.dig(type)&.dig(issue)&.each { |id| puts "    #{id}" }
+        puts "  "
       end
 
       def verbose(string, color = :green)
