@@ -30,8 +30,7 @@ module TestCase
     private
 
       def silent?
-        # @verbosity.zero?
-        false
+        @verbosity.zero?
       end
 
       def print_headings
