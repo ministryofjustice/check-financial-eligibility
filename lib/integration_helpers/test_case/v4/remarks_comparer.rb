@@ -44,7 +44,7 @@ module TestCase
       end
 
       def print_remark_line(type, issue)
-        # # OLD STYLE
+        # OLD STYLE
         actual = @actual&.dig(type)&.dig(issue)&.each { |id| puts "    #{id}" }
         expected = @expected[type][issue].each { |id| puts "    #{id}" }
         color = :green
@@ -53,7 +53,7 @@ module TestCase
         legend = "application employment remarks"
         verbose sprintf(@header_pattern, legend, expected, actual), color
 
-        # # NEW STYLE
+        # NEW STYLE
         # color = :red
         # puts "#{type}/#{issue}".__send__(color)
         # puts "  expected:"
