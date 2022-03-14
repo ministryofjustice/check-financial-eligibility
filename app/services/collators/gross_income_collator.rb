@@ -36,8 +36,8 @@ module Collators
     end
 
     def default_attrs
+      # setup initial values here
       {
-        # this looks wrong, monthly_student_loan is used for total gross income
         total_gross_income: monthly_student_loan,
         monthly_student_loan: monthly_student_loan,
         student_loan: categorised_income[:student_loan],

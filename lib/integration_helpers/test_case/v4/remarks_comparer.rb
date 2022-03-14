@@ -28,8 +28,6 @@ module TestCase
       end
 
       def compare_remarks
-        # print_actual_remarks unless silent?
-
         puts "Remarks >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>".green unless silent?
 
         @expected.each { |remark_type, remark_type_hash| compare_remark_type(remark_type, remark_type_hash) }
