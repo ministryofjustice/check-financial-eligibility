@@ -10,7 +10,7 @@ module Creators
     end
 
     def call
-      create
+      create_records
       self
     end
 
@@ -26,7 +26,7 @@ module Creators
       ]
     end
 
-    def create
+    def create_records
       [@income, @outgoings].each { |categories| validate_categories(categories) }
       return unless errors.empty?
 

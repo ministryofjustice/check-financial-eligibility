@@ -9,13 +9,13 @@ module Creators
     end
 
     def call
-      create
+      create_records
       self
     end
 
   private
 
-    def create
+    def create_records
       ActiveRecord::Base.transaction do
         assessment
         create_employment

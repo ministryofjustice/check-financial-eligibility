@@ -7,11 +7,11 @@ module Creators
     end
 
     def call
-      create
+      create_records
       self
     end
 
-    def create
+    def create_records
       create_remarks
     rescue CreationError => e
       errors << e.errors
@@ -37,7 +37,7 @@ module Creators
       rec = ExplicitRemark.create(assessment_id: @assessment_id,
                                   category:,
                                   remark:)
-      return if rec.valid?
+      return if rec.valid? && rec.persisted?
 
       @errors = rec.errors.full_messages
       raise ActiveRecord::Rollback
