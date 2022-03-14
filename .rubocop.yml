@@ -55,3 +55,19 @@ RSpec/ExpectInHook:
 # ****
 RSpec/LeadingSubject:
   Enabled: false
+
+# **** Leave these - they are historic migrations and no purpose is solved by changing them
+Rails/BulkChangeTable:
+  Exclude:
+    - 'db/migrate/20200102101936_refactor_disposable_income_summaries.rb'
+    - 'db/migrate/20200420132900_add_fields_to_gross_income_summary.rb'
+    - 'db/migrate/20210412102115_add_version_proceeding_type_codes.rb'
+    - 'db/migrate/20211110163830_add_gross_earned_income_to_gross_income_summary.rb'
+    - 'db/migrate/20211117161654_update_fields_on_employment.rb'
+    - 'db/migrate/20211207112406_add_additional_fields_to_summaries.rb'
+
+
+# **** leave this - it is wrongly diagnosing an error
+Rake/DuplicateTask:
+  Exclude:
+    - 'Rakefile'
