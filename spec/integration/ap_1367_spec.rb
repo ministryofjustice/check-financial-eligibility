@@ -28,7 +28,7 @@ RSpec.describe "Full Assessment with remarks" do
     output_response(:get, :assessment)
 
     remarks = parsed_response[:assessment][:remarks]
-    expect(remarks[:state_benefit_payment]).to eq expected_remarks[:state_benefit_payment]
+    deep_match(remarks[:state_benefit_payment], expected_remarks[:state_benefit_payment])
     expect(remarks[:other_income_payment][:amount_variation]).to match_array expected_remarks[:other_income_payment][:amount_variation]
     expect(remarks[:other_income_payment][:unknown_frequency]).to match_array expected_remarks[:other_income_payment][:unknown_frequency]
     expect(remarks[:outgoings_maintenance]).to match_array expected_remarks[:outgoings_maintenance]
@@ -37,6 +37,13 @@ RSpec.describe "Full Assessment with remarks" do
     expect(remarks[:outgoings_legal_aid]).to match_array expected_remarks[:outgoings_legal_aid]
     expect(remarks[:other_income_payment][:amount_variation]).to match_array(expected_remarks[:other_income_payment][:amount_variation])
     expect(remarks[:other_income_payment][:unknown_frequency]).to match_array(expected_remarks[:other_income_payment][:unknown_frequency])
+  end
+
+  def deep_match(actual, expected)
+    expect(actual.keys.sort).to eq expected.keys.sort
+    actual.each do |key, ids|
+      expect(ids).to match_array(expected[key])
+    end
   end
 
   def post_assessment

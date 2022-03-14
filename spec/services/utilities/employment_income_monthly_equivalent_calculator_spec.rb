@@ -80,6 +80,18 @@ module Utilities
         end
       end
 
+      context "blunt average" do
+        let(:dates) { %w[2021-12-10 2021-11-12 2021-10-15 2021-09-17 2021-08-20 2021-07-15] }
+
+        context "varying amounts" do
+          let(:amounts) { [100, 100, 100, 100, 100, 100] }
+
+          it "populates monthly equivalent field with gross income" do
+            expect(payments.map(&:gross_income_monthly_equiv).uniq).to eq [200]
+          end
+        end
+      end
+
       def create_employment_payment_records
         dates.each_with_index do |date_string, i|
           create :employment_payment, employment: employment, date: Date.parse(date_string), gross_income: amounts[i]
@@ -88,14 +100,14 @@ module Utilities
     end
 
     context "invalid payment period" do
-      let(:mock_analyser) { instance_double PaymentPeriodAnalyser, period_pattern: :unknown }
+      let(:mock_analyser) { instance_double PaymentPeriodAnalyser, period_pattern: :testing }
 
       before do
         allow(PaymentPeriodAnalyser).to receive(:new).and_return(mock_analyser)
       end
 
       it "raises an argument error with period :unknown" do
-        expect { described_class.call(employment) }.to raise_error ArgumentError, "unexpected period unknown"
+        expect { described_class.call(employment) }.to raise_error ArgumentError, "unexpected period testing"
       end
     end
   end

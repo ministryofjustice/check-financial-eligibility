@@ -21,6 +21,10 @@ module Collators
         populate_income_attrs(attrs, category)
       end
 
+      if assessment.employments.count < 2
+        attrs[:total_gross_income] += gross_income_summary[:gross_employment_income]
+      end
+
       attrs
     end
 
@@ -32,6 +36,7 @@ module Collators
     end
 
     def default_attrs
+      # setup initial values here
       {
         total_gross_income: monthly_student_loan,
         monthly_student_loan: monthly_student_loan,
