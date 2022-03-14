@@ -14,6 +14,8 @@ module TestCase
       end
 
       def call
+        print_actual_remarks unless silent?
+
         return true if @expected.blank?
 
         compare_remarks
@@ -26,6 +28,8 @@ module TestCase
       end
 
       def compare_remarks
+        # print_actual_remarks unless silent?
+
         puts "Remarks >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>".green unless silent?
 
         @expected.each { |remark_type, remark_type_hash| compare_remark_type(remark_type, remark_type_hash) }
@@ -33,7 +37,9 @@ module TestCase
 
       def compare_remark_type(type, hash)
         hash.each do |issue, _ids|
-          next if @actual&.dig(type)&.dig(issue) == @expected[type][issue]
+          actual_unsorted_remarks = @actual&.dig(type)&.dig(issue)
+          actual_remarks = actual_unsorted_remarks.nil? ? nil : actual_unsorted_remarks.sort
+          next if actual_remarks == @expected[type][issue].sort
 
           @result = false
           print_remark_line(type, issue) unless silent?
@@ -48,6 +54,17 @@ module TestCase
         puts "  actual:"
         @actual&.dig(type)&.dig(issue)&.each { |id| puts "    #{id}" }
         puts "  "
+      end
+
+      def print_actual_remarks
+        puts "Actual remaks returned from CFE >>>>>>>>>>>>>>>>>>>>>>>>>".blue
+        @actual.each do |type, issue|
+          puts "#{type}:".blue
+          issue.each do |issue_name, ids|
+            puts "  #{issue_name}:".blue
+            ids.each { |id| puts "    #{id}".blue }
+          end
+        end
       end
 
       def verbose(string, color = :green)
