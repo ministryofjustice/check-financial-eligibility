@@ -6,39 +6,3 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 7
-# Configuration parameters: Database, Include.
-# SupportedDatabases: mysql, postgresql
-# Include: db/migrate/*.rb
-Rails/BulkChangeTable:
-  Exclude:
-    - 'db/migrate/20200102101936_refactor_disposable_income_summaries.rb'
-    - 'db/migrate/20200420132900_add_fields_to_gross_income_summary.rb'
-    - 'db/migrate/20210412102115_add_version_proceeding_type_codes.rb'
-    - 'db/migrate/20211110163830_add_gross_earned_income_to_gross_income_summary.rb'
-    - 'db/migrate/20211117161654_update_fields_on_employment.rb'
-    - 'db/migrate/20211207112406_add_additional_fields_to_summaries.rb'
-
-# Offense count: 20
-# Cop supports --auto-correct.
-# Configuration parameters: AllowImplicitReturn, AllowedReceivers.
-Rails/SaveBang:
-  Exclude:
-    - 'app/services/creators/applicant_creator.rb'
-    - 'app/services/creators/capitals_creator.rb'
-    - 'app/services/creators/cash_transactions_creator.rb'
-    - 'app/services/creators/dependants_creator.rb'
-    - 'app/services/creators/employments_creator.rb'
-    - 'app/services/creators/explicit_remarks_creator.rb'
-    - 'app/services/creators/irregular_income_creator.rb'
-    - 'app/services/creators/other_incomes_creator.rb'
-    - 'app/services/creators/properties_creator.rb'
-    - 'app/services/creators/state_benefits_creator.rb'
-    - 'app/services/creators/vehicle_creator.rb'
-    - 'spec/models/assessment_spec.rb'
-    - 'spec/models/eligibility/gross_income_spec.rb'
-
-# Offense count: 1
-Rake/DuplicateTask:
-  Exclude:
-    - 'Rakefile'

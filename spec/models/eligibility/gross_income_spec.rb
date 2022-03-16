@@ -18,7 +18,7 @@ module Eligibility
     context "validation" do
       context "everything valid" do
         it "creates the expected record" do
-          rec = gis.eligibilities.create(attrs)
+          rec = gis.eligibilities.create!(attrs)
           expect(rec).to be_valid
           expect(rec.parent_id).to eq gis.id
           expect(rec.type).to eq "Eligibility::GrossIncome"
@@ -33,6 +33,7 @@ module Eligibility
 
         it "is not valid" do
           rec = gis.eligibilities.create(attrs)
+          expect(rec.persisted?).to be false
           expect(rec).not_to be_valid
           expect(rec.errors[:proceeding_type_code]).to eq ["invalid: SE115"]
         end

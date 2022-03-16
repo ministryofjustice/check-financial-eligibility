@@ -13,13 +13,13 @@ module Creators
     end
 
     def call
-      create
+      create_records
       self
     end
 
   private
 
-    def create
+    def create_records
       create_properties
     rescue CreationError => e
       self.errors = e.errors
