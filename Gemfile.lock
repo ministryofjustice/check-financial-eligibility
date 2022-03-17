@@ -73,7 +73,7 @@ GEM
       tzinfo (~> 2.0)
     addressable (2.8.0)
       public_suffix (>= 2.0.2, < 5.0)
-    apipie-rails (0.5.19)
+    apipie-rails (0.5.20)
       rails (>= 4.1)
     ast (2.4.2)
     awesome_print (1.9.2)
