@@ -323,15 +323,15 @@ module TestCase
       end
 
       def expected_employment_income_tax
-        expected_gross_income[:employment_income_tax]
+        expected_disposable_income[:employment_income_tax]&.positive? ? -expected_disposable_income[:employment_income_tax] : expected_disposable_income[:employment_income_tax]
       end
 
       def expected_employment_income_nic
-        expected_gross_income[:employment_income_nic]
+        expected_disposable_income[:employment_income_nic]&.positive? ? -expected_disposable_income[:employment_income_nic] : expected_disposable_income[:employment_income_nic]
       end
 
       def expected_fixed_employment_allowance
-        expected_gross_income[:fixed_employment_allowance]
+        expected_disposable_income[:fixed_employment_allowance]&.positive? ? -expected_disposable_income[:fixed_employment_allowance] : expected_disposable_income[:fixed_employment_allowance]
       end
     end
   end
