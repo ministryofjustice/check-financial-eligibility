@@ -19,20 +19,6 @@ RSpec.describe Creators::EmploymentsCreator do
     end
   end
 
-  context "without client ids" do
-    let(:params) { employment_income_params_without_client_ids }
-
-    it "creates the expected employment records" do
-      expect { creator.call }.to change(Employment, :count).by(2)
-      expect(Employment.all.map(&:client_id)).to eq [nil, nil]
-    end
-
-    it "creates the expected employment_payment records" do
-      expect { creator.call }.to change(EmploymentPayment, :count).by(6)
-      expect(EmploymentPayment.all.map(&:client_id)).to eq [nil, nil, nil, nil, nil, nil]
-    end
-  end
-
   def expected_employment_payment_ids
     %w[employment-1-payment-1 employment-1-payment-2 employment-1-payment-3 employment-2-payment-1 employment-2-payment-2 employment-2-payment-3]
   end

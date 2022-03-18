@@ -2,7 +2,6 @@
 
 # Ministry of Justice
 
-TEST
 
 ## Legal Aid Financial Eligibility check API
 
