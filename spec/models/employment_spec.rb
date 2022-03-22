@@ -3,6 +3,7 @@ require "rails_helper"
 RSpec.describe Employment do
   describe "#calculate_monthly_amounts!", :vcr do
     let(:employment) { create :employment, calculation_method: calculation_method }
+    let(:assessment) { employment.assessment }
     let(:calculation_method) { nil }
     let(:gross) { 2022.35 }
     let(:bik) { 44.32 }
@@ -46,12 +47,9 @@ RSpec.describe Employment do
         end
 
         it "adds a remark" do
-          assessment_double = instance_double(Assessment, submission_date: Time.zone.today, marked_for_destruction?: false)
-          remarks_double = instance_double(Remarks)
-          allow(employment).to receive(:assessment).and_return(assessment_double)
-          allow(assessment_double).to receive(:remarks).and_return(remarks_double)
-          expect(remarks_double).to receive(:add).with(:employment_gross_income, :amount_variation, employment.employment_payments.map(&:client_id))
           employment.__send__(:calculate_monthly_gross_income!)
+          remarks_hash = assessment.remarks.remarks_hash
+          expect(remarks_hash.dig(:employment_gross_income, :amount_variation)).to match_array(employment.employment_payments.map(&:client_id))
         end
 
         it "sets the calculation method" do
