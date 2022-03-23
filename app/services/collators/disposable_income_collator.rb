@@ -71,7 +71,7 @@ module Collators
     end
 
     def disposable_income
-      [0, total_gross_income - total_outgoings_and_allowances].max
+      total_gross_income - total_outgoings_and_allowances
     end
   end
 end
