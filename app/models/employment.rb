@@ -65,6 +65,8 @@ private
   end
 
   def add_amount_variation_remarks
-    assessment.remarks.add(:employment_gross_income, :amount_variation, employment_payments.map(&:client_id))
+    my_remarks = assessment.remarks
+    my_remarks.add(:employment_gross_income, :amount_variation, employment_payments.map(&:client_id))
+    assessment.update!(remarks: my_remarks)
   end
 end
