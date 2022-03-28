@@ -14,7 +14,7 @@ It's defined as code and [can be edited](https://github.com/ministryofjustice/la
 
 ## Documentation
 
-The API is documented at /apidocs
+The API is documented at `/apidocs`
 
 The documentation and input validation is maintained via
 [APIPIE](https://github.com/Apipie/apipie-rails).
@@ -23,7 +23,9 @@ The documentation and input validation is maintained via
 
 The API version is specified through the accept header, as follows:
 
-    ``` Accept:application/json;version=3```
+```text
+Accept:application/json;version=3
+```
 
 The only currently acceptable version is 3.  If no version is specified, version 3 is assumed if alternative versions are developed.
 
@@ -74,6 +76,7 @@ This generates a JSON file `doc/apipie_examples.json` which is read and used whe
 
 To add additional examples to this json file, add the `:show_in_doc` tag to the relevant rspec tests and rerun the above command.
 
+
 ## Setting the env vars
 To run the integration tests you will need to set up a `.env` file in the root folder.
 
@@ -88,6 +91,10 @@ ALLOW_FUTURE_SUBMISSION_DATE
 
 Set ALLOW_FUTURE_SUBMISSION_DATE to true to allow integration tests to run with submission dates that are in the future.
 A copy of the `.env` file including the current values can be found in the `Shared-LAA` section of LastPass
+
+## Setup
+
+You can run `bin/setup` from the commandline to install dependencies and setup the development and test databases
 
 ## Threshold configuration files
 
