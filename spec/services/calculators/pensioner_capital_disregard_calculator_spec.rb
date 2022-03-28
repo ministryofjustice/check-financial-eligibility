@@ -30,6 +30,12 @@ module Calculators
               end
             end
 
+            context "with an income of -100" do
+              let(:disposable_income) { -100.0 }
+
+              it { is_expected.to eq 100_000.0 }
+            end
+
             context "with an income of 50.99" do
               let(:disposable_income) { 50.99 }
 
