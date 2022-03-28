@@ -13,6 +13,14 @@ module Calculators
         end
       end
 
+      context "negative income" do
+        let(:income) { -100.0 }
+
+        it "returns zero" do
+          expect(calculator).to be_zero
+        end
+      end
+
       context "income in band a" do
         let(:income) { 340.0 }
         # (340 - 311) * 35% = 10.15
