@@ -13,7 +13,7 @@ pensioner_capital_disregard:
   non_passported: 100_000
   # capital to disregard if monthly disposable income (excluding income derived from capital) is below these figures
   monthly_income_values:
-    [0, 25.99]: 100_000
+    [-999_999_999_999, 25.99]: 100_000
     [26.0, 50.99]: 90_000
     [51.0, 75.99]: 80_000
     [76.0, 100.99]: 70_000
