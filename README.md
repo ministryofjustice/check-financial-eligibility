@@ -34,17 +34,15 @@ The only currently acceptable version is 3.  If no version is specified, version
 
 ### Database Architecture
 
-An ORM diagram can be found here: https://docs.google.com/drawings/d/1fgr-33x-kAwCkXcvr9GJ8xBs7DAbUnPCwTjrSZo74Tg/edit?usp=sharing
+The database structure is visualized in this [ORM diagram](https://docs.google.com/drawings/d/1fgr-33x-kAwCkXcvr9GJ8xBs7DAbUnPCwTjrSZo74Tg/edit?usp=sharing)
 
-Each assessment has a `CapitalSummary`, a `GrossIncomeSummary` and a `DisposableIncomeSummary`, to encapsulate the totals and results of the 
-three means assessments that are performed, the capital assessment, the gross income assessment and the disposable income assessment,
+Each assessment has a `CapitalSummary`, a `GrossIncomeSummary` and a `DisposableIncomeSummary`, to encapsulate the totals and results of the three means assessments that are performed, the capital assessment, the gross income assessment and the disposable income assessment,
 in order to arrive at an overall means assessment of the application.
 
 Each summary record has one or more sub records that record the individual items/transactions: The `CapitalSummary` has capital items,
 the `GrossIncomeSummary` has income transactions of various types, and the `DisposableIncomeSummary` various outgoings.
 
-Each of the three summary records also has a number of Eligibility records - one for each proceeding type specified on the assessment.  The eligibility
-record the upper and lower thresholds for that proceeding type, and will eventually hold the result for that proceeding type.
+Each of the three summary records also has a number of Eligibility records - one for each proceeding type specified on the assessment.  The eligibility record the upper and lower thresholds for that proceeding type, and will eventually hold the result for that proceeding type.
 
 ### Usage
 
@@ -54,23 +52,17 @@ by sending a GET request to the /assessments endpoint.
 
 ### Logic flow
 
-The `AssessmentController` calls the `MainWorkflow`, which immediately branches off to the `PassportedWorkflow` or `UnpassportedWorkflow`.  
-The main difference is 
-that unpassported applications are assessed on capital, gross income and disposable income, whereas passported applications are only 
-assessed on capital.
+The `AssessmentController` calls the `MainWorkflow`, which immediately branches off to the `PassportedWorkflow` or `UnpassportedWorkflow`.  The main difference is that unpassported applications are assessed on capital, gross income and disposable income, whereas passported applications are only assessed on capital.
 
-In each case, the workflow takes each of the assessments in turn, calls a collator to look at all the sub-records under the summary and come up 
-with a total figure in the case of capital, or a monthly equivalent figure in the case of gross or disposable  income, and these results are stored on
-the associated summary record.  After collation, an assessor is called for each summary which stores the results (eligible, ineligible, contribution required) 
-in each of the eligibility records (one for each proceeding type).  Finally, the main assessor is called to work out the overall result for 
-each proceeding type taking into account the results from the capital, gross income and disposable income assessments.
-The assessments controller then calls the main decorator to format the output in the required structure to send back to the client.
+In each case, the workflow takes each of the assessments in turn, calls a collator to look at all the sub-records under the summary and come up with a total figure in the case of capital, or a monthly equivalent figure in the case of gross or disposable  income, and these results are stored on the associated summary record.  After collation, an assessor is called for each summary which stores the results (eligible, ineligible, contribution required) in each of the eligibility records (one for each proceeding type).  Finally, the main assessor is called to work out the overall result for each proceeding type taking into account the results from the capital, gross income and disposable income assessments.  The assessments controller then calls the main decorator to format the output in the required structure to send back to the client.
 
 
 ## Generation of API documentation
 The documentation is automatically generated when tests are run with an environment variable set.
 
-```APIPIE_RECORD=examples bundle exec rspec```
+```shell
+APIPIE_RECORD=examples bundle exec rspec
+```
 
 This generates a JSON file `doc/apipie_examples.json` which is read and used when drilling down in the documentation available at '/apidocs'.
 
@@ -90,11 +82,7 @@ ALLOW_FUTURE_SUBMISSION_DATE
 ```
 
 Set ALLOW_FUTURE_SUBMISSION_DATE to true to allow integration tests to run with submission dates that are in the future.
-A copy of the `.env` file including the current values can be found in the `Shared-LAA` section of LastPass
-
-## Setup
-
-You can run `bin/setup` from the commandline to install dependencies and setup the development and test databases
+A copy of the `.env` file including the current values can be found in the `Shared-LAA` section of LastPass.
 
 ## Threshold configuration files
 
@@ -106,7 +94,11 @@ If a file has the key `test_only` with a value of true, then that file will only
 false for production.
 
 This allows the insertion of test data on an arbitrary date specified in the `values.yml` file to be used
-for testing new thresholds before they come into affect on production
+for testing new thresholds before they come into affect on production.
+
+## Setup
+
+You can run `bin/setup` from the command line to install dependencies and setup the development and test databases.
 
 ## Running tests
 
@@ -122,28 +114,25 @@ bundle exec rescue rspec
 will cause any failing tests or unhandled exceptions to automatically open a `pry` prompt for immediate investigation.
 
 ## Integration tests
-A series of spreadsheets is used to provide use cases and their expected results, and are run as part of the normal `rspec` test suite, or can  be 
-run individually with more control using the script `bin/ispec` (see below).
+A series of spreadsheets is used to provide use cases and their expected results, and are run as part of the normal `rspec` test suite, or can be run individually with more control using the script `bin/ispec` (see below).
 
-There is a  [Master CFE Integration Tests Spreadsheet](https://docs.google.com/spreadsheets/d/1lkRmiqi4KpoAIxzui3hTnHddsdWgN9VquEE_Cxjy9AM/edit#gid=651307264) which 
-lists all the other spreadsheets to be run, as well as contain skeleton worksheets for creating new tests scenarios.  Each spreadsheet can hold multiple worksheet, 
-each of which is a test scenario.
+There is a  [Master CFE Integration Tests Spreadsheet](https://docs.google.com/spreadsheets/d/1lkRmiqi4KpoAIxzui3hTnHddsdWgN9VquEE_Cxjy9AM/edit#gid=651307264) which lists all the other spreadsheets to be run, as well as contain skeleton worksheets for creating new tests scenarios.  Each spreadsheet can hold multiple worksheet, each of which is a test scenario.
 
 When run as part of the `rspec` test suite, it is run in silent mode and only passes if all tests on all spreadsheets pass.
 
 For more fine control over the amount of verbosity, to run just one test case, or to force download the google spreadsheet,
 use `bin/ispec`, the help text of which is given below.
 
-```
-      ispec - Run integration tests
+```text
+ispec - Run integration tests
 
-      options:
-        -h        Display this help text
-        -r        Force refresh of Google speadsheet to local storage
-        -v        Set verbosity level to 1 (default is 0: silent) - produce detailed expected and actual results
-        -vv       Set verbosity level to 2 - display all payloads, and actual and expected results
-        -w XXX    Only process worksheet named XXX
-  ```
+options:
+-h        Display this help text
+-r        Force refresh of Google speadsheet to local storage
+-v        Set verbosity level to 1 (default is 0: silent) - produce detailed expected and actual results
+-vv       Set verbosity level to 2 - display all payloads, and actual and expected results
+-w XXX    Only process worksheet named XXX
+```
 
 Each worksheet has a entry `Test Active` which can be either true or false.  If set to false, the worksheet will be skipped, unless it is 
 the named worksheet using the `-w` command line switch.
