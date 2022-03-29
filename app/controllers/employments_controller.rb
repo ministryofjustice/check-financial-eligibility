@@ -14,9 +14,9 @@ class EmploymentsController < ApplicationController
   param :assessment_id, :uuid, required: true
   param :employment_income, Array, of: Hash, desc: "Collection of employment and income financial information" do
     param :name, String, required: true, desc: "An identifying name for this employment e.g. employer name"
-    param :client_id, String, required: false, desc: "An id supplied by the client to identify this employment"
+    param :client_id, String, required: true, desc: "An id supplied by the client to identify this employment"
     param :payments, Array, of: Hash, required: true, desc: "A collection of information about income from the employment" do
-      param :client_id, String, required: false, desc: "An id supplied by the client to identify this payment"
+      param :client_id, String, required: true, desc: "An id supplied by the client to identify this payment"
       param :date, Date, date_option: :today_or_older, required: true, desc: "The date payment received"
       param :gross, :currency, currency_option: :not_negative, required: true, desc: "Gross income received figure"
       param :benefits_in_kind, :currency, currency_option: :not_negative, required: true, desc: "Benefit in kind amount"

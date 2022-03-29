@@ -31,27 +31,6 @@ RSpec.describe EmploymentsController, type: :request do
           end
         end
       end
-
-      context "without client ids" do
-        let(:params) { employment_income_params_without_client_ids }
-
-        it "returns http success" do
-          post_payload
-          expect(response).to have_http_status(:success)
-        end
-
-        it "creates two employment income records with associated EmploymentPayment records" do
-          post_payload
-          expect(Employment.count).to eq 2
-          expect(EmploymentPayment.count).to eq 6
-        end
-
-        it "generates a valid response" do
-          post_payload
-          expect(parsed_response[:success]).to eq true
-          expect(parsed_response[:errors]).to be_empty
-        end
-      end
     end
 
     context "invalid_payload" do
