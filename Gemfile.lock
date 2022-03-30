@@ -73,8 +73,9 @@ GEM
       tzinfo (~> 2.0)
     addressable (2.8.0)
       public_suffix (>= 2.0.2, < 5.0)
-    apipie-rails (0.5.20)
-      rails (>= 4.1)
+    apipie-rails (0.6.0)
+      actionpack (>= 4.1)
+      activesupport (>= 4.1)
     ast (2.4.2)
     awesome_print (1.9.2)
     binding_of_caller (1.0.0)
@@ -421,7 +422,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers (~> 0.10.13)
-  apipie-rails (>= 0.5.18)
+  apipie-rails (~> 0.6.0)
   awesome_print
   bootsnap (>= 1.1.0)
   business (~> 2.3)
