@@ -4,6 +4,7 @@ module Decorators
   module V4
     RSpec.describe GrossIncomeDecorator do
       let(:assessment) { create :assessment }
+
       let(:summary) do
         create :gross_income_summary,
                assessment: assessment,
@@ -18,10 +19,12 @@ module Decorators
                property_or_lodger_all_sources: 250,
                property_or_lodger_bank: 250
       end
-      let(:employment1) { create :employment, :with_monthly_payments, assessment: assessment }
-      let(:employment2) { create :employment, :with_monthly_payments, assessment: assessment }
+
+      let!(:employment1) { create :employment, :with_monthly_payments, assessment: assessment }
+      let!(:employment2) { create :employment, :with_monthly_payments, assessment: assessment }
       let(:universal_credit) { create :state_benefit_type, :universal_credit }
       let(:child_benefit) { create :state_benefit_type, :child_benefit }
+
       let(:expected_results) do
         {
           employment_income: [
@@ -135,16 +138,14 @@ module Decorators
 
       describe "#as_json" do
         before do
-          create :state_benefit, state_benefit_type: universal_credit, gross_income_summary: summary, monthly_value: 979.33
-          create :state_benefit, state_benefit_type: child_benefit, gross_income_summary: summary, monthly_value: 343.27
+          create(:state_benefit, state_benefit_type: universal_credit, gross_income_summary: summary, monthly_value: 979.33)
+          create(:state_benefit, state_benefit_type: child_benefit, gross_income_summary: summary, monthly_value: 343.27)
         end
 
         subject(:decorator) { described_class.new(assessment).as_json }
 
         it "returns the expected structure" do
-          employment1
-          employment2
-          expect(decorator).to eq expected_results
+          expect(decorator).to match(expected_results)
         end
       end
     end
