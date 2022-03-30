@@ -59,7 +59,7 @@ RSpec.describe Employment do
       end
     end
 
-    describe ".calculate_monthly_ni_tax!" do
+    describe "#calculate_monthly_ni_tax!" do
       before { setup_ni_and_tax }
 
       context "when using the blunt average" do
@@ -139,7 +139,9 @@ RSpec.describe Employment do
              gross_income_monthly_equiv: gross,
              benefits_in_kind: bik,
              tax: tax_amounts[i],
-             national_insurance: ni_amounts[i]
+             tax_monthly_equiv: tax_amounts[i],
+             national_insurance: ni_amounts[i],
+             national_insurance_monthly_equiv: ni_amounts[i]
     end
   end
 end

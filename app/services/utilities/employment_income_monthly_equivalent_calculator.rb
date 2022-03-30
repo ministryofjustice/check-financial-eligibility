@@ -55,7 +55,11 @@ module Utilities
 
     def update_payments(calc_method)
       @employment.employment_payments.each do |payment|
-        payment.update(gross_income_monthly_equiv: __send__(calc_method, payment.gross_income))
+        payment.update(
+          gross_income_monthly_equiv: __send__(calc_method, payment.gross_income),
+          tax_monthly_equiv: __send__(calc_method, payment.tax),
+          national_insurance_monthly_equiv: __send__(calc_method, payment.national_insurance),
+        )
       end
     end
 
