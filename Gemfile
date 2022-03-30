@@ -95,6 +95,7 @@ group :test do
   gem "shoulda-matchers"
   gem "simplecov", require: false
   gem "simplecov-rcov"
+  gem "super_diff"
   gem "vcr"
   gem "webmock", ">= 3.13.0"
 end
