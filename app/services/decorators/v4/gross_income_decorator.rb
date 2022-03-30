@@ -39,7 +39,7 @@ module Decorators
       end
 
       def employment_payments(employment)
-        employment.employment_payments.map { |payment| employment_payment(payment) }
+        employment.employment_payments.order(date: :desc).map { |payment| employment_payment(payment) }
       end
 
       def employment_payment(payment)
