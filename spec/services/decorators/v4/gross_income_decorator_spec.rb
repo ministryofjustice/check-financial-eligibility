@@ -32,7 +32,7 @@ module Decorators
               name: employment1.name,
               payments: [
                 {
-                  date: Date.current.strftime("%Y-%m-%d"),
+                  date: Time.zone.today.strftime("%Y-%m-%d"),
                   benefits_in_kind: 0.0,
                   gross: 1500.0,
                   tax: -495.0,
@@ -40,7 +40,7 @@ module Decorators
                   net_employment_income: 855.0,
                 },
                 {
-                  date: 1.month.ago.strftime("%Y-%m-%d"),
+                  date: 1.month.ago.to_date.strftime("%Y-%m-%d"),
                   benefits_in_kind: 0.0,
                   gross: 1500.0,
                   tax: -495.0,
@@ -48,7 +48,7 @@ module Decorators
                   net_employment_income: 855.0,
                 },
                 {
-                  date: 2.months.ago.strftime("%Y-%m-%d"),
+                  date: 2.months.ago.to_date.strftime("%Y-%m-%d"),
                   benefits_in_kind: 0.0,
                   gross: 1500.0,
                   tax: -495.0,
@@ -61,7 +61,7 @@ module Decorators
               name: employment2.name,
               payments: [
                 {
-                  date: Date.current.strftime("%Y-%m-%d"),
+                  date: Time.zone.today.strftime("%Y-%m-%d"),
                   benefits_in_kind: 0.0,
                   gross: 1500.0,
                   tax: -495.0,
@@ -69,7 +69,7 @@ module Decorators
                   net_employment_income: 855.0,
                 },
                 {
-                  date: 1.month.ago.strftime("%Y-%m-%d"),
+                  date: 1.month.ago.to_date.strftime("%Y-%m-%d"),
                   benefits_in_kind: 0.0,
                   gross: 1500.0,
                   tax: -495.0,
@@ -77,7 +77,7 @@ module Decorators
                   net_employment_income: 855.0,
                 },
                 {
-                  date: 2.months.ago.strftime("%Y-%m-%d"),
+                  date: 2.months.ago.to_date.strftime("%Y-%m-%d"),
                   benefits_in_kind: 0.0,
                   gross: 1500.0,
                   tax: -495.0,
