@@ -10,7 +10,7 @@ RSpec.describe ApplicantsController, type: :request do
         applicant: {
           date_of_birth: 20.years.ago.to_date,
           involvement_type: "applicant",
-          has_partner_opponent: false,
+          has_partner_opponent: "false",
           receives_qualifying_benefit: true,
         },
       }
