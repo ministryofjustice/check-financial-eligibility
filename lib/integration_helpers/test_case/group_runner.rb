@@ -5,7 +5,7 @@ module TestCase
   #
   class GroupRunner
     DATA_DIR = Rails.root.join("tmp/integration_test_data")
-    MASTER_SHEET = "AAA - CFE Integration Test master spreadsheet".freeze
+    MASTER_SHEET = "Eligibility copy of CFE Integration Test master spreadsheet".freeze
 
     def initialize(verbosity_level, refresh)
       @verbosity_level = verbosity_level
