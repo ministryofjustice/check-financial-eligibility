@@ -69,6 +69,19 @@ module Collators
         end
       end
 
+      context "when total disposable income is negative" do
+        before do
+          assessment.gross_income_summary.update!(total_gross_income: total_outgoings - 1500.0)
+        end
+
+        it "returns the correct negative amount" do
+          collator
+          result = assessment.gross_income_summary.total_gross_income + assessment.gross_income_summary.gross_employment_income - disposable_income_summary.reload.total_outgoings_and_allowances
+          expect(disposable_income_summary.total_disposable_income).to eq result
+          expect(disposable_income_summary.total_disposable_income).to be_negative
+        end
+      end
+
       context "lower threshold" do
         it "populates the lower threshold" do
           collator
