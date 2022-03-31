@@ -45,8 +45,8 @@ private
 
   def use_ni_tax_blunt_average
     update!(
-      monthly_national_insurance: blunt_average(:national_insurance),
-      monthly_tax: blunt_average(:tax),
+      monthly_national_insurance: blunt_average(:national_insurance_monthly_equiv),
+      monthly_tax: blunt_average(:tax_monthly_equiv),
     )
   end
 
@@ -54,8 +54,8 @@ private
     most_recent_payment = employment_payments.order(:date).last
 
     update!(
-      monthly_national_insurance: most_recent_payment.national_insurance,
-      monthly_tax: most_recent_payment.tax,
+      monthly_national_insurance: most_recent_payment.national_insurance_monthly_equiv,
+      monthly_tax: most_recent_payment.tax_monthly_equiv,
     )
   end
 
