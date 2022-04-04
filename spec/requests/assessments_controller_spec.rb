@@ -239,7 +239,7 @@ RSpec.describe AssessmentsController, type: :request do
           expect(results[:income_contribution]).to eq 0.0.to_s
         end
 
-        it "returns expected capital results", :show_in_doc, doc_title: "GET Version 3 Non-Passported Response" do
+        it "returns expected capital results" do
           results = parsed_response[:assessment][:capital]
           main_home = results[:capital_items][:properties][:main_home]
           expect(main_home[:value]).to eq 500_000.0.to_s
