@@ -141,8 +141,75 @@ module Calculators
       end
     end
 
-    # Changing these to be 2022 dates.
-    describe "retrieving threshold values" do
+    # 2021 threshold date tests
+    describe "retrieving threshold values for 2021" do
+      let(:dependant) { create :dependant }
+
+      subject(:calculator) { described_class.new(dependant) }
+
+      context "before new allowances date" do
+        before do
+          dependant.assessment.submission_date = "Sun, 11 Apr 2021"
+        end
+
+        describe "child_under_15_allowance" do
+          it "returns the threshold value" do
+            expect(calculator.child_under_15_allowance).to eq 296.65
+          end
+        end
+
+        describe "child_aged_15_allowance" do
+          it "returns the threshold value" do
+            expect(calculator.child_aged_15_allowance).to eq 296.65
+          end
+        end
+
+        describe "child_16_and_over_allowance" do
+          it "returns the threshold value" do
+            expect(calculator.child_16_and_over_allowance).to eq 296.65
+          end
+        end
+
+        describe "adult_allowance" do
+          it "returns the threshold value" do
+            expect(calculator.adult_allowance).to eq 296.65
+          end
+        end
+      end
+
+      context "after new allowances date" do
+        before do
+          dependant.assessment.submission_date = "Mon, 12 Apr 2021"
+        end
+
+        describe "child_under_15_allowance" do
+          it "returns the threshold value" do
+            expect(calculator.child_under_15_allowance).to eq 298.08
+          end
+        end
+
+        describe "child_aged_15_allowance" do
+          it "returns the threshold value" do
+            expect(calculator.child_aged_15_allowance).to eq 298.08
+          end
+        end
+
+        describe "child_16_and_over_allowance" do
+          it "returns the threshold value" do
+            expect(calculator.child_16_and_over_allowance).to eq 298.08
+          end
+        end
+
+        describe "adult_allowance" do
+          it "returns the threshold value" do
+            expect(calculator.adult_allowance).to eq 298.08
+          end
+        end
+      end
+    end
+
+    # 2022 threshold tests dates
+    describe "retrieving threshold values for 2022" do
       let(:dependant) { create :dependant }
 
       subject(:calculator) { described_class.new(dependant) }
