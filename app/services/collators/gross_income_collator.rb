@@ -36,7 +36,8 @@ module Collators
     end
 
     def default_attrs
-      # setup initial values here
+      # setup initial values here, populate_income_attrs above adds the other income(s)
+      # to the default start values here
       {
         total_gross_income: monthly_student_loan,
         monthly_student_loan: monthly_student_loan,
