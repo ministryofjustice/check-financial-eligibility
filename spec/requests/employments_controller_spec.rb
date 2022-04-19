@@ -31,6 +31,25 @@ RSpec.describe EmploymentsController, type: :request do
           end
         end
       end
+
+      context "crime assessment" do
+        it "returns http success", :show_in_doc do
+          post_payload
+          expect(response).to have_http_status(:success)
+        end
+
+        it "creates two employment income records with associated EmploymentPayment records" do
+          post_payload
+          expect(Employment.count).to eq 2
+          expect(EmploymentPayment.count).to eq 6
+        end
+
+        it "generates a valid response" do
+          post_payload
+          expect(parsed_response[:success]).to eq true
+          expect(parsed_response[:errors]).to be_empty
+        end
+      end
     end
 
     context "invalid_payload" do
@@ -146,6 +165,19 @@ RSpec.describe EmploymentsController, type: :request do
           },
         ],
       }
+    end
+
+    def criminal_legal_aid_employment_income_params
+      params = employment_income_params
+      params[:employment_income].each do |employment|
+        employment[:payments].each do |paymt|
+          paymt[:benefits_in_kind] = 0
+          paymt[:tax] = 0
+          paymt[:national_insurance] = 0
+          paymt[:net_employment_income] = 1046.00
+        end
+      end
+      params
     end
 
     def employment_income_params_without_client_ids
