@@ -8,7 +8,7 @@ RSpec.describe VehiclesController, type: :request do
     let(:date_in_future) { 3.days.from_now.strftime("%Y-%m-%d") }
     let(:params) { { vehicles: } }
 
-    subject(:post_payload) { post assessment_vehicles_path(assessment), params: params.to_json, headers: headers }
+    subject(:post_payload) { post assessment_vehicles_path(assessment), params: params.to_json, headers: }
 
     it "returns http success", :show_in_doc do
       post_payload

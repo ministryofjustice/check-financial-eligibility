@@ -8,7 +8,7 @@ RSpec.describe IrregularIncomesController, type: :request do
     let(:params) { irregular_income_params }
     let(:headers) { { "CONTENT_TYPE" => "application/json" } }
 
-    subject(:post_payload) { post assessment_irregular_incomes_path(assessment_id), params: params.to_json, headers: headers }
+    subject(:post_payload) { post assessment_irregular_incomes_path(assessment_id), params: params.to_json, headers: }
 
     context "valid payload" do
       it "returns http success", :show_in_doc do

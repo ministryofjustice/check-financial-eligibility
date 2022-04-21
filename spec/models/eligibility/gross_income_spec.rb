@@ -9,9 +9,9 @@ module Eligibility
     let(:assessment_result) { "pending" }
     let(:attrs) do
       {
-        proceeding_type_code: proceeding_type_code,
-        upper_threshold: upper_threshold,
-        assessment_result: assessment_result,
+        proceeding_type_code:,
+        upper_threshold:,
+        assessment_result:,
       }
     end
 

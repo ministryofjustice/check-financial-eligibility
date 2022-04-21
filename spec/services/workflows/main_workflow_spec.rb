@@ -2,7 +2,7 @@ require "rails_helper"
 
 module Workflows
   RSpec.describe ".call" do
-    let(:assessment) { create :assessment, applicant: applicant }
+    let(:assessment) { create :assessment, applicant: }
 
     context "applicant is passported" do
       let(:applicant) { create :applicant, :with_qualifying_benefits }

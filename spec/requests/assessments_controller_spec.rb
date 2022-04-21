@@ -21,7 +21,7 @@ RSpec.describe AssessmentsController, type: :request do
       let(:headers) { { "CONTENT_TYPE" => "application/json" } }
       let(:before_request) { nil }
 
-      subject(:post_payload) { post assessments_path, params: params.to_json, headers: headers }
+      subject(:post_payload) { post assessments_path, params: params.to_json, headers: }
 
       before do
         before_request
@@ -158,7 +158,7 @@ RSpec.describe AssessmentsController, type: :request do
     let(:option) { :below_lower_threshold }
     let(:now) { Time.zone.now }
 
-    subject(:get_assessment) { get assessment_path(assessment), headers: headers }
+    subject(:get_assessment) { get assessment_path(assessment), headers: }
 
     context "calling the correct workflows assessors and decorators" do
       before do
@@ -385,16 +385,16 @@ RSpec.describe AssessmentsController, type: :request do
     create :childcare_outgoing,
            disposable_income_summary: dis,
            payment_date: Date.parse(date),
-           amount: amount
+           amount:
   end
 
   def create_dependant(assessment, dob, education, relationship)
     create :dependant,
-           assessment: assessment,
+           assessment:,
            date_of_birth: Date.parse(dob),
            in_full_time_education: education,
            monthly_income: 0,
-           relationship: relationship
+           relationship:
   end
 
   def create_mortgage_payment(dis, date, amount)
@@ -402,16 +402,16 @@ RSpec.describe AssessmentsController, type: :request do
            disposable_income_summary: dis,
            housing_cost_type: "mortgage",
            payment_date: Date.parse(date),
-           amount: amount
+           amount:
   end
 
   def create_main_home(capital_summary, main_home, value, mortgage, percentage_owned, housing_assoc)
     create :property,
-           capital_summary: capital_summary,
-           main_home: main_home,
-           value: value,
+           capital_summary:,
+           main_home:,
+           value:,
            outstanding_mortgage: mortgage,
-           percentage_owned: percentage_owned,
+           percentage_owned:,
            shared_with_housing_assoc: housing_assoc
   end
 

@@ -52,7 +52,7 @@ module Collators
 
     def default_attrs
       {
-        total_outgoings_and_allowances: total_outgoings_and_allowances,
+        total_outgoings_and_allowances:,
         total_disposable_income: disposable_income,
       }
     end

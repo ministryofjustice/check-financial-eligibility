@@ -8,7 +8,7 @@ RSpec.describe EmploymentsController, type: :request do
     let(:params) { employment_income_params }
     let(:headers) { { "CONTENT_TYPE" => "application/json" } }
 
-    subject(:post_payload) { post assessment_employments_path(assessment_id), params: params.to_json, headers: headers }
+    subject(:post_payload) { post assessment_employments_path(assessment_id), params: params.to_json, headers: }
 
     context "valid payload" do
       context "with client ids" do

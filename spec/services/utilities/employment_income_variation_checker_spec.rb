@@ -7,7 +7,7 @@ module Utilities
 
     before do
       amounts.each do |amount|
-        create :employment_payment, employment: employment, gross_income_monthly_equiv: amount
+        create :employment_payment, employment:, gross_income_monthly_equiv: amount
       end
     end
 

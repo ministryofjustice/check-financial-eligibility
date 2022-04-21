@@ -19,7 +19,7 @@ module Creators
       {
         success: success?,
         assessment_id: new_assessment.id,
-        errors: errors,
+        errors:,
       }
     end
 
@@ -37,7 +37,7 @@ module Creators
         proceeding_type_codes: ccms_codes_for_application,
         assessment_type: assessment_type,
         version: @version,
-        remote_ip: remote_ip,
+        remote_ip:,
       }
     end
 

@@ -2,11 +2,11 @@ require "rails_helper"
 
 RSpec.describe IrregularIncomePayment, type: :model do
   let!(:gross_income_summary) { create :gross_income_summary }
-  let!(:payment) { create :irregular_income_payment, gross_income_summary: gross_income_summary }
+  let!(:payment) { create :irregular_income_payment, gross_income_summary: }
 
   context "validations" do
     context "invalid income type" do
-      let(:payment) { build :irregular_income_payment, gross_income_summary: gross_income_summary, income_type: "xxx" }
+      let(:payment) { build :irregular_income_payment, gross_income_summary:, income_type: "xxx" }
 
       it "is not valid" do
         expect(payment).not_to be_valid
@@ -15,7 +15,7 @@ RSpec.describe IrregularIncomePayment, type: :model do
     end
 
     context "frequency" do
-      let(:payment) { build :irregular_income_payment, gross_income_summary: gross_income_summary, frequency: "xxx" }
+      let(:payment) { build :irregular_income_payment, gross_income_summary:, frequency: "xxx" }
 
       it "is not valid" do
         expect(payment).not_to be_valid
@@ -24,7 +24,7 @@ RSpec.describe IrregularIncomePayment, type: :model do
     end
 
     context "duplicate income types" do
-      let(:payment) { create :irregular_income_payment, gross_income_summary: gross_income_summary }
+      let(:payment) { create :irregular_income_payment, gross_income_summary: }
 
       context "one student loan per assessment" do
         let(:gross_income_summary2) { create :gross_income_summary }
@@ -36,7 +36,7 @@ RSpec.describe IrregularIncomePayment, type: :model do
       end
 
       context "multiple student loans per assessment" do
-        let(:payment2) { build :irregular_income_payment, gross_income_summary: gross_income_summary }
+        let(:payment2) { build :irregular_income_payment, gross_income_summary: }
 
         it "is valid" do
           expect { payment2.save! }.to raise_error(ActiveRecord::RecordNotUnique)
@@ -46,7 +46,7 @@ RSpec.describe IrregularIncomePayment, type: :model do
 
     context "amount is less than zero" do
       let!(:payment) do
-        build :irregular_income_payment, amount: -1, gross_income_summary: gross_income_summary
+        build :irregular_income_payment, amount: -1, gross_income_summary:
       end
 
       it "raises error" do

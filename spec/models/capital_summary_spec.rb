@@ -5,7 +5,7 @@ RSpec.describe CapitalSummary do
   let(:additional_properties) { build_list :property, 2, :additional_property }
   let(:properties) { additional_properties }
   let(:capital_summary) do
-    create :capital_summary, assessment: assessment, properties: properties
+    create :capital_summary, assessment:, properties:
   end
 
   describe "#own_home" do

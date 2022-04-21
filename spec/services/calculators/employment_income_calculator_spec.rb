@@ -3,10 +3,10 @@ require "rails_helper"
 module Calculators
   RSpec.describe EmploymentIncomeCalculator, :vcr do
     let(:assessment) { create :assessment }
-    let!(:gross_income_summary) { create :gross_income_summary, assessment: assessment }
-    let!(:disposable_income_summary) { create :disposable_income_summary, assessment: assessment }
-    let(:employment1) { create :employment, assessment: assessment }
-    let(:employment2) { create :employment, assessment: assessment }
+    let!(:gross_income_summary) { create :gross_income_summary, assessment: }
+    let!(:disposable_income_summary) { create :disposable_income_summary, assessment: }
+    let(:employment1) { create :employment, assessment: }
+    let(:employment2) { create :employment, assessment: }
     let(:gross) { BigDecimal(rand(2022.35...3096.52), 2) }
     let(:tax) { (gross * 0.23).round(2) * -1 }
     let(:ni_cont) { (gross * 0.052).round(2) * -1 }
@@ -110,12 +110,12 @@ module Calculators
       [employment1, employment2].each do |employment|
         dates.each do |date|
           create :employment_payment,
-                 date: date,
-                 employment: employment,
+                 date:,
+                 employment:,
                  gross_income: gross,
-                 tax: tax,
+                 tax:,
                  national_insurance: ni_cont,
-                 benefits_in_kind: benefits_in_kind
+                 benefits_in_kind:
         end
       end
     end
@@ -123,12 +123,12 @@ module Calculators
     def create_payments_for_single_employment
       dates.each do |date|
         create :employment_payment,
-               date: date,
+               date:,
                employment: employment1,
                gross_income: gross,
-               tax: tax,
+               tax:,
                national_insurance: ni_cont,
-               benefits_in_kind: benefits_in_kind
+               benefits_in_kind:
       end
     end
   end

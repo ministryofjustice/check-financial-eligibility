@@ -7,11 +7,11 @@ module Assessors
     let(:service) { described_class.new(assessment) }
     let!(:vehicle) do
       create :vehicle,
-             capital_summary: capital_summary,
+             capital_summary:,
              value: estimated_value,
-             loan_amount_outstanding: loan_amount_outstanding,
-             date_of_purchase: date_of_purchase,
-             in_regular_use: in_regular_use
+             loan_amount_outstanding:,
+             date_of_purchase:,
+             in_regular_use:
     end
 
     before do

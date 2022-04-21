@@ -17,9 +17,9 @@ module Decorators
 
       def payload
         {
-          monthly_equivalents: monthly_equivalents,
-          childcare_allowance: childcare_allowance,
-          deductions: deductions,
+          monthly_equivalents:,
+          childcare_allowance:,
+          deductions:,
         }
       end
 

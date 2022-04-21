@@ -45,7 +45,7 @@ module Collators
         fixed_employment_allowance
     end
 
-    before { create :gross_income_summary, :with_all_records, assessment: assessment }
+    before { create :gross_income_summary, :with_all_records, assessment: }
 
     describe ".call" do
       subject(:collator) { described_class.call(assessment) }

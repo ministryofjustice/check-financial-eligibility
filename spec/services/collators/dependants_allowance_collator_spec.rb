@@ -17,8 +17,8 @@ module Collators
       end
 
       context "with dependants" do
-        let(:dependant1) { create :dependant, assessment: assessment }
-        let(:dependant2) { create :dependant, assessment: assessment }
+        let(:dependant1) { create :dependant, assessment: }
+        let(:dependant2) { create :dependant, assessment: }
 
         it "updates the dependant records and writes the sum to the diposable income summary" do
           allow(Calculators::DependantAllowanceCalculator).to receive(:new)

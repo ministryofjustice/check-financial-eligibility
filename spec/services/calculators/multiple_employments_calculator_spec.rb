@@ -5,7 +5,7 @@ module Calculators
     let(:assessment) { create :assessment, :with_gross_income_summary, :with_disposable_income_summary }
 
     before do
-      create_list :employment, 2, assessment: assessment
+      create_list :employment, 2, assessment:
     end
 
     it "sets gross employment income to zero" do

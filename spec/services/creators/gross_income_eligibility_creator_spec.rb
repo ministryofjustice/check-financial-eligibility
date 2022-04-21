@@ -40,7 +40,7 @@ module Creators
       context "two children" do
         before do
           create_list :dependant, 2, :child_relative, assessment: assessment
-          create_list :dependant, 4, :adult_relative, assessment: assessment
+          create_list :dependant, 4, :adult_relative, assessment:
         end
 
         it "creates a record with no uplifted threshold" do
@@ -55,7 +55,7 @@ module Creators
         let(:expected_threshold) { 2657 + (222 * 2) }
 
         before do
-          create_list :dependant, 6, :child_relative, assessment: assessment
+          create_list :dependant, 6, :child_relative, assessment:
         end
 
         it "creates a record with the uplifted threshold" do

@@ -94,7 +94,7 @@ RSpec.describe Remarks do
     context "with explicit remarks" do
       before do
         create :explicit_remark, assessment: assessment, remark: "Jacob Creuzfeldt disease fund"
-        create :explicit_remark, assessment: assessment, remark: "Grenfell tower fund"
+        create :explicit_remark, assessment:, remark: "Grenfell tower fund"
       end
 
       it "adds in the explicit remarks" do

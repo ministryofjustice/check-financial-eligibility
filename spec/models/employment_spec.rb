@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Employment do
   describe "#calculate_monthly_amounts!", :vcr do
-    let(:employment) { create :employment, calculation_method: calculation_method }
+    let(:employment) { create :employment, calculation_method: }
     let(:assessment) { employment.assessment }
     let(:calculation_method) { nil }
     let(:gross) { 2022.35 }
@@ -120,12 +120,12 @@ RSpec.describe Employment do
   def setup_employment_and_payments
     date_strings.each_with_index do |date_string, i|
       create :employment_payment,
-             employment: employment,
+             employment:,
              date: Date.parse(date_string),
              gross_income: gross,
              gross_income_monthly_equiv: amounts[i],
              benefits_in_kind: bik,
-             tax: tax,
+             tax:,
              national_insurance: insurance
     end
   end
@@ -133,7 +133,7 @@ RSpec.describe Employment do
   def setup_ni_and_tax
     date_strings.each_with_index do |date_string, i|
       create :employment_payment,
-             employment: employment,
+             employment:,
              date: Date.parse(date_string),
              gross_income: gross,
              gross_income_monthly_equiv: gross,

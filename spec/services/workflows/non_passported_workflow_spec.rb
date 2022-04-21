@@ -2,7 +2,7 @@ require "rails_helper"
 
 module Workflows
   RSpec.describe NonPassportedWorkflow do
-    let(:assessment) { create :assessment, :with_everything, applicant: applicant }
+    let(:assessment) { create :assessment, :with_everything, applicant: }
 
     before do
       assessment.proceeding_type_codes.each do |ptc|

@@ -34,7 +34,7 @@ FactoryBot.define do
 
     trait :with_disposable_income_summary do
       after(:create) do |assessment|
-        create :disposable_income_summary, assessment: assessment
+        create :disposable_income_summary, assessment:
       end
     end
 
@@ -49,7 +49,7 @@ FactoryBot.define do
 
     trait :with_capital_summary do
       after(:create) do |assessment|
-        create :capital_summary, assessment: assessment
+        create :capital_summary, assessment:
       end
     end
 
@@ -64,7 +64,7 @@ FactoryBot.define do
 
     trait :with_gross_income_summary do
       after(:create) do |assessment|
-        create :gross_income_summary, assessment: assessment
+        create :gross_income_summary, assessment:
       end
     end
 
@@ -79,13 +79,13 @@ FactoryBot.define do
 
     trait :with_gross_income_summary_and_records do
       after(:create) do |assessment|
-        create :gross_income_summary, :with_all_records, assessment: assessment
+        create :gross_income_summary, :with_all_records, assessment:
       end
     end
 
     trait :with_gross_income_summary_and_employment do
       after(:create) do |assessment|
-        create :gross_income_summary, :with_employment, assessment: assessment
+        create :gross_income_summary, :with_employment, assessment:
       end
     end
 
@@ -97,14 +97,14 @@ FactoryBot.define do
       after(:create) do |assessment|
         create :gross_income_summary, :with_everything, assessment: assessment
         create :disposable_income_summary, :with_everything, assessment: assessment
-        create :capital_summary, :with_everything, assessment: assessment
+        create :capital_summary, :with_everything, assessment:
       end
     end
 
     trait :passported do
       with_passported_applicant
       after(:create) do |assessment|
-        create :capital_summary, :with_everything, :with_eligibilities, assessment: assessment
+        create :capital_summary, :with_everything, :with_eligibilities, assessment:
       end
     end
 
@@ -137,7 +137,7 @@ FactoryBot.define do
     after(:create) do |assessment, evaluator|
       if evaluator.with_child_dependants > 0
         evaluator.with_child_dependants.times do
-          create :dependant, :child_relative, assessment: assessment
+          create :dependant, :child_relative, assessment:
         end
       end
     end

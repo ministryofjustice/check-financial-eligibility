@@ -12,7 +12,7 @@ RSpec.describe CapitalsController, type: :request do
     end
     let(:headers) { { "CONTENT_TYPE" => "application/json" } }
 
-    subject(:post_payload) { post assessment_capitals_path(assessment_id), params: params.to_json, headers: headers }
+    subject(:post_payload) { post assessment_capitals_path(assessment_id), params: params.to_json, headers: }
 
     before { post_payload }
 
