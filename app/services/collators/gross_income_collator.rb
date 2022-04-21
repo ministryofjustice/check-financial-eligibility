@@ -40,10 +40,10 @@ module Collators
       # to the default start values here
       {
         total_gross_income: monthly_student_loan,
-        monthly_student_loan: monthly_student_loan,
+        monthly_student_loan:,
         student_loan: categorised_income[:student_loan],
         monthly_other_income: categorised_income[:total],
-        monthly_state_benefits: monthly_state_benefits,
+        monthly_state_benefits:,
       }
     end
 

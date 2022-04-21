@@ -13,7 +13,7 @@ module Decorators
       describe "#as_json" do
         before do
           results.each do |ptc, result|
-            create :assessment_eligibility, assessment: assessment, proceeding_type_code: ptc, assessment_result: result
+            create :assessment_eligibility, assessment:, proceeding_type_code: ptc, assessment_result: result
           end
         end
 

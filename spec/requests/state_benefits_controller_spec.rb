@@ -12,7 +12,7 @@ RSpec.describe StateBenefitsController, type: :request do
     let!(:state_benefit_type1) { create :state_benefit_type }
     let!(:state_benefit_type2) { create :state_benefit_type }
 
-    subject(:post_payload) { post assessment_state_benefits_path(assessment_id), params: params.to_json, headers: headers }
+    subject(:post_payload) { post assessment_state_benefits_path(assessment_id), params: params.to_json, headers: }
 
     context "valid payload" do
       context "with two state benefits" do

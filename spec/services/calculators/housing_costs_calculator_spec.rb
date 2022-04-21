@@ -17,7 +17,7 @@ module Calculators
                disposable_income_summary: assessment.disposable_income_summary,
                payment_date: date,
                amount: housing_cost_amount,
-               housing_cost_type: housing_cost_type
+               housing_cost_type:
       end
 
       calculator
@@ -306,7 +306,7 @@ module Calculators
       housing_benefit_type = create :state_benefit_type, label: "housing_benefit"
       state_benefit = create :state_benefit, gross_income_summary: assessment.gross_income_summary, state_benefit_type: housing_benefit_type
       [2.months.ago, 1.month.ago, Date.current].each do |pay_date|
-        create :state_benefit_payment, state_benefit: state_benefit, amount: amount, payment_date: pay_date
+        create :state_benefit_payment, state_benefit:, amount:, payment_date: pay_date
       end
     end
   end

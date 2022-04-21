@@ -27,7 +27,7 @@ module Collators
           # childcare payments should be ignored
           create :childcare_outgoing, disposable_income_summary: disposable_income_summary, payment_date: 10.days.ago, amount: 99.00
           create :childcare_outgoing, disposable_income_summary: disposable_income_summary, payment_date: 28.days.ago, amount: 99.00
-          create :childcare_outgoing, disposable_income_summary: disposable_income_summary, payment_date: 66.days.ago, amount: 99.00
+          create :childcare_outgoing, disposable_income_summary:, payment_date: 66.days.ago, amount: 99.00
         end
 
         it "calculates the monthly equivalent and updates the disposable income summary" do

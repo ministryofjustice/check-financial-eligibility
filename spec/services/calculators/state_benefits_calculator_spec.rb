@@ -22,7 +22,7 @@ module Calculators
       before do
         create :state_benefit,
                :with_weekly_payments,
-               gross_income_summary: gross_income_summary,
+               gross_income_summary:,
                state_benefit_type: state_benefit_type_included
       end
 
@@ -38,7 +38,7 @@ module Calculators
         before do
           create :state_benefit,
                  :with_monthly_payments,
-                 gross_income_summary: gross_income_summary,
+                 gross_income_summary:,
                  state_benefit_type: another_state_benefit_type_included
         end
 
@@ -53,7 +53,7 @@ module Calculators
         before do
           create :state_benefit,
                  :with_monthly_payments,
-                 gross_income_summary: gross_income_summary,
+                 gross_income_summary:,
                  state_benefit_type: state_benefit_type_excluded
         end
 

@@ -7,7 +7,7 @@ module Decorators
 
       let(:summary) do
         create :gross_income_summary,
-               assessment: assessment,
+               assessment:,
                monthly_student_loan: 250,
                benefits_all_sources: 1_322.6,
                benefits_bank: 1_322.6,
@@ -20,8 +20,8 @@ module Decorators
                property_or_lodger_bank: 250
       end
 
-      let!(:employment1) { create :employment, :with_monthly_payments, assessment: assessment }
-      let!(:employment2) { create :employment, :with_monthly_payments, assessment: assessment }
+      let!(:employment1) { create :employment, :with_monthly_payments, assessment: }
+      let!(:employment2) { create :employment, :with_monthly_payments, assessment: }
       let(:universal_credit) { create :state_benefit_type, :universal_credit }
       let(:child_benefit) { create :state_benefit_type, :child_benefit }
 

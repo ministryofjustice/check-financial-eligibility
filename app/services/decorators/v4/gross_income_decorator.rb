@@ -11,9 +11,9 @@ module Decorators
       def as_json
         {
           employment_income: employment_incomes,
-          irregular_income: irregular_income,
-          state_benefits: state_benefits,
-          other_income: other_income,
+          irregular_income:,
+          state_benefits:,
+          other_income:,
         }
       end
 

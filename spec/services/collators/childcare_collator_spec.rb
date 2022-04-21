@@ -15,19 +15,19 @@ module Collators
         create :bank_holiday
         create :childcare_outgoing, disposable_income_summary: disposable_income_summary, payment_date: Date.yesterday, amount: 155.63
         create :childcare_outgoing, disposable_income_summary: disposable_income_summary, payment_date: 1.month.ago, amount: 155.63
-        create :childcare_outgoing, disposable_income_summary: disposable_income_summary, payment_date: 2.months.ago, amount: 155.63
+        create :childcare_outgoing, disposable_income_summary:, payment_date: 2.months.ago, amount: 155.63
       end
 
       context "No dependants under 15" do
         before do
-          create :dependant, assessment: assessment, date_of_birth: 16.years.ago
+          create :dependant, assessment:, date_of_birth: 16.years.ago
         end
 
         context "Employed" do
           before { allow_any_instance_of(described_class).to receive(:applicant_employed?).and_return(true) }
 
           context "in receipt of Student grant in irregular income payments" do
-            before { create :irregular_income_payment, gross_income_summary: gross_income_summary }
+            before { create :irregular_income_payment, gross_income_summary: }
 
             it "does not update the childcare value on the disposable income summary" do
               collator
@@ -46,7 +46,7 @@ module Collators
         context "not employed" do
           context "in receipt of Student grant" do
             context "in irregular income payments" do
-              before { create :irregular_income_payment, gross_income_summary: gross_income_summary }
+              before { create :irregular_income_payment, gross_income_summary: }
 
               it "does not update the childcare value on the disposable income summary" do
                 collator
@@ -69,14 +69,14 @@ module Collators
 
         before do
           create :dependant, assessment: assessment, date_of_birth: 16.years.ago
-          create :dependant, assessment: assessment, date_of_birth: 14.years.ago
+          create :dependant, assessment:, date_of_birth: 14.years.ago
         end
 
         context "Employed" do
           before { allow_any_instance_of(described_class).to receive(:applicant_employed?).and_return(true) }
 
           context "in receipt of Student grant in irregular income payments" do
-            before { create :irregular_income_payment, gross_income_summary: gross_income_summary }
+            before { create :irregular_income_payment, gross_income_summary: }
 
             it "updates the childcare value on the disposable income summary" do
               collator
@@ -94,7 +94,7 @@ module Collators
 
         context "not employed" do
           context "in receipt of Student grant in irregular income payments" do
-            before { create :irregular_income_payment, amount: 0.0, gross_income_summary: gross_income_summary }
+            before { create :irregular_income_payment, amount: 0.0, gross_income_summary: }
 
             it "updates the childcare value on the disposable income summary" do
               collator
@@ -103,7 +103,7 @@ module Collators
           end
 
           context "not in receipt of Student grant" do
-            before { create :other_income_source, gross_income_summary: gross_income_summary, name: "friends_or_family" }
+            before { create :other_income_source, gross_income_summary:, name: "friends_or_family" }
 
             it "does not update the childcare value on the disposable income summary" do
               collator

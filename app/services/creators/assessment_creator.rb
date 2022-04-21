@@ -19,7 +19,7 @@ module Creators
       {
         success: success?,
         assessment_id: new_assessment.id,
-        errors: errors,
+        errors:,
       }
     end
 
@@ -36,7 +36,7 @@ module Creators
         matter_proceeding_type: @parsed_raw_post[:matter_proceeding_type],
         proceeding_type_codes: ccms_codes_for_application,
         version: @version,
-        remote_ip: remote_ip,
+        remote_ip:,
       }
     end
 

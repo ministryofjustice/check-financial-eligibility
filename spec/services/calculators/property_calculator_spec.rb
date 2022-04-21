@@ -2,7 +2,7 @@ require "rails_helper"
 
 module Calculators
   RSpec.describe PropertyCalculator do
-    let(:assessment) { create :assessment, :with_capital_summary, submission_date: submission_date }
+    let(:assessment) { create :assessment, :with_capital_summary, submission_date: }
     let(:capital_summary) { assessment.capital_summary }
     let(:submission_date) { Time.zone.local(2020, 10, 10) }
     let(:service) { described_class.new(assessment) }
@@ -24,7 +24,7 @@ module Calculators
               create :property,
                      :main_home,
                      :not_shared_ownership,
-                     capital_summary: capital_summary,
+                     capital_summary:,
                      value: 466_993,
                      outstanding_mortgage: 266_000,
                      percentage_owned: 100.0
@@ -47,7 +47,7 @@ module Calculators
               create :property,
                      :main_home,
                      :not_shared_ownership,
-                     capital_summary: capital_summary,
+                     capital_summary:,
                      value: 466_993,
                      outstanding_mortgage: 37_256.44,
                      percentage_owned: 100.0
@@ -72,7 +72,7 @@ module Calculators
               create :property,
                      :main_home,
                      :not_shared_ownership,
-                     capital_summary: capital_summary,
+                     capital_summary:,
                      value: 466_993,
                      outstanding_mortgage: 266_000,
                      percentage_owned: 100.0
@@ -97,7 +97,7 @@ module Calculators
               create :property,
                      :main_home,
                      :not_shared_ownership,
-                     capital_summary: capital_summary,
+                     capital_summary:,
                      value: 466_993,
                      outstanding_mortgage: 266_000.44,
                      percentage_owned: 66.66
@@ -120,7 +120,7 @@ module Calculators
               create :property,
                      :main_home,
                      :not_shared_ownership,
-                     capital_summary: capital_summary,
+                     capital_summary:,
                      value: 466_993,
                      outstanding_mortgage: 37_256.44,
                      percentage_owned: 66.66
@@ -145,7 +145,7 @@ module Calculators
               create :property,
                      :main_home,
                      :not_shared_ownership,
-                     capital_summary: capital_summary,
+                     capital_summary:,
                      value: 466_993,
                      outstanding_mortgage: 266_000,
                      percentage_owned: 66.66
@@ -169,7 +169,7 @@ module Calculators
             create :property,
                    :main_home,
                    :shared_ownership,
-                   capital_summary: capital_summary,
+                   capital_summary:,
                    value: 160_000,
                    outstanding_mortgage: 70_000,
                    percentage_owned: 50.0
@@ -193,7 +193,7 @@ module Calculators
               create :property,
                      :main_home,
                      :not_shared_ownership,
-                     capital_summary: capital_summary,
+                     capital_summary:,
                      value: 466_993,
                      outstanding_mortgage: 266_000,
                      percentage_owned: 66.66
@@ -218,7 +218,7 @@ module Calculators
           create :property,
                  :main_home,
                  :not_shared_ownership,
-                 capital_summary: capital_summary,
+                 capital_summary:,
                  value: 220_000,
                  outstanding_mortgage: 35_000,
                  percentage_owned: 100.0
@@ -228,7 +228,7 @@ module Calculators
           create :property,
                  :additional_property,
                  :not_shared_ownership,
-                 capital_summary: capital_summary,
+                 capital_summary:,
                  value: 350_000,
                  outstanding_mortgage: 55_000,
                  percentage_owned: 100.0
@@ -238,7 +238,7 @@ module Calculators
           create :property,
                  :additional_property,
                  :not_shared_ownership,
-                 capital_summary: capital_summary,
+                 capital_summary:,
                  value: 270_000,
                  outstanding_mortgage: 40_000,
                  percentage_owned: 100.0
@@ -311,7 +311,7 @@ module Calculators
           create :property,
                  :additional_property,
                  :not_shared_ownership,
-                 capital_summary: capital_summary,
+                 capital_summary:,
                  value: 350_000,
                  outstanding_mortgage: 55_000,
                  percentage_owned: 100.0
@@ -336,7 +336,7 @@ module Calculators
             create :property,
                    :additional_property,
                    :not_shared_ownership,
-                   capital_summary: capital_summary,
+                   capital_summary:,
                    value: 350_000,
                    outstanding_mortgage: 200_000,
                    percentage_owned: 100.0

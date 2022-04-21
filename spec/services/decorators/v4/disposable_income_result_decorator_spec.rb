@@ -7,7 +7,7 @@ module Decorators
       let(:assessment) { create :assessment, :with_gross_income_summary, proceeding_type_codes: codes }
       let(:summary) do
         create :disposable_income_summary,
-               assessment: assessment,
+               assessment:,
                dependant_allowance: 220.21,
                gross_housing_costs: 990.42,
                housing_benefit: 440.21,
@@ -17,8 +17,8 @@ module Decorators
                total_disposable_income: 732.55,
                income_contribution: 75
       end
-      let(:employment1) { create :employment, :with_monthly_payments, assessment: assessment }
-      let(:employment2) { create :employment, :with_monthly_payments, assessment: assessment }
+      let(:employment1) { create :employment, :with_monthly_payments, assessment: }
+      let(:employment2) { create :employment, :with_monthly_payments, assessment: }
       let(:codes) { pt_results.keys }
       let(:pt_results) do
         {
@@ -85,8 +85,8 @@ module Decorators
           create :disposable_income_eligibility,
                  disposable_income_summary: summary,
                  proceeding_type_code: ptc,
-                 upper_threshold: upper_threshold,
-                 lower_threshold: lower_threshold,
+                 upper_threshold:,
+                 lower_threshold:,
                  assessment_result: result
         end
       end

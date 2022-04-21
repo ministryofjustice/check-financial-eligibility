@@ -86,7 +86,7 @@ RSpec.describe Calculators::TaxNiRefundCalculator do
   def setup_employment_and_payments
     date_strings.each_with_index do |date_string, i|
       create :employment_payment,
-             employment: employment,
+             employment:,
              date: Date.parse(date_string),
              gross_income: 1000,
              gross_income_monthly_equiv: 1000,

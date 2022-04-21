@@ -15,7 +15,7 @@ RSpec.describe OutgoingsController, type: :request do
       }
     end
 
-    subject(:post_payload) { post assessment_outgoings_path(assessment), params: params.to_json, headers: headers }
+    subject(:post_payload) { post assessment_outgoings_path(assessment), params: params.to_json, headers: }
 
     it "returns http success", :show_in_doc do
       post_payload
