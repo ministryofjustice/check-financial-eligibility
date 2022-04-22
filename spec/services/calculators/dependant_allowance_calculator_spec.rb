@@ -257,7 +257,7 @@ module Calculators
 
         describe "child_aged_15_allowance" do
           it "returns the threshold value" do
-            expect(calculator.child_aged_15_allowance).to eq 298.08
+            expect(calculator.child_aged_15_allowance).to eq 307.64
           end
         end
 
