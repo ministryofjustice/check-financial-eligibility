@@ -20,7 +20,7 @@ RSpec.describe ExplicitRemarksController, type: :request do
 
     context "valid payload" do
       before do
-        post assessment_explicit_remarks_path(assessment.id), params: payload.to_json, headers: headers
+        post assessment_explicit_remarks_path(assessment.id), params: payload.to_json, headers:
       end
 
       context " success", :show_in_doc do

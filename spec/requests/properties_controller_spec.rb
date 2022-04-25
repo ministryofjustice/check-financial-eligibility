@@ -4,7 +4,7 @@ RSpec.describe PropertiesController, type: :request do
   describe "POST /assessments/:assessment_id/properties" do
     let(:assessment) { create :assessment, :with_capital_summary }
     let(:assessment_id) { assessment.id }
-    let(:property) { create :property, assessment: assessment }
+    let(:property) { create :property, assessment: }
     let(:headers) { { "CONTENT_TYPE" => "application/json" } }
     let(:request_payload) do
       {
@@ -35,7 +35,7 @@ RSpec.describe PropertiesController, type: :request do
 
     context "valid payload" do
       before do
-        post assessment_properties_path(assessment_id), params: request_payload.to_json, headers: headers
+        post assessment_properties_path(assessment_id), params: request_payload.to_json, headers:
       end
 
       context "service returns success" do

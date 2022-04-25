@@ -13,9 +13,9 @@ module RemarkGenerators
       subject(:checker) { described_class.call(assessment, collection) }
 
       context "no flags" do
-        let(:payment1) { create :state_benefit_payment, state_benefit: state_benefit, amount: amount, payment_date: dates[0] }
-        let(:payment2) { create :state_benefit_payment, state_benefit: state_benefit, amount: amount, payment_date: dates[1] }
-        let(:payment3) { create :state_benefit_payment, state_benefit: state_benefit, amount: amount, payment_date: dates[2] }
+        let(:payment1) { create :state_benefit_payment, state_benefit:, amount:, payment_date: dates[0] }
+        let(:payment2) { create :state_benefit_payment, state_benefit:, amount:, payment_date: dates[1] }
+        let(:payment3) { create :state_benefit_payment, state_benefit:, amount:, payment_date: dates[2] }
 
         it "does not update the remarks class" do
           checker
@@ -24,9 +24,9 @@ module RemarkGenerators
       end
 
       context "variation in amount" do
-        let(:payment1) { create :state_benefit_payment, state_benefit: state_benefit, amount: amount, payment_date: dates[0] }
-        let(:payment2) { create :state_benefit_payment, state_benefit: state_benefit, amount: amount, payment_date: dates[1] }
-        let(:payment3) { create :state_benefit_payment, :with_multi_benefit_flag, state_benefit: state_benefit, amount: amount, payment_date: dates[2] }
+        let(:payment1) { create :state_benefit_payment, state_benefit:, amount:, payment_date: dates[0] }
+        let(:payment2) { create :state_benefit_payment, state_benefit:, amount:, payment_date: dates[1] }
+        let(:payment3) { create :state_benefit_payment, :with_multi_benefit_flag, state_benefit:, amount:, payment_date: dates[2] }
 
         it "adds the remark" do
           expect_any_instance_of(Remarks).to receive(:add).with(:state_benefit_payment, :multi_benefit, collection.map(&:client_id))

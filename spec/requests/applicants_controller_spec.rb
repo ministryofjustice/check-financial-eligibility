@@ -18,7 +18,7 @@ RSpec.describe ApplicantsController, type: :request do
 
     context "valid payload" do
       before do
-        post assessment_applicant_path(assessment.id), params: params.to_json, headers: headers
+        post assessment_applicant_path(assessment.id), params: params.to_json, headers:
       end
 
       context "service returns success" do
@@ -66,7 +66,7 @@ RSpec.describe ApplicantsController, type: :request do
 
       before do
         params[:assessment_id] = non_existent_assessment_id
-        post assessment_applicant_path(non_existent_assessment_id), params: params.to_json, headers: headers
+        post assessment_applicant_path(non_existent_assessment_id), params: params.to_json, headers:
       end
 
       it_behaves_like "it fails with message", "No such assessment id"
@@ -78,7 +78,7 @@ RSpec.describe ApplicantsController, type: :request do
       context "missing applicant" do
         before do
           params.delete(:applicant)
-          post assessment_applicant_path(assessment.id), params: params.to_json, headers: headers
+          post assessment_applicant_path(assessment.id), params: params.to_json, headers:
         end
 
         it_behaves_like "it fails with message", "Missing parameter date_of_birth"
@@ -89,7 +89,7 @@ RSpec.describe ApplicantsController, type: :request do
 
         before do
           params[:applicant][:date_of_birth] = dob
-          post assessment_applicant_path(assessment.id), params: params.to_json, headers: headers
+          post assessment_applicant_path(assessment.id), params: params.to_json, headers:
         end
 
         it_behaves_like "it fails with message", /Date must be parsable and in the past/
@@ -98,7 +98,7 @@ RSpec.describe ApplicantsController, type: :request do
       context "missing involvement_type" do
         before do
           params[:applicant].delete(:involvement_type)
-          post assessment_applicant_path(assessment.id), params: params.to_json, headers: headers
+          post assessment_applicant_path(assessment.id), params: params.to_json, headers:
         end
 
         it_behaves_like "it fails with message", "Missing parameter involvement_type"
@@ -107,7 +107,7 @@ RSpec.describe ApplicantsController, type: :request do
       context "invalid involvement type" do
         before do
           params[:applicant][:involvement_type] = "Witness"
-          post assessment_applicant_path(assessment.id), params: params.to_json, headers: headers
+          post assessment_applicant_path(assessment.id), params: params.to_json, headers:
         end
 
         it_behaves_like "it fails with message", %(Invalid parameter 'involvement_type' value "Witness": Must be one of: <code>applicant</code>.)
@@ -116,7 +116,7 @@ RSpec.describe ApplicantsController, type: :request do
       context "has_partner_opponent not a boolean" do
         before do
           params[:applicant][:has_partner_opponent] = "yes"
-          post assessment_applicant_path(assessment.id), params: params.to_json, headers: headers
+          post assessment_applicant_path(assessment.id), params: params.to_json, headers:
         end
 
         it_behaves_like "it fails with message",

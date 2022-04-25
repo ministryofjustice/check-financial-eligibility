@@ -30,7 +30,7 @@ module TestCase
 
     def payload_for_category(in_out, category)
       {
-        category: category,
+        category:,
         payments: @collection[in_out][category].map(&:payload),
       }
     end

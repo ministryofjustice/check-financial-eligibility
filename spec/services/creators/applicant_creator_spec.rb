@@ -79,7 +79,7 @@ module Creators
           end
 
           context "applicant already exists" do
-            before { create :applicant, assessment: assessment }
+            before { create :applicant, assessment: }
 
             describe "#success?" do
               it "returns false" do

@@ -2,7 +2,7 @@ require "rails_helper"
 
 module Collators
   RSpec.describe GrossIncomeCollator do
-    let(:assessment) { create :assessment, :with_applicant, :with_gross_income_summary, proceeding_type_codes: proceeding_type_codes }
+    let(:assessment) { create :assessment, :with_applicant, :with_gross_income_summary, proceeding_type_codes: }
     let(:gross_income_summary) { assessment.gross_income_summary }
 
     before do
@@ -10,7 +10,7 @@ module Collators
       mock_lfa_responses
       assessment.proceeding_type_codes.each do |ptc|
         create :gross_income_eligibility,
-               gross_income_summary: gross_income_summary,
+               gross_income_summary:,
                proceeding_type_code: ptc,
                upper_threshold: ProceedingTypeThreshold.value_for(ptc.to_sym, :gross_income_upper, assessment.submission_date),
                assessment_result: "pending"
@@ -67,7 +67,7 @@ module Collators
           end
 
           context "monthly_student_loan exists" do
-            before { create :irregular_income_payment, gross_income_summary: gross_income_summary, amount: 12_000 }
+            before { create :irregular_income_payment, gross_income_summary:, amount: 12_000 }
 
             it "updates the gross income record with categorised monthly incomes" do
               collator

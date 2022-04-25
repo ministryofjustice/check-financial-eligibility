@@ -5,8 +5,8 @@ describe Applicant do
     let(:age) { 31 }
     let(:date_of_birth) { (age.years + 6.months).ago }
     let(:submission_date) { 1.day.ago }
-    let(:assessment) { create :assessment, submission_date: submission_date }
-    let(:applicant) { create :applicant, date_of_birth: date_of_birth, assessment: assessment }
+    let(:assessment) { create :assessment, submission_date: }
+    let(:applicant) { create :applicant, date_of_birth:, assessment: }
 
     it "returns the age" do
       expect(applicant.age_at_submission).to eq(age)

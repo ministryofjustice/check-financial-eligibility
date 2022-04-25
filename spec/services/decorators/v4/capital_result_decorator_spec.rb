@@ -13,7 +13,7 @@ module Decorators
       end
       let(:summary) do
         create :capital_summary,
-               assessment: assessment,
+               assessment:,
                total_liquid: 9_355.23,
                total_non_liquid: 12_553.22,
                total_vehicle: 3500,
@@ -59,8 +59,8 @@ module Decorators
           create :capital_eligibility,
                  capital_summary: summary,
                  proceeding_type_code: ptc,
-                 lower_threshold: lower_threshold,
-                 upper_threshold: upper_threshold,
+                 lower_threshold:,
+                 upper_threshold:,
                  assessment_result: result
         end
       end

@@ -3,7 +3,7 @@ require "rails_helper"
 module Utilities
   RSpec.describe EmploymentIncomeMonthlyEquivalentCalculator, :vcr do
     let(:assessment) { create :assessment }
-    let(:employment) { create :employment, assessment: assessment }
+    let(:employment) { create :employment, assessment: }
     let(:payments) { employment.employment_payments }
 
     context "valid payment period" do
@@ -94,7 +94,7 @@ module Utilities
 
       def create_employment_payment_records
         dates.each_with_index do |date_string, i|
-          create :employment_payment, employment: employment, date: Date.parse(date_string), gross_income: amounts[i]
+          create :employment_payment, employment:, date: Date.parse(date_string), gross_income: amounts[i]
         end
       end
     end

@@ -8,7 +8,7 @@ module Assessors
 
     context "all positive supplied" do
       before do
-        create_list :non_liquid_capital_item, 3, capital_summary: capital_summary
+        create_list :non_liquid_capital_item, 3, capital_summary:
       end
 
       it "adds them all together" do

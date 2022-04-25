@@ -72,7 +72,7 @@ module LegalFrameworkAPI
 
     def request_body
       {
-        request_id: request_id,
+        request_id:,
         proceeding_types: [ccms_code],
       }.to_json
     end
@@ -81,7 +81,7 @@ module LegalFrameworkAPI
       matter_type = section8_code? ? "Children - section 8" : "Domestic abuse"
       threshold_waived = !section8_code?
       {
-        request_id: request_id,
+        request_id:,
         proceeding_types: [
           {
             ccms_code:,

@@ -13,7 +13,7 @@ module Decorators
       end
       let(:ptcs) { ptc_results.keys }
       let(:assessment) { create :assessment, proceeding_type_codes: ptcs }
-      let(:summary) { create :gross_income_summary, assessment: assessment, total_gross_income: 16_615.40 }
+      let(:summary) { create :gross_income_summary, assessment:, total_gross_income: 16_615.40 }
       let(:expected_hash) do
         {
           total_gross_income: 16_615.40,

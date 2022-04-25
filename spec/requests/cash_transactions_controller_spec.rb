@@ -11,7 +11,7 @@ RSpec.describe CashTransactionsController, type: :request do
     let(:month2) { Date.current.beginning_of_month - 2.months }
     let(:month3) { Date.current.beginning_of_month - 1.month }
 
-    subject(:post_payload) { post assessment_cash_transactions_path(assessment_id), params: params.to_json, headers: headers }
+    subject(:post_payload) { post assessment_cash_transactions_path(assessment_id), params: params.to_json, headers: }
 
     context "valid payload" do
       let(:params) { valid_params }

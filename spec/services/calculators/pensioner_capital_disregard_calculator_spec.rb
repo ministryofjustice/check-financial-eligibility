@@ -5,7 +5,7 @@ module Calculators
     subject(:value) { described_class.new(assessment).value }
 
     let(:service) { described_class.new(assessment) }
-    let(:assessment) { create :assessment, disposable_income_summary: disposable_income_summary, applicant: applicant }
+    let(:assessment) { create :assessment, disposable_income_summary:, applicant: }
     let(:capital_summary) { assessment.capital_summary }
     let(:disposable_income_summary) { create :disposable_income_summary, total_disposable_income: disposable_income }
     let(:disposable_income) { 0 }
