@@ -58,6 +58,11 @@ child_benefit:
   :exclude_from_gross_income: false
   :dwp_code: CHB
   :category:
+hmrc_child_benefit:
+  :name: Child Benefit
+  :exclude_from_gross_income: false
+  :dwp_code: HMRC CHILD BENEFIT
+  :category:
 child_maintenance:
   :name: Child Maintenance
   :exclude_from_gross_income: false
