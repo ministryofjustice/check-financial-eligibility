@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_21_085301) do
+ActiveRecord::Schema[7.0].define(version: 2022_04_29_103502) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -299,6 +299,18 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_21_085301) do
     t.decimal "assessed_equity", default: "0.0", null: false
     t.decimal "main_home_equity_disregard", default: "0.0", null: false
     t.index ["capital_summary_id"], name: "index_properties_on_capital_summary_id"
+  end
+
+  create_table "request_logs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "request_method"
+    t.string "endpoint"
+    t.string "assessment_id"
+    t.string "params"
+    t.integer "http_status"
+    t.string "response"
+    t.decimal "duration"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "state_benefit_payments", force: :cascade do |t|
