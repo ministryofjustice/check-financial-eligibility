@@ -100,6 +100,7 @@ RSpec.describe AssessmentsController, type: :request do
         post assessments_path, params: params.to_json, headers: headers
         expect(response).to have_http_status(:ok)
         expect(parsed_response[:success]).to be true
+        expect(Assessment.first.assessment_type).to eq nil
       end
     end
 
