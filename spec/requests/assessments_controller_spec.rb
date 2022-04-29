@@ -103,6 +103,30 @@ RSpec.describe AssessmentsController, type: :request do
       end
     end
 
+    context "criminal assessment" do
+      let(:headers) do
+        {
+          "CONTENT_TYPE" => "application/json",
+          "Accept" => "application/json; version=4",
+        }
+      end
+      let(:params) do
+        {
+          client_reference_id: "psr-123",
+          submission_date: "2019-06-06",
+          assessment_type: "criminal"
+        }
+      end
+
+      it "calls the assessment creator with version and params" do
+        expect(Creators::AssessmentCreator).to receive(:call).with(remote_ip: ipaddr, raw_post: params.to_json, version: "4").and_call_original
+        post assessments_path, params: params.to_json, headers: headers
+        expect(response).to have_http_status(:ok)
+        expect(parsed_response[:success]).to be true
+        expect(Assessment.first.assessment_type).to eq 'criminal'
+      end
+    end
+
     context "invalid version" do
       let(:headers) do
         {
