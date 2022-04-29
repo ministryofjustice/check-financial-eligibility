@@ -35,13 +35,18 @@ module Creators
         submission_date: Date.parse(@parsed_raw_post[:submission_date]),
         matter_proceeding_type: @parsed_raw_post[:matter_proceeding_type],
         proceeding_type_codes: ccms_codes_for_application,
+        assessment_type: assessment_type,
         version: @version,
         remote_ip: remote_ip,
       }
     end
 
+    def assessment_type
+      @parsed_raw_post[:assessment_type]
+    end
+
     def ccms_codes_for_application
-      @version == "3" ? dummy_code_for_domestic_abuse : codes_from_post
+      @version == "3" || assessment_type == "criminal" ? dummy_code_for_domestic_abuse : codes_from_post
     end
 
     # For version 3, which are all single_proceeding type (domestic abuse),
