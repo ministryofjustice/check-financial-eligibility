@@ -63,6 +63,6 @@ private
   end
 
   def proceeding_types_codes_required?
-    !version_3?
+    !version_3? && :assessment_type != "criminal"
   end
 end

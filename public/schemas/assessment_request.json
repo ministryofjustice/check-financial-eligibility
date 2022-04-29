@@ -31,6 +31,11 @@
       "type": "string",
       "enum": ["domestic_abuse"]
     },
+    "assessment_type": {
+      "description": "The type of case the assessment relates to",
+      "type": "string",
+      "enum": ["civil", "criminal"]
+    },
     "applicant_involvement_type": {
       "description": "The type of involvement of the applicant in the case.",
       "type": "string",

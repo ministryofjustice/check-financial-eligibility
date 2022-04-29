@@ -31,6 +31,7 @@ module TestCase
         proceeding_types: {
           ccms_codes: @proceeding_type_codes,
         },
+        assessment_type: @assessment_type,
       }
     end
 
@@ -56,6 +57,8 @@ module TestCase
         @version = row[3].to_i.to_s
       when "proceeding_type_codes"
         @proceeding_type_codes = row[3].split(";")
+      when "assessment_type"
+        @assessment_type = row[3]
       end
     end
   end
