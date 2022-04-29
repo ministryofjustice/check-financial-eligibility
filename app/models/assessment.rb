@@ -48,6 +48,10 @@ class Assessment < ApplicationRecord
     version == "3"
   end
 
+  def criminal?
+    assessment_type == "criminal"
+  end
+
 private
 
   def matter_proceeding_type_required?
@@ -55,7 +59,7 @@ private
   end
 
   def proceeding_type_codes_validations
-    return if version_3?
+    return if version_3? || criminal?
 
     proceeding_type_codes.each do |code|
       errors.add(:proceeding_type_codes, "invalid: #{code}") unless code.to_sym.in?(ProceedingTypeThreshold.valid_ccms_codes)
@@ -63,6 +67,6 @@ private
   end
 
   def proceeding_types_codes_required?
-    !version_3? && :assessment_type != "criminal"
+    !version_3? && !criminal?
   end
 end
