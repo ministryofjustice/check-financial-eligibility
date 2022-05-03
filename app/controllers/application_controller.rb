@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::API
+  around_action :log_request
+
   rescue_from StandardError do |e|
     Sentry.capture_exception(e)
     render json: { success: false, errors: ["#{e.class}: #{e.message}"] }, status: :unprocessable_entity
@@ -16,5 +18,13 @@ class ApplicationController < ActionController::API
 
   def render_success
     render json: { success: true, errors: [] }
+  end
+
+  def log_request
+    start_time = Time.zone.now
+    rec = RequestLog.create_from_request(request) if /^\/assessment/.match?(request.path)
+    yield
+    duration = Time.zone.now - start_time
+    rec.update_from_response(response, duration) if /^\/assessment/.match?(request.path)
   end
 end
