@@ -8,7 +8,7 @@ FactoryBot.define do
     version { "3" }
 
     trait :criminal do
-      assessment_type { "criminal" } 
+      assessment_type { "criminal" }
     end
 
     trait :with_applicant do
