@@ -33,6 +33,11 @@ RSpec.describe EmploymentsController, type: :request do
       end
 
       context "crime assessment" do
+        let!(:assessment) { create :assessment, :criminal }
+        let(:assessment_id) { assessment.id }
+        let(:gross_income_summary) { assessment.gross_income_summary }
+        let(:params) { criminal_legal_aid_employment_income_params }
+
         it "returns http success", :show_in_doc do
           post_payload
           expect(response).to have_http_status(:success)
