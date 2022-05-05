@@ -7,6 +7,10 @@ FactoryBot.define do
     proceeding_type_codes { %w[DA001] }
     version { "3" }
 
+    trait :criminal do
+      assessment_type { "criminal" } 
+    end
+
     trait :with_applicant do
       applicant { create :applicant, :under_pensionable_age }
     end
