@@ -37,6 +37,25 @@ module Creators
       end
     end
 
+    context "crime assessment" do
+      let(:assessment) { create :assessment, :criminal }
+      let(:assessment_id) { assessment.id }
+      let(:dependants_attributes) { attributes_for_list(:dependant, 1, :crime_dependant, :under15) }
+
+      it "creates a dependant record for this assessment" do
+        expect { creator }.to change { assessment.dependants.count }.by(dependants_attributes.count)
+
+        dependants_attributes.each do |dependant_attributes|
+          dependant = assessment.dependants.find_by!(date_of_birth: dependant_attributes[:date_of_birth])
+
+          dependant_attributes.each_key do |key|
+            expect(dependant[key].to_s).to eq(dependant_attributes[key].to_s),
+                                           "Dependent attribute `#{key}` mismatch: #{dependant[key].inspect}, #{dependant_attributes[key].inspect}"
+          end
+        end
+      end
+    end
+
     context "payload fails ActiveRecord validations" do
       let(:dependants_attributes) { attributes_for_list(:dependant, 2, date_of_birth: Faker::Date.forward) }
 
@@ -75,6 +94,27 @@ module Creators
         it "returns an error payload" do
           expect(creator.errors.size).to eq 1
           expect(creator.errors[0]).to eq "No such assessment id"
+        end
+      end
+    end
+
+    context "validates in_full_time_education" do
+      describe "invalid civil assessment when in_full_time_education is nil" do
+        let(:assessment) { create :assessment }
+        let(:assessment_id) { assessment.id }
+        let(:dependants_attributes) { attributes_for_list(:dependant, 1, :crime_dependant) }
+
+        it "returns false" do
+          expect(creator.success?).to be false
+        end
+
+        it "does not create a Dependant record" do
+          expect { creator }.not_to change(Dependant, :count)
+        end
+
+        it "returns an error payload" do
+          expect(creator.errors.size).to eq 1
+          expect(creator.errors[0]).to eq "in_full_time_education cannot be nil for a civil assessment"
         end
       end
     end
