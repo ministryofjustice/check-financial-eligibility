@@ -115,7 +115,7 @@ RSpec.describe AssessmentsController, type: :request do
         {
           client_reference_id: "psr-123",
           submission_date: "2019-06-06",
-          assessment_type: "criminal"
+          assessment_type: "criminal",
         }
       end
 
@@ -124,7 +124,7 @@ RSpec.describe AssessmentsController, type: :request do
         post assessments_path, params: params.to_json, headers: headers
         expect(response).to have_http_status(:ok)
         expect(parsed_response[:success]).to be true
-        expect(Assessment.first.assessment_type).to eq 'criminal'
+        expect(Assessment.first.assessment_type).to eq "criminal"
       end
     end
 
