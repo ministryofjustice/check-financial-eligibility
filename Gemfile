@@ -35,7 +35,7 @@ gem "business", "~> 2.3"
 
 gem "colorize"
 
-gem "json-schema", ">= 2.8.1"
+gem "json-schema", "~> 2.8.1"
 
 # Seeding tools
 gem "dibber"
@@ -64,6 +64,9 @@ gem "net-imap"
 gem "net-pop"
 gem "net-smtp"
 
+gem 'rswag-api'
+gem 'rswag-ui'
+
 group :development, :test do
   gem "awesome_print"
   gem "dotenv-rails", ">= 2.7.6"
@@ -74,6 +77,7 @@ group :development, :test do
   gem "pry-byebug"
   gem "rspec_junit_formatter"
   gem "rspec-rails", "~> 5.1"
+  gem 'rswag-specs'
   gem "rubocop-govuk", require: false
   gem "rubocop-performance"
   gem "timecop"
