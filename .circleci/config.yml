@@ -8,7 +8,7 @@ executors:
       - image: cimg/base:2020.01
   cloud-platform-executor:
     docker:
-      - image: ministryofjustice/cloud-platform-tools:1.23
+      - image: ministryofjustice/cloud-platform-tools:2.1
         environment:
           GITHUB_TEAM_NAME_SLUG: laa-apply-for-legal-aid
   linting-executor:
