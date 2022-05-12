@@ -55,7 +55,7 @@ gem "nesty"
 gem "roo", "~> 2.9.0"
 
 # Manage security headers
-gem "secure_headers"
+# gem "secure_headers"
 
 gem "webpacker", "~> 5"
 
@@ -64,8 +64,8 @@ gem "net-imap"
 gem "net-pop"
 gem "net-smtp"
 
-gem 'rswag-api'
-gem 'rswag-ui'
+gem "rswag-api"
+gem "rswag-ui"
 
 group :development, :test do
   gem "awesome_print"
@@ -77,7 +77,7 @@ group :development, :test do
   gem "pry-byebug"
   gem "rspec_junit_formatter"
   gem "rspec-rails", "~> 5.1"
-  gem 'rswag-specs'
+  gem "rswag-specs"
   gem "rubocop-govuk", require: false
   gem "rubocop-performance"
   gem "timecop"
