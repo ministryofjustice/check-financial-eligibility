@@ -374,7 +374,6 @@ GEM
     ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
-    secure_headers (6.3.3)
     semantic_range (3.0.0)
     sentry-rails (5.3.1)
       railties (>= 5.0)
@@ -474,7 +473,6 @@ DEPENDENCIES
   rswag-ui
   rubocop-govuk
   rubocop-performance
-  secure_headers
   sentry-rails (>= 4.4.0)
   sentry-ruby
   shoulda-matchers

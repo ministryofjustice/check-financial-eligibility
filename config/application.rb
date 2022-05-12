@@ -42,3 +42,5 @@ module CheckFinancialEligibility
     config.x.legal_framework_api_host = ENV["LEGAL_FRAMEWORK_API_HOST"]
   end
 end
+
+require "rswag_ui_csp"
