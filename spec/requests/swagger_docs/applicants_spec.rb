@@ -1,7 +1,7 @@
 require "rails_helper"
 require "swagger_helper"
 
-RSpec.describe "applicants", type: :request, swagger_doc: "v5/swagger.yaml" do
+RSpec.describe "applicants", type: :request, swagger_doc: "v4/swagger.yaml" do
   path "/assessments/{assessment_id}/applicant" do
     post("create applicant") do
       tags "Applicants"

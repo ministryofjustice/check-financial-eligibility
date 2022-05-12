@@ -1,8 +1,8 @@
 ---
 openapi: 3.0.1
 info:
-  title: API V5
-  version: v5
+  title: API V4
+  version: v4
 paths:
   "/assessments/{assessment_id}/applicant":
     post:
@@ -46,4 +46,4 @@ servers:
 - url: https://{defaultHost}
   variables:
     defaultHost:
-      default: www.example.com
+      default: localhost:3000

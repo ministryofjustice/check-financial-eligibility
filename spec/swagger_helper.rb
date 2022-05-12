@@ -15,11 +15,11 @@ RSpec.configure do |config|
   # document below. You can override this behavior by adding a swagger_doc tag to the
   # the root example_group in your specs, e.g. describe '...', swagger_doc: 'v2/swagger.json'
   config.swagger_docs = {
-    'v5/swagger.yaml' => {
+    'v4/swagger.yaml' => {
       openapi: '3.0.1',
       info: {
-        title: 'API V5',
-        version: 'v5'
+        title: 'API V4',
+        version: 'v4'
       },
       paths: {},
       servers: [
@@ -27,7 +27,7 @@ RSpec.configure do |config|
           url: 'https://{defaultHost}',
           variables: {
             defaultHost: {
-              default: 'www.example.com'
+              default: 'localhost:3000'
             }
           }
         }
