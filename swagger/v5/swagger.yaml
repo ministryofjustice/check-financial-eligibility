@@ -1,0 +1,49 @@
+---
+openapi: 3.0.1
+info:
+  title: API V5
+  version: v5
+paths:
+  "/assessments/{assessment_id}/applicant":
+    post:
+      summary: create applicant
+      tags:
+      - Applicants
+      parameters:
+      - name: assessment_id
+        in: path
+        description: assessment_id
+        required: true
+        schema:
+          type: uuid
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                date_of_birth:
+                  type: date
+                  example: '1992-07-22'
+                  description: Applicant date of birth
+                involvement_type:
+                  type: string
+                  example: applicant
+                  description: Applicant involvement type
+                has_partner_opponent:
+                  type: boolean
+                  example: false
+                  description: Applicant has partner opponent
+                receives_qualifying_benefit:
+                  type: boolean
+                  example: false
+                  description: Applicant receives qualifying benefit
+        required: true
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: www.example.com
