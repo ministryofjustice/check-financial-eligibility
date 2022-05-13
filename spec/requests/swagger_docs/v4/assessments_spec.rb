@@ -3,7 +3,7 @@ require "swagger_helper"
 RSpec.describe "assessments", type: :request, swagger_doc: "v4/swagger.yaml" do
   path "/assessments" do
     post("create assessment") do
-      tags "Assessments"
+      tags "Assessment"
       consumes "application/json"
       produces "application/json"
 
@@ -74,8 +74,7 @@ RSpec.describe "assessments", type: :request, swagger_doc: "v4/swagger.yaml" do
     parameter name: "id", in: :path, type: :string, description: "id"
 
     get("show assessment") do
-      tags "Assessments"
-      consumes "application/json"
+      tags "Assessment"
       produces "application/json"
 
       response(200, "successful") do
