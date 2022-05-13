@@ -14,10 +14,12 @@ It's defined as code and [can be edited](https://github.com/ministryofjustice/la
 
 ## Documentation
 
-The API is documented at `/apidocs`
+The API is documented by APIPIE at `/apidocs`
 
 The documentation and input validation is maintained via
 [APIPIE](https://github.com/Apipie/apipie-rails).
+
+The API is documented by Rswag at `/api-docs`
 
 ## API Versioning
 
@@ -57,7 +59,7 @@ The `AssessmentController` calls the `MainWorkflow`, which immediately branches 
 In each case, the workflow takes each of the assessments in turn, calls a collator to look at all the sub-records under the summary and come up with a total figure in the case of capital, or a monthly equivalent figure in the case of gross or disposable  income, and these results are stored on the associated summary record.  After collation, an assessor is called for each summary which stores the results (eligible, ineligible, contribution required) in each of the eligibility records (one for each proceeding type).  Finally, the main assessor is called to work out the overall result for each proceeding type taking into account the results from the capital, gross income and disposable income assessments.  The assessments controller then calls the main decorator to format the output in the required structure to send back to the client.
 
 
-## Generation of API documentation
+## Generation of API documentation using APIPIE
 The documentation is automatically generated when tests are run with an environment variable set.
 
 ```shell
@@ -68,6 +70,23 @@ This generates a JSON file `doc/apipie_examples.json` which is read and used whe
 
 To add additional examples to this json file, add the `:show_in_doc` tag to the relevant rspec tests and rerun the above command.
 
+## Generation of API documentation using Rswag
+
+see [Rswag readme] for initial setup and/or modifications.
+
+The `swagger` folder in the root directory has one `swagger.yaml` within a version number, `v4`, folder - `swagger/v4/swagger.yaml`. This file is what defines the swagger ui page displayed at `/api-docs`. This file is generated using rswag's rake task - `rake rswag:specs:swaggerize`.
+
+The `swagger.yaml` file that is generated is defined by a combination of "global" settings in `spec/swagger_helper.rb` and indivual spec files that are, by our convention, stored in `spec/requests/swagger_docs/v4/*.spec.rb`.
+
+You can generate a new endpoint spec file using:
+```sh
+rails generate rspec:swagger MyController
+```
+
+You can update an existing endpoint by modifying it's spec and then running:
+```sh
+rake rswag:specs:swaggerize
+```
 
 ## Setting the env vars
 To run the integration tests you will need to set up a `.env` file in the root folder.
