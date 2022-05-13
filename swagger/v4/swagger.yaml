@@ -12,14 +12,17 @@ paths:
     post:
       summary: create applicant
       tags:
-      - Applicants
+      - Assessment
       parameters:
       - name: assessment_id
         in: path
-        description: assessment_id
+        description: |
+          Assessment id to which this applicant relates.
+
+          This must have been created prior to this call using POST /assessments endpoint
         required: true
         schema:
-          type: uuid
+          type: string
       responses:
         '200':
           description: successful
@@ -29,26 +32,94 @@ paths:
             schema:
               type: object
               properties:
-                date_of_birth:
-                  type: date
-                  example: '1992-07-22'
-                  description: Applicant date of birth
-                involvement_type:
-                  type: string
-                  example: applicant
-                  description: Applicant involvement type
-                has_partner_opponent:
-                  type: boolean
-                  example: false
-                  description: Applicant has partner opponent
-                receives_qualifying_benefit:
-                  type: boolean
-                  example: false
-                  description: Applicant receives qualifying benefit
+                applicant:
+                  type: object
+                  description: Object describing pertinent applicant details
+                  properties:
+                    date_of_birth:
+                      type: date
+                      example: '1992-07-22'
+                      description: Applicant date of birth
+                    involvement_type:
+                      type: string
+                      example: applicant
+                      description: Applicant involvement type
+                    has_partner_opponent:
+                      type: boolean
+                      example: false
+                      description: Applicant has partner opponent
+                    receives_qualifying_benefit:
+                      type: boolean
+                      example: false
+                      description: Applicant receives qualifying benefit
         required: true
+  "/assessments":
+    post:
+      summary: create assessment
+      tags:
+      - Assessment
+      parameters:
+      - name: Accept
+        in: header
+        schema:
+          type: string
+          description: Accept Header with appended version
+          example: application/json;version=4
+      responses:
+        '200':
+          description: successful
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client_reference_id:
+                  type: string
+                  example: LA-FOO-BAR
+                  description: Client's reference number for this application (free
+                    text)
+                submission_date:
+                  type: string
+                  description: Date of the original submission (iso8601 format)
+                  example: '2022-05-16'
+                proceeding_types:
+                  type: object
+                  description: Details of proceeding types in the application (v4
+                    and above only)
+                  properties:
+                    ccms_codes:
+                      type: array
+                      description: Array of proceeding type CCMS codes
+                      example:
+                      - DA001
+                      - SE013
+                      items:
+                        type: string
+                        example: SE003
+        required: true
+  "/assessments/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: Unique identifier of the assessment
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show assessment
+      tags:
+      - Assessment
+      responses:
+        '200':
+          description: successful
   "/state_benefit_type":
     get:
       summary: list state_benefit_types
+      tags:
+      - State benefit types
       responses:
         '200':
           description: successful
