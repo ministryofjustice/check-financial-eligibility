@@ -54,9 +54,6 @@ gem "nesty"
 # parse spreadsheets
 gem "roo", "~> 2.9.0"
 
-# Manage security headers
-# gem "secure_headers"
-
 gem "webpacker", "~> 5"
 
 # Required following upgrade to ruby 3.1.0
