@@ -19,6 +19,11 @@ RSpec.configure do |config|
       openapi: "3.0.1",
       info: {
         title: "API V4",
+        description: "Check financial eligibility for legal aid",
+        contact: {
+          name: "Github repository",
+          url: "https://github.com/ministryofjustice/check-financial-eligibility",
+        },
         version: "v4",
       },
       paths: {},
