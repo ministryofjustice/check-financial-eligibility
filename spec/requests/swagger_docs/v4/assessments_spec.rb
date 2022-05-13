@@ -1,6 +1,6 @@
 require "swagger_helper"
 
-RSpec.describe "assessments", type: :request, swagger_doc: "v4/swagger.yaml" do
+RSpec.describe "Assessments", type: :request, vcr: true, swagger_doc: "v4/swagger.yaml" do
   path "/assessments" do
     post("create assessment") do
       tags "Assessment"
@@ -70,15 +70,15 @@ RSpec.describe "assessments", type: :request, swagger_doc: "v4/swagger.yaml" do
   end
 
   path "/assessments/{id}" do
-    # You'll want to customize the parameter types...
-    parameter name: "id", in: :path, type: :string, description: "id"
+    parameter name: :id, in: :path, type: :string, description: "Unique identifier of the assessment"
 
     get("show assessment") do
       tags "Assessment"
       produces "application/json"
 
       response(200, "successful") do
-        let(:id) { "123" }
+        let(:assessment) { create(:assessment, :passported, :with_everything, :with_eligibilities) }
+        let(:id) { assessment.id }
 
         after do |example|
           example.metadata[:response][:content] = {

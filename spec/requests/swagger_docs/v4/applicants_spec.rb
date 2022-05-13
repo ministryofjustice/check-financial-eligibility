@@ -8,7 +8,7 @@ RSpec.describe "applicants", type: :request, swagger_doc: "v4/swagger.yaml" do
       consumes "application/json"
       produces "application/json"
 
-      parameter name: :assessment_id,
+      parameter name: "assessment_id",
                 in: :path,
                 type: :string,
                 description: <<~DESC
@@ -48,7 +48,7 @@ RSpec.describe "applicants", type: :request, swagger_doc: "v4/swagger.yaml" do
         let(:assessment) { create :assessment }
         let(:assessment_id) { assessment.id }
 
-        let(:applicant) do
+        let(:params) do
           {
             applicant: {
               date_of_birth: "1992-07-22",
