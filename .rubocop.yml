@@ -37,6 +37,12 @@ RSpec/AnyInstance:
 RSpec/ContextWording:
   Enabled: false
 
+# Swagger docs specs use `run_test!` method to dynamically generate
+# a test and generate yaml. Rubocop does not recognize as a test.
+RSpec/EmptyExampleGroup:
+  Exclude:
+    - spec/requests/swagger_docs/*
+
 # **** LEAVE FOR NOW ****
 RSpec/ExpectInHook:
   Exclude:

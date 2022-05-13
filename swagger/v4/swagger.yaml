@@ -42,8 +42,9 @@ paths:
                   example: false
                   description: Applicant receives qualifying benefit
         required: true
-servers:
-- url: https://{defaultHost}
-  variables:
-    defaultHost:
-      default: localhost:3000
+  "/state_benefit_type":
+    get:
+      summary: list state_benefit_types
+      responses:
+        '200':
+          description: successful
