@@ -9,5 +9,7 @@ Rswag::Api.configure do |c|
   # The function will have access to the rack env for the current request
   # For example, you could leverage this to dynamically assign the "host" property
   #
-  # c.swagger_filter = lambda { |swagger, env| swagger['host'] = env['HTTP_HOST'] }
+  # rubocop:disable Rails/Output, Style/Semicolon
+  c.swagger_filter = ->(swagger, env) { puts env.except("puma.config"); swagger["host"] = env["HTTP_HOST"] }
+  # rubocop:enable Rails/Output, Style/Semicolon
 end
