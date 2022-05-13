@@ -1,6 +1,7 @@
 require "rails_helper"
 require "swagger_helper"
 
+# rubocop:disable RSpec/EmptyExampleGroup
 RSpec.describe "applicants", type: :request, swagger_doc: "v4/swagger.yaml" do
   path "/assessments/{assessment_id}/applicant" do
     post("create applicant") do
@@ -56,3 +57,4 @@ RSpec.describe "applicants", type: :request, swagger_doc: "v4/swagger.yaml" do
     end
   end
 end
+# rubocop:enable RSpec/EmptyExampleGroup

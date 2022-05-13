@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.configure do |config|
   # Specify a root folder where Swagger JSON files are generated
   # NOTE: If you're using the rswag-api to serve API descriptions, you'll need
   # to ensure that it's configured to serve Swagger from the same folder
-  config.swagger_root = Rails.root.join('swagger')
+  config.swagger_root = Rails.root.join("swagger")
 
   # Define one or more Swagger documents and provide global metadata for each one
   # When you run the 'rswag:specs:swaggerize' rake task, the complete Swagger will
@@ -15,24 +15,24 @@ RSpec.configure do |config|
   # document below. You can override this behavior by adding a swagger_doc tag to the
   # the root example_group in your specs, e.g. describe '...', swagger_doc: 'v2/swagger.json'
   config.swagger_docs = {
-    'v4/swagger.yaml' => {
-      openapi: '3.0.1',
+    "v4/swagger.yaml" => {
+      openapi: "3.0.1",
       info: {
-        title: 'API V4',
-        version: 'v4'
+        title: "API V4",
+        version: "v4",
       },
       paths: {},
       servers: [
         {
-          url: 'https://{defaultHost}',
+          url: "https://{defaultHost}",
           variables: {
             defaultHost: {
-              default: 'localhost:3000'
-            }
-          }
-        }
-      ]
-    }
+              default: "localhost:3000",
+            },
+          },
+        },
+      ],
+    },
   }
 
   # Specify the format of the output Swagger file when running 'rswag:specs:swaggerize'.
