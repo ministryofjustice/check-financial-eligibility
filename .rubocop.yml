@@ -41,7 +41,7 @@ RSpec/ContextWording:
 # a test and generate yaml. Rubocop does not recognize as a test.
 RSpec/EmptyExampleGroup:
   Exclude:
-    - spec/requests/swagger_docs/*
+    - spec/requests/swagger_docs/**/*
 
 # **** LEAVE FOR NOW ****
 RSpec/ExpectInHook:
