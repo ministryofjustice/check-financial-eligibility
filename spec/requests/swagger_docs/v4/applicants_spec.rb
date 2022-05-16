@@ -4,18 +4,18 @@ require "swagger_helper"
 RSpec.describe "applicants", type: :request, swagger_doc: "v4/swagger.yaml" do
   path "/assessments/{assessment_id}/applicant" do
     post("create applicant") do
-      tags "Assessment"
+      tags "Assessment components"
       consumes "application/json"
       produces "application/json"
 
       parameter name: "assessment_id",
                 in: :path,
                 type: :string,
-                description: <<~DESC
+                description: <<~DESCRIPTION
                   Assessment id to which this applicant relates.
 
                   This must have been created prior to this call using POST /assessments endpoint
-                DESC
+                DESCRIPTION
 
       parameter name: :params,
                 in: :body,
@@ -27,7 +27,8 @@ RSpec.describe "applicants", type: :request, swagger_doc: "v4/swagger.yaml" do
                       type: :object,
                       description: "Object describing pertinent applicant details",
                       properties: {
-                        date_of_birth: { type: :date,
+                        date_of_birth: { type: :string,
+                                         format: :date,
                                          example: "1992-07-22",
                                          description: "Applicant date of birth" },
                         involvement_type: { type: :string,
