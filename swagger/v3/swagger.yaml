@@ -1,0 +1,62 @@
+---
+openapi: 3.0.1
+info:
+  title: API V3
+  description: Check financial eligibility for legal aid
+  contact:
+    name: Github repository
+    url: https://github.com/ministryofjustice/check-financial-eligibility
+  version: v3
+paths:
+  "/assessments":
+    post:
+      summary: create assessment
+      tags:
+      - Assessment
+      parameters:
+      - name: Accept
+        in: header
+        schema:
+          type: string
+          description: Accept Header with appended version
+          example: application/json;version=3
+      responses:
+        '200':
+          description: successful
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client_reference_id:
+                  type: string
+                  example: LA-FOO-BAR
+                  description: Client's reference number for this application (free
+                    text)
+                submission_date:
+                  type: string
+                  description: Date of the original submission (iso8601 format)
+                  example: '2022-05-16'
+                matter_proceeding_type:
+                  type: string
+                  description: Matter type of the case (v3 and below only)
+                  example: domestic_abuse
+        required: true
+  "/assessments/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: Unique identifier of the assessment
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show assessment
+      tags:
+      - Assessment
+      responses:
+        '200':
+          description: successful

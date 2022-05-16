@@ -1,6 +1,6 @@
 require "swagger_helper"
 
-RSpec.describe "V4 Assessments", type: :request, vcr: true, swagger_doc: "v4/swagger.yaml" do
+RSpec.describe "V3 Assessments", type: :request, vcr: true, swagger_doc: "v3/swagger.yaml" do
   path "/assessments" do
     post("create assessment") do
       tags "Assessment"
@@ -12,7 +12,7 @@ RSpec.describe "V4 Assessments", type: :request, vcr: true, swagger_doc: "v4/swa
                 schema: {
                   type: :string,
                   description: "Accept Header with appended version",
-                  example: "application/json;version=4",
+                  example: "application/json;version=3",
                 }
 
       parameter name: :params,
@@ -31,33 +31,23 @@ RSpec.describe "V4 Assessments", type: :request, vcr: true, swagger_doc: "v4/swa
                       description: "Date of the original submission (iso8601 format)",
                       example: Time.zone.now.to_date.iso8601,
                     },
-                    proceeding_types: {
-                      type: :object,
-                      description: "Details of proceeding types in the application (v4 and above only)",
-                      properties: {
-                        ccms_codes: {
-                          type: :array,
-                          description: "Array of proceeding type CCMS codes",
-                          example: %w[DA001 SE013],
-                          items: {
-                            type: :string,
-                            example: "SE003",
-                          },
-                        },
-                      },
+                    matter_proceeding_type: {
+                      type: :string,
+                      description: "Matter type of the case (v3 and below only)",
+                      example: Assessment.matter_proceeding_types.values.first,
                     },
                   },
                 }
 
       # rubocop:disable RSpec/VariableName
-      let(:Accept) { "application/json;version=4" }
+      let(:Accept) { "application/json;version=3" }
       # rubocop:enable RSpec/VariableName
 
       response(200, "successful") do
         let(:params) do
           {
             submission_date: Time.zone.now.to_date.iso8601,
-            proceeding_types: { ccms_codes: %w[DA001] },
+            matter_proceeding_type: Assessment.matter_proceeding_types.values.first,
           }
         end
 
