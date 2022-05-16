@@ -13,13 +13,13 @@ paths:
       summary: create applicant
       tags:
       - Assessment components
+      description: |
+        This endpoint will create an Applicant and associate it with
+        an existing Assessment which has been created via `POST /assessments`
       parameters:
       - name: assessment_id
         in: path
-        description: |
-          Assessment id to which this applicant relates.
-
-          This must have been created prior to this call using POST /assessments endpoint
+        description: Unique identifier of the assessment
         required: true
         schema:
           type: string
@@ -116,8 +116,7 @@ paths:
       tags:
       - Assessment components
       description: |
-        == Description
-          Adds details of an applicant's capital assets to an assessment.
+        Adds details of an applicant's capital assets to an assessment.
 
         There are two types of assets:
 
@@ -131,10 +130,7 @@ paths:
       parameters:
       - name: assessment_id
         in: path
-        description: |
-          Assessment id to which this capital asset relates.
-
-          This must have been created prior to this call using POST /assessments endpoint
+        description: Unique identifier of the assessment
         required: true
         schema:
           type: string
@@ -170,14 +166,15 @@ paths:
       summary: create cash_transaction
       tags:
       - Assessment components
+      description: 'Adds cash income and outgoings to an assessment so that they can
+        be included in the means test.
+
+        '
       parameters:
       - name: assessment_id
         in: path
         format: uuid
-        description: |
-          Assessment id to which this cash transaction relates.
-
-          This must have been created prior to this call using POST /assessments endpoint
+        description: Unique identifier of the assessment
         required: true
         schema:
           type: string
