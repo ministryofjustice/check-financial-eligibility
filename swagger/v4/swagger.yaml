@@ -58,13 +58,7 @@ paths:
       summary: create assessment
       tags:
       - Assessment
-      parameters:
-      - name: Accept
-        in: header
-        schema:
-          type: string
-          description: Accept Header with appended version
-          example: application/json;version=4
+      parameters: []
       responses:
         '200':
           description: successful
@@ -115,6 +109,61 @@ paths:
       responses:
         '200':
           description: successful
+  "/assessments/{assessment_id}/capitals":
+    post:
+      summary: create capital
+      tags:
+      - Capitals
+      description: |
+        == Description
+          Adds details of an applicant's capital assets to an assessment.
+
+        There are two types of assets:
+
+        - bank_accounts The description should hold the Bank name and account
+          number, and the value should hold the lowest balance during that calculation period (i.e. the
+          month leading up to the submission date)
+
+        - non-liquid capital items: These are other capital assets which are not immediately realisable as cash, such
+          as stocks and shares, interest in a trust, valuable items, etc. Do not include property or vehicles which
+          are added through separate endpoints.
+      parameters:
+      - name: assessment_id
+        in: path
+        description: |
+          Assessment id to which this capital asset relates.
+
+          This must have been created prior to this call using POST /assessments endpoint
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                bank_accounts:
+                  type: array
+                  description: One or more account details
+                  example:
+                  - value: 1.01
+                    description: test name 1
+                  - value: 100.01
+                    description: test name 2
+                  items:
+                    type: object
+                    description: Account detail
+                    properties:
+                      value:
+                        type: number
+                        format: decimal
+                      description:
+                        type: string
+        required: true
   "/state_benefit_type":
     get:
       summary: list state_benefit_types

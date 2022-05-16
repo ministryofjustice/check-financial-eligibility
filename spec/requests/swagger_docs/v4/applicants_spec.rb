@@ -45,8 +45,7 @@ RSpec.describe "applicants", type: :request, swagger_doc: "v4/swagger.yaml" do
                 }
 
       response(200, "successful") do
-        let(:assessment) { create :assessment }
-        let(:assessment_id) { assessment.id }
+        let(:assessment_id) { create(:assessment).id }
 
         let(:params) do
           {

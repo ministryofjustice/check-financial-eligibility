@@ -26,6 +26,7 @@ RSpec.configure do |config|
         },
         version: "v3",
       },
+
       paths: {},
     },
     "v4/swagger.yaml" => {
