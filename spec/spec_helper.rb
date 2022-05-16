@@ -1,6 +1,5 @@
 require "simplecov"
 require "vcr"
-require "support/apipie_helper"
 
 SimpleCov.minimum_coverage 100 unless ENV["SKIP_COVERAGE"]
 
