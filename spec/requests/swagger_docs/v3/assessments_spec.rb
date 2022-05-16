@@ -7,14 +7,6 @@ RSpec.describe "V3 Assessments", type: :request, vcr: true, swagger_doc: "v3/swa
       consumes "application/json"
       produces "application/json"
 
-      parameter name: "Accept",
-                in: :header,
-                schema: {
-                  type: :string,
-                  description: "Accept Header with appended version",
-                  example: "application/json;version=3",
-                }
-
       parameter name: :params,
                 in: :body,
                 required: true,

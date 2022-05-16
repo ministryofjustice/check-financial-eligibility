@@ -13,13 +13,7 @@ paths:
       summary: create assessment
       tags:
       - Assessment
-      parameters:
-      - name: Accept
-        in: header
-        schema:
-          type: string
-          description: Accept Header with appended version
-          example: application/json;version=3
+      parameters: []
       responses:
         '200':
           description: successful

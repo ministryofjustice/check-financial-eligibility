@@ -7,14 +7,6 @@ RSpec.describe "V4 Assessments", type: :request, vcr: true, swagger_doc: "v4/swa
       consumes "application/json"
       produces "application/json"
 
-      parameter name: "Accept",
-                in: :header,
-                schema: {
-                  type: :string,
-                  description: "Accept Header with appended version",
-                  example: "application/json;version=4",
-                }
-
       parameter name: :params,
                 in: :body,
                 required: true,
@@ -73,7 +65,6 @@ RSpec.describe "V4 Assessments", type: :request, vcr: true, swagger_doc: "v4/swa
       end
 
       response(422, "Unprocessable Entity") do
-        context ""
         let(:params) { {} }
 
         run_test! do |response|
