@@ -8,8 +8,7 @@ RSpec.describe "capitals", type: :request, swagger_doc: "v4/swagger.yaml" do
       produces "application/json"
 
       description <<~DESCRIPTION
-        == Description
-          Adds details of an applicant's capital assets to an assessment.
+        Adds details of an applicant's capital assets to an assessment.
 
         There are two types of assets:
 
@@ -25,11 +24,7 @@ RSpec.describe "capitals", type: :request, swagger_doc: "v4/swagger.yaml" do
       parameter name: "assessment_id",
                 in: :path,
                 type: :string,
-                description: <<~DESC
-                  Assessment id to which this capital asset relates.
-
-                  This must have been created prior to this call using POST /assessments endpoint
-                DESC
+                description: "Unique identifier of the assessment"
 
       parameter name: :params,
                 in: :body,

@@ -8,14 +8,15 @@ RSpec.describe "applicants", type: :request, swagger_doc: "v4/swagger.yaml" do
       consumes "application/json"
       produces "application/json"
 
+      description <<~DESCRIPTION
+        This endpoint will create an Applicant and associate it with
+        an existing Assessment which has been created via `POST /assessments`
+      DESCRIPTION
+
       parameter name: "assessment_id",
                 in: :path,
                 type: :string,
-                description: <<~DESCRIPTION
-                  Assessment id to which this applicant relates.
-
-                  This must have been created prior to this call using POST /assessments endpoint
-                DESCRIPTION
+                description: "Unique identifier of the assessment"
 
       parameter name: :params,
                 in: :body,

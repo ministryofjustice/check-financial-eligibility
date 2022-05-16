@@ -7,15 +7,15 @@ RSpec.describe "cash_transactions", type: :request, swagger_doc: "v4/swagger.yam
       consumes "application/json"
       produces "application/json"
 
+      description <<~DESCRIPTION
+        Adds cash income and outgoings to an assessment so that they can be included in the means test.
+      DESCRIPTION
+
       parameter name: "assessment_id",
                 in: :path,
                 type: :string,
                 format: :uuid,
-                description: <<~DESCRIPTION
-                  Assessment id to which this cash transaction relates.
-
-                  This must have been created prior to this call using POST /assessments endpoint
-                DESCRIPTION
+                description: "Unique identifier of the assessment"
 
       parameter name: :params,
                 in: :body,
