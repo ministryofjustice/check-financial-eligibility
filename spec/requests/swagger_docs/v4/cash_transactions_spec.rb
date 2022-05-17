@@ -8,7 +8,7 @@ RSpec.describe "cash_transactions", type: :request, swagger_doc: "v4/swagger.yam
       produces "application/json"
 
       description <<~DESCRIPTION
-        Adds cash income and outgoings to an assessment so that they can be included in the means test.
+        Add cash income and outgoings to an assessment.
       DESCRIPTION
 
       parameter name: "assessment_id",
