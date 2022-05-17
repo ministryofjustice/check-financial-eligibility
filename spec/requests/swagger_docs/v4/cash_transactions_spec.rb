@@ -34,7 +34,8 @@ RSpec.describe "cash_transactions", type: :request, swagger_doc: "v4/swagger.yam
                         properties: {
                           category: {
                             type: :string,
-                            example: "maintenance_in",
+                            enum: CFEConstants::VALID_INCOME_CATEGORIES,
+                            example: CFEConstants::VALID_INCOME_CATEGORIES.first,
                           },
                           payments: {
                             type: :array,
@@ -73,7 +74,8 @@ RSpec.describe "cash_transactions", type: :request, swagger_doc: "v4/swagger.yam
                         properties: {
                           category: {
                             type: :string,
-                            example: "maintenance_out",
+                            enum: CFEConstants::VALID_OUTGOING_CATEGORIES,
+                            example: CFEConstants::VALID_OUTGOING_CATEGORIES.first,
                           },
                           payments: {
                             type: :array,
@@ -126,6 +128,7 @@ RSpec.describe "cash_transactions", type: :request, swagger_doc: "v4/swagger.yam
 
       response(422, "Unprocessable Entity") do\
         let(:assessment_id) { create(:assessment, :with_gross_income_summary).id }
+
         let(:params) do
           {
             income: [

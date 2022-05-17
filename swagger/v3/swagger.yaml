@@ -33,7 +33,7 @@ paths:
                 submission_date:
                   type: string
                   description: Date of the original submission (iso8601 format)
-                  example: '2022-05-16'
+                  example: '2022-05-17'
                 matter_proceeding_type:
                   type: string
                   description: Matter type of the case (v3 and below only)
