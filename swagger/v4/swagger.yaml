@@ -526,6 +526,65 @@ paths:
                               required: true
                               description: Net payment income received
         required: true
+  "/assessments/{assessment_id}/irregular_incomes":
+    post:
+      summary: create irregular_income
+      tags:
+      - Assessment components
+      description: 'Add applicant''s irregular income payments to an assessment.
+
+        '
+      parameters:
+      - name: assessment_id
+        in: path
+        format: uuid
+        description: Unique identifier of the assessment
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              description: A set of irregular income payments
+              example:
+                payments:
+                - income_type: student_loan
+                  frequency: annual
+                  amount: 123456.78
+              properties:
+                payments:
+                  type: array
+                  description: One or more irregular payment details
+                  items:
+                    type: object
+                    description: Irregular payment detail
+                    properties:
+                      income_type:
+                        type: string
+                        enum:
+                        - student_loan
+                        required: true
+                        description: Identifying name for this irregular income payment
+                        example: student_loan
+                      frequency:
+                        type: string
+                        enum:
+                        - annual
+                        required: true
+                        description: Frequency of the payment received
+                        example: annual
+                      amount:
+                        type: number
+                        format: decimal
+                        example: 101.01
+        required: true
   "/state_benefit_type":
     get:
       summary: list state_benefit_types
