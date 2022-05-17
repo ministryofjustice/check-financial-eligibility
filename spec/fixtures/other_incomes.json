@@ -1,0 +1,44 @@
+{
+  "other_incomes": [
+    {
+      "source": "maintenance_in",
+      "payments": [
+        {
+          "date": "2019-11-01",
+          "amount": 1046.44,
+          "client_id": "a1bc2f09-b96c-4d3d-99ce-4d6ebdd4a00f"
+        },
+        {
+          "date": "2019-10-01",
+          "amount": 1034.33,
+          "client_id": "de207ebc-2d03-447a-a8fc-84cb5feeaf21"
+        },
+        {
+          "date": "2019-09-01",
+          "amount": 1033.44,
+          "client_id": "95097caa-21f9-46a7-a06c-108810e9f20b"
+        }
+      ]
+    },
+    {
+      "source": "friends_or_family",
+      "payments": [
+        {
+          "date": "2019-11-01",
+          "amount": 250.0,
+          "client_id": "9b8b6a49-aded-42cf-a41e-e3cbd5ff3d0e"
+        },
+        {
+          "date": "2019-10-01",
+          "amount": 266.02,
+          "client_id": "f9f2c4cb-2caa-4893-98ef-3c6aa9aaa842"
+        },
+        {
+          "date": "2019-09-01",
+          "amount": 250.0,
+          "client_id": "17654dfb-035e-4e3d-9db3-0d1581003ee8"
+        }
+      ]
+    }
+  ]
+}
