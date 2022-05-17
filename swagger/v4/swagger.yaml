@@ -585,6 +585,103 @@ paths:
                         format: decimal
                         example: 101.01
         required: true
+  "/assessments/{assessment_id}/other_incomes":
+    post:
+      summary: create other_income
+      tags:
+      - Assessment components
+      description: 'Add applicant''s other income payments to an assessment.
+
+        '
+      parameters:
+      - name: assessment_id
+        in: path
+        format: uuid
+        description: Unique identifier of the assessment
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              description: A set of other regular income sources
+              example:
+                other_incomes:
+                - source: maintenance_in
+                  payments:
+                  - date: '2019-11-01'
+                    amount: 1046.44
+                    client_id: a1bc2f09-b96c-4d3d-99ce-4d6ebdd4a00f
+                  - date: '2019-10-01'
+                    amount: 1034.33
+                    client_id: de207ebc-2d03-447a-a8fc-84cb5feeaf21
+                  - date: '2019-09-01'
+                    amount: 1033.44
+                    client_id: 95097caa-21f9-46a7-a06c-108810e9f20b
+                - source: friends_or_family
+                  payments:
+                  - date: '2019-11-01'
+                    amount: 250.0
+                    client_id: 9b8b6a49-aded-42cf-a41e-e3cbd5ff3d0e
+                  - date: '2019-10-01'
+                    amount: 266.02
+                    client_id: f9f2c4cb-2caa-4893-98ef-3c6aa9aaa842
+                  - date: '2019-09-01'
+                    amount: 250.0
+                    client_id: 17654dfb-035e-4e3d-9db3-0d1581003ee8
+              properties:
+                other_incomes:
+                  type: array
+                  description: One or more other regular income payments categorized
+                    by source
+                  items:
+                    type: object
+                    description: Other regular income detail
+                    properties:
+                      source:
+                        type: string
+                        enum:
+                        - benefits
+                        - friends_or_family
+                        - maintenance_in
+                        - property_or_lodger
+                        - pension
+                        - Benefits
+                        - Friends or family
+                        - Maintenance in
+                        - Property or lodger
+                        - Pension
+                        example: benefits
+                      payments:
+                        type: array
+                        description: One or more other regular payment details
+                        items:
+                          type: object
+                          description: Payment detail
+                          properties:
+                            date:
+                              type: string
+                              format: date
+                              description: Date payment received
+                              example: '1992-07-22'
+                            amount:
+                              type: number
+                              format: decimal
+                              description: Amount of payment received
+                              example: 101.01
+                            client_id:
+                              type: string
+                              format: uuid
+                              description: Client identifier for payment received
+                              example: '05459c0f-a620-4743-9f0c-b3daa93e5711'
+        required: true
   "/state_benefit_type":
     get:
       summary: list state_benefit_types
