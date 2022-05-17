@@ -13,10 +13,7 @@ RSpec.describe "applicants", type: :request, swagger_doc: "v4/swagger.yaml" do
         an existing Assessment which has been created via `POST /assessments`
       DESCRIPTION
 
-      parameter name: "assessment_id",
-                in: :path,
-                type: :string,
-                description: "Unique identifier of the assessment"
+      assessment_id_parameter
 
       parameter name: :params,
                 in: :body,

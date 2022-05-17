@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "rails_helper"
+require "swagger_parameter_helpers"
 
 RSpec.configure do |config|
   # Specify a root folder where Swagger JSON files are generated
@@ -49,4 +50,7 @@ RSpec.configure do |config|
   # the key, this may want to be changed to avoid putting yaml in json files.
   # Defaults to json. Accepts ':json' and ':yaml'.
   config.swagger_format = :yaml
+
+  # mixin custom application specific swagger helpers
+  config.extend SwaggerParameterHelpers, type: :request
 end

@@ -21,10 +21,7 @@ RSpec.describe "capitals", type: :request, swagger_doc: "v4/swagger.yaml" do
           are added through separate endpoints.
       DESCRIPTION
 
-      parameter name: "assessment_id",
-                in: :path,
-                type: :string,
-                description: "Unique identifier of the assessment"
+      assessment_id_parameter
 
       parameter name: :params,
                 in: :body,
