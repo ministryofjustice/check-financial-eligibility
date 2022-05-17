@@ -658,6 +658,7 @@ paths:
                         - Maintenance in
                         - Property or lodger
                         - Pension
+                        description: Source of other regular income
                         example: benefits
                       payments:
                         type: array
@@ -680,6 +681,116 @@ paths:
                               type: string
                               format: uuid
                               description: Client identifier for payment received
+                              example: '05459c0f-a620-4743-9f0c-b3daa93e5711'
+        required: true
+  "/assessments/{assessment_id}/outgoings":
+    post:
+      summary: create outgoing
+      tags:
+      - Assessment components
+      description: 'Add applicant''s outgoings to an assessment.
+
+        '
+      parameters:
+      - name: assessment_id
+        in: path
+        format: uuid
+        description: Unique identifier of the assessment
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              description: A set of outgoings sources
+              example:
+                outgoings:
+                - name: child_care
+                  payments:
+                  - payment_date: '2022-03-14'
+                    amount: 526.43
+                    client_id: ea7c00e1-e98d-4ac0-a3f8-bd1a6e7f24a5
+                  - payment_date: '2022-03-14'
+                    amount: 612.76
+                    client_id: 6e87193e-3f3e-4187-aae8-14a937793221
+                - name: maintenance_out
+                  payments:
+                  - payment_date: '2022-03-14'
+                    amount: 141.26
+                    client_id: ea7c00e1-e98d-4ac0-a3f8-bd1a6e7f24a5
+                  - payment_date: '2022-03-14'
+                    amount: 210.43
+                    client_id: 6e87193e-3f3e-4187-aae8-14a937793221
+                - name: rent_or_mortgage
+                  payments:
+                  - payment_date: '2022-03-14'
+                    amount: 829.78
+                    housing_cost_type: rent
+                    client_id: ea7c00e1-e98d-4ac0-a3f8-bd1a6e7f24a5
+                  - payment_date: '2022-03-14'
+                    amount: 294.18
+                    housing_cost_type: rent
+                    client_id: 6e87193e-3f3e-4187-aae8-14a937793221
+              properties:
+                outgoings:
+                  type: array
+                  description: One or more outgoings categorized by name
+                  items:
+                    type: object
+                    description: Outgoing payments detail
+                    required: true
+                    properties:
+                      name:
+                        type: string
+                        enum:
+                        - child_care
+                        - rent_or_mortgage
+                        - maintenance_out
+                        - legal_aid
+                        required: true
+                        description: Type of outgoing
+                        example: child_care
+                      payments:
+                        type: array
+                        description: One or more outgoing payments detail
+                        items:
+                          type: object
+                          description: Payment detail
+                          properties:
+                            payment_date:
+                              type: string
+                              format: date
+                              required: true
+                              description: Date payment made
+                              example: '1992-07-22'
+                            housing_costs_type:
+                              type: string
+                              enum:
+                              - rent
+                              - mortgage
+                              - board_and_lodging
+                              required: false
+                              description: Housing cost type (omit for non-housing
+                                cost outgoings)
+                              example: rent
+                            amount:
+                              type: number
+                              format: decimal
+                              required: true
+                              description: Amount of payment made
+                              example: 101.01
+                            client_id:
+                              type: string
+                              format: uuid
+                              required: true
+                              description: Client identifier for outgoing payment
                               example: '05459c0f-a620-4743-9f0c-b3daa93e5711'
         required: true
   "/state_benefit_type":

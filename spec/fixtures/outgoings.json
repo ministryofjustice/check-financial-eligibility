@@ -1,0 +1,51 @@
+{
+  "outgoings": [
+    {
+      "name": "child_care",
+      "payments": [
+        {
+          "payment_date": "2022-03-14",
+          "amount": 526.43,
+          "client_id": "ea7c00e1-e98d-4ac0-a3f8-bd1a6e7f24a5"
+        },
+        {
+          "payment_date": "2022-03-14",
+          "amount": 612.76,
+          "client_id": "6e87193e-3f3e-4187-aae8-14a937793221"
+        }
+      ]
+    },
+    {
+      "name": "maintenance_out",
+      "payments": [
+        {
+          "payment_date": "2022-03-14",
+          "amount": 141.26,
+          "client_id": "ea7c00e1-e98d-4ac0-a3f8-bd1a6e7f24a5"
+        },
+        {
+          "payment_date": "2022-03-14",
+          "amount": 210.43,
+          "client_id": "6e87193e-3f3e-4187-aae8-14a937793221"
+        }
+      ]
+    },
+    {
+      "name": "rent_or_mortgage",
+      "payments": [
+        {
+          "payment_date": "2022-03-14",
+          "amount": 829.78,
+          "housing_cost_type": "rent",
+          "client_id": "ea7c00e1-e98d-4ac0-a3f8-bd1a6e7f24a5"
+        },
+        {
+          "payment_date": "2022-03-14",
+          "amount": 294.18,
+          "housing_cost_type": "rent",
+          "client_id": "6e87193e-3f3e-4187-aae8-14a937793221"
+        }
+      ]
+    }
+  ]
+}
