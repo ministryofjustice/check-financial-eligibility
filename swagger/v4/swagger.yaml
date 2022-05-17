@@ -526,6 +526,62 @@ paths:
                               required: true
                               description: Net payment income received
         required: true
+  "/assessments/{assessment_id}/explicit_remarks":
+    post:
+      summary: create explicit_remark
+      tags:
+      - Assessment components
+      description: 'Add explicit remarks to an assessment
+
+        '
+      parameters:
+      - name: assessment_id
+        in: path
+        format: uuid
+        description: Unique identifier of the assessment
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                explicit_remarks:
+                - category: policy_disregards
+                  details:
+                  - employment
+                  - charity
+              properties:
+                explicit_remarks:
+                  type: array
+                  required: true
+                  description: One or more remarks by category
+                  items:
+                    type: object
+                    description: Explicit remark
+                    properties:
+                      category:
+                        type: string
+                        enum:
+                        - policy_disregards
+                        required: true
+                        description: Category of remark. Currently, only 'policy_disregard'
+                          is supported
+                        example: policy_disregards
+                      details:
+                        type: array
+                        required: true
+                        description: One or more remarks for that category
+                        items:
+                          type: string
+        required: true
   "/assessments/{assessment_id}/irregular_incomes":
     post:
       summary: create irregular_income
