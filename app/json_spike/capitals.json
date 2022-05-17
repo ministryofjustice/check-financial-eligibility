@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "id": "http://gov.uk/laa/cfe/schemas/applicant",
+  "type": "object",
+  "required": [
+    "bank_accounts",
+    "non_liquid_capital"
+  ],
+  "properties": {
+    "bank_accounts": {
+      "type": "Array",
+      "items": {
+        "type": "object",
+        "required": [
+          "description",
+          "value"
+        ],
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "value": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "non_liquid_capital": {
+      "type": "Array",
+      "items": {
+        "type": "object",
+        "required": [
+          "description",
+          "value"
+        ],
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "value": {
+            "type": "number"
+          }
+        }
+      }
+    }
+  }
+}

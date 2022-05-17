@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "id": "https://check-financial-eligibility.cloud-platform.service.justice.gov.uk/schemas/applicant",
+  "type": "object",
+  "required": [
+    "applicant"
+  ],
+  "properties": {
+    "applicant": {
+      "type": "object",
+      "properties": {
+        "date_of_birth": {
+          "type": "string",
+          "pattern": "^[1-2][0-9]{3}-[0-1][0-9]-[0-3][0-9]$"
+        },
+        "involvement_type": { "enum": ["applicant"] },
+        "has_partner_opponent": {
+          "type": "boolean"
+        },
+        "receives_qualifying_benefit": {
+          "enum": [
+            "yes",
+            "no"
+          ]
+        }
+      },
+      "required": [
+        "date_of_birth",
+        "involvement_type",
+        "has_partner_opponent",
+        "receives_qualifying_benefit"
+      ]
+    }
+  }
+}
