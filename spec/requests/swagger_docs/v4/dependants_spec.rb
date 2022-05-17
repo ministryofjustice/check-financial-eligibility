@@ -11,11 +11,7 @@ RSpec.describe "dependants", type: :request, swagger_doc: "v4/swagger.yaml" do
         Adds details of an applicant's dependants.
       DESCRIPTION
 
-      parameter name: "assessment_id",
-                in: :path,
-                type: :string,
-                format: :uuid,
-                description: "Unique identifier of the assessment"
+      assessment_id_parameter
 
       parameter name: :params,
                 in: :body,
