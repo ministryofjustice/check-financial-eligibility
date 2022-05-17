@@ -1,0 +1,24 @@
+{
+  "properties": {
+    "main_home": {
+      "value": 500000.01,
+      "outstanding_mortgage": 999.99,
+      "percentage_owned": 15.00,
+      "shared_with_housing_assoc": true
+    },
+    "additional_properties": [
+      {
+        "value": 1000.01,
+        "outstanding_mortgage": 1.0,
+        "percentage_owned": 99.99,
+        "shared_with_housing_assoc": false
+      },
+      {
+        "value": 10000.01,
+        "outstanding_mortgage": 40.00,
+        "percentage_owned": 80.00,
+        "shared_with_housing_assoc": true
+      }
+    ]
+  }
+}
