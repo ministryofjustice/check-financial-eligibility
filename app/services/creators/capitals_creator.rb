@@ -34,6 +34,8 @@ module Creators
       @bank_accounts_attributes.each do |attrs|
         capital_summary.liquid_capital_items.create!(description: attrs[:description], value: attrs[:value])
       end
+    rescue ActiveRecord::RecordInvalid => e
+      raise CreationError, e.record.errors.full_messages
     end
 
     def create_non_liquid_assets
@@ -42,6 +44,8 @@ module Creators
       @non_liquid_capitals_attributes.each do |attrs|
         capital_summary.non_liquid_capital_items.create!(description: attrs[:description], value: attrs[:value])
       end
+    rescue ActiveRecord::RecordInvalid => e
+      raise CreationError, e.record.errors.full_messages
     end
   end
 end

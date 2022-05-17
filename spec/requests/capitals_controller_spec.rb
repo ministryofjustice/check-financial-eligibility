@@ -98,25 +98,25 @@ RSpec.describe CapitalsController, type: :request do
       context "missing name on bank account" do
         let(:bank_account_params) { attributes_for_list(:liquid_capital_item, 2).map { |account| account.tap { |item| item.delete(:description) } } }
 
-        it_behaves_like "it fails with message", "Missing parameter description"
+        it_behaves_like "it fails with message", "Description can't be blank"
       end
 
       context "missing lowest balance on bank account" do
         let(:bank_account_params) { attributes_for_list(:liquid_capital_item, 2).map { |account| account.tap { |item| item.delete(:value) } } }
 
-        it_behaves_like "it fails with message", "Missing parameter value"
+        it_behaves_like "it fails with message", "Value can't be blank"
       end
 
       context "missing description on non_liquid capital" do
         let(:non_liquid_params) { attributes_for_list(:non_liquid_capital_item, 2).map { |nlc| nlc.tap { |item| item.delete(:description) } } }
 
-        it_behaves_like "it fails with message", "Missing parameter description"
+        it_behaves_like "it fails with message", "Description can't be blank"
       end
 
       context "missing value on non-liquid capital" do
         let(:non_liquid_params) { attributes_for_list(:non_liquid_capital_item, 2).map { |nlc| nlc.tap { |item| item.delete(:value) } } }
 
-        it_behaves_like "it fails with message", "Missing parameter value"
+        it_behaves_like "it fails with message", "Value can't be blank"
       end
     end
 
