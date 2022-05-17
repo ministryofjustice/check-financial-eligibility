@@ -1,0 +1,70 @@
+{
+  "employment_income": [
+    {
+      "name": "Job 1",
+      "client_id": "a1d3a76f-89c7-4eae-ac51-550552f95774",
+      "payments": [
+        {
+          "client_id": "c106cc44-39a3-4494-abe8-a91dbff81ea7",
+          "date": "2021-10-30",
+          "gross": 1046.0,
+          "benefits_in_kind": 16.6,
+          "tax": -104.1,
+          "national_insurance": -18.66,
+          "net_employment_income": 898.84
+        },
+        {
+          "client_id": "bf3356a7-681b-4a2d-bab2-a224f52f0c6f",
+          "date": "2021-10-30",
+          "gross": 1046.0,
+          "benefits_in_kind": 16.6,
+          "tax": -104.1,
+          "national_insurance": -18.66,
+          "net_employment_income": 898.84
+        },
+        {
+          "client_id": "66971129-6685-4acd-9deb-60581601dca6",
+          "date": "2021-10-30",
+          "gross": 1046.0,
+          "benefits_in_kind": 16.6,
+          "tax": -104.1,
+          "national_insurance": -18.66,
+          "net_employment_income": 898.84
+        }
+      ]
+    },
+    {
+      "name": "Job 2",
+      "client_id": "27355c60-d969-459f-a283-ffbedde42ab3",
+      "payments": [
+        {
+          "client_id": "7b8ad08f-25f5-454e-9b43-a4849d1259a1",
+          "date": "2021-10-30",
+          "gross": 1046.0,
+          "benefits_in_kind": 16.6,
+          "tax": -104.1,
+          "national_insurance": -18.66,
+          "net_employment_income": 898.84
+        },
+        {
+          "client_id": "cc9bd6d9-9680-43d6-890b-bc06a12da124",
+          "date": "2021-10-30",
+          "gross": 1046.0,
+          "benefits_in_kind": 16.6,
+          "tax": -104.1,
+          "national_insurance": -18.66,
+          "net_employment_income": 898.84
+        },
+        {
+          "client_id": "46f99ca3-9702-4fbc-b824-b68908884f06",
+          "date": "2021-10-30",
+          "gross": 1046.0,
+          "benefits_in_kind": 16.6,
+          "tax": -104.1,
+          "national_insurance": -18.66,
+          "net_employment_income": 898.84
+        }
+      ]
+    }
+  ]
+}
