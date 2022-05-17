@@ -72,11 +72,11 @@ To add additional examples to this json file, add the `:show_in_doc` tag to the 
 
 ## Generation of API documentation using Rswag
 
-see [Rswag readme] for initial setup and/or modifications.
+see [Rswag readme](https://github.com/rswag/rswag/blob/master/README.md) for initial setup and/or modifications.
 
-The `swagger` folder in the root directory has one `swagger.yaml` within a version number, `v4`, folder - `swagger/v4/swagger.yaml`. This file is what defines the swagger ui page displayed at `/api-docs`. This file is generated using rswag's rake task - `rake rswag:specs:swaggerize`.
+The `swagger` folder in the root directory has one `swagger.yaml` within a version number folder - e.g. `swagger/v4/swagger.yaml`. This file is what defines the swagger ui page displayed at `/api-docs`. This file is generated using rswag's rake task - `rake rswag:specs:swaggerize`.
 
-The `swagger.yaml` file that is generated is defined by a combination of "global" settings in `spec/swagger_helper.rb` and indivual spec files that are, by our convention, stored in `spec/requests/swagger_docs/v4/*.spec.rb`.
+The `swagger.yaml` file that is generated is defined by a combination of "global" settings in `spec/swagger_helper.rb` and indivual spec files that are, by our convention, stored in `spec/requests/swagger_docs/<version>/*.spec.rb`.
 
 You can generate a new endpoint spec file using:
 ```sh
