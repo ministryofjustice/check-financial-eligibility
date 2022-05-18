@@ -27,16 +27,20 @@ RSpec.describe "applicants", type: :request, swagger_doc: "v3/swagger.yaml" do
                       properties: {
                         date_of_birth: { type: :string,
                                          format: :date,
+                                         required: true,
                                          example: "1992-07-22",
                                          description: "Applicant date of birth" },
                         involvement_type: { type: :string,
                                             enum: Applicant.involvement_types.values,
+                                            required: true,
                                             example: Applicant.involvement_types.values.first,
                                             description: "Applicant involvement type" },
                         has_partner_opponent: { type: :boolean,
+                                                required: true,
                                                 example: false,
                                                 description: "Applicant has partner opponent" },
                         receives_qualifying_benefit: { type: :boolean,
+                                                       required: true,
                                                        example: false,
                                                        description: "Applicant receives qualifying benefit" },
                       },
@@ -67,6 +71,25 @@ RSpec.describe "applicants", type: :request, swagger_doc: "v3/swagger.yaml" do
         end
 
         run_test!
+      end
+
+      response(422, "Unprocessable Entity") do\
+        let(:assessment_id) { create(:assessment).id }
+
+        let(:params) do
+          {
+            applicant: {
+              involvement_type: "applicant",
+              has_partner_opponent: false,
+              receives_qualifying_benefit: true,
+            },
+          }
+        end
+
+        run_test! do |response|
+          body = JSON.parse(response.body, symbolize_names: true)
+          expect(body[:errors]).to include(/Missing parameter date_of_birth/)
+        end
       end
     end
   end

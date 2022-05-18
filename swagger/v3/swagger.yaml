@@ -27,6 +27,8 @@ paths:
       responses:
         '200':
           description: successful
+        '422':
+          description: Unprocessable Entity
       requestBody:
         content:
           application/json:
@@ -40,20 +42,24 @@ paths:
                     date_of_birth:
                       type: string
                       format: date
+                      required: true
                       example: '1992-07-22'
                       description: Applicant date of birth
                     involvement_type:
                       type: string
                       enum:
                       - applicant
+                      required: true
                       example: applicant
                       description: Applicant involvement type
                     has_partner_opponent:
                       type: boolean
+                      required: true
                       example: false
                       description: Applicant has partner opponent
                     receives_qualifying_benefit:
                       type: boolean
+                      required: true
                       example: false
                       description: Applicant receives qualifying benefit
         required: true
@@ -131,6 +137,8 @@ paths:
       responses:
         '200':
           description: successful
+        '422':
+          description: Unprocessable Entity
       requestBody:
         content:
           application/json:
