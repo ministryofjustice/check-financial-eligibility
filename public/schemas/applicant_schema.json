@@ -1,0 +1,27 @@
+{
+  "id": "check_financial_eligibility/schemas/applicant",
+  "type": "object",
+  "required": ["applicant"],
+  "properties": {
+    "applicant": {
+      "type": "object",
+      "properties": {
+        "date_of_birth": {
+          "type": "string",
+          "pattern": "^[1-2][0-9]{3}-[0-1][0-9]-[0-3][0-9]$"
+        },
+        "involvement_type": {
+          "type": "string",
+          "pattern": "^applicant"
+        },
+        "has_partner_opponent": { 
+          "type": "boolean" 
+        },
+        "receives_qualifying_benefit": {
+           "type": "boolean" 
+        },
+        "required": ["date_of_birth", "involvement_type", "has_partner_opponent", "receives_qualifying_benefit"]
+      }
+    }
+  }
+}
