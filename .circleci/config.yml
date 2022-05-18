@@ -80,7 +80,6 @@ references:
         kubectl config set-credentials circleci --token=${K8S_TOKEN}
         kubectl config set-context ${K8S_CLUSTER_NAME} --cluster=${K8S_CLUSTER_NAME} --user=circleci --namespace=${K8S_NAMESPACE}
         kubectl config use-context ${K8S_CLUSTER_NAME}
-        kubectl config use-context ${K8S_CLUSTER_NAME}
   update_packages: &update_packages
     run:
       name: Update packages
@@ -234,6 +233,17 @@ jobs:
                         --values ./deploy/helm/values-production.yaml \
                         --set image.repository="$ECR_ENDPOINT/laa-apply-for-legal-aid/check-financial-eligibility-service" \
                         --set image.tag="${CIRCLE_SHA1}"
+  delete_dependabot_deployment:
+    executor: cloud-platform-executor
+    steps:
+      - checkout
+      - setup_remote_docker
+      - *authenticate_k8s
+      - run:
+          name: Delete dependabot deployment
+          command: |
+            ./bin/delete_dependabot_deployment
+
   clean_up_ecr:
     executor: linting-executor
     steps:
@@ -276,6 +286,15 @@ workflows:
             - lint_checks
             - unit_tests
             - build_and_push
+          <<: *generic-slack-fail-post-step
+      - delete_dependabot_deployment:
+          context: check-financial-eligibility-uat
+          filters:
+            branches:
+              only:
+                - /dependabot.*/
+          requires:
+            - deploy_uat
           <<: *generic-slack-fail-post-step
 
   merge_pr:
