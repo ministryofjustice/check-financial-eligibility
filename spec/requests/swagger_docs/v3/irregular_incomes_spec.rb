@@ -1,6 +1,6 @@
 require "swagger_helper"
 
-RSpec.describe "irregular_incomes", type: :request, swagger_doc: "v4/swagger.yaml" do
+RSpec.describe "irregular_incomes", type: :request, swagger_doc: "v3/swagger.yaml" do
   path "/assessments/{assessment_id}/irregular_incomes" do
     post("create irregular_income") do
       tags "Assessment components"

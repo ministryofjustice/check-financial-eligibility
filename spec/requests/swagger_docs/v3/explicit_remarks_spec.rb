@@ -1,6 +1,6 @@
 require "swagger_helper"
 
-RSpec.describe "explicit_remarks", type: :request, swagger_doc: "v4/swagger.yaml" do
+RSpec.describe "explicit_remarks", type: :request, swagger_doc: "v3/swagger.yaml" do
   path "/assessments/{assessment_id}/explicit_remarks" do
     post("create explicit_remark") do
       tags "Assessment components"
