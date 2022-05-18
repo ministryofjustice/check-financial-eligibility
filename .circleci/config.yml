@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   slack: circleci/slack@4.5.2
+
 executors:
   basic-executor:
     docker:
@@ -36,6 +37,7 @@ executors:
         environment:
           - POSTGRES_USER=user
           - POSTGRES_DB=check_financial_eligibility_test
+
 references:
   build_docker_image: &build_docker_image
     run:
@@ -127,6 +129,7 @@ references:
       command: |
         bundle exec rake db:create db:schema:load
         bundle exec rake db:migrate
+
 jobs:
   lint_checks:
     executor: linting-executor
@@ -138,6 +141,7 @@ jobs:
       - run:
           name: Run Rubocop
           command:  bundle exec rubocop
+
   unit_tests:
     executor: test-executor
     steps:
@@ -164,6 +168,22 @@ jobs:
           path: /tmp/test-results/rspec
       - store_artifacts:
           path: ./coverage
+
+  check_swagger:
+    executor: test-executor
+    steps:
+      - checkout
+      - *install_packages_for_testing
+      - *restore_gems_cache
+      - *install_gems
+      - *save_gems_cache
+      - *setup_database
+      - *install_js_packages
+      - run:
+          name: Check for unapplied swagger documentation specs
+          command: |
+            bundle exec rails check_swaggerization
+
   build_and_push:
     executor: basic-executor
     steps:
@@ -176,6 +196,7 @@ jobs:
     - *build_docker_image
     - *setup_aws_login
     - *push_to_ecr
+
   deploy_uat: &deploy_uat
     executor: cloud-platform-executor
     steps:
@@ -188,8 +209,10 @@ jobs:
           name: Helm deployment to UAT
           command: |
             ./bin/uat_deploy
+
   deploy_main_uat:
     <<: *deploy_uat
+
   delete_uat_branch:
     executor: cloud-platform-executor
     steps:
@@ -200,6 +223,7 @@ jobs:
           name: Delete UAT release
           command: |
             ./bin/delete_uat_release.sh
+
   deploy_staging:
     executor: cloud-platform-executor
     steps:
@@ -217,6 +241,7 @@ jobs:
                           --values ./deploy/helm/values-staging.yaml \
                           --set image.repository="$ECR_ENDPOINT/laa-apply-for-legal-aid/check-financial-eligibility-service" \
                           --set image.tag="${CIRCLE_SHA1}"
+
   deploy_production:
     executor: cloud-platform-executor
     steps:
@@ -234,6 +259,7 @@ jobs:
                         --values ./deploy/helm/values-production.yaml \
                         --set image.repository="$ECR_ENDPOINT/laa-apply-for-legal-aid/check-financial-eligibility-service" \
                         --set image.tag="${CIRCLE_SHA1}"
+
   clean_up_ecr:
     executor: linting-executor
     steps:
@@ -265,6 +291,11 @@ workflows:
             branches:
               ignore: main
           <<: *generic-slack-fail-post-step
+      - check_swagger:
+          filters:
+            branches:
+              ignore: main
+          <<: *generic-slack-fail-post-step
       - build_and_push:
           filters:
             branches:
@@ -274,6 +305,7 @@ workflows:
           context: check-financial-eligibility-uat
           requires:
             - lint_checks
+            - check_swagger
             - unit_tests
             - build_and_push
           <<: *generic-slack-fail-post-step
@@ -290,9 +322,15 @@ workflows:
             branches:
               only: main
           <<: *generic-slack-fail-post-step
+      - check_swagger:
+          filters:
+            branches:
+              only: main
+          <<: *generic-slack-fail-post-step
       - build_and_push:
           requires:
             - lint_checks
+            - check_swagger
             - unit_tests
           <<: *generic-slack-fail-post-step
       - deploy_main_uat:
@@ -362,6 +400,7 @@ workflows:
           requires:
             - hold_production
           <<: *generic-slack-fail-post-step
+
   nightly:
     triggers:
       - schedule:
