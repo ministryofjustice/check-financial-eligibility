@@ -5,6 +5,7 @@
   "properties": {
     "applicant": {
       "type": "object",
+      "required": ["date_of_birth", "involvement_type", "has_partner_opponent", "receives_qualifying_benefit"],
       "properties": {
         "date_of_birth": {
           "type": "string",
@@ -14,13 +15,12 @@
           "type": "string",
           "pattern": "^applicant"
         },
-        "has_partner_opponent": { 
-          "type": "boolean" 
+        "has_partner_opponent": {
+          "type": "boolean"
         },
         "receives_qualifying_benefit": {
-           "type": "boolean" 
-        },
-        "required": ["date_of_birth", "involvement_type", "has_partner_opponent", "receives_qualifying_benefit"]
+           "type": "boolean"
+        }
       }
     }
   }
