@@ -22,7 +22,7 @@ RSpec.describe ApplicantsController, type: :request do
       end
 
       context "service returns success" do
-        it "returns success", :show_in_doc do
+        it "returns success"  do
           expect(response).to have_http_status(:success)
         end
 
@@ -123,8 +123,8 @@ RSpec.describe ApplicantsController, type: :request do
                         /The property '#\/applicant\/has_partner_opponent' of type string did not match the following type: boolean in schema/
       end
 
-      context "for documentation" do
-        it "fails with a message", :show_in_doc do
+      context "receives_qualifying_benefit not a boolean" do
+        it "fails with a message" do
           params[:applicant][:receives_qualifying_benefit] = "yes"
           post assessment_applicant_path(assessment.id), params: params.to_json, headers: headers
           expect(response).to have_http_status(:unprocessable_entity)
