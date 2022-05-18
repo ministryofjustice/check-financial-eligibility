@@ -559,42 +559,6 @@
     {
       "title": "Default",
       "verb": "POST",
-      "path": "/assessments/fc72540b-2c69-4997-87ac-0ab21e689c79/dependants",
-      "versions": [
-        "1.0"
-      ],
-      "query": null,
-      "request_data": {
-        "dependants": [
-          {
-            "date_of_birth": "1991-07-07",
-            "in_full_time_education": null,
-            "relationship": "adult_relative",
-            "monthly_income": "8732.52",
-            "assets_value": 0.0
-          },
-          {
-            "date_of_birth": "1962-04-10",
-            "in_full_time_education": null,
-            "relationship": "adult_relative",
-            "monthly_income": "3382.47",
-            "assets_value": 0.0
-          }
-        ]
-      },
-      "response_data": {
-        "success": false,
-        "errors": [
-          "Invalid parameter 'in_full_time_education' value nil: Must be one of: <code>true</code>, <code>false</code>, <code>1</code>, <code>0</code>."
-        ]
-      },
-      "code": 422,
-      "show_in_doc": 1,
-      "recorded": true
-    },
-    {
-      "title": "Default",
-      "verb": "POST",
       "path": "/assessments/c1a8cfe7-c46f-40fb-858e-d820f70b4698/dependants",
       "versions": [
         "1.0"

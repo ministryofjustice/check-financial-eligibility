@@ -7,6 +7,14 @@ FactoryBot.define do
     monthly_income { rand(1...10_000.0).round(2).to_d(Float::DIG) }
     assets_value { 0.0 }
 
+    trait :crime_dependant do
+      assessment { create :assessment, :criminal }
+      date_of_birth { Faker::Date.birthday }
+      in_full_time_education { nil }
+      monthly_income { 0.0 }
+      assets_value { 0.0 }
+    end
+
     trait :child_relative do
       relationship { :child_relative }
     end
