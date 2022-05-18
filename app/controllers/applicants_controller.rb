@@ -52,10 +52,10 @@ private
   end
 
   def json_validator
-    @json_validator ||= JsonValidator.new(schema, input)
+    @json_validator ||= JsonValidator.new(schema, request.raw_post)
   end
 
   def schema
-    @schema ||= Rails.root.join("public/schemas/applicant_schema.json").to_s
+    "public/schemas/applicant_schema.json"
   end
 end
