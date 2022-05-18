@@ -9,6 +9,17 @@ RSpec.configure do |config|
   # to ensure that it's configured to serve Swagger from the same folder
   config.swagger_root = Rails.root.join("swagger")
 
+  api_description = <<~DESCRIPTION
+    # Check financial eligibility for legal aid.
+
+    ## Usage:
+      - Create an assessment by POSTing a payload to `/assessments`
+        and store the `assessment_id` returned.
+      - Add assessment components, such as applicant, capitals and properties using the
+        `assessment_id` from the first call
+      - Retrieve the result using the GET `/assessments/{assessment_id}`
+  DESCRIPTION
+
   # Define one or more Swagger documents and provide global metadata for each one
   # When you run the 'rswag:specs:swaggerize' rake task, the complete Swagger will
   # be generated at the provided relative path under swagger_root
@@ -20,7 +31,7 @@ RSpec.configure do |config|
       openapi: "3.0.1",
       info: {
         title: "API V3",
-        description: "Check financial eligibility for legal aid",
+        description: api_description,
         contact: {
           name: "Github repository",
           url: "https://github.com/ministryofjustice/check-financial-eligibility",
@@ -34,7 +45,7 @@ RSpec.configure do |config|
       openapi: "3.0.1",
       info: {
         title: "API V4",
-        description: "Check financial eligibility for legal aid",
+        description: api_description,
         contact: {
           name: "Github repository",
           url: "https://github.com/ministryofjustice/check-financial-eligibility",

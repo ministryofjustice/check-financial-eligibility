@@ -2,7 +2,15 @@
 openapi: 3.0.1
 info:
   title: API V3
-  description: Check financial eligibility for legal aid
+  description: |
+    # Check financial eligibility for legal aid.
+
+    ## Usage:
+      - Create an assessment by POSTing a payload to `/assessments`
+        and store the `assessment_id` returned.
+      - Add assessment components, such as applicant, capitals and properties using the
+        `assessment_id` from the first call
+      - Retrieve the result using the GET `/assessments/{assessment_id}`
   contact:
     name: Github repository
     url: https://github.com/ministryofjustice/check-financial-eligibility
