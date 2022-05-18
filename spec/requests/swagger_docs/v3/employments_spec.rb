@@ -1,6 +1,6 @@
 require "swagger_helper"
 
-RSpec.describe "employments", type: :request, swagger_doc: "v4/swagger.yaml" do
+RSpec.describe "employments", type: :request, swagger_doc: "v3/swagger.yaml" do
   path "/assessments/{assessment_id}/employments" do
     post("create employment") do
       tags "Assessment components"

@@ -74,28 +74,4 @@ RSpec.describe "V4 Assessments", type: :request, vcr: true, swagger_doc: "v4/swa
       end
     end
   end
-
-  path "/assessments/{id}" do
-    parameter name: :id, in: :path, type: :string, description: "Unique identifier of the assessment"
-
-    get("show assessment") do
-      tags "Assessment"
-      produces "application/json"
-
-      response(200, "successful") do
-        let(:assessment) { create(:assessment, :passported, :with_everything, :with_eligibilities) }
-        let(:id) { assessment.id }
-
-        after do |example|
-          example.metadata[:response][:content] = {
-            "application/json" => {
-              example: JSON.parse(response.body, symbolize_names: true),
-            },
-          }
-        end
-
-        run_test!
-      end
-    end
-  end
 end

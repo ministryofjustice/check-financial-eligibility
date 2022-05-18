@@ -1,14 +1,14 @@
 require "swagger_helper"
 
-RSpec.describe "other_incomes", type: :request, swagger_doc: "v4/swagger.yaml" do
-  path "/assessments/{assessment_id}/other_incomes" do
-    post("create other_income") do
+RSpec.describe "outgoings", type: :request, swagger_doc: "v3/swagger.yaml" do
+  path "/assessments/{assessment_id}/outgoings" do
+    post("create outgoing") do
       tags "Assessment components"
       consumes "application/json"
       produces "application/json"
 
       description <<~DESCRIPTION
-        Add applicant's other income payments to an assessment.
+        Add applicant's outgoings to an assessment.
       DESCRIPTION
 
       assessment_id_parameter
@@ -18,45 +18,57 @@ RSpec.describe "other_incomes", type: :request, swagger_doc: "v4/swagger.yaml" d
                 required: true,
                 schema: {
                   type: :object,
-                  description: "A set of other regular income sources",
-                  example: JSON.parse(File.read(Rails.root.join("spec/fixtures/other_incomes.json"))),
+                  description: "A set of outgoings sources",
+                  example: JSON.parse(File.read(Rails.root.join("spec/fixtures/outgoings.json"))),
                   properties: {
-                    other_incomes: {
+                    outgoings: {
                       type: :array,
-                      description: "One or more other regular income payments categorized by source",
+                      description: "One or more outgoings categorized by name",
                       items: {
                         type: :object,
-                        description: "Other regular income detail",
+                        description: "Outgoing payments detail",
+                        required: true,
                         properties: {
-                          source: {
+                          name: {
                             type: :string,
-                            enum: CFEConstants::HUMANIZED_INCOME_CATEGORIES,
-                            description: "Source of other regular income",
-                            example: CFEConstants::HUMANIZED_INCOME_CATEGORIES.first,
+                            enum: CFEConstants::VALID_OUTGOING_CATEGORIES,
+                            required: true,
+                            description: "Type of outgoing",
+                            example: CFEConstants::VALID_OUTGOING_CATEGORIES.first,
                           },
                           payments: {
                             type: :array,
-                            description: "One or more other regular payment details",
+                            description: "One or more outgoing payments detail",
                             items: {
                               type: :object,
                               description: "Payment detail",
                               properties: {
-                                date: {
+                                payment_date: {
                                   type: :string,
                                   format: :date,
-                                  description: "Date payment received",
+                                  required: true,
+                                  description: "Date payment made",
                                   example: "1992-07-22",
+                                },
+                                housing_costs_type: {
+                                  type: :string,
+                                  enum: CFEConstants::VALID_OUTGOING_HOUSING_COST_TYPES,
+                                  required: false,
+                                  description: "Housing cost type (omit for non-housing cost outgoings)",
+                                  example: CFEConstants::VALID_OUTGOING_HOUSING_COST_TYPES.first,
                                 },
                                 amount: {
                                   type: :number,
                                   format: :decimal,
-                                  description: "Amount of payment received",
+                                  required: true,
+                                  description: "Amount of payment made",
                                   example: 101.01,
                                 },
                                 client_id: {
                                   type: :string,
                                   format: :uuid,
-                                  description: "Client identifier for payment received",
+                                  required: true,
+                                  description: "Client identifier for outgoing payment",
                                   example: "05459c0f-a620-4743-9f0c-b3daa93e5711",
                                 },
                               },
@@ -69,10 +81,10 @@ RSpec.describe "other_incomes", type: :request, swagger_doc: "v4/swagger.yaml" d
                 }
 
       response(200, "successful") do
-        let(:assessment_id) { create(:assessment, :with_gross_income_summary).id }
+        let(:assessment_id) { create(:assessment).id }
 
         let(:params) do
-          JSON.parse(file_fixture("other_incomes.json").read)
+          JSON.parse(file_fixture("outgoings.json").read)
         end
 
         after do |example|
@@ -87,13 +99,13 @@ RSpec.describe "other_incomes", type: :request, swagger_doc: "v4/swagger.yaml" d
       end
 
       response(422, "Unprocessable Entity") do
-        let(:assessment_id) { create(:assessment, :with_gross_income_summary).id }
+        let(:assessment_id) { create(:assessment).id }
 
         let(:params) do
           {
-            other_incomes: [
+            outgoings: [
               {
-                source: "foobar",
+                name: "foobar",
                 payments: [],
               },
             ],
@@ -102,7 +114,7 @@ RSpec.describe "other_incomes", type: :request, swagger_doc: "v4/swagger.yaml" d
 
         run_test! do |response|
           body = JSON.parse(response.body, symbolize_names: true)
-          expect(body[:errors]).to include(/Invalid parameter 'source' value/)
+          expect(body[:errors]).to include(/Invalid parameter 'name' value/)
         end
       end
     end

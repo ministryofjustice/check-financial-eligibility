@@ -1,6 +1,6 @@
 require "swagger_helper"
 
-RSpec.describe "capitals", type: :request, swagger_doc: "v4/swagger.yaml" do
+RSpec.describe "capitals", type: :request, swagger_doc: "v3/swagger.yaml" do
   path "/assessments/{assessment_id}/capitals" do
     post("create capital") do
       tags "Assessment components"
