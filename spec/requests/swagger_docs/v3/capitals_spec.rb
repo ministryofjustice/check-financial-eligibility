@@ -88,6 +88,25 @@ RSpec.describe "capitals", type: :request, swagger_doc: "v3/swagger.yaml" do
 
         run_test!
       end
+
+      response(422, "Unprocessable Entity") do\
+        let(:assessment_id) { create(:assessment, :with_capital_summary).id }
+
+        let(:params) do
+          {
+            bank_accounts: [
+              {
+                description: "ALKEN ASSET MANAGEMENT 10606062",
+              },
+            ],
+          }
+        end
+
+        run_test! do |response|
+          body = JSON.parse(response.body, symbolize_names: true)
+          expect(body[:errors]).to include(/Missing parameter value/)
+        end
+      end
     end
   end
 end
