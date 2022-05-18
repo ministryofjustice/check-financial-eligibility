@@ -1070,3 +1070,63 @@ paths:
                                 multi_benefit:
                                   type: boolean
         required: true
+  "/assessments/{assessment_id}/vehicles":
+    post:
+      summary: create vehicle
+      tags:
+      - Assessment components
+      description: 'Add applicant''s outgoings to an assessment.
+
+        '
+      parameters:
+      - name: assessment_id
+        in: path
+        format: uuid
+        description: Unique identifier of the assessment
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Details of vehicles owned by the applicant
+              example:
+                vehicles:
+                - value: 10000.01
+                  loan_amount_outstanding: 9999.99
+                  date_of_purchase: '2020-01-27'
+                  in_regular_use: true
+              properties:
+                vehicles:
+                  type: array
+                  require: true
+                  description: One or more vehicles' details
+                  items:
+                    value:
+                      type: number
+                      format: decimal
+                      required: true
+                      description: Financial value of the vehicle
+                    loan_amount_outstanding:
+                      type: number
+                      format: decimal
+                      required: false
+                      description: Amount remaining, if any, of a loan used to purchase
+                        the vehicle
+                    date_of_purchase:
+                      type: string
+                      format: dates
+                      required: true
+                      description: Date vehicle purchased by the applicant
+                    in_regular_use:
+                      type: boolean
+                      required: false
+                      description: Vehicle in regular use or not
+        required: true
