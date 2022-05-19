@@ -1,5 +1,7 @@
 {
-  "id": "check_financial_eligibility/schemas/applicant",
+  "id": "http://localhost:3000/schemas/applicant.json",
+  "schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Legal Aid Check Financial Eligibility create applicant payload schema",
   "type": "object",
   "required": ["applicant"],
   "properties": {
@@ -8,8 +10,7 @@
       "required": ["date_of_birth", "involvement_type", "has_partner_opponent", "receives_qualifying_benefit"],
       "properties": {
         "date_of_birth": {
-          "type": "string",
-          "pattern": "^[1-2][0-9]{3}-[0-1][0-9]-[0-3][0-9]$"
+          "$ref": "http://localhost:3000/schemas/assessment_request.json#/definitions/date"
         },
         "involvement_type": {
           "type": "string",

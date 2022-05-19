@@ -1,4 +1,8 @@
+require "rails_helper"
+
 RSpec.describe "JsonValidator" do
+  before { stub_call_to_json_schema }
+
   let(:payload) do
     {
       applicant: {
@@ -35,7 +39,7 @@ RSpec.describe "JsonValidator" do
 
     it "displays errors" do
       errors = validator.errors
-      expect(errors).to include(match(/The property '#\/applicant\/date_of_birth' value "3002-12-23" did not match the regex '\^\[1-2\]\[0-9\]\{3\}-\[0-1\]\[0-9\]-\[0-3\]\[0-9\]\$' in schema/))
+      expect(errors).to include(match(/The property '#\/applicant\/date_of_birth' value "3002-12-23" did not match the regex/))
       expect(errors).to include(match(/The property '#\/applicant\/involvement_type' value "defendant" did not match the regex '\^applicant' in schema/))
     end
   end

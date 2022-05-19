@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.describe ApplicantsController, type: :request do
+  before { stub_call_to_json_schema }
+
   describe "POST applicants" do
     let(:assessment) { create :assessment }
     let(:applicant) { "applicant" }
@@ -93,6 +95,17 @@ RSpec.describe ApplicantsController, type: :request do
         end
 
         it_behaves_like "it fails with message", /Date of birth cannot be in future/
+      end
+
+      context "invalid date of birth" do
+        let(:dob) { "2002-12-32" }
+
+        before do
+          params[:applicant][:date_of_birth] = dob
+          post assessment_applicant_path(assessment.id), params: params.to_json, headers:
+        end
+
+        it_behaves_like "it fails with message", /The property '#\/applicant\/date_of_birth' value "2002-12-32" did not match the regex/
       end
 
       context "missing involvement_type" do

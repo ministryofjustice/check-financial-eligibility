@@ -1,6 +1,6 @@
 class JsonValidator
   def initialize(schema, payload)
-    @schema = Rails.root.join(schema).to_s
+    @schema = File.read(Rails.root.join(schema))
     @payload = payload
   end
 
