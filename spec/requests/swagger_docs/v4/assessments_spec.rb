@@ -21,7 +21,7 @@ RSpec.describe "V4 Assessments", type: :request, vcr: true, swagger_doc: "v4/swa
                     submission_date: {
                       type: :string,
                       description: "Date of the original submission (iso8601 format)",
-                      example: Time.zone.now.to_date.iso8601,
+                      example: "2022-05-19",
                     },
                     proceeding_types: {
                       type: :object,
@@ -48,7 +48,7 @@ RSpec.describe "V4 Assessments", type: :request, vcr: true, swagger_doc: "v4/swa
       response(200, "successful") do
         let(:params) do
           {
-            submission_date: Time.zone.now.to_date.iso8601,
+            submission_date: "2022-05-19",
             proceeding_types: { ccms_codes: %w[DA001] },
           }
         end

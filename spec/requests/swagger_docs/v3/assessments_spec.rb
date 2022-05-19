@@ -21,7 +21,7 @@ RSpec.describe "V3 Assessments", type: :request, vcr: true, swagger_doc: "v3/swa
                     submission_date: {
                       type: :string,
                       description: "Date of the original submission (iso8601 format)",
-                      example: Time.zone.now.to_date.iso8601,
+                      example: "2022-05-19",
                     },
                     matter_proceeding_type: {
                       type: :string,
@@ -38,7 +38,7 @@ RSpec.describe "V3 Assessments", type: :request, vcr: true, swagger_doc: "v3/swa
       response(200, "successful") do
         let(:params) do
           {
-            submission_date: Time.zone.now.to_date.iso8601,
+            submission_date: "2022-05-19",
             matter_proceeding_type: Assessment.matter_proceeding_types.values.first,
           }
         end
