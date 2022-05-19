@@ -7,7 +7,6 @@ module SwaggerParameterHelpers
     parameter name: "assessment_id",
               in: :path,
               type: :string,
-              format: :uuid,
               description: "Unique identifier of the assessment"
   end
 end

@@ -27,7 +27,6 @@ paths:
       parameters:
       - name: assessment_id
         in: path
-        format: uuid
         description: Unique identifier of the assessment
         required: true
         schema:
@@ -147,7 +146,6 @@ paths:
       parameters:
       - name: assessment_id
         in: path
-        format: uuid
         description: Unique identifier of the assessment
         required: true
         schema:
@@ -192,7 +190,6 @@ paths:
       parameters:
       - name: assessment_id
         in: path
-        format: uuid
         description: Unique identifier of the assessment
         required: true
         schema:
@@ -337,7 +334,6 @@ paths:
       parameters:
       - name: assessment_id
         in: path
-        format: uuid
         description: Unique identifier of the assessment
         required: true
         schema:
@@ -412,7 +408,6 @@ paths:
       parameters:
       - name: assessment_id
         in: path
-        format: uuid
         description: Unique identifier of the assessment
         required: true
         schema:
@@ -553,7 +548,6 @@ paths:
       parameters:
       - name: assessment_id
         in: path
-        format: uuid
         description: Unique identifier of the assessment
         required: true
         schema:
@@ -609,7 +603,6 @@ paths:
       parameters:
       - name: assessment_id
         in: path
-        format: uuid
         description: Unique identifier of the assessment
         required: true
         schema:
@@ -668,7 +661,6 @@ paths:
       parameters:
       - name: assessment_id
         in: path
-        format: uuid
         description: Unique identifier of the assessment
         required: true
         schema:
@@ -766,7 +758,6 @@ paths:
       parameters:
       - name: assessment_id
         in: path
-        format: uuid
         description: Unique identifier of the assessment
         required: true
         schema:
@@ -876,7 +867,6 @@ paths:
       parameters:
       - name: assessment_id
         in: path
-        format: uuid
         description: Unique identifier of the assessment
         required: true
         schema:
@@ -995,7 +985,6 @@ paths:
       parameters:
       - name: assessment_id
         in: path
-        format: uuid
         description: Unique identifier of the assessment
         required: true
         schema:
@@ -1097,7 +1086,6 @@ paths:
       parameters:
       - name: assessment_id
         in: path
-        format: uuid
         description: Unique identifier of the assessment
         required: true
         schema:
