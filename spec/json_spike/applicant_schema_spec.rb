@@ -12,18 +12,19 @@ describe 'JsonValidator' do
     }.to_json
   end
 
-  let(:dob) { '2002-12-22' }
+  let(:dob) { '20025-12-22' }
   let(:involvement_type) { "applicant" }
   let(:opponent) { false }
   let(:benefit) { 'yes' }
 
   let(:schema_location) { 'https://check-financial-eligibility.cloud-platform.service.justice.gov.uk/schemas/applicant'}
-  let(:schema) { JSON.load_file(Rails.root.join("app/json_spike/applicant.json")) }
+  let(:schema_name) { 'applicant' }
 
-  let(:validator) { JsonValidator.new(schema, payload) }
+  let(:validator) { JsonValidator.new(schema_name, payload) }
 
   context 'when valid payload' do
     it 'returns true' do
+      puts validator.errors
       expect(validator).to be_valid
     end
   end
