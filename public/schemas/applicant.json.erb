@@ -10,7 +10,7 @@
       "required": ["date_of_birth", "involvement_type", "has_partner_opponent", "receives_qualifying_benefit"],
       "properties": {
         "date_of_birth": {
-          "$ref": "http://localhost:3000/schemas/assessment_request.json#/definitions/date"
+          "$ref": "<%= "file://#{@schema_dir}/common.json#date" %>"
         },
         "involvement_type": {
           "type": "string",

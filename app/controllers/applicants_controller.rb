@@ -27,6 +27,6 @@ private
   end
 
   def schema
-    @schema ||= "public/schemas/applicant_schema.json"
+    @schema ||= "applicant"
   end
 end

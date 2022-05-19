@@ -1,8 +1,6 @@
 require "rails_helper"
 
 RSpec.describe "JsonValidator" do
-  before { stub_call_to_json_schema }
-
   let(:payload) do
     {
       applicant: {
@@ -19,11 +17,11 @@ RSpec.describe "JsonValidator" do
   let(:opponent) { false }
   let(:benefit) { true }
 
-  let(:schema) { "public/schemas/applicant_schema.json" }
+  let(:schema_name) { "applicant" }
 
-  let(:validator) { JsonValidator.new(schema, payload) }
+  let(:validator) { JsonValidator.new(schema_name, payload) }
 
-  context "when valid payloadka" do
+  context "when valid payload" do
     it "returns true" do
       expect(validator).to be_valid
     end

@@ -1,8 +1,6 @@
 require "rails_helper"
 
 RSpec.describe ApplicantsController, type: :request do
-  before { stub_call_to_json_schema }
-
   describe "POST applicants" do
     let(:assessment) { create :assessment }
     let(:applicant) { "applicant" }
@@ -75,7 +73,7 @@ RSpec.describe ApplicantsController, type: :request do
     end
 
     context "malformed JSON payload" do
-      # before { expect(Creators::ApplicantCreator).not_to receive(:call) }
+      before { expect(Creators::ApplicantCreator).not_to receive(:call) }
 
       context "missing applicant" do
         before do
@@ -84,17 +82,6 @@ RSpec.describe ApplicantsController, type: :request do
         end
 
         it_behaves_like "it fails with message", /The property '#\/' did not contain a required property of 'applicant'/
-      end
-
-      context "future date of birth" do
-        let(:dob) { 3.days.from_now.to_date }
-
-        before do
-          params[:applicant][:date_of_birth] = dob
-          post assessment_applicant_path(assessment.id), params: params.to_json, headers:
-        end
-
-        it_behaves_like "it fails with message", /Date of birth cannot be in future/
       end
 
       context "invalid date of birth" do
@@ -143,6 +130,17 @@ RSpec.describe ApplicantsController, type: :request do
           expect(response).to have_http_status(:unprocessable_entity)
         end
       end
+    end
+
+    context "future date of birth" do
+      let(:dob) { 3.days.from_now.to_date }
+
+      before do
+        params[:applicant][:date_of_birth] = dob
+        post assessment_applicant_path(assessment.id), params: params.to_json, headers:
+      end
+
+      it_behaves_like "it fails with message", /Date of birth cannot be in future/
     end
   end
 end
