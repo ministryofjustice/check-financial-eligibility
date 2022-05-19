@@ -88,11 +88,11 @@ RSpec.describe "Eligible Full Assessment with policy disregard remarks" do
   end
 
   def headers
-    { "CONTENT_TYPE" => "application/json" }
+    v3_headers
   end
 
   def v3_headers
-    { "Accept" => "application/json;version=3" }
+    { "CONTENT_TYPE" => "application/json", "Accept" => "application/json;version=3" }
   end
 
   def assessment_params

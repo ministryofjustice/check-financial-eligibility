@@ -47,7 +47,7 @@ RSpec.describe "Full Assessment with remarks" do
   end
 
   def post_assessment
-    post assessments_path, params: assessment_params, headers: headers
+    post assessments_path, params: assessment_params, headers: v3_headers
     output_response(:post, :assessment)
     parsed_response[:assessment_id]
   end
@@ -102,7 +102,7 @@ RSpec.describe "Full Assessment with remarks" do
   end
 
   def v3_headers
-    { "Accept" => "application/json;version=3" }
+    { "CONTENT_TYPE" => "application/json", "Accept" => "application/json;version=3" }
   end
 
   def assessment_params

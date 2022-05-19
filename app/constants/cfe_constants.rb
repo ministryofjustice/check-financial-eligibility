@@ -1,8 +1,8 @@
 module CFEConstants
   # Versions
   #
-  DEFAULT_ASSESSMENT_VERSION = "3".freeze
-  VALID_ASSESSMENT_VERSIONS = [DEFAULT_ASSESSMENT_VERSION, "4"].freeze
+  DEFAULT_ASSESSMENT_VERSION = "4".freeze
+  VALID_ASSESSMENT_VERSIONS = [DEFAULT_ASSESSMENT_VERSION, "3"].freeze
 
   # Income categories
   #
