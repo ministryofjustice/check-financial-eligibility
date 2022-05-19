@@ -18,43 +18,40 @@ RSpec.describe "dependants", type: :request, swagger_doc: "v4/swagger.yaml" do
                 required: true,
                 schema: {
                   type: :object,
+                  required: %i[dependants],
                   description: "A set dependants details",
                   example: JSON.parse(File.read(Rails.root.join("spec/fixtures/dependants.json"))),
                   properties: {
                     dependants: {
                       type: :array,
+                      required: %i[date_of_birth in_full_time_education relationship],
                       description: "One or more dependants details",
                       items: {
                         date_of_birth: {
                           type: :string,
                           format: :date,
-                          required: true,
                           example: "1992-07-22",
                         },
                         in_full_time_education: {
                           type: :boolan,
-                          required: false,
                           example: false,
                           description: "Dependant is in full time education or not",
                         },
                         relationship: {
                           type: :string,
                           enum: Dependant.relationships.values,
-                          required: true,
                           example: Dependant.relationships.values.first,
                           description: "Dependant's relationship to the applicant",
                         },
                         monthly_income: {
                           type: :number,
                           format: :decimal,
-                          required: false,
                           description: "Dependant's monthly income",
                           example: 101.01,
                         },
                         assets_value: {
                           type: :number,
                           format: :decimal,
-                          required: false,
                           description: "Dependant's total assets value",
                           example: 0.0,
                         },

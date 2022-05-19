@@ -18,11 +18,12 @@ RSpec.describe "explicit_remarks", type: :request, swagger_doc: "v4/swagger.yaml
                 required: true,
                 schema: {
                   type: :object,
+                  required: %i[explicit_remarks],
                   example: { explicit_remarks: [{ category: "policy_disregards", details: %w[employment charity] }] },
                   properties: {
                     explicit_remarks: {
                       type: :array,
-                      required: true,
+                      required: %i[category details],
                       description: "One or more remarks by category",
                       items: {
                         type: :object,
@@ -31,13 +32,11 @@ RSpec.describe "explicit_remarks", type: :request, swagger_doc: "v4/swagger.yaml
                           category: {
                             type: :string,
                             enum: CFEConstants::VALID_REMARK_CATEGORIES,
-                            required: true,
                             description: "Category of remark. Currently, only 'policy_disregard' is supported",
                             example: CFEConstants::VALID_REMARK_CATEGORIES.first,
                           },
                           details: {
                             type: :array,
-                            required: true,
                             description: "One or more remarks for that category",
                             items: {
                               type: :string,

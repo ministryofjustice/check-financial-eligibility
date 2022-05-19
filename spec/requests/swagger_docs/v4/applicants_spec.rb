@@ -20,6 +20,7 @@ RSpec.describe "applicants", type: :request, swagger_doc: "v4/swagger.yaml" do
                 required: true,
                 schema: {
                   type: :object,
+                  required: %i[date_of_birth involvement_type has_partner_opponent receives_qualifying_benefit],
                   properties: {
                     applicant: {
                       type: :object,
@@ -27,20 +28,16 @@ RSpec.describe "applicants", type: :request, swagger_doc: "v4/swagger.yaml" do
                       properties: {
                         date_of_birth: { type: :string,
                                          format: :date,
-                                         required: true,
                                          example: "1992-07-22",
                                          description: "Applicant date of birth" },
                         involvement_type: { type: :string,
                                             enum: Applicant.involvement_types.values,
-                                            required: true,
                                             example: Applicant.involvement_types.values.first,
                                             description: "Applicant involvement type" },
                         has_partner_opponent: { type: :boolean,
-                                                required: true,
                                                 example: false,
                                                 description: "Applicant has partner opponent" },
                         receives_qualifying_benefit: { type: :boolean,
-                                                       required: true,
                                                        example: false,
                                                        description: "Applicant receives qualifying benefit" },
                       },

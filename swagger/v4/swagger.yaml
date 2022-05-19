@@ -41,6 +41,11 @@ paths:
           application/json:
             schema:
               type: object
+              required:
+              - date_of_birth
+              - involvement_type
+              - has_partner_opponent
+              - receives_qualifying_benefit
               properties:
                 applicant:
                   type: object
@@ -49,24 +54,20 @@ paths:
                     date_of_birth:
                       type: string
                       format: date
-                      required: true
                       example: '1992-07-22'
                       description: Applicant date of birth
                     involvement_type:
                       type: string
                       enum:
                       - applicant
-                      required: true
                       example: applicant
                       description: Applicant involvement type
                     has_partner_opponent:
                       type: boolean
-                      required: true
                       example: false
                       description: Applicant has partner opponent
                     receives_qualifying_benefit:
                       type: boolean
-                      required: true
                       example: false
                       description: Applicant receives qualifying benefit
         required: true
@@ -348,6 +349,8 @@ paths:
           application/json:
             schema:
               type: object
+              required:
+              - dependants
               description: A set dependants details
               example:
                 dependants:
@@ -364,16 +367,18 @@ paths:
               properties:
                 dependants:
                   type: array
+                  required:
+                  - date_of_birth
+                  - in_full_time_education
+                  - relationship
                   description: One or more dependants details
                   items:
                     date_of_birth:
                       type: string
                       format: date
-                      required: true
                       example: '1992-07-22'
                     in_full_time_education:
                       type: boolan
-                      required: false
                       example: false
                       description: Dependant is in full time education or not
                     relationship:
@@ -381,19 +386,16 @@ paths:
                       enum:
                       - child_relative
                       - adult_relative
-                      required: true
                       example: child_relative
                       description: Dependant's relationship to the applicant
                     monthly_income:
                       type: number
                       format: decimal
-                      required: false
                       description: Dependant's monthly income
                       example: 101.01
                     assets_value:
                       type: number
                       format: decimal
-                      required: false
                       description: Dependant's total assets value
                       example: 0.0
         required: true
@@ -476,6 +478,10 @@ paths:
               properties:
                 employment_income:
                   type: array
+                  required:
+                  - name
+                  - client_id
+                  - payments
                   description: One or more employment income details
                   items:
                     type: object
@@ -483,16 +489,21 @@ paths:
                     properties:
                       name:
                         type: string
-                        required: true
                         description: Identifying name for this employment - e.g. employer's
                           name
                       client_id:
                         type: string
-                        format: uuid
-                        required: true
                         description: Client supplied id to identify the employment
                       payments:
                         type: array
+                        required:
+                        - client_id
+                        - date
+                        - gross
+                        - benefits_in_kind
+                        - tax
+                        - national_insurance
+                        - net_employment_income
                         description: One or more employment payment details
                         items:
                           type: object
@@ -500,41 +511,33 @@ paths:
                           properties:
                             client_id:
                               type: string
-                              format: uuid
-                              required: true
                               description: Client supplied id to identify the payment
                               example: '05459c0f-a620-4743-9f0c-b3daa93e5711'
                             date:
                               type: string
                               format: date
-                              required: true
                               description: Date payment received
                               example: '1992-07-22'
                             gross:
                               type: number
                               format: decimal
-                              required: true
                               description: Gross payment income received
                               example: '101.01'
                             benefits_in_kind:
                               type: number
                               format: decimal
-                              required: true
                               description: Benefit in kind amount received
                             tax:
                               type: number
                               format: decimal
-                              required: true
                               description: Amount of tax paid
                             national_insurance:
                               type: number
                               format: decimal
-                              required: true
                               description: Amount of national insurance paid
                             net_employment_income:
                               type: number
                               format: decimal
-                              required: true
                               description: Net payment income received
         required: true
   "/assessments/{assessment_id}/explicit_remarks":
@@ -562,6 +565,8 @@ paths:
           application/json:
             schema:
               type: object
+              required:
+              - explicit_remarks
               example:
                 explicit_remarks:
                 - category: policy_disregards
@@ -571,7 +576,9 @@ paths:
               properties:
                 explicit_remarks:
                   type: array
-                  required: true
+                  required:
+                  - category
+                  - details
                   description: One or more remarks by category
                   items:
                     type: object
@@ -581,13 +588,11 @@ paths:
                         type: string
                         enum:
                         - policy_disregards
-                        required: true
                         description: Category of remark. Currently, only 'policy_disregard'
                           is supported
                         example: policy_disregards
                       details:
                         type: array
-                        required: true
                         description: One or more remarks for that category
                         items:
                           type: string
@@ -626,6 +631,10 @@ paths:
               properties:
                 payments:
                   type: array
+                  required:
+                  - income_type
+                  - frequency
+                  - amount
                   description: One or more irregular payment details
                   items:
                     type: object
@@ -635,14 +644,12 @@ paths:
                         type: string
                         enum:
                         - student_loan
-                        required: true
                         description: Identifying name for this irregular income payment
                         example: student_loan
                       frequency:
                         type: string
                         enum:
                         - annual
-                        required: true
                         description: Frequency of the payment received
                         example: annual
                       amount:
@@ -804,11 +811,13 @@ paths:
               properties:
                 outgoings:
                   type: array
+                  required:
+                  - name
+                  - payments
                   description: One or more outgoings categorized by name
                   items:
                     type: object
                     description: Outgoing payments detail
-                    required: true
                     properties:
                       name:
                         type: string
@@ -817,20 +826,26 @@ paths:
                         - rent_or_mortgage
                         - maintenance_out
                         - legal_aid
-                        required: true
                         description: Type of outgoing
                         example: child_care
                       payments:
                         type: array
+                        required:
+                        - client_id
+                        - payment_date
+                        - amount
                         description: One or more outgoing payments detail
                         items:
                           type: object
                           description: Payment detail
                           properties:
+                            client_id:
+                              type: string
+                              description: Client identifier for outgoing payment
+                              example: '05459c0f-a620-4743-9f0c-b3daa93e5711'
                             payment_date:
                               type: string
                               format: date
-                              required: true
                               description: Date payment made
                               example: '1992-07-22'
                             housing_costs_type:
@@ -839,22 +854,14 @@ paths:
                               - rent
                               - mortgage
                               - board_and_lodging
-                              required: false
                               description: Housing cost type (omit for non-housing
                                 cost outgoings)
                               example: rent
                             amount:
                               type: number
                               format: decimal
-                              required: true
                               description: Amount of payment made
                               example: 101.01
-                            client_id:
-                              type: string
-                              format: uuid
-                              required: true
-                              description: Client identifier for outgoing payment
-                              example: '05459c0f-a620-4743-9f0c-b3daa93e5711'
         required: true
   "/assessments/{assessment_id}/properties":
     post:
@@ -881,6 +888,8 @@ paths:
           application/json:
             schema:
               type: object
+              required:
+              - properties
               description: A set consisting of a main home and additional properties
               example:
                 properties:
@@ -901,40 +910,46 @@ paths:
               properties:
                 properties:
                   type: object
+                  required:
+                  - main_home
                   description: A main home and additional properties
                   properties:
                     main_home:
                       type: object
+                      required:
+                      - value
+                      - outstanding_mortgage
+                      - percentage_owned
+                      - shared_with_housing_assoc
                       description: Applicant's main home details
-                      required: true
                       properties:
                         value:
                           type: number
                           format: decimal
-                          required: true
                           description: Financial value of the property
                           example: 500000.01
                         outstanding_mortgage:
                           type: number
                           format: decimal
-                          required: true
                           description: Amount outstanding on all mortgages against
                             this property
                           example: 999.99
                         percentage_owned:
                           type: number
                           format: decimal
-                          required: true
                           description: Percentage share of the property which is owned
                             by the applicant
                           example: 99.99
                         shared_with_housing_assoc:
                           type: boolean
-                          required: true
                           description: Property is shared with a housing association
                     additional_properties:
                       type: array
-                      required: false
+                      required:
+                      - value
+                      - outstanding_mortgage
+                      - percentage_owned
+                      - shared_with_housing_assoc
                       description: One or more additional properties owned by the
                         applicant
                       items:
@@ -944,26 +959,22 @@ paths:
                           value:
                             type: number
                             format: decimal
-                            required: true
                             description: Financial value of the property
                             example: 500000.01
                           outstanding_mortgage:
                             type: number
                             format: decimal
-                            required: true
                             description: Amount outstanding on all mortgages against
                               this property
                             example: 999.99
                           percentage_owned:
                             type: number
                             format: decimal
-                            required: true
                             description: Percentage share of the property which is
                               owned by the applicant
                             example: 99.99
                           shared_with_housing_assoc:
                             type: boolean
-                            required: true
                             description: Property is shared with a housing association
         required: true
   "/state_benefit_type":
@@ -1033,6 +1044,9 @@ paths:
                     and categorized by name
                   items:
                     type: object
+                    required:
+                    - name
+                    - payments
                     description: State benefit payment detail
                     properties:
                       name:
@@ -1041,32 +1055,32 @@ paths:
                         example: my_state_bnefit
                       payments:
                         type: array
+                        required:
+                        - client_id
+                        - date
+                        - amount
                         description: One or more state benefit payments details
                         items:
                           type: object
                           description: Payment detail
                           properties:
+                            client_id:
+                              type: string
+                              format: uuid
+                              description: Client identifier for payment received
+                              example: '05459c0f-a620-4743-9f0c-b3daa93e5711'
                             date:
                               type: string
                               format: date
-                              required: true
                               description: Date payment received
                               example: '1992-07-22'
                             amount:
                               type: number
                               format: decimal
-                              required: true
                               description: Amount of payment received
                               example: 101.01
-                            client_id:
-                              type: string
-                              format: uuid
-                              required: true
-                              description: Client identifier for payment received
-                              example: '05459c0f-a620-4743-9f0c-b3daa93e5711'
                             flags:
                               type: object
-                              required: false
                               description: Line items that should be flagged to caseworkers
                                 for review
                               example:
@@ -1110,27 +1124,25 @@ paths:
               properties:
                 vehicles:
                   type: array
-                  require: true
+                  required:
+                  - value
+                  - date_of_purchase
                   description: One or more vehicles' details
                   items:
                     value:
                       type: number
                       format: decimal
-                      required: true
                       description: Financial value of the vehicle
                     loan_amount_outstanding:
                       type: number
                       format: decimal
-                      required: false
                       description: Amount remaining, if any, of a loan used to purchase
                         the vehicle
                     date_of_purchase:
                       type: string
                       format: dates
-                      required: true
                       description: Date vehicle purchased by the applicant
                     in_regular_use:
                       type: boolean
-                      required: false
                       description: Vehicle in regular use or not
         required: true

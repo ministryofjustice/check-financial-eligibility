@@ -23,53 +23,48 @@ RSpec.describe "outgoings", type: :request, swagger_doc: "v4/swagger.yaml" do
                   properties: {
                     outgoings: {
                       type: :array,
+                      required: %i[name payments],
                       description: "One or more outgoings categorized by name",
                       items: {
                         type: :object,
                         description: "Outgoing payments detail",
-                        required: true,
                         properties: {
                           name: {
                             type: :string,
                             enum: CFEConstants::VALID_OUTGOING_CATEGORIES,
-                            required: true,
                             description: "Type of outgoing",
                             example: CFEConstants::VALID_OUTGOING_CATEGORIES.first,
                           },
                           payments: {
                             type: :array,
+                            required: %i[client_id payment_date amount],
                             description: "One or more outgoing payments detail",
                             items: {
                               type: :object,
                               description: "Payment detail",
                               properties: {
+                                client_id: {
+                                  type: :string,
+                                  description: "Client identifier for outgoing payment",
+                                  example: "05459c0f-a620-4743-9f0c-b3daa93e5711",
+                                },
                                 payment_date: {
                                   type: :string,
                                   format: :date,
-                                  required: true,
                                   description: "Date payment made",
                                   example: "1992-07-22",
                                 },
                                 housing_costs_type: {
                                   type: :string,
                                   enum: CFEConstants::VALID_OUTGOING_HOUSING_COST_TYPES,
-                                  required: false,
                                   description: "Housing cost type (omit for non-housing cost outgoings)",
                                   example: CFEConstants::VALID_OUTGOING_HOUSING_COST_TYPES.first,
                                 },
                                 amount: {
                                   type: :number,
                                   format: :decimal,
-                                  required: true,
                                   description: "Amount of payment made",
                                   example: 101.01,
-                                },
-                                client_id: {
-                                  type: :string,
-                                  format: :uuid,
-                                  required: true,
-                                  description: "Client identifier for outgoing payment",
-                                  example: "05459c0f-a620-4743-9f0c-b3daa93e5711",
                                 },
                               },
                             },

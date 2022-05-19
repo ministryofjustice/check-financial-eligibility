@@ -23,30 +23,26 @@ RSpec.describe "vehicles", type: :request, swagger_doc: "v4/swagger.yaml" do
                   properties: {
                     vehicles: {
                       type: :array,
-                      require: true,
+                      required: %i[value date_of_purchase],
                       description: "One or more vehicles' details",
                       items: {
                         value: {
                           type: :number,
                           format: :decimal,
-                          required: true,
                           description: "Financial value of the vehicle",
                         },
                         loan_amount_outstanding: {
                           type: :number,
                           format: :decimal,
-                          required: false,
                           description: "Amount remaining, if any, of a loan used to purchase the vehicle",
                         },
                         date_of_purchase: {
                           type: :string,
                           format: :dates,
-                          required: true,
                           description: "Date vehicle purchased by the applicant",
                         },
                         in_regular_use: {
                           type: :boolean,
-                          required: false,
                           description: "Vehicle in regular use or not",
                         },
                       },

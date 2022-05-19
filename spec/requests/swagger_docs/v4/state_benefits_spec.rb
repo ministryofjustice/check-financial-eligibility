@@ -26,6 +26,7 @@ RSpec.describe "state_benefits", type: :request, swagger_doc: "v4/swagger.yaml" 
                       description: "One or more state benefits receved by the applicant and categorized by name",
                       items: {
                         type: :object,
+                        required: %i[name payments],
                         description: "State benefit payment detail",
                         properties: {
                           name: {
@@ -35,35 +36,32 @@ RSpec.describe "state_benefits", type: :request, swagger_doc: "v4/swagger.yaml" 
                           },
                           payments: {
                             type: :array,
+                            required: %i[client_id date amount],
                             description: "One or more state benefit payments details",
                             items: {
                               type: :object,
                               description: "Payment detail",
                               properties: {
+                                client_id: {
+                                  type: :string,
+                                  format: :uuid,
+                                  description: "Client identifier for payment received",
+                                  example: "05459c0f-a620-4743-9f0c-b3daa93e5711",
+                                },
                                 date: {
                                   type: :string,
                                   format: :date,
-                                  required: true,
                                   description: "Date payment received",
                                   example: "1992-07-22",
                                 },
                                 amount: {
                                   type: :number,
                                   format: :decimal,
-                                  required: true,
                                   description: "Amount of payment received",
                                   example: 101.01,
                                 },
-                                client_id: {
-                                  type: :string,
-                                  format: :uuid,
-                                  required: true,
-                                  description: "Client identifier for payment received",
-                                  example: "05459c0f-a620-4743-9f0c-b3daa93e5711",
-                                },
                                 flags: {
                                   type: :object,
-                                  required: false,
                                   description: "Line items that should be flagged to caseworkers for review",
                                   example: { multi_benefit: true },
                                   properties: {

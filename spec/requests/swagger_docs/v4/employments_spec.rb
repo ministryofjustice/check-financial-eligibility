@@ -23,6 +23,7 @@ RSpec.describe "employments", type: :request, swagger_doc: "v4/swagger.yaml" do
                   properties: {
                     employment_income: {
                       type: :array,
+                      required: %i[name client_id payments],
                       description: "One or more employment income details",
                       items: {
                         type: :object,
@@ -30,17 +31,15 @@ RSpec.describe "employments", type: :request, swagger_doc: "v4/swagger.yaml" do
                         properties: {
                           name: {
                             type: :string,
-                            required: true,
                             description: "Identifying name for this employment - e.g. employer's name",
                           },
                           client_id: {
                             type: :string,
-                            format: :uuid,
-                            required: true,
                             description: "Client supplied id to identify the employment",
                           },
                           payments: {
                             type: :array,
+                            required: %i[client_id date gross benefits_in_kind tax national_insurance net_employment_income],
                             description: "One or more employment payment details",
                             items: {
                               type: :object,
@@ -48,47 +47,39 @@ RSpec.describe "employments", type: :request, swagger_doc: "v4/swagger.yaml" do
                               properties: {
                                 client_id: {
                                   type: :string,
-                                  format: :uuid,
-                                  required: true,
                                   description: "Client supplied id to identify the payment",
                                   example: "05459c0f-a620-4743-9f0c-b3daa93e5711",
                                 },
                                 date: {
                                   type: :string,
                                   format: :date,
-                                  required: true,
                                   description: "Date payment received",
                                   example: "1992-07-22",
                                 },
                                 gross: {
                                   type: :number,
                                   format: :decimal,
-                                  required: true,
                                   description: "Gross payment income received",
                                   example: "101.01",
                                 },
                                 benefits_in_kind: {
                                   type: :number,
                                   format: :decimal,
-                                  required: true,
                                   description: "Benefit in kind amount received",
                                 },
                                 tax: {
                                   type: :number,
                                   format: :decimal,
-                                  required: true,
                                   description: "Amount of tax paid",
                                 },
                                 national_insurance: {
                                   type: :number,
                                   format: :decimal,
-                                  required: true,
                                   description: "Amount of national insurance paid",
                                 },
                                 net_employment_income: {
                                   type: :number,
                                   format: :decimal,
-                                  required: true,
                                   description: "Net payment income received",
                                 },
                               },

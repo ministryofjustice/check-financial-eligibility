@@ -18,49 +18,47 @@ RSpec.describe "properties", type: :request, swagger_doc: "v4/swagger.yaml" do
                 required: true,
                 schema: {
                   type: :object,
+                  required: %i[properties],
                   description: "A set consisting of a main home and additional properties",
                   example: JSON.parse(File.read(Rails.root.join("spec/fixtures/properties.json"))),
                   properties: {
                     properties: {
                       type: :object,
+                      required: %i[main_home],
                       description: "A main home and additional properties",
                       properties: {
                         main_home: {
                           type: :object,
+                          required: %i[value outstanding_mortgage percentage_owned shared_with_housing_assoc],
                           description: "Applicant's main home details",
-                          required: true,
                           properties: {
                             value: {
                               type: :number,
                               format: :decimal,
-                              required: true,
                               description: "Financial value of the property",
                               example: 500_000.01,
                             },
                             outstanding_mortgage: {
                               type: :number,
                               format: :decimal,
-                              required: true,
                               description: "Amount outstanding on all mortgages against this property",
                               example: 999.99,
                             },
                             percentage_owned: {
                               type: :number,
                               format: :decimal,
-                              required: true,
                               description: "Percentage share of the property which is owned by the applicant",
                               example: 99.99,
                             },
                             shared_with_housing_assoc: {
                               type: :boolean,
-                              required: true,
                               description: "Property is shared with a housing association",
                             },
                           },
                         },
                         additional_properties: {
                           type: :array,
-                          required: false,
+                          required: %i[value outstanding_mortgage percentage_owned shared_with_housing_assoc],
                           description: "One or more additional properties owned by the applicant",
                           items: {
                             type: :object,
@@ -69,27 +67,23 @@ RSpec.describe "properties", type: :request, swagger_doc: "v4/swagger.yaml" do
                               value: {
                                 type: :number,
                                 format: :decimal,
-                                required: true,
                                 description: "Financial value of the property",
                                 example: 500_000.01,
                               },
                               outstanding_mortgage: {
                                 type: :number,
                                 format: :decimal,
-                                required: true,
                                 description: "Amount outstanding on all mortgages against this property",
                                 example: 999.99,
                               },
                               percentage_owned: {
                                 type: :number,
                                 format: :decimal,
-                                required: true,
                                 description: "Percentage share of the property which is owned by the applicant",
                                 example: 99.99,
                               },
                               shared_with_housing_assoc: {
                                 type: :boolean,
-                                required: true,
                                 description: "Property is shared with a housing association",
                               },
                             },
