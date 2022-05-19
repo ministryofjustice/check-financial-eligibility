@@ -1,6 +1,6 @@
 require "swagger_helper"
 
-RSpec.describe "cash_transactions", type: :request, swagger_doc: "v3/swagger.yaml" do
+RSpec.describe "cash_transactions", type: :request, swagger_doc: "v4/swagger.yaml" do
   path "/assessments/{assessment_id}/cash_transactions" do
     post("create cash_transaction") do
       tags "Assessment components"

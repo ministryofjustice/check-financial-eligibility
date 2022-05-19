@@ -1,6 +1,6 @@
 require "swagger_helper"
 
-RSpec.describe "properties", type: :request, swagger_doc: "v3/swagger.yaml" do
+RSpec.describe "properties", type: :request, swagger_doc: "v4/swagger.yaml" do
   path "/assessments/{assessment_id}/properties" do
     post("create property") do
       tags "Assessment components"
