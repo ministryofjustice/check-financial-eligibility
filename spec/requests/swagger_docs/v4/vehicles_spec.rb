@@ -23,27 +23,30 @@ RSpec.describe "vehicles", type: :request, swagger_doc: "v4/swagger.yaml" do
                   properties: {
                     vehicles: {
                       type: :array,
-                      required: %i[value date_of_purchase],
                       description: "One or more vehicles' details",
                       items: {
-                        value: {
-                          type: :number,
-                          format: :decimal,
-                          description: "Financial value of the vehicle",
-                        },
-                        loan_amount_outstanding: {
-                          type: :number,
-                          format: :decimal,
-                          description: "Amount remaining, if any, of a loan used to purchase the vehicle",
-                        },
-                        date_of_purchase: {
-                          type: :string,
-                          format: :dates,
-                          description: "Date vehicle purchased by the applicant",
-                        },
-                        in_regular_use: {
-                          type: :boolean,
-                          description: "Vehicle in regular use or not",
+                        type: :object,
+                        required: %i[value date_of_purchase],
+                        properties: {
+                          value: {
+                            type: :number,
+                            format: :decimal,
+                            description: "Financial value of the vehicle",
+                          },
+                          loan_amount_outstanding: {
+                            type: :number,
+                            format: :decimal,
+                            description: "Amount remaining, if any, of a loan used to purchase the vehicle",
+                          },
+                          date_of_purchase: {
+                            type: :string,
+                            format: :dates,
+                            description: "Date vehicle purchased by the applicant",
+                          },
+                          in_regular_use: {
+                            type: :boolean,
+                            description: "Vehicle in regular use or not",
+                          },
                         },
                       },
                     },

@@ -367,37 +367,39 @@ paths:
               properties:
                 dependants:
                   type: array
-                  required:
-                  - date_of_birth
-                  - in_full_time_education
-                  - relationship
                   description: One or more dependants details
                   items:
-                    date_of_birth:
-                      type: string
-                      format: date
-                      example: '1992-07-22'
-                    in_full_time_education:
-                      type: boolan
-                      example: false
-                      description: Dependant is in full time education or not
-                    relationship:
-                      type: string
-                      enum:
-                      - child_relative
-                      - adult_relative
-                      example: child_relative
-                      description: Dependant's relationship to the applicant
-                    monthly_income:
-                      type: number
-                      format: decimal
-                      description: Dependant's monthly income
-                      example: 101.01
-                    assets_value:
-                      type: number
-                      format: decimal
-                      description: Dependant's total assets value
-                      example: 0.0
+                    type: object
+                    required:
+                    - date_of_birth
+                    - in_full_time_education
+                    - relationship
+                    properties:
+                      date_of_birth:
+                        type: string
+                        format: date
+                        example: '1992-07-22'
+                      in_full_time_education:
+                        type: boolean
+                        example: false
+                        description: Dependant is in full time education or not
+                      relationship:
+                        type: string
+                        enum:
+                        - child_relative
+                        - adult_relative
+                        example: child_relative
+                        description: Dependant's relationship to the applicant
+                      monthly_income:
+                        type: number
+                        format: decimal
+                        description: Dependant's monthly income
+                        example: 101.01
+                      assets_value:
+                        type: number
+                        format: decimal
+                        description: Dependant's total assets value
+                        example: 0.0
         required: true
   "/assessments/{assessment_id}/employments":
     post:
@@ -1124,25 +1126,27 @@ paths:
               properties:
                 vehicles:
                   type: array
-                  required:
-                  - value
-                  - date_of_purchase
                   description: One or more vehicles' details
                   items:
-                    value:
-                      type: number
-                      format: decimal
-                      description: Financial value of the vehicle
-                    loan_amount_outstanding:
-                      type: number
-                      format: decimal
-                      description: Amount remaining, if any, of a loan used to purchase
-                        the vehicle
-                    date_of_purchase:
-                      type: string
-                      format: dates
-                      description: Date vehicle purchased by the applicant
-                    in_regular_use:
-                      type: boolean
-                      description: Vehicle in regular use or not
+                    type: object
+                    required:
+                    - value
+                    - date_of_purchase
+                    properties:
+                      value:
+                        type: number
+                        format: decimal
+                        description: Financial value of the vehicle
+                      loan_amount_outstanding:
+                        type: number
+                        format: decimal
+                        description: Amount remaining, if any, of a loan used to purchase
+                          the vehicle
+                      date_of_purchase:
+                        type: string
+                        format: dates
+                        description: Date vehicle purchased by the applicant
+                      in_regular_use:
+                        type: boolean
+                        description: Vehicle in regular use or not
         required: true
