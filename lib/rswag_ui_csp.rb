@@ -9,7 +9,7 @@ module Rswag::Ui::Csp
     _, headers, = response = super
     headers["Content-Security-Policy"] = <<~POLICY.tr "\n", " "
       default-src 'self';
-      img-src 'self' data: https://online.swagger.io; https://validator.swagger.io/;
+      img-src 'self' data: https://online.swagger.io https://validator.swagger.io/;
       font-src 'self' https://fonts.gstatic.com;
       style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
       script-src 'self' 'unsafe-inline';
