@@ -37,6 +37,10 @@ RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
+  # Path to look up fixtures using `file_fixture('file_name.blah').read`.
+  # Default is "spec/fixtures/files"
+  config.file_fixture_path = "spec/fixtures"
+
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.

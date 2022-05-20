@@ -1,0 +1,47 @@
+{
+  "state_benefits": [
+    {
+      "name": "benefit_type_101",
+      "payments": [
+        {
+          "date": "2019-11-01",
+          "amount": 1046.44,
+          "client_id": "4378057c-4f09-4e20-8d46-264ebb3144e5"
+        },
+        {
+          "date": "2019-10-01",
+          "amount": 1034.33,
+          "client_id": "18c69e4d-a2d7-4743-8d97-5b4367a8ffb0"
+        },
+        {
+          "date": "2019-09-01",
+          "amount": 1033.44,
+          "client_id": "710f422d-89eb-47df-9e6c-69d7da014933"
+        }
+      ]
+    },
+    {
+      "name": "benefit_type_102",
+      "payments": [
+        {
+          "date": "2019-11-01",
+          "amount": 250.0,
+          "client_id": "4378057c-4f09-4e20-8d46-264ebb3144e5"
+        },
+        {
+          "date": "2019-10-01",
+          "amount": 266.02,
+          "client_id": "18c69e4d-a2d7-4743-8d97-5b4367a8ffb0"
+        },
+        {
+          "date": "2019-09-01",
+          "amount": 250.0,
+          "client_id": "710f422d-89eb-47df-9e6c-69d7da014933",
+          "flags": {
+            "multi_benefit": true
+          }
+        }
+      ]
+    }
+  ]
+}

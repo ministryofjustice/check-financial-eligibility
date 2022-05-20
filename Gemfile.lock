@@ -193,8 +193,8 @@ GEM
     i18n (1.10.0)
       concurrent-ruby (~> 1.0)
     interception (0.5)
-    json-schema (3.0.0)
-      addressable (>= 2.8)
+    json-schema (2.8.1)
+      addressable (>= 2.4)
     jsonapi-renderer (0.2.2)
     jwt (2.3.0)
     listen (3.7.1)
@@ -334,6 +334,15 @@ GEM
     rspec-support (3.11.0)
     rspec_junit_formatter (0.5.1)
       rspec-core (>= 2, < 4, != 2.12.0)
+    rswag-api (2.5.1)
+      railties (>= 3.1, < 7.1)
+    rswag-specs (2.5.1)
+      activesupport (>= 3.1, < 7.1)
+      json-schema (~> 2.2)
+      railties (>= 3.1, < 7.1)
+    rswag-ui (2.5.1)
+      actionpack (>= 3.1, < 7.1)
+      railties (>= 3.1, < 7.1)
     rubocop (1.27.0)
       parallel (~> 1.10)
       parser (>= 3.1.0.0)
@@ -365,7 +374,6 @@ GEM
     ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
-    secure_headers (6.3.3)
     semantic_range (3.0.0)
     sentry-rails (5.3.1)
       railties (>= 5.0)
@@ -444,7 +452,7 @@ DEPENDENCIES
   guard
   guard-rspec
   guard-rubocop
-  json-schema (>= 2.8.1)
+  json-schema (~> 2.8.1)
   listen (>= 3.0.5, < 3.8)
   mimemagic (>= 0.4.3)
   nesty
@@ -460,9 +468,11 @@ DEPENDENCIES
   roo (~> 2.9.0)
   rspec-rails (~> 5.1)
   rspec_junit_formatter
+  rswag-api
+  rswag-specs
+  rswag-ui
   rubocop-govuk
   rubocop-performance
-  secure_headers
   sentry-rails (>= 4.4.0)
   sentry-ruby
   shoulda-matchers

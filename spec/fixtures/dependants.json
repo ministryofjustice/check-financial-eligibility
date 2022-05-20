@@ -1,0 +1,18 @@
+{
+  "dependants": [
+    {
+      "date_of_birth": "1983-08-08",
+      "in_full_time_education": false,
+      "relationship": "adult_relative",
+      "monthly_income": 4448.63,
+      "assets_value": 0.0
+    },
+    {
+      "date_of_birth": "1982-02-03",
+      "in_full_time_education": false,
+      "relationship": "adult_relative",
+      "monthly_income": 886.61,
+      "assets_value": 0.0
+    }
+  ]
+}
