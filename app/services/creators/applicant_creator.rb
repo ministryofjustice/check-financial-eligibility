@@ -1,15 +1,19 @@
 module Creators
   class ApplicantCreator < BaseCreator
-    attr_accessor :assessment_id, :applicant_attributes, :applicant
+    attr_accessor :assessment_id, :applicant
 
-    def initialize(assessment_id:, applicant_attributes:)
+    def initialize(assessment_id:, applicant_params:)
       super()
       @assessment_id = assessment_id
-      @applicant_attributes = applicant_attributes
+      @applicant_params = applicant_params
     end
 
     def call
-      create_records
+      if json_validator.valid?
+        create_records
+      else
+        self.errors = json_validator.errors
+      end
       self
     end
 
@@ -30,6 +34,14 @@ module Creators
 
     def assessment
       @assessment ||= Assessment.find_by(id: assessment_id) || (raise CreationError, ["No such assessment id"])
+    end
+
+    def applicant_attributes
+      @applicant_attributes ||= JSON.parse(@applicant_params, symbolize_names: true)[:applicant]
+    end
+
+    def json_validator
+      @json_validator ||= JsonValidator.new("applicant", @applicant_params)
     end
   end
 end

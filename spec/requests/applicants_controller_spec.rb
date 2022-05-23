@@ -73,8 +73,6 @@ RSpec.describe ApplicantsController, type: :request do
     end
 
     context "with malformed JSON payload" do
-      before { expect(Creators::ApplicantCreator).not_to receive(:call) }
-
       context "missing applicant" do
         before do
           params.delete(:applicant)
@@ -130,17 +128,17 @@ RSpec.describe ApplicantsController, type: :request do
           expect(response).to have_http_status(:unprocessable_entity)
         end
       end
-    end
 
-    context "with date of birth in the future" do
-      let(:dob) { 3.days.from_now.to_date }
+      context "with date of birth in the future" do
+        let(:dob) { 3.days.from_now.to_date }
 
-      before do
-        params[:applicant][:date_of_birth] = dob
-        post assessment_applicant_path(assessment.id), params: params.to_json, headers:
+        before do
+          params[:applicant][:date_of_birth] = dob
+          post assessment_applicant_path(assessment.id), params: params.to_json, headers:
+        end
+
+        it_behaves_like "it fails with message", /Date of birth cannot be in future/
       end
-
-      it_behaves_like "it fails with message", /Date of birth cannot be in future/
     end
   end
 end
