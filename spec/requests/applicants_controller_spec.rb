@@ -16,12 +16,12 @@ RSpec.describe ApplicantsController, type: :request do
       }
     end
 
-    context "valid payload" do
+    context "with valid payload" do
       before do
         post assessment_applicant_path(assessment.id), params: params.to_json, headers:
       end
 
-      context "service returns success" do
+      context "when service returns success" do
         it "returns success"  do
           expect(response).to have_http_status(:success)
         end
@@ -32,7 +32,7 @@ RSpec.describe ApplicantsController, type: :request do
         end
       end
 
-      context "service returns failure" do
+      context "when service returns failure" do
         let(:future_date) { 4.years.from_now.to_date }
         let(:future_date_string) { future_date.strftime("%Y-%m-%d") }
         let(:params) do
@@ -61,7 +61,7 @@ RSpec.describe ApplicantsController, type: :request do
       end
     end
 
-    context "invalid payload" do
+    context "with invalid payload" do
       let(:non_existent_assessment_id) { SecureRandom.uuid }
 
       before do
@@ -72,7 +72,7 @@ RSpec.describe ApplicantsController, type: :request do
       it_behaves_like "it fails with message", "No such assessment id"
     end
 
-    context "malformed JSON payload" do
+    context "with malformed JSON payload" do
       before { expect(Creators::ApplicantCreator).not_to receive(:call) }
 
       context "missing applicant" do
@@ -84,7 +84,7 @@ RSpec.describe ApplicantsController, type: :request do
         it_behaves_like "it fails with message", /The property '#\/' did not contain a required property of 'applicant'/
       end
 
-      context "invalid date of birth" do
+      context "with invalid date of birth" do
         let(:dob) { "2002-12-32" }
 
         before do
