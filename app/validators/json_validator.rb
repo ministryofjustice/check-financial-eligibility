@@ -1,16 +1,16 @@
 class JsonValidator
-  def initialize(schema, payload)
+  def initialize(schema_name, payload)
     @schema_dir = Rails.root.join("public/schemas")
-    @schema = load_schema(schema)
+    @schema_name = load_schema(schema_name)
     @payload = payload
   end
 
   def valid?
-    JSON::Validator.validate(@schema, @payload)
+    JSON::Validator.validate(@schema_name, @payload)
   end
 
   def errors
-    JSON::Validator.fully_validate(@schema, @payload)
+    JSON::Validator.fully_validate(@schema_name, @payload)
   end
 
 private

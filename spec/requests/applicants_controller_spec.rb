@@ -110,7 +110,7 @@ RSpec.describe ApplicantsController, type: :request do
           post assessment_applicant_path(assessment.id), params: params.to_json, headers:
         end
 
-        it_behaves_like "it fails with message", /The property '#\/applicant\/involvement_type' value "Witness" did not match the regex '\^applicant'/
+        it_behaves_like "it fails with message", /The property '#\/applicant\/involvement_type' value "Witness" did not match one of the following values: applicant in schema file/
       end
 
       context "has_partner_opponent not a boolean" do

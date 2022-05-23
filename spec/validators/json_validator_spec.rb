@@ -38,7 +38,7 @@ RSpec.describe "JsonValidator" do
     it "displays errors" do
       errors = validator.errors
       expect(errors).to include(match(/The property '#\/applicant\/date_of_birth' value "3002-12-23" did not match the regex/))
-      expect(errors).to include(match(/The property '#\/applicant\/involvement_type' value "defendant" did not match the regex '\^applicant' in schema/))
+      expect(errors).to include(match(/The property '#\/applicant\/involvement_type' value "defendant" did not match one of the following values: applicant in schema file:/))
     end
   end
 

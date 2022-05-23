@@ -23,10 +23,10 @@ private
   end
 
   def json_validator
-    @json_validator ||= JsonValidator.new(schema, request.raw_post)
+    JsonValidator.new(schema_name, request.raw_post)
   end
 
-  def schema
-    @schema ||= "applicant"
+  def schema_name
+    @schema_name ||= "applicant"
   end
 end
