@@ -123,7 +123,7 @@ RSpec.describe ApplicantsController, type: :request do
                         /The property '#\/applicant\/has_partner_opponent' of type string did not match the following type: boolean in schema/
       end
 
-      context "receives_qualifying_benefit not a boolean" do
+      context "with non boolean receives_qualifying_benefit" do
         it "fails with a message" do
           params[:applicant][:receives_qualifying_benefit] = "yes"
           post assessment_applicant_path(assessment.id), params: params.to_json, headers: headers
@@ -132,7 +132,7 @@ RSpec.describe ApplicantsController, type: :request do
       end
     end
 
-    context "future date of birth" do
+    context "with date of birth in the future" do
       let(:dob) { 3.days.from_now.to_date }
 
       before do
