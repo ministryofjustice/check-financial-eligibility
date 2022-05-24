@@ -45,38 +45,38 @@ RSpec.describe "contribution_required Full Assessment with remarks" do
   end
 
   def post_assessment
-    post assessments_path, params: assessment_params, headers: headers
+    post assessments_path, params: assessment_params, headers: v3_headers
     output_response(:post, :assessment)
     parsed_response[:assessment_id]
   end
 
   def post_applicant(assessment_id)
-    post assessment_applicant_path(assessment_id), params: applicant_params, headers: headers
+    post assessment_applicant_path(assessment_id), params: applicant_params, headers: v3_headers
     output_response(:post, :applicant)
   end
 
   def post_capitals(assessment_id)
-    post assessment_capitals_path(assessment_id), params: capitals_params, headers: headers
+    post assessment_capitals_path(assessment_id), params: capitals_params, headers: v3_headers
     output_response(:post, :capitals)
   end
 
   def post_other_incomes(assessment_id)
-    post assessment_other_incomes_path(assessment_id), params: other_income_params, headers: headers
+    post assessment_other_incomes_path(assessment_id), params: other_income_params, headers: v3_headers
     output_response(:post, :other_incomes)
   end
 
   def post_outgoings(assessment_id)
-    post assessment_outgoings_path(assessment_id), params: outgoings_params, headers: headers
+    post assessment_outgoings_path(assessment_id), params: outgoings_params, headers: v3_headers
     output_response(:post, :outgoings)
   end
 
   def post_state_benefits(assessment_id)
-    post assessment_state_benefits_path(assessment_id), params: state_benefit_params, headers: headers
+    post assessment_state_benefits_path(assessment_id), params: state_benefit_params, headers: v3_headers
     output_response(:post, :state_benefits)
   end
 
   def post_explicit_remarks(assessment_id)
-    post assessment_explicit_remarks_path(assessment_id), params: explicit_remarks_params, headers: headers
+    post assessment_explicit_remarks_path(assessment_id), params: explicit_remarks_params, headers: v3_headers
     output_response(:post, :explicit_remarks)
   end
 
@@ -90,12 +90,8 @@ RSpec.describe "contribution_required Full Assessment with remarks" do
     ENV["VERBOSE"] == "true"
   end
 
-  def headers
-    { "CONTENT_TYPE" => "application/json" }
-  end
-
   def v3_headers
-    { "Accept" => "application/json;version=3" }
+    { "CONTENT_TYPE" => "application/json", "Accept" => "application/json;version=3" }
   end
 
   def assessment_params

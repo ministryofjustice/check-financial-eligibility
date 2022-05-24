@@ -19,9 +19,11 @@ RSpec.describe AssessmentsController, type: :request do
         }
       end
       let(:headers) { { "CONTENT_TYPE" => "application/json" } }
+      let(:v3_headers) { { "CONTENT_TYPE" => "application/json", "Accept" => "application/json;version=3" } }
+
       let(:before_request) { nil }
 
-      subject(:post_payload) { post assessments_path, params: params.to_json, headers: }
+      subject(:post_payload) { post assessments_path, params: params.to_json, headers: v3_headers }
 
       before do
         before_request
@@ -125,6 +127,31 @@ RSpec.describe AssessmentsController, type: :request do
         expect(response).to have_http_status(:unprocessable_entity)
         expect(parsed_response[:success]).to be false
         expect(parsed_response[:errors]).to eq ["Version not valid in Accept header"]
+      end
+    end
+
+    context "no version specified" do
+      let(:headers) do
+        {
+          "CONTENT_TYPE" => "application/json",
+          "Accept" => "application/json",
+        }
+      end
+      let(:params) do
+        {
+          client_reference_id: "psr-123",
+          submission_date: "2019-06-06",
+          proceeding_types: {
+            ccms_codes:,
+          },
+        }
+      end
+
+      it "calls the assessment creator with the default version 4 and params" do
+        expect(Creators::AssessmentCreator).to receive(:call).with(remote_ip: ipaddr, raw_post: params.to_json, version: "4").and_call_original
+        post assessments_path, params: params.to_json, headers: headers
+        expect(response).to have_http_status(:ok)
+        expect(parsed_response[:success]).to be true
       end
     end
   end

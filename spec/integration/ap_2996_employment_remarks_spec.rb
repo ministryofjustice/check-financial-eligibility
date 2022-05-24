@@ -190,11 +190,11 @@ RSpec.describe "Full Assessment with remarks" do
   end
 
   def post_headers
-    { "CONTENT_TYPE" => "application/json" }
+    { "CONTENT_TYPE" => "application/json", "Accept" => "application/json;version=3" }
   end
 
   def v4_headers
-    { "Accept" => "application/json;version=4" }
+    { "CONTENT_TYPE" => "application/json", "Accept" => "application/json;version=4" }
   end
 
   def assessment_params
