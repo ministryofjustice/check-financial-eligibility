@@ -49,16 +49,17 @@ module Utilities
       (value * 52 / 12).round(2)
     end
 
-    def blunt_average(_value)
-      @employment.employment_payments.sum(&:gross_income) / 3
+    def blunt_average(value)
+      # @employment.employment_payments.sum(&:gross_income) / 3
+      @employment.employment_payments.sum(&value) / @employment.employment_payments.count
     end
 
     def update_payments(calc_method)
       @employment.employment_payments.each do |payment|
         payment.update(
-          gross_income_monthly_equiv: __send__(calc_method, payment.gross_income),
-          tax_monthly_equiv: __send__(calc_method, payment.tax),
-          national_insurance_monthly_equiv: __send__(calc_method, payment.national_insurance),
+          gross_income_monthly_equiv: __send__(calc_method, :gross_income),
+          tax_monthly_equiv: __send__(calc_method, :tax),
+          national_insurance_monthly_equiv: __send__(calc_method, :national_insurance),
         )
       end
     end
