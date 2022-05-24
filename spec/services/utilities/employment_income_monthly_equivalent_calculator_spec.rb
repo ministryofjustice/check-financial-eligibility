@@ -87,7 +87,7 @@ module Utilities
           let(:amounts) { [100, 100, 100, 100, 100, 100] }
 
           it "populates monthly equivalent field with gross income" do
-            expect(payments.map(&:gross_income_monthly_equiv).uniq).to eq [200]
+            expect(payments.map(&:gross_income_monthly_equiv).uniq).to eq [100]
           end
         end
       end
