@@ -5,13 +5,13 @@ RSpec.describe Utilities::EmploymentIncomeMonthlyEquivalentCalculator, :vcr do
   let(:employment) { create :employment, assessment: }
   let(:payments) { employment.employment_payments }
 
-  context "valid payment period" do
+  context "with valid payment period" do
     before do
       create_employment_payment_records
       described_class.call(employment)
     end
 
-    context "monthly payment" do
+    context "with monthly payment frequency" do
       let(:dates) { %w[2022-01-31 2022-02-28 2022-03-31] }
 
       context "non varying amounts" do
@@ -33,7 +33,7 @@ RSpec.describe Utilities::EmploymentIncomeMonthlyEquivalentCalculator, :vcr do
       end
     end
 
-    context "four-weekly payment" do
+    context "with four-weekly payment frequency" do
       let(:dates) { %w[2022-01-14 2022-02-11 2022-03-11] }
 
       context "non varying amounts" do
@@ -55,7 +55,7 @@ RSpec.describe Utilities::EmploymentIncomeMonthlyEquivalentCalculator, :vcr do
       end
     end
 
-    context "two-weekly payments" do
+    context "with two-weekly payment frequency" do
       let(:dates) { %w[2022-01-14 2022-01-28 2022-02-11 2022-02-25 2022-03-11 2022-03-25] }
 
       context "non varying amounts" do
@@ -67,7 +67,7 @@ RSpec.describe Utilities::EmploymentIncomeMonthlyEquivalentCalculator, :vcr do
       end
     end
 
-    context "weekly payments" do
+    context "with weekly payment frequency" do
       let(:dates) { %w[2022-01-07 2022-01-14 2022-01-21 2022-01-28 2022-02-04 2022-02-11 2022-02-18 2022-02-25 2022-03-04 2022-03-11 2022-03-18 2022-03-25] }
 
       context "non varying amounts" do
@@ -79,8 +79,8 @@ RSpec.describe Utilities::EmploymentIncomeMonthlyEquivalentCalculator, :vcr do
       end
     end
 
-    context "blunt average" do
-      let(:dates) { %w[2021-12-10 2021-11-12 2021-10-15 2021-09-17 2021-08-20 2021-07-15] }
+    context "with irregular payment frequency requiring a blunt average" do
+      let(:dates) { %w[2021-07-15 2021-08-20 2021-09-17 2021-10-15 2021-11-12 2021-12-10] }
 
       context "varying amounts" do
         let(:amounts) { [100, 100, 100, 100, 100, 100] }
@@ -98,7 +98,7 @@ RSpec.describe Utilities::EmploymentIncomeMonthlyEquivalentCalculator, :vcr do
     end
   end
 
-  context "invalid payment period" do
+  context "with invalid payment period" do
     let(:mock_analyser) { instance_double Utilities::PaymentPeriodAnalyser, period_pattern: :testing }
 
     before do
