@@ -1,9 +1,14 @@
 require "rails_helper"
 
-RSpec.describe Utilities::EmploymentIncomeMonthlyEquivalentCalculator, :vcr do
+RSpec.describe Utilities::EmploymentIncomeMonthlyEquivalentCalculator do
   let(:assessment) { create :assessment }
   let(:employment) { create :employment, assessment: }
   let(:payments) { employment.employment_payments }
+
+  before do
+    stub_request(:get, "https://www.gov.uk/bank-holidays.json")
+      .to_return(body: file_fixture("bank-holidays.json").read)
+  end
 
   context "with valid payment period" do
     before do
@@ -17,7 +22,7 @@ RSpec.describe Utilities::EmploymentIncomeMonthlyEquivalentCalculator, :vcr do
       context "non varying amounts" do
         let(:amounts) { [2456.83, 2456.83, 2456.83] }
 
-        it "populates monthly equivalent field with gross income" do
+        it "populates gross_income_monthly_equiv" do
           expect(payments.map(&:gross_income_monthly_equiv)).to eq amounts
         end
       end
