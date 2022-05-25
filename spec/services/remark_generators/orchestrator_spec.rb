@@ -33,7 +33,7 @@ module RemarkGenerators
       expect(FrequencyChecker).to receive(:call).with(assessment, maintenance_outgoings)
       expect(FrequencyChecker).to receive(:call).with(assessment, housing_outgoings)
       expect(FrequencyChecker).to receive(:call).with(assessment, legal_aid_outgoings)
-      expect(FrequencyChecker).to receive(:call).with(assessment, employment_payments, "date")
+      expect(FrequencyChecker).to receive(:call).with(assessment, employment_payments, :date)
 
       expect(ResidualBalanceChecker).to receive(:call).with(assessment)
 
