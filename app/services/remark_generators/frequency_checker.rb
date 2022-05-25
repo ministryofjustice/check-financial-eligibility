@@ -2,7 +2,12 @@ module RemarkGenerators
   class FrequencyChecker < BaseChecker
     include Exemptable
 
-    def call
+    def self.call(assessment, collection, date_field = "payment_date")
+      new(assessment, collection).call(date_field)
+    end
+
+    def call(date_field = "payment_date")
+      @date_field = date_field
       populate_remarks if unknown_frequency? && !exempt_from_checking
     end
 
@@ -13,7 +18,7 @@ module RemarkGenerators
     end
 
     def dates_and_amounts
-      @collection.map { |rec| [rec.payment_date, nil] }
+      @collection.map { |rec| [rec.send(@date_field), nil] }
     end
 
     def dates

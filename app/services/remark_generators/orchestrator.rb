@@ -55,6 +55,9 @@ module RemarkGenerators
       outgoings.group_by(&:type).each do |_type, collection|
         FrequencyChecker.call(@assessment, collection)
       end
+      assessment.employments.each do |job|
+        FrequencyChecker.call(@assessment, job.employment_payments, "date") if job.employment_payments.present?
+      end
     end
 
     def check_residual_balances
