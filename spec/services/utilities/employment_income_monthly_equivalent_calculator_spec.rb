@@ -20,10 +20,20 @@ RSpec.describe Utilities::EmploymentIncomeMonthlyEquivalentCalculator do
       let(:dates) { %w[2022-01-31 2022-02-28 2022-03-31] }
 
       context "non varying amounts" do
-        let(:amounts) { [2456.83, 2456.83, 2456.83] }
+        let(:amounts) { [2456.83]*3 }
+        let(:tax) { [-810.75]*3 }
+        let(:national_insurance) { [-245.68]*3 }
 
         it "populates gross_income_monthly_equiv" do
           expect(payments.map(&:gross_income_monthly_equiv)).to eq amounts
+        end
+
+        it "populates tax_monthly_equiv" do
+          expect(payments.map(&:tax_monthly_equiv)).to eq tax
+        end
+
+        it "populates national_insurance_monthly_equiv" do
+          expect(payments.map(&:national_insurance_monthly_equiv)).to eq national_insurance
         end
       end
 
