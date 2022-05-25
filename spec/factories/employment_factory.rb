@@ -12,4 +12,12 @@ FactoryBot.define do
       end
     end
   end
+
+  trait :with_irregular_payments do
+    after(:create) do |record|
+      [Time.zone.today, 32.days.ago.to_date, 64.days.ago.to_date].each do |date|
+        create :employment_payment, employment: record, date:, gross_income: 1500, gross_income_monthly_equiv: 1500
+      end
+    end
+  end
 end
