@@ -116,5 +116,38 @@ module RemarkGenerators
         end
       end
     end
+
+    context "employment_payments" do
+      let(:gross_income_summary) { create :gross_income_summary, :with_everything }
+      let(:assessment) { gross_income_summary.assessment }
+      let(:amount) { 277.67 }
+
+      let(:collection) { employment.employment_payments }
+
+      context "regular payments" do
+        let(:employment) { create :employment, :with_monthly_payments, assessment: gross_income_summary.assessment }
+
+        it "does not update the remarks class" do
+          original_remarks = assessment.remarks.as_json
+          described_class.call(assessment, collection, "date")
+          expect(assessment.reload.remarks.as_json).to eq original_remarks
+        end
+      end
+
+      context "irregular dates" do
+        let(:employment) { create :employment, :with_irregular_payments, assessment: gross_income_summary.assessment }
+
+        it "adds the remark" do
+          expect_any_instance_of(Remarks).to receive(:add).with(:employment_payment, :unknown_frequency, collection.map(&:client_id))
+          described_class.call(assessment, collection, "date")
+        end
+
+        it "stores the changed the remarks class on the assessment" do
+          original_remarks = assessment.remarks.as_json
+          described_class.call(assessment, collection, "date")
+          expect(assessment.reload.remarks.as_json).not_to eq original_remarks
+        end
+      end
+    end
   end
 end

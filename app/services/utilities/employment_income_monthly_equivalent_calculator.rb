@@ -49,16 +49,16 @@ module Utilities
       (value * 52 / 12).round(2)
     end
 
-    def blunt_average(value)
-      (@employment.employment_payments.sum(&value) / @employment.employment_payments.count).round(2)
+    def blunt_average(attribute)
+      (@employment.employment_payments.sum(&attribute) / @employment.employment_payments.count).round(2)
     end
 
     def update_payments(calc_method)
       @employment.employment_payments.each do |payment|
         payment.update(
-          gross_income_monthly_equiv: __send__(calc_method, calculation_value(calc_method, payment, "gross_income")),
-          tax_monthly_equiv: __send__(calc_method, calculation_value(calc_method, payment, "tax")),
-          national_insurance_monthly_equiv: __send__(calc_method, calculation_value(calc_method, payment, "national_insurance")),
+          gross_income_monthly_equiv: __send__(calc_method, calculation_value(calc_method, payment, :gross_income)),
+          tax_monthly_equiv: __send__(calc_method, calculation_value(calc_method, payment, :tax)),
+          national_insurance_monthly_equiv: __send__(calc_method, calculation_value(calc_method, payment, :national_insurance)),
         )
       end
     end
@@ -67,8 +67,8 @@ module Utilities
       @employment.employment_payments.map(&:date)
     end
 
-    def calculation_value(calc_method, payment, type)
-      calc_method.eql?(:blunt_average) ? type.to_sym : payment.send(type)
+    def calculation_value(calc_method, payment, attribute)
+      calc_method.eql?(:blunt_average) ? attribute.to_sym : payment.send(attribute)
     end
   end
 end
