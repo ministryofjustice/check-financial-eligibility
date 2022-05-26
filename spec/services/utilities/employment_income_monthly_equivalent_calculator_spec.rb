@@ -4,7 +4,7 @@ RSpec.describe Utilities::EmploymentIncomeMonthlyEquivalentCalculator do
   let(:instance) { described_class.new(employment) }
   let(:assessment) { create :assessment }
   let(:employment) { create :employment, assessment: }
-  let(:payments) { employment.employment_payments }
+  let(:payments) { employment.employment_payments.order(:date) }
 
   before do
     stub_request(:get, "https://www.gov.uk/bank-holidays.json")
