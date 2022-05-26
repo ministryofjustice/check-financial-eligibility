@@ -28,6 +28,10 @@ RSpec.describe Utilities::EmploymentIncomeMonthlyEquivalentCalculator do
       let(:tax) { [-810.75] * 3 }
       let(:national_insurance) { [-245.68] * 3 }
 
+      it "calls monthly_to_monthly at least once per period" do
+        expect(instance).to have_received(:monthly_to_monthly).at_least(3).times
+      end
+
       it "populates gross_income_monthly_equiv" do
         expect(payments.map(&:gross_income_monthly_equiv)).to eq gross_income
       end
@@ -45,7 +49,11 @@ RSpec.describe Utilities::EmploymentIncomeMonthlyEquivalentCalculator do
       let(:dates) { %w[2022-01-31 2022-02-28 2022-03-31] }
       let(:gross_income) { [2456.83, 2412.66, 2447.33] }
 
-      it "populates monthly equivalent field with gross income" do
+      it "calls monthly_to_monthly at least once per period" do
+        expect(instance).to have_received(:monthly_to_monthly).at_least(3).times
+      end
+
+      it "populates each monthly equivalent field with gross income" do
         payments.each do |payment|
           expect(payment.gross_income_monthly_equiv).to eq payment.gross_income
         end
@@ -56,6 +64,10 @@ RSpec.describe Utilities::EmploymentIncomeMonthlyEquivalentCalculator do
       let(:dates) { %w[2022-01-14 2022-02-11 2022-03-11] }
       let(:gross_income) { [2456.83, 2456.83, 2456.83] }
 
+      it "calls four_weekly_to_monthly at least once per period" do
+        expect(instance).to have_received(:four_weekly_to_monthly).at_least(3).times
+      end
+
       it "populates monthly equivalent field with gross income" do
         expect(payments.map(&:gross_income_monthly_equiv).uniq).to eq [2661.57]
       end
@@ -64,6 +76,10 @@ RSpec.describe Utilities::EmploymentIncomeMonthlyEquivalentCalculator do
     context "with four-weekly payment frequency and varying gross_income" do
       let(:dates) { %w[2022-01-14 2022-02-11 2022-03-11] }
       let(:gross_income) { [2456.83, 2412.66, 2447.33] }
+
+      it "calls four_weekly_to_monthly at least once per period" do
+        expect(instance).to have_received(:four_weekly_to_monthly).at_least(3).times
+      end
 
       it "populates the gross income monthly equiv with calculated amount" do
         expect(payments.find_by(date: Date.parse("2022-01-14")).gross_income_monthly_equiv).to eq 2661.57
@@ -75,6 +91,10 @@ RSpec.describe Utilities::EmploymentIncomeMonthlyEquivalentCalculator do
     context "with two-weekly payment frequency and non varying gross_income" do
       let(:dates) { %w[2022-01-14 2022-01-28 2022-02-11 2022-02-25 2022-03-11 2022-03-25] }
       let(:gross_income) { [1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0] }
+
+      it "calls two_weekly_to_monthly at least once per period" do
+        expect(instance).to have_received(:two_weekly_to_monthly).at_least(6).times
+      end
 
       it "populates monthly equivalent field with gross income" do
         expect(payments.map(&:gross_income_monthly_equiv).uniq).to eq [2166.67]
@@ -88,6 +108,10 @@ RSpec.describe Utilities::EmploymentIncomeMonthlyEquivalentCalculator do
       let(:dates) { %w[2022-01-07 2022-01-14 2022-01-21 2022-01-28 2022-02-04 2022-02-11 2022-02-18 2022-02-25 2022-03-04 2022-03-11 2022-03-18 2022-03-25] }
       let(:gross_income) { [1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0] }
 
+      it "calls weekly_to_monthly at least once per period" do
+        expect(instance).to have_received(:weekly_to_monthly).at_least(12).times
+      end
+
       it "populates monthly equivalent field with gross income" do
         expect(payments.map(&:gross_income_monthly_equiv)).to eq([4333.33] * 12)
       end
@@ -96,6 +120,10 @@ RSpec.describe Utilities::EmploymentIncomeMonthlyEquivalentCalculator do
     context "with weekly payment frequency and varying gross_income" do
       let(:dates) { %w[2022-01-07 2022-01-14 2022-01-21 2022-01-28 2022-02-04 2022-02-11 2022-02-18 2022-02-25 2022-03-04 2022-03-11 2022-03-18 2022-03-25] }
       let(:gross_income) { [1000.0, 2000.0, 1000.0, 2000.0, 1000.0, 2000.0, 1000.0, 2000.0, 1000.0, 2000.0, 1000.0, 2000.0] }
+
+      it "calls weekly_to_monthly at least once per period" do
+        expect(instance).to have_received(:weekly_to_monthly).at_least(12).times
+      end
 
       it "populates monthly equivalent field with gross income" do
         expect(payments.map(&:gross_income_monthly_equiv)).to eq([4333.33, 8666.67] * 6)
@@ -106,6 +134,10 @@ RSpec.describe Utilities::EmploymentIncomeMonthlyEquivalentCalculator do
       let(:dates) { %w[2021-07-15 2021-08-20 2021-09-17 2021-10-15 2021-11-12 2021-12-10] }
       let(:gross_income) { [100, 100, 100, 100, 100, 100] }
 
+      it "calls blunt_average at least once per period" do
+        expect(instance).to have_received(:blunt_average).at_least(6).times
+      end
+
       it "populates monthly equivalent field with gross income" do
         expect(payments.map(&:gross_income_monthly_equiv).uniq).to eq [100]
       end
@@ -114,6 +146,10 @@ RSpec.describe Utilities::EmploymentIncomeMonthlyEquivalentCalculator do
     context "with irregular payment frequency, requiring a blunt_average, and varying gross_income" do
       let(:dates) { %w[2021-07-15 2021-08-20 2021-09-17 2021-10-15 2021-11-12 2021-12-10] }
       let(:gross_income) { [100, 200, 100, 200, 100, 200] }
+
+      it "calls blunt_average at least once per period" do
+        expect(instance).to have_received(:blunt_average).at_least(6).times
+      end
 
       it "populates monthly equivalent field with gross income" do
         expect(payments.map(&:gross_income_monthly_equiv).uniq).to eq [150]
