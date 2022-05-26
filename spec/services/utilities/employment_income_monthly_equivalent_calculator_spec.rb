@@ -101,7 +101,17 @@ RSpec.describe Utilities::EmploymentIncomeMonthlyEquivalentCalculator do
       end
     end
 
-    xcontext "with two-weekly payment frequency and varying gross_income", skip: "TODO??" do
+    context "with two-weekly payment frequency and varying gross_income" do
+      let(:dates) { %w[2022-01-14 2022-01-28 2022-02-11 2022-02-25 2022-03-11 2022-03-25] }
+      let(:gross_income) { [1000.0, 2000.0, 1000.0, 2000.0, 1000.0, 2000.0] }
+
+      it "calls two_weekly_to_monthly at least once per period" do
+        expect(instance).to have_received(:two_weekly_to_monthly).at_least(6).times
+      end
+
+      it "populates monthly equivalent field with gross income" do
+        expect(payments.map(&:gross_income_monthly_equiv)).to eq [2166.67, 4333.33] * 3
+      end
     end
 
     context "with weekly payment frequency and non varying gross_income" do
