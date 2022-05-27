@@ -35,6 +35,7 @@ module CFEConstants
     outgoings_rent_or_mortgage
     current_account_balance
     employment_gross_income
+    employment_payment
     employment_tax
     employment_nic
     employment

@@ -91,7 +91,7 @@ module TestCase
     end
 
     def calculate_net(payment_hash)
-      payment_hash[:gross] + payment_hash[:benefits_in_kind] + payment_hash[:tax] + payment_hash[:national_insurance]
+      (payment_hash[:gross] + payment_hash[:benefits_in_kind] + payment_hash[:tax] + payment_hash[:national_insurance]).round(2)
     end
   end
 end
