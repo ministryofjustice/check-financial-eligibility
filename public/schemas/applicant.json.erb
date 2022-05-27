@@ -1,0 +1,27 @@
+{
+  "id": "file://#{@schema_dir}/applicant.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Legal Aid Check Financial Eligibility create applicant payload schema",
+  "type": "object",
+  "required": ["applicant"],
+  "properties": {
+    "applicant": {
+      "type": "object",
+      "required": ["date_of_birth", "involvement_type", "has_partner_opponent", "receives_qualifying_benefit"],
+      "properties": {
+        "date_of_birth": {
+          "$ref": "<%= "file://#{@schema_dir}/common.json#date" %>"
+        },
+        "involvement_type": {
+          "enum": ["applicant"]
+        },
+        "has_partner_opponent": {
+          "type": "boolean"
+        },
+        "receives_qualifying_benefit": {
+           "type": "boolean"
+        }
+      }
+    }
+  }
+}

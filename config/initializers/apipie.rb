@@ -27,7 +27,6 @@ Apipie.configure do |config|
 
     The response to this action includes an assessment id that can then be used in the following steps:
 
-      POST /assessments/:assessment_id/applicant          # adds data about the applicant
       POST /assessments/:assessment_id/capitals           # adds data about liquid assets (i.e. bank accounts) and non-liquid assets (valuable items, trusts, etc)
       POST /assessments/:assessment_id/cash_transactions  # adds cash income and outgoings
       POST /assessments/:assessment_id/dependants         # adds data about any dependants the applicant may have

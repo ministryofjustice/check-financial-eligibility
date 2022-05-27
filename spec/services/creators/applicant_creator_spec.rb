@@ -6,16 +6,18 @@ module Creators
       let(:assessment) { create :assessment }
       let(:assessment_id) { assessment.id }
       let(:date_of_birth) { Faker::Date.backward }
-      let(:applicant_attributes) do
+      let(:applicant_params) do
         {
-          date_of_birth:,
-          involvement_type: "applicant",
-          has_partner_opponent: true,
-          receives_qualifying_benefit: true,
-        }
+          applicant: {
+            date_of_birth:,
+            involvement_type: "applicant",
+            has_partner_opponent: true,
+            receives_qualifying_benefit: true,
+          },
+        }.to_json
       end
 
-      subject(:creator) { described_class.call(assessment_id:, applicant_attributes:) }
+      subject(:creator) { described_class.call(assessment_id:, applicant_params:) }
 
       describe ".call" do
         context "valid payload" do

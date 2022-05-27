@@ -16,13 +16,13 @@ RSpec.describe ApplicantsController, type: :request do
       }
     end
 
-    context "valid payload" do
+    context "with valid payload" do
       before do
         post assessment_applicant_path(assessment.id), params: params.to_json, headers:
       end
 
-      context "service returns success" do
-        it "returns success", :show_in_doc do
+      context "when service returns success" do
+        it "returns success"  do
           expect(response).to have_http_status(:success)
         end
 
@@ -32,7 +32,7 @@ RSpec.describe ApplicantsController, type: :request do
         end
       end
 
-      context "service returns failure" do
+      context "when service returns failure" do
         let(:future_date) { 4.years.from_now.to_date }
         let(:future_date_string) { future_date.strftime("%Y-%m-%d") }
         let(:params) do
@@ -47,7 +47,7 @@ RSpec.describe ApplicantsController, type: :request do
           }
         end
         let(:expected_message) do
-          %(Invalid parameter 'date_of_birth' value "#{future_date_string}": Date must be parsable and in the past. For example: '2019-05-23')
+          %(Date of birth cannot be in future)
         end
 
         it "returns 422" do
@@ -61,7 +61,7 @@ RSpec.describe ApplicantsController, type: :request do
       end
     end
 
-    context "invalid payload" do
+    context "with invalid payload" do
       let(:non_existent_assessment_id) { SecureRandom.uuid }
 
       before do
@@ -72,27 +72,25 @@ RSpec.describe ApplicantsController, type: :request do
       it_behaves_like "it fails with message", "No such assessment id"
     end
 
-    context "malformed JSON payload" do
-      before { expect(Creators::ApplicantCreator).not_to receive(:call) }
-
+    context "with malformed JSON payload" do
       context "missing applicant" do
         before do
           params.delete(:applicant)
           post assessment_applicant_path(assessment.id), params: params.to_json, headers:
         end
 
-        it_behaves_like "it fails with message", "Missing parameter date_of_birth"
+        it_behaves_like "it fails with message", /The property '#\/' did not contain a required property of 'applicant'/
       end
 
-      context "future date of birth" do
-        let(:dob) { 3.days.from_now.to_date }
+      context "with invalid date of birth" do
+        let(:dob) { "2002-12-32" }
 
         before do
           params[:applicant][:date_of_birth] = dob
           post assessment_applicant_path(assessment.id), params: params.to_json, headers:
         end
 
-        it_behaves_like "it fails with message", /Date must be parsable and in the past/
+        it_behaves_like "it fails with message", /The property '#\/applicant\/date_of_birth' value "2002-12-32" did not match the regex/
       end
 
       context "missing involvement_type" do
@@ -101,7 +99,7 @@ RSpec.describe ApplicantsController, type: :request do
           post assessment_applicant_path(assessment.id), params: params.to_json, headers:
         end
 
-        it_behaves_like "it fails with message", "Missing parameter involvement_type"
+        it_behaves_like "it fails with message", /The property '#\/applicant' did not contain a required property of 'involvement_type'/
       end
 
       context "invalid involvement type" do
@@ -110,7 +108,7 @@ RSpec.describe ApplicantsController, type: :request do
           post assessment_applicant_path(assessment.id), params: params.to_json, headers:
         end
 
-        it_behaves_like "it fails with message", %(Invalid parameter 'involvement_type' value "Witness": Must be one of: <code>applicant</code>.)
+        it_behaves_like "it fails with message", /The property '#\/applicant\/involvement_type' value "Witness" did not match one of the following values: applicant in schema file/
       end
 
       context "has_partner_opponent not a boolean" do
@@ -120,15 +118,26 @@ RSpec.describe ApplicantsController, type: :request do
         end
 
         it_behaves_like "it fails with message",
-                        %(Invalid parameter 'has_partner_opponent' value "yes": Must be one of: <code>true</code>, <code>false</code>, <code>1</code>, <code>0</code>.)
+                        /The property '#\/applicant\/has_partner_opponent' of type string did not match the following type: boolean in schema/
       end
 
-      context "for documentation" do
-        it "fails with a message", :show_in_doc do
+      context "with non boolean receives_qualifying_benefit" do
+        it "fails with a message" do
           params[:applicant][:receives_qualifying_benefit] = "yes"
           post assessment_applicant_path(assessment.id), params: params.to_json, headers: headers
           expect(response).to have_http_status(:unprocessable_entity)
         end
+      end
+
+      context "with date of birth in the future" do
+        let(:dob) { 3.days.from_now.to_date }
+
+        before do
+          params[:applicant][:date_of_birth] = dob
+          post assessment_applicant_path(assessment.id), params: params.to_json, headers:
+        end
+
+        it_behaves_like "it fails with message", /Date of birth cannot be in future/
       end
     end
   end
