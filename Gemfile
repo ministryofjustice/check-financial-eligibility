@@ -20,7 +20,7 @@ gem "puma", "~> 5.6"
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 
-gem "sentry-rails", ">= 4.4.0"
+gem "sentry-rails", ">= 5.3.1"
 gem "sentry-ruby"
 
 # Use Capistrano for deployment
@@ -54,7 +54,7 @@ gem "nesty"
 # parse spreadsheets
 gem "roo", "~> 2.9.0"
 
-gem "webpacker", "~> 5"
+gem "webpacker", "~> 5", ">= 5.4.3"
 
 # Required following upgrade to ruby 3.1.0
 gem "net-imap"
@@ -73,7 +73,7 @@ group :development, :test do
   gem "byebug", platforms: %i[mri mingw x64_mingw]
   gem "pry-byebug"
   gem "rspec_junit_formatter"
-  gem "rspec-rails", "~> 5.1"
+  gem "rspec-rails", "~> 5.1", ">= 5.1.2"
   gem "rswag-specs"
   gem "rubocop-govuk", require: false
   gem "rubocop-performance"
