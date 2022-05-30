@@ -104,7 +104,7 @@ RSpec.describe "capitals", type: :request, swagger_doc: "v4/swagger.yaml" do
 
         run_test! do |response|
           body = JSON.parse(response.body, symbolize_names: true)
-          expect(body[:errors]).to include(/Missing parameter value/)
+          expect(body[:errors]).to include("The property '#/bank_accounts/0' did not contain a required property of 'value' in schema file://#")
         end
       end
     end
