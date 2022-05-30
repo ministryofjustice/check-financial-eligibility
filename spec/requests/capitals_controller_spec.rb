@@ -18,7 +18,7 @@ RSpec.describe CapitalsController, type: :request do
 
     context "valid payload" do
       context "with both types of assets" do
-        it "returns http success", :show_in_doc do
+        it "returns http success" do
           expect(response).to have_http_status(:success)
         end
 
@@ -98,25 +98,25 @@ RSpec.describe CapitalsController, type: :request do
       context "missing name on bank account" do
         let(:bank_account_params) { attributes_for_list(:liquid_capital_item, 2).map { |account| account.tap { |item| item.delete(:description) } } }
 
-        it_behaves_like "it fails with message", "Missing parameter description"
+        it_behaves_like "it fails with message", "The property '#/bank_accounts/0' did not contain a required property of 'description' in schema file://#"
       end
 
       context "missing lowest balance on bank account" do
         let(:bank_account_params) { attributes_for_list(:liquid_capital_item, 2).map { |account| account.tap { |item| item.delete(:value) } } }
 
-        it_behaves_like "it fails with message", "Missing parameter value"
+        it_behaves_like "it fails with message", "The property '#/bank_accounts/0' did not contain a required property of 'value' in schema file://#"
       end
 
       context "missing description on non_liquid capital" do
         let(:non_liquid_params) { attributes_for_list(:non_liquid_capital_item, 2).map { |nlc| nlc.tap { |item| item.delete(:description) } } }
 
-        it_behaves_like "it fails with message", "Missing parameter description"
+        it_behaves_like "it fails with message", "The property '#/non_liquid_capital/0' did not contain a required property of 'description' in schema file://#"
       end
 
       context "missing value on non-liquid capital" do
         let(:non_liquid_params) { attributes_for_list(:non_liquid_capital_item, 2).map { |nlc| nlc.tap { |item| item.delete(:value) } } }
 
-        it_behaves_like "it fails with message", "Missing parameter value"
+        it_behaves_like "it fails with message", "The property '#/non_liquid_capital/0' did not contain a required property of 'value' in schema file://#"
       end
     end
 
