@@ -16,9 +16,10 @@ RSpec.describe CapitalsController, type: :request do
 
     before { post_payload }
 
-    context "valid payload" do
+    context "with valid payload" do
       context "with both types of assets" do
-        it "returns http success", :show_in_doc do
+        it "returns http success" do
+          # binding.pry
           expect(response).to have_http_status(:success)
         end
 
@@ -70,7 +71,7 @@ RSpec.describe CapitalsController, type: :request do
         end
       end
 
-      context "empty payload" do
+      context "with empty payload" do
         let(:params) { {} }
 
         it "returns http unprocessable entity" do
@@ -83,7 +84,7 @@ RSpec.describe CapitalsController, type: :request do
         end
       end
 
-      context "Active Record error" do
+      context "with Active Record error" do
         let(:assessment_id) { SecureRandom.uuid }
 
         it "errors and is shown in apidocs", :show_in_doc do
@@ -94,29 +95,57 @@ RSpec.describe CapitalsController, type: :request do
       end
     end
 
-    context "invalid payload" do
-      context "missing name on bank account" do
+    context "with invalid payload" do
+      context "with missing name on bank account" do
         let(:bank_account_params) { attributes_for_list(:liquid_capital_item, 2).map { |account| account.tap { |item| item.delete(:description) } } }
 
-        it_behaves_like "it fails with message", "Missing parameter description"
+        it_behaves_like "it fails with message", "/The property '#\bank_account/' did not contain a required property of 'description'/"
       end
 
-      context "missing lowest balance on bank account" do
+      context "with missing lowest balance on bank account" do
         let(:bank_account_params) { attributes_for_list(:liquid_capital_item, 2).map { |account| account.tap { |item| item.delete(:value) } } }
 
-        it_behaves_like "it fails with message", "Missing parameter value"
+        # it "hello" do
+        #   # binding.pry
+        # end
+
+        it_behaves_like "it fails with message", "/The property '#\bank_account/' did not contain a required property of 'value'/"
       end
 
-      context "missing description on non_liquid capital" do
+      context "with non-string bank account description" do
+        let(:bank_account_params) { attributes_for_list(:liquid_capital_item, 2).map { |account| account.tap { |item| item[:description] = true } } }
+
+        it_behaves_like "it fails with message", "/The property '#\bank_account/\description' of type boolean did not match the following type: string in schema/"
+      end
+
+      context "with non-currency bank account value" do
+        let(:bank_account_params) { attributes_for_list(:liquid_capital_item, 2).map { |account| account.tap { |item| item[:value] = "one hundred" } } }
+
+        it_behaves_like "it fails with message", "/The property '#\bank_account/\value' of type string did not match the following type: number in schema/"
+      end
+
+      context "with missing description on non_liquid capital" do
         let(:non_liquid_params) { attributes_for_list(:non_liquid_capital_item, 2).map { |nlc| nlc.tap { |item| item.delete(:description) } } }
 
-        it_behaves_like "it fails with message", "Missing parameter description"
+        it_behaves_like "it fails with message", "/The property '#\non_liquid_capital/' did not contain a required property of 'description'/"
       end
 
       context "missing value on non-liquid capital" do
         let(:non_liquid_params) { attributes_for_list(:non_liquid_capital_item, 2).map { |nlc| nlc.tap { |item| item.delete(:value) } } }
 
-        it_behaves_like "it fails with message", "Missing parameter value"
+        it_behaves_like "it fails with message", "/The property '#\non_liquid_capital/' did not contain a required property of 'value'/"
+      end
+
+      context "with non-string non-liquid capital description" do
+        let(:bank_account_params) { attributes_for_list(:non_liquid_capital_item, 2).map { |account| account.tap { |item| item[:description] = true } } }
+
+        it_behaves_like "it fails with message", "/The property '#\bank_account/\description' of type boolean did not match the following type: string in schema/"
+      end
+
+      context "with non-currency non-liquid capital value" do
+        let(:bank_account_params) { attributes_for_list(:non_liquid_capital_item, 2).map { |account| account.tap { |item| item[:value] = "one hundred" } } }
+
+        it_behaves_like "it fails with message", "/The property '#\bank_account/\value' of type string did not match the following type: number in schema/"
       end
     end
 

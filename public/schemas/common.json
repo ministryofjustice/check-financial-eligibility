@@ -11,5 +11,28 @@
     "description": "Date in format YYYY-MM-DD in range 1900-01-01 to 2999-12-31",
     "type": "string",
     "pattern": "^([12][9|0][0-9]{2}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01]))$"
+  },
+  "non_liquid_capital": {
+    "description": "An array of objects describing applicant's non-liquid capital items (excluding property), e.g. valuable items, jewellery, trusts, other investments",
+    "type": "array",
+    "items": {
+      "$ref": "#/definitions/capital_item"
+    }
+  },
+  "bank_accounts": {
+    "description": "Describes the name of the bank account and the lowest balance during the computation period",
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["account_name", "lowest_balance"],
+    "properties": {
+      "account_name": {
+        "description": "The name of the bank account",
+        "type": "string"
+      },
+      "lowest_balance": {
+        "description": "The lowest balance on the account during the caluclation period",
+        "$ref": "#/definitions/neg_or_pos_number_with_two_decimals"
+      }
+    }
   }
 }

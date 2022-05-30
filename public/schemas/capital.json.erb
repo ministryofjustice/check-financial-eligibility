@@ -1,0 +1,20 @@
+{
+  "id": "file://#{@schema_dir}/applicant.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Legal Aid Check Financial Eligibility add capital details to an assessment schema",
+  "type": "object",
+  "properties": {
+    "capital": {
+      "type": "object",
+      "required": ["bank_accounts", "non_liquid_capital"],
+      "properties": {
+        "bank_accounts": [
+          "$ref": "<%= "file://#{@schema_dir}/common.json#bank_accounts" %>"
+        ],
+        "non_liquid_capital": [
+          "$ref": "<%= "file://#{@schema_dir}/common.json#non_liquid_capital" %>"
+        ]
+      }
+    }
+  }
+}
