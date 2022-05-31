@@ -46,7 +46,7 @@ module Creators
     end
 
     def ccms_codes_for_application
-      @version == "3" || assessment_type == "criminal" ? dummy_code_for_domestic_abuse : codes_from_post
+      @version == "3" ? dummy_code_for_domestic_abuse : codes_from_post
     end
 
     # For version 3, which are all single_proceeding type (domestic abuse),
@@ -58,7 +58,7 @@ module Creators
     end
 
     def codes_from_post
-      @parsed_raw_post[:proceeding_types][:ccms_codes]
+      @parsed_raw_post[:proceeding_types] ? @parsed_raw_post[:proceeding_types][:ccms_codes] : []
     end
 
     def new_assessment
