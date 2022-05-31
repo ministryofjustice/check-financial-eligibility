@@ -9,10 +9,14 @@ module Creators
     end
 
     def call
-      GrossIncomeEligibilityCreator.call(@assessment)
-      DisposableIncomeEligibilityCreator.call(@assessment)
-      CapitalEligibilityCreator.call(@assessment)
-      AssessmentEligibilityCreator.call(@assessment)
+      if @assessment.assessment_type == 'criminal'
+        AdjustedIncomeEligibilityCreator.call(@assessment)
+      else
+        GrossIncomeEligibilityCreator.call(@assessment)
+        DisposableIncomeEligibilityCreator.call(@assessment)
+        CapitalEligibilityCreator.call(@assessment)
+        AssessmentEligibilityCreator.call(@assessment)
+      end
     end
   end
 end
