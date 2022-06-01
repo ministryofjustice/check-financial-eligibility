@@ -19,7 +19,10 @@ RSpec.describe "cash_transactions", type: :request, swagger_doc: "v4/swagger.yam
                 schema: {
                   type: :object,
                   description: "A set of cash income[ings] and outgoings payments by category",
-                  example: JSON.parse(File.read(Rails.root.join("spec/fixtures/cash_transactions.json"))),
+                  example: JSON.parse(File.read(Rails.root.join("spec/fixtures/cash_transactions.json"))
+                                          .gsub("3.months.ago", "2022-01-01")
+                                          .gsub("2.months.ago", "2022-02-01")
+                                          .gsub("1.month.ago", "2022-03-01")),
                   properties: {
                     income: {
                       type: :array,
@@ -108,7 +111,11 @@ RSpec.describe "cash_transactions", type: :request, swagger_doc: "v4/swagger.yam
         let(:assessment_id) { create(:assessment, :with_gross_income_summary).id }
 
         let(:params) do
-          JSON.parse(file_fixture("cash_transactions.json").read)
+          source = file_fixture("cash_transactions.json").read
+          updated = source.gsub("3.months.ago", 3.months.ago.beginning_of_month.strftime("%Y-%m-%d"))
+                          .gsub("2.months.ago", 2.months.ago.beginning_of_month.strftime("%Y-%m-%d"))
+                          .gsub("1.month.ago", 1.month.ago.beginning_of_month.strftime("%Y-%m-%d"))
+          JSON.parse(updated)
         end
 
         after do |example|
