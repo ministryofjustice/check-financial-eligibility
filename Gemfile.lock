@@ -360,7 +360,7 @@ GEM
       rubocop-rails (= 2.14.2)
       rubocop-rake (= 0.6.0)
       rubocop-rspec (= 2.10.0)
-    rubocop-performance (1.14.1)
+    rubocop-performance (1.14.2)
       rubocop (>= 1.7.0, < 2.0)
       rubocop-ast (>= 0.4.0)
     rubocop-rails (2.14.2)
@@ -466,14 +466,14 @@ DEPENDENCIES
   puma (~> 5.6)
   rails (~> 7.0.3)
   roo (~> 2.9.0)
-  rspec-rails (~> 5.1)
+  rspec-rails (~> 5.1, >= 5.1.2)
   rspec_junit_formatter
   rswag-api
   rswag-specs
   rswag-ui
   rubocop-govuk
   rubocop-performance
-  sentry-rails (>= 4.4.0)
+  sentry-rails (>= 5.3.1)
   sentry-ruby
   shoulda-matchers
   simplecov
@@ -484,7 +484,7 @@ DEPENDENCIES
   tzinfo-data
   vcr
   webmock (>= 3.13.0)
-  webpacker (~> 5)
+  webpacker (~> 5, >= 5.4.3)
 
 RUBY VERSION
    ruby 3.1.2p20
