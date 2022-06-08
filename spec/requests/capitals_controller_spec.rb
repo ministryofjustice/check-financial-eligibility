@@ -118,6 +118,18 @@ RSpec.describe CapitalsController, type: :request do
 
         it_behaves_like "it fails with message", "The property '#/non_liquid_capital/0' did not contain a required property of 'value' in schema file://#"
       end
+
+      context "negative non-liquid capital value" do
+        let(:non_liquid_params) { negative_non_liquid_params }
+
+        it_behaves_like "it fails with message", /The property '#\/non_liquid_capital\/0\/value' value "-123.45" did not match the regex/
+      end
+
+      context "invalid non-liquid capital value" do
+        let(:non_liquid_params) { invalid_non_liquid_params }
+
+        it_behaves_like "it fails with message", /The property '#\/non_liquid_capital\/0\/value' value "one hundred pounds" did not match the regex/
+      end
     end
 
     def bank_account_params
@@ -163,11 +175,16 @@ RSpec.describe CapitalsController, type: :request do
       [
         {
           description: fake_asset_name,
-          value: (Faker::Number.decimal(r_digits: 2) * -1),
+          value: "-123.45",
         },
+      ]
+    end
+
+    def invalid_non_liquid_params
+      [
         {
           description: fake_asset_name,
-          value: (Faker::Number.decimal(r_digits: 2) * -1),
+          value: "one hundred pounds",
         },
       ]
     end
