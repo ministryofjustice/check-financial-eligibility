@@ -11,7 +11,7 @@ RSpec.describe MigrationHelpers::EligibilityPopulator do
 
   context "migration has not yet been run" do
     it "has created a gross_income eligibility for each assessment" do
-      expect { populator }.to change { Eligibility::GrossIncome.count }.by(3)
+      expect { populator }.to change(Eligibility::GrossIncome, :count).by(3)
       assessments.each do |assessment|
         gis = assessment.gross_income_summary
         expect(gis.eligibilities.count).to eq 1
@@ -23,7 +23,7 @@ RSpec.describe MigrationHelpers::EligibilityPopulator do
     end
 
     it "has created a disposable income eligibility record for each assessment" do
-      expect { populator }.to change { Eligibility::DisposableIncome.count }.by(3)
+      expect { populator }.to change(Eligibility::DisposableIncome, :count).by(3)
       assessments.each do |assessment|
         dis = assessment.disposable_income_summary
         expect(dis.eligibilities.count).to eq 1
@@ -36,7 +36,7 @@ RSpec.describe MigrationHelpers::EligibilityPopulator do
     end
 
     it "has created a capital eligibility record for each assessment" do
-      expect { populator }.to change { Eligibility::Capital.count }.by(3)
+      expect { populator }.to change(Eligibility::Capital, :count).by(3)
       assessments.each do |assessment|
         cap = assessment.capital_summary
         expect(cap.eligibilities.count).to eq 1

@@ -9,7 +9,7 @@ module Creators
       subject(:creator) { described_class.call(assessment) }
 
       it "creates an assessment eligibiltiy record for each proceeding type code" do
-        expect { creator }.to change { Eligibility::Assessment.count }.by(3)
+        expect { creator }.to change(Eligibility::Assessment, :count).by(3)
         expect(assessment.eligibilities.map(&:proceeding_type_code)).to match_array codes
       end
 

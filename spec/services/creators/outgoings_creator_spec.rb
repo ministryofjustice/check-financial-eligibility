@@ -20,7 +20,7 @@ module Creators
       end
 
       it "creates all the required outgoing records" do
-        expect { creator }.to change { Outgoings::BaseOutgoing.count }.by(6)
+        expect { creator }.to change(Outgoings::BaseOutgoing, :count).by(6)
 
         childcares = assessment.disposable_income_summary.childcare_outgoings.order(:payment_date)
         expect(childcares.first.payment_date).to eq Date.parse("2019-11-09")
