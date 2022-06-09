@@ -23,7 +23,7 @@ RSpec.describe OutgoingsController, type: :request do
     end
 
     it "creates outgoings" do
-      expect { post_payload }.to change { Outgoings::BaseOutgoing.count }.by(6)
+      expect { post_payload }.to change(Outgoings::BaseOutgoing, :count).by(6)
     end
 
     it "sets success flag to true" do
@@ -109,7 +109,7 @@ RSpec.describe OutgoingsController, type: :request do
       end
 
       it "create the childcare records but does not create any other records" do
-        expect { post_payload }.to change { Outgoings::BaseOutgoing.count }.by(2)
+        expect { post_payload }.to change(Outgoings::BaseOutgoing, :count).by(2)
         expect(disposable_income_summary.childcare_outgoings.count).to eq 2
         expect(disposable_income_summary.housing_cost_outgoings.count).to eq 0
         expect(disposable_income_summary.maintenance_outgoings.count).to eq 0

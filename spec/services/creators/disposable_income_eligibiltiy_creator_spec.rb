@@ -19,7 +19,7 @@ module Creators
       let(:codes) { %w[DA001] }
 
       it "creates one eligibility record" do
-        expect { creator }.to change { Eligibility::DisposableIncome.count }.by(1)
+        expect { creator }.to change(Eligibility::DisposableIncome, :count).by(1)
       end
 
       it "creates a record with the expected thresholds" do
@@ -35,7 +35,7 @@ module Creators
       let(:codes) { %w[SE013] }
 
       it "creates one eligibility record" do
-        expect { creator }.to change { Eligibility::DisposableIncome.count }.by(1)
+        expect { creator }.to change(Eligibility::DisposableIncome, :count).by(1)
       end
 
       it "creates a record with the expected thresholds" do
@@ -51,7 +51,7 @@ module Creators
       let(:codes) { %w[DA001 DA005 SE003] }
 
       it "creates one eligibility record for each proceeding type" do
-        expect { creator }.to change { Eligibility::DisposableIncome.count }.by(codes.size)
+        expect { creator }.to change(Eligibility::DisposableIncome, :count).by(codes.size)
       end
     end
   end
