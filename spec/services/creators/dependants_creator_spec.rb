@@ -6,8 +6,9 @@ module Creators
     let(:assessment) { create :assessment }
     let(:assessment_id) { assessment.id }
     let(:dependants_attributes) { attributes_for_list(:dependant, 2) }
+    let(:dependants_params) { { dependants: dependants_attributes }.to_json }
 
-    subject(:creator) { described_class.call(assessment_id:, dependants_attributes:) }
+    subject(:creator) { described_class.call(assessment_id:, dependants_params:) }
 
     context "valid payload" do
       it "creates two dependant records for this assessment" do
