@@ -32,8 +32,8 @@ FactoryBot.define do
 
   factory :adjusted_income_eligibility, class: "Eligibility::AdjustedIncome" do
     gross_income_summary
-    lower_threshold { 12475 }
-    upper_threshold { 22325 }
+    lower_threshold { 12_475 }
+    upper_threshold { 22_325 }
     assessment_result { "pending" }
   end
 end

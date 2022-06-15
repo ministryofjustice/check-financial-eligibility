@@ -2,7 +2,6 @@ require "rails_helper"
 
 module Creators
   RSpec.describe AdjustedIncomeEligibilityCreator do
-
     let(:crime_assessment) { create :assessment, :criminal, :with_gross_income_summary }
     let(:summary) { crime_assessment.gross_income_summary }
 
@@ -22,8 +21,8 @@ module Creators
       it "creates a record with the expected thresholds" do
         creator
         elig = summary.crime_eligibilities.first
-        expect(elig.upper_threshold).to eq 22325
-        expect(elig.lower_threshold).to eq 12475
+        expect(elig.upper_threshold).to eq 22_325
+        expect(elig.lower_threshold).to eq 12_475
         expect(elig.assessment_result).to eq "pending"
       end
     end

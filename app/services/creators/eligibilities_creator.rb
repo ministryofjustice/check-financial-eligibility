@@ -9,7 +9,7 @@ module Creators
     end
 
     def call
-      if @assessment.assessment_type == 'criminal'
+      if @assessment.assessment_type == "criminal"
         AdjustedIncomeEligibilityCreator.call(@assessment)
       else
         GrossIncomeEligibilityCreator.call(@assessment)

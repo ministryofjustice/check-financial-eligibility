@@ -62,3 +62,15 @@ disposable_income_contribution_bands:
     disregard: 616
     percentage: 70.0
     base: 121.85
+
+adjusted_income_lower: 12475
+adjusted_income_upper: 22325
+
+crime_adjusted_income_weightings:
+  [0, 1]: 0.15
+  [2, 4]: 0.3
+  [5, 7]: 0.34
+  [8, 10]: 0.38
+  [11, 12]: 0.41
+  [13, 15]: 0.44
+  [16, 18]: 0.59
