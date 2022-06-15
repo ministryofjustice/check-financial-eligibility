@@ -30,7 +30,6 @@ module Assessors
 
       def adjusted_income
         if dependants.empty?
-          p total_gross_income
           total_gross_income
         else
           total_gross_income / collated_weightings 
