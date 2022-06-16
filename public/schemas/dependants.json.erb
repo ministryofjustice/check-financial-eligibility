@@ -1,0 +1,33 @@
+{
+  "id": "file://#{@schema_dir}/dependants.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Legal Aid Check Financial Eligibility create dependants payload schema",
+  "type": "object",
+  "required": ["dependants"],
+  "properties": {
+    "dependants": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["date_of_birth", "in_full_time_education", "relationship"],
+        "properties": {
+          "date_of_birth": {
+            "$ref": "<%= "file://#{@schema_dir}/common.json#date" %>"
+          },
+          "in_full_time_education": {
+            "type": "boolean"
+          },
+          "relationship": {
+            "enum": ["adult_relative", "child_relative"]
+          },
+          "monthly_income": {
+            "$ref": "<%= "file://#{@schema_dir}/common.json#currency" %>"
+          },
+          "assets_value": {
+            "$ref": "<%= "file://#{@schema_dir}/common.json#currency" %>"
+          }
+        }
+      }
+    }
+  }
+}

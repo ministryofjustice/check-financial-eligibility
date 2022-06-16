@@ -110,7 +110,7 @@ RSpec.describe "dependants", type: :request, swagger_doc: "v4/swagger.yaml" do
 
         run_test! do |response|
           body = JSON.parse(response.body, symbolize_names: true)
-          expect(body[:errors]).to include(/Invalid parameter 'in_full_time_education' value nil/)
+          expect(body[:errors]).to include(/The property '#\/dependants\/0\/in_full_time_education' of type null did not match the following type: boolean in schema file/)
         end
       end
     end
