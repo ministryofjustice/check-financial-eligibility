@@ -9,11 +9,11 @@ class GrossIncomeSummary < ApplicationRecord
            inverse_of: :gross_income_summary,
            foreign_key: :parent_id,
            dependent: :destroy
-  has_many :crime_eligibilities,
-           class_name: "Eligibility::AdjustedIncome",
-           inverse_of: :gross_income_summary,
-           foreign_key: :parent_id,
-           dependent: :destroy
+  has_one :crime_eligibility,
+          class_name: "Eligibility::AdjustedIncome",
+          inverse_of: :gross_income_summary,
+          foreign_key: :parent_id,
+          dependent: :destroy
 
   def housing_benefit_payments
     state_benefits.find_by(state_benefit_type_id: StateBenefitType.housing_benefit&.id)&.state_benefit_payments || []
@@ -24,8 +24,7 @@ class GrossIncomeSummary < ApplicationRecord
   end
 
   def crime_summarized_assessment_result
-    # to change pending answer from Mike
-    crime_eligibilities.first.assessment_result.to_sym
+    crime_eligibility.assessment_result.to_sym
   end
 
   def eligible?

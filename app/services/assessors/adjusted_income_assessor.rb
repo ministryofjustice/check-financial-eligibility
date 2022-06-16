@@ -1,21 +1,15 @@
 module Assessors
   class AdjustedIncomeAssessor < BaseWorkflowService
-    delegate :adjusted_income, :crime_eligibilities, :total_gross_income, to: :gross_income_summary
+    delegate :adjusted_income, :crime_eligibility, :total_gross_income, to: :gross_income_summary
     delegate :dependants, to: :assessment
 
     def call
       ActiveRecord::Base.transaction do
-        update_eligibility_records
+        crime_eligibility.update!(assessment_result: assessment_result(crime_eligibility))
       end
     end
 
   private
-
-    def update_eligibility_records
-      crime_eligibilities.each do |elig|
-        elig.update!(assessment_result: assessment_result(elig))
-      end
-    end
 
     def assessment_result(elig)
       if adjusted_income <= elig.lower_threshold

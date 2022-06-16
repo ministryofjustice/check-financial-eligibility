@@ -20,7 +20,7 @@ module Creators
 
       it "creates a record with the expected thresholds" do
         creator
-        elig = summary.crime_eligibilities.first
+        elig = summary.crime_eligibility
         expect(elig.upper_threshold).to eq 22_325
         expect(elig.lower_threshold).to eq 12_475
         expect(elig.assessment_result).to eq "pending"

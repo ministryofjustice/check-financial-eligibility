@@ -10,7 +10,7 @@ module Creators
     end
 
     def call
-      @summary.crime_eligibilities.create!(
+      @summary.create_crime_eligibility!(
         upper_threshold: Threshold.value_for(:adjusted_income_upper),
         lower_threshold: Threshold.value_for(:adjusted_income_lower),
         assessment_result: "pending",
