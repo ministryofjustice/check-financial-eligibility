@@ -21,5 +21,12 @@
     "id": "common/currency",
     "description": "A negative or positive number (including zero) with two decimal places",
     "pattern": "^[-+]?\\d+(\\.\\d{1,2})?$"
+  },
+  "positive_cash_amount": {
+    "id": "common/positive_cash_amount",
+    "description": "Non-negative number (including zero) with two decimal places",
+    "type": "number",
+    "multipleOf": 0.01,
+    "minimum": 0.00
   }
 }

@@ -1,0 +1,90 @@
+{
+  "id": "file://#{@schema_dir}/cash_transactions.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Legal Aid Check Financial Eligibility add cash transaction details to an assessment schema",
+  "type": "object",
+  "properties": {
+    "income": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "description": "The category of the income transaction",
+            "type": "string",
+            "enum": ["benefits", "friends_or_family", "maintenance_in", "property_or_lodger", "pension"]
+          },
+          "payments": {
+            "description": "The payments of the income transaction",
+            "type":"array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "amount": {
+                  "$ref": "<%= "file://#{@schema_dir}/common.json#positive_cash_amount" %>"
+                },
+                "client_id": {
+                  "$ref": "<%= "file://#{@schema_dir}/common.json#uuid" %>"
+                },
+                "date": {
+                  "$ref": "<%= "file://#{@schema_dir}/common.json#date" %>"
+                }
+              },
+              "required": [
+                "amount",
+                "client_id",
+                "date"
+              ]
+            }
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "category",
+          "payments"
+        ]
+      }
+    },
+    "outgoings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "description": "The category of the outgoing transaction",
+            "type": "string",
+            "enum": ["child_care", "rent_or_mortgage", "maintenance_out", "legal_aid"]
+          },
+          "payments": {
+            "description": "The payments of the outgoing transaction",
+            "type":"array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "amount": {
+                  "$ref": "<%= "file://#{@schema_dir}/common.json#positive_cash_amount" %>"
+                },
+                "client_id": {
+                  "$ref": "<%= "file://#{@schema_dir}/common.json#uuid" %>"
+                },
+                "date": {
+                  "$ref": "<%= "file://#{@schema_dir}/common.json#date" %>"
+                }
+              },
+              "required": [
+                "amount",
+                "client_id",
+                "date"
+              ]
+            }
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "category",
+          "payments"
+        ]
+      }
+    }
+  }
+}
