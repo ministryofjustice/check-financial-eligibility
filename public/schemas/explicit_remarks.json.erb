@@ -1,0 +1,30 @@
+{
+  "id": "file://#{@schema_dir}/explicit_remarks.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Legal Aid Check Financial Eligibility create explicit remarls schema",
+  "type": "object",
+  "required": ["assessment_id", "explicit_remarks"],
+  "properties": {
+    "assessment_id": {
+      "$ref": "<%= "file://#{@schema_dir}/common.json#uuid" %>"
+    },
+    "explicit_remarks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["category", "details"],
+        "properties": {
+          "category": {
+            "enum": [<%= CFEConstants::VALID_REMARK_CATEGORIES.join('", "') %>],
+          },
+          "details": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+        }
+      }
+    }
+  }
+}
