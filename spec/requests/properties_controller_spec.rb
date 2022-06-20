@@ -39,7 +39,7 @@ RSpec.describe PropertiesController, type: :request do
       end
 
       context "service returns success" do
-        it "returns http status code 200", :show_in_doc do
+        it "returns http status code 200" do
           expect(response).to have_http_status(:success)
         end
 
@@ -52,7 +52,7 @@ RSpec.describe PropertiesController, type: :request do
       context "with invalid assessment ID" do
         let(:assessment_id) { SecureRandom.uuid }
 
-        it "returns expected error response", :show_in_doc do
+        it "returns expected error response" do
           expect(parsed_response[:success]).to eq(false)
           expect(parsed_response[:errors]).to eq [%(No such assessment id)]
         end
@@ -65,7 +65,7 @@ RSpec.describe PropertiesController, type: :request do
       context "with missing main_home attribute" do
         let(:request_payload) { { properties: {} } }
 
-        it "returns expected error response", :show_in_doc do
+        it "returns expected error response" do
           expect(parsed_response[:success]).to eq(false)
           expect(parsed_response[:errors]).to match [/The property '#\/properties' did not contain a required property of 'main_home' in schema file/]
         end
@@ -89,7 +89,7 @@ RSpec.describe PropertiesController, type: :request do
           }
         end
 
-        it "returns expected error response", :show_in_doc do
+        it "returns expected error response" do
           expect(parsed_response[:success]).to eq(false)
           expect(parsed_response[:errors]).to match [/The property '#\/properties\/main_home\/value' value "one hundred pounds" did not match the regex/]
         end
@@ -112,7 +112,7 @@ RSpec.describe PropertiesController, type: :request do
           }
         end
 
-        it "returns expected error response", :show_in_doc do
+        it "returns expected error response" do
           expect(parsed_response[:success]).to eq(false)
           expect(parsed_response[:errors]).to match [/The property '#\/properties\/main_home' did not contain a required property of 'outstanding_mortgage' in schema file/]
         end
@@ -143,7 +143,7 @@ RSpec.describe PropertiesController, type: :request do
           }
         end
 
-        it "returns expected error response", :show_in_doc do
+        it "returns expected error response" do
           expect(parsed_response[:success]).to eq(false)
           expect(parsed_response[:errors]).to match [/The property '#\/properties\/additional_properties\/0' did not contain a required property of 'percentage_owned' in schema file/]
         end
@@ -175,7 +175,7 @@ RSpec.describe PropertiesController, type: :request do
           }
         end
 
-        it "returns expected error response", :show_in_doc do
+        it "returns expected error response" do
           expect(parsed_response[:success]).to eq(false)
           expect(parsed_response[:errors]).to match [/The property '#\/properties\/additional_properties\/0\/shared_with_housing_assoc' of type string did not match the following type: boolean in schema file/]
         end
