@@ -1,0 +1,54 @@
+{
+  "id": "file://#{@schema_dir}/properties.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Legal Aid Check Financial Eligibility create properties payload schema",
+  "type": "object",
+  "required": ["properties"],
+  "properties": {
+    "properties": {
+      "type": "object",
+      "required": ["main_home"],
+      "properties": {
+        "main_home": {
+          "type": "object",
+          "required": ["value", "outstanding_mortgage", "percentage_owned", "shared_with_housing_assoc"],
+          "properties": {
+            "value": {
+              "$ref": "<%= "file://#{@schema_dir}/common.json#currency" %>"
+            },
+            "outstanding_mortgage": {
+              "$ref": "<%= "file://#{@schema_dir}/common.json#currency" %>"
+            },
+            "percentage_owned": {
+              "$ref": "<%= "file://#{@schema_dir}/common.json#currency" %>"
+            },
+            "shared_with_housing_assoc": {
+              "type": "boolean"
+            }
+          }
+        },
+        "additional_properties": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["value", "outstanding_mortgage", "percentage_owned", "shared_with_housing_assoc"],
+            "properties": {
+              "value": {
+                "$ref": "<%= "file://#{@schema_dir}/common.json#currency" %>"
+              },
+              "outstanding_mortgage": {
+                "$ref": "<%= "file://#{@schema_dir}/common.json#currency" %>"
+              },
+              "percentage_owned": {
+                "$ref": "<%= "file://#{@schema_dir}/common.json#currency" %>"
+              },
+              "shared_with_housing_assoc": {
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

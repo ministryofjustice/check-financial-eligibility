@@ -1,19 +1,22 @@
 module Creators
   class PropertiesCreator < BaseCreator
-    attr_accessor :assessment_id, :main_home_attributes, :additional_properties_attributes, :properties
+    attr_accessor :assessment_id, :properties
 
     delegate :capital_summary, to: :assessment
 
-    def initialize(assessment_id:, main_home_attributes: nil, additional_properties_attributes: [])
+    def initialize(assessment_id:, properties_params:)
       super()
       @assessment_id = assessment_id
-      @main_home_attributes = main_home_attributes
-      @additional_properties_attributes = additional_properties_attributes
+      @properties_params = properties_params
       @properties = []
     end
 
     def call
-      create_records
+      if json_validator.valid?
+        create_records
+      else
+        self.errors = json_validator.errors
+      end
       self
     end
 
@@ -43,6 +46,22 @@ module Creators
     def new_property(attrs, main_home)
       attrs[:main_home] = main_home
       @properties << capital_summary.properties.create!(attrs)
+    end
+
+    def main_home_attributes
+      @main_home_attributes ||= properties_attributes[:main_home]
+    end
+
+    def additional_properties_attributes
+      @additional_properties_attributes ||= properties_attributes[:additional_properties]
+    end
+
+    def properties_attributes
+      @properties_attributes ||= JSON.parse(@properties_params, symbolize_names: true)[:properties]
+    end
+
+    def json_validator
+      @json_validator ||= JsonValidator.new("properties", @properties_params)
     end
   end
 end
