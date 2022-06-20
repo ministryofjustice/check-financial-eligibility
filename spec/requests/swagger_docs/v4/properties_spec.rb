@@ -131,7 +131,7 @@ RSpec.describe "properties", type: :request, swagger_doc: "v4/swagger.yaml" do
 
         run_test! do |response|
           body = JSON.parse(response.body, symbolize_names: true)
-          expect(body[:errors]).to include(/Invalid parameter 'value' value/)
+          expect(body[:errors]).to include(/The property '#\/properties\/main_home\/value' of type null matched the disallowed schema in schema file/)
         end
       end
     end
