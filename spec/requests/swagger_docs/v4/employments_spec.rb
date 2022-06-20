@@ -135,7 +135,7 @@ RSpec.describe "employments", type: :request, swagger_doc: "v4/swagger.yaml" do
 
         run_test! do |response|
           body = JSON.parse(response.body, symbolize_names: true)
-          expect(body[:errors]).to include(/Missing parameter name/)
+          expect(body[:errors]).to include(/The property '#\/employment_income\/0' did not contain a required property of 'name'/)
         end
       end
     end

@@ -1,0 +1,67 @@
+{
+  "id": "file://public/schemas/employment.json.erb",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Legal Aid Check Financial Eligibility add cash transaction details to an assessment schema",
+  "type": "object",
+  "properties": {
+    "employment_income": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "client_id": {
+            "type": "string"
+          },
+          "payments": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "client_id": {
+                  "type": "string"
+                },
+                "date": {
+                  "$ref": "<%= "file://#{@schema_dir}/common.json#date" %>"
+                },
+                "gross": {
+                  "$ref": "<%= "file://#{@schema_dir}/common.json#positive_currency" %>"
+                },
+                "benefits_in_kind": {
+                  "$ref": "<%= "file://#{@schema_dir}/common.json#positive_currency" %>"
+                },
+                "tax": {
+                  "$ref": "<%= "file://#{@schema_dir}/common.json#currency" %>"
+                },
+                "national_insurance": {
+                  "$ref": "<%= "file://#{@schema_dir}/common.json#currency" %>"
+                },
+                "net_employment_income": {
+                  "$ref": "<%= "file://#{@schema_dir}/common.json#positive_currency" %>"
+                }
+              },
+              "additionalProperties": false,
+              "required": [
+                "client_id",
+                "date",
+                "gross",
+                "benefits_in_kind",
+                "tax",
+                "national_insurance",
+                "net_employment_income"
+              ]
+            }
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "client_id",
+          "payments"
+        ]
+      }
+    }
+  }
+}

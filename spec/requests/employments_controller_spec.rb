@@ -13,7 +13,7 @@ RSpec.describe EmploymentsController, type: :request do
     context "valid payload" do
       context "with client ids" do
         context "with two employments" do
-          it "returns http success", :show_in_doc do
+          it "returns http success" do
             post_payload
             expect(response).to have_http_status(:success)
           end
@@ -34,22 +34,59 @@ RSpec.describe EmploymentsController, type: :request do
     end
 
     context "invalid_payload" do
-      context "missing data in the second employment" do
+      context "missing name" do
         let(:params) do
           new_hash = employment_income_params
           new_hash[:employment_income].last.delete(:name)
           new_hash
         end
 
-        it "returns unsuccessful", :show_in_doc do
-          post_payload
-          expect(response.status).to eq 422
+        before { post_payload }
+
+        it_behaves_like "it fails with message",
+                        /The property '#\/employment_income\/1' did not contain a required property of 'name'/
+
+        it "does not create any employment records" do
+          expect { post_payload }.not_to change(Employment, :count)
         end
 
-        it "contains success false in the response body" do
-          post_payload
-          expect(parsed_response).to eq(errors: ["Missing parameter name"], success: false)
+        it "does not create employment payment records" do
+          expect { post_payload }.not_to change(EmploymentPayment, :count)
         end
+      end
+
+      context "missing client id" do
+        let(:params) do
+          new_hash = employment_income_params
+          new_hash[:employment_income].last.delete(:client_id)
+          new_hash
+        end
+
+        before { post_payload }
+
+        it_behaves_like "it fails with message",
+                        /The property '#\/employment_income\/1' did not contain a required property of 'client_id'/
+
+        it "does not create any employment records" do
+          expect { post_payload }.not_to change(Employment, :count)
+        end
+
+        it "does not create employment payment records" do
+          expect { post_payload }.not_to change(EmploymentPayment, :count)
+        end
+      end
+
+      context "missing payments" do
+        let(:params) do
+          new_hash = employment_income_params
+          new_hash[:employment_income].last.delete(:payments)
+          new_hash
+        end
+
+        before { post_payload }
+
+        it_behaves_like "it fails with message",
+                        /The property '#\/employment_income\/1' did not contain a required property of 'payments'/
 
         it "does not create any employment records" do
           expect { post_payload }.not_to change(Employment, :count)
@@ -146,15 +183,6 @@ RSpec.describe EmploymentsController, type: :request do
           },
         ],
       }
-    end
-
-    def employment_income_params_without_client_ids
-      params = employment_income_params
-      params[:employment_income].each do |employment|
-        employment.delete(:client_id)
-        employment[:payments].each { |paymt| paymt.delete(:client_id) }
-      end
-      params
     end
   end
 end
