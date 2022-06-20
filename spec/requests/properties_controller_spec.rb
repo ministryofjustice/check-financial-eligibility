@@ -33,33 +33,39 @@ RSpec.describe PropertiesController, type: :request do
       }
     end
 
+    before do
+      post assessment_properties_path(assessment_id), params: request_payload.to_json, headers:
+    end
+
     context "with valid payload" do
-      before do
-        post assessment_properties_path(assessment_id), params: request_payload.to_json, headers:
+      let(:assessment_id) { assessment.id }
+
+      it "returns http status code 200", :show_in_doc do
+        expect(response).to have_http_status(:success)
       end
 
-      context "service returns success" do
-        it "returns http status code 200" do
-          expect(response).to have_http_status(:success)
-        end
-
-        it "generates a valid response" do
-          expect(parsed_response[:success]).to eq true
-          expect(parsed_response[:errors]).to be_empty
-        end
+      it "parsed response returns success true" do
+        expect(parsed_response[:success]).to eq true
       end
 
-      context "with invalid assessment ID" do
-        let(:assessment_id) { SecureRandom.uuid }
+      it "parsed response returns no errors" do
+        expect(parsed_response[:errors]).to be_empty
+      end
+    end
 
-        it "returns expected error response" do
-          expect(parsed_response[:success]).to eq(false)
-          expect(parsed_response[:errors]).to eq [%(No such assessment id)]
-        end
+    context "with invalid assessment ID" do
+      let(:assessment_id) { SecureRandom.uuid }
 
-        it "returns 422" do
-          expect(response).to have_http_status(:unprocessable_entity)
-        end
+      it "returns http status 422" do
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it "parsed response returns success false" do
+        expect(parsed_response[:success]).to eq false
+      end
+
+      it "returns expected error response", :show_in_doc do
+        expect(parsed_response[:errors]).to eq [%(No such assessment id)]
       end
 
       context "with missing main_home attribute" do
