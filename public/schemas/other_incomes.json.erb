@@ -1,0 +1,39 @@
+{
+  "id": "file://#{@schema_dir}/other_incomes.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Legal Aid Check Financial Eligibility add other income details to an assessment schema",
+  "type": "object",
+  "required": ["other_incomes"],
+  "properties": {
+    "other_incomes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["source"],
+        "properties": {
+          "source": {
+            "enum": <%= CFEConstants::HUMANIZED_INCOME_CATEGORIES.as_json %>
+          },
+          "payments": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["date", "amount", "client_id"],
+              "properties": {
+                "date": {
+                  "$ref": "<%= "file://#{@schema_dir}/common.json#date" %>"
+                },
+                "amount": {
+                  "$ref": "<%= "file://#{@schema_dir}/common.json#positive_currency" %>"
+                },
+                "client_id": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
