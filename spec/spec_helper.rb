@@ -77,12 +77,18 @@ RSpec.configure do |config|
 
   # The settings below are suggested to provide a good initial experience
   # with RSpec, but feel free to customize to your heart's content.
-  #   # This allows you to limit a spec run to individual examples or groups
-  #   # you care about by tagging them with `:focus` metadata. When nothing
-  #   # is tagged with `:focus`, all examples get run. RSpec also provides
-  #   # aliases for `it`, `describe`, and `context` that include `:focus`
-  #   # metadata: `fit`, `fdescribe` and `fcontext`, respectively.
-  #   config.filter_run_when_matching :focus
+
+  # These two settings work together to allow you to limit a spec run
+  # to individual examples or groups you care about by tagging them with
+  # `:focus` metadata. When nothing is tagged with `:focus`, all examples
+  # get run.
+  # NOTE: ENV['CI'] is a variable that is populated on circleci, at least, which
+  # thereby prevents focused running in the CI pipeline.
+  #
+  # NOTE: you can also use `fit`, `fdescribe`, `fcontext` to focus specs
+  #
+  config.filter_run_including focus: true unless ENV["CI"]
+  config.run_all_when_everything_filtered = true
   #
   #   # Allows RSpec to persist some state between runs in order to support
   #   # the `--only-failures` and `--next-failure` CLI options. We recommend
