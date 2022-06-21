@@ -69,7 +69,7 @@
       },
       "response_data": {
         "success": true,
-        "assessment_id": "088b8274-b844-4d2e-ae6c-c710c6987754",
+        "assessment_id": "ae2fde0e-9d2c-441e-b6df-55f98e264b8a",
         "errors": [
 
         ]
@@ -93,7 +93,7 @@
       },
       "response_data": {
         "success": true,
-        "assessment_id": "42eea153-eb25-4ee8-a748-c5a9e25ee6db",
+        "assessment_id": "13f6aac9-bef7-4691-b1d3-011c81bacfb2",
         "errors": [
 
         ]
@@ -130,7 +130,7 @@
     {
       "title": "POST V4 Success Response",
       "verb": "GET",
-      "path": "/assessments/9f641a69-bd04-47cf-80a4-17bbd0030da6",
+      "path": "/assessments/327696d5-674c-4638-87a0-913820e46386",
       "versions": [
         "1.0"
       ],
@@ -138,7 +138,7 @@
       "request_data": null,
       "response_data": {
         "version": "4",
-        "timestamp": "2022-04-04T09:57:09.000Z",
+        "timestamp": "2022-06-21T07:18:09.000Z",
         "success": true,
         "result_summary": {
           "overall_result": {
@@ -215,7 +215,7 @@
           }
         },
         "assessment": {
-          "id": "9f641a69-bd04-47cf-80a4-17bbd0030da6",
+          "id": "327696d5-674c-4638-87a0-913820e46386",
           "client_reference_id": "NPE6-1",
           "submission_date": "2019-05-29",
           "applicant": {
@@ -349,14 +349,14 @@
           "remarks": {
             "state_benefit_payment": {
               "amount_variation": [
-                "0cd97f34-6cda-4526-afb5-bbb68f83d89e",
-                "38c7d989-ee02-4154-958f-d7c998a88997",
-                "56f9a827-ca1e-47c5-98b8-ae1f783caf8b"
+                "3ee28856-9de1-467d-bc19-d018097902df",
+                "0fff8d22-a6ac-4e68-a177-4dda7f6100ad",
+                "3ed84d9e-9b70-4527-b266-2ce446d4ee73"
               ],
               "unknown_frequency": [
-                "0cd97f34-6cda-4526-afb5-bbb68f83d89e",
-                "38c7d989-ee02-4154-958f-d7c998a88997",
-                "56f9a827-ca1e-47c5-98b8-ae1f783caf8b"
+                "3ee28856-9de1-467d-bc19-d018097902df",
+                "0fff8d22-a6ac-4e68-a177-4dda7f6100ad",
+                "3ed84d9e-9b70-4527-b266-2ce446d4ee73"
               ]
             }
           }
@@ -371,30 +371,30 @@
     {
       "title": "Default",
       "verb": "POST",
-      "path": "/assessments/0de6b5bf-8395-4bcd-b72c-935b0e8ad789/capitals",
+      "path": "/assessments/13ba4de2-3c71-40df-b54d-5bc12eb7077e/capitals",
       "versions": [
-        "1.0"
+
       ],
       "query": null,
       "request_data": {
         "bank_accounts": [
           {
-            "description": "ALKEN ASSET MANAGEMENT 10606062",
-            "value": 85847.05
+            "description": "ABBOTSTONE AGRICULTURAL PROPERTY UNIT TRUST 78967882",
+            "value": 40743.28
           },
           {
-            "description": "SANTANDER UK PLC 68346475",
-            "value": 59389.67
+            "description": "ABN AMRO HOARE GOVETT SECURITIES 34052246",
+            "value": 54096.86
           }
         ],
         "non_liquid_capital": [
           {
-            "description": "FTSE tracker unit trust",
-            "value": 61192.56
+            "description": "Life Endowment Policy",
+            "value": 50037.09
           },
           {
-            "description": "Aramco shares",
-            "value": 51082.81
+            "description": "FTSE tracker unit trust",
+            "value": 32561.87
           }
         ]
       },
@@ -407,53 +407,13 @@
       "code": 422,
       "show_in_doc": 1,
       "recorded": true
-    },
-    {
-      "title": "Default",
-      "verb": "POST",
-      "path": "/assessments/9088d8ba-71f8-4fd9-a20a-69f17a27e96d/capitals",
-      "versions": [
-        "1.0"
-      ],
-      "query": null,
-      "request_data": {
-        "bank_accounts": [
-          {
-            "description": "ALLIED BANK PHILIPPINES (UK) PLC 00505045",
-            "value": 51135.01
-          },
-          {
-            "description": "ALKEN ASSET MANAGEMENT 98283374",
-            "value": 24363.94
-          }
-        ],
-        "non_liquid_capital": [
-          {
-            "description": "Van Gogh Sunflowers",
-            "value": 99943.27
-          },
-          {
-            "description": "R.J.Ewing Trust",
-            "value": 27893.42
-          }
-        ]
-      },
-      "response_data": {
-        "success": true,
-        "errors": [
-
-        ]
-      },
-      "code": 200,
-      "show_in_doc": 1,
-      "recorded": true
     }
   ],
   "cash_transactions#create": [
     {
       "title": "Default",
       "verb": "POST",
-      "path": "/assessments/5d5e9b83-968b-4f86-b719-b26ef055bf78/cash_transactions",
+      "path": "/assessments/26979661-47dd-4ab4-9c83-6efda738babc/cash_transactions",
       "versions": [
         "1.0"
       ],
@@ -464,17 +424,17 @@
             "category": "maintenance_in",
             "payments": [
               {
-                "date": "2022-01-01",
+                "date": "2022-03-01",
                 "amount": 1046.44,
                 "client_id": "05459c0f-a620-4743-9f0c-b3daa93e5711"
               },
               {
-                "date": "2022-02-01",
+                "date": "2022-04-01",
                 "amount": 1034.33,
                 "client_id": "10318f7b-289a-4fa5-a986-fc6f499fecd0"
               },
               {
-                "date": "2022-03-01",
+                "date": "2022-05-01",
                 "amount": 1033.44,
                 "client_id": "5cf62a12-c92b-4cc1-b8ca-eeb4efbcce21"
               }
@@ -484,17 +444,17 @@
             "category": "friends_or_family",
             "payments": [
               {
-                "date": "2022-02-01",
+                "date": "2022-04-01",
                 "amount": 250.0,
                 "client_id": "e47b707b-d795-47c2-8b39-ccf022eae33b"
               },
               {
-                "date": "2022-03-01",
+                "date": "2022-05-01",
                 "amount": 266.02,
                 "client_id": "b0c46cc7-8478-4658-a7f9-85ec85d420b1"
               },
               {
-                "date": "2022-01-01",
+                "date": "2022-03-01",
                 "amount": 250.0,
                 "client_id": "f3ec68a3-8748-4ed5-971a-94d133e0efa0"
               }
@@ -506,17 +466,17 @@
             "category": "maintenance_out",
             "payments": [
               {
-                "date": "2022-02-01",
+                "date": "2022-04-01",
                 "amount": 256.0,
                 "client_id": "347b707b-d795-47c2-8b39-ccf022eae33b"
               },
               {
-                "date": "2022-03-01",
+                "date": "2022-05-01",
                 "amount": 256.0,
                 "client_id": "722b707b-d795-47c2-8b39-ccf022eae33b"
               },
               {
-                "date": "2022-01-01",
+                "date": "2022-03-01",
                 "amount": 256.0,
                 "client_id": "abcb707b-d795-47c2-8b39-ccf022eae33b"
               }
@@ -526,17 +486,17 @@
             "category": "child_care",
             "payments": [
               {
-                "date": "2022-03-01",
+                "date": "2022-05-01",
                 "amount": 258.0,
                 "client_id": "ff7b707b-d795-47c2-8b39-ccf022eae33b"
               },
               {
-                "date": "2022-02-01",
+                "date": "2022-04-01",
                 "amount": 257.0,
                 "client_id": "ee7b707b-d795-47c2-8b39-ccf022eae33b"
               },
               {
-                "date": "2022-01-01",
+                "date": "2022-03-01",
                 "amount": 256.0,
                 "client_id": "ec7b707b-d795-47c2-8b39-ccf022eae33b"
               }
@@ -669,7 +629,7 @@
     {
       "title": "Default",
       "verb": "POST",
-      "path": "/assessments/616c1503-1be7-4c3a-9d9b-7e6e340c13d6/employments",
+      "path": "/assessments/931db196-7af8-4a8f-890a-c23fac4ebc08/employments",
       "versions": [
         "1.0"
       ],
@@ -678,10 +638,10 @@
         "employment_income": [
           {
             "name": "Job 1",
-            "client_id": "56b0d776-41f8-4264-a397-6407cbc31c12",
+            "client_id": "3f1ae417-7d5e-4a24-8cc4-b0be6a3ce35a",
             "payments": [
               {
-                "client_id": "53f77643-a4d1-4d23-8ee1-841c635a4062",
+                "client_id": "cdd0dc82-3609-4e81-9fa1-3e7557452199",
                 "date": "2021-10-30",
                 "gross": 1046.0,
                 "benefits_in_kind": 16.6,
@@ -690,7 +650,7 @@
                 "net_employment_income": 898.84
               },
               {
-                "client_id": "78fe670b-3b36-46f4-9da1-4f47aaefc620",
+                "client_id": "58f1cbcc-3ad0-4030-9382-ee09ed8c3322",
                 "date": "2021-10-30",
                 "gross": 1046.0,
                 "benefits_in_kind": 16.6,
@@ -699,7 +659,7 @@
                 "net_employment_income": 898.84
               },
               {
-                "client_id": "b4a518b9-0ce0-47d8-8444-b669aa8a95ef",
+                "client_id": "38d264d4-f3c0-4a8a-8a26-61caeda1b0ea",
                 "date": "2021-10-30",
                 "gross": 1046.0,
                 "benefits_in_kind": 16.6,
@@ -710,10 +670,10 @@
             ]
           },
           {
-            "client_id": "1fb3fdce-5525-4dcd-b81b-fc860f82fef4",
+            "client_id": "b43e65a7-0a2d-4568-b43a-0468693bcbd9",
             "payments": [
               {
-                "client_id": "e46055be-72b7-4000-8409-f077e2fc5bce",
+                "client_id": "c29721b9-78af-49d1-87c9-57c4fa25e2c7",
                 "date": "2021-10-30",
                 "gross": 1046.0,
                 "benefits_in_kind": 16.6,
@@ -722,7 +682,7 @@
                 "net_employment_income": 898.84
               },
               {
-                "client_id": "6fbc92d1-014d-4fe6-945b-79611e8d5ab8",
+                "client_id": "87d6ceb3-3da1-4c50-907d-cc93d55c4881",
                 "date": "2021-10-30",
                 "gross": 1046.0,
                 "benefits_in_kind": 16.6,
@@ -731,7 +691,7 @@
                 "net_employment_income": 898.84
               },
               {
-                "client_id": "21f8940a-b3e8-4f0a-9f5c-876d85c69ae4",
+                "client_id": "4df779b1-0e9c-4729-84fb-22187e64c77e",
                 "date": "2021-10-30",
                 "gross": 1046.0,
                 "benefits_in_kind": 16.6,
@@ -756,7 +716,7 @@
     {
       "title": "Default",
       "verb": "POST",
-      "path": "/assessments/0c88492d-95c6-4b0c-a5fa-29b732c249d1/employments",
+      "path": "/assessments/54295bc5-d20f-48e4-966f-f38bcc78f8be/employments",
       "versions": [
         "1.0"
       ],
@@ -765,10 +725,10 @@
         "employment_income": [
           {
             "name": "Job 1",
-            "client_id": "a1d3a76f-89c7-4eae-ac51-550552f95774",
+            "client_id": "ddfa3c53-2dfa-481c-989e-e8c019137cde",
             "payments": [
               {
-                "client_id": "c106cc44-39a3-4494-abe8-a91dbff81ea7",
+                "client_id": "79bbfc96-ad53-44a8-a9a0-b6363f60862d",
                 "date": "2021-10-30",
                 "gross": 1046.0,
                 "benefits_in_kind": 16.6,
@@ -777,7 +737,7 @@
                 "net_employment_income": 898.84
               },
               {
-                "client_id": "bf3356a7-681b-4a2d-bab2-a224f52f0c6f",
+                "client_id": "5236f9a0-9e13-4839-b3cb-dc16d5e9ba63",
                 "date": "2021-10-30",
                 "gross": 1046.0,
                 "benefits_in_kind": 16.6,
@@ -786,7 +746,7 @@
                 "net_employment_income": 898.84
               },
               {
-                "client_id": "66971129-6685-4acd-9deb-60581601dca6",
+                "client_id": "324a96bb-dd13-49fc-bca9-560d01244198",
                 "date": "2021-10-30",
                 "gross": 1046.0,
                 "benefits_in_kind": 16.6,
@@ -798,10 +758,10 @@
           },
           {
             "name": "Job 2",
-            "client_id": "27355c60-d969-459f-a283-ffbedde42ab3",
+            "client_id": "36cca65b-b2ee-4e7c-b58b-b6e76fc0869d",
             "payments": [
               {
-                "client_id": "7b8ad08f-25f5-454e-9b43-a4849d1259a1",
+                "client_id": "6cd53ac0-5d24-4880-9bce-afd8f5406a94",
                 "date": "2021-10-30",
                 "gross": 1046.0,
                 "benefits_in_kind": 16.6,
@@ -810,7 +770,7 @@
                 "net_employment_income": 898.84
               },
               {
-                "client_id": "cc9bd6d9-9680-43d6-890b-bc06a12da124",
+                "client_id": "16059a1a-03db-4f5e-843f-15b21447e93b",
                 "date": "2021-10-30",
                 "gross": 1046.0,
                 "benefits_in_kind": 16.6,
@@ -819,7 +779,7 @@
                 "net_employment_income": 898.84
               },
               {
-                "client_id": "46f99ca3-9702-4fbc-b824-b68908884f06",
+                "client_id": "ebd911db-1c16-4394-81e7-d44503d7f220",
                 "date": "2021-10-30",
                 "gross": 1046.0,
                 "benefits_in_kind": 16.6,
@@ -846,36 +806,7 @@
     {
       "title": "Default",
       "verb": "POST",
-      "path": "/assessments/90bb7c3e-ddc3-43c1-b58a-9f659d4bef5f/explicit_remarks",
-      "versions": [
-        "1.0"
-      ],
-      "query": null,
-      "request_data": {
-        "explicit_remarks": [
-          {
-            "category": "other_stuff",
-            "details": [
-              "employment",
-              "charity"
-            ]
-          }
-        ]
-      },
-      "response_data": {
-        "success": false,
-        "errors": [
-          "Invalid parameter 'category' value \"other_stuff\": Must be one of: <code>policy_disregards</code>."
-        ]
-      },
-      "code": 422,
-      "show_in_doc": 1,
-      "recorded": true
-    },
-    {
-      "title": "Default",
-      "verb": "POST",
-      "path": "/assessments/8eb9d9fd-a99c-41f4-813d-e7247e357b3d/explicit_remarks",
+      "path": "/assessments/8b801cce-cd2b-4e78-9673-fca50a95d1c0/explicit_remarks",
       "versions": [
         "1.0"
       ],
@@ -900,39 +831,42 @@
       "code": 200,
       "show_in_doc": 1,
       "recorded": true
-    }
-  ],
-  "irregular_incomes#create": [
+    },
     {
       "title": "Default",
       "verb": "POST",
-      "path": "/assessments/d823422f-e6e5-4dd0-815d-5041d555af62/irregular_incomes",
+      "path": "/assessments/7ac52d69-e32f-44b4-b861-ff83b9e09250/explicit_remarks",
       "versions": [
         "1.0"
       ],
       "query": null,
       "request_data": {
-        "payments": [
+        "explicit_remarks": [
           {
-            "frequency": "annual",
-            "amount": 123456.78
+            "category": "other_stuff",
+            "details": [
+              "employment",
+              "charity"
+            ]
           }
         ]
       },
       "response_data": {
         "success": false,
         "errors": [
-          "Missing parameter income_type"
+          "Invalid parameter 'category' value \"other_stuff\": Must be one of: <code>policy_disregards</code>."
         ]
       },
       "code": 422,
       "show_in_doc": 1,
       "recorded": true
-    },
+    }
+  ],
+  "irregular_incomes#create": [
     {
       "title": "Default",
       "verb": "POST",
-      "path": "/assessments/b9ac4de8-2058-40c8-af75-386b3c7413b8/irregular_incomes",
+      "path": "/assessments/928201a6-9491-4f77-b130-06ffa043b840/irregular_incomes",
       "versions": [
         "1.0"
       ],
@@ -955,13 +889,39 @@
       "code": 200,
       "show_in_doc": 1,
       "recorded": true
+    },
+    {
+      "title": "Default",
+      "verb": "POST",
+      "path": "/assessments/d65b06d9-d35b-4c5b-9a6b-7022b4ffbd73/irregular_incomes",
+      "versions": [
+        "1.0"
+      ],
+      "query": null,
+      "request_data": {
+        "payments": [
+          {
+            "frequency": "annual",
+            "amount": 123456.78
+          }
+        ]
+      },
+      "response_data": {
+        "success": false,
+        "errors": [
+          "Missing parameter income_type"
+        ]
+      },
+      "code": 422,
+      "show_in_doc": 1,
+      "recorded": true
     }
   ],
   "other_incomes#create": [
     {
       "title": "Default",
       "verb": "POST",
-      "path": "/assessments/99c5b8f7-d539-4850-8113-f6c3bb3c8095/other_incomes",
+      "path": "/assessments/e160a5e9-7882-45c1-baa8-2e691bacb759/other_incomes",
       "versions": [
         "1.0"
       ],
@@ -974,17 +934,17 @@
               {
                 "date": "2019-11-01",
                 "amount": 1046.44,
-                "client_id": "a1bc2f09-b96c-4d3d-99ce-4d6ebdd4a00f"
+                "client_id": "2b30e52f-4ded-412a-970f-39855bb1172c"
               },
               {
                 "date": "2019-10-01",
                 "amount": 1034.33,
-                "client_id": "de207ebc-2d03-447a-a8fc-84cb5feeaf21"
+                "client_id": "b948a695-d605-459b-88b7-65f13bad7cb4"
               },
               {
                 "date": "2019-09-01",
                 "amount": 1033.44,
-                "client_id": "95097caa-21f9-46a7-a06c-108810e9f20b"
+                "client_id": "16a8cb85-a7d4-48a7-9240-e1e9d15b8471"
               }
             ]
           },
@@ -994,17 +954,17 @@
               {
                 "date": "2019-11-01",
                 "amount": 250.0,
-                "client_id": "9b8b6a49-aded-42cf-a41e-e3cbd5ff3d0e"
+                "client_id": "442a0541-dc36-45fe-950f-a76e832eac93"
               },
               {
                 "date": "2019-10-01",
                 "amount": 266.02,
-                "client_id": "f9f2c4cb-2caa-4893-98ef-3c6aa9aaa842"
+                "client_id": "f43aa867-7ddd-4b35-b8ed-21b9c5f6d0aa"
               },
               {
                 "date": "2019-09-01",
                 "amount": 250.0,
-                "client_id": "17654dfb-035e-4e3d-9db3-0d1581003ee8"
+                "client_id": "27c2f3a1-459e-4e42-b283-addfe0aca9bd"
               }
             ]
           }
@@ -1025,7 +985,7 @@
     {
       "title": "Default",
       "verb": "POST",
-      "path": "/assessments/2526cdbe-7b2a-4dc0-8906-c4facda51c6f/outgoings",
+      "path": "/assessments/fe53700e-e22e-4130-886b-32b3b2ed2ce9/outgoings",
       "versions": [
         "1.0"
       ],
@@ -1036,14 +996,14 @@
             "name": "child_care",
             "payments": [
               {
-                "payment_date": "2022-03-14",
-                "amount": 526.43,
-                "client_id": "ea7c00e1-e98d-4ac0-a3f8-bd1a6e7f24a5"
+                "payment_date": "2022-05-31",
+                "amount": 642.69,
+                "client_id": "b94ba821-ae20-46c1-952d-5a2c9e17555c"
               },
               {
-                "payment_date": "2022-03-14",
-                "amount": 612.76,
-                "client_id": "6e87193e-3f3e-4187-aae8-14a937793221"
+                "payment_date": "2022-05-31",
+                "amount": 251.95,
+                "client_id": "0fe47a3e-42a1-401a-9c9b-81fd568b2a1c"
               }
             ]
           },
@@ -1051,14 +1011,14 @@
             "name": "maintenance_out",
             "payments": [
               {
-                "payment_date": "2022-03-14",
-                "amount": 141.26,
-                "client_id": "ea7c00e1-e98d-4ac0-a3f8-bd1a6e7f24a5"
+                "payment_date": "2022-05-31",
+                "amount": 930.97,
+                "client_id": "b94ba821-ae20-46c1-952d-5a2c9e17555c"
               },
               {
-                "payment_date": "2022-03-14",
-                "amount": 210.43,
-                "client_id": "6e87193e-3f3e-4187-aae8-14a937793221"
+                "payment_date": "2022-05-31",
+                "amount": 599.07,
+                "client_id": "0fe47a3e-42a1-401a-9c9b-81fd568b2a1c"
               }
             ]
           },
@@ -1066,16 +1026,16 @@
             "name": "rent_or_mortgage",
             "payments": [
               {
-                "payment_date": "2022-03-14",
-                "amount": 829.78,
-                "housing_cost_type": "rent",
-                "client_id": "ea7c00e1-e98d-4ac0-a3f8-bd1a6e7f24a5"
+                "payment_date": "2022-05-31",
+                "amount": 632.95,
+                "housing_cost_type": "board_and_lodging",
+                "client_id": "b94ba821-ae20-46c1-952d-5a2c9e17555c"
               },
               {
-                "payment_date": "2022-03-14",
-                "amount": 294.18,
-                "housing_cost_type": "rent",
-                "client_id": "6e87193e-3f3e-4187-aae8-14a937793221"
+                "payment_date": "2022-05-31",
+                "amount": 200.14,
+                "housing_cost_type": "board_and_lodging",
+                "client_id": "0fe47a3e-42a1-401a-9c9b-81fd568b2a1c"
               }
             ]
           }
@@ -1105,14 +1065,14 @@
             "name": "child_care",
             "payments": [
               {
-                "payment_date": "2022-03-14",
-                "amount": 926.95,
-                "client_id": "4c30e7aa-315c-462a-b62b-9cde6b9f0487"
+                "payment_date": "2022-05-31",
+                "amount": 426.86,
+                "client_id": "b5df9995-24d7-4007-8530-4d2d21f636c8"
               },
               {
-                "payment_date": "2022-03-14",
-                "amount": 642.48,
-                "client_id": "eefb50f9-ef4c-4dab-b4a0-3265eb495ad4"
+                "payment_date": "2022-05-31",
+                "amount": 150.09,
+                "client_id": "e274048e-b29c-4125-9d62-faa6461734ce"
               }
             ]
           },
@@ -1120,14 +1080,14 @@
             "name": "maintenance_out",
             "payments": [
               {
-                "payment_date": "2022-03-14",
-                "amount": 924.25,
-                "client_id": "4c30e7aa-315c-462a-b62b-9cde6b9f0487"
+                "payment_date": "2022-05-31",
+                "amount": 327.39,
+                "client_id": "b5df9995-24d7-4007-8530-4d2d21f636c8"
               },
               {
-                "payment_date": "2022-03-14",
-                "amount": 433.25,
-                "client_id": "eefb50f9-ef4c-4dab-b4a0-3265eb495ad4"
+                "payment_date": "2022-05-31",
+                "amount": 976.86,
+                "client_id": "e274048e-b29c-4125-9d62-faa6461734ce"
               }
             ]
           },
@@ -1135,16 +1095,16 @@
             "name": "rent_or_mortgage",
             "payments": [
               {
-                "payment_date": "2022-03-14",
-                "amount": 675.15,
-                "housing_cost_type": "mortgage",
-                "client_id": "4c30e7aa-315c-462a-b62b-9cde6b9f0487"
+                "payment_date": "2022-05-31",
+                "amount": 490.59,
+                "housing_cost_type": "board_and_lodging",
+                "client_id": "b5df9995-24d7-4007-8530-4d2d21f636c8"
               },
               {
-                "payment_date": "2022-03-14",
-                "amount": 130.34,
-                "housing_cost_type": "mortgage",
-                "client_id": "eefb50f9-ef4c-4dab-b4a0-3265eb495ad4"
+                "payment_date": "2022-05-31",
+                "amount": 604.15,
+                "housing_cost_type": "board_and_lodging",
+                "client_id": "e274048e-b29c-4125-9d62-faa6461734ce"
               }
             ]
           }
@@ -1333,6 +1293,13 @@
           "name": "Child Benefit",
           "exclude_from_gross_income": false,
           "dwp_code": "CHB",
+          "category": null
+        },
+        {
+          "label": "hmrc_child_benefit",
+          "name": "Child Benefit",
+          "exclude_from_gross_income": false,
+          "dwp_code": "HMRC CHILD BENEFIT",
           "category": null
         },
         {
@@ -1821,7 +1788,7 @@
     {
       "title": "Default",
       "verb": "POST",
-      "path": "/assessments/39ff775c-0687-4c6a-89c3-d777f03c0334/state_benefits",
+      "path": "/assessments/1189851e-f64f-4cbe-8156-18a5aedaae29/state_benefits",
       "versions": [
         "1.0"
       ],
@@ -1834,17 +1801,17 @@
               {
                 "date": "2019-11-01",
                 "amount": 1046.44,
-                "client_id": "4378057c-4f09-4e20-8d46-264ebb3144e5"
+                "client_id": "df609cd1-cf37-410c-8b78-2b8b314577ef"
               },
               {
                 "date": "2019-10-01",
                 "amount": 1034.33,
-                "client_id": "18c69e4d-a2d7-4743-8d97-5b4367a8ffb0"
+                "client_id": "f0dd6915-efcf-4285-af67-915e497ef823"
               },
               {
                 "date": "2019-09-01",
                 "amount": 1033.44,
-                "client_id": "710f422d-89eb-47df-9e6c-69d7da014933"
+                "client_id": "9d969d07-c9b5-47ad-9b1e-555832b61892"
               }
             ]
           },
@@ -1854,17 +1821,17 @@
               {
                 "date": "2019-11-01",
                 "amount": 250.0,
-                "client_id": "4378057c-4f09-4e20-8d46-264ebb3144e5"
+                "client_id": "df609cd1-cf37-410c-8b78-2b8b314577ef"
               },
               {
                 "date": "2019-10-01",
                 "amount": 266.02,
-                "client_id": "18c69e4d-a2d7-4743-8d97-5b4367a8ffb0"
+                "client_id": "f0dd6915-efcf-4285-af67-915e497ef823"
               },
               {
                 "date": "2019-09-01",
                 "amount": 250.0,
-                "client_id": "710f422d-89eb-47df-9e6c-69d7da014933",
+                "client_id": "9d969d07-c9b5-47ad-9b1e-555832b61892",
                 "flags": {
                   "multi_benefit": true
                 }
@@ -1886,7 +1853,7 @@
     {
       "title": "Default",
       "verb": "POST",
-      "path": "/assessments/e7fbd931-3827-4ee3-b82e-f81339ea13e9/state_benefits",
+      "path": "/assessments/1db85f74-127e-4b41-b157-f057ac99e8b8/state_benefits",
       "versions": [
         "1.0"
       ],
@@ -1899,17 +1866,17 @@
               {
                 "date": "2019-11-01",
                 "amount": 1046.44,
-                "client_id": "c24b7960-b6dd-4634-8713-67d392c028c2"
+                "client_id": "a7e72824-38c3-4c75-88bd-909f0cf4b6ab"
               },
               {
                 "date": "2019-10-01",
                 "amount": 1034.33,
-                "client_id": "d3b3673c-b9eb-4ef7-9d77-2e5e10213000"
+                "client_id": "bc4771ae-9be5-43b9-9dc6-e4d6a974aad0"
               },
               {
                 "date": "2019-09-01",
                 "amount": 1033.44,
-                "client_id": "d373e02d-6b74-4649-a56d-f04ea8089d7a"
+                "client_id": "d382afc5-b5e4-45af-b6d0-e6f6c957cef2"
               }
             ]
           },
@@ -1918,17 +1885,17 @@
               {
                 "date": "2019-11-01",
                 "amount": 250.0,
-                "client_id": "c24b7960-b6dd-4634-8713-67d392c028c2"
+                "client_id": "a7e72824-38c3-4c75-88bd-909f0cf4b6ab"
               },
               {
                 "date": "2019-10-01",
                 "amount": 266.02,
-                "client_id": "d3b3673c-b9eb-4ef7-9d77-2e5e10213000"
+                "client_id": "bc4771ae-9be5-43b9-9dc6-e4d6a974aad0"
               },
               {
                 "date": "2019-09-01",
                 "amount": 250.0,
-                "client_id": "d373e02d-6b74-4649-a56d-f04ea8089d7a",
+                "client_id": "d382afc5-b5e4-45af-b6d0-e6f6c957cef2",
                 "flags": {
                   "multi_benefit": true
                 }
@@ -1952,7 +1919,7 @@
     {
       "title": "Default",
       "verb": "POST",
-      "path": "/assessments/ec9667d4-eaed-47b3-a76d-7472cf01dab5/vehicles",
+      "path": "/assessments/25150439-df04-41ae-a507-0089cc6c37c8/vehicles",
       "versions": [
         "1.0"
       ],
@@ -1960,15 +1927,15 @@
       "request_data": {
         "vehicles": [
           {
-            "value": 1817.19,
-            "loan_amount_outstanding": 1361.65,
-            "date_of_purchase": "2021-02-14",
-            "in_regular_use": true
+            "value": 2281.95,
+            "loan_amount_outstanding": 2618.81,
+            "date_of_purchase": "2021-04-18",
+            "in_regular_use": false
           },
           {
-            "value": 6190.19,
-            "loan_amount_outstanding": 6584.08,
-            "date_of_purchase": "2020-01-27",
+            "value": 5522.16,
+            "loan_amount_outstanding": 8644.32,
+            "date_of_purchase": "2018-12-27",
             "in_regular_use": false
           }
         ]
@@ -1994,15 +1961,15 @@
       "request_data": {
         "vehicles": [
           {
-            "value": 6232.05,
-            "loan_amount_outstanding": 6434.04,
-            "date_of_purchase": "2020-06-15",
+            "value": 9655.92,
+            "loan_amount_outstanding": 8911.05,
+            "date_of_purchase": "2021-02-06",
             "in_regular_use": false
           },
           {
-            "value": 2368.05,
-            "loan_amount_outstanding": 6695.98,
-            "date_of_purchase": "2021-12-06",
+            "value": 8188.96,
+            "loan_amount_outstanding": 2467.52,
+            "date_of_purchase": "2020-12-02",
             "in_regular_use": true
           }
         ]
