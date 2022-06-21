@@ -138,6 +138,7 @@ RSpec.describe Assessment, type: :model do
           client_reference_id: "client-ref-1",
           submission_date: Date.current,
           proceeding_type_codes: nil,
+          matter_proceeding_type: nil,
           assessment_type: "criminal",
           remote_ip: "127.0.0.1",
           version: "4",
