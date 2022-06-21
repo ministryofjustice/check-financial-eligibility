@@ -4,7 +4,7 @@ RSpec.describe StatusController, type: :request do
   describe "#healthcheck" do
     context "when an infrastructure problem exists" do
       before do
-        allow(ActiveRecord::Base.connection).to receive(:active?).and_raise(PG::ConnectionBad)
+        allow(ActiveRecord::Base.connection).to receive(:active?).and_raise(PG::ConnectionBad, "error")
 
         get "/healthcheck"
       end
