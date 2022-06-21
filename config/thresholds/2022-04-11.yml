@@ -65,3 +65,18 @@ disposable_income_contribution_bands:
 
 fixed_employment_allowance: 45.0
 employment_income_variance: 60.0
+
+adjusted_income_lower: 12475.0
+adjusted_income_upper: 22325.0
+
+crime_adjusted_income_weightings:
+  applicant: 1
+  partner: 0.64
+  dependants:
+    [0, 1]: 0.15
+    [2, 4]: 0.3
+    [5, 7]: 0.34
+    [8, 10]: 0.38
+    [11, 12]: 0.41
+    [13, 15]: 0.44
+    [16, 18]: 0.59
