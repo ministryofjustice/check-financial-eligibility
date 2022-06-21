@@ -16,13 +16,13 @@ RSpec.describe CashTransactionsController, type: :request do
     context "valid payload" do
       let(:params) { valid_params }
 
-      it "returns http success", :show_in_doc do
+      it "returns http success" do
         post_payload
         expect(response).to have_http_status(:success)
       end
 
       it "calls cash transactions creator" do
-        expect(creator_class).to receive(:call).with(assessment_id:, income: params[:income], outgoings: params[:outgoings])
+        expect(creator_class).to receive(:call).with(assessment_id:, cash_transaction_params: params)
         post_payload
       end
 
@@ -64,43 +64,163 @@ RSpec.describe CashTransactionsController, type: :request do
     end
 
     context "invalid payload" do
-      context "invalid income category" do
-        let(:params) { invalid_income_category_params }
+      context "invalid income" do
+        context "missing category" do
+          let(:params) { missing_income_category_params }
 
-        it "returns an error" do
-          post_payload
-          expect(parsed_response[:success]).to eq false
-          expect(parsed_response[:errors]).to eq [invalid_income_category_error_message]
+          before { post_payload }
+
+          it_behaves_like "it fails with message",
+                          /The property '#\/income\/0' did not contain a required property of 'category'/
+
+          it "does not call the CashTransactionCreator" do
+            expect(creator_class).not_to receive(:call)
+          end
         end
 
-        it "returns unprocessable" do
-          post_payload
-          expect(response.status).to eq 422
+        context "missing payments" do
+          let(:params) { missing_income_payment_params }
+
+          before { post_payload }
+
+          it_behaves_like "it fails with message",
+                          /The property '#\/income\/0' did not contain a required property of 'payments'/
+
+          it "does not call the CashTransactionCreator" do
+            expect(creator_class).not_to receive(:call)
+          end
         end
 
-        it "does not call the CashTransactionCreator" do
-          expect(creator_class).not_to receive(:call)
+        context "invalid category" do
+          let(:params) { invalid_income_category_params }
+
+          before { post_payload }
+
+          it_behaves_like "it fails with message",
+                          /The property '#\/income\/0\/category' value "xxxx" did not match one of the following values/
+
+          it "does not call the CashTransactionCreator" do
+            expect(creator_class).not_to receive(:call)
+          end
+        end
+
+        context "negative amounts" do
+          let(:params) { negative_income_amount_params }
+
+          before { post_payload }
+
+          it_behaves_like "it fails with message",
+                          /The property '#\/income\/1\/payments\/2\/amount' did not have a minimum value of 0.0/
+
+          it "does not call the CashTransactionCreator" do
+            expect(creator_class).not_to receive(:call)
+          end
+        end
+
+        context "missing amount" do
+          let(:params) { missing_income_amount_params }
+
+          before { post_payload }
+
+          it_behaves_like "it fails with message",
+                          /The property '#\/income\/1\/payments\/2' did not contain a required property of 'amount'/
+
+          it "does not call the CashTransactionCreator" do
+            expect(creator_class).not_to receive(:call)
+          end
+        end
+
+        context "non-number amount" do
+          let(:params) { non_number_income_amount_params }
+
+          before { post_payload }
+
+          it_behaves_like "it fails with message",
+                          /The property '#\/income\/1\/payments\/2\/amount' of type string did not match the following type: number/
+
+          it "does not call the CashTransactionCreator" do
+            expect(creator_class).not_to receive(:call)
+          end
         end
       end
 
-      context "negative amounts" do
-        let(:params) { invalid_negative_amount_params }
+      context "invalid outgoings" do
+        context "missing category" do
+          let(:params) { missing_outgoings_category_params }
 
-        it "returns an error" do
-          post_payload
-          expect(parsed_response[:success]).to eq false
-          expect(parsed_response[:errors]).to eq(
-            ["Invalid parameter 'amount' value -100: Must be a decimal, zero or greater, with a maximum of two decimal places. For example: 123.34"],
-          )
+          before { post_payload }
+
+          it_behaves_like "it fails with message",
+                          /The property '#\/outgoings\/0' did not contain a required property of 'category'/
+
+          it "does not call the CashTransactionCreator" do
+            expect(creator_class).not_to receive(:call)
+          end
         end
 
-        it "returns unprocessable" do
-          post_payload
-          expect(response.status).to eq 422
+        context "invalid category" do
+          let(:params) { invalid_outgoings_category_params }
+
+          before { post_payload }
+
+          it_behaves_like "it fails with message",
+                          /The property '#\/outgoings\/0\/category' value "xxxx" did not match one of the following values/
+
+          it "does not call the CashTransactionCreator" do
+            expect(creator_class).not_to receive(:call)
+          end
         end
 
-        it "does not call the CashTransactionCreator" do
-          expect(creator_class).not_to receive(:call)
+        context "missing payments" do
+          let(:params) { missing_outgoings_payments_params }
+
+          before { post_payload }
+
+          it_behaves_like "it fails with message",
+                          /The property '#\/outgoings\/0' did not contain a required property of 'payments'/
+
+          it "does not call the CashTransactionCreator" do
+            expect(creator_class).not_to receive(:call)
+          end
+        end
+
+        context "negative payment amount" do
+          let(:params) { negative_outgoings_payment_params }
+
+          before { post_payload }
+
+          it_behaves_like "it fails with message",
+                          /The property '#\/outgoings\/1\/payments\/2\/amount' did not have a minimum value of 0.0/
+
+          it "does not call the CashTransactionCreator" do
+            expect(creator_class).not_to receive(:call)
+          end
+        end
+
+        context "missing payment amount" do
+          let(:params) { missing_outgoings_payment_amount_params }
+
+          before { post_payload }
+
+          it_behaves_like "it fails with message",
+                          /The property '#\/outgoings\/1\/payments\/2' did not contain a required property of 'amount'/
+
+          it "does not call the CashTransactionCreator" do
+            expect(creator_class).not_to receive(:call)
+          end
+        end
+
+        context "invalid payment amount value" do
+          let(:params) { invalid_outgoings_payment_params }
+
+          before { post_payload }
+
+          it_behaves_like "it fails with message",
+                          /The property '#\/outgoings\/1\/payments\/2\/amount' of type string did not match the following type: number/
+
+          it "does not call the CashTransactionCreator" do
+            expect(creator_class).not_to receive(:call)
+          end
         end
       end
     end
@@ -201,14 +321,76 @@ RSpec.describe CashTransactionsController, type: :request do
       params
     end
 
-    def invalid_negative_amount_params
+    def missing_income_category_params
+      params = valid_params.clone
+      params[:income][0].delete(:category)
+      params
+    end
+
+    def missing_income_payment_params
+      params = valid_params.clone
+      params[:income][0].delete(:payments)
+      params
+    end
+
+    def negative_income_amount_params
+      params = valid_params.clone
+      params[:income].last[:payments].last[:amount] = -100
+      params
+    end
+
+    def missing_income_amount_params
+      params = valid_params.clone
+      params[:income].last[:payments].last.delete(:amount)
+      params
+    end
+
+    def non_number_income_amount_params
+      params = valid_params.clone
+      params[:income].last[:payments].last[:amount] = "hello"
+      params
+    end
+
+    def negative_outgoings_amount_params
       params = valid_params.clone
       params[:outgoings].last[:payments].last[:amount] = -100
       params
     end
 
-    def invalid_income_category_error_message
-      %(Invalid parameter 'category' value "xxxx": Must be one of: <code>benefits</code>, <code>friends_or_family</code>, <code>maintenance_in</code>, <code>property_or_lodger</code>, <code>pension</code>.)
+    def missing_outgoings_category_params
+      params = valid_params.clone
+      params[:outgoings][0].delete(:category)
+      params
+    end
+
+    def missing_outgoings_payments_params
+      params = valid_params.clone
+      params[:outgoings][0].delete(:payments)
+      params
+    end
+
+    def invalid_outgoings_category_params
+      params = valid_params.clone
+      params[:outgoings].first[:category] = "xxxx"
+      params
+    end
+
+    def negative_outgoings_payment_params
+      params = valid_params.clone
+      params[:outgoings].last[:payments].last[:amount] = -100
+      params
+    end
+
+    def missing_outgoings_payment_amount_params
+      params = valid_params.clone
+      params[:outgoings].last[:payments].last.delete(:amount)
+      params
+    end
+
+    def invalid_outgoings_payment_params
+      params = valid_params.clone
+      params[:outgoings].last[:payments].last[:amount] = "hello"
+      params
     end
   end
 end

@@ -151,7 +151,8 @@ RSpec.describe "cash_transactions", type: :request, swagger_doc: "v4/swagger.yam
 
         run_test! do |response|
           body = JSON.parse(response.body, symbolize_names: true)
-          expect(body[:errors]).to include(/Invalid parameter 'category' value/)
+          expect(body[:errors]).to include(/The property '#\/income\/0\/category' value "maintenance_out" did not match one of the following values/)
+          expect(body[:errors]).to include(/The property '#\/outgoings\/0\/category' value "maintenance_in" did not match one of the following values/)
         end
       end
     end
