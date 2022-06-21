@@ -131,5 +131,24 @@ RSpec.describe Assessment, type: :model do
         expect(assessment.remarks.as_json).to eq Remarks.new(assessment.id).as_json
       end
     end
+
+    context "criminal" do
+      let(:param_hash) do
+        {
+          client_reference_id: "client-ref-1",
+          submission_date: Date.current,
+          proceeding_type_codes: nil,
+          assessment_type: "criminal",
+          remote_ip: "127.0.0.1",
+          version: "4",
+        }
+      end
+
+      it "creates a valid assessment" do
+        assessment = described_class.create param_hash
+        expect(assessment.persisted?).to be true
+        expect(assessment.valid?).to be true
+      end
+    end
   end
 end
