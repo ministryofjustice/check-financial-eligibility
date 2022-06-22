@@ -29,12 +29,19 @@ module Creators
         },
       ]
     end
+    let(:properties_params) do
+      {
+        properties: {
+          main_home:,
+          additional_properties:,
+        },
+      }.to_json
+    end
 
     subject(:creator) do
       described_class.call(
         assessment_id:,
-        main_home_attributes: main_home,
-        additional_properties_attributes: additional_properties,
+        properties_params:,
       )
     end
 

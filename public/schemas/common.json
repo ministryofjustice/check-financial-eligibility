@@ -15,11 +15,13 @@
   "positive_currency": {
     "id": "common/positive_currency",
     "description": "Non-negative number (including zero) with two decimal places",
+    "not": {"type": "null"},
     "pattern": "^[+]?\\d+(\\.\\d{1,2})?$"
   },
   "currency": {
     "id": "common/currency",
     "description": "A negative or positive number (including zero) with two decimal places",
+    "not": {"type": "null"},
     "pattern": "^[-+]?\\d+(\\.\\d{1,2})?$"
   },
   "positive_cash_amount": {
