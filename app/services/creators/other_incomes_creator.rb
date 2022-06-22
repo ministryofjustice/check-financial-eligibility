@@ -17,7 +17,7 @@ module Creators
       if json_validator.valid?
         create_records
       else
-        self.errors = json_validator.errors
+        errors.concat(json_validator.errors)
       end
       self
     end
@@ -62,7 +62,7 @@ module Creators
     end
 
     def other_incomes
-      @other_incomes ||= JSON.parse(@other_incomes_params, symbolize_names: true)[:other_incomes]
+      @other_incomes ||= JSON.parse(@other_incomes_params, symbolize_names: true).fetch(:other_incomes, nil)
     end
 
     def json_validator
