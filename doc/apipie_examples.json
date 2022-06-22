@@ -802,66 +802,6 @@
       "recorded": true
     }
   ],
-  "explicit_remarks#create": [
-    {
-      "title": "Default",
-      "verb": "POST",
-      "path": "/assessments/8b801cce-cd2b-4e78-9673-fca50a95d1c0/explicit_remarks",
-      "versions": [
-        "1.0"
-      ],
-      "query": null,
-      "request_data": {
-        "explicit_remarks": [
-          {
-            "category": "policy_disregards",
-            "details": [
-              "employment",
-              "charity"
-            ]
-          }
-        ]
-      },
-      "response_data": {
-        "success": true,
-        "errors": [
-
-        ]
-      },
-      "code": 200,
-      "show_in_doc": 1,
-      "recorded": true
-    },
-    {
-      "title": "Default",
-      "verb": "POST",
-      "path": "/assessments/7ac52d69-e32f-44b4-b861-ff83b9e09250/explicit_remarks",
-      "versions": [
-        "1.0"
-      ],
-      "query": null,
-      "request_data": {
-        "explicit_remarks": [
-          {
-            "category": "other_stuff",
-            "details": [
-              "employment",
-              "charity"
-            ]
-          }
-        ]
-      },
-      "response_data": {
-        "success": false,
-        "errors": [
-          "Invalid parameter 'category' value \"other_stuff\": Must be one of: <code>policy_disregards</code>."
-        ]
-      },
-      "code": 422,
-      "show_in_doc": 1,
-      "recorded": true
-    }
-  ],
   "irregular_incomes#create": [
     {
       "title": "Default",

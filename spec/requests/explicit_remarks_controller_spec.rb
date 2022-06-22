@@ -4,7 +4,8 @@ RSpec.describe ExplicitRemarksController, type: :request do
   describe "POST /assessments/:assessment_id/remarks" do
     let(:assessment) { create :assessment }
     let(:headers) { { "CONTENT_TYPE" => "application/json" } }
-    let(:request_payload) do
+
+    let(:valid_payload) do
       {
         explicit_remarks: [
           {
@@ -18,71 +19,112 @@ RSpec.describe ExplicitRemarksController, type: :request do
       }
     end
 
-    context "valid payload" do
+    context "with valid payload" do
+      let(:payload) { valid_payload }
+      let(:assessment_id) { assessment.id }
+
+      before do
+        post assessment_explicit_remarks_path(assessment_id), params: payload.to_json, headers:
+      end
+
+      it "returns success" do
+        expect(response).to have_http_status(:success)
+        expect(parsed_response[:success]).to be true
+      end
+
+      it "parsed responses errors empty true" do
+        expect(parsed_response[:errors]).to be_empty
+      end
+
+      context "but no assessment_id " do
+        let(:assessment_id) { "fake-uuid" }
+
+        it "returns failure" do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(parsed_response[:success]).to be false
+        end
+
+        it "parsed responses contains errors" do
+          expect(parsed_response[:errors]).to include(%(Assessment must exist))
+        end
+      end
+    end
+
+    context "with valid payload but error in creation service" do
+      let(:payload) { valid_payload }
+
+      before do
+        allow_any_instance_of(Creators::ExplicitRemarksCreator).to receive(:success?).and_return(false)
+        post assessment_explicit_remarks_path(assessment.id), params: payload.to_json, headers:
+      end
+
+      it "returns unprocessable entity" do
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+    end
+
+    context "with no explicit_remarks" do
+      let(:payload) { {} }
+
       before do
         post assessment_explicit_remarks_path(assessment.id), params: payload.to_json, headers:
       end
 
-      context " success", :show_in_doc do
-        let(:payload) { valid_payload }
+      it { expect(response).to have_http_status(:unprocessable_entity) }
 
-        it "successful" do
-          expect(response).to be_successful
-        end
-      end
-
-      context "invalid payload" do
-        let(:payload) { invalid_payload }
-
-        it "is not successful", :show_in_doc do
-          expect(response).to have_http_status(:unprocessable_entity)
-        end
-
-        it "shows errors in the response" do
-          parsed_response = JSON.parse(response.body, symbolize_names: true)
-          expect(parsed_response[:success]).to be false
-          expect(parsed_response[:errors].size).to eq 1
-          expect(parsed_response[:errors].first).to eq %(Invalid parameter 'category' value "other_stuff": Must be one of: <code>policy_disregards</code>.)
-        end
-      end
-
-      context "error in creation service" do
-        let(:payload) { valid_payload }
-
-        it "returns unprocessable entity" do
-          allow_any_instance_of(Creators::ExplicitRemarksCreator).to receive(:success?).and_return(false)
-          post assessment_explicit_remarks_path(assessment.id), params: payload.to_json, headers: headers
-          expect(response).to have_http_status(:unprocessable_entity)
-        end
+      it "parsed responses contains errors" do
+        expect(parsed_response[:errors]).to include(%r{The property '#/' did not contain a required property of 'explicit_remarks'})
       end
     end
 
-    def valid_payload
-      {
-        explicit_remarks: [
-          {
-            category: "policy_disregards",
-            details: %w[
-              employment
-              charity
-            ],
-          },
-        ],
-      }
+    context "with invalid explicit_remark category" do
+      let(:payload) do
+        {
+          explicit_remarks: [
+            {
+              category: "other_stuff",
+            },
+          ],
+        }
+      end
+
+      before do
+        post assessment_explicit_remarks_path(assessment.id), params: payload.to_json, headers:
+      end
+
+      it "returns failure" do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(parsed_response[:success]).to be false
+      end
+
+      it "parsed responses contains errors" do
+        expect(parsed_response[:errors]).to include(%r{The property '#/explicit_remarks/0/category' value "other_stuff" did not match one of the following values: policy_disregards})
+      end
     end
 
-    def invalid_payload
-      {
-        explicit_remarks: [
-          {
-            category: "other_stuff",
-            details: %w[
-              employment
-              charity
-            ],
-          },
-        ],
-      }
+    context "with no explicit_remark details" do
+      let(:payload) do
+        {
+          explicit_remarks: [
+            {
+              category: "policy_disregards",
+            },
+          ],
+        }
+      end
+
+      before do
+        post assessment_explicit_remarks_path(assessment.id), params: payload.to_json, headers:
+      end
+
+      it "returns failure" do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(parsed_response[:success]).to be false
+      end
+
+      it "parsed responses contains errors" do
+        expect(parsed_response[:errors]).to include(%r{The property '#/explicit_remarks/0' did not contain a required property of 'details'})
+      end
     end
   end
 end

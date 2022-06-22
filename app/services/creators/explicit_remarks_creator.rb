@@ -1,13 +1,17 @@
 module Creators
   class ExplicitRemarksCreator < BaseCreator
-    def initialize(assessment_id:, remarks_attributes: nil)
+    def initialize(assessment_id:, explicit_remarks_params:)
       super()
       @assessment_id = assessment_id
-      @remarks_attributes = remarks_attributes
+      @explicit_remarks_params = explicit_remarks_params
     end
 
     def call
-      create_records
+      if json_validator.valid?
+        create_records
+      else
+        errors.concat(json_validator.errors)
+      end
       self
     end
 
@@ -19,7 +23,7 @@ module Creators
 
     def create_remarks
       ExplicitRemark.transaction do
-        @remarks_attributes.each do |remark_category|
+        explicit_remarks_attributes.each do |remark_category|
           create_remark_category(remark_category)
         end
       end
@@ -41,6 +45,16 @@ module Creators
 
       @errors = rec.errors.full_messages
       raise ActiveRecord::Rollback
+    end
+
+  private
+
+    def explicit_remarks_attributes
+      @explicit_remarks_attributes ||= JSON.parse(@explicit_remarks_params, symbolize_names: true).fetch(:explicit_remarks, nil)
+    end
+
+    def json_validator
+      @json_validator ||= JsonValidator.new("explicit_remarks", @explicit_remarks_params)
     end
   end
 end

@@ -95,7 +95,7 @@ RSpec.describe "explicit_remarks", type: :request, swagger_doc: "v4/swagger.yaml
 
         run_test! do |response|
           body = JSON.parse(response.body, symbolize_names: true)
-          expect(body[:errors]).to include(/Invalid parameter 'category' value/)
+          expect(body[:errors]).to include(%r{The property '#/explicit_remarks/0/category' value "foobar" did not match one of the following values: policy_disregards})
         end
       end
     end

@@ -1,74 +1,79 @@
 require "rails_helper"
 
 RSpec.describe Creators::ExplicitRemarksCreator do
-  let(:assessment) { create :assessment }
+  describe ".call" do
+    subject(:call) { described_class.call(assessment_id: assessment.id, explicit_remarks_params: params) }
 
-  subject(:creator) { described_class.call(assessment_id: assessment.id, remarks_attributes: params) }
+    let(:assessment) { create :assessment }
 
-  context "valid payload" do
-    let(:params) { valid_params }
-
-    it "creates the expected number of records" do
-      expect { creator }.to change(ExplicitRemark, :count).by(2)
+    let(:valid_params) do
+      {
+        explicit_remarks: [
+          {
+            category: "policy_disregards",
+            details: %w[disregard_1 disregard_2],
+          },
+        ],
+      }.to_json
     end
 
-    it "is successful" do
-      expect(creator.success?).to be true
+    let(:invalid_params) do
+      {
+        explicit_remarks: [
+          {
+            category: "policy_disregards",
+            details: %w[xxxx zzzzz],
+          },
+          {
+            category: "other_stuff",
+            details: %w[xxxx zzzzz],
+          },
+        ],
+      }.to_json
     end
 
-    it "creates the right records" do
-      creator
-      expect(ExplicitRemark.where(assessment_id: assessment.id, category: "policy_disregards").map(&:remark)).to match_array(%w[disregard_1 disregard_2])
-    end
-  end
+    context "with valid payload" do
+      let(:params) { valid_params }
 
-  context "invalid_params" do
-    context "unknown category" do
+      it "#success? is true" do
+        expect(call.success?).to be true
+      end
+
+      it "creates the expected number of records" do
+        expect { call }.to change(ExplicitRemark, :count).by(2)
+      end
+
+      it "creates expected record data" do
+        call
+        remarks = ExplicitRemark.where(assessment_id: assessment.id, category: "policy_disregards").map(&:remark)
+        expect(remarks).to match_array(%w[disregard_1 disregard_2])
+      end
+    end
+
+    context "with invalid payload, unacceptable category" do
       let(:params) { invalid_params }
 
-      it "does not write any records" do
-        expect { creator }.not_to change(ExplicitRemark, :count)
+      it "#success? is false" do
+        expect(call.success?).to be false
       end
 
-      it "is not successful" do
-        expect(creator.success?).to be false
+      it "does not create any records" do
+        expect { call }.not_to change(ExplicitRemark, :count)
       end
 
-      it "updates the error array" do
-        expect(creator.errors).to eq ["Category other_stuff is not a valid remark category"]
+      it "stores the error on the object" do
+        expect(call.errors).to include(%r{The property '#/explicit_remarks/1/category' value "other_stuff" did not match one of the following values: policy_disregards})
       end
     end
-  end
 
-  context "unknown exception raised" do
-    let(:params) { valid_params }
+    context "with valid payload but unknown exception raised" do
+      let(:params) { valid_params }
 
-    it "raises a Creation error" do
-      allow_any_instance_of(described_class).to receive(:create_remark_category).and_raise(ArgumentError, "Argument error detailed message")
-      expect(creator.success?).to be false
-      expect(creator.errors).to eq ["ArgumentError - Argument error detailed message"]
+      it "stores the error on the object" do
+        allow_any_instance_of(described_class).to receive(:create_remark_category).and_raise(ArgumentError, "Argument error detailed message")
+        expect(call.success?).to be false
+        expect(call.errors).to eq ["ArgumentError - Argument error detailed message"]
+      end
     end
-  end
-
-  def valid_params
-    [
-      {
-        category: "policy_disregards",
-        details: %w[disregard_1 disregard_2],
-      },
-    ]
-  end
-
-  def invalid_params
-    [
-      {
-        category: "policy_disregards",
-        details: %w[xxxx zzzzz],
-      },
-      {
-        category: "other_stuff",
-        details: %w[xxxx zzzzz],
-      },
-    ]
   end
 end
