@@ -184,16 +184,16 @@ module Creators
       context "criminal assessment" do
         let(:raw_post) { raw_post_crime }
         let(:version) { "4" }
-  
+
         context "valid request" do
           it "is successful" do
             expect(creator.success?).to eq true
           end
-  
+
           it "creates an Assessment record" do
             expect { creator.success? }.to change(Assessment, :count).by(1)
           end
-  
+
           it "populates the assessment record with expected values" do
             creator.success?
             assessment = Assessment.first
