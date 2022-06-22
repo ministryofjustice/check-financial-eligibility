@@ -6,15 +6,19 @@ module Creators
 
     attr_reader :other_income_sources
 
-    def initialize(assessment_id:, other_incomes: [])
+    def initialize(assessment_id:, other_incomes_params:)
       super()
       @assessment_id = assessment_id
-      @other_incomes = other_incomes[:other_incomes]
+      @other_incomes_params = other_incomes_params
       @other_income_sources = []
     end
 
     def call
-      create_records
+      if json_validator.valid?
+        create_records
+      else
+        errors.concat(json_validator.errors)
+      end
       self
     end
 
@@ -30,9 +34,9 @@ module Creators
     end
 
     def create_other_income
-      return if @other_incomes.empty?
+      return if other_incomes.empty?
 
-      @other_incomes.each do |other_income_source_params|
+      other_incomes.each do |other_income_source_params|
         @other_income_sources << create_other_income_source(other_income_source_params)
       end
     end
@@ -55,6 +59,14 @@ module Creators
 
     def normalize(name)
       name.underscore.tr(" ", "_")
+    end
+
+    def other_incomes
+      @other_incomes ||= JSON.parse(@other_incomes_params, symbolize_names: true).fetch(:other_incomes, nil)
+    end
+
+    def json_validator
+      @json_validator ||= JsonValidator.new("other_incomes", @other_incomes_params)
     end
   end
 end

@@ -12,9 +12,9 @@ RSpec.describe OtherIncomesController, type: :request do
 
     subject(:post_payload) { post assessment_other_incomes_path(assessment_id), params: params.to_json, headers: }
 
-    context "valid payload" do
+    context "with valid payload" do
       context "with two sources" do
-        it "returns http success", :show_in_doc do
+        it "returns http success" do
           post_payload
           expect(response).to have_http_status(:success)
         end
@@ -61,7 +61,7 @@ RSpec.describe OtherIncomesController, type: :request do
       end
     end
 
-    context "invalid_payload" do
+    context "with invalid_payload" do
       context "missing source in the second element" do
         let(:params) do
           new_hash = other_income_params
@@ -76,7 +76,7 @@ RSpec.describe OtherIncomesController, type: :request do
 
         it "contains success false in the response body" do
           post_payload
-          expect(parsed_response).to eq(errors: ["Missing parameter source"], success: false)
+          expect(parsed_response).to match(errors: [/The property '#\/other_incomes\/1' did not contain a required property of 'source' in schema file/], success: false)
         end
 
         it "does not create any other income source records" do
@@ -102,7 +102,7 @@ RSpec.describe OtherIncomesController, type: :request do
 
         it "contains success false in the response body" do
           post_payload
-          expect(parsed_response).to eq(errors: ["Missing parameter client_id"], success: false)
+          expect(parsed_response).to match(errors: [/The property '#\/other_incomes\/1\/payments\/0' did not contain a required property of 'client_id' in schema file/], success: false)
         end
 
         it "does not create any other income source records" do
@@ -114,7 +114,7 @@ RSpec.describe OtherIncomesController, type: :request do
         end
       end
 
-      context "invalid source" do
+      context "with invalid source" do
         let(:params) do
           new_hash = other_income_params
           new_hash[:other_incomes].last[:source] = "imagined_source"
@@ -133,12 +133,12 @@ RSpec.describe OtherIncomesController, type: :request do
 
         it "contains an error message" do
           post_payload
-          expect(parsed_response[:errors].first).to match(/Invalid parameter 'source'/)
+          expect(parsed_response[:errors].first).to match(/The property '#\/other_incomes\/1\/source' value "imagined_source" did not match one of the following values: benefits, friends_or_family, maintenance_in, property_or_lodger, pension, Benefits, Friends or family, Maintenance in, Property or lodger, Pension in schema file/)
         end
       end
     end
 
-    context "invalid_assessment_id" do
+    context "with invalid_assessment_id" do
       let(:assessment_id) { SecureRandom.uuid }
 
       it "returns unsuccessful" do
@@ -149,6 +149,65 @@ RSpec.describe OtherIncomesController, type: :request do
       it "contains success false in the response body" do
         post_payload
         expect(parsed_response).to eq(errors: ["No such assessment id"], success: false)
+      end
+    end
+
+    context "with missing payment date" do
+      let(:assessment_id) { SecureRandom.uuid }
+      let(:other_income_params) do
+        {
+          other_incomes: [
+            {
+              source: "maintenance_in",
+              payments: [
+                {
+                  amount: 1046.44,
+                  client_id: SecureRandom.uuid,
+                },
+              ],
+            },
+          ],
+        }
+      end
+
+      it "returns unsuccessful" do
+        post_payload
+        expect(response.status).to eq 422
+      end
+
+      it "contains success false in the response body" do
+        post_payload
+        expect(parsed_response).to match(errors: [/The property '#\/other_incomes\/0\/payments\/0' did not contain a required property of 'date' in schema file/], success: false)
+      end
+    end
+
+    context "with invalid client_id" do
+      let(:assessment_id) { SecureRandom.uuid }
+      let(:other_income_params) do
+        {
+          other_incomes: [
+            {
+              source: "maintenance_in",
+              payments: [
+                {
+                  date: "2019-11-01",
+                  amount: 1046.44,
+                  client_id: 1,
+                },
+              ],
+            },
+          ],
+        }
+      end
+
+      it "returns unsuccessful" do
+        post_payload
+        expect(response.status).to eq 422
+      end
+
+      it "contains success false in the response body" do
+        post_payload
+        expect(parsed_response).to match(errors: [/The property '#\/other_incomes\/0\/payments\/0\/client_id' of type integer did not match the following type: string in schema file/], success: false)
       end
     end
 

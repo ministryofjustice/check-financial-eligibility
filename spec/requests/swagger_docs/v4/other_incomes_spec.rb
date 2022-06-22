@@ -102,7 +102,7 @@ RSpec.describe "other_incomes", type: :request, swagger_doc: "v4/swagger.yaml" d
 
         run_test! do |response|
           body = JSON.parse(response.body, symbolize_names: true)
-          expect(body[:errors]).to include(/Invalid parameter 'source' value/)
+          expect(body[:errors]).to include(/The property '#\/other_incomes\/0\/source' value "foobar" did not match one of the following values: benefits, friends_or_family, maintenance_in, property_or_lodger, pension, Benefits, Friends or family, Maintenance in, Property or lodger, Pension in schema file/)
         end
       end
     end
