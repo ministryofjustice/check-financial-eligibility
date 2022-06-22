@@ -65,13 +65,16 @@ RSpec.describe PropertiesController, type: :request do
       context "with missing main_home attribute" do
         let(:request_payload) { { properties: {} } }
 
-        it "returns expected error response" do
-          expect(parsed_response[:success]).to eq(false)
-          expect(parsed_response[:errors]).to match [/The property '#\/properties' did not contain a required property of 'main_home' in schema file/]
+        it "returns http status 422" do
+          expect(response).to have_http_status(:unprocessable_entity)
         end
 
-        it "returns 422" do
-          expect(response).to have_http_status(:unprocessable_entity)
+        it "parsed response returns success false" do
+          expect(parsed_response[:success]).to eq false
+        end
+
+        it "returns expected error response" do
+          expect(parsed_response[:errors]).to match [/The property '#\/properties' did not contain a required property of 'main_home' in schema file/]
         end
       end
 
@@ -89,13 +92,16 @@ RSpec.describe PropertiesController, type: :request do
           }
         end
 
-        it "returns expected error response" do
-          expect(parsed_response[:success]).to eq(false)
-          expect(parsed_response[:errors]).to match [/The property '#\/properties\/main_home\/value' value "one hundred pounds" did not match the regex/]
+        it "returns http status 422" do
+          expect(response).to have_http_status(:unprocessable_entity)
         end
 
-        it "returns 422" do
-          expect(response).to have_http_status(:unprocessable_entity)
+        it "parsed response returns success false" do
+          expect(parsed_response[:success]).to eq false
+        end
+
+        it "returns expected error response" do
+          expect(parsed_response[:errors]).to match [/The property '#\/properties\/main_home\/value' value "one hundred pounds" did not match the regex/]
         end
       end
 
@@ -112,13 +118,16 @@ RSpec.describe PropertiesController, type: :request do
           }
         end
 
-        it "returns expected error response" do
-          expect(parsed_response[:success]).to eq(false)
-          expect(parsed_response[:errors]).to match [/The property '#\/properties\/main_home' did not contain a required property of 'outstanding_mortgage' in schema file/]
+        it "returns http status 422" do
+          expect(response).to have_http_status(:unprocessable_entity)
         end
 
-        it "returns 422" do
-          expect(response).to have_http_status(:unprocessable_entity)
+        it "parsed response returns success false" do
+          expect(parsed_response[:success]).to eq false
+        end
+
+        it "returns expected error response" do
+          expect(parsed_response[:errors]).to match [/The property '#\/properties\/main_home' did not contain a required property of 'outstanding_mortgage' in schema file/]
         end
       end
 
@@ -143,13 +152,16 @@ RSpec.describe PropertiesController, type: :request do
           }
         end
 
-        it "returns expected error response" do
-          expect(parsed_response[:success]).to eq(false)
-          expect(parsed_response[:errors]).to match [/The property '#\/properties\/additional_properties\/0' did not contain a required property of 'percentage_owned' in schema file/]
+        it "returns http status 422" do
+          expect(response).to have_http_status(:unprocessable_entity)
         end
 
-        it "returns 422" do
-          expect(response).to have_http_status(:unprocessable_entity)
+        it "parsed response returns success false" do
+          expect(parsed_response[:success]).to eq false
+        end
+
+        it "returns expected error response" do
+          expect(parsed_response[:errors]).to match [/The property '#\/properties\/additional_properties\/0' did not contain a required property of 'percentage_owned' in schema file/]
         end
       end
 
@@ -175,13 +187,16 @@ RSpec.describe PropertiesController, type: :request do
           }
         end
 
-        it "returns expected error response" do
-          expect(parsed_response[:success]).to eq(false)
-          expect(parsed_response[:errors]).to match [/The property '#\/properties\/additional_properties\/0\/shared_with_housing_assoc' of type string did not match the following type: boolean in schema file/]
+        it "returns http status 422" do
+          expect(response).to have_http_status(:unprocessable_entity)
         end
 
-        it "returns 422" do
-          expect(response).to have_http_status(:unprocessable_entity)
+        it "parsed response returns success false" do
+          expect(parsed_response[:success]).to eq false
+        end
+
+        it "returns expected error response" do
+          expect(parsed_response[:errors]).to match [/The property '#\/properties\/additional_properties\/0\/shared_with_housing_assoc' of type string did not match the following type: boolean in schema file/]
         end
       end
     end
