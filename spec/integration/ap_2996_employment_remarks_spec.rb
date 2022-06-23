@@ -83,7 +83,11 @@ RSpec.describe "Full Assessment with remarks" do
         {
           name: "Job 2",
           client_id: "job-2-id",
-          payments: [],
+          payments: [
+            { client_id: "Job-2-nov", date: "2021-11-12", gross: 0.0, benefits_in_kind: 0.0, tax: 128.0, national_insurance: 0.0, net_employment_income: 128.0 },
+            { client_id: "Job-2-oct", date: "2021-10-12", gross: 0.0, benefits_in_kind: 0.0, tax: 128.0, national_insurance: 0.0, net_employment_income: 128.0 },
+            { client_id: "Job-2-dec", date: "2021-12-12", gross: 0.0, benefits_in_kind: 0.0, tax: 128.0, national_insurance: 0.0, net_employment_income: 128.0 },
+          ],
         },
       ],
     }
