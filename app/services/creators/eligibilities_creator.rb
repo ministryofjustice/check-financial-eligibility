@@ -11,6 +11,7 @@ module Creators
     def call
       if @assessment.criminal?
         AdjustedIncomeEligibilityCreator.call(@assessment)
+        CrimeAssessmentEligibilityCreator.call(@assessment)
       else
         GrossIncomeEligibilityCreator.call(@assessment)
         DisposableIncomeEligibilityCreator.call(@assessment)

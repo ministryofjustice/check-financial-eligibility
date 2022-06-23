@@ -13,4 +13,6 @@ module Assessors
       Utilities::ResultSummarizer.call(eligibilities.map(&:assessment_result))
     end
   end
+
+  # if assessment.criminal? then call AssessmentCrimeAssessor
 end

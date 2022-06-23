@@ -19,6 +19,7 @@ module Creators
       context "crime assessment" do
         it "calls an eligibility creator for each type of summary record" do
           expect(AdjustedIncomeEligibilityCreator).to receive(:call).with(crime_assessment)
+          expect(CrimeAssessmentEligibilityCreator).to receive(:call).with(crime_assessment)
 
           described_class.call(crime_assessment)
         end
