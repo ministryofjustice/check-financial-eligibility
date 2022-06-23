@@ -26,6 +26,14 @@ module Creators
       }.to_json
     end
 
+    let(:raw_post_crime) do
+      {
+        client_reference_id: "psr-123",
+        submission_date: "2022-06-22",
+        assessment_type: "criminal",
+      }.to_json
+    end
+
     subject(:creator) { described_class.call(remote_ip:, raw_post:, version:) }
 
     context "version 3" do
@@ -169,6 +177,30 @@ module Creators
               errors: [],
             }
             expect(creator.as_json).to eq expected_response
+          end
+        end
+      end
+
+      context "criminal assessment" do
+        let(:raw_post) { raw_post_crime }
+        let(:version) { "4" }
+
+        context "valid request" do
+          it "is successful" do
+            expect(creator.success?).to eq true
+          end
+
+          it "creates an Assessment record" do
+            expect { creator.success? }.to change(Assessment, :count).by(1)
+          end
+
+          it "populates the assessment record with expected values" do
+            creator.success?
+            assessment = Assessment.first
+            expect(assessment.version).to eq "4"
+            expect(assessment.remote_ip).to eq "127.0.0.1"
+            expect(assessment.matter_proceeding_type).to be_nil
+            expect(assessment.proceeding_type_codes).to eq []
           end
         end
       end

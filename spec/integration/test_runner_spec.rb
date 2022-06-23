@@ -60,7 +60,7 @@ RSpec.describe "IntegrationTests::TestRunner", type: :request do
       worksheet.parse_worksheet
       assessment_id = post_assessment(worksheet)
 
-      worksheet.payload_objects.each { |obj| post_object(obj, assessment_id, worksheet.version) }
+      worksheet.payload_objects.each { |obj| post_object(obj, assessment_id, worksheet.version, worksheet.description) }
       actual_results = get_assessment(assessment_id, worksheet.version)
       worksheet.compare_results(actual_results)
     end
@@ -74,13 +74,13 @@ RSpec.describe "IntegrationTests::TestRunner", type: :request do
       parsed_response
     end
 
-    def noisy_post(url, payload, version)
+    def noisy_post(url, payload, version, description)
       puts ">>>>>>>>>>>> #{url} V#{version} #{__FILE__}:#{__LINE__} <<<<<<<<<<<<".yellow unless silent?
       pp payload if noisy?
       post url, params: payload.to_json, headers: headers(version)
       pp parsed_response if noisy?
       puts " \n" if noisy?
-      raise "Unsuccessful response: #{parsed_response.inspect}" unless parsed_response[:success]
+      raise "Unsuccessful response: #{parsed_response.inspect} *** #{description} ***" unless parsed_response[:success]
 
       parsed_response
     end
@@ -88,17 +88,17 @@ RSpec.describe "IntegrationTests::TestRunner", type: :request do
     def post_assessment(worksheet)
       url = worksheet.assessment.url
       payload = worksheet.assessment.payload
-      noisy_post url, payload, worksheet.version
+      noisy_post url, payload, worksheet.version, worksheet.description
       parsed_response[:assessment_id]
     end
 
-    def post_object(obj, assessment_id, version)
+    def post_object(obj, assessment_id, version, description)
       return if obj.blank?
 
       url_method = obj.__send__(:url_method)
       url = Rails.application.routes.url_helpers.__send__(url_method, assessment_id)
       payload = obj.__send__(:payload)
-      noisy_post(url, payload, version)
+      noisy_post(url, payload, version, description)
     end
 
     def silent?

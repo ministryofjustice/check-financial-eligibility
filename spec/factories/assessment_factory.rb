@@ -9,6 +9,9 @@ FactoryBot.define do
 
     trait :criminal do
       assessment_type { "criminal" }
+      proceeding_type_codes { nil }
+      matter_proceeding_type { nil }
+      version { "4" }
     end
 
     trait :with_applicant do
