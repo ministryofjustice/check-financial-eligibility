@@ -1,5 +1,5 @@
 {
-  "id": "file://#{@schema_dir}/cash_transactions.json",
+  "id": "file://public/schemas/cash_transactions.json",
   "$schema": "http://json-schema.org/draft-04/schema#",
   "title": "Legal Aid Check Financial Eligibility add cash transaction details to an assessment schema",
   "type": "object",
@@ -21,7 +21,7 @@
               "type": "object",
               "properties": {
                 "amount": {
-                  "$ref": "<%= "file://#{@schema_dir}/common.json#positive_cash_amount" %>"
+                  "$ref": "<%= "file://#{@schema_dir}/common.json#positive_currency" %>"
                 },
                 "client_id": {
                   "$ref": "<%= "file://#{@schema_dir}/common.json#uuid" %>"
@@ -62,7 +62,7 @@
               "type": "object",
               "properties": {
                 "amount": {
-                  "$ref": "<%= "file://#{@schema_dir}/common.json#positive_cash_amount" %>"
+                  "$ref": "<%= "file://#{@schema_dir}/common.json#positive_currency" %>"
                 },
                 "client_id": {
                   "$ref": "<%= "file://#{@schema_dir}/common.json#uuid" %>"
