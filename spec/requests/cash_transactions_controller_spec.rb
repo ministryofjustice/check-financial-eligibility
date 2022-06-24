@@ -22,7 +22,7 @@ RSpec.describe CashTransactionsController, type: :request do
       end
 
       it "calls cash transactions creator" do
-        expect(creator_class).to receive(:call).with(assessment_id:, cash_transaction_params: params)
+        expect(creator_class).to receive(:call).with(assessment_id:, cash_transaction_params: params.to_json)
         post_payload
       end
 
@@ -109,8 +109,11 @@ RSpec.describe CashTransactionsController, type: :request do
 
           before { post_payload }
 
+          it "testing" do
+          end
+
           it_behaves_like "it fails with message",
-                          /The property '#\/income\/1\/payments\/2\/amount' did not have a minimum value of 0.0/
+                          /The property '#\/income\/1\/payments\/2\/amount' value "-100.00" did not match the regex/
 
           it "does not call the CashTransactionCreator" do
             expect(creator_class).not_to receive(:call)
@@ -136,7 +139,7 @@ RSpec.describe CashTransactionsController, type: :request do
           before { post_payload }
 
           it_behaves_like "it fails with message",
-                          /The property '#\/income\/1\/payments\/2\/amount' of type string did not match the following type: number/
+                          /The property '#\/income\/1\/payments\/2\/amount' value "hello" did not match the regex/
 
           it "does not call the CashTransactionCreator" do
             expect(creator_class).not_to receive(:call)
@@ -190,7 +193,7 @@ RSpec.describe CashTransactionsController, type: :request do
           before { post_payload }
 
           it_behaves_like "it fails with message",
-                          /The property '#\/outgoings\/1\/payments\/2\/amount' did not have a minimum value of 0.0/
+                          /The property '#\/outgoings\/1\/payments\/2\/amount' value "-100.00" did not match the regex/
 
           it "does not call the CashTransactionCreator" do
             expect(creator_class).not_to receive(:call)
@@ -216,7 +219,7 @@ RSpec.describe CashTransactionsController, type: :request do
           before { post_payload }
 
           it_behaves_like "it fails with message",
-                          /The property '#\/outgoings\/1\/payments\/2\/amount' of type string did not match the following type: number/
+                          /The property '#\/outgoings\/1\/payments\/2\/amount' value "hello" did not match the regex/
 
           it "does not call the CashTransactionCreator" do
             expect(creator_class).not_to receive(:call)
@@ -335,7 +338,7 @@ RSpec.describe CashTransactionsController, type: :request do
 
     def negative_income_amount_params
       params = valid_params.clone
-      params[:income].last[:payments].last[:amount] = -100
+      params[:income].last[:payments].last[:amount] = "-100.00"
       params
     end
 
@@ -353,7 +356,7 @@ RSpec.describe CashTransactionsController, type: :request do
 
     def negative_outgoings_amount_params
       params = valid_params.clone
-      params[:outgoings].last[:payments].last[:amount] = -100
+      params[:outgoings].last[:payments].last[:amount] = "-100.00"
       params
     end
 
@@ -377,7 +380,7 @@ RSpec.describe CashTransactionsController, type: :request do
 
     def negative_outgoings_payment_params
       params = valid_params.clone
-      params[:outgoings].last[:payments].last[:amount] = -100
+      params[:outgoings].last[:payments].last[:amount] = "-100.00"
       params
     end
 

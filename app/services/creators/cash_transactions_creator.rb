@@ -1,7 +1,5 @@
 module Creators
   class CashTransactionsCreator < BaseCreator
-    attr_reader :cash_transaction_params
-
     delegate :gross_income_summary, to: :assessment
 
     def initialize(assessment_id:, cash_transaction_params:)
@@ -14,7 +12,7 @@ module Creators
       if json_validator.valid?
         create_records
       else
-        self.errors = json_validator.errors
+        errors.concat(json_validator.errors)
       end
       self
     end
@@ -32,12 +30,12 @@ module Creators
     end
 
     def create_records
-      [income, outgoings].each { |categories| validate_categories(categories) }
+      [income_attributes, outgoings_attributes].each { |categories| validate_categories(categories) }
       return unless errors.empty?
 
       ActiveRecord::Base.transaction do
-        income.each { |category_hash| create_category(category_hash, "credit") }
-        outgoings.each { |category_hash| create_category(category_hash, "debit") }
+        income_attributes.each { |category_hash| create_category(category_hash, "credit") }
+        outgoings_attributes.each { |category_hash| create_category(category_hash, "debit") }
       rescue StandardError => e
         errors << "#{e.class} :: #{e.message}\n#{e.backtrace.join("\n")}"
       end
@@ -85,15 +83,15 @@ module Creators
     end
 
     def json_validator
-      @json_validator ||= JsonValidator.new("cash_transaction", cash_transaction_params)
+      @json_validator ||= JsonValidator.new("cash_transaction", @cash_transaction_params)
     end
 
-    def income
-      cash_transaction_params[:income]
+    def income_attributes
+      @income_attributes ||= JSON.parse(@cash_transaction_params, symbolize_names: true)[:income]
     end
 
-    def outgoings
-      cash_transaction_params[:outgoings]
+    def outgoings_attributes
+      @outgoings_attributes ||= JSON.parse(@cash_transaction_params, symbolize_names: true)[:outgoings]
     end
   end
 end
