@@ -152,7 +152,7 @@ options:
 -w XXX    Only process worksheet named XXX
 ```
 
-Each worksheet has a entry `Test Active` which can be either true or false.  If set to false, the worksheet will be skipped, unless it is
+Each worksheet has an entry `Test Active` which can be either true or false.  If set to false, the worksheet will be skipped, unless it is
 the named worksheet using the `-w` command line switch.
 
 ## Replaying live API interactions for debugging purposes
