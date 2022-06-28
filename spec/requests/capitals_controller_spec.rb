@@ -99,25 +99,29 @@ RSpec.describe CapitalsController, type: :request do
         context "missing name on bank account" do
           let(:bank_account_params) { attributes_for_list(:liquid_capital_item, 2).map { |account| account.tap { |item| item.delete(:description) } } }
 
-          it_behaves_like "it fails with message", "The property '#/bank_accounts/0' did not contain a required property of 'description' in schema file://#"
+          it_behaves_like "it fails with message",
+                          /The property '#\/bank_accounts\/0' did not contain a required property of 'description'/
         end
 
         context "invalid name on bank account" do
           let(:bank_account_params) { bank_account_params_with_invalid_description }
 
-          it_behaves_like "it fails with message", "The property '#/bank_accounts/0/description' of type number did not match the following type: string in schema file://#"
+          it_behaves_like "it fails with message",
+                          /The property '#\/bank_accounts\/0\/description' of type number did not match the following type: string/
         end
 
         context "missing lowest balance on bank account" do
           let(:bank_account_params) { attributes_for_list(:liquid_capital_item, 2).map { |account| account.tap { |item| item.delete(:value) } } }
 
-          it_behaves_like "it fails with message", "The property '#/bank_accounts/0' did not contain a required property of 'value' in schema file://#"
+          it_behaves_like "it fails with message",
+                          /The property '#\/bank_accounts\/0' did not contain a required property of 'value'/
         end
 
         context "invalid lowest balance on bank account" do
           let(:bank_account_params) { bank_account_params_with_invalid_value }
 
-          it_behaves_like "it fails with message", /The property '#\/bank_accounts\/0\/value' value "one hundred pounds" did not match the regex/
+          it_behaves_like "it fails with message",
+                          /The property '#\/bank_accounts\/0\/value' value "one hundred pounds" did not match the regex/
         end
       end
 
@@ -125,32 +129,37 @@ RSpec.describe CapitalsController, type: :request do
         context "missing description on non_liquid capital" do
           let(:non_liquid_params) { attributes_for_list(:non_liquid_capital_item, 2).map { |nlc| nlc.tap { |item| item.delete(:description) } } }
 
-          it_behaves_like "it fails with message", "The property '#/non_liquid_capital/0' did not contain a required property of 'description' in schema file://#"
+          it_behaves_like "it fails with message",
+                          /The property '#\/non_liquid_capital\/0' did not contain a required property of 'description'/
         end
 
         context "invalid non-liquid capital description" do
           let(:fake_asset_name) { true }
           let(:non_liquid_params) { invalid_non_liquid_params }
 
-          it_behaves_like "it fails with message", "The property '#/non_liquid_capital/0/description' of type boolean did not match the following type: string in schema file://#"
+          it_behaves_like "it fails with message",
+                          /The property '#\/non_liquid_capital\/0\/description' of type boolean did not match the following type: string/
         end
 
         context "missing value on non-liquid capital" do
           let(:non_liquid_params) { attributes_for_list(:non_liquid_capital_item, 2).map { |nlc| nlc.tap { |item| item.delete(:value) } } }
 
-          it_behaves_like "it fails with message", "The property '#/non_liquid_capital/0' did not contain a required property of 'value' in schema file://#"
+          it_behaves_like "it fails with message",
+                          /The property '#\/non_liquid_capital\/0' did not contain a required property of 'value'/
         end
 
         context "negative non-liquid capital value" do
           let(:non_liquid_params) { negative_non_liquid_params }
 
-          it_behaves_like "it fails with message", /The property '#\/non_liquid_capital\/0\/value' value "-123.45" did not match the regex/
+          it_behaves_like "it fails with message",
+                          /The property '#\/non_liquid_capital\/0\/value' value "-123.45" did not match the regex/
         end
 
         context "invalid non-liquid capital value" do
           let(:non_liquid_params) { invalid_non_liquid_params }
 
-          it_behaves_like "it fails with message", /The property '#\/non_liquid_capital\/0\/value' value "one hundred pounds" did not match the regex/
+          it_behaves_like "it fails with message",
+                          /The property '#\/non_liquid_capital\/0\/value' value "one hundred pounds" did not match the regex/
         end
       end
     end

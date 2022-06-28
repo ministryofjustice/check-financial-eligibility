@@ -1,7 +1,5 @@
 module Creators
   class CapitalsCreator < BaseCreator
-    attr_accessor :assessment_id, :capital, :capital_params
-
     delegate :capital_summary, to: :assessment
 
     def initialize(assessment_id:, capital_params:)
@@ -14,7 +12,7 @@ module Creators
       if json_validator.valid?
         create_records
       else
-        self.errors = json_validator.errors
+        errors.concat(json_validator.errors)
       end
       self
     end
@@ -35,32 +33,28 @@ module Creators
       return if bank_accounts_attributes.nil?
 
       bank_accounts_attributes.each do |attrs|
-        capital_summary.liquid_capital_items.create!(description: attrs["description"], value: attrs["value"])
+        capital_summary.liquid_capital_items.create!(description: attrs[:description], value: attrs[:value])
       end
     end
 
     def create_non_liquid_assets
-      return if non_liquid_capitals_attributes.nil?
+      return if non_liquid_capital_attributes.nil?
 
-      non_liquid_capitals_attributes.each do |attrs|
-        capital_summary.non_liquid_capital_items.create!(description: attrs["description"], value: attrs["value"])
+      non_liquid_capital_attributes.each do |attrs|
+        capital_summary.non_liquid_capital_items.create!(description: attrs[:description], value: attrs[:value])
       end
     end
 
     def json_validator
-      @json_validator ||= JsonValidator.new("capital", capital_params)
+      @json_validator ||= JsonValidator.new("capital", @capital_params)
     end
 
     def bank_accounts_attributes
-      parsed_params["bank_accounts"]
+      @bank_accounts_attributes ||= JSON.parse(@capital_params, symbolize_names: true)[:bank_accounts]
     end
 
-    def non_liquid_capitals_attributes
-      parsed_params["non_liquid_capital"]
-    end
-
-    def parsed_params
-      JSON.parse(capital_params)
+    def non_liquid_capital_attributes
+      @non_liquid_capital_attributes ||= JSON.parse(@capital_params, symbolize_names: true)[:non_liquid_capital]
     end
   end
 end
