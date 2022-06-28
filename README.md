@@ -14,12 +14,11 @@ It's defined as code and [can be edited](https://github.com/ministryofjustice/la
 
 ## Documentation
 
-The API is documented by APIPIE at `/apidocs`
+API documentation is currently being migrated from [APIPIE](https://github.com/Apipie/apipie-rails) to [rswag](https://github.com/rswag/rswag).
 
-The documentation and input validation is maintained via
-[APIPIE](https://github.com/Apipie/apipie-rails).
+Current APIPIE documentation can be found at `/apidocs`.
 
-The API is documented by Rswag at `/api-docs`
+Current Rswag documentation can be found at `/api-docs`.
 
 ## API Versioning
 
@@ -153,7 +152,7 @@ options:
 -w XXX    Only process worksheet named XXX
 ```
 
-Each worksheet has a entry `Test Active` which can be either true or false.  If set to false, the worksheet will be skipped, unless it is 
+Each worksheet has an entry `Test Active` which can be either true or false.  If set to false, the worksheet will be skipped, unless it is
 the named worksheet using the `-w` command line switch.
 
 ## Replaying live API interactions for debugging purposes
