@@ -48,6 +48,10 @@ class Assessment < ApplicationRecord
     version == "3"
   end
 
+  def version_4?
+    version == "4"
+  end
+
 private
 
   def matter_proceeding_type_required?
@@ -63,6 +67,6 @@ private
   end
 
   def proceeding_types_codes_required?
-    !version_3?
+    version_4?
   end
 end

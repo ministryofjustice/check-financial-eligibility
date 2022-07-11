@@ -79,6 +79,22 @@ RSpec.describe Assessment, type: :model do
     end
   end
 
+  context "version 5" do
+    let(:param_hash) do
+      {
+        client_reference_id: "client-ref-1",
+        submission_date: Date.current,
+        remote_ip: "127.0.0.1",
+        version: "5",
+      }
+    end
+
+    it "writes a valid record" do
+      assessment = described_class.create! param_hash
+      expect(assessment).to be_valid
+    end
+  end
+
   context "missing ip address" do
     let(:param_hash) do
       {
