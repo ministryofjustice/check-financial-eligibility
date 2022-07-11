@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_29_103502) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_11_095032) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -76,11 +76,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_29_103502) do
     t.decimal "pensioner_capital_disregard", default: "0.0", null: false
     t.decimal "assessed_capital", default: "0.0", null: false
     t.decimal "capital_contribution", default: "0.0", null: false
-    t.decimal "lower_threshold", default: "0.0", null: false
-    t.decimal "upper_threshold", default: "0.0", null: false
-    t.string "assessment_result", default: "pending", null: false
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
+    t.decimal "lower_threshold", default: "0.0", null: false
+    t.decimal "upper_threshold", default: "0.0", null: false
+    t.string "assessment_result"
     t.index ["assessment_id"], name: "index_capital_summaries_on_assessment_id"
   end
 
@@ -124,9 +124,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_29_103502) do
     t.decimal "gross_housing_costs", default: "0.0", null: false
     t.decimal "total_outgoings_and_allowances", default: "0.0", null: false
     t.decimal "total_disposable_income", default: "0.0", null: false
-    t.decimal "lower_threshold", default: "0.0", null: false
-    t.decimal "upper_threshold", default: "0.0", null: false
-    t.string "assessment_result", default: "pending", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.decimal "net_housing_costs", default: "0.0"
@@ -145,6 +142,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_29_103502) do
     t.decimal "maintenance_out_cash", default: "0.0"
     t.decimal "rent_or_mortgage_cash", default: "0.0"
     t.decimal "legal_aid_cash", default: "0.0"
+    t.decimal "lower_threshold", default: "0.0", null: false
+    t.decimal "upper_threshold", default: "0.0", null: false
+    t.string "assessment_result"
     t.decimal "employment_income_deductions", default: "0.0", null: false
     t.decimal "fixed_employment_allowance", default: "0.0", null: false
     t.decimal "tax", default: "0.0", null: false
@@ -206,10 +206,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_29_103502) do
     t.uuid "assessment_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.decimal "upper_threshold", default: "0.0", null: false
     t.decimal "monthly_other_income"
     t.boolean "assessment_error", default: false
-    t.string "assessment_result", default: "pending", null: false
     t.decimal "monthly_state_benefits", default: "0.0", null: false
     t.decimal "total_gross_income", default: "0.0"
     t.decimal "friends_or_family", default: "0.0"
@@ -233,6 +231,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_29_103502) do
     t.decimal "maintenance_in_cash", default: "0.0"
     t.decimal "property_or_lodger_cash", default: "0.0"
     t.decimal "pension_cash", default: "0.0"
+    t.decimal "upper_threshold", default: "0.0", null: false
+    t.string "assessment_result"
     t.decimal "gross_employment_income", default: "0.0", null: false
     t.decimal "benefits_in_kind", default: "0.0", null: false
     t.index ["assessment_id"], name: "index_gross_income_summaries_on_assessment_id"
@@ -280,6 +280,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_29_103502) do
     t.datetime "updated_at", null: false
     t.string "client_id"
     t.index ["disposable_income_summary_id"], name: "index_outgoings_on_disposable_income_summary_id"
+  end
+
+  create_table "proceeding_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "assessment_id"
+    t.string "ccms_code", null: false
+    t.string "client_involvement_type", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["assessment_id"], name: "index_proceeding_types_on_assessment_id"
   end
 
   create_table "properties", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -373,6 +382,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_29_103502) do
   add_foreign_key "other_income_payments", "other_income_sources"
   add_foreign_key "other_income_sources", "gross_income_summaries"
   add_foreign_key "outgoings", "disposable_income_summaries"
+  add_foreign_key "proceeding_types", "assessments"
   add_foreign_key "properties", "capital_summaries"
   add_foreign_key "state_benefit_payments", "state_benefits"
   add_foreign_key "state_benefits", "gross_income_summaries"

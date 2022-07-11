@@ -31,6 +31,8 @@ class Assessment < ApplicationRecord
            inverse_of: :assessment,
            dependent: :destroy
   has_many :employment_payments, through: :employments
+  has_many :proceeding_types,
+           dependent: :destroy
 
   enum matter_proceeding_type: enum_hash_for(:domestic_abuse)
 
