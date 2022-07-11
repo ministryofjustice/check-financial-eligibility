@@ -2,13 +2,12 @@ module Creators
   class AssessmentCreator < BaseCreator
     SCHEMA_PATH = Rails.root.join("public/schemas/assessment.json").to_s
 
-    attr_reader :assessment_hash, :raw_post
-
-    def initialize(remote_ip:, raw_post:, version:)
+    def initialize(remote_ip:, assessment_params:, version:)
       super()
-      @parsed_raw_post = JSON.parse(raw_post, symbolize_names: true)
+      @assessment_params = assessment_params
+      @remote_ip = remote_ip
+      @parsed_raw_post = JSON.parse(assessment_params, symbolize_names: true)
       @version = version
-      @assessment_hash = generate_assessment_hash(remote_ip)
     end
 
     def call
@@ -24,10 +23,14 @@ module Creators
     end
 
     def errors
-      new_assessment.errors.full_messages
+      new_assessment_errors.concat(json_validator.errors)
     end
 
   private
+
+    def new_assessment_errors
+      new_assessment&.errors&.full_messages || []
+    end
 
     def generate_assessment_hash(remote_ip)
       {
@@ -57,7 +60,7 @@ module Creators
     end
 
     def new_assessment
-      @new_assessment ||= create_new_assessment_and_summary_records
+      @new_assessment ||= create_new_assessment_and_summary_records if json_validator.valid?
     end
 
     def create_new_assessment_and_summary_records
@@ -69,6 +72,14 @@ module Creators
         Creators::EligibilitiesCreator.call(assessment) if assessment.save
         assessment
       end
+    end
+
+    def assessment_hash
+      generate_assessment_hash(@remote_ip)
+    end
+
+    def json_validator
+      @json_validator ||= JsonValidator.new("assessment", @assessment_params)
     end
   end
 end

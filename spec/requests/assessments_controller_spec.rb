@@ -30,11 +30,11 @@ RSpec.describe AssessmentsController, type: :request do
         post_payload
       end
 
-      it "returns http success", :show_in_doc do
+      it "returns http success" do
         expect(response).to have_http_status(:success)
       end
 
-      it "has a valid payload", :show_in_doc, doc_title: "POST Success Response" do
+      it "has a valid payload" do
         expected_response = {
           success: true,
           assessment_id: Assessment.last.id,
@@ -53,7 +53,7 @@ RSpec.describe AssessmentsController, type: :request do
           expect(response).to have_http_status(:unprocessable_entity)
         end
 
-        it "returns error json payload", :show_in_doc, doc_title: "POST Error Response" do
+        it "returns error json payload" do
           expected_response = {
             success: false,
             errors: ["error creating record"],
@@ -65,7 +65,7 @@ RSpec.describe AssessmentsController, type: :request do
       context "invalid matter proceeding type" do
         let(:params) { { matter_proceeding_type: "xxx", submission_date: "2019-07-01" } }
 
-        it_behaves_like "it fails with message", %(Invalid parameter 'matter_proceeding_type' value "xxx": Must be one of: <code>domestic_abuse</code>.)
+        it_behaves_like "it fails with message", /The property '#\/matter_proceeding_type' value "xxx" did not match one of the following values: domestic_abuse in schema file/
       end
 
       context "missing submission date" do
@@ -76,7 +76,7 @@ RSpec.describe AssessmentsController, type: :request do
           }
         end
 
-        it_behaves_like "it fails with message", "Missing parameter submission_date"
+        it_behaves_like "it fails with message", /The property '#\/' did not contain a required property of 'submission_date' in schema file/
       end
     end
 
@@ -98,7 +98,7 @@ RSpec.describe AssessmentsController, type: :request do
       end
 
       it "calls the assessment creator with version and params" do
-        expect(Creators::AssessmentCreator).to receive(:call).with(remote_ip: ipaddr, raw_post: params.to_json, version: "4").and_call_original
+        expect(Creators::AssessmentCreator).to receive(:call).with(remote_ip: ipaddr, assessment_params: params.to_json, version: "4").and_call_original
         post assessments_path, params: params.to_json, headers: headers
         expect(response).to have_http_status(:ok)
         expect(parsed_response[:success]).to be true
@@ -148,7 +148,7 @@ RSpec.describe AssessmentsController, type: :request do
       end
 
       it "calls the assessment creator with the default version 4 and params" do
-        expect(Creators::AssessmentCreator).to receive(:call).with(remote_ip: ipaddr, raw_post: params.to_json, version: "4").and_call_original
+        expect(Creators::AssessmentCreator).to receive(:call).with(remote_ip: ipaddr, assessment_params: params.to_json, version: "4").and_call_original
         post assessments_path, params: params.to_json, headers: headers
         expect(response).to have_http_status(:ok)
         expect(parsed_response[:success]).to be true
@@ -310,7 +310,7 @@ RSpec.describe AssessmentsController, type: :request do
         let(:headers) { { "Accept" => "application/json;version=4" } }
         let(:frozen_time) { Time.zone.now }
 
-        it "returns expected structure", :show_in_doc, doc_title: "POST V4 Success Response" do
+        it "returns expected structure" do
           expect(parsed_response).to eq expected_v4_result
         end
       end

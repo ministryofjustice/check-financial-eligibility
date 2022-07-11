@@ -26,10 +26,10 @@ module Creators
       }.to_json
     end
 
-    subject(:creator) { described_class.call(remote_ip:, raw_post:, version:) }
+    subject(:creator) { described_class.call(remote_ip:, assessment_params:, version:) }
 
     context "version 3" do
-      let(:raw_post) { raw_post_v3 }
+      let(:assessment_params) { raw_post_v3 }
       let(:version) { "3" }
 
       context "valid request" do
@@ -108,7 +108,7 @@ module Creators
     end
 
     context "version 4" do
-      let(:raw_post) { raw_post_v4 }
+      let(:assessment_params) { raw_post_v4 }
       let(:version) { "4" }
 
       context "valid request" do
@@ -186,6 +186,30 @@ module Creators
 
         it "has  errors" do
           expect(creator.errors).to include("Remote ip can't be blank")
+        end
+      end
+
+      context "with invalid ccms_code" do
+        let(:raw_post_v4) do
+          {
+            client_reference_id: "psr-123",
+            submission_date: "2019-06-06",
+            proceeding_types: {
+              ccms_codes: %w[DA005 SE003 XXX],
+            },
+          }.to_json
+        end
+
+        it "is not successful" do
+          expect(creator.success?).to be false
+        end
+
+        it "does not create an Assessment record" do
+          expect { creator.success? }.not_to change(Assessment, :count)
+        end
+
+        it "has  errors" do
+          expect(creator.errors).to include(/The property '#\/proceeding_types\/ccms_codes\/2' value "XXX" did not match one of the following values/)
         end
       end
     end
