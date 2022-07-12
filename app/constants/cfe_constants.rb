@@ -2,7 +2,7 @@ module CFEConstants
   # Versions
   #
   DEFAULT_ASSESSMENT_VERSION = "4".freeze
-  VALID_ASSESSMENT_VERSIONS = [DEFAULT_ASSESSMENT_VERSION, "3"].freeze
+  VALID_ASSESSMENT_VERSIONS = [DEFAULT_ASSESSMENT_VERSION, "3", "5"].freeze
 
   # Income categories
   #
@@ -66,4 +66,8 @@ module CFEConstants
   #
   VALID_FREQUENCIES = %i[monthly four_weekly two_weekly weekly unknown].freeze
   NUMBER_OF_MONTHS_TO_AVERAGE = 3
+
+  # client_involvement_types
+  #
+  VALID_CLIENT_INVOLVEMENT_TYPES = %w[A D W Z I].freeze
 end

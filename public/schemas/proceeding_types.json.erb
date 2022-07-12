@@ -1,0 +1,24 @@
+{
+  "id": "file://#{@schema_dir}/proceeding_types.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Legal Aid Check Financial Eligibility create proceeding_types payload schema",
+  "type": "object",
+  "required": ["proceeding_types"],
+  "properties": {
+    "proceeding_types": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["ccms_code", "client_involvement_type"],
+        "properties": {
+          "ccms_code": {
+            "enum": <%= ProceedingTypeThreshold.valid_ccms_codes.as_json %>
+          },
+          "client_involvement_type": {
+            "enum": <%= CFEConstants::VALID_CLIENT_INVOLVEMENT_TYPES.as_json %>
+          }
+        }
+      }
+    }
+  }
+}
