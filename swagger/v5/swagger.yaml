@@ -1,0 +1,71 @@
+---
+openapi: 3.0.1
+info:
+  title: API V5
+  description: |
+    # Check financial eligibility for legal aid.
+
+    ## Usage:
+      - Create an assessment by POSTing a payload to `/assessments`
+        and store the `assessment_id` returned.
+      - Add assessment components, such as applicant, capitals and properties using the
+        `assessment_id` from the first call
+      - Retrieve the result using the GET `/assessments/{assessment_id}`
+  contact:
+    name: Github repository
+    url: https://github.com/ministryofjustice/check-financial-eligibility
+  version: v5
+paths:
+  "/assessments/{assessment_id}/proceeding_types":
+    post:
+      summary: 'create '
+      tags:
+      - Assessment components
+      description: 'Adds details of an application''s proceeding types.
+
+        '
+      parameters:
+      - name: assessment_id
+        in: path
+        description: Unique identifier of the assessment
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - proceeding_types
+              description: A set of proceeding_type details
+              example:
+                proceeding_types:
+                - ccms_code: DA005
+                  client_involvement_type: A
+                - ccms_code: SE013
+                  client_involvement_type: I
+              properties:
+                proceeding_types:
+                  type: array
+                  description: One or more proceeding_type details
+                  items:
+                    type: object
+                    required:
+                    - ccms_code
+                    - client_involvement_type
+                    properties:
+                      ccms_code:
+                        type: string
+                        example: DA001
+                        description: The code expected by CCMS
+                      client_involvement_type:
+                        type: string
+                        example: A
+                        description: The client_involvement_type expected by CCMS
+        required: true

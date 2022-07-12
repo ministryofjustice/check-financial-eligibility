@@ -1,6 +1,6 @@
 module Creators
   class ProceedingTypesCreator < BaseCreator
-    attr_accessor :assessment_id
+    attr_accessor :assessment_id, :proceeding_types
 
     def initialize(assessment_id:, proceeding_types_params:)
       super()
@@ -12,7 +12,7 @@ module Creators
       if json_validator.valid?
         create_records
       else
-        self.errors = json_validator.errors
+        errors.concat(json_validator.errors)
       end
       self
     end
@@ -20,28 +20,27 @@ module Creators
   private
 
     def create_records
-      create_a
+      create_proceeding_types
     rescue CreationError => e
-      self.errors = e.errors
+      errors << e.errors
     end
 
-    def create_applicant
-      (raise CreationError, ["There is already an applicant for this assesssment"]) if assessment.applicant.present?
-      self.applicant = assessment.create_applicant!(applicant_attributes)
-    rescue ActiveRecord::RecordInvalid => e
-      raise CreationError, e.record.errors.full_messages
+    def create_proceeding_types
+      self.proceeding_types = assessment.proceeding_types.create!(proceeding_types_attributes)
+    rescue StandardError => e
+      raise CreationError, "#{e.class} - #{e.message}"
     end
 
     def assessment
       @assessment ||= Assessment.find_by(id: assessment_id) || (raise CreationError, ["No such assessment id"])
     end
 
-    def applicant_attributes
-      @applicant_attributes ||= JSON.parse(@applicant_params, symbolize_names: true)[:applicant]
+    def proceeding_types_attributes
+      @proceeding_types_attributes ||= JSON.parse(@proceeding_types_params, symbolize_names: true)[:proceeding_types]
     end
 
     def json_validator
-      @json_validator ||= JsonValidator.new("applicant", @applicant_params)
+      @json_validator ||= JsonValidator.new("proceeding_types", @proceeding_types_params)
     end
   end
 end

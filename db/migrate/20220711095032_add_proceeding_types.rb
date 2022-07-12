@@ -6,5 +6,7 @@ class AddProceedingTypes < ActiveRecord::Migration[7.0]
       t.string :client_involvement_type, null: false
       t.timestamps
     end
+
+    add_index(:proceeding_types, %i[assessment_id ccms_code], unique: true)
   end
 end

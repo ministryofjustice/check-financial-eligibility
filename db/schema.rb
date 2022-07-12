@@ -288,6 +288,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_11_095032) do
     t.string "client_involvement_type", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["assessment_id", "ccms_code"], name: "index_proceeding_types_on_assessment_id_and_ccms_code", unique: true
     t.index ["assessment_id"], name: "index_proceeding_types_on_assessment_id"
   end
 

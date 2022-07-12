@@ -1,0 +1,12 @@
+{
+  "proceeding_types":[
+    {
+      "ccms_code":"DA005",
+      "client_involvement_type":"A"
+    },
+    {
+      "ccms_code":"SE013",
+      "client_involvement_type":"I"
+    }
+  ]
+}

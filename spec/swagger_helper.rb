@@ -54,6 +54,19 @@ RSpec.configure do |config|
       },
       paths: {},
     },
+    "v5/swagger.yaml" => {
+      openapi: "3.0.1",
+      info: {
+        title: "API V5",
+        description: api_description,
+        contact: {
+          name: "Github repository",
+          url: "https://github.com/ministryofjustice/check-financial-eligibility",
+        },
+        version: "v5",
+      },
+      paths: {},
+    },
   }
 
   # Specify the format of the output Swagger file when running 'rswag:specs:swaggerize'.
