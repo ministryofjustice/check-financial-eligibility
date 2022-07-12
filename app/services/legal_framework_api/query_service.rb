@@ -1,3 +1,5 @@
+# TODO: Remove this class once version 4 has been deprecated; replaced by LegalFramework::ThresholdWaivers
+
 module LegalFrameworkAPI
   class QueryService
     ENDPOINT = "proceeding_types/threshold_waivers".freeze

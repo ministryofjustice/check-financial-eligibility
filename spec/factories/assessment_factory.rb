@@ -23,6 +23,12 @@ FactoryBot.define do
       applicant { create :applicant, :over_pensionable_age }
     end
 
+    trait :version_5 do
+      version { "5" }
+      proceeding_type_codes { [] }
+      matter_proceeding_type { nil }
+    end
+
     # use :with_child_dependants: 2 to create 2 children for the assessment
     transient do
       with_child_dependants { 0 }
