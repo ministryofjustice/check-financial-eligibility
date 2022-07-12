@@ -109,7 +109,7 @@ RSpec.describe AssessmentsController, type: :request do
       let(:headers) do
         {
           "CONTENT_TYPE" => "application/json",
-          "Accept" => "application/json; version=5",
+          "Accept" => "application/json; version=6",
         }
       end
       let(:params) do
