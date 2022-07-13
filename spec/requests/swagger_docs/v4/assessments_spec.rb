@@ -69,7 +69,7 @@ RSpec.describe "V4 Assessments", type: :request, vcr: true, swagger_doc: "v4/swa
 
         run_test! do |response|
           body = JSON.parse(response.body, symbolize_names: true)
-          expect(body[:errors]).to include("Missing parameter submission_date")
+          expect(body[:errors]).to include(/The property '#\/' did not contain a required property of 'submission_date' in schema file/)
         end
       end
     end
