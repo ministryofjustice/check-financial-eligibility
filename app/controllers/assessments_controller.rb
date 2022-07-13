@@ -18,7 +18,6 @@ private
 
   def perform_assessment
     Workflows::MainWorkflow.call(assessment)
-    decorator_klass = assessment.version_3? ? Decorators::V3::AssessmentDecorator : Decorators::V4::AssessmentDecorator
     render json: decorator_klass.new(assessment).as_json
   end
 
@@ -35,5 +34,15 @@ private
 
   def assessment
     @assessment ||= Assessment.find(params[:id])
+  end
+
+  def decorator_klass
+    if assessment.version_3?
+      Decorators::V3::AssessmentDecorator
+    elsif assessment.version_4?
+      Decorators::V4::AssessmentDecorator
+    else
+      Decorators::V5::AssessmentDecorator
+    end
   end
 end
