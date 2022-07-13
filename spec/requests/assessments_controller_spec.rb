@@ -168,14 +168,12 @@ RSpec.describe AssessmentsController, type: :request do
         allow(Workflows::MainWorkflow).to receive(:call).with(assessment)
         allow(Assessors::MainAssessor).to receive(:call).with(assessment)
         allow(assessment).to receive(:version_3?).and_return(is_version3)
-        allow(assessment).to receive(:version_4?).and_return(is_version4)
       end
 
       let(:assessment) { create :assessment, :passported, :with_everything, :with_eligibilities }
 
       context "version 3" do
         let(:is_version3) { true }
-        let(:is_version4) { false }
         let(:decorator) { instance_double Decorators::V3::AssessmentDecorator }
 
         it "calls the required services and uses the V3 decorator" do
@@ -188,24 +186,10 @@ RSpec.describe AssessmentsController, type: :request do
 
       context "version 4" do
         let(:is_version3) { false }
-        let(:is_version4) { true }
         let(:decorator) { instance_double Decorators::V4::AssessmentDecorator }
 
-        it "calls the required services and uses the V4 decorator" do
+        it "calls the required services and uses the V3 decorator" do
           allow(Decorators::V4::AssessmentDecorator).to receive(:new).with(assessment).and_return(decorator)
-          allow(decorator).to receive(:as_json).and_return("")
-
-          get_assessment
-        end
-      end
-
-      context "version 5" do
-        let(:is_version3) { false }
-        let(:is_version4) { false }
-        let(:decorator) { instance_double Decorators::V4::AssessmentDecorator }
-
-        it "calls the required services and uses the V5 decorator" do
-          allow(Decorators::V5::AssessmentDecorator).to receive(:new).with(assessment).and_return(decorator)
           allow(decorator).to receive(:as_json).and_return("")
 
           get_assessment
