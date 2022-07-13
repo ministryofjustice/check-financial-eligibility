@@ -1,6 +1,6 @@
 require "swagger_helper"
 
-RSpec.describe "V4 Assessments", type: :request, vcr: true, swagger_doc: "v4/swagger.yaml" do
+RSpec.describe "V5 Assessments", type: :request, vcr: true, swagger_doc: "v5/swagger.yaml" do
   path "/assessments" do
     post("create assessment") do
       tags "Assessment"
@@ -23,26 +23,11 @@ RSpec.describe "V4 Assessments", type: :request, vcr: true, swagger_doc: "v4/swa
                       description: "Date of the original submission (iso8601 format)",
                       example: "2022-05-19",
                     },
-                    proceeding_types: {
-                      type: :object,
-                      description: "Details of proceeding types in the application (v4 and above only)",
-                      properties: {
-                        ccms_codes: {
-                          type: :array,
-                          description: "Array of proceeding type CCMS codes",
-                          example: %w[DA001 SE013],
-                          items: {
-                            type: :string,
-                            example: "SE003",
-                          },
-                        },
-                      },
-                    },
                   },
                 }
 
       # rubocop:disable RSpec/VariableName
-      let(:Accept) { "application/json;version=4" }
+      let(:Accept) { "application/json;version=5" }
       # rubocop:enable RSpec/VariableName
 
       response(200, "successful") do
