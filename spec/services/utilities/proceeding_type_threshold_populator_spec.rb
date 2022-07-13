@@ -4,13 +4,6 @@ module Utilities
   RSpec.describe ProceedingTypeThresholdPopulator do
     describe ".call" do
       let(:assessment) { create :assessment, submission_date: Date.new(2022, 7, 12) }
-
-      before do
-        create :proceeding_type, assessment:, ccms_code: "DA001", client_involvement_type: "A"
-        create :proceeding_type, assessment:, ccms_code: "DA005", client_involvement_type: "Z"
-        create :proceeding_type, assessment:, ccms_code: "SE014", client_involvement_type: "A"
-      end
-
       let(:response) do
         {
           request_id: "ba7de3c7-cfbe-43de-89b6-8afa2fbe4193",
@@ -43,7 +36,6 @@ module Utilities
           ],
         }
       end
-
       let(:expected_payload) do
         [
           {
@@ -59,6 +51,12 @@ module Utilities
             client_involvement_type: "A",
           },
         ]
+      end
+
+      before do
+        create :proceeding_type, assessment:, ccms_code: "DA001", client_involvement_type: "A"
+        create :proceeding_type, assessment:, ccms_code: "DA005", client_involvement_type: "Z"
+        create :proceeding_type, assessment:, ccms_code: "SE014", client_involvement_type: "A"
       end
 
       it "calls LegalFrameworkAPI::ThresholdWaivers with expected payload" do
