@@ -33,10 +33,10 @@ module Creators
       }.to_json
     end
 
-    subject(:creator) { described_class.call(remote_ip:, raw_post:, version:) }
+    subject(:creator) { described_class.call(remote_ip:, assessment_params:, version:) }
 
     context "when version 3" do
-      let(:raw_post) { raw_post_v3 }
+      let(:assessment_params) { raw_post_v3 }
       let(:version) { "3" }
 
       context "valid request" do
@@ -115,7 +115,7 @@ module Creators
     end
 
     context "when version 4" do
-      let(:raw_post) { raw_post_v4 }
+      let(:assessment_params) { raw_post_v4 }
       let(:version) { "4" }
 
       context "valid request" do
@@ -289,7 +289,7 @@ module Creators
     end
 
     context "when version 5" do
-      let(:raw_post) { raw_post_v5 }
+      let(:assessment_params) { raw_post_v5 }
       let(:version) { "5" }
 
       context "valid request" do
@@ -368,15 +368,6 @@ module Creators
         it "has  errors" do
           expect(creator.errors).to include("Remote ip can't be blank")
         end
-      end
-    end
-
-    context "when version is invalid" do
-      let(:raw_post) { raw_post_v5 }
-      let(:version) { "666" }
-
-      it "is raises" do
-        expect{ creator }.to raise_error RuntimeError, "Invalid version specified: 666"
       end
     end
   end

@@ -51,8 +51,6 @@ module Creators
         codes_from_post
       when "5"
         []
-      else
-        raise "Invalid version specified: #{@version}"
       end
     end
 
