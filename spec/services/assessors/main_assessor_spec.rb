@@ -37,5 +37,29 @@ module Assessors
         expect(assessment.assessment_result).to eq "partially_eligible"
       end
     end
+
+    context "crime assessment" do
+      let(:assessment) do
+        create :assessment,
+               :criminal,
+               :with_gross_income_summary,
+               :with_crime_eligibility,
+               :with_applicant
+      end
+
+      subject(:assessor) { described_class.call(assessment) }
+
+      context "AssessmentCrimeAssessor" do
+        before do
+          assessment.crime_eligibility.update!(assessment_result: "eligible")
+        end
+
+        it "calls AssessmentCrimeAssessor and updates the assessment result" do
+          expect(AssessmentCrimeAssessor).to receive(:call).with(assessment)
+          assessor
+          expect(assessment.assessment_result).to eq "eligible"
+        end
+      end
+    end
   end
 end

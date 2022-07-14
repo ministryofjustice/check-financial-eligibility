@@ -80,6 +80,13 @@ FactoryBot.define do
       end
     end
 
+    trait :with_gross_income_summary_and_crime_eligibility do
+      after(:create) do |assessment|
+        gis = create :gross_income_summary, assessment: assessment
+        create :adjusted_income_eligibility, gross_income_summary: gis
+      end
+    end
+
     trait :with_gross_income_summary_and_records do
       after(:create) do |assessment|
         create :gross_income_summary, :with_all_records, assessment:
@@ -108,6 +115,12 @@ FactoryBot.define do
       with_passported_applicant
       after(:create) do |assessment|
         create :capital_summary, :with_everything, :with_eligibilities, assessment:
+      end
+    end
+
+    trait :with_crime_eligibility do
+      after(:create) do |assessment|
+        create :assessment_crime_eligibility, assessment:
       end
     end
 

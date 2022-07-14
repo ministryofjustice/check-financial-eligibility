@@ -24,6 +24,7 @@ module Assessors
           it "is eligible" do
             assessor
             expect(gross_income_summary.crime_summarized_assessment_result).to eq :eligible
+            expect(gross_income_summary.adjusted_income).to eq 10_000.00
           end
         end
 
@@ -33,6 +34,7 @@ module Assessors
           it "is eligible" do
             assessor
             expect(gross_income_summary.crime_summarized_assessment_result).to eq :eligible
+            expect(gross_income_summary.adjusted_income).to eq 12_475.00
           end
         end
 
@@ -42,6 +44,7 @@ module Assessors
           it "a full means test is required" do
             assessor
             expect(gross_income_summary.crime_summarized_assessment_result).to eq :full_means_test_required
+            expect(gross_income_summary.adjusted_income).to eq 17_554.36
           end
         end
 
@@ -51,6 +54,7 @@ module Assessors
           it "a full means test is required" do
             assessor
             expect(gross_income_summary.crime_summarized_assessment_result).to eq :full_means_test_required
+            expect(gross_income_summary.adjusted_income).to eq 22_325.00
           end
         end
 
@@ -60,6 +64,7 @@ module Assessors
           it "is ineligible" do
             assessor
             expect(gross_income_summary.crime_summarized_assessment_result).to eq :ineligible
+            expect(gross_income_summary.adjusted_income).to eq 31_824.78
           end
         end
       end

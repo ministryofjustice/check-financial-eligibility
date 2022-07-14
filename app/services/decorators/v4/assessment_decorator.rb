@@ -28,7 +28,7 @@ module Decorators
           version: assessment.version,
           timestamp: Time.current,
           success: true,
-          result_summary: ResultSummaryDecorator.new(assessment).as_json,
+          result_summary: assessment_result_summary,
           assessment: assessment_details,
         }
       end
@@ -44,6 +44,10 @@ module Decorators
           capital: CapitalDecorator.new(@assessment).as_json,
           remarks: RemarksDecorator.new(remarks, assessment).as_json,
         }
+      end
+
+      def assessment_result_summary
+        assessment.criminal? ? CrimeResultSummaryDecorator.new(@assessment).as_json : ResultSummaryDecorator.new(@assessment).as_json
       end
     end
   end

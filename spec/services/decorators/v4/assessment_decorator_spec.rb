@@ -40,6 +40,26 @@ module Decorators
           allow(::Decorators::V3::RemarksDecorator).to receive(:new).and_return(instance_double("rmk", as_json: nil))
           decorator
         end
+
+        context "crime assessment" do
+          let(:crime_assessment) do
+            create :assessment,
+                   :criminal,
+                   :with_gross_income_summary,
+                   :with_disposable_income_summary,
+                   :with_capital_summary,
+                   :with_applicant,
+                   :with_crime_eligibility
+          end
+
+          it "calls the relevant decorators for a crime assessment" do
+            allow(GrossIncomeDecorator).to receive(:new).and_return(instance_double("gisd", as_json: nil))
+            allow(DisposableIncomeDecorator).to receive(:new).and_return(instance_double("disd", as_json: nil))
+            allow(CapitalDecorator).to receive(:new).and_return(instance_double("csd", as_json: nil))
+            allow(AdjustedIncomeResultDecorator).to receive(:new).and_return(instance_double("aisd", as_json: nil))
+            decorator
+          end
+        end
       end
     end
   end

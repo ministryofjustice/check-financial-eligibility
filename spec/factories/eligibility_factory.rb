@@ -30,6 +30,13 @@ FactoryBot.define do
     assessment_result { "pending" }
   end
 
+  factory :assessment_crime_eligibility, class: "Eligibility::CrimeAssessment" do
+    assessment
+    lower_threshold { nil }
+    upper_threshold { nil }
+    assessment_result { "pending" }
+  end
+
   factory :adjusted_income_eligibility, class: "Eligibility::AdjustedIncome" do
     gross_income_summary
     lower_threshold { 12_475 }

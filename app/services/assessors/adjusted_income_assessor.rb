@@ -1,11 +1,12 @@
 module Assessors
   class AdjustedIncomeAssessor < BaseWorkflowService
-    delegate :adjusted_income, :crime_eligibility, :total_gross_income, to: :gross_income_summary
+    delegate :crime_eligibility, :total_gross_income, to: :gross_income_summary
     delegate :dependants, to: :assessment
 
     def call
       ActiveRecord::Base.transaction do
         crime_eligibility.update!(assessment_result: assessment_result(crime_eligibility))
+        gross_income_summary.update!(adjusted_income:)
       end
     end
 

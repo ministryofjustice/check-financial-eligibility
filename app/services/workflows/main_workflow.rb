@@ -1,12 +1,17 @@
 module Workflows
   class MainWorkflow < BaseWorkflowService
     def call
-      if applicant_passported?
-        PassportedWorkflow.call(assessment)
+      if assessment.criminal?
+        CrimeWorkflow.call(assessment)
       else
-        NonPassportedWorkflow.call(assessment)
+        if applicant_passported?
+          PassportedWorkflow.call(assessment)
+        else
+          NonPassportedWorkflow.call(assessment)
+        end
+        RemarkGenerators::Orchestrator.call(assessment)
       end
-      RemarkGenerators::Orchestrator.call(assessment)
+
       Assessors::MainAssessor.call(assessment)
     end
 

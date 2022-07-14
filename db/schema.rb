@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_20_103042) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_12_093229) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -246,6 +246,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_20_103042) do
     t.decimal "pension_cash", default: "0.0"
     t.decimal "gross_employment_income", default: "0.0", null: false
     t.decimal "benefits_in_kind", default: "0.0", null: false
+    t.decimal "adjusted_income", default: "0.0"
     t.index ["assessment_id"], name: "index_gross_income_summaries_on_assessment_id"
   end
 

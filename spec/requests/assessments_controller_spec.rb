@@ -313,6 +313,22 @@ RSpec.describe AssessmentsController, type: :request do
         end
       end
     end
+
+    context "test crime assessment" do
+      let(:assessment) { create_assessment_crime }
+      let(:headers) { { "Accept" => "application/json;version=4" } }
+      let(:frozen_time) { Time.zone.now }
+
+      before do
+        travel_to frozen_time
+        get_assessment
+        travel_back
+      end
+
+      it "returns expected structure", :show_in_doc, doc_title: "Crime Success Response" do
+        expect(parsed_response).to eq expected_crime_result
+      end
+    end
   end
 
   def expected_response_keys
@@ -381,6 +397,41 @@ RSpec.describe AssessmentsController, type: :request do
     assessment
   end
 
+  def create_assessment_crime
+    assessment = create :assessment,
+                        client_reference_id: "CRIME_1",
+                        submission_date: Date.parse("29/5/2019"),
+                        assessment_type: "criminal",
+                        version: "4",
+                        matter_proceeding_type: nil,
+                        proceeding_type_codes: []
+
+    create :applicant, assessment:, date_of_birth: Date.parse("29/5/1958")
+    create_dependant(assessment, "2/2/2005", true, "child_relative")
+    create_dependant(assessment, "5/2/2008", true, "child_relative")
+    create_dependant(assessment, "5/2/2010", true, "child_relative")
+
+    gis = create :gross_income_summary, assessment: assessment
+    ois = create :other_income_source, gross_income_summary: gis, name: "friends_or_family"
+    create :other_income_payment, other_income_source: ois, payment_date: Date.parse("28/2/2019"), amount: 1415, client_id: SecureRandom.uuid
+    create :other_income_payment, other_income_source: ois, payment_date: Date.parse("31/3/2019"), amount: 1415, client_id: SecureRandom.uuid
+    create :other_income_payment, other_income_source: ois, payment_date: Date.parse("30/4/2019"), amount: 1415, client_id: SecureRandom.uuid
+
+    sbt = create :state_benefit_type, label: "child_benefit", name: "Child Benefit", exclude_from_gross_income: false
+    sb = create :state_benefit, state_benefit_type: sbt, gross_income_summary: gis
+    create :state_benefit_payment, state_benefit: sb, payment_date: Date.parse("1/2/2019"), amount: 200, client_id: SecureRandom.uuid
+    create :state_benefit_payment, state_benefit: sb, payment_date: Date.parse("10/3/2019"), amount: 202, client_id: SecureRandom.uuid
+    create :state_benefit_payment, state_benefit: sb, payment_date: Date.parse("29/3/2019"), amount: 198, client_id: SecureRandom.uuid
+
+    create :capital_summary, assessment: assessment
+    create :disposable_income_summary, assessment: assessment
+
+    create :adjusted_income_eligibility, gross_income_summary: gis
+    create :assessment_crime_eligibility, assessment: assessment
+
+    assessment
+  end
+
   def create_childcare_payment(dis, date, amount)
     create :childcare_outgoing,
            disposable_income_summary: dis,
@@ -413,6 +464,157 @@ RSpec.describe AssessmentsController, type: :request do
            outstanding_mortgage: mortgage,
            percentage_owned:,
            shared_with_housing_assoc: housing_assoc
+  end
+
+  def expected_crime_result
+    {
+      version: "4",
+      timestamp: frozen_time.strftime("%Y-%m-%dT%H:%M:%S.000Z"),
+      success: true,
+      result_summary: {
+        overall_result: {
+          result: "eligible",
+          capital_contribution: 0.0,
+          income_contribution: 0.0,
+        },
+        gross_income: {
+          total_gross_income: 1615.0,
+          proceeding_types: [],
+        },
+        adjusted_income: {
+          adjusted_income: 724.22,
+          lower_threshold: 12_475.0,
+          upper_threshold: 22_325.0,
+          result: "eligible",
+        },
+        disposable_income: {
+          dependant_allowance: 0.0,
+          gross_housing_costs: 0.0,
+          housing_benefit: 0.0,
+          net_housing_costs: 0.0,
+          maintenance_allowance: 0.0,
+          total_outgoings_and_allowances: 0.0,
+          total_disposable_income: 0.0,
+          employment_income:
+            {
+              gross_income: 0.0,
+              benefits_in_kind: 0.0,
+              tax: 0.0,
+              national_insurance: 0.0,
+              fixed_employment_deduction: 0.0,
+              net_employment_income: 0.0,
+            },
+          income_contribution: 0.0,
+          proceeding_types: [],
+        },
+        capital: {
+          total_liquid: 0.0,
+          total_non_liquid: 0.0,
+          total_vehicle: 0.0,
+          total_property: 0.0,
+          total_mortgage_allowance: 0.0,
+          total_capital: 0.0,
+          pensioner_capital_disregard: 0.0,
+          capital_contribution: 0.0,
+          assessed_capital: 0.0,
+          proceeding_types: [],
+        },
+      },
+      assessment: {
+        id: assessment.id,
+        client_reference_id: "CRIME_1",
+        submission_date: "2019-05-29",
+        applicant: {
+          date_of_birth: "1958-05-29",
+          involvement_type: "applicant",
+          has_partner_opponent: false,
+          receives_qualifying_benefit: false,
+          self_employed: false,
+        },
+        gross_income: {
+          employment_income: [],
+          irregular_income: {
+            monthly_equivalents: {
+              student_loan: 0.0,
+            },
+          },
+          state_benefits: {
+            monthly_equivalents: {
+              all_sources: 200.0,
+              cash_transactions: 0.0,
+              bank_transactions: [
+                {
+                  name: "Child Benefit",
+                  monthly_value: 200.0,
+                  excluded_from_income_assessment: false,
+                },
+              ],
+            },
+          },
+          other_income: {
+            monthly_equivalents: {
+              all_sources: {
+                friends_or_family: 1415.0,
+                maintenance_in: 0.0,
+                property_or_lodger: 0.0,
+                pension: 0.0,
+              },
+              bank_transactions: {
+                friends_or_family: 1415.0,
+                maintenance_in: 0.0,
+                property_or_lodger: 0.0,
+                pension: 0.0,
+              },
+              cash_transactions: {
+                friends_or_family: 0.0,
+                maintenance_in: 0.0,
+                property_or_lodger: 0.0,
+                pension: 0.0,
+              },
+            },
+          },
+        },
+        disposable_income: {
+          monthly_equivalents: {
+            all_sources: {
+              child_care: 0.0,
+              rent_or_mortgage: 0.0,
+              maintenance_out: 0.0,
+              legal_aid: 0.0,
+            },
+            bank_transactions: {
+              child_care: 0.0,
+              rent_or_mortgage: 0.0,
+              maintenance_out: 0.0,
+              legal_aid: 0.0,
+            },
+            cash_transactions: {
+              child_care: 0.0,
+              rent_or_mortgage: 0.0,
+              maintenance_out: 0.0,
+              legal_aid: 0.0,
+            },
+          },
+          childcare_allowance: 0.0,
+          deductions: {
+            dependants_allowance: 0.0,
+            disregarded_state_benefits: 0.0,
+          },
+        },
+        capital: {
+          capital_items: {
+            liquid: [],
+            non_liquid: [],
+            vehicles: [],
+            properties: {
+              main_home: nil,
+              additional_properties: [],
+            },
+          },
+        },
+        remarks: {},
+      },
+    }
   end
 
   def expected_v4_result
