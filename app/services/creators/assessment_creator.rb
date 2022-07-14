@@ -44,7 +44,12 @@ module Creators
     end
 
     def ccms_codes_for_application
-      @version == "3" ? dummy_code_for_domestic_abuse : codes_from_post
+      case @version
+      when "3"
+        dummy_code_for_domestic_abuse
+      when "4"
+        codes_from_post
+      end
     end
 
     # For version 3, which are all single_proceeding type (domestic abuse),
