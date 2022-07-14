@@ -16,7 +16,6 @@ module Creators
       else
         @assessment.proceeding_type_codes.each { |ptc| create_eligibility(ptc) }
       end
-      # @assessment.proceeding_type_codes.each { |ptc| create_eligibility(ptc) }
     end
 
   private

@@ -49,6 +49,10 @@ module Creators
         dummy_code_for_domestic_abuse
       when "4"
         codes_from_post
+      when "5"
+        []
+      else
+        raise "Invalid version specified: #{@version}"
       end
     end
 
