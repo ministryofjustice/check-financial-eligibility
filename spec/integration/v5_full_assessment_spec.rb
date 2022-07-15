@@ -9,7 +9,7 @@ RSpec.describe "Full V5 passported spec " do
                        name_method: :label,
                        overwrite: true).build
 
-    ENV["VERBOSE"] = "true"
+    ENV["VERBOSE"] = "false"
     create :bank_holiday
     mock_lfa_responses
   end
@@ -67,8 +67,8 @@ RSpec.describe "Full V5 passported spec " do
     end
   end
 
-  context 'when debugging ' do
-    it 'does not return error' do
+  context "when debugging " do
+    it "does not return error" do
       VCR.use_cassette "debugging" do
         rq = "{\"client_reference_id\":\"L-KUT-FW2\",\"submission_date\":\"2022-07-15\"}"
         post assessments_path, params: rq, headers: v5_headers
@@ -87,8 +87,7 @@ RSpec.describe "Full V5 passported spec " do
         post assessment_capitals_path(assessment_id), params: rq, headers: headers
         output_response(:post, :capitals)
 
-
-        rq =  "{\"vehicles\":[{\"value\":\"3000.0\",\"loan_amount_outstanding\":\"0.0\",\"date_of_purchase\":\"2018-07-15\",\"in_regular_use\":true}]}"
+        rq = "{\"vehicles\":[{\"value\":\"3000.0\",\"loan_amount_outstanding\":\"0.0\",\"date_of_purchase\":\"2018-07-15\",\"in_regular_use\":true}]}"
         post assessment_vehicles_path(assessment_id), params: rq, headers: headers
         output_response(:post, :vehicles)
 
@@ -100,44 +99,9 @@ RSpec.describe "Full V5 passported spec " do
         post assessment_explicit_remarks_path(assessment_id), params: rq, headers: headers
         output_response(:post, :vehicles)
 
-
         get assessment_path(assessment_id), headers: v5_headers
         output_response(:get, :assessment)
       end
-
-      #
-      # >>>>>>>>>>>> /assessments /Users/stephenrichards/moj/apply/app/services/cfe/base_service.rb:73 <<<<<<<<<<<<
-      #   "{\"client_reference_id\":\"L-KUT-FW2\",\"submission_date\":\"2022-07-15\"}"
-      # >>>>>>>>>>>>  /Users/stephenrichards/moj/apply/app/services/cfe/base_service.rb:75 <<<<<<<<<<<<
-      #   CFE Submission :: call to CFE::CreateAssessmentService for 356088b6-513e-44b9-a7de-f8cc7f911f5e took 2.292592 seconds
-      # >>>>>>>>>>>> /assessments/6c2a501e-ae25-4360-a2a5-c12050d779f7/proceeding_types /Users/stephenrichards/moj/apply/app/services/cfe/base_service.rb:73 <<<<<<<<<<<<
-      #     "{\"proceeding_types\":[{\"ccms_code\":\"DA002\",\"client_involvement_type\":\"A\"},{\"ccms_code\":\"SE013\",\"client_involvement_type\":\"A\"}]}"
-      # >>>>>>>>>>>>  /Users/stephenrichards/moj/apply/app/services/cfe/base_service.rb:75 <<<<<<<<<<<<
-      #     CFE Submission :: call to CFE::CreateProceedingTypesService for 356088b6-513e-44b9-a7de-f8cc7f911f5e took 0.62701 seconds
-      # >>>>>>>>>>>> /assessments/6c2a501e-ae25-4360-a2a5-c12050d779f7/applicant /Users/stephenrichards/moj/apply/app/services/cfe/base_service.rb:73 <<<<<<<<<<<<
-      #     "{\"applicant\":{\"date_of_birth\":\"1980-01-10\",\"involvement_type\":\"applicant\",\"has_partner_opponent\":false,\"receives_qualifying_benefit\":true}}"
-      # >>>>>>>>>>>>  /Users/stephenrichards/moj/apply/app/services/cfe/base_service.rb:75 <<<<<<<<<<<<
-      #     CFE Submission :: call to CFE::CreateApplicantService for 356088b6-513e-44b9-a7de-f8cc7f911f5e took 0.127026 seconds
-      # >>>>>>>>>>>> /assessments/6c2a501e-ae25-4360-a2a5-c12050d779f7/capitals /Users/stephenrichards/moj/apply/app/services/cfe/base_service.rb:73 <<<<<<<<<<<<
-      #     "{\"bank_accounts\":[{\"description\":\"Current accounts\",\"value\":\"788.0\"}],\"non_liquid_capital\":[]}"
-      # >>>>>>>>>>>>  /Users/stephenrichards/moj/apply/app/services/cfe/base_service.rb:75 <<<<<<<<<<<<
-      #     CFE Submission :: call to CFE::CreateCapitalsService for 356088b6-513e-44b9-a7de-f8cc7f911f5e took 0.17218 seconds
-      # >>>>>>>>>>>> /assessments/6c2a501e-ae25-4360-a2a5-c12050d779f7/vehicles /Users/stephenrichards/moj/apply/app/services/cfe/base_service.rb:73 <<<<<<<<<<<<
-      #     "{\"vehicles\":[{\"value\":\"3000.0\",\"loan_amount_outstanding\":\"0.0\",\"date_of_purchase\":\"2018-07-15\",\"in_regular_use\":true}]}"
-      # >>>>>>>>>>>>  /Users/stephenrichards/moj/apply/app/services/cfe/base_service.rb:75 <<<<<<<<<<<<
-      #     CFE Submission :: call to CFE::CreateVehiclesService for 356088b6-513e-44b9-a7de-f8cc7f911f5e took 0.128534 seconds
-      # >>>>>>>>>>>> /assessments/6c2a501e-ae25-4360-a2a5-c12050d779f7/properties /Users/stephenrichards/moj/apply/app/services/cfe/base_service.rb:73 <<<<<<<<<<<<
-      #     "{\"properties\":{\"main_home\":{\"value\":0.0,\"outstanding_mortgage\":0.0,\"percentage_owned\":0.0,\"shared_with_housing_assoc\":false},\"additional_properties\":[{\"value\":0,\"outstanding_mortgage\":0,\"percentage_owned\":0,\"shared_with_housing_assoc\":false}]}}"
-      # >>>>>>>>>>>>  /Users/stephenrichards/moj/apply/app/services/cfe/base_service.rb:75 <<<<<<<<<<<<
-      #     CFE Submission :: call to CFE::CreatePropertiesService for 356088b6-513e-44b9-a7de-f8cc7f911f5e took 0.152368 seconds
-      # >>>>>>>>>>>> /assessments/6c2a501e-ae25-4360-a2a5-c12050d779f7/explicit_remarks /Users/stephenrichards/moj/apply/app/services/cfe/base_service.rb:73 <<<<<<<<<<<<
-      #     "{\"explicit_remarks\":[{\"category\":\"policy_disregards\",\"details\":[]}]}"
-      # >>>>>>>>>>>>  /Users/stephenrichards/moj/apply/app/services/cfe/base_service.rb:75 <<<<<<<<<<<<
-
-
-
-
-
     end
   end
 
