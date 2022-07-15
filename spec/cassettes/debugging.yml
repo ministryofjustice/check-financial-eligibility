@@ -2,10 +2,10 @@
 http_interactions:
 - request:
     method: post
-    uri: http://localhost:4001/threshold_waivers
+    uri: https://legal-framework-api-staging.cloud-platform.service.justice.gov.uk/threshold_waivers
     body:
       encoding: UTF-8
-      string: '{"request_id":"6d9ca739-5dd0-43c1-9405-967415797342","proceedings":[{"ccms_code":"DA002","client_involvement_type":"A"},{"ccms_code":"SE013","client_involvement_type":"A"}]}'
+      string: '{"request_id":"3c6240ca-31e8-4564-a2ce-274eb85ac3d9","proceedings":[{"ccms_code":"DA002","client_involvement_type":"A"},{"ccms_code":"SE013","client_involvement_type":"A"}]}'
     headers:
       Content-Type:
       - application/json
@@ -20,6 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Date:
+      - Fri, 15 Jul 2022 14:39:01 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
       X-Frame-Options:
       - SAMEORIGIN
       X-Xss-Protection:
@@ -32,24 +40,22 @@ http_interactions:
       - none
       Referrer-Policy:
       - strict-origin-when-cross-origin
-      Content-Type:
-      - application/json; charset=utf-8
       Vary:
       - Accept, Origin
       Etag:
-      - W/"659ff3ed6265c58c733b34b1ef59ea2d"
+      - W/"5b8371e412d96a1feb7cfd7a79f39862"
       Cache-Control:
       - max-age=0, private, must-revalidate
       X-Request-Id:
-      - 76c9e64b-a7f2-4839-9cec-666415119977
+      - 1975dcd85aec595d2cecdd79dc9bc49d
       X-Runtime:
-      - '0.290091'
-      Transfer-Encoding:
-      - chunked
+      - '0.059533'
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
     body:
       encoding: UTF-8
-      string: '{"request_id":"6d9ca739-5dd0-43c1-9405-967415797342","success":true,"proceedings":[{"ccms_code":"DA002","matter_type":"Domestic
+      string: '{"request_id":"3c6240ca-31e8-4564-a2ce-274eb85ac3d9","success":true,"proceedings":[{"ccms_code":"DA002","matter_type":"Domestic
         abuse","gross_income_upper":true,"disposable_income_upper":true,"capital_upper":true,"client_involvement_type":"A"},{"ccms_code":"SE013","matter_type":"Children
         - section 8","gross_income_upper":false,"disposable_income_upper":false,"capital_upper":false,"client_involvement_type":"A"}]}'
-  recorded_at: Fri, 15 Jul 2022 13:26:12 GMT
+  recorded_at: Fri, 15 Jul 2022 14:39:01 GMT
 recorded_with: VCR 6.1.0

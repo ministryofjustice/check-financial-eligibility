@@ -2,10 +2,10 @@
 http_interactions:
 - request:
     method: post
-    uri: http://localhost:4001/threshold_waivers
+    uri: https://legal-framework-api-staging.cloud-platform.service.justice.gov.uk/threshold_waivers
     body:
       encoding: UTF-8
-      string: '{"request_id":"b24af98c-3e59-4b81-9e32-ead435b0f182","proceedings":[{"ccms_code":"DA004","client_involvement_type":"A"},{"ccms_code":"DA020","client_involvement_type":"A"},{"ccms_code":"SE004","client_involvement_type":"A"},{"ccms_code":"SE013","client_involvement_type":"A"}]}'
+      string: '{"request_id":"954a1092-521a-492a-9b6d-ab0cc6520b4d","proceedings":[{"ccms_code":"DA004","client_involvement_type":"A"},{"ccms_code":"DA020","client_involvement_type":"A"},{"ccms_code":"SE004","client_involvement_type":"A"},{"ccms_code":"SE013","client_involvement_type":"A"}]}'
     headers:
       Content-Type:
       - application/json
@@ -20,6 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Date:
+      - Fri, 15 Jul 2022 14:38:59 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
       X-Frame-Options:
       - SAMEORIGIN
       X-Xss-Protection:
@@ -32,26 +40,24 @@ http_interactions:
       - none
       Referrer-Policy:
       - strict-origin-when-cross-origin
-      Content-Type:
-      - application/json; charset=utf-8
       Vary:
       - Accept, Origin
       Etag:
-      - W/"53fa2fc1fb9e504c98c11c7a505c2eab"
+      - W/"3e672f7710ca99f06c1b0530d3ed152f"
       Cache-Control:
       - max-age=0, private, must-revalidate
       X-Request-Id:
-      - b40ba011-7011-4207-9241-d2e228c382ce
+      - c6cfdb613d8d68d77dae7955e06f7bdc
       X-Runtime:
-      - '0.400675'
-      Transfer-Encoding:
-      - chunked
+      - '0.041589'
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
     body:
       encoding: UTF-8
-      string: '{"request_id":"b24af98c-3e59-4b81-9e32-ead435b0f182","success":true,"proceedings":[{"ccms_code":"DA004","matter_type":"Domestic
+      string: '{"request_id":"954a1092-521a-492a-9b6d-ab0cc6520b4d","success":true,"proceedings":[{"ccms_code":"DA004","matter_type":"Domestic
         abuse","gross_income_upper":true,"disposable_income_upper":true,"capital_upper":true,"client_involvement_type":"A"},{"ccms_code":"DA020","matter_type":"Domestic
         abuse","gross_income_upper":true,"disposable_income_upper":true,"capital_upper":true,"client_involvement_type":"A"},{"ccms_code":"SE004","matter_type":"Children
         - section 8","gross_income_upper":false,"disposable_income_upper":false,"capital_upper":false,"client_involvement_type":"A"},{"ccms_code":"SE013","matter_type":"Children
         - section 8","gross_income_upper":false,"disposable_income_upper":false,"capital_upper":false,"client_involvement_type":"A"}]}'
-  recorded_at: Fri, 15 Jul 2022 10:07:29 GMT
+  recorded_at: Fri, 15 Jul 2022 14:38:59 GMT
 recorded_with: VCR 6.1.0
