@@ -9,10 +9,14 @@ module Creators
     end
 
     def call
-      @assessment.proceeding_type_codes.each { |ptc| create_eligibility(ptc) }
+      proceeding_type_codes.each { |ptc| create_eligibility(ptc) }
     end
 
   private
+
+    def proceeding_type_codes
+      @assessment.version_5? ? @assessment.proceeding_types.map(&:ccms_code) : @assessment.proceeding_type_codes
+    end
 
     def create_eligibility(ptc)
       @assessment.eligibilities.create!(proceeding_type_code: ptc, assessment_result: "pending")
