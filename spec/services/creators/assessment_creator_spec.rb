@@ -191,7 +191,7 @@ module Creators
           expect { creator.success? }.not_to change(Assessment, :count)
         end
 
-        it "has  errors" do
+        it "has errors" do
           expect(creator.errors).to include("Remote ip can't be blank")
         end
       end

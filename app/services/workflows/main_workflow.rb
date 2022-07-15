@@ -23,6 +23,7 @@ module Workflows
       raise "Proceeding Types not created" unless assessment.proceeding_types.any?
 
       Utilities::ProceedingTypeThresholdPopulator.call(assessment)
+      Creators::EligibilitiesCreator.call(assessment)
     end
   end
 end

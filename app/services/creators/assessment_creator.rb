@@ -76,7 +76,9 @@ module Creators
         assessment.build_capital_summary
         assessment.build_gross_income_summary
         assessment.build_disposable_income_summary
-        Creators::EligibilitiesCreator.call(assessment) if assessment.save
+        if assessment.save && !assessment.version_5?
+          Creators::EligibilitiesCreator.call(assessment)
+        end
         assessment
       end
     end

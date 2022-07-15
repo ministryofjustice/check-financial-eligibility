@@ -41,7 +41,15 @@ module Workflows
     end
 
     context "version 5" do
-      let(:assessment) { create :assessment, version: "5", applicant: }
+      let(:assessment) do
+        create :assessment,
+               :with_capital_summary,
+               :with_capital_summary,
+               :with_gross_income_summary,
+               :with_disposable_income_summary,
+               version: "5",
+               applicant:
+      end
       let(:applicant) { create :applicant, :without_qualifying_benefits }
 
       subject(:workflow_call) { MainWorkflow.call(assessment) }
@@ -59,8 +67,22 @@ module Workflows
 
         it "Populates proceeding types with thresholds" do
           expect(Utilities::ProceedingTypeThresholdPopulator).to receive(:call).with(assessment)
+
+          allow(Creators::EligibilitiesCreator).to receive(:call).with(assessment)
           allow(NonPassportedWorkflow).to receive(:call).with(assessment)
           allow(Assessors::MainAssessor).to receive(:call).with(assessment)
+          allow(RemarkGenerators::Orchestrator).to receive(:call).with(assessment)
+
+          workflow_call
+        end
+
+        it "creates the eligibility records" do
+          expect(Creators::EligibilitiesCreator).to receive(:call).with(assessment)
+
+          allow(Utilities::ProceedingTypeThresholdPopulator).to receive(:call).with(assessment)
+          allow(NonPassportedWorkflow).to receive(:call).with(assessment)
+          allow(Assessors::MainAssessor).to receive(:call).with(assessment)
+          allow(RemarkGenerators::Orchestrator).to receive(:call).with(assessment)
 
           workflow_call
         end
