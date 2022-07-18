@@ -139,7 +139,9 @@ module TestCase
     end
 
     def populate_proceeding_types
-      @proceeding_types = TestCase::ProceedingTypesCollection.new(@rows)
+      row_index = @rows.index { |r| r.first.present? && r.first != "proceeding_types" }
+      proceeding_type_rows = @rows.shift(row_index)
+      @proceeding_types = TestCase::ProceedingTypesCollection.new(proceeding_type_rows)
     end
 
     def populate_expected_results

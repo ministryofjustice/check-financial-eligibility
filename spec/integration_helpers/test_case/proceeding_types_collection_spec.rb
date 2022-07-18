@@ -3,13 +3,12 @@ require Rails.root.join("lib/integration_helpers/test_case/proceeding_types_coll
 
 module TestCase
   RSpec.describe ProceedingTypesCollection do
-
     let(:rows) do
       [
         ["proceeding_types", "one", "proceeding_type_codes", "DA001", nil, nil, nil, nil, nil, nil],
         [nil, nil, "client_involvement_type", "A", nil, nil, nil, nil, nil, nil],
         [nil, "two", "proceeding_type_codes", "SE013", nil, nil, nil, nil, nil, nil],
-        [nil, nil, "client_involvement_type", "Z", nil, nil, nil, nil, nil, nil]
+        [nil, nil, "client_involvement_type", "Z", nil, nil, nil, nil, nil, nil],
       ]
     end
 

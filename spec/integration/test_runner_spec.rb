@@ -29,7 +29,7 @@ RSpec.describe "IntegrationTests::TestRunner", type: :request do
     mock_lfa_responses
   end
 
-  describe "run integration_tests" do
+  describe "run integration_tests", :vcr do
     it "processes all the tests on all the sheets" do
       failing_tests = []
       test_count = 0

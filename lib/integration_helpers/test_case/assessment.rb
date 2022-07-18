@@ -14,7 +14,7 @@ module TestCase
     def payload
       @version = "3" if @version.nil?
       case @version
-      when ""
+      when "3"
         version_3_payload
       when "4"
         version_4_payload
