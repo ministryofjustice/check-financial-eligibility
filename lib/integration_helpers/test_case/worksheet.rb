@@ -10,6 +10,7 @@ module TestCase
                 :irregular_income,
                 :other_incomes,
                 :outgoings,
+                :proceeding_types,
                 :properties,
                 :state_benefits,
                 :submission_date,
@@ -18,6 +19,7 @@ module TestCase
                 :worksheet_name
 
     PAYLOAD_OBJECTS = %i[
+      proceeding_types
       applicant
       capitals
       cash_transactions
@@ -136,8 +138,19 @@ module TestCase
       @vehicle = Vehicle.new(vehicle_rows)
     end
 
+    def populate_proceeding_types
+      @proceeding_types = TestCase::ProceedingTypesCollection.new(@rows)
+    end
+
     def populate_expected_results
-      @expected_results = version == "4" ? V4::ExpectedResult.new(@rows) : V3::ExpectedResult.new(@rows)
+      @expected_results = case version
+                          when "4"
+                            V4::ExpectedResult.new(@rows)
+                          when "5"
+                            V5::ExpectedResult.new(@rows)
+                          else
+                            V3::ExpectedResult.new(@rows)
+                          end
     end
 
     def populate_earned_income

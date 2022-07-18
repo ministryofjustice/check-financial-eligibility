@@ -13,7 +13,14 @@ module TestCase
 
     def payload
       @version = "3" if @version.nil?
-      @version == "3" ? version_3_payload : version_4_payload
+      case @version
+      when ""
+        version_3_payload
+      when "4"
+        version_4_payload
+      else
+        version_5_payload
+      end
     end
 
     def version_3_payload
@@ -31,6 +38,13 @@ module TestCase
         proceeding_types: {
           ccms_codes: @proceeding_type_codes,
         },
+      }
+    end
+
+    def version_5_payload
+      {
+        client_reference_id: @worksheet_name,
+        submission_date: @submission_date,
       }
     end
 
