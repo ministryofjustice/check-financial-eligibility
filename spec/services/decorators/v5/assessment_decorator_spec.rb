@@ -38,7 +38,7 @@ module Decorators
           allow(::Decorators::V4::DisposableIncomeDecorator).to receive(:new).and_return(instance_double("disd", as_json: nil))
           allow(::Decorators::V4::CapitalDecorator).to receive(:new).and_return(instance_double("csd", as_json: nil))
           allow(::Decorators::V3::RemarksDecorator).to receive(:new).and_return(instance_double("rmk", as_json: nil))
-          allow(::Decorators::V4::ResultSummaryDecorator).to receive(:new).and_return(instance_double("rsd", as_json: nil))
+          allow(::Decorators::V5::ResultSummaryDecorator).to receive(:new).and_return(instance_double("rsd", as_json: nil))
           decorator
         end
       end

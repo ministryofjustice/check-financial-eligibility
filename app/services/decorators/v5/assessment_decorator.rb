@@ -7,9 +7,8 @@ module Decorators
 
       # class aliases for V4
       GrossIncomeDecorator = ::Decorators::V4::GrossIncomeDecorator
-      DisposableIncomeDecorator = ::Decorators::V4::DisposableIncomeDecorator
       CapitalDecorator = ::Decorators::V4::CapitalDecorator
-      ResultSummaryDecorator = ::Decorators::V4::ResultSummaryDecorator
+      DisposableIncomeDecorator = ::Decorators::V4::DisposableIncomeDecorator
 
       attr_reader :assessment
 
