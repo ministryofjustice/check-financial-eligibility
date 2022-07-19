@@ -1,0 +1,55 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://localhost:4001/threshold_waivers
+    body:
+      encoding: UTF-8
+      string: '{"request_id":"1b7956c4-1030-435a-a41d-ea476c200158","proceedings":[{"ccms_code":"DA002","client_involvement_type":"A"},{"ccms_code":"DA003","client_involvement_type":"A"}]}'
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Faraday v1.10.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Content-Type:
+      - application/json; charset=utf-8
+      Vary:
+      - Accept, Origin
+      Etag:
+      - W/"0188684653d82b5a92bf62a8619c3fe0"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 6753740b-0b70-46e9-9e82-89146e1afc90
+      X-Runtime:
+      - '0.183068'
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"request_id":"1b7956c4-1030-435a-a41d-ea476c200158","success":true,"proceedings":[{"ccms_code":"DA002","matter_type":"Domestic
+        abuse","gross_income_upper":true,"disposable_income_upper":true,"capital_upper":true,"client_involvement_type":"A"},{"ccms_code":"DA003","matter_type":"Domestic
+        abuse","gross_income_upper":true,"disposable_income_upper":true,"capital_upper":true,"client_involvement_type":"A"}]}'
+  recorded_at: Fri, 15 Jul 2022 08:58:11 GMT
+recorded_with: VCR 6.1.0

@@ -105,3 +105,10 @@ def mock_lfa_responses
   end
   allow(LegalFrameworkAPI::QueryService).to receive(:matter_type) { |ccms_code| /^DA/.match?(ccms_code.to_s) ? "domestic_abuse" : "section8" }
 end
+
+def deep_match(actual, expected)
+  expect(actual.keys.sort).to eq expected.keys.sort
+  actual.each do |key, ids|
+    expect(ids).to match_array(expected[key])
+  end
+end

@@ -39,12 +39,12 @@ RSpec.describe "Full Assessment with remarks" do
     expect(remarks[:other_income_payment][:unknown_frequency]).to match_array(expected_remarks[:other_income_payment][:unknown_frequency])
   end
 
-  def deep_match(actual, expected)
-    expect(actual.keys.sort).to eq expected.keys.sort
-    actual.each do |key, ids|
-      expect(ids).to match_array(expected[key])
-    end
-  end
+  # def deep_match(actual, expected)
+  #   expect(actual.keys.sort).to eq expected.keys.sort
+  #   actual.each do |key, ids|
+  #     expect(ids).to match_array(expected[key])
+  #   end
+  # end
 
   def post_assessment
     post assessments_path, params: assessment_params, headers: v3_headers

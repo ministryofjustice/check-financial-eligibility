@@ -4,6 +4,10 @@ module CFEConstants
   DEFAULT_ASSESSMENT_VERSION = "4".freeze
   VALID_ASSESSMENT_VERSIONS = [DEFAULT_ASSESSMENT_VERSION, "3", "5"].freeze
 
+  # Valid CCMS Codes for proceeding types - probably need to get this from LFA in future
+  #
+  VALID_PROCEEDING_TYPE_CCMS_CODES = %i[DA001 DA002 DA003 DA004 DA005 DA006 DA007 DA020 SE003 SE004 SE013 SE014].freeze
+
   # Income categories
   #
   VALID_INCOME_CATEGORIES = %w[benefits friends_or_family maintenance_in property_or_lodger pension].freeze

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_11_095032) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_12_135919) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -288,6 +288,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_11_095032) do
     t.string "client_involvement_type", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "gross_income_upper_threshold"
+    t.decimal "disposable_income_upper_threshold"
+    t.decimal "capital_upper_threshold"
     t.index ["assessment_id", "ccms_code"], name: "index_proceeding_types_on_assessment_id_and_ccms_code", unique: true
     t.index ["assessment_id"], name: "index_proceeding_types_on_assessment_id"
   end

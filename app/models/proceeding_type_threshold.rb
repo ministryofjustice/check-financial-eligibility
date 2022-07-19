@@ -1,8 +1,8 @@
+# TODO: remove this class once version 4 is deprecated.  Work is done by Utilities::ProceedingTypeThresholdPopulator
+
 # This class returns the correct threshold for a specified proceeding type
 #
 class ProceedingTypeThreshold
-  VALID_CCMS_CODES = %i[DA001 DA002 DA003 DA004 DA005 DA006 DA007 DA020 SE003 SE004 SE013 SE014].freeze
-
   def self.value_for(ccms_code, threshold, at)
     new(ccms_code, threshold, at).value
   end
@@ -22,7 +22,7 @@ class ProceedingTypeThreshold
   end
 
   def self.valid_ccms_codes
-    VALID_CCMS_CODES
+    CFEConstants::VALID_PROCEEDING_TYPE_CCMS_CODES
   end
 
 private
