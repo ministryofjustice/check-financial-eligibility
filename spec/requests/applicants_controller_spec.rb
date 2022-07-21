@@ -99,7 +99,24 @@ RSpec.describe ApplicantsController, type: :request do
           post assessment_applicant_path(assessment.id), params: params.to_json, headers:
         end
 
-        it_behaves_like "it fails with message", /The property '#\/applicant' did not contain a required property of 'involvement_type'/
+        context "version 4" do
+          let(:assessment) { create :assessment, version: "4" }
+
+          it_behaves_like "it fails with message", /The property '#\/applicant' did not contain a required property of 'involvement_type'/
+        end
+
+        context "version 5" do
+          let(:assessment) { create :assessment, version: "5" }
+
+          it "returns success"  do
+            expect(response).to have_http_status(:success)
+          end
+
+          it "returns expected response" do
+            expect(parsed_response[:success]).to eq(true)
+            expect(parsed_response[:errors]).to be_empty
+          end
+        end
       end
 
       context "invalid involvement type" do
