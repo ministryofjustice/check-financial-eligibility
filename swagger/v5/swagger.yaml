@@ -56,12 +56,6 @@ paths:
                       format: date
                       example: '1992-07-22'
                       description: Applicant date of birth
-                    involvement_type:
-                      type: string
-                      enum:
-                      - applicant
-                      example: applicant
-                      description: Applicant involvement type
                     has_partner_opponent:
                       type: boolean
                       example: false

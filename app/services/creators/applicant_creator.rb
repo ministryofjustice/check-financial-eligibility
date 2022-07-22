@@ -26,6 +26,7 @@ module Creators
     end
 
     def create_applicant
+      (raise CreationError, ["No such assessment id"]) if assessment.nil?
       (raise CreationError, ["There is already an applicant for this assesssment"]) if assessment.applicant.present?
       self.applicant = assessment.create_applicant!(applicant_attributes)
     rescue ActiveRecord::RecordInvalid => e
@@ -33,7 +34,7 @@ module Creators
     end
 
     def assessment
-      @assessment ||= Assessment.find_by(id: assessment_id) || (raise CreationError, ["No such assessment id"])
+      @assessment ||= Assessment.find_by(id: assessment_id)
     end
 
     def applicant_attributes
@@ -41,7 +42,7 @@ module Creators
     end
 
     def json_validator
-      @json_validator ||= JsonValidator.new("applicant", @applicant_params)
+      @json_validator ||= assessment&.version == "5" ? JsonValidator.new("applicant_v5", @applicant_params) : JsonValidator.new("applicant", @applicant_params)
     end
   end
 end

@@ -30,10 +30,6 @@ RSpec.describe "applicants", type: :request, swagger_doc: "v5/swagger.yaml" do
                                          format: :date,
                                          example: "1992-07-22",
                                          description: "Applicant date of birth" },
-                        involvement_type: { type: :string,
-                                            enum: Applicant.involvement_types.values,
-                                            example: Applicant.involvement_types.values.first,
-                                            description: "Applicant involvement type" },
                         has_partner_opponent: { type: :boolean,
                                                 example: false,
                                                 description: "Applicant has partner opponent" },
@@ -46,13 +42,12 @@ RSpec.describe "applicants", type: :request, swagger_doc: "v5/swagger.yaml" do
                 }
 
       response(200, "successful") do
-        let(:assessment_id) { create(:assessment).id }
+        let(:assessment_id) { create(:assessment, version: "5").id }
 
         let(:params) do
           {
             applicant: {
               date_of_birth: "1992-07-22",
-              involvement_type: "applicant",
               has_partner_opponent: false,
               receives_qualifying_benefit: true,
             },
@@ -71,12 +66,11 @@ RSpec.describe "applicants", type: :request, swagger_doc: "v5/swagger.yaml" do
       end
 
       response(422, "Unprocessable Entity") do\
-        let(:assessment_id) { create(:assessment).id }
+        let(:assessment_id) { create(:assessment, version: "5").id }
 
         let(:params) do
           {
             applicant: {
-              involvement_type: "applicant",
               has_partner_opponent: false,
               receives_qualifying_benefit: true,
             },
