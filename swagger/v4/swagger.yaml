@@ -617,8 +617,6 @@ paths:
       responses:
         '200':
           description: successful
-        '422':
-          description: Unprocessable Entity
       requestBody:
         content:
           application/json:
