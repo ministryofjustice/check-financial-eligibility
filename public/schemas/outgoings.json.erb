@@ -1,0 +1,41 @@
+{
+  "id": "file://#{@schema_dir}/outgoings.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Legal Aid Check Financial Eligibility create outgoings payload schema",
+  "required": ["outgoings"],
+  "properties": {
+    "outgoings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+          "payments": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["payment_date", "amount", "client_id"],
+              "properties": {
+                "payment_date": {
+                  "$ref": "<%= "file://#{@schema_dir}/common.json#date" %>"
+                },
+                "housing_costs_type": {
+                  "enum": <%= CFEConstants::VALID_OUTGOING_HOUSING_COST_TYPES.as_json %>
+                },
+                "amount": {
+                  "$ref": "<%= "file://#{@schema_dir}/common.json#positive_currency" %>"
+                },
+                "client_id": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "name": {
+            "enum": <%= CFEConstants::VALID_OUTGOING_CATEGORIES.as_json %>
+          }
+        }
+      }
+    }
+  }
+}

@@ -17,7 +17,7 @@ RSpec.describe OutgoingsController, type: :request do
 
     subject(:post_payload) { post assessment_outgoings_path(assessment), params: params.to_json, headers: }
 
-    it "returns http success", :show_in_doc do
+    it "returns http success" do
       post_payload
       expect(response).to have_http_status(:success)
     end
@@ -46,12 +46,12 @@ RSpec.describe OutgoingsController, type: :request do
 
       before { post_payload }
 
-      it "returns unprocessable", :show_in_doc do
+      it "returns unprocessable" do
         expect(response).to have_http_status(:unprocessable_entity)
       end
 
       it "returns error information" do
-        expect(parsed_response[:errors].join).to match(/Invalid.*assessment_id/)
+        expect(parsed_response[:errors].join).to match(/No such assessment id/)
       end
 
       it "sets success flag to false" do
@@ -69,7 +69,7 @@ RSpec.describe OutgoingsController, type: :request do
       end
 
       it "returns error information" do
-        expect(parsed_response[:errors].join).to match(/Invalid.*payment_date/)
+        expect(parsed_response[:errors].join).to match(/ActiveRecord::RecordInvalid: Validation failed: Payment date date is in the future/)
       end
 
       it "sets success flag to false" do
@@ -93,7 +93,7 @@ RSpec.describe OutgoingsController, type: :request do
 
       it "contains success false in the response body" do
         post_payload
-        expect(parsed_response).to eq(errors: ["Missing parameter client_id"], success: false)
+        expect(parsed_response).to match(errors: [/The property '#\/outgoings\/2\/payments\/0' did not contain a required property of 'client_id' in schema file/], success: false)
       end
 
       it "does not create outgoing records" do

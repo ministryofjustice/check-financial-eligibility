@@ -1,14 +1,18 @@
 module Creators
   class OutgoingsCreator < BaseCreator
-    def initialize(assessment_id:, outgoings:)
+    def initialize(assessment_id:, outgoings_params:)
       super()
       @assessment_id = assessment_id
-      @outgoings = outgoings
+      @outgoings_params = outgoings_params
     end
 
     def call
-      ActiveRecord::Base.transaction do
-        @outgoings.each { |outgoing| create_outgoing_collection(outgoing) }
+      if json_validator.valid?
+        ActiveRecord::Base.transaction do
+          outgoings.each { |outgoing| create_outgoing_collection(outgoing) }
+        end
+      else
+        errors.concat(json_validator.errors)
       end
       self
     end
@@ -21,6 +25,8 @@ module Creators
       payments.each do |payment_params|
         klass.create! payment_params.merge(disposable_income_summary:)
       end
+    rescue CreationError => e
+      self.errors = e.errors
     end
 
     def disposable_income_summary
@@ -29,6 +35,14 @@ module Creators
 
     def find_or_create_disposable_income_summary
       assessment.disposable_income_summary || assessment.create_disposable_income_summary
+    end
+
+    def outgoings
+      @outgoings ||= JSON.parse(@outgoings_params, symbolize_names: true)[:outgoings]
+    end
+
+    def json_validator
+      @json_validator ||= JsonValidator.new("outgoings", @outgoings_params)
     end
   end
 end
