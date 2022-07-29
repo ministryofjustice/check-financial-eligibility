@@ -2,10 +2,10 @@
 http_interactions:
 - request:
     method: post
-    uri: https://legal-framework-api-staging.cloud-platform.service.justice.gov.uk/threshold_waivers
+    uri: https://legal-framework-api-staging.cloud-platform.service.justice.gov.uk/proceeding_types/threshold_waivers
     body:
       encoding: UTF-8
-      string: '{"request_id":"4efa3b2b-8c2b-43a2-97b4-5a51d3fd810b","proceedings":[{"ccms_code":"DA001","client_involvement_type":"A"},{"ccms_code":"SE013","client_involvement_type":"D"}]}'
+      string: '{"request_id":"7bd6ded0-8804-4d8c-bdf9-6f414d6d254b","proceeding_types":["DA004"]}'
     headers:
       Content-Type:
       - application/json
@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 18 Jul 2022 13:46:43 GMT
+      - Mon, 01 Aug 2022 09:20:11 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -43,19 +43,360 @@ http_interactions:
       Vary:
       - Accept, Origin
       Etag:
-      - W/"85b853359f905036a301b7c466c324ed"
+      - W/"6577b13904f745fa111269c52612c8ec"
       Cache-Control:
       - max-age=0, private, must-revalidate
       X-Request-Id:
-      - 954786797a698a9d8a18a1d4d13af993
+      - 6db2b1bf6eb0a1044d1008233d8d2bd4
       X-Runtime:
-      - '0.086090'
+      - '0.059027'
       Strict-Transport-Security:
       - max-age=15724800; includeSubDomains
     body:
       encoding: UTF-8
-      string: '{"request_id":"4efa3b2b-8c2b-43a2-97b4-5a51d3fd810b","success":true,"proceedings":[{"ccms_code":"DA001","matter_type":"Domestic
-        abuse","gross_income_upper":true,"disposable_income_upper":true,"capital_upper":true,"client_involvement_type":"A"},{"ccms_code":"SE013","matter_type":"Children
-        - section 8","gross_income_upper":false,"disposable_income_upper":false,"capital_upper":false,"client_involvement_type":"D"}]}'
-  recorded_at: Mon, 18 Jul 2022 13:46:43 GMT
+      string: '{"request_id":"7bd6ded0-8804-4d8c-bdf9-6f414d6d254b","success":true,"proceeding_types":[{"ccms_code":"DA004","matter_type":"Domestic
+        abuse","gross_income_upper":true,"disposable_income_upper":true,"capital_upper":true}]}'
+  recorded_at: Mon, 01 Aug 2022 09:20:11 GMT
+- request:
+    method: post
+    uri: https://legal-framework-api-staging.cloud-platform.service.justice.gov.uk/proceeding_types/threshold_waivers
+    body:
+      encoding: UTF-8
+      string: '{"request_id":"aacd703a-6d73-49e1-a28f-7bec975ab7b7","proceeding_types":["DA001"]}'
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Faraday v1.10.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 01 Aug 2022 09:20:13 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Vary:
+      - Accept, Origin
+      Etag:
+      - W/"485976ec6462d885ea4c8dc18fc03766"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - dcf9e916915c282fad05db0425b80124
+      X-Runtime:
+      - '0.069190'
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: '{"request_id":"aacd703a-6d73-49e1-a28f-7bec975ab7b7","success":true,"proceeding_types":[{"ccms_code":"DA001","matter_type":"Domestic
+        abuse","gross_income_upper":true,"disposable_income_upper":true,"capital_upper":true}]}'
+  recorded_at: Mon, 01 Aug 2022 09:20:13 GMT
+- request:
+    method: post
+    uri: https://legal-framework-api-staging.cloud-platform.service.justice.gov.uk/proceeding_types/threshold_waivers
+    body:
+      encoding: UTF-8
+      string: '{"request_id":"683ff64a-2544-4f6f-96fe-fa262ef0791d","proceeding_types":["SE013"]}'
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Faraday v1.10.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 01 Aug 2022 09:20:22 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Vary:
+      - Accept, Origin
+      Etag:
+      - W/"a8aaca4b8af7e1cf275ef58ec779d6d4"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - deae872b0127d957fd0306ea2b0eeb39
+      X-Runtime:
+      - '0.019396'
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: '{"request_id":"683ff64a-2544-4f6f-96fe-fa262ef0791d","success":true,"proceeding_types":[{"ccms_code":"SE013","matter_type":"Children
+        - section 8","gross_income_upper":false,"disposable_income_upper":false,"capital_upper":false}]}'
+  recorded_at: Mon, 01 Aug 2022 09:20:22 GMT
+- request:
+    method: post
+    uri: https://legal-framework-api-staging.cloud-platform.service.justice.gov.uk/proceeding_types/threshold_waivers
+    body:
+      encoding: UTF-8
+      string: '{"request_id":"b03c9e19-2eb1-4299-b9c7-b284ae7f0f75","proceeding_types":["SE003"]}'
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Faraday v1.10.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 01 Aug 2022 09:20:22 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Vary:
+      - Accept, Origin
+      Etag:
+      - W/"43aa2ba0a216ec1bab3bf4e63904a408"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - cdf466fe5e1f5ea847590cb1f28fbb96
+      X-Runtime:
+      - '0.018664'
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: '{"request_id":"b03c9e19-2eb1-4299-b9c7-b284ae7f0f75","success":true,"proceeding_types":[{"ccms_code":"SE003","matter_type":"Children
+        - section 8","gross_income_upper":false,"disposable_income_upper":false,"capital_upper":false}]}'
+  recorded_at: Mon, 01 Aug 2022 09:20:22 GMT
+- request:
+    method: post
+    uri: https://legal-framework-api-staging.cloud-platform.service.justice.gov.uk/proceeding_types/threshold_waivers
+    body:
+      encoding: UTF-8
+      string: '{"request_id":"76e09f6d-191b-4b0b-805a-69faa7ed1d4b","proceeding_types":["DA001"]}'
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Faraday v1.10.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 01 Aug 2022 09:20:29 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Vary:
+      - Accept, Origin
+      Etag:
+      - W/"de964a79932eccce5afc402ea6d4cb29"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - ec7ff50aa15621e94f0053c0c69198c0
+      X-Runtime:
+      - '0.014481'
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: '{"request_id":"76e09f6d-191b-4b0b-805a-69faa7ed1d4b","success":true,"proceeding_types":[{"ccms_code":"DA001","matter_type":"Domestic
+        abuse","gross_income_upper":true,"disposable_income_upper":true,"capital_upper":true}]}'
+  recorded_at: Mon, 01 Aug 2022 09:20:29 GMT
+- request:
+    method: post
+    uri: https://legal-framework-api-staging.cloud-platform.service.justice.gov.uk/proceeding_types/threshold_waivers
+    body:
+      encoding: UTF-8
+      string: '{"request_id":"fd04563e-ce2f-4587-8971-b2e8ed50822c","proceeding_types":["SE013"]}'
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Faraday v1.10.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 01 Aug 2022 09:20:30 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Vary:
+      - Accept, Origin
+      Etag:
+      - W/"0ea5d1e96273e61356b798d80ee88b23"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - e6c72cd1ab5a20037e64caebfb9487d4
+      X-Runtime:
+      - '0.032599'
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: '{"request_id":"fd04563e-ce2f-4587-8971-b2e8ed50822c","success":true,"proceeding_types":[{"ccms_code":"SE013","matter_type":"Children
+        - section 8","gross_income_upper":false,"disposable_income_upper":false,"capital_upper":false}]}'
+  recorded_at: Mon, 01 Aug 2022 09:20:30 GMT
+- request:
+    method: post
+    uri: https://legal-framework-api-staging.cloud-platform.service.justice.gov.uk/proceeding_types/threshold_waivers
+    body:
+      encoding: UTF-8
+      string: '{"request_id":"5c05d925-2eed-40a2-aa1c-533850b7690c","proceeding_types":["SE003"]}'
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Faraday v1.10.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 01 Aug 2022 09:20:30 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Vary:
+      - Accept, Origin
+      Etag:
+      - W/"aeb03922cd4077678edf63e3f91bdbc6"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 5bc1b68dbdefdd991d3d88fbe929cd34
+      X-Runtime:
+      - '0.017207'
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: '{"request_id":"5c05d925-2eed-40a2-aa1c-533850b7690c","success":true,"proceeding_types":[{"ccms_code":"SE003","matter_type":"Children
+        - section 8","gross_income_upper":false,"disposable_income_upper":false,"capital_upper":false}]}'
+  recorded_at: Mon, 01 Aug 2022 09:20:30 GMT
 recorded_with: VCR 6.1.0

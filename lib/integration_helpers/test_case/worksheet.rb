@@ -89,7 +89,9 @@ module TestCase
     end
 
     def populate_applicant
-      @applicant = TestCase::Applicant.new(@rows.shift(4))
+      row_index = @rows.index { |r| r.first.present? && r.first != "applicant" }
+      applicant_rows = @rows.shift(row_index)
+      @applicant = TestCase::Applicant.new(applicant_rows)
     end
 
     def populate_dependants
