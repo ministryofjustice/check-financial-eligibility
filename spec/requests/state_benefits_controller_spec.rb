@@ -16,7 +16,7 @@ RSpec.describe StateBenefitsController, type: :request do
 
     context "valid payload" do
       context "with two state benefits" do
-        it "returns http success", :show_in_doc do
+        it "returns http success" do
           post_payload
           expect(response).to have_http_status(:success)
         end
@@ -68,14 +68,14 @@ RSpec.describe StateBenefitsController, type: :request do
           new_hash
         end
 
-        it "returns unsuccessful", :show_in_doc do
+        it "returns unsuccessful" do
           post_payload
           expect(response.status).to eq 422
         end
 
         it "contains success false in the response body" do
           post_payload
-          expect(parsed_response).to eq(errors: ["Missing parameter name"], success: false)
+          expect(parsed_response).to match(errors: [/The property '#\/state_benefits\/1' did not contain a required property of 'name' in schema file/], success: false)
         end
 
         it "does not create any state benefit records" do
@@ -97,7 +97,7 @@ RSpec.describe StateBenefitsController, type: :request do
 
         it "contains success false in the response body" do
           post_payload
-          expect(parsed_response).to eq(errors: ["Missing parameter client_id"], success: false)
+          expect(parsed_response).to match(errors: [/The property '#\/state_benefits\/1\/payments\/0' did not contain a required property of 'client_id' in schema file/], success: false)
         end
 
         it "does not create any other income source records" do

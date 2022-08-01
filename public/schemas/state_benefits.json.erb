@@ -1,0 +1,41 @@
+{
+  "id": "file://#{@schema_dir}/state_benefits.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Legal Aid Check Financial Eligibility create state benefits payload schema",
+  "type": "object",
+  "required": ["state_benefits"],
+  "properties": {
+    "state_benefits": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+          "payments": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["date", "amount", "client_id"],
+              "properties": {
+                "date": {
+                  "$ref": "<%= "file://#{@schema_dir}/common.json#date" %>"
+                },
+                "amount": {
+                  "$ref": "<%= "file://#{@schema_dir}/common.json#positive_currency" %>"
+                },
+                "client_id": {
+                  "type": "string"
+                },
+                "flags": {
+                }
+              }
+            }
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
