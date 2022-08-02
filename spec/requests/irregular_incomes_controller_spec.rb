@@ -11,7 +11,7 @@ RSpec.describe IrregularIncomesController, type: :request do
     subject(:post_payload) { post assessment_irregular_incomes_path(assessment_id), params: params.to_json, headers: }
 
     context "valid payload" do
-      it "returns http success", :show_in_doc do
+      it "returns http success" do
         post_payload
         expect(response).to have_http_status(:success)
       end
@@ -41,7 +41,7 @@ RSpec.describe IrregularIncomesController, type: :request do
           new_hash
         end
 
-        it "returns unprocessable", :show_in_doc do
+        it "returns unprocessable" do
           post_payload
           expect(response).to have_http_status(:unprocessable_entity)
         end
