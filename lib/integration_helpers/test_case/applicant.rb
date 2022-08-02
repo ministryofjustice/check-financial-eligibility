@@ -1,10 +1,8 @@
 module TestCase
   class Applicant
     def initialize(rows)
-      @date_of_birth = rows.shift[3]
-      @involvement_type = rows.shift[3]
-      @has_partner_opponent = rows.shift[3]
-      @receives_qualifying_benefit = rows.shift[3]
+      @rows = rows
+      @rows.each { |row| populate_instance_vars(row) }
     end
 
     def url_method
@@ -24,6 +22,21 @@ module TestCase
 
     def empty?
       false
+    end
+
+  private
+
+    def populate_instance_vars(row)
+      case row[2]
+      when "date_of_birth"
+        @date_of_birth = row[3]
+      when "has_partner_opponent"
+        @has_partner_opponent = row[3]
+      when "receives_qualifying_benefit"
+        @receives_qualifying_benefit = row[3]
+      when "involvement_type"
+        @involvement_type = row[3]
+      end
     end
   end
 end

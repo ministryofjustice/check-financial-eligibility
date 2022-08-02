@@ -4,8 +4,9 @@ module Workflows
       return SelfEmployedWorkflow.call(assessment) if applicant.self_employed?
 
       collate_and_assess_gross_income
-      disposable_income_assessment if gross_income_summary.eligible?
+      return if gross_income_summary.ineligible?
 
+      disposable_income_assessment
       return if disposable_income_summary.ineligible?
 
       collate_and_assess_capital

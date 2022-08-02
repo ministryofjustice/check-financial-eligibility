@@ -9,7 +9,8 @@ module Utilities
     end
 
     def call
-      response = LegalFrameworkAPI::ThresholdWaivers.call(proceeding_type_details)
+      service = Rails.env.production? ? LegalFrameworkAPI::ThresholdWaivers : LegalFrameworkAPI::MockThresholdWaivers
+      response = service.call(proceeding_type_details)
       store_response(response)
     end
 

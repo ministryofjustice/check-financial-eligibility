@@ -21,4 +21,8 @@ class GrossIncomeSummary < ApplicationRecord
   def eligible?
     summarized_assessment_result.in? %i[eligible partially_eligible]
   end
+
+  def ineligible?
+    !eligible?
+  end
 end

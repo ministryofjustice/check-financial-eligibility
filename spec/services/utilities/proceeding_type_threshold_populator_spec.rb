@@ -60,8 +60,8 @@ module Utilities
       end
 
       it "calls LegalFrameworkAPI::ThresholdWaivers with expected payload" do
-        expect(LegalFrameworkAPI::ThresholdWaivers).to receive(:call).with(expected_payload)
-        allow(LegalFrameworkAPI::ThresholdWaivers).to receive(:call).and_return(response)
+        expect(LegalFrameworkAPI::MockThresholdWaivers).to receive(:call).with(expected_payload)
+        allow(LegalFrameworkAPI::MockThresholdWaivers).to receive(:call).and_return(response)
 
         described_class.call(assessment)
       end
