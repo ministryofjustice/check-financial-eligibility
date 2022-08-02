@@ -78,7 +78,7 @@ RSpec.describe "irregular_incomes", type: :request, swagger_doc: "v4/swagger.yam
         run_test!
       end
 
-      response(422, "Unprocessable Entity") do\
+      response(422, "Unprocessable Entity") do
         let(:assessment_id) { create(:assessment, :with_gross_income_summary).id }
 
         let(:params) do
@@ -94,7 +94,7 @@ RSpec.describe "irregular_incomes", type: :request, swagger_doc: "v4/swagger.yam
 
         run_test! do |response|
           body = JSON.parse(response.body, symbolize_names: true)
-          expect(body[:errors]).to include(/Missing parameter income_type/)
+          expect(body[:errors]).to include(/did not contain a required property of 'income_type' /)
         end
       end
     end

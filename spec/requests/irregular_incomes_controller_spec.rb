@@ -11,7 +11,7 @@ RSpec.describe IrregularIncomesController, type: :request do
     subject(:post_payload) { post assessment_irregular_incomes_path(assessment_id), params: params.to_json, headers: }
 
     context "valid payload" do
-      it "returns http success", :show_in_doc do
+      it "returns http success" do
         post_payload
         expect(response).to have_http_status(:success)
       end
@@ -41,14 +41,14 @@ RSpec.describe IrregularIncomesController, type: :request do
           new_hash
         end
 
-        it "returns unprocessable", :show_in_doc do
+        it "returns unprocessable" do
           post_payload
           expect(response).to have_http_status(:unprocessable_entity)
         end
 
         it "contains success false in the response body" do
           post_payload
-          expect(parsed_response).to eq(errors: ["Missing parameter income_type"], success: false)
+          expect(parsed_response).to eq(success: false, errors: ["The property '#/payments/0' did not contain a required property of 'income_type' in schema file://public/schemas/irregular_incomes.json"])
         end
 
         it "does not create irregular income payment record" do
@@ -75,12 +75,7 @@ RSpec.describe IrregularIncomesController, type: :request do
 
         it "contains an error message" do
           post_payload
-          expect(parsed_response[:errors].first).to match(/Invalid parameter 'income_type'/)
-        end
-
-        it "returns an error response" do
-          post_payload
-          expect(parsed_response).to eq(errors: ["Invalid parameter 'income_type' value \"imagined_type\": Must be one of: <code>student_loan</code>."], success: false)
+          expect(parsed_response).to eq({ success: false, errors: ["The property '#/payments/0/income_type' value \"imagined_type\" did not match one of the following values: student_loan in schema file://public/schemas/irregular_incomes.json"] })
         end
 
         it "does not create irregular income payments record" do

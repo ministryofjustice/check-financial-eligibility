@@ -94,7 +94,7 @@ RSpec.describe "irregular_incomes", type: :request, swagger_doc: "v5/swagger.yam
 
         run_test! do |response|
           body = JSON.parse(response.body, symbolize_names: true)
-          expect(body[:errors]).to include(/Missing parameter income_type/)
+          expect(body[:errors]).to include("The property '#/payments/0' did not contain a required property of 'income_type' in schema file://public/schemas/irregular_incomes.json")
         end
       end
     end

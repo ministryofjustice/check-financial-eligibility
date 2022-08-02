@@ -7,9 +7,9 @@ module Creators
     let(:frequency) { "annual" }
     let(:student_loan) { "student_loan" }
     let(:assessment_id) { assessment.id }
-    let(:irregular_income) { irregular_income_params }
+    let(:irregular_income_params) { irregular_income_params }
 
-    subject(:creator) { described_class.call(assessment_id:, irregular_income:) }
+    subject(:creator) { described_class.call(assessment_id:, irregular_income_params:) }
 
     describe ".call" do
       context "payload" do
@@ -27,7 +27,7 @@ module Creators
       end
 
       context "empty payload" do
-        let(:irregular_income) { { payments: [] } }
+        let(:irregular_income_params) { { payments: [] } }
 
         it "does not create any records" do
           expect { creator }.not_to change(IrregularIncomePayment, :count)
@@ -41,13 +41,65 @@ module Creators
           expect(creator.errors).to eq ["No such assessment id"]
         end
       end
+
+      context "invalid payload - missing frequency" do
+        let(:irregular_income_params) { missing_frequency_params }
+
+        it "does not creat any records" do
+          expect { creator }.not_to change(IrregularIncomePayment, :count)
+        end
+
+        it "returns an error" do
+          expect(creator.errors).to eq ["The property '#/payments/0' did not contain a required property of 'frequency' in schema file://public/schemas/irregular_incomes.json"]
+        end
+      end
+
+      context "invalid payload - multiple payments" do
+        let(:irregular_income_params) { multiple_payments_params }
+
+        it "does not creat any records" do
+          expect { creator }.not_to change(IrregularIncomePayment, :count)
+        end
+
+        it "returns an error" do
+          expect(creator.errors).to eq ["The property '#/payments' had more items than the allowed 1 in schema file://public/schemas/irregular_incomes.json"]
+        end
+      end
     end
 
     def irregular_income_params
       {
         payments: [
           {
-            income_type: student_loan,
+            income_type: "student_loan",
+            frequency:,
+            amount: 123_456.78,
+          },
+        ],
+      }
+    end
+
+    def missing_frequency_params
+      {
+        payments: [
+          {
+            income_type: "student_loan",
+            amount: 99_999.00,
+          },
+        ],
+      }
+    end
+
+    def multiple_payments_params
+      {
+        payments: [
+          {
+            income_type: "student_loan",
+            frequency:,
+            amount: 123_456.78,
+          },
+          {
+            income_type: "student_loan",
             frequency:,
             amount: 123_456.78,
           },
