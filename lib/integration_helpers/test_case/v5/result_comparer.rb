@@ -18,7 +18,6 @@ module TestCase
       def call
         print_headings
         compare_assessment
-        compare_matter_types
         compare_proceeding_types
         compare_gross_income
         compare_disposable_income
@@ -38,26 +37,10 @@ module TestCase
         verbose sprintf(@header_pattern, "", "=========", "=========")
       end
 
-      def print_mismatched_matter_types
-        verbose "Matter type names do not match expected", :red
-        verbose "  Expected: #{expected_matter_type_names.join(', ')}", :red
-        verbose "  Actual  : #{actual_matter_type_names.join(', ')}", :red
-      end
-
       def print_mismatched_proceeding_type_codes
         verbose "Proceeding type codes do not match expected", :red
         verbose "  Expected: #{expected_proceeding_type_codes.join(', ')}", :red
         verbose "  Actual  : #{actual_proceeding_type_codes.join(', ')}", :red
-      end
-
-      def print_matter_type_details
-        expected_matter_types.each do |matter_type_hash|
-          name = matter_type_hash.keys.first
-          expected_result = matter_type_hash[name]
-          actual_result = actual_matter_type_result_for(name)
-          color = actual_result == expected_result ? :green : :red
-          verbose sprintf(@header_pattern, "Matter type: #{name}", expected_result, actual_result), color
-        end
       end
 
       def client_reference_id
@@ -66,14 +49,6 @@ module TestCase
 
       def compare_assessment
         compare_and_print("assessment_result", actual_overall_result[:result], expected_assessment[:assessment_result])
-      end
-
-      def compare_matter_types
-        if expected_matter_type_names == actual_matter_type_names
-          print_matter_type_details
-        else
-          print_mismatched_matter_types
-        end
       end
 
       def compare_proceeding_types
