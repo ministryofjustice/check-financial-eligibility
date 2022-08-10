@@ -85,7 +85,9 @@ LEGAL_FRAMEWORK_API_HOST
 ```
 
 Set ALLOW_FUTURE_SUBMISSION_DATE to true to allow integration tests to run with submission dates that are in the future.
-A copy of the `.env` file including the current values can be found in the `Shared-LAA` section of LastPass.
+A copy of the `.env` file including the current values can be found in the `Shared-LAA` section of LastPass (reach out to the team if you don't have access).
+
+Note: Remove “GOOGLE_SHEETS_” from several of the variables in .env file
 
 ## Threshold configuration files
 
@@ -100,6 +102,11 @@ This allows the insertion of test data on an arbitrary date specified in the `va
 for testing new thresholds before they come into affect on production.
 
 ## Setup
+
+Please install the following dependencies prior to running the application setup:
+
+brew install shared-mime-info
+brew install postgresql
 
 You can run `bin/setup` from the command line to install dependencies and setup the development and test databases.
 
