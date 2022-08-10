@@ -156,6 +156,51 @@ options:
 Each worksheet has an entry `Test Active` which can be either true or false.  If set to false, the worksheet will be skipped, unless it is
 the named worksheet using the `-w` command line switch.
 
+## Integration tests (cucumber)
+
+Temp note: This branch holds cucumber tests that are a POC meant to replace the spreadsheet tests i.e., the above ispec tests. The tests are not fully converted as its a POC.
+
+To run, please run
+
+```
+bundle install
+bin/spring stop && bin/spring server
+```
+
+You'll also need the database running.
+
+```
+brew services info postgresql
+brew services restart postgresql
+```
+
+Note: If postgres does not start up, it may be due to a lingering pid file. Remove:
+
+```
+rm -f /usr/local/var/postgres/postmaster.pid
+```
+
+Then run the setup script to setup the database.
+
+```
+bin/setup
+```
+
+
+In case the rails server does not start up, start it up to run the tests against them:
+
+```
+bin/rails server
+```
+
+To run the tests
+
+```
+bundle exec cucumber
+```
+
+For convenience, we've also introduced git abstracted scripts for Windows based non-dev users. These can be found in the features folder. You will need to setup the `CUCUMBER_REPO_PATH` environment variable to get these scripts working. The name of the file describes the interaction it will perform. For example, save.bat is short for creating a branch, committing and pushing to Github repo.
+
 ## Replaying live API interactions for debugging purposes
 
 In the event that you need to investigate why a CFE result was produced on live, there is

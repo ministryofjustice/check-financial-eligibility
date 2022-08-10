@@ -371,7 +371,7 @@
     {
       "title": "Default",
       "verb": "POST",
-      "path": "/assessments/13ba4de2-3c71-40df-b54d-5bc12eb7077e/capitals",
+      "path": "/assessments/701f00a2-3b6f-49b7-af84-01e3160425c6/capitals",
       "versions": [
 
       ],
@@ -379,22 +379,22 @@
       "request_data": {
         "bank_accounts": [
           {
-            "description": "ABBOTSTONE AGRICULTURAL PROPERTY UNIT TRUST 78967882",
-            "value": 40743.28
+            "description": "ABG SUNDAL COLLIER LIMITED 87469117",
+            "value": 90759.98
           },
           {
-            "description": "ABN AMRO HOARE GOVETT SECURITIES 34052246",
-            "value": 54096.86
+            "description": "ABN AMRO HOARE GOVETT CORPORATE FINANCE LTD. 34907013",
+            "value": 87859.36
           }
         ],
         "non_liquid_capital": [
           {
-            "description": "Life Endowment Policy",
-            "value": 50037.09
+            "description": "Ming Vase",
+            "value": 93899.45
           },
           {
             "description": "FTSE tracker unit trust",
-            "value": 32561.87
+            "value": 32643.22
           }
         ]
       },
@@ -1065,51 +1065,9 @@
     {
       "title": "Default",
       "verb": "POST",
-      "path": "/assessments/de6b3d38-5a13-4e2c-9cbc-8e37c2a6f601/properties",
+      "path": "/assessments/7db9455b-bae9-4225-9b4e-18a3d5365cfc/properties",
       "versions": [
-        "1.0"
-      ],
-      "query": null,
-      "request_data": {
-        "properties": {
-          "main_home": {
-            "value": 500000,
-            "outstanding_mortgage": 200,
-            "percentage_owned": 15,
-            "shared_with_housing_assoc": true
-          },
-          "additional_properties": [
-            {
-              "value": 1000,
-              "outstanding_mortgage": 0,
-              "percentage_owned": 99,
-              "shared_with_housing_assoc": false
-            },
-            {
-              "value": 10000,
-              "outstanding_mortgage": 40,
-              "percentage_owned": 80,
-              "shared_with_housing_assoc": true
-            }
-          ]
-        }
-      },
-      "response_data": {
-        "success": true,
-        "errors": [
 
-        ]
-      },
-      "code": 200,
-      "show_in_doc": 1,
-      "recorded": true
-    },
-    {
-      "title": "Default",
-      "verb": "POST",
-      "path": "/assessments/1ce10b1b-5b82-40f0-a6e3-5447aa90b4cb/properties",
-      "versions": [
-        "1.0"
       ],
       "query": null,
       "request_data": {
@@ -1143,6 +1101,48 @@
         ]
       },
       "code": 422,
+      "show_in_doc": 1,
+      "recorded": true
+    },
+    {
+      "title": "Default",
+      "verb": "POST",
+      "path": "/assessments/a5e8d24d-4d86-4176-9c40-e0a8e017532d/properties",
+      "versions": [
+
+      ],
+      "query": null,
+      "request_data": {
+        "properties": {
+          "main_home": {
+            "value": 500000,
+            "outstanding_mortgage": 200,
+            "percentage_owned": 15,
+            "shared_with_housing_assoc": true
+          },
+          "additional_properties": [
+            {
+              "value": 1000,
+              "outstanding_mortgage": 0,
+              "percentage_owned": 99,
+              "shared_with_housing_assoc": false
+            },
+            {
+              "value": 10000,
+              "outstanding_mortgage": 40,
+              "percentage_owned": 80,
+              "shared_with_housing_assoc": true
+            }
+          ]
+        }
+      },
+      "response_data": {
+        "success": true,
+        "errors": [
+
+        ]
+      },
+      "code": 200,
       "show_in_doc": 1,
       "recorded": true
     }
@@ -1859,7 +1859,7 @@
     {
       "title": "Default",
       "verb": "POST",
-      "path": "/assessments/25150439-df04-41ae-a507-0089cc6c37c8/vehicles",
+      "path": "/assessments/0581f649-fd3f-4666-b728-cb8d8cf86434/vehicles",
       "versions": [
         "1.0"
       ],
@@ -1867,16 +1867,16 @@
       "request_data": {
         "vehicles": [
           {
-            "value": 2281.95,
-            "loan_amount_outstanding": 2618.81,
-            "date_of_purchase": "2021-04-18",
+            "value": 5642.27,
+            "loan_amount_outstanding": 4455.52,
+            "date_of_purchase": "2019-05-10",
             "in_regular_use": false
           },
           {
-            "value": 5522.16,
-            "loan_amount_outstanding": 8644.32,
-            "date_of_purchase": "2018-12-27",
-            "in_regular_use": false
+            "value": 4583.42,
+            "loan_amount_outstanding": 7556.66,
+            "date_of_purchase": "2018-12-07",
+            "in_regular_use": true
           }
         ]
       },
@@ -1901,16 +1901,16 @@
       "request_data": {
         "vehicles": [
           {
-            "value": 9655.92,
-            "loan_amount_outstanding": 8911.05,
-            "date_of_purchase": "2021-02-06",
-            "in_regular_use": false
+            "value": 6684.91,
+            "loan_amount_outstanding": 1811.39,
+            "date_of_purchase": "2020-09-01",
+            "in_regular_use": true
           },
           {
-            "value": 8188.96,
-            "loan_amount_outstanding": 2467.52,
-            "date_of_purchase": "2020-12-02",
-            "in_regular_use": true
+            "value": 6900.21,
+            "loan_amount_outstanding": 4432.38,
+            "date_of_purchase": "2018-11-15",
+            "in_regular_use": false
           }
         ]
       },
