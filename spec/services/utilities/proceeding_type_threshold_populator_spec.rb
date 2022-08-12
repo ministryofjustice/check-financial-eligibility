@@ -3,7 +3,8 @@ require "rails_helper"
 module Utilities
   RSpec.describe ProceedingTypeThresholdPopulator do
     describe ".call" do
-      let(:assessment) { create :assessment, submission_date: Date.new(2022, 7, 12) }
+      let(:proceeding_hash) { [%w[DA001 A], %w[DA005 Z], %w[SE014 A]] }
+      let(:assessment) { create :assessment, submission_date: Date.new(2022, 7, 12), proceedings: proceeding_hash }
       let(:response) do
         {
           request_id: "ba7de3c7-cfbe-43de-89b6-8afa2fbe4193",
@@ -51,12 +52,6 @@ module Utilities
             client_involvement_type: "A",
           },
         ]
-      end
-
-      before do
-        create :proceeding_type, assessment:, ccms_code: "DA001", client_involvement_type: "A"
-        create :proceeding_type, assessment:, ccms_code: "DA005", client_involvement_type: "Z"
-        create :proceeding_type, assessment:, ccms_code: "SE014", client_involvement_type: "A"
       end
 
       it "calls LegalFrameworkAPI::ThresholdWaivers with expected payload" do

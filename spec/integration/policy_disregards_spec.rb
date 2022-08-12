@@ -17,6 +17,7 @@ RSpec.describe "Eligible Full Assessment with policy disregard remarks" do
   it "returns the expected payload with no policy disregards remarks" do
     assessment_id = post_assessment
     post_applicant(assessment_id)
+    post_proceeding_types(assessment_id)
     post_capitals(assessment_id)
     post_dependants(assessment_id)
     post_outgoings(assessment_id)
@@ -25,7 +26,7 @@ RSpec.describe "Eligible Full Assessment with policy disregard remarks" do
     post_irregular_income(assessment_id)
     post_explicit_remarks(assessment_id)
 
-    get assessment_path(assessment_id), headers: v3_headers
+    get assessment_path(assessment_id), headers: v5_headers
     output_response(:get, :assessment)
 
     expect(parsed_response[:assessment][:remarks]).not_to include(:policy_disregards)
@@ -40,6 +41,11 @@ RSpec.describe "Eligible Full Assessment with policy disregard remarks" do
   def post_applicant(assessment_id)
     post assessment_applicant_path(assessment_id), params: applicant_params, headers: headers
     output_response(:post, :applicant)
+  end
+
+  def post_proceeding_types(assessment_id)
+    post assessment_proceeding_types_path(assessment_id), params: proceeding_type_params, headers: headers
+    output_response(:post, :proceeding_types)
   end
 
   def post_capitals(assessment_id)
@@ -88,11 +94,11 @@ RSpec.describe "Eligible Full Assessment with policy disregard remarks" do
   end
 
   def headers
-    v3_headers
+    v5_headers
   end
 
-  def v3_headers
-    { "CONTENT_TYPE" => "application/json", "Accept" => "application/json;version=3" }
+  def v5_headers
+    { "CONTENT_TYPE" => "application/json", "Accept" => "application/json;version=5" }
   end
 
   def assessment_params
@@ -104,9 +110,19 @@ RSpec.describe "Eligible Full Assessment with policy disregard remarks" do
   def applicant_params
     { "applicant" =>
           { "date_of_birth" => "1981-04-11",
-            "involvement_type" => "applicant",
             "has_partner_opponent" => false,
             "receives_qualifying_benefit" => false } }.to_json
+  end
+
+  def proceeding_type_params
+    {
+      "proceeding_types" => [
+        { "ccms_code" => "DA004", "client_involvement_type" => "A" },
+        { "ccms_code" => "DA020", "client_involvement_type" => "A" },
+        { "ccms_code" => "SE004", "client_involvement_type" => "A" },
+        { "ccms_code" => "SE013", "client_involvement_type" => "A" },
+      ],
+    }.to_json
   end
 
   def capitals_params

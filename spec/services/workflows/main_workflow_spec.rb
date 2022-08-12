@@ -2,7 +2,18 @@ require "rails_helper"
 
 module Workflows
   RSpec.describe ".call" do
-    let(:assessment) { create :assessment, applicant: }
+    let(:proceedings_hash) { [%w[DA003 A], %w[SE013 I]] }
+    let(:bank_holiday_response) { %w[2015-01-01 2015-04-03 2015-04-06] }
+    let(:assessment) do
+      create :assessment,
+             :with_everything,
+             proceedings: proceedings_hash,
+             applicant:
+    end
+
+    before do
+      allow(GovukBankHolidayRetriever).to receive(:dates).and_return(bank_holiday_response)
+    end
 
     context "applicant is passported" do
       let(:applicant) { create :applicant, :with_qualifying_benefits }
@@ -47,6 +58,7 @@ module Workflows
                :with_capital_summary,
                :with_gross_income_summary,
                :with_disposable_income_summary,
+               proceedings: proceedings_hash,
                version: "5",
                applicant:
       end
@@ -54,7 +66,9 @@ module Workflows
 
       subject(:workflow_call) { MainWorkflow.call(assessment) }
 
-      context "without an proceeding types" do
+      context "without any proceeding types" do
+        let(:proceedings_hash) { [] }
+
         it "raises" do
           expect {
             workflow_call
@@ -63,8 +77,6 @@ module Workflows
       end
 
       context "with proceeding types" do
-        before { create_list :proceeding_type, 2, assessment: }
-
         it "Populates proceeding types with thresholds" do
           expect(Utilities::ProceedingTypeThresholdPopulator).to receive(:call).with(assessment)
 

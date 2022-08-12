@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe ProceedingType do
-  let(:assessment) { create :assessment }
+  let(:assessment) { create :assessment, proceedings: [] }
 
   describe "ccms_code" do
     it "errors if invalid" do

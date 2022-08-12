@@ -28,5 +28,16 @@ FactoryBot.define do
       disposable_income_upper_threshold { 733.0 }
       capital_upper_threshold { 8_000.0 }
     end
+
+    trait :da003a do
+      with_waived_thresholds
+      ccms_code { "DA003" }
+      client_involvement_type { "A" }
+    end
+
+    trait :se014z do
+      with_unwaived_thresholds
+      ccms_code { "SE014" }
+    end
   end
 end

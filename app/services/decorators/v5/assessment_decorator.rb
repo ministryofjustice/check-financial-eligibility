@@ -1,15 +1,6 @@
 module Decorators
   module V5
     class AssessmentDecorator
-      # class aliases for V3
-      ApplicantDecorator = ::Decorators::V3::ApplicantDecorator
-      RemarksDecorator = ::Decorators::V3::RemarksDecorator
-
-      # class aliases for V4
-      GrossIncomeDecorator = ::Decorators::V4::GrossIncomeDecorator
-      CapitalDecorator = ::Decorators::V4::CapitalDecorator
-      DisposableIncomeDecorator = ::Decorators::V4::DisposableIncomeDecorator
-
       attr_reader :assessment
 
       delegate :applicant,

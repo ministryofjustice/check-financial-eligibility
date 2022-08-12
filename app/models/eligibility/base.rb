@@ -13,7 +13,7 @@ module Eligibility
     end
 
     def valid_proceeding_type_code?
-      proceeding_type_code.to_sym.in?(ProceedingTypeThreshold.valid_ccms_codes)
+      proceeding_type_code.to_sym.in?(CFEConstants::VALID_PROCEEDING_TYPE_CCMS_CODES)
     end
   end
 end

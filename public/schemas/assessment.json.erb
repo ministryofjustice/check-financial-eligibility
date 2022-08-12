@@ -10,22 +10,6 @@
     },
     "submission_date": {
       "$ref": "<%= "file://#{@schema_dir}/common.json#date" %>"
-    },
-    "matter_proceeding_type": {
-      "enum": <%= Assessment.matter_proceeding_types.values.as_json %>
-    },
-    "proceeding_types": {
-      "type": "object",
-      "required": ["ccms_codes"],
-      "properties": {
-        "ccms_codes": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": <%= ProceedingTypeThreshold.valid_ccms_codes.as_json %>
-          }
-        }
-      }
     }
   }
 }

@@ -41,11 +41,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_01_175043) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.date "submission_date", null: false
-    t.string "matter_proceeding_type"
     t.string "assessment_result", default: "pending", null: false
     t.text "remarks"
     t.string "version"
-    t.string "proceeding_type_codes"
     t.index ["client_reference_id"], name: "index_assessments_on_client_reference_id"
   end
 

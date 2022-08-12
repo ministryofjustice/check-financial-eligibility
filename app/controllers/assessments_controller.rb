@@ -22,10 +22,11 @@ private
   end
 
   def version
-    version = CFEConstants::DEFAULT_ASSESSMENT_VERSION
-    parts = request.headers["Accept"].split(";")
-    parts.each { |part| version = Regexp.last_match(1) if part.strip =~ /^version=(\d)$/ }
-    version
+    accept_header_parts = request.headers["Accept"].split(";")
+    version_part = accept_header_parts.detect { |part| part.strip =~ /^version=(\d+)$/ }
+    return CFEConstants::DEFAULT_ASSESSMENT_VERSION if version_part.nil?
+
+    Regexp.last_match(1)
   end
 
   def assessment_creation_service
@@ -37,12 +38,6 @@ private
   end
 
   def decorator_klass
-    if assessment.version_3?
-      Decorators::V3::AssessmentDecorator
-    elsif assessment.version_4?
-      Decorators::V4::AssessmentDecorator
-    else
-      Decorators::V5::AssessmentDecorator
-    end
+    Decorators::V5::AssessmentDecorator
   end
 end

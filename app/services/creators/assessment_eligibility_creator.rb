@@ -15,7 +15,7 @@ module Creators
   private
 
     def proceeding_type_codes
-      @assessment.version_5? ? @assessment.proceeding_types.map(&:ccms_code) : @assessment.proceeding_type_codes
+      @assessment.proceeding_types.map(&:ccms_code)
     end
 
     def create_eligibility(ptc)
