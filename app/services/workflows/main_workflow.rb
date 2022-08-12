@@ -18,8 +18,6 @@ module Workflows
     end
 
     def version_5_verification(assessment)
-      return unless assessment.version_5?
-
       raise "Proceeding Types not created" unless assessment.proceeding_types.any?
 
       Utilities::ProceedingTypeThresholdPopulator.call(assessment)

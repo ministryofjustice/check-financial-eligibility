@@ -6,7 +6,7 @@ module Decorators
       end
 
       def as_json
-        proceeding_types.map { |proceeding_type| pt_result(proceeding_type) }
+        proceeding_types.order(:ccms_code).map { |proceeding_type| pt_result(proceeding_type) }
       end
 
     private

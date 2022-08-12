@@ -2,16 +2,11 @@ class Assessment < ApplicationRecord
   extend EnumHash
 
   serialize :remarks
-  serialize :proceeding_type_codes, Array
 
   validates :remote_ip,
             :submission_date,
             presence: true
-  validates :matter_proceeding_type, presence: true, if: :matter_proceeding_type_required?
-  validates :proceeding_type_codes, presence: true, if: :proceeding_types_codes_required?
   validates :version, inclusion: { in: CFEConstants::VALID_ASSESSMENT_VERSIONS, message: "not valid in Accept header" }
-
-  validate :proceeding_type_codes_validations
 
   has_one :applicant, dependent: :destroy
   has_one :capital_summary, dependent: :destroy
@@ -34,8 +29,6 @@ class Assessment < ApplicationRecord
   has_many :proceeding_types,
            dependent: :destroy
 
-  enum matter_proceeding_type: enum_hash_for(:domestic_abuse)
-
   delegate :determine_result!, to: :capital_summary
   delegate :cash_transaction_categories, to: :gross_income_summary
 
@@ -46,33 +39,7 @@ class Assessment < ApplicationRecord
     Remarks.new(id)
   end
 
-  def version_3?
-    version == "3"
-  end
-
-  def version_4?
-    version == "4"
-  end
-
-  def version_5?
-    version == "5"
-  end
-
-private
-
-  def matter_proceeding_type_required?
-    version_3?
-  end
-
-  def proceeding_type_codes_validations
-    return if version_3?
-
-    proceeding_type_codes.each do |code|
-      errors.add(:proceeding_type_codes, "invalid: #{code}") unless code.to_sym.in?(ProceedingTypeThreshold.valid_ccms_codes)
-    end
-  end
-
-  def proceeding_types_codes_required?
-    version_4?
+  def proceeding_type_codes
+    proceeding_types.map(&:ccms_code)
   end
 end

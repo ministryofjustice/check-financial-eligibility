@@ -3,7 +3,7 @@ require "rails_helper"
 module Creators
   RSpec.describe ProceedingTypesCreator do
     include Rails.application.routes.url_helpers
-    let(:assessment) { create :assessment, version: "5" }
+    let(:assessment) { create :assessment, proceedings: [] }
     let(:assessment_id) { assessment.id }
     let(:proceeding_types_attributes) { attributes_for_list(:proceeding_type, 2) }
     let(:proceeding_types_params) { { proceeding_types: proceeding_types_attributes }.to_json }

@@ -68,7 +68,7 @@ RSpec.describe "V5 Assessments", type: :request, vcr: true, swagger_doc: "v5/swa
       produces "application/json"
 
       response(200, "successful") do
-        let(:assessment) { create(:assessment, :passported, :with_everything, :with_eligibilities) }
+        let(:assessment) { create(:assessment, :passported, :with_everything) }
         let(:id) { assessment.id }
 
         after do |example|

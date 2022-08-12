@@ -42,7 +42,6 @@ module TestCase
       @verbosity_level = verbosity_level
       @rows = @worksheet.to_a
       @cash_transactions = CashTransactionsCollection.new
-      @headers = { "CONTENT_TYPE" => "application/json", "Accept" => "application/json;version=2" }
       @skippable = !@rows[0][1]
     end
 
@@ -67,11 +66,7 @@ module TestCase
     end
 
     def compare_results(actual_result)
-      if version == "3"
-        Result.new(@expected_results, actual_result, @verbosity_level).compare
-      else
-        @expected_results.compare(actual_result, @verbosity_level)
-      end
+      @expected_results.compare(actual_result, @verbosity_level)
     end
 
   private
@@ -147,14 +142,7 @@ module TestCase
     end
 
     def populate_expected_results
-      @expected_results = case version
-                          when "4"
-                            V4::ExpectedResult.new(@rows)
-                          when "5"
-                            V5::ExpectedResult.new(@rows)
-                          else
-                            V3::ExpectedResult.new(@rows)
-                          end
+      @expected_results = V5::ExpectedResult.new(@rows)
     end
 
     def populate_earned_income

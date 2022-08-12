@@ -42,7 +42,7 @@ module Creators
     end
 
     def json_validator
-      @json_validator ||= assessment&.version == "5" ? JsonValidator.new("applicant_v5", @applicant_params) : JsonValidator.new("applicant", @applicant_params)
+      @json_validator ||= JsonValidator.new("applicant_v5", @applicant_params)
     end
   end
 end

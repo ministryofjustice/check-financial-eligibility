@@ -4,7 +4,6 @@ class AssessmentRequestFixture < BaseAssessmentFixture
       client_reference_id: "my-eligibility-check-01",
       meta_data: {
         submission_date: Date.parse("02 Apr 2019"),
-        matter_proceeding_type: "domestic_abuse",
       },
       applicant: {
         date_of_birth: Date.parse("13 Aug 1953"),

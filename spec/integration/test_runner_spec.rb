@@ -22,7 +22,7 @@ RSpec.describe "IntegrationTests::TestRunner", type: :request do
   let(:spreadsheet_file) { Rails.root.join("tmp/integration_test_data.xlsx") }
   let(:spreadsheet) { Roo::Spreadsheet.open(spreadsheet_file.to_s) }
   let(:worksheet_names) { spreadsheet.sheets }
-  let(:headers) { { "CONTENT_TYPE" => "application/json", "Accept" => "application/json;version=3" } }
+  let(:headers) { { "CONTENT_TYPE" => "application/json", "Accept" => "application/json;version=5" } }
 
   before do
     setup_test_data

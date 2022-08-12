@@ -27,33 +27,6 @@ RSpec.configure do |config|
   # document below. You can override this behavior by adding a swagger_doc tag to the
   # the root example_group in your specs, e.g. describe '...', swagger_doc: 'v2/swagger.json'
   config.swagger_docs = {
-    "v3/swagger.yaml" => {
-      openapi: "3.0.1",
-      info: {
-        title: "API V3",
-        description: api_description,
-        contact: {
-          name: "Github repository",
-          url: "https://github.com/ministryofjustice/check-financial-eligibility",
-        },
-        version: "v3",
-      },
-
-      paths: {},
-    },
-    "v4/swagger.yaml" => {
-      openapi: "3.0.1",
-      info: {
-        title: "API V4",
-        description: api_description,
-        contact: {
-          name: "Github repository",
-          url: "https://github.com/ministryofjustice/check-financial-eligibility",
-        },
-        version: "v4",
-      },
-      paths: {},
-    },
     "v5/swagger.yaml" => {
       openapi: "3.0.1",
       info: {

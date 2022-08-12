@@ -5,7 +5,6 @@ RSpec.describe "JsonValidator" do
     {
       applicant: {
         date_of_birth: dob,
-        involvement_type:,
         has_partner_opponent: opponent,
         receives_qualifying_benefit: benefit,
       },
@@ -17,7 +16,7 @@ RSpec.describe "JsonValidator" do
   let(:opponent) { false }
   let(:benefit) { true }
 
-  let(:schema_name) { "applicant" }
+  let(:schema_name) { "applicant_v5" }
 
   let(:validator) { JsonValidator.new(schema_name, payload) }
 
@@ -34,7 +33,6 @@ RSpec.describe "JsonValidator" do
     it "displays errors" do
       expect(validator.errors)
         .to include(match(/The property '#\/applicant\/date_of_birth' value "3002-12-23" did not match the rege/))
-        .and include(match(/The property '#\/applicant\/involvement_type' value "defendant" did not match one of the following values: applicant in schema file:/))
     end
   end
 
@@ -52,8 +50,7 @@ RSpec.describe "JsonValidator" do
 
     it "has the expected errors" do
       expect(validator.errors)
-        .to include(match(/The property '#\/applicant' did not contain a required property of 'involvement_type' in schema/))
-        .and include(match(/The property '#\/applicant' did not contain a required property of 'receives_qualifying_benefit' in schema/))
+        .to include(match(/The property '#\/applicant' did not contain a required property of 'receives_qualifying_benefit' in schema/))
     end
   end
 end
