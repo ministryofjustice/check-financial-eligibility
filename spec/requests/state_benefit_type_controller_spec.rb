@@ -24,7 +24,7 @@ RSpec.describe StateBenefitTypeController, type: :request do
   end
 
   context "full list for documentation" do
-    it "returns http success", :show_in_doc do
+    it "returns http success" do
       StateBenefitType.delete_all
       Dibber::Seeder.new(StateBenefitType, "data/state_benefit_types.yml", name_method: :label, overwrite: true).build
       get state_benefit_type_index_path

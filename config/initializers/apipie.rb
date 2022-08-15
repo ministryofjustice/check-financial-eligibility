@@ -36,13 +36,5 @@ Apipie.configure do |config|
     the following call should be made to perform the assessment and get the result:
 
       GET /assessment/:assessment_id
-
-    == Reference data
-
-    A list of state_benefit types, their full names, and the labels to use when posting to the state_benfits endpoint can
-    be obtained from this endpoint:
-
-    GET /state_benefit_type
-
   END_OF_TEXT
 end
