@@ -86,7 +86,7 @@ RSpec.describe CapitalsController, type: :request do
       context "Active Record error" do
         let(:assessment_id) { SecureRandom.uuid }
 
-        it "errors and is shown in apidocs", :show_in_doc do
+        it "errors and is shown in apidocs" do
           expect(response).to have_http_status(:unprocessable_entity)
         end
 

@@ -40,7 +40,7 @@ RSpec.describe PropertiesController, type: :request do
     context "with valid payload" do
       let(:assessment_id) { assessment.id }
 
-      it "returns http status code 200", :show_in_doc do
+      it "returns http status code 200" do
         expect(response).to have_http_status(:success)
       end
 
@@ -64,7 +64,7 @@ RSpec.describe PropertiesController, type: :request do
         expect(parsed_response[:success]).to eq false
       end
 
-      it "returns expected error response", :show_in_doc do
+      it "returns expected error response" do
         expect(parsed_response[:errors]).to eq [%(No such assessment id)]
       end
 
