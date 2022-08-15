@@ -27,9 +27,6 @@ Apipie.configure do |config|
 
     The response to this action includes an assessment id that can then be used in the following steps:
 
-      POST /assessments/:assessment_id/cash_transactions  # adds cash income and outgoings
-      POST /assessments/:assessment_id/irregular_incomes  # adds data about applicant's irregular income
-      POST /assessments/:assessment_id/explicit_remarks   # adds remarks to be included on the means report
       POST /assessments/:assessment_id/vehicles           # adds data about vehicles owned by the applicant
 
     Once all the above calls have been made to build up a complete picture of the applicant's assets and income
