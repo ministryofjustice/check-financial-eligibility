@@ -7,7 +7,7 @@ RSpec.describe "other_incomes", type: :request, swagger_doc: "v5/swagger.yaml" d
       consumes "application/json"
       produces "application/json"
 
-      description <<~DESCRIPTION
+      description <<~DESCRIPTION.chomp
         Add applicant's other income payments to an assessment.
       DESCRIPTION
 

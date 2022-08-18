@@ -7,7 +7,7 @@ RSpec.describe "state_benefits", type: :request, swagger_doc: "v5/swagger.yaml" 
       consumes "application/json"
       produces "application/json"
 
-      description <<~DESCRIPTION
+      description <<~DESCRIPTION.chomp
         Add applicant's state benefits to an assessment.
       DESCRIPTION
 
