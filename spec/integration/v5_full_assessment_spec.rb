@@ -57,7 +57,9 @@ RSpec.describe "Full V5 passported spec " do
         deep_match(remarks[:state_benefit_payment], expected_remarks[:state_benefit_payment])
         expect(remarks[:other_income_payment][:amount_variation]).to match_array expected_remarks[:other_income_payment][:amount_variation]
         expect(remarks[:other_income_payment][:unknown_frequency]).to match_array expected_remarks[:other_income_payment][:unknown_frequency]
-        expect(remarks[:outgoings_maintenance]).to match_array expected_remarks[:outgoings_maintenance]
+        expect(remarks[:outgoings_maintenance].keys).to match_array([:amount_variation, :unknown_frequency])
+        expect(remarks[:outgoings_maintenance][:amount_variation]).to match_array(expected_remarks[:outgoings_maintenance][:amount_variation])
+        expect(remarks[:outgoings_maintenance][:unknown_frequency]).to match_array(expected_remarks[:outgoings_maintenance][:unknown_frequency])
         expect(remarks[:outgoings_housing_cost]).to match_array expected_remarks[:outgoings_housing_cost]
         expect(remarks[:outgoings_childcare]).to match_array expected_remarks[:outgoings_childcare]
         expect(remarks[:outgoings_legal_aid]).to match_array expected_remarks[:outgoings_legal_aid]
