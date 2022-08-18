@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Full V5 passported spec " do
+RSpec.describe "Full V5 passported spec", :vcr do
   let(:client_id) { "uuid or any unique string" }
 
   before do
@@ -18,19 +18,18 @@ RSpec.describe "Full V5 passported spec " do
     let(:qualifying_benefit) { true }
 
     it "returns the expected payload without remarks" do
-      VCR.use_cassette "v5_passported_full_assessment" do
-        assessment_id = post_assessment
-        post_proceeding_types(assessment_id)
-        post_applicant(assessment_id)
+      assessment_id = post_assessment
+      post_proceeding_types(assessment_id)
+      post_applicant(assessment_id)
 
-        post_capitals(assessment_id)
+      post_capitals(assessment_id)
+      post_vehicles(assessment_id)
 
-        get assessment_path(assessment_id), headers: v5_headers
-        output_response(:get, :assessment)
+      get assessment_path(assessment_id), headers: v5_headers
+      output_response(:get, :assessment)
 
-        remarks = parsed_response[:assessment][:remarks]
-        expect(remarks).to eq({})
-      end
+      remarks = parsed_response[:assessment][:remarks]
+      expect(remarks).to eq({})
     end
   end
 
@@ -38,72 +37,68 @@ RSpec.describe "Full V5 passported spec " do
     let(:qualifying_benefit) { false }
 
     it "returns the expected payload with remarks" do
-      VCR.use_cassette "v5_non_passported_full_assessment" do
-        assessment_id = post_assessment
-        post_proceeding_types(assessment_id)
-        post_applicant(assessment_id)
-        post_capitals(assessment_id)
-        post_dependants(assessment_id)
-        post_outgoings(assessment_id)
-        post_state_benefits(assessment_id)
-        post_other_incomes(assessment_id)
-        post_irregular_income(assessment_id)
+      assessment_id = post_assessment
+      post_proceeding_types(assessment_id)
+      post_applicant(assessment_id)
+      post_capitals(assessment_id)
+      post_dependants(assessment_id)
+      post_outgoings(assessment_id)
+      post_state_benefits(assessment_id)
+      post_other_incomes(assessment_id)
+      post_irregular_income(assessment_id)
 
-        get assessment_path(assessment_id), headers: v5_headers
-        output_response(:get, :assessment)
+      get assessment_path(assessment_id), headers: v5_headers
+      output_response(:get, :assessment)
 
-        remarks = parsed_response[:assessment][:remarks]
+      remarks = parsed_response[:assessment][:remarks]
 
-        deep_match(remarks[:state_benefit_payment], expected_remarks[:state_benefit_payment])
-        expect(remarks[:other_income_payment][:amount_variation]).to match_array expected_remarks[:other_income_payment][:amount_variation]
-        expect(remarks[:other_income_payment][:unknown_frequency]).to match_array expected_remarks[:other_income_payment][:unknown_frequency]
-        expect(remarks[:outgoings_maintenance].keys).to match_array(%i[amount_variation unknown_frequency])
-        expect(remarks[:outgoings_maintenance][:amount_variation]).to match_array(expected_remarks[:outgoings_maintenance][:amount_variation])
-        expect(remarks[:outgoings_maintenance][:unknown_frequency]).to match_array(expected_remarks[:outgoings_maintenance][:unknown_frequency])
-        expect(remarks[:outgoings_housing_cost]).to match_array expected_remarks[:outgoings_housing_cost]
-        expect(remarks[:outgoings_childcare]).to match_array expected_remarks[:outgoings_childcare]
-        expect(remarks[:outgoings_legal_aid]).to match_array expected_remarks[:outgoings_legal_aid]
-        expect(remarks[:other_income_payment][:amount_variation]).to match_array(expected_remarks[:other_income_payment][:amount_variation])
-        expect(remarks[:other_income_payment][:unknown_frequency]).to match_array(expected_remarks[:other_income_payment][:unknown_frequency])
-      end
+      deep_match(remarks[:state_benefit_payment], expected_remarks[:state_benefit_payment])
+      expect(remarks[:other_income_payment][:amount_variation]).to match_array expected_remarks[:other_income_payment][:amount_variation]
+      expect(remarks[:other_income_payment][:unknown_frequency]).to match_array expected_remarks[:other_income_payment][:unknown_frequency]
+      expect(remarks[:outgoings_maintenance].keys).to match_array(%i[amount_variation unknown_frequency])
+      expect(remarks[:outgoings_maintenance][:amount_variation]).to match_array(expected_remarks[:outgoings_maintenance][:amount_variation])
+      expect(remarks[:outgoings_maintenance][:unknown_frequency]).to match_array(expected_remarks[:outgoings_maintenance][:unknown_frequency])
+      expect(remarks[:outgoings_housing_cost]).to match_array expected_remarks[:outgoings_housing_cost]
+      expect(remarks[:outgoings_childcare]).to match_array expected_remarks[:outgoings_childcare]
+      expect(remarks[:outgoings_legal_aid]).to match_array expected_remarks[:outgoings_legal_aid]
+      expect(remarks[:other_income_payment][:amount_variation]).to match_array(expected_remarks[:other_income_payment][:amount_variation])
+      expect(remarks[:other_income_payment][:unknown_frequency]).to match_array(expected_remarks[:other_income_payment][:unknown_frequency])
     end
   end
 
   context "when debugging " do
     it "does not return error" do
-      VCR.use_cassette "debugging" do
-        rq = "{\"client_reference_id\":\"L-KUT-FW2\",\"submission_date\":\"2022-07-15\"}"
-        post assessments_path, params: rq, headers: v5_headers
-        output_response(:post, :assessment)
-        assessment_id = parsed_response[:assessment_id]
+      rq = "{\"client_reference_id\":\"L-KUT-FW2\",\"submission_date\":\"2022-07-15\"}"
+      post assessments_path, params: rq, headers: v5_headers
+      output_response(:post, :assessment)
+      assessment_id = parsed_response[:assessment_id]
 
-        rq = "{\"proceeding_types\":[{\"ccms_code\":\"DA002\",\"client_involvement_type\":\"A\"},{\"ccms_code\":\"SE013\",\"client_involvement_type\":\"A\"}]}"
-        post assessment_proceeding_types_path(assessment_id), params: rq, headers: headers
-        output_response(:post, :proceeding_types)
+      rq = "{\"proceeding_types\":[{\"ccms_code\":\"DA002\",\"client_involvement_type\":\"A\"},{\"ccms_code\":\"SE013\",\"client_involvement_type\":\"A\"}]}"
+      post assessment_proceeding_types_path(assessment_id), params: rq, headers: headers
+      output_response(:post, :proceeding_types)
 
-        rq = "{\"applicant\":{\"date_of_birth\":\"1980-01-10\",\"involvement_type\":\"applicant\",\"has_partner_opponent\":false,\"receives_qualifying_benefit\":true}}"
-        post assessment_applicant_path(assessment_id), params: rq, headers: headers
-        output_response(:post, :applicant)
+      rq = "{\"applicant\":{\"date_of_birth\":\"1980-01-10\",\"involvement_type\":\"applicant\",\"has_partner_opponent\":false,\"receives_qualifying_benefit\":true}}"
+      post assessment_applicant_path(assessment_id), params: rq, headers: headers
+      output_response(:post, :applicant)
 
-        rq = "{\"bank_accounts\":[{\"description\":\"Current accounts\",\"value\":\"788.0\"}],\"non_liquid_capital\":[]}"
-        post assessment_capitals_path(assessment_id), params: rq, headers: headers
-        output_response(:post, :capitals)
+      rq = "{\"bank_accounts\":[{\"description\":\"Current accounts\",\"value\":\"788.0\"}],\"non_liquid_capital\":[]}"
+      post assessment_capitals_path(assessment_id), params: rq, headers: headers
+      output_response(:post, :capitals)
 
-        rq = "{\"vehicles\":[{\"value\":\"3000.0\",\"loan_amount_outstanding\":\"0.0\",\"date_of_purchase\":\"2018-07-15\",\"in_regular_use\":true}]}"
-        post assessment_vehicles_path(assessment_id), params: rq, headers: headers
-        output_response(:post, :vehicles)
+      rq = "{\"vehicles\":[{\"value\":\"3000.0\",\"loan_amount_outstanding\":\"0.0\",\"date_of_purchase\":\"2018-07-15\",\"in_regular_use\":true}]}"
+      post assessment_vehicles_path(assessment_id), params: rq, headers: headers
+      output_response(:post, :vehicles)
 
-        rq = "{\"properties\":{\"main_home\":{\"value\":0.0,\"outstanding_mortgage\":0.0,\"percentage_owned\":0.0,\"shared_with_housing_assoc\":false},\"additional_properties\":[{\"value\":0,\"outstanding_mortgage\":0,\"percentage_owned\":0,\"shared_with_housing_assoc\":false}]}}"
-        post assessment_properties_path(assessment_id), params: rq, headers: headers
-        output_response(:post, :vehicles)
+      rq = "{\"properties\":{\"main_home\":{\"value\":0.0,\"outstanding_mortgage\":0.0,\"percentage_owned\":0.0,\"shared_with_housing_assoc\":false},\"additional_properties\":[{\"value\":0,\"outstanding_mortgage\":0,\"percentage_owned\":0,\"shared_with_housing_assoc\":false}]}}"
+      post assessment_properties_path(assessment_id), params: rq, headers: headers
+      output_response(:post, :vehicles)
 
-        rq = "{\"explicit_remarks\":[{\"category\":\"policy_disregards\",\"details\":[]}]}"
-        post assessment_explicit_remarks_path(assessment_id), params: rq, headers: headers
-        output_response(:post, :vehicles)
+      rq = "{\"explicit_remarks\":[{\"category\":\"policy_disregards\",\"details\":[]}]}"
+      post assessment_explicit_remarks_path(assessment_id), params: rq, headers: headers
+      output_response(:post, :vehicles)
 
-        get assessment_path(assessment_id), headers: v5_headers
-        output_response(:get, :assessment)
-      end
+      get assessment_path(assessment_id), headers: v5_headers
+      output_response(:get, :assessment)
     end
   end
 
@@ -126,6 +121,11 @@ RSpec.describe "Full V5 passported spec " do
   def post_capitals(assessment_id)
     post assessment_capitals_path(assessment_id), params: capitals_params, headers: headers
     output_response(:post, :capitals)
+  end
+
+  def post_vehicles(assessment_id)
+    post assessment_vehicles_path(assessment_id), params: vehicle_params, headers: headers
+    output_response(:post, :vehicles)
   end
 
   def post_dependants(assessment_id)
@@ -192,6 +192,19 @@ RSpec.describe "Full V5 passported spec " do
       "non_liquid_capital" =>
         [{ "description" => "Any valuable items worth more than £500",
            "value" => "700.0" }] }.to_json
+  end
+
+  def vehicle_params
+    {
+      "vehicles" => [
+        {
+          "value" => "12000.0",
+          "loan_amount_outstanding" => "0.0",
+          "date_of_purchase" => "2020-08-18",
+          "in_regular_use" => true,
+        },
+      ],
+    }.to_json
   end
 
   def dependants_params
