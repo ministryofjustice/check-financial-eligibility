@@ -40,6 +40,6 @@ class Assessment < ApplicationRecord
   end
 
   def proceeding_type_codes
-    proceeding_types.map(&:ccms_code)
+    proceeding_types.order(:ccms_code).map(&:ccms_code)
   end
 end
