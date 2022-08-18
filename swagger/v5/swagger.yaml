@@ -167,7 +167,7 @@ paths:
       - Assessment components
       description: 'Add cash income and outgoings to an assessment.
 
-        '
+'
       parameters:
       - name: assessment_id
         in: path
@@ -311,7 +311,7 @@ paths:
       - Assessment components
       description: 'Adds details of an applicant''s dependants.
 
-        '
+'
       parameters:
       - name: assessment_id
         in: path
@@ -388,7 +388,7 @@ paths:
       - Assessment components
       description: 'Add applicant employment income to an assessment.
 
-        '
+'
       parameters:
       - name: assessment_id
         in: path
@@ -529,7 +529,7 @@ paths:
       - Assessment components
       description: 'Add explicit remarks to an assessment
 
-        '
+'
       parameters:
       - name: assessment_id
         in: path
@@ -586,7 +586,7 @@ paths:
       - Assessment components
       description: 'Add applicant''s irregular income payments to an assessment.
 
-        '
+'
       parameters:
       - name: assessment_id
         in: path
@@ -646,7 +646,7 @@ paths:
       - Assessment components
       description: 'Add applicant''s other income payments to an assessment.
 
-        '
+'
       parameters:
       - name: assessment_id
         in: path
@@ -743,7 +743,7 @@ paths:
       - Assessment components
       description: 'Add applicant''s outgoings to an assessment.
 
-        '
+'
       parameters:
       - name: assessment_id
         in: path
@@ -852,7 +852,7 @@ paths:
       - Assessment components
       description: 'Adds details of an application''s proceeding types.
 
-        '
+'
       parameters:
       - name: assessment_id
         in: path
@@ -905,7 +905,7 @@ paths:
       - Assessment components
       description: 'Add applicant''s properties to an assessment.
 
-        '
+'
       parameters:
       - name: assessment_id
         in: path
@@ -1027,7 +1027,7 @@ paths:
       - Assessment components
       description: 'Add applicant''s state benefits to an assessment.
 
-        '
+'
       parameters:
       - name: assessment_id
         in: path
@@ -1131,7 +1131,7 @@ paths:
       - Assessment components
       description: 'Add applicant''s outgoings to an assessment.
 
-        '
+'
       parameters:
       - name: assessment_id
         in: path
