@@ -1,6 +1,5 @@
 desc "Checks for unapplied swagger documentation specs"
 task check_swaggerization: :environment do
-
   # require "digest/sha1"
   #
   # swagger_root = Rswag::Api.config.swagger_root
