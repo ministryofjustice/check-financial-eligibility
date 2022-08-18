@@ -2,7 +2,7 @@
 openapi: 3.0.1
 info:
   title: API V5
-  description: |
+  description: |-
     # Check financial eligibility for legal aid.
 
     ## Usage:
@@ -21,7 +21,7 @@ paths:
       summary: create applicant
       tags:
       - Assessment components
-      description: |
+      description: |-
         This endpoint will create an Applicant and associate it with
         an existing Assessment which has been created via `POST /assessments`
       parameters:
@@ -112,7 +112,7 @@ paths:
       summary: create capital
       tags:
       - Assessment components
-      description: |
+      description: |-
         Adds details of an applicant's capital assets to an assessment.
 
         There are two types of assets:
@@ -165,9 +165,7 @@ paths:
       summary: create cash_transaction
       tags:
       - Assessment components
-      description: 'Add cash income and outgoings to an assessment.
-
-'
+      description: Add cash income and outgoings to an assessment.
       parameters:
       - name: assessment_id
         in: path
@@ -309,9 +307,7 @@ paths:
       summary: create dependant
       tags:
       - Assessment components
-      description: 'Adds details of an applicant''s dependants.
-
-'
+      description: Adds details of an applicant's dependants.
       parameters:
       - name: assessment_id
         in: path
@@ -386,9 +382,7 @@ paths:
       summary: create employment
       tags:
       - Assessment components
-      description: 'Add applicant employment income to an assessment.
-
-'
+      description: Add applicant employment income to an assessment.
       parameters:
       - name: assessment_id
         in: path
@@ -527,9 +521,7 @@ paths:
       summary: create explicit_remark
       tags:
       - Assessment components
-      description: 'Add explicit remarks to an assessment
-
-'
+      description: Add explicit remarks to an assessment
       parameters:
       - name: assessment_id
         in: path
@@ -584,9 +576,7 @@ paths:
       summary: create irregular_income
       tags:
       - Assessment components
-      description: 'Add applicant''s irregular income payments to an assessment.
-
-'
+      description: Add applicant's irregular income payments to an assessment.
       parameters:
       - name: assessment_id
         in: path
@@ -644,9 +634,7 @@ paths:
       summary: create other_income
       tags:
       - Assessment components
-      description: 'Add applicant''s other income payments to an assessment.
-
-'
+      description: Add applicant's other income payments to an assessment.
       parameters:
       - name: assessment_id
         in: path
@@ -741,9 +729,7 @@ paths:
       summary: create outgoing
       tags:
       - Assessment components
-      description: 'Add applicant''s outgoings to an assessment.
-
-'
+      description: Add applicant's outgoings to an assessment.
       parameters:
       - name: assessment_id
         in: path
@@ -850,9 +836,7 @@ paths:
       summary: 'create '
       tags:
       - Assessment components
-      description: 'Adds details of an application''s proceeding types.
-
-'
+      description: Adds details of an application's proceeding types.
       parameters:
       - name: assessment_id
         in: path
@@ -903,9 +887,7 @@ paths:
       summary: create property
       tags:
       - Assessment components
-      description: 'Add applicant''s properties to an assessment.
-
-'
+      description: Add applicant's properties to an assessment.
       parameters:
       - name: assessment_id
         in: path
@@ -1113,9 +1095,7 @@ paths:
       summary: create state_benefit
       tags:
       - Assessment components
-      description: 'Add applicant''s state benefits to an assessment.
-
-'
+      description: Add applicant's state benefits to an assessment.
       parameters:
       - name: assessment_id
         in: path
@@ -1217,9 +1197,7 @@ paths:
       summary: create vehicle
       tags:
       - Assessment components
-      description: 'Add applicant''s outgoings to an assessment.
-
-'
+      description: Add applicant's outgoings to an assessment.
       parameters:
       - name: assessment_id
         in: path

@@ -9,7 +9,7 @@ RSpec.configure do |config|
   # to ensure that it's configured to serve Swagger from the same folder
   config.swagger_root = Rails.root.join("swagger")
 
-  api_description = <<~DESCRIPTION
+  api_description = <<~DESCRIPTION.chomp
     # Check financial eligibility for legal aid.
 
     ## Usage:
