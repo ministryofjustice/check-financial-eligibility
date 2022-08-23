@@ -53,10 +53,6 @@ module Creators
       other_income_source
     end
 
-    def assessment
-      @assessment ||= Assessment.find_by(id: assessment_id) || (raise CreationError, ["No such assessment id"])
-    end
-
     def normalize(name)
       name.underscore.tr(" ", "_")
     end
