@@ -36,18 +36,18 @@ module Creators
     def create_other_income
       return if other_incomes.empty?
 
-      other_incomes.each do |other_income_source_params|
-        @other_income_sources << create_other_income_source(other_income_source_params)
+      other_incomes.each do |other_income|
+        @other_income_sources << create_other_income_source(other_income)
       end
     end
 
-    def create_other_income_source(other_income_source_params)
-      other_income_source = gross_income_summary.other_income_sources.create!(name: other_income_source_params[:source].parameterize(separator: "_"))
-      other_income_source_params[:payments].each do |payment_params|
+    def create_other_income_source(other_income)
+      other_income_source = gross_income_summary.other_income_sources.create!(name: other_income[:source].parameterize(separator: "_"))
+      other_income[:payments].each do |payment|
         other_income_source.other_income_payments.create!(
-          payment_date: payment_params[:date],
-          amount: payment_params[:amount],
-          client_id: payment_params[:client_id],
+          payment_date: payment[:date],
+          amount: payment[:amount],
+          client_id: payment[:client_id],
         )
       end
       other_income_source
