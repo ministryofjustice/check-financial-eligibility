@@ -42,7 +42,7 @@ module Creators
     end
 
     def create_other_income_source(other_income_source_params)
-      other_income_source = gross_income_summary.other_income_sources.create!(name: normalize(other_income_source_params[:source]))
+      other_income_source = gross_income_summary.other_income_sources.create!(name: other_income_source_params[:source].parameterize(separator: "_"))
       other_income_source_params[:payments].each do |payment_params|
         other_income_source.other_income_payments.create!(
           payment_date: payment_params[:date],
@@ -51,10 +51,6 @@ module Creators
         )
       end
       other_income_source
-    end
-
-    def normalize(name)
-      name.underscore.tr(" ", "_")
     end
 
     def other_incomes
