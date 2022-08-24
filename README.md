@@ -97,6 +97,7 @@ PRIVATE_KEY
 CLIENT_EMAIL
 CLIENT_ID
 ALLOW_FUTURE_SUBMISSION_DATE
+LEGAL_FRAMEWORK_API_HOST
 ```
 
 Set ALLOW_FUTURE_SUBMISSION_DATE to true to allow integration tests to run with submission dates that are in the future.
