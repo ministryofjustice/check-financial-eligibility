@@ -1,0 +1,29 @@
+{
+  "id": "http://localhost:3000/schemas/vehicles.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Legal Aid Check Financial Eligibility create vehicles payload schema",
+  "required": ["vehicles"],
+  "properties": {
+    "vehicles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["value", "date_of_purchase"],
+        "properties": {
+          "value": {
+            "$ref": "<%= "file://#{@schema_dir}/common.json#positive_currency" %>"
+          },
+          "loan_amount_outstanding": {
+            "$ref": "<%= "file://#{@schema_dir}/common.json#currency" %>"
+          },
+          "date_of_purchase": {
+            "$ref": "<%= "file://#{@schema_dir}/common.json#date" %>"
+          },
+          "in_regular_use": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  }
+}

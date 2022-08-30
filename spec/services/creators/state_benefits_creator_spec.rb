@@ -30,7 +30,7 @@ module Creators
         end
 
         it "returns an error" do
-          expect(creator.errors).to eq ["Payment date date is in the future"]
+          expect(creator.errors).to eq ["Payment date cannot be in the future"]
           expect(StateBenefitPayment.count).to eq 0
         end
       end

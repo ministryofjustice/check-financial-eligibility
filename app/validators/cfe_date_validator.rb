@@ -12,7 +12,7 @@ private
 
   def parse_date(date_str, format)
     format ||= DEFAULT_FORMAT
-    Time.strptime(date_str, format).in_time_zone
+    Date.strptime(date_str, format)
   rescue StandardError
     nil
   end
@@ -31,7 +31,7 @@ private
     return if required.blank?
 
     message = required[:message] if required.is_a?(Hash)
-    message ||= "date is in the future"
+    message ||= "cannot be in the future"
     record.errors.add(attribute, message) if value > Date.current
   end
 end
