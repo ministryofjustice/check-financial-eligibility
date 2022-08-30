@@ -10,7 +10,7 @@ RSpec.describe VehiclesController, type: :request do
 
     subject(:post_payload) { post assessment_vehicles_path(assessment), params: params.to_json, headers: }
 
-    it "returns http success", :show_in_doc do
+    it "returns http success" do
       post_payload
       expect(response).to have_http_status(:success)
     end
@@ -37,7 +37,7 @@ RSpec.describe VehiclesController, type: :request do
       end
 
       it "returns error information" do
-        expect(parsed_response[:errors].join).to match(/Invalid.*#{invalid_item}/)
+        expect(parsed_response[:errors].join).to match(invalid_item)
       end
 
       it "sets success flag to false" do
@@ -48,24 +48,24 @@ RSpec.describe VehiclesController, type: :request do
     context "with an invalid id" do
       let(:assessment) { 33 }
 
-      it "returns unprocessable", :show_in_doc do
+      it "returns unprocessable" do
         post_payload
         expect(response).to have_http_status(:unprocessable_entity)
       end
 
-      it_behaves_like "an unprocessable entity", "assessment_id"
+      it_behaves_like "an unprocessable entity", "No such assessment id"
     end
 
     context "with invalid input" do
       let(:vehicles) { :invalid }
 
-      it_behaves_like "an unprocessable entity", "vehicles"
+      it_behaves_like "an unprocessable entity", "The property '#/vehicles' of type string did not match the following type: array in schema"
     end
 
-    context "with a future wage slip" do
+    context "with a future date_of_purchase" do
       let(:vehicles) { [attributes_for(:vehicle, date_of_purchase: date_in_future)] }
 
-      it_behaves_like "an unprocessable entity", "date_of_purchase"
+      it_behaves_like "an unprocessable entity", "Date of purchase cannot be in the future"
     end
 
     context "with service returning error" do
