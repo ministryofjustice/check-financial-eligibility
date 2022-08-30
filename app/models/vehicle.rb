@@ -4,7 +4,7 @@ class Vehicle < ApplicationRecord
 
   belongs_to :capital_summary
 
-  validate :date_of_purchase_cannot_be_in_future
+  validates :date_of_purchase, cfe_date: { not_in_the_future: true }
 
   def assess!
     in_regular_use? ? assess_vehicle_in_regular_use : assess_vehicle_not_in_regular_use
@@ -12,10 +12,6 @@ class Vehicle < ApplicationRecord
   end
 
 private
-
-  def date_of_purchase_cannot_be_in_future
-    errors.add(:date_of_purchase, "cannot be in the future") if date_of_purchase > Date.current
-  end
 
   def assess_vehicle_not_in_regular_use
     self.included_in_assessment = true
