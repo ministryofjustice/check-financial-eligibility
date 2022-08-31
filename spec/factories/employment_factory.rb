@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :employment do
     assessment
     client_id { SecureRandom.uuid }
-    sequence(:name) { |n| "Job #{n}" }
+    sequence(:name) { |n| sprintf("Job %04d", n) }
   end
 
   trait :with_monthly_payments do
