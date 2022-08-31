@@ -4,6 +4,7 @@
 #
 # see https://github.com/rswag/rswag/issues/174
 #
+# :nocov:
 module Rswag::Ui::Csp
   def call(env)
     _, headers, = response = super
@@ -17,5 +18,6 @@ module Rswag::Ui::Csp
     response
   end
 end
+# :nocov:
 
 Rswag::Ui::Middleware.prepend Rswag::Ui::Csp
