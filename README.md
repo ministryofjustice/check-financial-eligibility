@@ -14,11 +14,7 @@ It's defined as code and [can be edited](https://github.com/ministryofjustice/la
 
 ## Documentation
 
-API documentation is currently being migrated from [APIPIE](https://github.com/Apipie/apipie-rails) to [rswag](https://github.com/rswag/rswag).
-
-Current APIPIE documentation can be found at `/apidocs`.
-
-Current Rswag documentation can be found at `/api-docs`.
+Rswag documentation can be found at `/api-docs`.
 
 ## API Versioning
 
@@ -56,18 +52,6 @@ by sending a GET request to the /assessments endpoint.
 The `AssessmentController` calls the `MainWorkflow`, which immediately branches off to the `PassportedWorkflow` or `UnpassportedWorkflow`.  The main difference is that unpassported applications are assessed on capital, gross income and disposable income, whereas passported applications are only assessed on capital.
 
 In each case, the workflow takes each of the assessments in turn, calls a collator to look at all the sub-records under the summary and come up with a total figure in the case of capital, or a monthly equivalent figure in the case of gross or disposable  income, and these results are stored on the associated summary record.  After collation, an assessor is called for each summary which stores the results (eligible, ineligible, contribution required) in each of the eligibility records (one for each proceeding type).  Finally, the main assessor is called to work out the overall result for each proceeding type taking into account the results from the capital, gross income and disposable income assessments.  The assessments controller then calls the main decorator to format the output in the required structure to send back to the client.
-
-
-## Generation of API documentation using APIPIE
-The documentation is automatically generated when tests are run with an environment variable set.
-
-```shell
-APIPIE_RECORD=examples bundle exec rspec
-```
-
-This generates a JSON file `doc/apipie_examples.json` which is read and used when drilling down in the documentation available at '/apidocs'.
-
-To add additional examples to this json file, add the `:show_in_doc` tag to the relevant rspec tests and rerun the above command.
 
 ## Generation of API documentation using Rswag
 

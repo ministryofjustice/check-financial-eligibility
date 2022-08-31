@@ -5,10 +5,6 @@ class ApplicationController < ActionController::API
     Sentry.capture_exception(e)
     render json: { success: false, errors: ["#{e.class}: #{e.message}"] }, status: :unprocessable_entity
   end
-  rescue_from Apipie::ParamError do |e|
-    Sentry.capture_exception(e)
-    render json: { success: false, errors: [e.message] }, status: :unprocessable_entity
-  end
 
   def render_unprocessable(message)
     sentry_message = message.is_a?(Array) ? message.join(", ") : message
