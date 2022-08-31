@@ -8,15 +8,6 @@ require "rspec/rails"
 require "pry-rescue/rspec" if Rails.env.development?
 require "super_diff/rspec-rails"
 
-puts ">>>>>>>>>>>>  #{__FILE__}:#{__LINE__} <<<<<<<<<<<<".yellow
-if ENV['CI'].present?
-  puts ">>>>>>>>>>>>  #{__FILE__}:#{__LINE__} <<<<<<<<<<<<".yellow
-  puts "Present"
-else
-  puts ">>>>>>>>>>>>  #{__FILE__}:#{__LINE__} <<<<<<<<<<<<".yellow
-  puts 'Absnet'
-end
-
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
