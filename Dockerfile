@@ -7,12 +7,12 @@ RUN set -ex
 
 RUN apk --no-cache add --virtual build-dependencies \
                     build-base \
-                    libxml2-dev \
-                    libxslt-dev \
                     postgresql-dev \
 && apk --no-cache add \
                   postgresql-client \
                   nodejs \
+                  libxml2-dev \
+                  libxslt-dev \
                   shared-mime-info \
                   yarn
 
