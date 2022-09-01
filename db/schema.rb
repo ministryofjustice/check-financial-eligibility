@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_12_135919) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_01_175043) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -313,6 +313,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_12_135919) do
     t.index ["capital_summary_id"], name: "index_properties_on_capital_summary_id"
   end
 
+  create_table "regular_transactions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "gross_income_summary_id", null: false
+    t.string "category"
+    t.string "operation"
+    t.decimal "amount"
+    t.string "frequency"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["gross_income_summary_id"], name: "index_regular_transactions_on_gross_income_summary_id"
+  end
+
   create_table "request_logs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "request_method"
     t.string "endpoint"
@@ -388,6 +399,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_12_135919) do
   add_foreign_key "outgoings", "disposable_income_summaries"
   add_foreign_key "proceeding_types", "assessments"
   add_foreign_key "properties", "capital_summaries"
+  add_foreign_key "regular_transactions", "gross_income_summaries"
   add_foreign_key "state_benefit_payments", "state_benefits"
   add_foreign_key "state_benefits", "gross_income_summaries"
   add_foreign_key "state_benefits", "state_benefit_types"
