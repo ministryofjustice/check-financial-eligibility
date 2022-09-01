@@ -11,6 +11,8 @@ RUN apk --no-cache add --virtual build-dependencies \
 && apk --no-cache add \
                   postgresql-client \
                   nodejs \
+                  libxml2-dev \
+                  libxslt-dev \
                   shared-mime-info \
                   yarn
 
