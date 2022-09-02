@@ -52,7 +52,7 @@ jobs:
       - name: Run Tests
         env:
           SKIP_COVERAGE: true
-          VERBOSE: true
+          VERBOSE: 1
           CLIENT_EMAIL: ${{ secrets.CLIENT_EMAIL }}
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
