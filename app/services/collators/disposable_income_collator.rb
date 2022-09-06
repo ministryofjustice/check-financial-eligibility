@@ -4,8 +4,6 @@ module Collators
 
     attr_accessor :monthly_cash_transactions_total
 
-    OUTGOING_CATEGORIES = CFEConstants::VALID_OUTGOING_CATEGORIES.map(&:to_sym)
-
     delegate :net_housing_costs,
              :rent_or_mortgage_bank,
              :rent_or_mortgage_cash,
@@ -31,10 +29,14 @@ module Collators
 
   private
 
+    def outgoing_categories
+      CFEConstants::VALID_OUTGOING_CATEGORIES.map(&:to_sym)
+    end
+
     def populate_attrs
       attrs = {}
 
-      OUTGOING_CATEGORIES.each do |category|
+      outgoing_categories.each do |category|
         monthly_cash_amount = category == :child_care ? __send__("#{category}_cash") : monthly_cash_by_category(category)
         @monthly_cash_transactions_total += monthly_cash_amount unless category == :rent_or_mortgage
 

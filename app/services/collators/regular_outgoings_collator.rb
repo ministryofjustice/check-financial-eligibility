@@ -20,7 +20,6 @@ module Collators
 
   private
 
-    # TODO: use same method in DisposableIncomeCollator to avoid leaky/redefining constants or promote?!
     def outgoing_categories
       CFEConstants::VALID_OUTGOING_CATEGORIES.map(&:to_sym)
     end
