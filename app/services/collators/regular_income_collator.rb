@@ -19,7 +19,6 @@ module Collators
 
   private
 
-    # TODO: use same method in GrossIncomeCollator to avoid leaky/redefining constants or promote?!
     def income_categories
       CFEConstants::VALID_INCOME_CATEGORIES.map(&:to_sym)
     end
