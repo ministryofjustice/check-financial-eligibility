@@ -33,6 +33,8 @@ module Collators
       CFEConstants::VALID_OUTGOING_CATEGORIES.map(&:to_sym)
     end
 
+    # TODO: This line seems redundant as it updates the column to its existing value!
+    # `attrs[:"#{category}_bank"] = __send__("#{category}_bank")`
     def populate_attrs
       attrs = {}
 
@@ -59,10 +61,12 @@ module Collators
       }
     end
 
+    # TODO: this could just be delegated
     def fixed_employment_allowance
       @fixed_employment_allowance ||= disposable_income_summary.fixed_employment_allowance
     end
 
+    # TODO: this could just be delegated
     def employment_income_deductions
       @employment_income_deductions ||= disposable_income_summary.employment_income_deductions
     end

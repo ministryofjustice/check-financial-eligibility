@@ -14,8 +14,10 @@ module Workflows
 
   private
 
+    # TODO: make the Collators::GrossIncomeCollator increment/sum to existing values so order of "collation" becomes unimportant
     def collate_and_assess_gross_income
       Collators::GrossIncomeCollator.call(assessment)
+      # TODO: call Collators::RegularIncomeCollator.call(assessment) here OR call in Collators::GrossIncomeCollator
       Assessors::GrossIncomeAssessor.call(assessment)
     end
 
@@ -23,9 +25,11 @@ module Workflows
       Collators::OutgoingsCollator.call(assessment)
     end
 
+    # TODO: make the Collators::DisposableIncomeCollator increment/sum to existing values so order of "collation" becomes unimportant
     def disposable_income_assessment
       collate_outgoings
       Collators::DisposableIncomeCollator.call(assessment)
+      # TODO: call Collators::RegularOutgoingsCollator.call(assessment) here OR call in Collators::DisposableIncomeCollator
       Assessors::DisposableIncomeAssessor.call(assessment)
     end
 
