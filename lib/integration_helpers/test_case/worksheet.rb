@@ -8,6 +8,7 @@ module TestCase
                 :employment_income,
                 :expected_results,
                 :irregular_income,
+                :regular_transactions,
                 :other_incomes,
                 :outgoings,
                 :proceeding_types,
@@ -26,6 +27,7 @@ module TestCase
       dependants
       employment_income
       irregular_income
+      regular_transactions
       other_incomes
       outgoings
       properties
@@ -104,6 +106,10 @@ module TestCase
 
     def populate_other_incomes
       @other_incomes = TestCase::OtherIncomesCollection.new(@rows)
+    end
+
+    def populate_regular_transactions
+      @regular_transactions = TestCase::RegularTransactionsCollection.new(@rows)
     end
 
     def populate_state_benefits

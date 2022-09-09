@@ -59,7 +59,6 @@ RSpec.describe "IntegrationTests::TestRunner", type: :request do
     def run_test_case(worksheet)
       worksheet.parse_worksheet
       assessment_id = post_assessment(worksheet)
-
       worksheet.payload_objects.each { |obj| post_object(obj, assessment_id, worksheet.version) }
       actual_results = get_assessment(assessment_id, worksheet.version)
       worksheet.compare_results(actual_results)
