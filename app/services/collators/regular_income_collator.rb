@@ -43,17 +43,5 @@ module Collators
         attrs[:total_gross_income] = gross_income_summary.total_gross_income
       }.symbolize_keys
     end
-
-    # TODO: share with RegularOutgoingsCollator, when it is created?!
-    def monthly_regular_transaction_amount_by(operation:, category:)
-      transactions = gross_income_summary.regular_transactions.where(operation:).where(category:)
-
-      all_monthly_amounts = transactions.each_with_object([]) do |transaction, amounts|
-        calc_method = determine_calc_method(transaction.frequency)
-        amounts << send(calc_method, transaction.amount)
-      end
-
-      all_monthly_amounts.sum
-    end
   end
 end

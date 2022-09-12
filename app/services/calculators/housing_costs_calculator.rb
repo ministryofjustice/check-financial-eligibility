@@ -1,6 +1,7 @@
 module Calculators
   class HousingCostsCalculator < BaseWorkflowService
     include Transactions
+    include MonthlyEquivalentCalculatable
 
     delegate :disposable_income_summary, :submission_date, :dependants, :applicant, to: :assessment
     delegate :housing_cost_outgoings, to: :disposable_income_summary
@@ -18,7 +19,7 @@ module Calculators
     end
 
     def gross_housing_costs
-      @gross_housing_costs ||= gross_housing_costs_bank + gross_housing_costs_cash
+      @gross_housing_costs ||= gross_housing_costs_bank + gross_housing_costs_regular_transactions + gross_housing_costs_cash
     end
 
     def monthly_housing_benefit
@@ -34,6 +35,10 @@ module Calculators
     def gross_housing_costs_bank
       disposable_income_summary.calculate_monthly_rent_or_mortgage_amount!
       disposable_income_summary.rent_or_mortgage_bank
+    end
+
+    def gross_housing_costs_regular_transactions
+      monthly_regular_transaction_amount_by(operation: :debit, category: :rent_or_mortgage)
     end
 
     def monthly_actual_housing_costs

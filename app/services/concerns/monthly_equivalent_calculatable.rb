@@ -33,4 +33,15 @@ private
   def weekly_to_monthly(value)
     (value * 52 / 12).round(2)
   end
+
+  def monthly_regular_transaction_amount_by(operation:, category:)
+    transactions = gross_income_summary.regular_transactions.where(operation:).where(category:)
+
+    all_monthly_amounts = transactions.each_with_object([]) do |transaction, amounts|
+      calc_method = determine_calc_method(transaction.frequency)
+      amounts << send(calc_method, transaction.amount)
+    end
+
+    all_monthly_amounts.sum
+  end
 end
