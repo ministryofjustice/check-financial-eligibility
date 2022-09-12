@@ -72,8 +72,14 @@ module Collators
     end
 
     def total_outgoings_and_allowances
-      net_housing_costs + dependant_allowance + child_care_bank + maintenance_out_bank + legal_aid_bank\
-      + @monthly_cash_transactions_total - fixed_employment_allowance - employment_income_deductions
+      net_housing_costs +
+        dependant_allowance +
+        child_care_bank +
+        maintenance_out_bank +
+        legal_aid_bank +
+        @monthly_cash_transactions_total -
+        fixed_employment_allowance -
+        employment_income_deductions
     end
 
     def disposable_income

@@ -1,14 +1,10 @@
-# Sum convert each regular outgoings transaction to monthly, sum together in <category>_all_sources
-# with any pre-existing values from other transaction forms (cash typically)
+# Convert each regular outgoing to monthly and sum together in
+# <category>_all_sources with any pre-existing values from other
+# transactions (cash typically). Also, except for :rent_or_mortgate**,
+# increment the total_outgoings_and_allowances and decrement the total_disposable_income.
 #
-# for each category:
-# 1. retrieve a set of all regular transactions of that category/operation
-# 2. for each set convert amount to monthly from whatever frequency it is
-# 3. sum all monthly amounts for that category/operation
-# 4. sum that value to the `<category>_all_sources:` key's value
-# 5. sum that value to `total_outgoings_and_allowances` aswell
-# 6. amend value of `total_disposable_income` (to be `total_gross_income - total_outgoings_and_allowances`)
-# 7. update that `<category>_all_sources`, `total_outgoings_and_allowances` and `total_disposable_income` column values on DB
+# ** :rent_or_mortgate that has already been added to totals by the
+# HousingCostCollator/HousingCostCalculator and DisposableIncomeCollator :(
 #
 module Collators
   class RegularOutgoingsCollator < BaseWorkflowService
@@ -32,6 +28,8 @@ module Collators
         category_monthly_amount = monthly_regular_transaction_amount_by(operation: :debit, category:)
 
         attrs[category_all_sources] += category_monthly_amount
+        next if category == :rent_or_mortgage # see ** above
+
         attrs[:total_outgoings_and_allowances] += category_monthly_amount
         attrs[:total_disposable_income] -= category_monthly_amount
       end

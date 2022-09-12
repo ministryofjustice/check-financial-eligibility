@@ -1,16 +1,14 @@
 require "rails_helper"
 
-# regular_outgoings_transactions needs to
+# regular_outgoings_transactions needs to:
 # 1. work out monthly equivalent values for each category of debit operation
-# 1. increment/sum to all _all_sources for each category of debit operation
-# 2. increment/sum total_outgoings_and_allowances
-# 3. increment/sum total_disposable_income
+# 1. increment all _all_sources for each category of debit operation
+# 2. increment total_outgoings_and_allowances, except for rent_or_mortgate**
+# 3. decrement total_disposable_income, except for rent_or_mortgate**
 #
-# However, it cannot amend housing currently?!
-# child_care: Outgoings::Childcare,
-# rent_or_mortgage: Outgoings::HousingCost,
-# maintenance_out: Outgoings::Maintenance,
-# legal_aid: Outgoings::LegalAid,
+# ** in full NonPassportedWorkflow :rent_or_mortgate will already been added
+# to totals by the HousingCostCollator/HousingCostCalculator and DisposableIncomeCollator :(
+#
 
 RSpec.describe Collators::RegularOutgoingsCollator do
   let(:assessment) { create(:assessment, :with_applicant, :with_gross_income_summary, :with_disposable_income_summary) }
@@ -48,7 +46,7 @@ RSpec.describe Collators::RegularOutgoingsCollator do
     context "with monthly regular transactions" do
       before do
         create(:regular_transaction, gross_income_summary:, operation: "debit", category: "maintenance_out", frequency: "monthly", amount: 111.11)
-        create(:regular_transaction, gross_income_summary:, operation: "debit", category: "rent_or_mortgage", frequency: "monthly", amount: 222.22)
+        create(:regular_transaction, gross_income_summary:, operation: "debit", category: "legal_aid", frequency: "monthly", amount: 222.22)
         create(:regular_transaction, gross_income_summary:, operation: "credit", category: "maintenance_in", frequency: "monthly", amount: 12_000)
       end
 
@@ -58,8 +56,8 @@ RSpec.describe Collators::RegularOutgoingsCollator do
         expect(disposable_income_summary).to have_attributes(
           child_care_all_sources: 0.0,
           maintenance_out_all_sources: 111.11,
-          rent_or_mortgage_all_sources: 222.22,
-          legal_aid_all_sources: 0.0,
+          rent_or_mortgage_all_sources: 0.0,
+          legal_aid_all_sources: 222.22,
         )
       end
 
@@ -79,7 +77,7 @@ RSpec.describe Collators::RegularOutgoingsCollator do
     context "with four_weekly regular transactions" do
       before do
         create(:regular_transaction, gross_income_summary:, operation: "debit", category: "maintenance_out", frequency: "four_weekly", amount: 111.11)
-        create(:regular_transaction, gross_income_summary:, operation: "debit", category: "rent_or_mortgage", frequency: "four_weekly", amount: 222.22)
+        create(:regular_transaction, gross_income_summary:, operation: "debit", category: "legal_aid", frequency: "four_weekly", amount: 222.22)
         create(:regular_transaction, gross_income_summary:, operation: "credit", category: "maintenance_in", frequency: "four_weekly", amount: 12_000)
       end
 
@@ -89,8 +87,8 @@ RSpec.describe Collators::RegularOutgoingsCollator do
         expect(disposable_income_summary).to have_attributes(
           child_care_all_sources: 0.0,
           maintenance_out_all_sources: 120.37,
-          rent_or_mortgage_all_sources: 240.74,
-          legal_aid_all_sources: 0.0,
+          rent_or_mortgage_all_sources: 0.0,
+          legal_aid_all_sources: 240.74,
         )
       end
 
@@ -110,7 +108,7 @@ RSpec.describe Collators::RegularOutgoingsCollator do
     context "with two_weekly regular transactions" do
       before do
         create(:regular_transaction, gross_income_summary:, operation: "debit", category: "maintenance_out", frequency: "two_weekly", amount: 111.11)
-        create(:regular_transaction, gross_income_summary:, operation: "debit", category: "rent_or_mortgage", frequency: "two_weekly", amount: 222.22)
+        create(:regular_transaction, gross_income_summary:, operation: "debit", category: "legal_aid", frequency: "two_weekly", amount: 222.22)
         create(:regular_transaction, gross_income_summary:, operation: "credit", category: "maintenance_in", frequency: "two_weekly", amount: 12_000)
       end
 
@@ -120,8 +118,8 @@ RSpec.describe Collators::RegularOutgoingsCollator do
         expect(disposable_income_summary).to have_attributes(
           child_care_all_sources: 0.0,
           maintenance_out_all_sources: 240.74,
-          rent_or_mortgage_all_sources: 481.48,
-          legal_aid_all_sources: 0.0,
+          rent_or_mortgage_all_sources: 0.0,
+          legal_aid_all_sources: 481.48,
         )
       end
 
@@ -141,7 +139,7 @@ RSpec.describe Collators::RegularOutgoingsCollator do
     context "with weekly regular transaction" do
       before do
         create(:regular_transaction, gross_income_summary:, operation: "debit", category: "maintenance_out", frequency: "weekly", amount: 111.11)
-        create(:regular_transaction, gross_income_summary:, operation: "debit", category: "rent_or_mortgage", frequency: "weekly", amount: 222.22)
+        create(:regular_transaction, gross_income_summary:, operation: "debit", category: "legal_aid", frequency: "weekly", amount: 222.22)
         create(:regular_transaction, gross_income_summary:, operation: "credit", category: "maintenance_in", frequency: "weekly", amount: 12_000)
       end
 
@@ -151,8 +149,8 @@ RSpec.describe Collators::RegularOutgoingsCollator do
         expect(disposable_income_summary).to have_attributes(
           child_care_all_sources: 0.0,
           maintenance_out_all_sources: 481.48,
-          rent_or_mortgage_all_sources: 962.95,
-          legal_aid_all_sources: 0.0,
+          rent_or_mortgage_all_sources: 0.0,
+          legal_aid_all_sources: 962.95,
         )
       end
 
@@ -166,6 +164,36 @@ RSpec.describe Collators::RegularOutgoingsCollator do
         collator
         disposable_income_summary.reload
         expect(disposable_income_summary.total_disposable_income).to eq(-1444.43)
+      end
+    end
+
+    # ** see above for reason
+    context "with monthly regular transactions of :rent_or_mortgage" do
+      before do
+        create(:regular_transaction, gross_income_summary:, operation: "debit", category: "rent_or_mortgage", frequency: "monthly", amount: 222.22)
+      end
+
+      it "increments #<cagtegory>_all_sources data" do
+        collator
+        disposable_income_summary.reload
+        expect(disposable_income_summary).to have_attributes(
+          child_care_all_sources: 0.0,
+          maintenance_out_all_sources: 0.0,
+          rent_or_mortgage_all_sources: 222.22,
+          legal_aid_all_sources: 0.00,
+        )
+      end
+
+      it "does not increment #total_outgoings_and_allowances" do
+        collator
+        disposable_income_summary.reload
+        expect(disposable_income_summary.total_outgoings_and_allowances).to be_zero
+      end
+
+      it "does not decrement #total_disposable_income" do
+        collator
+        disposable_income_summary.reload
+        expect(disposable_income_summary.total_disposable_income).to be_zero
       end
     end
 
@@ -226,7 +254,7 @@ RSpec.describe Collators::RegularOutgoingsCollator do
       context "with monthly regular transactions" do
         before do
           create(:regular_transaction, gross_income_summary:, operation: "debit", category: "maintenance_out", frequency: "monthly", amount: 1000.00)
-          create(:regular_transaction, gross_income_summary:, operation: "debit", category: "rent_or_mortgage", frequency: "monthly", amount: 2000.00)
+          create(:regular_transaction, gross_income_summary:, operation: "debit", category: "legal_aid", frequency: "monthly", amount: 2000.00)
         end
 
         it "increments #<cagtegory>_all_sources data to existing values" do
@@ -235,8 +263,8 @@ RSpec.describe Collators::RegularOutgoingsCollator do
           expect(disposable_income_summary).to have_attributes(
             child_care_all_sources: 0.0,
             maintenance_out_all_sources: 1_333.33,
-            rent_or_mortgage_all_sources: 2_000.00,
-            legal_aid_all_sources: 0.0,
+            rent_or_mortgage_all_sources: 0.0,
+            legal_aid_all_sources: 2_000.00,
           )
         end
 
