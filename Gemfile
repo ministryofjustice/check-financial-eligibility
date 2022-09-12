@@ -5,7 +5,7 @@ ruby "3.1.2"
 
 gem "active_model_serializers", "~> 0.10.13"
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem "rails", "~> 7.0.3"
+gem "rails", "~> 7.0.4"
 # Use postgresql as the database for Active Record
 gem "pg", ">= 0.18", "< 2.0"
 # Use Puma as the app server
