@@ -13,7 +13,9 @@ module Collators
              :maintenance_out_cash,
              :dependant_allowance,
              :legal_aid_bank,
-             :legal_aid_cash, to: :disposable_income_summary
+             :legal_aid_cash,
+             :fixed_employment_allowance,
+             :employment_income_deductions, to: :disposable_income_summary
 
     delegate :total_gross_income,
              :gross_employment_income, to: :gross_income_summary
@@ -59,16 +61,6 @@ module Collators
         total_outgoings_and_allowances:,
         total_disposable_income: disposable_income,
       }
-    end
-
-    # TODO: this could just be delegated
-    def fixed_employment_allowance
-      @fixed_employment_allowance ||= disposable_income_summary.fixed_employment_allowance
-    end
-
-    # TODO: this could just be delegated
-    def employment_income_deductions
-      @employment_income_deductions ||= disposable_income_summary.employment_income_deductions
     end
 
     def total_outgoings_and_allowances
