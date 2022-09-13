@@ -2,7 +2,7 @@ module Collators
   class DisposableIncomeCollator < BaseWorkflowService
     include Transactions
 
-    attr_accessor :monthly_cash_transactions_total
+    attr_reader :monthly_cash_transactions_total
 
     delegate :net_housing_costs,
              :rent_or_mortgage_bank,
@@ -74,12 +74,14 @@ module Collators
     def total_outgoings_and_allowances
       net_housing_costs +
         dependant_allowance +
-        child_care_bank +
-        maintenance_out_bank +
-        legal_aid_bank +
-        @monthly_cash_transactions_total -
+        monthly_bank_transactions_total +
+        monthly_cash_transactions_total -
         fixed_employment_allowance -
         employment_income_deductions
+    end
+
+    def monthly_bank_transactions_total
+      child_care_bank + maintenance_out_bank + legal_aid_bank
     end
 
     def disposable_income
