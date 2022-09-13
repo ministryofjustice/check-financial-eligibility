@@ -32,7 +32,7 @@ module Collators
 
     def populate_income_attrs(attrs, category)
       attrs[:"#{category}_bank"] = category == :benefits ? monthly_state_benefits : categorised_income[category].to_d
-      attrs[:"#{category}_cash"] = monthly_transaction_amount_by(operation: :credit, category:)
+      attrs[:"#{category}_cash"] = monthly_cash_transaction_amount_by(operation: :credit, category:)
       attrs[:"#{category}_all_sources"] = attrs[:"#{category}_bank"] + attrs[:"#{category}_cash"]
       attrs[:total_gross_income] += attrs[:"#{category}_all_sources"]
     end

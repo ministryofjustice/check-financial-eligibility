@@ -17,7 +17,7 @@ module Transactions
     transactions
   end
 
-  def monthly_transaction_amount_by(operation:, category:)
+  def monthly_cash_transaction_amount_by(operation:, category:)
     transactions = CashTransaction.by_operation_and_category(@assessment, operation, category)
     return 0.0 if transactions.empty?
 

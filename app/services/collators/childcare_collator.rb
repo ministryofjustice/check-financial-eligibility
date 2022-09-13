@@ -13,7 +13,7 @@ module Collators
     end
 
     def monthly_child_care_cash
-      monthly_transaction_amount_by(operation: :debit, category: :child_care)
+      monthly_cash_transaction_amount_by(operation: :debit, category: :child_care)
     end
 
     def applicant_has_dependent_child?

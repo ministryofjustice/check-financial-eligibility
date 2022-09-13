@@ -29,7 +29,7 @@ module Calculators
   private
 
     def gross_housing_costs_cash
-      monthly_transaction_amount_by(operation: :debit, category: :rent_or_mortgage)
+      monthly_cash_transaction_amount_by(operation: :debit, category: :rent_or_mortgage)
     end
 
     def gross_housing_costs_bank
