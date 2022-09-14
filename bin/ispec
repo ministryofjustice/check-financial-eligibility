@@ -24,7 +24,7 @@ class Ispec
   def run
     display_help if @help
 
-    command = "#{verbosity} #{freshness} #{target} bundle exec rspec spec/integration/test_runner_spec.rb"
+    command = "ISPEC_RUN=true #{verbosity} #{freshness} #{target} bundle exec rspec spec/integration/test_runner_spec.rb"
     puts command
     system command
   end
