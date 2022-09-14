@@ -16,7 +16,7 @@ RSpec.describe CFEDateValidator do
     it "raises error if date is in the future" do
       dummy.date_val = 3.days.from_now.to_date
       expect(dummy).to be_invalid
-      expect(dummy.errors[:date_val]).to eq ["date is in the future"]
+      expect(dummy.errors[:date_val]).to eq ["cannot be in the future"]
     end
 
     it "does not raise an error if date is not in the future" do
@@ -29,6 +29,18 @@ RSpec.describe CFEDateValidator do
       dummy.date_val = Time.zone.today
       expect(dummy).to be_valid
       expect(dummy.errors[:date_val]).to eq []
+    end
+
+    it "does not raise an error if date is a valid date string" do
+      dummy.date_val = 3.days.ago.to_date.to_s
+      expect(dummy).to be_valid
+      expect(dummy.errors[:date_val]).to eq []
+    end
+
+    it "raises an error if date is an invalid date string" do
+      dummy.date_val = "invalid"
+      expect(dummy).to be_invalid
+      expect(dummy.errors[:date_val]).to eq ["date not valid"]
     end
   end
 end

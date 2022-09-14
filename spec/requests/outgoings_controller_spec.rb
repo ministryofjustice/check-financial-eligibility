@@ -69,7 +69,7 @@ RSpec.describe OutgoingsController, type: :request do
       end
 
       it "returns error information" do
-        expect(parsed_response[:errors].join).to match(/ActiveRecord::RecordInvalid: Validation failed: Payment date date is in the future/)
+        expect(parsed_response[:errors].join).to match(/ActiveRecord::RecordInvalid: Validation failed: Payment date cannot be in the future/)
       end
 
       it "sets success flag to false" do

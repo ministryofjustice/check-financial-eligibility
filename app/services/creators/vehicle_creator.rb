@@ -1,15 +1,19 @@
 module Creators
   class VehicleCreator < BaseCreator
-    attr_accessor :assessment_id, :vehicles_attributes, :vehicles
+    attr_accessor :assessment_id, :vehicles
 
-    def initialize(assessment_id:, vehicles_attributes:)
+    def initialize(assessment_id:, vehicles_params:)
       super()
       @assessment_id = assessment_id
-      @vehicles_attributes = vehicles_attributes
+      @vehicles_params = vehicles_params
     end
 
     def call
-      create_records
+      if json_validator.valid?
+        create_records
+      else
+        self.errors = json_validator.errors
+      end
       self
     end
 
@@ -33,6 +37,14 @@ module Creators
 
     def capital_summary
       @capital_summary ||= assessment.capital_summary
+    end
+
+    def vehicles_attributes
+      @vehicles_attributes ||= JSON.parse(@vehicles_params, symbolize_names: true)[:vehicles]
+    end
+
+    def json_validator
+      @json_validator ||= JsonValidator.new("vehicles", @vehicles_params)
     end
   end
 end
