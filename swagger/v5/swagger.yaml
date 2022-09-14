@@ -1012,6 +1012,93 @@ paths:
                             type: boolean
                             description: Property is shared with a housing association
         required: true
+  "/assessments/{assessment_id}/regular_transactions":
+    post:
+      summary: create regular_transactions
+      tags:
+      - Assessment components
+      description: 'Add applicant''s regular transactions to an assessment.
+
+        '
+      parameters:
+      - name: assessment_id
+        in: path
+        description: Unique identifier of the assessment
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              description: A set of regular transactions
+              example:
+                regular_transactions:
+                - category: maintenance_in
+                  operation: credit
+                  frequency: monthly
+                  amount: 123456.78
+                - category: maintenance_out
+                  operation: debit
+                  frequency: four_weekly
+                  amount: 123456.78
+              properties:
+                regular_transactions:
+                  type: array
+                  minItems: 1
+                  required:
+                  - category
+                  - operation
+                  - frequency
+                  - amount
+                  description: One or more regular transactions
+                  items:
+                    type: object
+                    description: regular transaction detail
+                    properties:
+                      category:
+                        type: string
+                        enum:
+                        - benefits
+                        - friends_or_family
+                        - maintenance_in
+                        - property_or_lodger
+                        - pension
+                        - child_care
+                        - rent_or_mortgage
+                        - maintenance_out
+                        - legal_aid
+                        description: Identifying category for this regular transaction
+                        example: benefits
+                      operation:
+                        type: string
+                        enum:
+                        - credit
+                        - debit
+                        description: Identifying operation for this regular transaction
+                        example: credit
+                      frequency:
+                        type: string
+                        enum:
+                        - monthly
+                        - four_weekly
+                        - two_weekly
+                        - weekly
+                        - unknown
+                        description: Frequency with which regular transaction is made
+                          or received
+                        example: monthly
+                      amount:
+                        type: number
+                        format: decimal
+                        example: 101.01
+        required: true
   "/state_benefit_type":
     get:
       summary: list state_benefit_types

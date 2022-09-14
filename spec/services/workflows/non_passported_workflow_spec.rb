@@ -15,7 +15,7 @@ module Workflows
     describe ".call" do
       subject(:workflow_call) { described_class.call(assessment) }
 
-      context "self_employed" do
+      context "when self_employed" do
         let(:applicant) { create :applicant, self_employed: true }
 
         it "calls the self-employed workflow" do
@@ -24,35 +24,35 @@ module Workflows
         end
       end
 
-      context "not employed, not self_employed, Gross income exceeds threshold" do
+      context "when not employed, not self_employed, Gross income exceeds threshold" do
         let(:applicant) { create :applicant, self_employed: false }
 
         before do
           assessment.gross_income_summary.eligibilities.map { |elig| elig.update! assessment_result: "ineligible" }
         end
 
-        it "collates and assesses gross income but not disposable" do
+        it "collates and assesses gross income but not disposable income" do
           expect(Collators::GrossIncomeCollator).to receive(:call).with(assessment)
+          expect(Collators::RegularIncomeCollator).to receive(:call).with(assessment)
           expect(Assessors::GrossIncomeAssessor).to receive(:call).with(assessment)
           expect(Assessors::DisposableIncomeAssessor).not_to receive(:call)
-
           workflow_call
         end
       end
 
-      context "not employed, not self_employed, Gross income does not exceed threshold" do
+      context "when not employed, not self_employed, Gross income does not exceed threshold" do
         let(:applicant) { create :applicant, self_employed: false }
 
         before do
           assessment.gross_income_summary.eligibilities.map { |elig| elig.update! assessment_result: "eligible" }
         end
 
-        it "collates and assesses gross income, outgoings and perfoms disposable assessment" do
+        it "collates and assesses outgoings, regular transations and gross income and disposable income" do
           expect(Collators::GrossIncomeCollator).to receive(:call).with(assessment)
+          expect(Collators::RegularIncomeCollator).to receive(:call).with(assessment)
           expect(Assessors::GrossIncomeAssessor).to receive(:call).with(assessment)
           expect(Collators::OutgoingsCollator).to receive(:call).with(assessment)
           expect(Assessors::DisposableIncomeAssessor).to receive(:call).with(assessment)
-
           workflow_call
         end
       end

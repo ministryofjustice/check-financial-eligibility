@@ -6,6 +6,8 @@ RSpec.describe GrossIncomeSummary do
     create :gross_income_summary, assessment:
   end
 
+  it { is_expected.to have_many(:regular_transactions).dependent(:destroy) }
+
   describe "housing_benefit_payments" do
     context "no state benefits belonging to gross income summary" do
       it "returns an empty array" do

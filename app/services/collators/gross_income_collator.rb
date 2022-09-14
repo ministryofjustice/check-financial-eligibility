@@ -2,8 +2,6 @@ module Collators
   class GrossIncomeCollator < BaseWorkflowService
     include Transactions
 
-    INCOME_CATEGORIES = CFEConstants::VALID_INCOME_CATEGORIES.map(&:to_sym)
-
     def call
       if assessment.employments.any?
         assessment.employments.each { |employment| Utilities::EmploymentIncomeMonthlyEquivalentCalculator.call(employment) }
@@ -14,10 +12,14 @@ module Collators
 
   private
 
+    def income_categories
+      CFEConstants::VALID_INCOME_CATEGORIES.map(&:to_sym)
+    end
+
     def populate_attrs
       attrs = default_attrs
 
-      INCOME_CATEGORIES.each do |category|
+      income_categories.each do |category|
         populate_income_attrs(attrs, category)
       end
 
@@ -30,7 +32,7 @@ module Collators
 
     def populate_income_attrs(attrs, category)
       attrs[:"#{category}_bank"] = category == :benefits ? monthly_state_benefits : categorised_income[category].to_d
-      attrs[:"#{category}_cash"] = monthly_transaction_amount_by(operation: :credit, category:)
+      attrs[:"#{category}_cash"] = monthly_cash_transaction_amount_by(operation: :credit, category:)
       attrs[:"#{category}_all_sources"] = attrs[:"#{category}_bank"] + attrs[:"#{category}_cash"]
       attrs[:total_gross_income] += attrs[:"#{category}_all_sources"]
     end

@@ -95,8 +95,9 @@ module TestCase
         puts "Disposable income >>>>>>>>>>>>>>>>>>>>>>".green unless silent?
         compare_and_print("childcare", actual_disposable(:child_care), expected_disposable(:childcare))
         compare_and_print("dependant allowance", actual_dependant_allowance, expected_disposable(:dependant_allowance))
+        compare_and_print("legal_aid", actual_disposable(:legal_aid), expected_disposable(:legal_aid))
         compare_and_print("maintenance", actual_disposable(:maintenance_out), expected_disposable(:maintenance))
-        compare_and_print("gross_housing_costs", actual_disposable(:rent_or_mortgage), expected_disposable(:gross_housing_costs))
+        compare_and_print("gross_housing_costs", disposable_income_result[:gross_housing_costs], expected_disposable(:gross_housing_costs))
         compare_and_print("housing benefit", disposable_income_result[:housing_benefit], expected_disposable(:housing_benefit))
         compare_and_print("net housing costs", disposable_income_result[:net_housing_costs], expected_disposable(:net_housing_costs))
         compare_and_print("total outgoings and allowances", disposable_income_result[:total_outgoings_and_allowances], expected_disposable(:total_outgoings_and_allowances))

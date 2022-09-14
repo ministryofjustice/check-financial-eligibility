@@ -2,9 +2,7 @@ module Collators
   class DisposableIncomeCollator < BaseWorkflowService
     include Transactions
 
-    attr_accessor :monthly_cash_transactions_total
-
-    OUTGOING_CATEGORIES = CFEConstants::VALID_OUTGOING_CATEGORIES.map(&:to_sym)
+    attr_reader :monthly_cash_transactions_total
 
     delegate :net_housing_costs,
              :rent_or_mortgage_bank,
@@ -15,7 +13,9 @@ module Collators
              :maintenance_out_cash,
              :dependant_allowance,
              :legal_aid_bank,
-             :legal_aid_cash, to: :disposable_income_summary
+             :legal_aid_cash,
+             :fixed_employment_allowance,
+             :employment_income_deductions, to: :disposable_income_summary
 
     delegate :total_gross_income,
              :gross_employment_income, to: :gross_income_summary
@@ -31,10 +31,16 @@ module Collators
 
   private
 
+    def outgoing_categories
+      CFEConstants::VALID_OUTGOING_CATEGORIES.map(&:to_sym)
+    end
+
+    # TODO: This line seems redundant as it updates the column to its existing value!
+    # `attrs[:"#{category}_bank"] = __send__("#{category}_bank")`
     def populate_attrs
       attrs = {}
 
-      OUTGOING_CATEGORIES.each do |category|
+      outgoing_categories.each do |category|
         monthly_cash_amount = category == :child_care ? __send__("#{category}_cash") : monthly_cash_by_category(category)
         @monthly_cash_transactions_total += monthly_cash_amount unless category == :rent_or_mortgage
 
@@ -47,7 +53,7 @@ module Collators
     end
 
     def monthly_cash_by_category(category)
-      monthly_transaction_amount_by(operation: :debit, category:)
+      monthly_cash_transaction_amount_by(operation: :debit, category:)
     end
 
     def default_attrs
@@ -57,17 +63,17 @@ module Collators
       }
     end
 
-    def fixed_employment_allowance
-      @fixed_employment_allowance ||= disposable_income_summary.fixed_employment_allowance
-    end
-
-    def employment_income_deductions
-      @employment_income_deductions ||= disposable_income_summary.employment_income_deductions
-    end
-
     def total_outgoings_and_allowances
-      net_housing_costs + dependant_allowance + child_care_bank + maintenance_out_bank + legal_aid_bank\
-      + @monthly_cash_transactions_total - fixed_employment_allowance - employment_income_deductions
+      net_housing_costs +
+        dependant_allowance +
+        monthly_bank_transactions_total +
+        monthly_cash_transactions_total -
+        fixed_employment_allowance -
+        employment_income_deductions
+    end
+
+    def monthly_bank_transactions_total
+      child_care_bank + maintenance_out_bank + legal_aid_bank
     end
 
     def disposable_income

@@ -1,0 +1,40 @@
+{
+  "id": "file://public/schemas/regular_transactions.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Legal Aid Check Financial Eligibility add regular transactions to an assessment schema",
+  "type": "object",
+  "required": ["regular_transactions"],
+  "properties": {
+    "regular_transactions": {
+      "description": "Describes simple regular transactions received by applicant",
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "string",
+            "enum": <%= CFEConstants::VALID_INCOME_CATEGORIES.as_json + CFEConstants::VALID_OUTGOING_CATEGORIES.as_json %>
+          },
+          "operation": {
+            "type": "string",
+            "enum": <%= %w[credit debit].as_json %>
+          },
+          "frequency": {
+            "type": "string",
+            "enum": <%= CFEConstants::VALID_FREQUENCIES.as_json %>
+          },
+          "amount": {
+            "$ref": "<%= "file://#{@schema_dir}/common.json#currency" %>"
+          }
+        },
+        "required": ["category", "operation", "frequency", "amount"],
+        "additionalProperties": false
+      }
+    }
+  }
+}
+
+
+
+
