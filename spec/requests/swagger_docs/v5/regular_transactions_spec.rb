@@ -50,9 +50,9 @@ RSpec.describe "regular_transactions", type: :request, swagger_doc: "v5/swagger.
                           },
                           frequency: {
                             type: :string,
-                            enum: CFEConstants::VALID_FREQUENCIES,
+                            enum: CFEConstants::VALID_REGULAR_TRANSACTION_FREQUENCIES,
                             description: "Frequency with which regular transaction is made or received",
-                            example: CFEConstants::VALID_FREQUENCIES.first,
+                            example: CFEConstants::VALID_REGULAR_TRANSACTION_FREQUENCIES.first,
                           },
                           amount: {
                             type: :number,
@@ -113,7 +113,7 @@ RSpec.describe "regular_transactions", type: :request, swagger_doc: "v5/swagger.
           expect(body[:errors])
             .to include(%r{The property '#/regular_transactions/0/category' value "" did not match one of the following values:},
                         %r{The property '#/regular_transactions/0/operation' value "" did not match one of the following values: credit, debit},
-                        %r{The property '#/regular_transactions/0/frequency' value "" did not match one of the following values: monthly, four_weekly, two_weekly, weekly, unknown},
+                        %r{The property '#/regular_transactions/0/frequency' value "" did not match one of the following values: three_monthly, monthly, four_weekly, two_weekly, weekly, unknown},
                         %r{The property '#/regular_transactions/0/amount' value "" did not match the regex})
         end
       end

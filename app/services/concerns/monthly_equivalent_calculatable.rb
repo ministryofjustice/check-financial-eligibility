@@ -1,21 +1,14 @@
 module MonthlyEquivalentCalculatable
 private
 
-  def determine_calc_method(period)
-    case period.to_sym
-    when :monthly
-      :monthly_to_monthly
-    when :four_weekly
-      :four_weekly_to_monthly
-    when :two_weekly
-      :two_weekly_to_monthly
-    when :weekly
-      :weekly_to_monthly
-    when :unknown
-      :blunt_average
-    else
-      raise ArgumentError, "unexpected period #{period}"
-    end
+  def determine_calc_method(frequency)
+    raise ArgumentError, "unexpected frequency #{frequency}" unless frequency_conversions.key?(frequency)
+
+    frequency_conversions[frequency]
+  end
+
+  def three_monthly_to_monthly(value)
+    (value / 3).round(2)
   end
 
   def monthly_to_monthly(value)
@@ -32,6 +25,15 @@ private
 
   def weekly_to_monthly(value)
     (value * 52 / 12).round(2)
+  end
+
+  def frequency_conversions
+    { three_monthly: :three_monthly_to_monthly,
+      monthly: :monthly_to_monthly,
+      four_weekly: :four_weekly_to_monthly,
+      two_weekly: :two_weekly_to_monthly,
+      weekly: :weekly_to_monthly,
+      unknown: :blunt_average }.with_indifferent_access
   end
 
   def monthly_regular_transaction_amount_by(operation:, category:)
