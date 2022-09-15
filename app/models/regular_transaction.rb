@@ -7,7 +7,7 @@ class RegularTransaction < ApplicationRecord
                                      message: "%<value>s is not a valid operation" }
 
   validates :category, inclusion: {
-    in: CFEConstants::VALID_INCOME_CATEGORIES,
+    in: CFEConstants::VALID_REGULAR_INCOME_CATEGORIES,
     message: "is not a valid credit category: %<value>s",
   }, if: :credit?
 

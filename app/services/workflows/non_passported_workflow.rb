@@ -21,13 +21,9 @@ module Workflows
       Assessors::GrossIncomeAssessor.call(assessment)
     end
 
-    def collate_outgoings
-      Collators::OutgoingsCollator.call(assessment)
-    end
-
     # TODO: make the Collators::DisposableIncomeCollator increment/sum to existing values so order of "collation" becomes unimportant
     def disposable_income_assessment
-      collate_outgoings
+      Collators::OutgoingsCollator.call(assessment)
       Collators::DisposableIncomeCollator.call(assessment)
       Collators::RegularOutgoingsCollator.call(assessment) # here OR call in Collators::DisposableIncomeCollator
       Assessors::DisposableIncomeAssessor.call(assessment)

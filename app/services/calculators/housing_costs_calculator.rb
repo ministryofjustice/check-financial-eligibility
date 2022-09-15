@@ -23,6 +23,7 @@ module Calculators
     end
 
     def monthly_housing_benefit
+      # TODO: could sum in regular transaction records for housing_benefit here as well? or handle in GrossIncomeSummary
       @monthly_housing_benefit = disposable_income_summary.calculate_monthly_equivalent(collection: housing_benefit_records)
     end
 

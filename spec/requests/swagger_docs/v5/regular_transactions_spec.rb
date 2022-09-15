@@ -38,9 +38,9 @@ RSpec.describe "regular_transactions", type: :request, swagger_doc: "v5/swagger.
                         properties: {
                           category: {
                             type: :string,
-                            enum: CFEConstants::VALID_INCOME_CATEGORIES + CFEConstants::VALID_OUTGOING_CATEGORIES,
+                            enum: CFEConstants::VALID_REGULAR_INCOME_CATEGORIES + CFEConstants::VALID_OUTGOING_CATEGORIES,
                             description: "Identifying category for this regular transaction",
-                            example: CFEConstants::VALID_INCOME_CATEGORIES.first,
+                            example: CFEConstants::VALID_REGULAR_INCOME_CATEGORIES.first,
                           },
                           operation: {
                             type: :string,

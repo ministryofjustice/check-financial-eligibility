@@ -1052,6 +1052,7 @@ paths:
                         - maintenance_in
                         - property_or_lodger
                         - pension
+                        - housing_benefit
                         - child_care
                         - rent_or_mortgage
                         - maintenance_out

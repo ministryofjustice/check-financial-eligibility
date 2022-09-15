@@ -75,6 +75,12 @@ RSpec.describe RegularTransaction, type: :model do
     end
   end
 
+  context "when category is housing_benefit" do
+    subject(:regular_transaction) { build(:regular_transaction, operation: "credit", category: "housing_benefit") }
+
+    it { is_expected.to be_valid }
+  end
+
   context "with valid frequency" do
     subject(:regular_transaction) { build(:regular_transaction, frequency: "monthly") }
 
