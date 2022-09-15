@@ -17,7 +17,7 @@ class RegularTransaction < ApplicationRecord
   }, if: :debit?
 
   validates :frequency, inclusion: {
-    in: CFEConstants::VALID_FREQUENCIES.map(&:to_s),
+    in: CFEConstants::VALID_REGULAR_TRANSACTION_FREQUENCIES.map(&:to_s),
     message: "is not a valid frequency: %<value>s",
   }
 

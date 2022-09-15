@@ -246,8 +246,8 @@ RSpec.describe Utilities::EmploymentIncomeMonthlyEquivalentCalculator do
       allow(Utilities::PaymentPeriodAnalyser).to receive(:new).and_return(mock_analyser)
     end
 
-    it "raises an argument error with period :unknown" do
-      expect { described_class.call(employment) }.to raise_error ArgumentError, "unexpected period testing"
+    it "raises an argument error for unacceptable period" do
+      expect { described_class.call(employment) }.to raise_error ArgumentError, "unexpected frequency testing"
     end
   end
 end

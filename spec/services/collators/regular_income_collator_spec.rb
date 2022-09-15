@@ -7,7 +7,7 @@ RSpec.describe Collators::RegularIncomeCollator do
   describe ".call" do
     subject(:collator) { described_class.call(assessment) }
 
-    context "without monthly regular transactions" do
+    context "without regular transactions" do
       it "does not increment #<cagtegory>_all_sources data" do
         collator
         gross_income_summary.reload
@@ -22,6 +22,32 @@ RSpec.describe Collators::RegularIncomeCollator do
 
       it "does not increment #total_gross_income" do
         expect(gross_income_summary.total_gross_income).to be_zero
+      end
+    end
+
+    context "with three monthly regular transactions" do
+      before do
+        create(:regular_transaction, gross_income_summary:, operation: "credit", category: "maintenance_in", frequency: "three_monthly", amount: 100.0)
+        create(:regular_transaction, gross_income_summary:, operation: "credit", category: "friends_or_family", frequency: "three_monthly", amount: 200.0)
+        create(:regular_transaction, gross_income_summary:, operation: "debit", category: "maintenance_out", frequency: "three_monthly", amount: 12_000)
+      end
+
+      it "increments #<cagtegory>_all_sources data" do
+        collator
+        gross_income_summary.reload
+        expect(gross_income_summary).to have_attributes(
+          benefits_all_sources: 0.0,
+          maintenance_in_all_sources: 33.33,
+          pension_all_sources: 0.0,
+          friends_or_family_all_sources: 66.67,
+          property_or_lodger_all_sources: 0.0,
+        )
+      end
+
+      it "increments #total_gross_income" do
+        collator
+        gross_income_summary.reload
+        expect(gross_income_summary.total_gross_income).to eq 100.00
       end
     end
 

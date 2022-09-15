@@ -68,6 +68,7 @@ module CFEConstants
 
   # Frequencies
   #
+  VALID_REGULAR_TRANSACTION_FREQUENCIES = %i[three_monthly monthly four_weekly two_weekly weekly unknown].freeze
   VALID_FREQUENCIES = %i[monthly four_weekly two_weekly weekly unknown].freeze
   NUMBER_OF_MONTHS_TO_AVERAGE = 3
 

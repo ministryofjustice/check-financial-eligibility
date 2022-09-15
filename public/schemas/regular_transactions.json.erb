@@ -22,7 +22,7 @@
           },
           "frequency": {
             "type": "string",
-            "enum": <%= CFEConstants::VALID_FREQUENCIES.as_json %>
+            "enum": <%= CFEConstants::VALID_REGULAR_TRANSACTION_FREQUENCIES.as_json %>
           },
           "amount": {
             "$ref": "<%= "file://#{@schema_dir}/common.json#currency" %>"
