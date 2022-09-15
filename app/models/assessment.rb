@@ -65,7 +65,7 @@ private
   end
 
   def proceeding_type_codes_validations
-    return if version_3?
+    return unless version_4?
 
     proceeding_type_codes.each do |code|
       errors.add(:proceeding_type_codes, "invalid: #{code}") unless code.to_sym.in?(ProceedingTypeThreshold.valid_ccms_codes)
