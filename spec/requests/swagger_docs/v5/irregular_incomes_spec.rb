@@ -7,7 +7,7 @@ RSpec.describe "irregular_incomes", type: :request, swagger_doc: "v5/swagger.yam
       consumes "application/json"
       produces "application/json"
 
-      description <<~DESCRIPTION
+      description <<~DESCRIPTION.chomp
         Add applicant's irregular income payments to an assessment.
       DESCRIPTION
 

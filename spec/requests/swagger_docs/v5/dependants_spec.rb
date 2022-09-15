@@ -7,7 +7,7 @@ RSpec.describe "dependants", type: :request, swagger_doc: "v5/swagger.yaml" do
       consumes "application/json"
       produces "application/json"
 
-      description <<~DESCRIPTION
+      description <<~DESCRIPTION.chomp
         Adds details of an applicant's dependants.
       DESCRIPTION
 

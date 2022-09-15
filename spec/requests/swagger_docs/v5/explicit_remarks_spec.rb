@@ -7,7 +7,7 @@ RSpec.describe "explicit_remarks", type: :request, swagger_doc: "v5/swagger.yaml
       consumes "application/json"
       produces "application/json"
 
-      description <<~DESCRIPTION
+      description <<~DESCRIPTION.chomp
         Add explicit remarks to an assessment
       DESCRIPTION
 

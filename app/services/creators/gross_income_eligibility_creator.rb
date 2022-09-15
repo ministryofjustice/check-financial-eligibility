@@ -10,12 +10,7 @@ module Creators
     end
 
     def call
-      # TODO: remove if statement once version 4 deprecated
-      if @assessment.version_5?
-        @assessment.proceeding_types.map(&:ccms_code).each { |ptc| create_eligibility(ptc) }
-      else
-        @assessment.proceeding_type_codes.each { |ptc| create_eligibility(ptc) }
-      end
+      @assessment.proceeding_types.map(&:ccms_code).each { |ptc| create_eligibility(ptc) }
     end
 
   private
@@ -29,7 +24,7 @@ module Creators
     end
 
     def upper_threshold(ptc)
-      base_threshold = @assessment.version_5? ? threshold_from_proceeding_type(ptc) : threshold_from_service(ptc)
+      base_threshold = threshold_from_proceeding_type(ptc)
 
       return base_threshold if base_threshold == 999_999_999_999
 
@@ -38,10 +33,6 @@ module Creators
 
     def threshold_from_proceeding_type(ptc)
       @assessment.proceeding_types.find_by!(ccms_code: ptc).gross_income_upper_threshold
-    end
-
-    def threshold_from_service(ptc)
-      ProceedingTypeThreshold.value_for(ptc.to_sym, :gross_income_upper, @assessment.submission_date)
     end
 
     def dependant_increase

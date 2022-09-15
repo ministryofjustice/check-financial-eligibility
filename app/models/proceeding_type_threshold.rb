@@ -7,10 +7,6 @@ class ProceedingTypeThreshold
     new(ccms_code, threshold, at).value
   end
 
-  def self.matter_type(ccms_code)
-    LegalFrameworkAPI::QueryService.matter_type(ccms_code.to_sym)
-  end
-
   def initialize(ccms_code, threshold_type, at)
     @ccms_code = ccms_code
     @threshold_type = threshold_type

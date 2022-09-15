@@ -7,7 +7,7 @@ RSpec.describe "employments", type: :request, swagger_doc: "v5/swagger.yaml" do
       consumes "application/json"
       produces "application/json"
 
-      description <<~DESCRIPTION
+      description <<~DESCRIPTION.chomp
         Add applicant employment income to an assessment.
       DESCRIPTION
 

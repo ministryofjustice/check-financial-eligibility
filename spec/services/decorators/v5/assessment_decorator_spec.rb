@@ -33,11 +33,11 @@ module Decorators
         end
 
         it "calls the decorators for associated records" do
-          allow(::Decorators::V3::ApplicantDecorator).to receive(:new).and_return(instance_double("ad", as_json: nil))
-          allow(::Decorators::V4::GrossIncomeDecorator).to receive(:new).and_return(instance_double("gisd", as_json: nil))
-          allow(::Decorators::V4::DisposableIncomeDecorator).to receive(:new).and_return(instance_double("disd", as_json: nil))
-          allow(::Decorators::V4::CapitalDecorator).to receive(:new).and_return(instance_double("csd", as_json: nil))
-          allow(::Decorators::V3::RemarksDecorator).to receive(:new).and_return(instance_double("rmk", as_json: nil))
+          allow(::Decorators::V5::ApplicantDecorator).to receive(:new).and_return(instance_double("ad", as_json: nil))
+          allow(::Decorators::V5::GrossIncomeDecorator).to receive(:new).and_return(instance_double("gisd", as_json: nil))
+          allow(::Decorators::V5::DisposableIncomeDecorator).to receive(:new).and_return(instance_double("disd", as_json: nil))
+          allow(::Decorators::V5::CapitalDecorator).to receive(:new).and_return(instance_double("csd", as_json: nil))
+          allow(::Decorators::V5::RemarksDecorator).to receive(:new).and_return(instance_double("rmk", as_json: nil))
           allow(::Decorators::V5::ResultSummaryDecorator).to receive(:new).and_return(instance_double("rsd", as_json: nil))
           decorator
         end

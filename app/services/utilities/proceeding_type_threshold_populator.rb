@@ -17,7 +17,7 @@ module Utilities
   private
 
     def proceeding_type_details
-      @proceeding_type_details ||= @assessment.proceeding_types.map do |pt|
+      @proceeding_type_details ||= @assessment.proceeding_types.order(:ccms_code).map do |pt|
         { ccms_code: pt.ccms_code, client_involvement_type: pt.client_involvement_type }
       end
     end

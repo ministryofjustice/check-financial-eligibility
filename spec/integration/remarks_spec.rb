@@ -18,13 +18,14 @@ RSpec.describe "contribution_required Full Assessment with remarks" do
 
     assessment_id = post_assessment
     post_applicant(assessment_id)
+    post_proceeding_types(assessment_id)
     post_capitals(assessment_id)
     post_other_incomes(assessment_id)
     post_outgoings(assessment_id)
     post_state_benefits(assessment_id)
     post_explicit_remarks(assessment_id)
 
-    get assessment_path(assessment_id), headers: v3_headers
+    get assessment_path(assessment_id), headers: v5_headers
     output_response(:get, :assessment)
     expect(deep_orderless_match(parsed_response[:assessment][:remarks], expected_remarks)).to be true
   end
@@ -45,38 +46,43 @@ RSpec.describe "contribution_required Full Assessment with remarks" do
   end
 
   def post_assessment
-    post assessments_path, params: assessment_params, headers: v3_headers
+    post assessments_path, params: assessment_params, headers: v5_headers
     output_response(:post, :assessment)
     parsed_response[:assessment_id]
   end
 
   def post_applicant(assessment_id)
-    post assessment_applicant_path(assessment_id), params: applicant_params, headers: v3_headers
+    post assessment_applicant_path(assessment_id), params: applicant_params, headers: v5_headers
+    output_response(:post, :applicant)
+  end
+
+  def post_proceeding_types(assessment_id)
+    post assessment_proceeding_types_path(assessment_id), params: proceeding_types_params, headers: v5_headers
     output_response(:post, :applicant)
   end
 
   def post_capitals(assessment_id)
-    post assessment_capitals_path(assessment_id), params: capitals_params, headers: v3_headers
+    post assessment_capitals_path(assessment_id), params: capitals_params, headers: v5_headers
     output_response(:post, :capitals)
   end
 
   def post_other_incomes(assessment_id)
-    post assessment_other_incomes_path(assessment_id), params: other_income_params, headers: v3_headers
+    post assessment_other_incomes_path(assessment_id), params: other_income_params, headers: v5_headers
     output_response(:post, :other_incomes)
   end
 
   def post_outgoings(assessment_id)
-    post assessment_outgoings_path(assessment_id), params: outgoings_params, headers: v3_headers
+    post assessment_outgoings_path(assessment_id), params: outgoings_params, headers: v5_headers
     output_response(:post, :outgoings)
   end
 
   def post_state_benefits(assessment_id)
-    post assessment_state_benefits_path(assessment_id), params: state_benefit_params, headers: v3_headers
+    post assessment_state_benefits_path(assessment_id), params: state_benefit_params, headers: v5_headers
     output_response(:post, :state_benefits)
   end
 
   def post_explicit_remarks(assessment_id)
-    post assessment_explicit_remarks_path(assessment_id), params: explicit_remarks_params, headers: v3_headers
+    post assessment_explicit_remarks_path(assessment_id), params: explicit_remarks_params, headers: v5_headers
     output_response(:post, :explicit_remarks)
   end
 
@@ -90,15 +96,14 @@ RSpec.describe "contribution_required Full Assessment with remarks" do
     ENV["VERBOSE"] == "true"
   end
 
-  def v3_headers
-    { "CONTENT_TYPE" => "application/json", "Accept" => "application/json;version=3" }
+  def v5_headers
+    { "CONTENT_TYPE" => "application/json", "Accept" => "application/json;version=5" }
   end
 
   def assessment_params
     {
       client_reference_id: "psr-123",
       submission_date: "2019-06-06",
-      matter_proceeding_type: "domestic_abuse",
     }.to_json
   end
 
@@ -106,10 +111,20 @@ RSpec.describe "contribution_required Full Assessment with remarks" do
     {
       applicant: {
         date_of_birth: 20.years.ago.to_date,
-        involvement_type: "applicant",
         has_partner_opponent: false,
         receives_qualifying_benefit: true,
       },
+    }.to_json
+  end
+
+  def proceeding_types_params
+    {
+      proceeding_types: [
+        {
+          ccms_code: "DA005",
+          client_involvement_type: "A",
+        },
+      ],
     }.to_json
   end
 

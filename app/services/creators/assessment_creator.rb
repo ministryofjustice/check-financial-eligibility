@@ -36,34 +36,9 @@ module Creators
       {
         client_reference_id: @parsed_raw_post[:client_reference_id],
         submission_date: Date.parse(@parsed_raw_post[:submission_date]),
-        matter_proceeding_type: @parsed_raw_post[:matter_proceeding_type],
-        proceeding_type_codes: ccms_codes_for_application,
         version: @version,
         remote_ip:,
       }
-    end
-
-    def ccms_codes_for_application
-      case @version
-      when "3"
-        dummy_code_for_domestic_abuse
-      when "4"
-        codes_from_post
-      when "5"
-        []
-      end
-    end
-
-    # For version 3, which are all single_proceeding type (domestic abuse),
-    # we just create an assessment with one dummy domestic abuse proceeding type.
-    # This allows us to treat both versions the same for determining thresholds.
-    #
-    def dummy_code_for_domestic_abuse
-      %w[DA001]
-    end
-
-    def codes_from_post
-      @parsed_raw_post[:proceeding_types][:ccms_codes]
     end
 
     def new_assessment
@@ -76,9 +51,8 @@ module Creators
         assessment.build_capital_summary
         assessment.build_gross_income_summary
         assessment.build_disposable_income_summary
-        if assessment.save && !assessment.version_5?
-          Creators::EligibilitiesCreator.call(assessment)
-        end
+        Creators::EligibilitiesCreator.call(assessment) if assessment.save
+
         assessment
       end
     end

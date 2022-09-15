@@ -2,7 +2,7 @@ require "rails_helper"
 
 module Collators
   RSpec.describe GrossIncomeCollator do
-    let(:assessment) { create :assessment, :with_applicant, :with_gross_income_summary, proceeding_type_codes: }
+    let(:assessment) { create :assessment, :with_applicant, :with_gross_income_summary, proceedings: proceeding_type_codes }
     let(:gross_income_summary) { assessment.gross_income_summary }
 
     before do
@@ -21,7 +21,7 @@ module Collators
       subject(:collator) { described_class.call assessment }
 
       context "only domestic abuse proceeding type codes" do
-        let(:proceeding_type_codes) { %w[DA001] }
+        let(:proceeding_type_codes) { [%w[DA001 A]] }
 
         context "monthly_other_income" do
           context "there are no other income records" do

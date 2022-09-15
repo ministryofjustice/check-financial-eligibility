@@ -7,7 +7,7 @@ RSpec.describe "vehicles", type: :request, swagger_doc: "v5/swagger.yaml" do
       consumes "application/json"
       produces "application/json"
 
-      description <<~DESCRIPTION
+      description <<~DESCRIPTION.chomp
         Add applicant's outgoings to an assessment.
       DESCRIPTION
 

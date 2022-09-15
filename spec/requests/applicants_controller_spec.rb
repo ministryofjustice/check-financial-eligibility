@@ -9,7 +9,6 @@ RSpec.describe ApplicantsController, type: :request do
       {
         applicant: {
           date_of_birth: 20.years.ago.to_date,
-          involvement_type: "applicant",
           has_partner_opponent: false,
           receives_qualifying_benefit: true,
         },
@@ -91,41 +90,6 @@ RSpec.describe ApplicantsController, type: :request do
         end
 
         it_behaves_like "it fails with message", /The property '#\/applicant\/date_of_birth' value "2002-12-32" did not match the regex/
-      end
-
-      context "missing involvement_type" do
-        before do
-          params[:applicant].delete(:involvement_type)
-          post assessment_applicant_path(assessment.id), params: params.to_json, headers:
-        end
-
-        context "version 4" do
-          let(:assessment) { create :assessment, version: "4" }
-
-          it_behaves_like "it fails with message", /The property '#\/applicant' did not contain a required property of 'involvement_type'/
-        end
-
-        context "version 5" do
-          let(:assessment) { create :assessment, version: "5" }
-
-          it "returns success"  do
-            expect(response).to have_http_status(:success)
-          end
-
-          it "returns expected response" do
-            expect(parsed_response[:success]).to eq(true)
-            expect(parsed_response[:errors]).to be_empty
-          end
-        end
-      end
-
-      context "invalid involvement type" do
-        before do
-          params[:applicant][:involvement_type] = "Witness"
-          post assessment_applicant_path(assessment.id), params: params.to_json, headers:
-        end
-
-        it_behaves_like "it fails with message", /The property '#\/applicant\/involvement_type' value "Witness" did not match one of the following values: applicant in schema file/
       end
 
       context "has_partner_opponent not a boolean" do

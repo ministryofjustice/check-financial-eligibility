@@ -7,7 +7,7 @@ RSpec.describe "proceeding_types", type: :request, swagger_doc: "v5/swagger.yaml
       consumes "application/json"
       produces "application/json"
 
-      description <<~DESCRIPTION
+      description <<~DESCRIPTION.chomp
         Adds details of an application's proceeding types.
       DESCRIPTION
 

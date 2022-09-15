@@ -12,33 +12,7 @@ module TestCase
     end
 
     def payload
-      @version = "3" if @version.nil?
-      case @version
-      when "3"
-        version_3_payload
-      when "4"
-        version_4_payload
-      else
-        version_5_payload
-      end
-    end
-
-    def version_3_payload
-      {
-        client_reference_id: @worksheet_name,
-        submission_date: @submission_date,
-        matter_proceeding_type: @matter_proceeding_type,
-      }
-    end
-
-    def version_4_payload
-      {
-        client_reference_id: @worksheet_name,
-        submission_date: @submission_date,
-        proceeding_types: {
-          ccms_codes: @proceeding_type_codes,
-        },
-      }
+      version_5_payload
     end
 
     def version_5_payload
@@ -64,12 +38,8 @@ module TestCase
       case row[2]
       when "submission_date"
         @submission_date = row[3]
-      when "matter_proceeding_type"
-        @matter_proceeding_type = row[3]
       when "version"
         @version = row[3].to_i.to_s
-      when "proceeding_type_codes"
-        @proceeding_type_codes = row[3].split(";")
       end
     end
   end
