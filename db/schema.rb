@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_01_175043) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_15_153334) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -116,9 +116,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_01_175043) do
 
   create_table "disposable_income_summaries", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "assessment_id", null: false
-    t.decimal "childcare", default: "0.0", null: false
     t.decimal "dependant_allowance", default: "0.0", null: false
-    t.decimal "maintenance", default: "0.0", null: false
     t.decimal "gross_housing_costs", default: "0.0", null: false
     t.decimal "total_outgoings_and_allowances", default: "0.0", null: false
     t.decimal "total_disposable_income", default: "0.0", null: false
@@ -130,7 +128,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_01_175043) do
     t.decimal "net_housing_costs", default: "0.0"
     t.decimal "housing_benefit", default: "0.0"
     t.decimal "income_contribution", default: "0.0"
-    t.decimal "legal_aid", default: "0.0", null: false
     t.decimal "child_care_all_sources", default: "0.0"
     t.decimal "maintenance_out_all_sources", default: "0.0"
     t.decimal "rent_or_mortgage_all_sources", default: "0.0"
@@ -210,11 +207,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_01_175043) do
     t.string "assessment_result", default: "pending", null: false
     t.decimal "monthly_state_benefits", default: "0.0", null: false
     t.decimal "total_gross_income", default: "0.0"
-    t.decimal "friends_or_family", default: "0.0"
-    t.decimal "maintenance_in", default: "0.0"
-    t.decimal "property_or_lodger", default: "0.0"
     t.decimal "student_loan", default: "0.0"
-    t.decimal "pension", default: "0.0"
     t.decimal "monthly_student_loan"
     t.decimal "benefits_all_sources", default: "0.0"
     t.decimal "friends_or_family_all_sources", default: "0.0"
