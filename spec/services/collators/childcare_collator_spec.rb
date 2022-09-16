@@ -31,14 +31,14 @@ module Collators
 
             it "does not update the childcare value on the disposable income summary" do
               collator
-              expect(disposable_income_summary.childcare).to eq 0.0
+              expect(disposable_income_summary.child_care_bank).to eq 0.0
             end
           end
 
           context "not in receipt of Student grant" do
             it "does not update the childcare value on the disposable income summary" do
               collator
-              expect(disposable_income_summary.childcare).to eq 0.0
+              expect(disposable_income_summary.child_care_bank).to eq 0.0
             end
           end
         end
@@ -50,7 +50,7 @@ module Collators
 
               it "does not update the childcare value on the disposable income summary" do
                 collator
-                expect(disposable_income_summary.childcare).to eq 0.0
+                expect(disposable_income_summary.child_care_bank).to eq 0.0
               end
             end
           end
@@ -58,7 +58,7 @@ module Collators
           context "not in receipt of Student grant" do
             it "does not update the childcare value on the disposable income summary" do
               collator
-              expect(disposable_income_summary.childcare).to eq 0.0
+              expect(disposable_income_summary.child_care_bank).to eq 0.0
             end
           end
         end

@@ -196,7 +196,6 @@ RSpec.describe Collators::RegularIncomeCollator do
           benefits_bank: 0.0,
           benefits_cash: 222.22,
           benefits_all_sources: 222.22,
-          friends_or_family: 0.0,
           friends_or_family_bank: 0.0,
           friends_or_family_cash: 0.0,
           friends_or_family_all_sources: 0.0,
