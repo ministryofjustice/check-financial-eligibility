@@ -1,6 +1,7 @@
 name: manual-integration-tests
 
 on:
+  workflow_dispatch:
   repository_dispatch:
     types: manual-trigger
   schedule:
