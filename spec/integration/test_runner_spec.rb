@@ -30,21 +30,34 @@ RSpec.describe "IntegrationTests::TestRunner", type: :request do
   end
 
   describe "run integration_tests", :vcr do
-    it "processes all the tests on all the sheets" do
-      failing_tests = []
-      test_count = 0
-      group_runner = TestCase::GroupRunner.new(verbosity_level, refresh)
-      group_runner.each do |worksheet|
-        next if target_worksheet.nil? && worksheet.skippable?
-        next if target_worksheet.present? && target_worksheet != worksheet.worksheet_name
+    ispec_run = ENV["ISPEC_RUN"].present?
 
-        test_count += 1
-        puts ">>> RUNNING TEST #{worksheet.description} <<<".yellow unless silent?
-        pass = run_test_case(worksheet)
-        failing_tests << worksheet.description unless pass
-        result_message(failing_tests, test_count) unless silent?
+    if ispec_run
+      it "processes all the tests on all the sheets" do
+        failing_tests = []
+        test_count = 0
+        group_runner = TestCase::GroupRunner.new(verbosity_level, refresh)
+        group_runner.each do |worksheet|
+          next if target_worksheet.nil? && worksheet.skippable?
+          next if target_worksheet.present? && target_worksheet != worksheet.worksheet_name
+
+          test_count += 1
+          puts ">>> RUNNING TEST #{worksheet.description} <<<".yellow unless silent?
+          pass = run_test_case(worksheet)
+          failing_tests << worksheet.description unless pass
+          result_message(failing_tests, test_count) unless silent?
+        end
+        expect(failing_tests).to be_empty, "Failing tests: #{failing_tests.join(', ')}"
       end
-      expect(failing_tests).to be_empty, "Failing tests: #{failing_tests.join(', ')}"
+    else
+      TestCase::GroupRunner.new(0, "true").each do |worksheet|
+        next if worksheet.skippable?
+
+        it "#{worksheet.description} passes" do
+          pass = run_test_case(worksheet)
+          expect(pass).to be true
+        end
+      end
     end
 
     def result_message(failing_tests, test_count)
