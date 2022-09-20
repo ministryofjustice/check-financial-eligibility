@@ -26,7 +26,7 @@ module Collators
 
         # TODO: missing spec? remove? - this tests existing functionality which shows it is possible
         # return a negative net_housing_costs. Should it not return zero?
-        context "with housing benefit" do
+        context "with housing benefit as a state_benefit" do
           before do
             housing_benefit_type = create :state_benefit_type, label: "housing_benefit"
             state_benefit = create :state_benefit, gross_income_summary: gross_income_summary, state_benefit_type: housing_benefit_type
@@ -84,7 +84,7 @@ module Collators
           end
         end
 
-        context "with housing benefit" do
+        context "with housing benefit as a state_benefit" do
           before do
             housing_benefit_type = create :state_benefit_type, label: "housing_benefit"
             state_benefit = create :state_benefit, gross_income_summary: gross_income_summary, state_benefit_type: housing_benefit_type
@@ -119,6 +119,40 @@ module Collators
                   net_housing_costs: 254.42, # 355.44 - 101.02
                 )
             end
+          end
+        end
+      end
+
+      context "with housing cost regular_transactions" do
+        before do
+          create(:regular_transaction, gross_income_summary:, operation: "debit", category: "rent_or_mortgage", frequency: "three_monthly", amount: 1000.00)
+        end
+
+        context "without housing benefit" do
+          it "records the full monthly housing costs" do
+            collator
+            expect(disposable_income_summary)
+              .to have_attributes(
+                gross_housing_costs: 333.33,
+                housing_benefit: 0.0,
+                net_housing_costs: 333.33,
+              )
+          end
+        end
+
+        context "with housing benefit as a regular_transaction" do
+          before do
+            create(:regular_transaction, gross_income_summary:, operation: "credit", category: "housing_benefit", frequency: "three_monthly", amount: 1000.0)
+          end
+
+          it "records half the housing cost less the housing benefit" do
+            collator
+            expect(disposable_income_summary)
+              .to have_attributes(
+                gross_housing_costs: 333.33,
+                housing_benefit: 333.33,
+                net_housing_costs: 0.00,
+              )
           end
         end
       end

@@ -12,7 +12,6 @@ class GrossIncomeSummary < ApplicationRecord
            dependent: :destroy
 
   def housing_benefit_payments
-    # TODO: could return regular transaction records for housing_benefit here as well? or handle in HousingCostsCalculator
     state_benefits.find_by(state_benefit_type_id: StateBenefitType.housing_benefit&.id)&.state_benefit_payments || []
   end
 
