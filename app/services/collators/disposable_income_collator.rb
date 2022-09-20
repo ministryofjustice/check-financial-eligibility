@@ -35,8 +35,6 @@ module Collators
       CFEConstants::VALID_OUTGOING_CATEGORIES.map(&:to_sym)
     end
 
-    # TODO: This line seems redundant as it updates the column to its existing value!
-    # `attrs[:"#{category}_bank"] = __send__("#{category}_bank")`
     def populate_attrs
       attrs = {}
 
@@ -44,12 +42,15 @@ module Collators
         monthly_cash_amount = category == :child_care ? __send__("#{category}_cash") : monthly_cash_by_category(category)
         @monthly_cash_transactions_total += monthly_cash_amount unless category == :rent_or_mortgage
 
-        attrs[:"#{category}_bank"] = __send__("#{category}_bank")
         attrs[:"#{category}_cash"] = monthly_cash_amount
-        attrs[:"#{category}_all_sources"] = attrs[:"#{category}_bank"] + attrs[:"#{category}_cash"]
+        attrs[:"#{category}_all_sources"] = bank_amount_for(category) + attrs[:"#{category}_cash"]
       end
 
       attrs.merge(default_attrs)
+    end
+
+    def bank_amount_for(category)
+      __send__("#{category}_bank")
     end
 
     def monthly_cash_by_category(category)
