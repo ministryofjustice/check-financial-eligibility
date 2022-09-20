@@ -24,8 +24,6 @@ module Collators
           end
         end
 
-        # TODO: missing spec? remove? - this tests existing functionality which shows it is possible
-        # return a negative net_housing_costs. Should it not return zero?
         context "with housing benefit as a state_benefit" do
           before do
             housing_benefit_type = create :state_benefit_type, label: "housing_benefit"
@@ -41,7 +39,7 @@ module Collators
               .to have_attributes(
                 gross_housing_costs: 0.0,
                 housing_benefit: 101.02,
-                net_housing_costs: -101.02,
+                net_housing_costs: 0,
               )
           end
         end
