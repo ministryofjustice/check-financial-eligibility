@@ -6,7 +6,7 @@
     "jquery": "^3.6.1"
   },
   "devDependencies": {
-    "webpack-dev-server": "^4.11.0"
+    "webpack-dev-server": "^4.11.1"
   },
   "resolutions": {
     "css-what": "^5.0.1",
