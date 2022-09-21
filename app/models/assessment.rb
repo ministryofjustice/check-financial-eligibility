@@ -1,4 +1,5 @@
 class Assessment < ApplicationRecord
+
   extend EnumHash
 
   serialize :remarks
