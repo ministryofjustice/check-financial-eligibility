@@ -7,15 +7,17 @@ module Calculators
     delegate :housing_cost_outgoings, to: :disposable_income_summary
 
     def net_housing_costs
-      if housing_costs_cap_apply?
-        [gross_housing_costs, gross_cost_minus_housing_benefit, single_monthly_housing_costs_cap].min.to_f
-      elsif should_halve_full_cost_minus_benefits?
-        (monthly_actual_housing_costs - monthly_housing_benefit) / 2
-      elsif should_exclude_housing_benefit?
-        gross_cost_minus_housing_benefit
-      else
-        gross_housing_costs
-      end
+      net_housing_costs = if housing_costs_cap_apply?
+                            [gross_housing_costs, gross_cost_minus_housing_benefit, single_monthly_housing_costs_cap].min.to_f
+                          elsif should_halve_full_cost_minus_benefits?
+                            (monthly_actual_housing_costs - monthly_housing_benefit) / 2
+                          elsif should_exclude_housing_benefit?
+                            gross_cost_minus_housing_benefit
+                          else
+                            gross_housing_costs
+                          end
+
+      [net_housing_costs, 0.0].max
     end
 
     def gross_housing_costs
