@@ -116,5 +116,41 @@ RSpec.describe AssessmentsController, type: :request do
         expect(parsed_response[:errors].first).to match(/^RuntimeError: Oops/)
       end
     end
+
+    context "assessment hasn't been fully completed" do
+      let(:assessment) { create :assessment, proceedings: [] } # create assessment without proceedings or applicant
+      let(:error_payload) do
+        {
+          errors: ["You must add proceeding types and applicant to before calling for the assessment to be calculated"],
+          success: false,
+        }.to_json
+      end
+
+      context "without proceedings" do
+        let(:assessment) { create :assessment, proceedings: [] } # create assessment without proceedings or applicant
+
+        it "returns error payload" do
+          get_assessment
+          expect(response.body).to eq error_payload
+        end
+
+        it "returns status 422" do
+          expect(get_assessment).to eq 422
+        end
+      end
+
+      context "with proceeding but without applicant" do
+        let(:assessment) { create :assessment } # has proceedings but no applicant
+
+        it "returns error payload" do
+          get_assessment
+          expect(response.body).to eq error_payload
+        end
+
+        it "returns status 422" do
+          expect(get_assessment).to eq 422
+        end
+      end
+    end
   end
 end

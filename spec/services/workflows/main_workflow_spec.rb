@@ -66,16 +66,6 @@ module Workflows
 
       subject(:workflow_call) { MainWorkflow.call(assessment) }
 
-      context "without any proceeding types" do
-        let(:proceedings_hash) { [] }
-
-        it "raises" do
-          expect {
-            workflow_call
-          }.to raise_error RuntimeError, "Proceeding Types not created"
-        end
-      end
-
       context "with proceeding types" do
         it "Populates proceeding types with thresholds" do
           expect(Utilities::ProceedingTypeThresholdPopulator).to receive(:call).with(assessment)

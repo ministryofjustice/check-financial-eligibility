@@ -8,13 +8,27 @@ class AssessmentsController < ApplicationController
   end
 
   def show
-    perform_assessment
-  rescue StandardError => e
-    Sentry.capture_exception(e)
-    render json: Decorators::ErrorDecorator.new(e).as_json, status: :unprocessable_entity
+    if assessment_incomplete?
+      render json: Decorators::ErrorDecorator.new(incomplete_message).as_json, status: :unprocessable_entity
+    else
+      begin
+        perform_assessment
+      rescue StandardError => e
+        Sentry.capture_exception(e)
+        render json: Decorators::ErrorDecorator.new(e).as_json, status: :unprocessable_entity
+      end
+    end
   end
 
 private
+
+  def assessment_incomplete?
+    assessment.proceeding_types.empty? || assessment.applicant.nil?
+  end
+
+  def incomplete_message
+    "You must add proceeding types and applicant to before calling for the assessment to be calculated"
+  end
 
   def perform_assessment
     Workflows::MainWorkflow.call(assessment)
