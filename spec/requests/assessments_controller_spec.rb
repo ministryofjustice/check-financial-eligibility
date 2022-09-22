@@ -135,7 +135,8 @@ RSpec.describe AssessmentsController, type: :request do
         end
 
         it "returns status 422" do
-          expect(get_assessment).to eq 422
+          get_assessment
+          expect(response).to have_http_status(:unprocessable_entity)
         end
       end
 
@@ -148,7 +149,8 @@ RSpec.describe AssessmentsController, type: :request do
         end
 
         it "returns status 422" do
-          expect(get_assessment).to eq 422
+          get_assessment
+          expect(response).to have_http_status(:unprocessable_entity)
         end
       end
     end

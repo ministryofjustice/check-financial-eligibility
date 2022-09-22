@@ -11,13 +11,11 @@ class AssessmentsController < ApplicationController
     if assessment_incomplete?
       render json: Decorators::ErrorDecorator.new(incomplete_message).as_json, status: :unprocessable_entity
     else
-      begin
-        perform_assessment
-      rescue StandardError => e
-        Sentry.capture_exception(e)
-        render json: Decorators::ErrorDecorator.new(e).as_json, status: :unprocessable_entity
-      end
+      perform_assessment
     end
+  rescue StandardError => e
+    Sentry.capture_exception(e)
+    render json: Decorators::ErrorDecorator.new(e).as_json, status: :unprocessable_entity
   end
 
 private
