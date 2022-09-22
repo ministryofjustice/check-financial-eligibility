@@ -14,7 +14,7 @@
         "properties": {
           "category": {
             "type": "string",
-            "enum": <%= CFEConstants::VALID_INCOME_CATEGORIES.as_json + CFEConstants::VALID_OUTGOING_CATEGORIES.as_json %>
+            "enum": <%= CFEConstants::VALID_REGULAR_INCOME_CATEGORIES.as_json + CFEConstants::VALID_OUTGOING_CATEGORIES.as_json %>
           },
           "operation": {
             "type": "string",

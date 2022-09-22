@@ -25,6 +25,28 @@ RSpec.describe Collators::RegularIncomeCollator do
       end
     end
 
+    context "with housing_benefit regular transactions" do
+      before do
+        create(:regular_transaction, gross_income_summary:, operation: "credit", category: "housing_benefit", frequency: "three_monthly", amount: 1000.0)
+      end
+
+      it "does not increment #<cagtegory>_all_sources data" do
+        collator
+        gross_income_summary.reload
+        expect(gross_income_summary).to have_attributes(
+          benefits_all_sources: 0.0,
+          maintenance_in_all_sources: 0.0,
+          pension_all_sources: 0.0,
+          friends_or_family_all_sources: 0.0,
+          property_or_lodger_all_sources: 0.0,
+        )
+      end
+
+      it "does not increment #total_gross_income" do
+        expect(gross_income_summary.total_gross_income).to be_zero
+      end
+    end
+
     context "with three monthly regular transactions" do
       before do
         create(:regular_transaction, gross_income_summary:, operation: "credit", category: "maintenance_in", frequency: "three_monthly", amount: 100.0)

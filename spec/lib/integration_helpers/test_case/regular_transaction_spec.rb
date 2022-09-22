@@ -9,6 +9,7 @@ RSpec.describe TestCase::RegularTransaction do
 
     context "with a credit category" do
       let(:category) { "maintenance_in" }
+
       let(:data) do
         [
           %w[irrelevant irrelevant irrelevant 111.11],
@@ -28,6 +29,7 @@ RSpec.describe TestCase::RegularTransaction do
 
     context "with a debit category" do
       let(:category) { "maintenance_out" }
+
       let(:data) do
         [
           %w[irrelevant irrelevant irrelevant 111.11],
@@ -42,6 +44,20 @@ RSpec.describe TestCase::RegularTransaction do
           amount: "111.11",
           frequency: "monthly",
         })
+      end
+    end
+
+    context "with an unknown category" do
+      let(:category) { "foobar" }
+      let(:data) do
+        [
+          %w[irrelevant irrelevant irrelevant 111.11],
+          %w[irrelevant irrelevant irrelevant monthly],
+        ]
+      end
+
+      it "raise argument error" do
+        expect { payload }.to raise_error ArgumentError, "unexpected category \"foobar\" with no available operation"
       end
     end
 

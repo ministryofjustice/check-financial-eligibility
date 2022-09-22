@@ -23,10 +23,12 @@ module TestCase
 
     def operation
       case category
-      when *CFEConstants::VALID_INCOME_CATEGORIES
+      when *CFEConstants::VALID_REGULAR_INCOME_CATEGORIES
         "credit"
       when *CFEConstants::VALID_OUTGOING_CATEGORIES
         "debit"
+      else
+        raise ArgumentError, "unexpected category \"#{category}\" with no available operation"
       end
     end
 
