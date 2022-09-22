@@ -28,6 +28,7 @@ class Assessment < ApplicationRecord
   has_many :employment_payments, through: :employments
   has_many :proceeding_types,
            dependent: :destroy
+  has_many :request_logs, dependent: :destroy
 
   delegate :determine_result!, to: :capital_summary
   delegate :cash_transaction_categories, to: :gross_income_summary

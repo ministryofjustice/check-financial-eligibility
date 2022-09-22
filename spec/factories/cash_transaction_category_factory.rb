@@ -3,5 +3,10 @@ FactoryBot.define do
     gross_income_summary
     operation { nil }
     name { nil }
+
+    trait :credit do
+      operation { "credit" }
+      name { CFEConstants::VALID_INCOME_CATEGORIES.sample }
+    end
   end
 end

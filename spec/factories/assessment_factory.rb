@@ -30,7 +30,7 @@ FactoryBot.define do
         record.proceeding_types << pt_rec
       end
 
-      # create child dependants if speciied
+      # create child dependants if specified
       if evaluator.with_child_dependants > 0
         evaluator.with_child_dependants.times do
           create :dependant, :child_relative, assessment: record
