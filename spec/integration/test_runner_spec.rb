@@ -50,7 +50,7 @@ RSpec.describe "IntegrationTests::TestRunner", type: :request do
         expect(failing_tests).to be_empty, "Failing tests: #{failing_tests.join(', ')}"
       end
     else
-      TestCase::GroupRunner.new(0, "true").each do |worksheet|
+      TestCase::GroupRunner.new(0, "false").each do |worksheet|
         next if worksheet.skippable?
 
         it "#{worksheet.description} passes" do
