@@ -16,6 +16,8 @@ module Creators
   private
 
     def create_eligibility(ptc)
+      return if eligibility_record_exists?(ptc)
+
       @summary.eligibilities.create!(
         proceeding_type_code: ptc,
         upper_threshold: upper_threshold(ptc),
@@ -30,6 +32,10 @@ module Creators
 
     def upper_threshold(ptc)
       @assessment.proceeding_types.find_by!(ccms_code: ptc).capital_upper_threshold
+    end
+
+    def eligibility_record_exists?(ptc)
+      @summary.eligibilities.where(proceeding_type_code: ptc).any?
     end
   end
 end

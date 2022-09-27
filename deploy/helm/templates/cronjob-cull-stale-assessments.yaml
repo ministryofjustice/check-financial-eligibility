@@ -1,0 +1,35 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ .Release.Name | trunc 26 }}-cull-stale-assessments
+  labels:
+    app: {{ template "app.name" . }}
+    chart: {{ template "app.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  schedule: '5 2 * * *'
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            reportuploader: cronjob
+        spec:
+          containers:
+          - name: cull-stale-assessments
+            image: '{{ .Values.image.repository }}:{{ .Values.image.tag }}'
+            imagePullPolicy: IfNotPresent
+            command: ['rake', "stale_assessments:cull"]
+{{ include "app.envs" . | nindent 12 }}
+            resources:
+              limits:
+                cpu: 200m
+                memory: 2048Mi
+              requests:
+                cpu: 100m
+                memory: 1024Mi
+          restartPolicy: Never
