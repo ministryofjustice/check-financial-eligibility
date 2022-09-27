@@ -137,7 +137,7 @@ A series of spreadsheets is used to provide use cases and their expected results
 
 There is a  [Master CFE Integration Tests Spreadsheet](https://docs.google.com/spreadsheets/d/1lkRmiqi4KpoAIxzui3hTnHddsdWgN9VquEE_Cxjy9AM/edit#gid=651307264) which lists all the other spreadsheets to be run, as well as contain skeleton worksheets for creating new tests scenarios.  Each spreadsheet can hold multiple worksheet, each of which is a test scenario.
 
-When run as part of the `rspec` test suite, it is run in silent mode and only passes if all tests on all spreadsheets pass.
+When run as part of the `rspec` test suite each worksheet is handled as a separate example.
 
 For more fine control over the amount of verbosity, to run just one test case, or to force download the google spreadsheet,
 use `bin/ispec`, the help text of which is given below.
