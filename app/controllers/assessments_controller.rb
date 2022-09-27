@@ -8,8 +8,11 @@ class AssessmentsController < ApplicationController
   end
 
   def show
-    if assessment_incomplete?
+    case analyse_assessment_status
+    when :incomplete
       render json: Decorators::ErrorDecorator.new(incomplete_message).as_json, status: :unprocessable_entity
+    when :not_pending
+      render json: Decorators::ErrorDecorator.new(not_pending_message).as_json, status: :unprocessable_entity
     else
       perform_assessment
     end
@@ -20,12 +23,24 @@ class AssessmentsController < ApplicationController
 
 private
 
+  def analyse_assessment_status
+    return :incomplete if assessment_incomplete?
+
+    return :pending if assessment.assessment_result == "pending"
+
+    :not_pending
+  end
+
   def assessment_incomplete?
     assessment.proceeding_types.empty? || assessment.applicant.nil?
   end
 
   def incomplete_message
     "You must add proceeding types and applicant to before calling for the assessment to be calculated"
+  end
+
+  def not_pending_message
+    "Unable to call GET on the same assessment twice - please create new assessment and resubmit data"
   end
 
   def perform_assessment

@@ -67,6 +67,11 @@ RSpec.describe "V5 Assessments", type: :request, vcr: true, swagger_doc: "v5/swa
       tags "Assessment"
       produces "application/json"
 
+      description <<~DESCIPTION.chomp
+        This endpoint will cause an assessment to be calculated using all the data that has been uploaded to the
+        other endpoints and return the result.  You call this endpoint twice for the same assessment_id.
+      DESCIPTION
+
       response(200, "successful") do
         let(:assessment) { create(:assessment, :passported, :with_everything) }
         let(:id) { assessment.id }

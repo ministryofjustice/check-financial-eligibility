@@ -66,6 +66,35 @@ RSpec.describe "Full V5 passported spec", :vcr do
     end
   end
 
+  context "When GET is called twice on the same assessment" do
+    let(:qualifying_benefit) { false }
+    let(:assessment_id) { post_assessment }
+
+    before do
+      post_proceeding_types(assessment_id)
+      post_applicant(assessment_id)
+      post_capitals(assessment_id)
+      post_dependants(assessment_id)
+      post_outgoings(assessment_id)
+      post_state_benefits(assessment_id)
+      post_other_incomes(assessment_id)
+      post_irregular_income(assessment_id)
+
+      get assessment_path(assessment_id), headers: v5_headers
+    end
+
+    it "returns error payload" do
+      get assessment_path(assessment_id), headers: v5_headers
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(parsed_response).to eq(
+        {
+          errors: ["Unable to call GET on the same assessment twice - please create new assessment and resubmit data"],
+          success: false,
+        },
+      )
+    end
+  end
+
   context "when debugging " do
     it "does not return error" do
       rq = "{\"client_reference_id\":\"L-KUT-FW2\",\"submission_date\":\"2022-07-15\"}"
