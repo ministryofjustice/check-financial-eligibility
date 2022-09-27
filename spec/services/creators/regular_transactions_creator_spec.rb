@@ -126,7 +126,13 @@ RSpec.describe Creators::RegularTransactionsCreator do
         expect { creator }.not_to change(RegularTransaction, :count)
       end
 
-      it_behaves_like "unsuccessful creation", "The property '#/regular_transactions' did not contain a minimum number of items 1 in schema file://public/schemas/regular_transactions.json"
+      it "marks it as success" do
+        expect(creator).to be_success
+      end
+
+      it "does not add an error" do
+        expect(creator.errors).to be_empty
+      end
     end
 
     context "with missing required properties" do

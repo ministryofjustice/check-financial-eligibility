@@ -78,7 +78,19 @@ RSpec.describe RegularTransactionsController, type: :request do
     context "with empty regular_transactions" do
       let(:params) { { regular_transactions: [] } }
 
-      it_behaves_like "unsuccessful response", "The property '#/regular_transactions' did not contain a minimum number of items 1 in schema"
+      it "returns http success" do
+        request
+        expect(response).to have_http_status(:success)
+      end
+
+      it "response contains success true" do
+        request
+        expect(parsed_response[:success]).to be true
+      end
+
+      it "does not create the regular transaction record" do
+        expect { request }.not_to change(RegularTransaction, :count)
+      end
     end
 
     context "with missing required properties" do

@@ -1033,13 +1033,12 @@ paths:
               properties:
                 regular_transactions:
                   type: array
-                  minItems: 1
                   required:
                   - category
                   - operation
                   - frequency
                   - amount
-                  description: One or more regular transactions
+                  description: Zero or more regular transactions
                   items:
                     type: object
                     description: regular transaction detail

@@ -29,9 +29,8 @@ RSpec.describe "regular_transactions", type: :request, swagger_doc: "v5/swagger.
                   properties: {
                     regular_transactions: {
                       type: :array,
-                      minItems: 1,
                       required: %i[category operation frequency amount],
-                      description: "One or more regular transactions",
+                      description: "Zero or more regular transactions",
                       items: {
                         type: :object,
                         description: "regular transaction detail",
