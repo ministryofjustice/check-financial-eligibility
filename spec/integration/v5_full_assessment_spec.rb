@@ -33,11 +33,11 @@ RSpec.describe "Full V5 passported spec", :vcr do
     end
   end
 
-  context "when applicant is not passported" do
+  context "when applicant is not passported and supplies bank transaction data" do
     let(:qualifying_benefit) { false }
+    let(:assessment_id) { post_assessment }
 
-    it "returns the expected payload with remarks" do
-      assessment_id = post_assessment
+    before do
       post_proceeding_types(assessment_id)
       post_applicant(assessment_id)
       post_capitals(assessment_id)
@@ -48,8 +48,10 @@ RSpec.describe "Full V5 passported spec", :vcr do
       post_irregular_income(assessment_id)
 
       get assessment_path(assessment_id), headers: v5_headers
-      output_response(:get, :assessment)
+    end
 
+    it "returns the expected remarks in payload" do
+      output_response(:get, :assessment)
       remarks = parsed_response[:assessment][:remarks]
 
       deep_match(remarks[:state_benefit_payment], expected_remarks[:state_benefit_payment])
@@ -63,6 +65,35 @@ RSpec.describe "Full V5 passported spec", :vcr do
       expect(remarks[:outgoings_legal_aid]).to match_array expected_remarks[:outgoings_legal_aid]
       expect(remarks[:other_income_payment][:amount_variation]).to match_array(expected_remarks[:other_income_payment][:amount_variation])
       expect(remarks[:other_income_payment][:unknown_frequency]).to match_array(expected_remarks[:other_income_payment][:unknown_frequency])
+    end
+
+    it "returns the expected disposable income summary in payload" do
+      output_response(:get, :assessment)
+      disposable_income = parsed_response[:result_summary][:disposable_income]
+
+      expect(disposable_income).to include(expected_disposable_income_summary)
+    end
+  end
+
+  context "when applicant is not passported and supplies regular transaction data" do
+    let(:qualifying_benefit) { false }
+    let(:assessment_id) { post_assessment }
+
+    it "returns the expected disposable income summary in payload" do
+      assessment_id = post_assessment
+      post_proceeding_types(assessment_id)
+      post_applicant(assessment_id)
+      post_capitals(assessment_id)
+      post_dependants(assessment_id)
+      post_regular_transactions(assessment_id)
+      post_irregular_income(assessment_id)
+      get assessment_path(assessment_id), headers: v5_headers
+
+      output_response(:get, :assessment)
+
+      disposable_income = parsed_response[:result_summary][:disposable_income]
+
+      expect(disposable_income).to include(expected_disposable_income_summary)
     end
   end
 
@@ -146,6 +177,11 @@ RSpec.describe "Full V5 passported spec", :vcr do
   def post_other_incomes(assessment_id)
     post assessment_other_incomes_path(assessment_id), params: other_income_params, headers: headers
     output_response(:post, :other_incomes)
+  end
+
+  def post_regular_transactions(assessment_id)
+    post assessment_regular_transactions_path(assessment_id), params: regular_transaction_params, headers: headers
+    output_response(:post, :regular_transactions)
   end
 
   def post_irregular_income(assessment_id)
@@ -315,7 +351,7 @@ RSpec.describe "Full V5 passported spec", :vcr do
 
   def state_benefit_params
     { "state_benefits" =>
-        [{ "name" => "Manually chosen",
+        [{ "name" => "housing_benefit",
            "payments" =>
              [{ "date" => "2020-04-10",
                 "amount" => 50.36,
@@ -326,6 +362,68 @@ RSpec.describe "Full V5 passported spec", :vcr do
               { "date" => "2020-06-06",
                 "amount" => 22.42,
                 "client_id" => "TX-state-benefits-3" }] }] }.to_json
+  end
+
+  def regular_transaction_params
+    {
+      regular_transactions: [
+        {
+          category: "friends_or_family",
+          operation: "credit",
+          frequency: "three_monthly",
+          amount: 142.42, # 22.42 + 50.0 + 70.0
+        },
+        {
+          category: "maintenance_in",
+          operation: "credit",
+          frequency: "three_monthly",
+          amount: 118.86, # 25.0 + 43.5 + 50.36
+        },
+        {
+          category: "pension",
+          operation: "credit",
+          frequency: "three_monthly",
+          amount: 247.6, # 40.0 + 137.6 + 70.0
+        },
+        {
+          category: "property_or_lodger",
+          operation: "credit",
+          frequency: "three_monthly",
+          amount: 223.09, # 137.6 + 35.49 + 50.0
+        },
+        {
+          category: "maintenance_out",
+          operation: "debit",
+          frequency: "three_monthly",
+          amount: 13.0, # 0.01 + 7.99 + 5.0
+        },
+        {
+          category: "rent_or_mortgage",
+          operation: "debit",
+          frequency: "three_monthly",
+          amount: 183.41, # 36.59 + 100.00 + 46.82
+        },
+        {
+          category: "child_care",
+          operation: "debit",
+          frequency: "three_monthly",
+          amount: 70.5, # 20.0 + 10.5 + 40.0
+        },
+        {
+          category: "legal_aid",
+          operation: "debit",
+          frequency: "three_monthly",
+          amount: 81.65, # 24.5 + 36.59 + 20.56
+        },
+
+        {
+          category: "housing_benefit",
+          operation: "credit",
+          frequency: "three_monthly",
+          amount: 112.78, # 50.36 + 40.0 + 22.42
+        },
+      ],
+    }.to_json
   end
 
   def student_loan_params
@@ -386,6 +484,24 @@ RSpec.describe "Full V5 passported spec", :vcr do
                              unknown_frequency: %w[TX-outgoing-rent-legal-aid-1
                                                    TX-outgoing-rent-legal-aid-2
                                                    TX-outgoing-rent-legal-aid-3] } }
+  end
+
+  def expected_disposable_income_summary
+    {
+      dependant_allowance: 296.65,
+      gross_housing_costs: 61.14,
+      housing_benefit: 37.59,
+      net_housing_costs: 23.55,
+      maintenance_allowance: 4.33,
+      total_outgoings_and_allowances: 375.25,
+      total_disposable_income: -122.93666666666667,
+      employment_income: { gross_income: 0.0, benefits_in_kind: 0.0, tax: 0.0, national_insurance: 0.0, fixed_employment_deduction: 0.0, net_employment_income: 0.0 },
+      income_contribution: 0.0,
+      proceeding_types: [{ ccms_code: "DA004", client_involvement_type: "A", upper_threshold: 999_999_999_999.0, lower_threshold: 315.0, result: "eligible" },
+                         { ccms_code: "DA020", client_involvement_type: "A", upper_threshold: 999_999_999_999.0, lower_threshold: 315.0, result: "eligible" },
+                         { ccms_code: "SE004", client_involvement_type: "A", upper_threshold: 733.0, lower_threshold: 315.0, result: "eligible" },
+                         { ccms_code: "SE013", client_involvement_type: "A", upper_threshold: 733.0, lower_threshold: 315.0, result: "eligible" }],
+    }
   end
 
   def headers
