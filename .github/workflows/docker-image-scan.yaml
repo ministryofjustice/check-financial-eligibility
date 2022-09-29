@@ -1,0 +1,42 @@
+name: Scan docker image
+
+on:
+  schedule:
+    - cron:  '15 5 * * *'
+
+jobs:
+  scan-docker-image:
+    runs-on: ubuntu-latest
+    name: Scan docker image in job
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Build docker image
+        run: |
+          docker build \
+            --tag check-financial-eligibility:scan \
+            --file Dockerfile .
+
+      - name: Scan docker image using Snyk
+        continue-on-error: true
+        uses: snyk/actions/docker@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          image: check-financial-eligibility:scan
+          args: --file=Dockerfile
+
+      - name: Monitor docker image using Snyk
+        uses: snyk/actions/docker@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: monitor
+          image: check-financial-eligibility:scan
+          args: --file=Dockerfile
+
+      - name: Upload result to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: snyk.sarif
