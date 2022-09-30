@@ -110,3 +110,10 @@ def deep_match(actual, expected)
     expect(ids).to match_array(expected[key])
   end
 end
+
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    with.test_framework :rspec
+    with.library :rails
+  end
+end
