@@ -54,17 +54,7 @@ RSpec.describe "Full V5 passported spec", :vcr do
       output_response(:get, :assessment)
       remarks = parsed_response[:assessment][:remarks]
 
-      deep_match(remarks[:state_benefit_payment], expected_remarks[:state_benefit_payment])
-      expect(remarks[:other_income_payment][:amount_variation]).to match_array expected_remarks[:other_income_payment][:amount_variation]
-      expect(remarks[:other_income_payment][:unknown_frequency]).to match_array expected_remarks[:other_income_payment][:unknown_frequency]
-      expect(remarks[:outgoings_maintenance].keys).to match_array(%i[amount_variation unknown_frequency])
-      expect(remarks[:outgoings_maintenance][:amount_variation]).to match_array(expected_remarks[:outgoings_maintenance][:amount_variation])
-      expect(remarks[:outgoings_maintenance][:unknown_frequency]).to match_array(expected_remarks[:outgoings_maintenance][:unknown_frequency])
-      expect(remarks[:outgoings_housing_cost]).to match_array expected_remarks[:outgoings_housing_cost]
-      expect(remarks[:outgoings_childcare]).to match_array expected_remarks[:outgoings_childcare]
-      expect(remarks[:outgoings_legal_aid]).to match_array expected_remarks[:outgoings_legal_aid]
-      expect(remarks[:other_income_payment][:amount_variation]).to match_array(expected_remarks[:other_income_payment][:amount_variation])
-      expect(remarks[:other_income_payment][:unknown_frequency]).to match_array(expected_remarks[:other_income_payment][:unknown_frequency])
+      expect(remarks).to include(expected_remarks)
     end
 
     it "returns the expected disposable income summary in payload" do
