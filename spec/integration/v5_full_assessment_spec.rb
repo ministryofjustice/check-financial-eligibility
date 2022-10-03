@@ -57,11 +57,18 @@ RSpec.describe "Full V5 passported spec", :vcr do
       expect(remarks).to include(expected_remarks)
     end
 
-    it "returns the expected disposable income summary in payload" do
+    it "returns the expected gross income in payload" do
+      output_response(:get, :assessment)
+      gross_income = parsed_response[:result_summary][:gross_income]
+
+      expect(gross_income).to include(expected_gross_income)
+    end
+
+    it "returns the expected disposable income in payload" do
       output_response(:get, :assessment)
       disposable_income = parsed_response[:result_summary][:disposable_income]
 
-      expect(disposable_income).to include(expected_disposable_income_summary)
+      expect(disposable_income).to include(expected_disposable_income)
     end
   end
 
@@ -69,21 +76,30 @@ RSpec.describe "Full V5 passported spec", :vcr do
     let(:qualifying_benefit) { false }
     let(:assessment_id) { post_assessment }
 
-    it "returns the expected disposable income summary in payload" do
-      assessment_id = post_assessment
+    before do
       post_proceeding_types(assessment_id)
       post_applicant(assessment_id)
       post_capitals(assessment_id)
       post_dependants(assessment_id)
       post_regular_transactions(assessment_id)
       post_irregular_income(assessment_id)
-      get assessment_path(assessment_id), headers: v5_headers
 
+      get assessment_path(assessment_id), headers: v5_headers
+    end
+
+    it "returns the expected gross income in payload" do
+      output_response(:get, :assessment)
+      gross_income = parsed_response[:result_summary][:gross_income]
+
+      expect(gross_income).to include(expected_gross_income)
+    end
+
+    it "returns the expected disposable income in payload" do
       output_response(:get, :assessment)
 
       disposable_income = parsed_response[:result_summary][:disposable_income]
 
-      expect(disposable_income).to include(expected_disposable_income_summary)
+      expect(disposable_income).to include(expected_disposable_income)
     end
   end
 
@@ -476,7 +492,19 @@ RSpec.describe "Full V5 passported spec", :vcr do
                                                    TX-outgoing-rent-legal-aid-3] } }
   end
 
-  def expected_disposable_income_summary
+  def expected_gross_income
+    {
+      total_gross_income: 252.31333333333333,
+      proceeding_types: [
+        { ccms_code: "DA004", client_involvement_type: "A", upper_threshold: 999_999_999_999.0, lower_threshold: 0.0, result: "eligible" },
+        { ccms_code: "DA020", client_involvement_type: "A", upper_threshold: 999_999_999_999.0, lower_threshold: 0.0, result: "eligible" },
+        { ccms_code: "SE004", client_involvement_type: "A", upper_threshold: 2657.0, lower_threshold: 0.0, result: "eligible" },
+        { ccms_code: "SE013", client_involvement_type: "A", upper_threshold: 2657.0, lower_threshold: 0.0, result: "eligible" },
+      ],
+    }
+  end
+
+  def expected_disposable_income
     {
       dependant_allowance: 296.65,
       gross_housing_costs: 61.14,
