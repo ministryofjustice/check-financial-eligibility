@@ -616,12 +616,14 @@ paths:
                         type: string
                         enum:
                         - student_loan
+                        - unspecified_source_income
                         description: Identifying name for this irregular income payment
                         example: student_loan
                       frequency:
                         type: string
                         enum:
                         - annual
+                        - quarterly
                         description: Frequency of the payment received
                         example: annual
                       amount:

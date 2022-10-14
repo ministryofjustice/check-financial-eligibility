@@ -206,6 +206,7 @@ RSpec.describe Collators::RegularIncomeCollator do
       before do
         assessment.gross_income_summary.update!(
           student_loan: 111.11,
+          unspecified_source_income: 444.44,
           benefits_cash: 222.22,
           benefits_all_sources: 222.22,
           total_gross_income: 333.33,
@@ -215,6 +216,7 @@ RSpec.describe Collators::RegularIncomeCollator do
       it "has expected values prior to regular income collation" do
         expect(gross_income_summary).to have_attributes(
           student_loan: 111.11,
+          unspecified_source_income: 444.44,
           benefits_bank: 0.0,
           benefits_cash: 222.22,
           benefits_all_sources: 222.22,

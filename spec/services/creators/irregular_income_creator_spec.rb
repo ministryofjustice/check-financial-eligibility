@@ -62,7 +62,7 @@ module Creators
         end
 
         it "returns an error" do
-          expect(creator.errors).to eq ["The property '#/payments' had more items than the allowed 1 in schema file://public/schemas/irregular_incomes.json"]
+          expect(creator.errors).to eq ["The property '#/payments' had more items than the allowed 2 in schema file://public/schemas/irregular_incomes.json"]
         end
       end
     end
@@ -100,6 +100,11 @@ module Creators
           },
           {
             income_type: "student_loan",
+            frequency:,
+            amount: 123_456.78,
+          },
+          {
+            income_type: "unspecified_source_income",
             frequency:,
             amount: 123_456.78,
           },

@@ -33,6 +33,7 @@ module Decorators
           irregular_income: {
             monthly_equivalents: {
               student_loan: record.monthly_student_loan,
+              unspecified_source_income: record.unspecified_source_income,
             },
           },
           state_benefits: {

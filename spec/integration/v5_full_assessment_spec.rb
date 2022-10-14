@@ -191,7 +191,7 @@ RSpec.describe "Full V5 passported spec", :vcr do
   end
 
   def post_irregular_income(assessment_id)
-    post assessment_irregular_incomes_path(assessment_id), params: student_loan_params, headers: headers
+    post assessment_irregular_incomes_path(assessment_id), params: irregular_income_params, headers: headers
     output_response(:post, :irregular_income)
   end
 
@@ -432,11 +432,14 @@ RSpec.describe "Full V5 passported spec", :vcr do
     }.to_json
   end
 
-  def student_loan_params
+  def irregular_income_params
     { "payments" =>
         [{ "income_type" => "student_loan",
            "frequency" => "annual",
-           "amount" => 100.0 }] }.to_json
+           "amount" => 100.0 },
+         { "income_type" => "unspecified_source_income",
+           "frequency" => "quarterly",
+           "amount" => 303 }] }.to_json
   end
 
   def expected_remarks
@@ -494,7 +497,7 @@ RSpec.describe "Full V5 passported spec", :vcr do
 
   def expected_gross_income
     {
-      total_gross_income: 252.31333333333333,
+      total_gross_income: 353.31333333333333,
       proceeding_types: [
         { ccms_code: "DA004", client_involvement_type: "A", upper_threshold: 999_999_999_999.0, lower_threshold: 0.0, result: "eligible" },
         { ccms_code: "DA020", client_involvement_type: "A", upper_threshold: 999_999_999_999.0, lower_threshold: 0.0, result: "eligible" },
@@ -512,7 +515,7 @@ RSpec.describe "Full V5 passported spec", :vcr do
       net_housing_costs: 23.55,
       maintenance_allowance: 4.33,
       total_outgoings_and_allowances: 375.25,
-      total_disposable_income: -122.93666666666667,
+      total_disposable_income: -21.936666666666667,
       employment_income: { gross_income: 0.0, benefits_in_kind: 0.0, tax: 0.0, national_insurance: 0.0, fixed_employment_deduction: 0.0, net_employment_income: 0.0 },
       income_contribution: 0.0,
       proceeding_types: [{ ccms_code: "DA004", client_involvement_type: "A", upper_threshold: 999_999_999_999.0, lower_threshold: 315.0, result: "eligible" },

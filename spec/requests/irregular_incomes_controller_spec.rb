@@ -31,6 +31,28 @@ RSpec.describe IrregularIncomesController, type: :request do
         expect(parsed_response[:success]).to eq true
         expect(parsed_response[:errors]).to be_empty
       end
+
+      context "unspecified source income" do
+        let(:params) do
+          {
+            payments: [
+              {
+                income_type: "unspecified_source_income",
+                frequency: "quarterly",
+                amount: 123_456.78,
+              },
+            ],
+          }
+        end
+
+        it "creates the required number of IrregularIncomePayment records" do
+          expect { post_payload }.to change(IrregularIncomePayment, :count).by(1)
+          payments = gross_income_summary.irregular_income_payments
+          expect(payments[0].income_type).to eq CFEConstants::UNSPECIFIED_SOURCE_INCOME
+          expect(payments[0].frequency).to eq CFEConstants::QUARTERLY_FREQUENCY
+          expect(payments[0].amount).to eq 123_456.78
+        end
+      end
     end
 
     context "invalid_payload" do
@@ -75,7 +97,7 @@ RSpec.describe IrregularIncomesController, type: :request do
 
         it "contains an error message" do
           post_payload
-          expect(parsed_response).to eq({ success: false, errors: ["The property '#/payments/0/income_type' value \"imagined_type\" did not match one of the following values: student_loan in schema file://public/schemas/irregular_incomes.json"] })
+          expect(parsed_response).to eq({ success: false, errors: ["The property '#/payments/0/income_type' value \"imagined_type\" did not match one of the following values: student_loan, unspecified_source_income in schema file://public/schemas/irregular_incomes.json"] })
         end
 
         it "does not create irregular income payments record" do

@@ -30,7 +30,7 @@ module Collators
     end
 
     def applicant_has_student_loan?
-      return true if irregular_income_payments&.present?
+      return true if irregular_income_payments&.student_loan&.present?
 
       false
     end

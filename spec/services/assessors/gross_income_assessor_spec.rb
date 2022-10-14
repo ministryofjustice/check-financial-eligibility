@@ -11,7 +11,7 @@ module Assessors
       context "gross income has been summarised" do
         context "monthly income below upper threshold" do
           it "is eligible" do
-            set_gross_income_values gross_income_summary, 1_023, 0.0, 45.3, 2_567
+            set_gross_income_values gross_income_summary, 1_023, 0.0, 0.0, 45.3, 2_567
             assessor
             expect(gross_income_summary.summarized_assessment_result).to eq :eligible
           end
@@ -19,7 +19,7 @@ module Assessors
 
         context "monthly income equals upper threshold" do
           it "is not eligible" do
-            set_gross_income_values gross_income_summary, 2_000, 0.0, 567.00, 2_567.00
+            set_gross_income_values gross_income_summary, 2_000, 0.0, 0.0, 567.00, 2_567.00
             assessor
             expect(gross_income_summary.summarized_assessment_result).to eq :ineligible
           end
@@ -27,17 +27,17 @@ module Assessors
 
         context "monthly income above upper threshold" do
           it "is not eligible" do
-            set_gross_income_values gross_income_summary, 2_100.0, 0.0, 500.2, 2_567
+            set_gross_income_values gross_income_summary, 2_100.0, 0.0, 0.0, 500.2, 2_567
             assessor
             expect(gross_income_summary.summarized_assessment_result).to eq :ineligible
           end
         end
 
-        def set_gross_income_values(record, other_income, monthly_student_loan, state_benefits, threshold)
+        def set_gross_income_values(record, other_income, monthly_student_loan, monthly_unspecified_source_income, state_benefits, threshold)
           record.update!(monthly_other_income: other_income,
                          monthly_student_loan:,
                          monthly_state_benefits: state_benefits,
-                         total_gross_income: other_income + state_benefits + monthly_student_loan,
+                         total_gross_income: other_income + state_benefits + monthly_student_loan + monthly_unspecified_source_income,
                          upper_threshold: threshold,
                          assessment_result: "summarised")
           create :gross_income_eligibility, gross_income_summary: record, upper_threshold: threshold
