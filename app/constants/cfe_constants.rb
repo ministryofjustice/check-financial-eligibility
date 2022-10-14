@@ -57,9 +57,11 @@ module CFEConstants
   # Irregular income categories and frequencies
   #
   ANNUAL_FREQUENCY = "annual".freeze
+  QUARTERLY_FREQUENCY = "quarterly".freeze
   STUDENT_LOAN = "student_loan".freeze
-  VALID_IRREGULAR_INCOME_FREQUENCIES = [ANNUAL_FREQUENCY].freeze
-  VALID_IRREGULAR_INCOME_TYPES = [STUDENT_LOAN].freeze
+  UNSPECIFIED_SOURCE_INCOME = "unspecified_source_income".freeze
+  VALID_IRREGULAR_INCOME_FREQUENCIES = [ANNUAL_FREQUENCY, QUARTERLY_FREQUENCY].freeze
+  VALID_IRREGULAR_INCOME_TYPES = [STUDENT_LOAN, UNSPECIFIED_SOURCE_INCOME].freeze
 
   # Date and bank holidays
   #

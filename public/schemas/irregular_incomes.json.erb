@@ -5,21 +5,23 @@
   "type": "object",
   "properties": {
     "payments": {
-      "description": "Describes irregular payments received by applicant (currently annual student loan is the only irregular income allowed)",
+      "description": "Describes irregular payments received by applicant",
       "type": "array",
       "minItems": 0,
-      "maxItems": 1,
+      "maxItems": 2,
       "items": {
         "type": "object",
         "properties": {
           "income_type": {
             "enum": [
-              "student_loan"
+              "student_loan",
+              "unspecified_source_income"
             ]
           },
           "frequency": {
             "enum": [
-              "annual"
+              "annual",
+              "quarterly"
             ]
           },
           "amount": {

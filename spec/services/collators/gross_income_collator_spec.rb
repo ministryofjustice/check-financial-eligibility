@@ -82,6 +82,36 @@ module Collators
           end
         end
 
+        context "monthly_unspecified_source_income" do
+          context "there are no irregular income payments" do
+            it "set monthly income from unspecified sources to zero" do
+              collator
+              expect(gross_income_summary.reload.monthly_unspecified_source_income).to eq 0.0
+            end
+          end
+
+          context "monthly_unspecified_source_income exists" do
+            before do
+              create :irregular_income_payment,
+                     gross_income_summary:,
+                     amount: 12_000,
+                     income_type: "unspecified_source_income",
+                     frequency: "quarterly"
+            end
+
+            it "updates the gross income record with categorised monthly incomes" do
+              collator
+              gross_income_summary.reload
+              expect(gross_income_summary.benefits_all_sources).to be_zero
+              expect(gross_income_summary.maintenance_in_all_sources).to be_zero
+              expect(gross_income_summary.pension_all_sources).to be_zero
+              expect(gross_income_summary.monthly_other_income).to eq 0.0
+              expect(gross_income_summary.monthly_unspecified_source_income).to eq 12_000 / 3
+              expect(gross_income_summary.total_gross_income).to eq 12_000 / 3
+            end
+          end
+        end
+
         context "bank and cash transactions" do
           let(:assessment) { create :assessment, :with_applicant, :with_gross_income_summary_and_records }
 
@@ -110,7 +140,8 @@ module Collators
               gross_income_summary.maintenance_in_all_sources +
               gross_income_summary.property_or_lodger_all_sources +
               gross_income_summary.pension_all_sources +
-              gross_income_summary.monthly_student_loan
+              gross_income_summary.monthly_student_loan +
+              gross_income_summary.monthly_unspecified_source_income
 
             expect(gross_income_summary.total_gross_income).to eq all_sources_total
           end

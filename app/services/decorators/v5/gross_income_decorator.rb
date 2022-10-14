@@ -62,6 +62,7 @@ module Decorators
           monthly_equivalents:
             {
               student_loan: summary.monthly_student_loan.to_f,
+              unspecified_source_income: summary.monthly_unspecified_source_income.to_f,
             },
         }
       end
