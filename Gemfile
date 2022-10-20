@@ -35,7 +35,7 @@ gem "business", "~> 2.3"
 
 gem "colorize"
 
-gem "json-schema", "~> 2.8.1"
+gem "json-schema", "~> 3.0.0"
 
 # Seeding tools
 gem "dibber"
