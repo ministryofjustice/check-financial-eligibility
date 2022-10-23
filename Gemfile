@@ -20,7 +20,7 @@ gem "puma", "~> 5.6"
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 
-gem "sentry-rails", ">= 5.3.1"
+gem "sentry-rails", ">= 5.5.0"
 gem "sentry-ruby"
 
 # Use Capistrano for deployment
@@ -66,14 +66,14 @@ gem "rswag-ui"
 
 group :development, :test do
   gem "awesome_print"
-  gem "dotenv-rails", ">= 2.7.6"
+  gem "dotenv-rails", ">= 2.8.1"
   gem "factory_bot_rails", ">= 6.2.0"
   gem "faker"
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: %i[mri mingw x64_mingw]
   gem "pry-byebug"
   gem "rspec_junit_formatter"
-  gem "rspec-rails", "~> 6.0"
+  gem "rspec-rails", "~> 6.0", ">= 6.0.1"
   gem "rswag-specs"
   gem "rubocop-govuk", require: false
   gem "rubocop-performance"
