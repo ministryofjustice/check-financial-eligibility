@@ -9,14 +9,14 @@ module Collators
   private
 
     def eligible_for_childcare_costs?
-      applicant_has_dependent_child? && (applicant_employed? || applicant_has_student_loan?)
+      applicant_has_dependant_child? && (applicant_employed? || applicant_has_student_loan?)
     end
 
     def monthly_child_care_cash
       monthly_cash_transaction_amount_by(operation: :debit, category: :child_care)
     end
 
-    def applicant_has_dependent_child?
+    def applicant_has_dependant_child?
       assessment.dependants.each do |dependant|
         return true if dependant.date_of_birth > assessment.submission_date - 15.years
       end
