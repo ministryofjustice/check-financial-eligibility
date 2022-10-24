@@ -17,10 +17,9 @@ module Collators
     end
 
     def applicant_has_dependant_child?
-      assessment.dependants.each do |dependant|
-        return true if dependant.date_of_birth > assessment.submission_date - 15.years
+      assessment.dependants.any? do |dependant|
+        assessment.submission_date.before?(dependant.becomes_adult_on)
       end
-      false
     end
 
     def applicant_employed?

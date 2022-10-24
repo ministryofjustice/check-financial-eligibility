@@ -28,4 +28,12 @@ RSpec.describe Dependant, type: :model do
       end
     end
   end
+
+  describe "#becomes_adult_on" do
+    let(:dependant) { build_stubbed(:dependant, date_of_birth: Date.new(2000, 1, 1)) }
+
+    it "returns the dependant's 16th birthday" do
+      expect(dependant.becomes_adult_on).to eq Date.new(2016, 1, 1)
+    end
+  end
 end
