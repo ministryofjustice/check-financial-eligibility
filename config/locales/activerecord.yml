@@ -1,0 +1,12 @@
+en:
+  activerecord:
+    errors:
+      models:
+        applicant:
+          attributes:
+            date_of_birth:
+              less_than_or_equal_to: cannot be in future
+        dependant:
+          attributes:
+            date_of_birth:
+              less_than_or_equal_to: cannot be in future
