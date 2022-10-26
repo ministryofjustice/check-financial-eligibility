@@ -8,12 +8,12 @@ ENV["RAILS_ENV"] ||= "test"
 ENV["APP_ENV"] ||= "test"
 
 # require 'cucumber/rails'
-require 'capybara/cucumber'
-require 'capybara/mechanize'
+require "capybara/cucumber"
+require "capybara/mechanize"
 
 # frozen_string_literal: true
 
-Capybara.app_host = "http://127.0.0.1:3000" 
+Capybara.app_host = "http://127.0.0.1:3000"
 
 # Capybara defaults to CSS3 selectors rather than XPath.
 # If you'd prefer to use XPath, just uncomment this line and adjust any
@@ -38,10 +38,10 @@ Capybara.app_host = "http://127.0.0.1:3000"
 # ActionController::Base.allow_rescue = false
 
 Capybara.register_driver :rack_test do |app|
-  Capybara::RackTest::Driver.new(app, headers: { 'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36' })
+  Capybara::RackTest::Driver.new(app, headers: { "HTTP_USER_AGENT" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36" })
 end
 
-Capybara.register_driver :mechanize do |app|
+Capybara.register_driver :mechanize do |_app|
   Capybara::Mechanize::Driver.new(proc {})
 end
 
@@ -74,4 +74,3 @@ Capybara.default_driver = :mechanize
 # The :transaction strategy is faster, but might give you threading problems.
 # See https://github.com/cucumber/cucumber-rails/blob/master/features/choose_javascript_database_strategy.feature
 # Cucumber::Rails::Database.javascript_strategy = :truncation
-
