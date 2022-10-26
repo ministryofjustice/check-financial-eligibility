@@ -160,40 +160,7 @@ the named worksheet using the `-w` command line switch.
 
 Temp note: This branch holds cucumber tests that are a POC meant to replace the spreadsheet tests i.e., the above ispec tests. The tests are not fully converted as its a POC.
 
-To run, please run
-
-```
-bundle install
-bin/spring stop && bin/spring server
-```
-
-You'll also need the database running.
-
-```
-brew services info postgresql
-brew services restart postgresql
-```
-
-Note: If postgres does not start up, it may be due to a lingering pid file. Remove:
-
-```
-rm -f /usr/local/var/postgres/postmaster.pid
-```
-
-Then run the setup script to setup the database.
-
-```
-bin/setup
-```
-
-
-In case the rails server does not start up, start it up to run the tests against them:
-
-```
-bin/rails server
-```
-
-To run the tests
+To run, ensure you have an instance of rails server running locally. Then run:
 
 ```
 bundle exec cucumber
