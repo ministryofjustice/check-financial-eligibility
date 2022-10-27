@@ -158,7 +158,7 @@ the named worksheet using the `-w` command line switch.
 
 ## Integration tests (cucumber)
 
-Temp note: This branch holds cucumber tests that are a POC meant to replace the spreadsheet tests i.e., the above ispec tests. The tests are not fully converted as its a POC.
+The `features` folder holds two sample cucumber tests that are a POC for a future project to replace the above spreadsheet-based ispec tests.
 
 To run, ensure you have an instance of rails server running locally. Then run:
 
