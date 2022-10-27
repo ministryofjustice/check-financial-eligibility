@@ -41,11 +41,11 @@ module Collators
       # setup initial values here, populate_income_attrs above adds the other income(s)
       # to the default start values here
       {
-        total_gross_income: monthly_student_loan + monthly_unspecified_source_income,
+        total_gross_income: monthly_student_loan + monthly_unspecified_source,
         monthly_student_loan:,
-        monthly_unspecified_source_income:,
+        monthly_unspecified_source:,
         student_loan: categorised_income[:student_loan],
-        unspecified_source_income: categorised_income[:unspecified_source_income],
+        unspecified_source: categorised_income[:unspecified_source],
         monthly_other_income: categorised_income[:total],
         monthly_state_benefits:,
       }
@@ -62,44 +62,17 @@ module Collators
     def calculate_monthly_student_loan
       return 0.0 if categorised_income.key?(:student_loan)
 
-      if gross_income_summary.irregular_income_payments.student_loan.exists?
-        total = 0
-        gross_income_summary.irregular_income_payments.student_loan.each do |payment|
-          total += (payment.amount / irregular_payment_divisor(payment))
-        end
-        total
-      else
-        0.0
-      end
+      gross_income_summary.student_loan_payments.sum(&:monthly_equivalent_amount)
     end
 
-    def monthly_unspecified_source_income
-      @monthly_unspecified_source_income ||= calculate_monthly_unspecified_source_income
+    def monthly_unspecified_source
+      @monthly_unspecified_source ||= calculate_monthly_unspecified_source
     end
 
-    def calculate_monthly_unspecified_source_income
-      return 0.0 if categorised_income.key?(:unspecified_source_income)
+    def calculate_monthly_unspecified_source
+      return 0.0 if categorised_income.key?(:unspecified_source)
 
-      if gross_income_summary.irregular_income_payments.unspecified.exists?
-        total = 0
-        gross_income_summary.irregular_income_payments.unspecified.each do |payment|
-          total += (payment.amount / irregular_payment_divisor(payment))
-        end
-        total
-      else
-        0.0
-      end
-    end
-
-    def irregular_payment_divisor(irregular_income_payment)
-      case irregular_income_payment.frequency
-      when CFEConstants::ANNUAL_FREQUENCY
-        12
-      when CFEConstants::QUARTERLY_FREQUENCY
-        3
-      else
-        raise "Unprocessable irregular income payment frequency: #{irregular_income_payment.frequency}"
-      end
+      gross_income_summary.unspecified_source_payments.sum(&:monthly_equivalent_amount)
     end
 
     def categorised_income

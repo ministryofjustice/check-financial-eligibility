@@ -259,7 +259,7 @@ RSpec.describe "Eligible Full Assessment with policy disregard remarks" do
           [{ "income_type" => "student_loan",
              "frequency" => "annual",
              "amount" => 100.0 },
-           { "income_type" => "unspecified_source_income",
+           { "income_type" => "unspecified_source",
              "frequency" => "quarterly",
              "amount" => 303.0 }] }.to_json
   end

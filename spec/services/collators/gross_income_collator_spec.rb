@@ -82,20 +82,20 @@ module Collators
           end
         end
 
-        context "monthly_unspecified_source_income" do
+        context "monthly_unspecified_source" do
           context "there are no irregular income payments" do
             it "set monthly income from unspecified sources to zero" do
               collator
-              expect(gross_income_summary.reload.monthly_unspecified_source_income).to eq 0.0
+              expect(gross_income_summary.reload.monthly_unspecified_source).to eq 0.0
             end
           end
 
-          context "monthly_unspecified_source_income exists" do
+          context "monthly_unspecified_source exists" do
             before do
               create :irregular_income_payment,
                      gross_income_summary:,
                      amount: 12_000,
-                     income_type: "unspecified_source_income",
+                     income_type: "unspecified_source",
                      frequency: "quarterly"
             end
 
@@ -106,7 +106,7 @@ module Collators
               expect(gross_income_summary.maintenance_in_all_sources).to be_zero
               expect(gross_income_summary.pension_all_sources).to be_zero
               expect(gross_income_summary.monthly_other_income).to eq 0.0
-              expect(gross_income_summary.monthly_unspecified_source_income).to eq 12_000 / 3
+              expect(gross_income_summary.monthly_unspecified_source).to eq 12_000 / 3
               expect(gross_income_summary.total_gross_income).to eq 12_000 / 3
             end
           end
@@ -141,7 +141,7 @@ module Collators
               gross_income_summary.property_or_lodger_all_sources +
               gross_income_summary.pension_all_sources +
               gross_income_summary.monthly_student_loan +
-              gross_income_summary.monthly_unspecified_source_income
+              gross_income_summary.monthly_unspecified_source
 
             expect(gross_income_summary.total_gross_income).to eq all_sources_total
           end

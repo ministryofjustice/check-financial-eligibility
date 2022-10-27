@@ -51,7 +51,7 @@ module Decorators
             end
 
             it "returns expected keys for irregular payments" do
-              expected_keys = %i[student_loan unspecified_source_income]
+              expected_keys = %i[student_loan unspecified_source]
               expect(decorator[:irregular_income][:monthly_equivalents].keys).to match expected_keys
             end
 

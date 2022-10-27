@@ -13,7 +13,8 @@ class BaseWorkflowService
   delegate :upper_threshold,
            :state_benefits,
            :other_income_sources,
-           :irregular_income_payments, to: :gross_income_summary
+           :irregular_income_payments,
+           :student_loan_payments, to: :gross_income_summary
 
   attr_reader :assessment
 

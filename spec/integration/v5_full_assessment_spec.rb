@@ -437,7 +437,7 @@ RSpec.describe "Full V5 passported spec", :vcr do
         [{ "income_type" => "student_loan",
            "frequency" => "annual",
            "amount" => 100.0 },
-         { "income_type" => "unspecified_source_income",
+         { "income_type" => "unspecified_source",
            "frequency" => "quarterly",
            "amount" => 303 }] }.to_json
   end

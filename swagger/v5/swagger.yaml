@@ -616,7 +616,7 @@ paths:
                         type: string
                         enum:
                         - student_loan
-                        - unspecified_source_income
+                        - unspecified_source
                         description: Identifying name for this irregular income payment
                         example: student_loan
                       frequency:

@@ -226,8 +226,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_14_131213) do
     t.decimal "pension_cash", default: "0.0"
     t.decimal "gross_employment_income", default: "0.0", null: false
     t.decimal "benefits_in_kind", default: "0.0", null: false
-    t.decimal "unspecified_source_income", default: "0.0"
-    t.decimal "monthly_unspecified_source_income"
+    t.decimal "unspecified_source", default: "0.0"
+    t.decimal "monthly_unspecified_source"
     t.index ["assessment_id"], name: "index_gross_income_summaries_on_assessment_id"
   end
 

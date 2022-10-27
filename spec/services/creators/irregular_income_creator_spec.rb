@@ -104,7 +104,7 @@ module Creators
             amount: 123_456.78,
           },
           {
-            income_type: "unspecified_source_income",
+            income_type: "unspecified_source",
             frequency:,
             amount: 123_456.78,
           },
