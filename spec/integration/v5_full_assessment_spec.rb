@@ -17,19 +17,27 @@ RSpec.describe "Full V5 passported spec", :vcr do
   context "when applicant is passported" do
     let(:qualifying_benefit) { true }
 
-    it "returns the expected payload without remarks" do
+    before do
       assessment_id = post_assessment
       post_proceeding_types(assessment_id)
       post_applicant(assessment_id)
 
       post_capitals(assessment_id)
       post_vehicles(assessment_id)
+      post_properties(assessment_id)
 
       get assessment_path(assessment_id), headers: v5_headers
       output_response(:get, :assessment)
+    end
 
+    it "returns the expected payload without remarks" do
       remarks = parsed_response[:assessment][:remarks]
       expect(remarks).to eq({})
+    end
+
+    it "returns the expected capital summary" do
+      capital_summary = parsed_response.dig(:result_summary, :capital)
+      expect(capital_summary).to include(expected_capital_summary)
     end
   end
 
@@ -165,6 +173,11 @@ RSpec.describe "Full V5 passported spec", :vcr do
     output_response(:post, :vehicles)
   end
 
+  def post_properties(assessment_id)
+    post assessment_properties_path(assessment_id), params: property_params, headers: headers
+    output_response(:post, :properties)
+  end
+
   def post_dependants(assessment_id)
     post assessment_dependants_path(assessment_id), params: dependants_params, headers: headers
     output_response(:post, :dependants)
@@ -205,7 +218,7 @@ RSpec.describe "Full V5 passported spec", :vcr do
   def assessment_params
     {
       "client_reference_id" => "L-YYV-4N6",
-      "submission_date" => "2020-06-11",
+      "submission_date" => "2022-06-11",
     }.to_json
   end
 
@@ -233,7 +246,8 @@ RSpec.describe "Full V5 passported spec", :vcr do
         [{ "description" => "Money not in a bank account", "value" => "50.0" }],
       "non_liquid_capital" =>
         [{ "description" => "Any valuable items worth more than £500",
-           "value" => "700.0" }] }.to_json
+           "value" => "700.0",
+           "subject_matter_of_dispute" => true }] }.to_json
   end
 
   def vehicle_params
@@ -244,8 +258,37 @@ RSpec.describe "Full V5 passported spec", :vcr do
           "loan_amount_outstanding" => "0.0",
           "date_of_purchase" => "2020-08-18",
           "in_regular_use" => true,
+          "subject_matter_of_dispute" => true,
         },
       ],
+    }.to_json
+  end
+
+  def property_params
+    {
+      "properties": {
+        "main_home": {
+          "value": 500_000.01,
+          "outstanding_mortgage": 999.99,
+          "percentage_owned": 15,
+          "shared_with_housing_assoc": true,
+        },
+        "additional_properties": [
+          {
+            "value": 1000.01,
+            "outstanding_mortgage": 1,
+            "percentage_owned": 99.99,
+            "shared_with_housing_assoc": false,
+          },
+          {
+            "value": 10_000.01,
+            "outstanding_mortgage": 40,
+            "percentage_owned": 80,
+            "shared_with_housing_assoc": true,
+            "subject_matter_of_dispute": true,
+          },
+        ],
+      },
     }.to_json
   end
 
@@ -551,13 +594,13 @@ RSpec.describe "Full V5 passported spec", :vcr do
 
   def expected_disposable_income
     {
-      dependant_allowance: 296.65,
+      dependant_allowance: 307.64,
       gross_housing_costs: 61.14,
       housing_benefit: 37.59,
       net_housing_costs: 23.55,
       maintenance_allowance: 4.33,
-      total_outgoings_and_allowances: 375.25,
-      total_disposable_income: -21.936666666666667,
+      total_outgoings_and_allowances: 386.24,
+      total_disposable_income: -32.92666666666667,
       employment_income: { gross_income: 0.0, benefits_in_kind: 0.0, tax: 0.0, national_insurance: 0.0, fixed_employment_deduction: 0.0, net_employment_income: 0.0 },
       income_contribution: 0.0,
       proceeding_types: contain_exactly(
@@ -566,6 +609,21 @@ RSpec.describe "Full V5 passported spec", :vcr do
         { ccms_code: "SE004", client_involvement_type: "A", upper_threshold: 733.0, lower_threshold: 315.0, result: "eligible" },
         { ccms_code: "SE013", client_involvement_type: "A", upper_threshold: 733.0, lower_threshold: 315.0, result: "eligible" },
       ),
+    }
+  end
+
+  def expected_capital_summary
+    {
+      total_liquid: 50.0,
+      total_non_liquid: 700.0,
+      total_vehicle: 0.0,
+      total_property: 8628.92,
+      total_mortgage_allowance: 999_999_999_999.0,
+      total_capital: 9378.92,
+      pensioner_capital_disregard: 0.0,
+      subject_matter_of_dispute_disregard: 8360.01,
+      capital_contribution: 0.0,
+      assessed_capital: 1018.91,
     }
   end
 

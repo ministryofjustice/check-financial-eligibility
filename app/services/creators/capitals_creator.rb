@@ -33,7 +33,7 @@ module Creators
       return if bank_accounts_attributes.nil?
 
       bank_accounts_attributes.each do |attrs|
-        capital_summary.liquid_capital_items.create!(description: attrs[:description], value: attrs[:value])
+        capital_summary.liquid_capital_items.create!(attrs.slice(:value, :description, :subject_matter_of_dispute))
       end
     end
 
@@ -41,7 +41,7 @@ module Creators
       return if non_liquid_capital_attributes.nil?
 
       non_liquid_capital_attributes.each do |attrs|
-        capital_summary.non_liquid_capital_items.create!(description: attrs[:description], value: attrs[:value])
+        capital_summary.non_liquid_capital_items.create!(attrs.slice(:value, :description, :subject_matter_of_dispute))
       end
     end
 

@@ -7,6 +7,7 @@ module Collators
       total_mortgage_allowance: "property_maximum_mortgage_allowance_threshold",
       total_property: "property",
       pensioner_capital_disregard: "pensioner_capital_disregard",
+      subject_matter_of_dispute_disregard: "subject_matter_of_dispute_disregard",
       total_capital: "total_capital",
       assessed_capital: "assessed_capital",
       capital_contribution: "capital_contribution",
@@ -19,7 +20,7 @@ module Collators
   private
 
     def assessed_capital
-      total_capital - pensioner_capital_disregard
+      total_capital - pensioner_capital_disregard - subject_matter_of_dispute_disregard
     end
 
     def total_capital
@@ -48,6 +49,10 @@ module Collators
 
     def pensioner_capital_disregard
       @pensioner_capital_disregard ||= Calculators::PensionerCapitalDisregardCalculator.new(assessment).value
+    end
+
+    def subject_matter_of_dispute_disregard
+      @subject_matter_of_dispute_disregard ||= Calculators::SubjectMatterOfDisputeDisregardCalculator.new(assessment).value
     end
 
     def lower_threshold

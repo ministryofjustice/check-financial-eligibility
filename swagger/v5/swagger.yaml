@@ -150,6 +150,7 @@ paths:
                     description: test name 1
                   - value: 100.01
                     description: test name 2
+                    subject_matter_of_dispute: true
                   items:
                     type: object
                     description: Account detail
@@ -159,6 +160,8 @@ paths:
                         format: decimal
                       description:
                         type: string
+                      subject_matter_of_dispute:
+                        type: boolean
         required: true
   "/assessments/{assessment_id}/cash_transactions":
     post:
@@ -962,6 +965,9 @@ paths:
                         shared_with_housing_assoc:
                           type: boolean
                           description: Property is shared with a housing association
+                        subject_matter_of_dispute:
+                          type: boolean
+                          description: Property is the subject of a dispute
                     additional_properties:
                       type: array
                       required:
@@ -995,6 +1001,9 @@ paths:
                           shared_with_housing_assoc:
                             type: boolean
                             description: Property is shared with a housing association
+                          subject_matter_of_dispute:
+                            type: boolean
+                            description: Property is the subject of a dispute
         required: true
   "/assessments/{assessment_id}/regular_transactions":
     post:
@@ -1250,4 +1259,7 @@ paths:
                       in_regular_use:
                         type: boolean
                         description: Vehicle in regular use or not
+                      subject_matter_of_dispute:
+                        type: boolean
+                        description: Whether this vehicle is the subject of a dispute
         required: true

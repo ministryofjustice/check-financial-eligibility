@@ -54,6 +54,10 @@ RSpec.describe "properties", type: :request, swagger_doc: "v5/swagger.yaml" do
                               type: :boolean,
                               description: "Property is shared with a housing association",
                             },
+                            subject_matter_of_dispute: {
+                              type: :boolean,
+                              description: "Property is the subject of a dispute",
+                            },
                           },
                         },
                         additional_properties: {
@@ -85,6 +89,10 @@ RSpec.describe "properties", type: :request, swagger_doc: "v5/swagger.yaml" do
                               shared_with_housing_assoc: {
                                 type: :boolean,
                                 description: "Property is shared with a housing association",
+                              },
+                              subject_matter_of_dispute: {
+                                type: :boolean,
+                                description: "Property is the subject of a dispute",
                               },
                             },
                           },
@@ -123,6 +131,7 @@ RSpec.describe "properties", type: :request, swagger_doc: "v5/swagger.yaml" do
                 outstanding_mortgage: 999.99,
                 percentage_owned: 15.0,
                 shared_with_housing_assoc: true,
+                subject_matter_of_dispute: false,
               },
               additional_properties: [],
             },

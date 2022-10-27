@@ -27,6 +27,7 @@ module Decorators
               total_mortgage_allowance
               total_capital
               pensioner_capital_disregard
+              subject_matter_of_dispute_disregard
               assessed_capital
               lower_threshold
               upper_threshold

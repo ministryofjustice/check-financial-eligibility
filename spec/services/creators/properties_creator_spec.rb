@@ -11,6 +11,7 @@ module Creators
         outstanding_mortgage: 200,
         percentage_owned: 15,
         shared_with_housing_assoc: true,
+        subject_matter_of_dispute: true,
       }
     end
     let(:additional_properties) do
@@ -20,6 +21,7 @@ module Creators
           outstanding_mortgage: 0,
           percentage_owned: 99,
           shared_with_housing_assoc: false,
+          subject_matter_of_dispute: false,
         },
         {
           value: 10_000,

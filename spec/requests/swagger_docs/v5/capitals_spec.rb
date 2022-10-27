@@ -32,7 +32,8 @@ RSpec.describe "capitals", type: :request, swagger_doc: "v5/swagger.yaml" do
                     bank_accounts: {
                       type: :array,
                       description: "One or more account details",
-                      example: [{ value: 1.01, description: "test name 1" }, { value: 100.01, description: "test name 2" }],
+                      example: [{ value: 1.01, description: "test name 1" },
+                                { value: 100.01, description: "test name 2", subject_matter_of_dispute: true }],
                       items: {
                         type: :object,
                         description: "Account detail",
@@ -43,6 +44,9 @@ RSpec.describe "capitals", type: :request, swagger_doc: "v5/swagger.yaml" do
                           },
                           description: {
                             type: :string,
+                          },
+                          subject_matter_of_dispute: {
+                            type: :boolean,
                           },
                         },
                       },
@@ -63,12 +67,14 @@ RSpec.describe "capitals", type: :request, swagger_doc: "v5/swagger.yaml" do
               {
                 description: "SANTANDER UK PLC 68346475",
                 value: 59_389.67,
+                subject_matter_of_dispute: true,
               },
             ],
             non_liquid_capital: [
               {
                 description: "FTSE tracker unit trust",
                 value: 61_192.56,
+                subject_matter_of_dispute: false,
               },
               {
                 description: "Aramco shares",

@@ -22,6 +22,7 @@ module Decorators
                total_mortgage_allowance: 750_000,
                total_capital: 24_000,
                pensioner_capital_disregard: 10_000,
+               subject_matter_of_dispute_disregard: 3_000,
                capital_contribution: 0.0,
                assessed_capital: 9_355
       end
@@ -35,6 +36,7 @@ module Decorators
           total_mortgage_allowance: 750_000,
           total_capital: 24_000,
           pensioner_capital_disregard: 10_000,
+          subject_matter_of_dispute_disregard: 3_000,
           capital_contribution: 0.0,
           assessed_capital: 9_355,
           proceeding_types: [
