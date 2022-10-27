@@ -9,7 +9,7 @@ module Collators
   private
 
     def eligible_for_childcare_costs?
-      applicant_has_dependant_child? && (applicant_employed? || applicant_has_student_loan?)
+      applicant_has_dependant_child? && (applicant_is_employed? || applicant_has_student_loan?)
     end
 
     def monthly_child_care_cash
@@ -22,10 +22,8 @@ module Collators
       end
     end
 
-    def applicant_employed?
-      # for now, no applicants are employed, but when they are, we will want to test this
-      # by checking for earned income
-      false
+    def applicant_is_employed?
+      !!applicant&.employed?
     end
 
     def applicant_has_student_loan?

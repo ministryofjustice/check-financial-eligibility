@@ -17,10 +17,11 @@ module Decorators
         context "applicant exists" do
           let(:applicant) { create :applicant }
 
-          it "has all expected keys present int he returned hash" do
+          it "has all expected keys present in the returned hash" do
             expected_keys = %i[
               date_of_birth
               involvement_type
+              employed
               has_partner_opponent
               receives_qualifying_benefit
               self_employed

@@ -24,7 +24,9 @@ module Collators
         end
 
         context "Employed" do
-          before { allow_any_instance_of(described_class).to receive(:applicant_employed?).and_return(true) }
+          before do
+            create(:applicant, assessment:, employed: true)
+          end
 
           context "in receipt of Student grant in irregular income payments" do
             before { create :irregular_income_payment, gross_income_summary: }
@@ -73,7 +75,9 @@ module Collators
         end
 
         context "Employed" do
-          before { allow_any_instance_of(described_class).to receive(:applicant_employed?).and_return(true) }
+          before do
+            create(:applicant, assessment:, employed: true)
+          end
 
           context "in receipt of Student grant in irregular income payments" do
             before { create :irregular_income_payment, gross_income_summary: }

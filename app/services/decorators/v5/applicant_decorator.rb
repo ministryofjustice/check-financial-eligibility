@@ -15,6 +15,7 @@ module Decorators
         {
           date_of_birth: @record.date_of_birth,
           involvement_type: @record.involvement_type,
+          employed: @record.employed,
           has_partner_opponent: @record.has_partner_opponent,
           receives_qualifying_benefit: @record.receives_qualifying_benefit,
           self_employed: @record.self_employed,
