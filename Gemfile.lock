@@ -440,6 +440,7 @@ DEPENDENCIES
   dotenv-rails (>= 2.7.6)
   factory_bot_rails (>= 6.2.0)
   faker
+  faraday (~> 1.0)
   google_drive (>= 3.0.7)
   guard
   guard-rspec
