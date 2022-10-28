@@ -11,6 +11,9 @@ class GrossIncomeSummary < ApplicationRecord
            foreign_key: :parent_id,
            dependent: :destroy
 
+  has_many :student_loan_payments, -> { student_loan }, class_name: "IrregularIncomePayment"
+  has_many :unspecified_source_payments, -> { unspecified_source }, class_name: "IrregularIncomePayment"
+
   def housing_benefit_payments
     state_benefits.find_by(state_benefit_type_id: StateBenefitType.housing_benefit&.id)&.state_benefit_payments || []
   end

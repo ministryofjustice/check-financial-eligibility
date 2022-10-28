@@ -50,8 +50,8 @@ module Decorators
               expect(decorator[:state_benefits][:monthly_equivalents].keys).to match expected_keys
             end
 
-            it "returns expected keys for student_loan" do
-              expected_keys = %i[student_loan]
+            it "returns expected keys for irregular payments" do
+              expected_keys = %i[student_loan unspecified_source]
               expect(decorator[:irregular_income][:monthly_equivalents].keys).to match expected_keys
             end
 

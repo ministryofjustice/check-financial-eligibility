@@ -74,7 +74,7 @@ RSpec.describe "Eligible Full Assessment with policy disregard remarks" do
   end
 
   def post_irregular_income(assessment_id)
-    post assessment_irregular_incomes_path(assessment_id), params: student_loan_params, headers: headers
+    post assessment_irregular_incomes_path(assessment_id), params: irregular_income_params, headers: headers
     output_response(:post, :irregular_income)
   end
 
@@ -254,11 +254,14 @@ RSpec.describe "Eligible Full Assessment with policy disregard remarks" do
                     "client_id" => "TX-state-benefits-3" }] }] }.to_json
   end
 
-  def student_loan_params
+  def irregular_income_params
     { "payments" =>
           [{ "income_type" => "student_loan",
              "frequency" => "annual",
-             "amount" => 100.0 }] }.to_json
+             "amount" => 100.0 },
+           { "income_type" => "unspecified_source",
+             "frequency" => "quarterly",
+             "amount" => 303.0 }] }.to_json
   end
 
   def explicit_remarks_params

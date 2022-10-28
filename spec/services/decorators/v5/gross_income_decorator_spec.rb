@@ -9,6 +9,7 @@ module Decorators
         create :gross_income_summary,
                assessment:,
                monthly_student_loan: 250,
+               monthly_unspecified_source: 423.35,
                benefits_all_sources: 1_322.6,
                benefits_bank: 1_322.6,
                maintenance_in_all_sources: 350,
@@ -91,6 +92,7 @@ module Decorators
             monthly_equivalents:
               {
                 student_loan: 250.0,
+                unspecified_source: 423.35,
               },
           },
           state_benefits: {

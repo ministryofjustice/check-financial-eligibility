@@ -41,9 +41,11 @@ module Collators
       # setup initial values here, populate_income_attrs above adds the other income(s)
       # to the default start values here
       {
-        total_gross_income: monthly_student_loan,
+        total_gross_income: monthly_student_loan + monthly_unspecified_source,
         monthly_student_loan:,
+        monthly_unspecified_source:,
         student_loan: categorised_income[:student_loan],
+        unspecified_source: categorised_income[:unspecified_source],
         monthly_other_income: categorised_income[:total],
         monthly_state_benefits:,
       }
@@ -60,15 +62,17 @@ module Collators
     def calculate_monthly_student_loan
       return 0.0 if categorised_income.key?(:student_loan)
 
-      if gross_income_summary.irregular_income_payments.exists?
-        total = 0
-        gross_income_summary.irregular_income_payments.each do |payment|
-          total += (payment.amount / 12)
-        end
-        total
-      else
-        0.0
-      end
+      gross_income_summary.student_loan_payments.sum(&:monthly_equivalent_amount)
+    end
+
+    def monthly_unspecified_source
+      @monthly_unspecified_source ||= calculate_monthly_unspecified_source
+    end
+
+    def calculate_monthly_unspecified_source
+      return 0.0 if categorised_income.key?(:unspecified_source)
+
+      gross_income_summary.unspecified_source_payments.sum(&:monthly_equivalent_amount)
     end
 
     def categorised_income
