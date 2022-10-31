@@ -7,7 +7,7 @@ FactoryBot.define do
     percentage_owned { Faker::Number.decimal(l_digits: 1, r_digits: 2).to_f }
     main_home { [true, false].sample }
     shared_with_housing_assoc { [true, false].sample }
-    subject_matter_of_dispute { [true, false].sample }
+    subject_matter_of_dispute { false }
 
     trait :main_home do
       main_home { true }

@@ -61,7 +61,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_27_150350) do
     t.decimal "value", default: "0.0", null: false
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.boolean "subject_matter_of_dispute", default: false
+    t.boolean "subject_matter_of_dispute"
     t.index ["capital_summary_id"], name: "index_capital_items_on_capital_summary_id"
   end
 
@@ -306,7 +306,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_27_150350) do
     t.decimal "net_equity", default: "0.0", null: false
     t.decimal "assessed_equity", default: "0.0", null: false
     t.decimal "main_home_equity_disregard", default: "0.0", null: false
-    t.boolean "subject_matter_of_dispute", default: false
+    t.boolean "subject_matter_of_dispute"
     t.index ["capital_summary_id"], name: "index_properties_on_capital_summary_id"
   end
 
@@ -377,7 +377,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_27_150350) do
     t.uuid "capital_summary_id"
     t.boolean "included_in_assessment", default: false, null: false
     t.decimal "assessed_value", default: "0.0", null: false
-    t.boolean "subject_matter_of_dispute", default: false
+    t.boolean "subject_matter_of_dispute"
     t.index ["capital_summary_id"], name: "index_vehicles_on_capital_summary_id"
   end
 

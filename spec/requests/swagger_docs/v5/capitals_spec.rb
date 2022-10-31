@@ -32,7 +32,7 @@ RSpec.describe "capitals", type: :request, swagger_doc: "v5/swagger.yaml" do
                     bank_accounts: {
                       type: :array,
                       description: "One or more account details",
-                      example: [{ value: 1.01, description: "test name 1" },
+                      example: [{ value: 1.01, description: "test name 1", subject_matter_of_dispute: false },
                                 { value: 100.01, description: "test name 2", subject_matter_of_dispute: true }],
                       items: {
                         type: :object,

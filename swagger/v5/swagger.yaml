@@ -148,6 +148,7 @@ paths:
                   example:
                   - value: 1.01
                     description: test name 1
+                    subject_matter_of_dispute: false
                   - value: 100.01
                     description: test name 2
                     subject_matter_of_dispute: true

@@ -77,8 +77,8 @@ module Calculators
         let(:property) { create :property, assessed_equity: 9_000, subject_matter_of_dispute: true }
         let(:threshold_value) { nil }
 
-        it "returns 0" do
-          expect(value).to eq 0
+        it "raises an exception" do
+          expect { value }.to raise_error RuntimeError
         end
       end
     end

@@ -35,9 +35,14 @@ RSpec.describe "Full V5 passported spec", :vcr do
       expect(remarks).to eq({})
     end
 
-    it "returns the expected capital summary" do
+    it "returns a SMOD disregard" do
       capital_summary = parsed_response.dig(:result_summary, :capital)
-      expect(capital_summary).to include(expected_capital_summary)
+      expect(capital_summary[:subject_matter_of_dispute_disregard]).to eq(700)
+      expect(capital_summary[:assessed_capital]).to eq(
+        capital_summary[:total_capital] -
+          capital_summary[:subject_matter_of_dispute_disregard] -
+          capital_summary[:pensioner_capital_disregard],
+      )
     end
   end
 
@@ -285,7 +290,7 @@ RSpec.describe "Full V5 passported spec", :vcr do
             "outstanding_mortgage": 40,
             "percentage_owned": 80,
             "shared_with_housing_assoc": true,
-            "subject_matter_of_dispute": true,
+            "subject_matter_of_dispute": false,
           },
         ],
       },
@@ -609,21 +614,6 @@ RSpec.describe "Full V5 passported spec", :vcr do
         { ccms_code: "SE004", client_involvement_type: "A", upper_threshold: 733.0, lower_threshold: 315.0, result: "eligible" },
         { ccms_code: "SE013", client_involvement_type: "A", upper_threshold: 733.0, lower_threshold: 315.0, result: "eligible" },
       ),
-    }
-  end
-
-  def expected_capital_summary
-    {
-      total_liquid: 50.0,
-      total_non_liquid: 700.0,
-      total_vehicle: 0.0,
-      total_property: 8628.92,
-      total_mortgage_allowance: 999_999_999_999.0,
-      total_capital: 9378.92,
-      pensioner_capital_disregard: 0.0,
-      subject_matter_of_dispute_disregard: 8360.01,
-      capital_contribution: 0.0,
-      assessed_capital: 1018.91,
     }
   end
 

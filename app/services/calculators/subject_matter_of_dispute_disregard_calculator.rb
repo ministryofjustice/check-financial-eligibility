@@ -5,13 +5,17 @@ module Calculators
         disputed_property_value +
         disputed_vehicle_value
 
-      [total_disputed_asset_value, threshold].min
+      if total_disputed_asset_value.positive? && threshold.nil?
+        raise "SMOD assets listed but no threshold data found for #{submission_date}"
+      end
+
+      [total_disputed_asset_value, threshold].compact.min
     end
 
   private
 
     def threshold
-      @threshold ||= Threshold.value_for(:subject_matter_of_dispute_disregard, at: submission_date) || 0
+      @threshold ||= Threshold.value_for(:subject_matter_of_dispute_disregard, at: submission_date)
     end
 
     def disputed_capital_value
