@@ -1,147 +1,116 @@
 require "rails_helper"
 
 RSpec.describe Employment do
-  describe "#calculate_monthly_amounts!", :vcr do
-    let(:employment) { create :employment, calculation_method: }
-    let(:assessment) { employment.assessment }
-    let(:calculation_method) { nil }
-    let(:gross) { 2022.35 }
-    let(:bik) { 44.32 }
-    let(:tax) { 677.27 }
-    let(:insurance) { 98.65 }
-    let(:date_strings) { %w[2021-09-30 2021-10-29 2021-11-30] }
+  describe "#calculate!" do
+    let(:employment) { create(:employment) }
 
-    # new tests for new employment calculations
-    describe "calculate gross income!" do
-      before { setup_employment_and_payments }
+    it "calls the tax and national insurance refund calculator" do
+      allow(Calculators::TaxNiRefundCalculator).to receive(:call)
 
-      context "variance less than 60 GBP" do
-        let(:amounts) { [2000, 1990, 2010] }
+      employment.calculate!
 
-        it "populates with the most recent monthly employment equivalent" do
-          employment.__send__(:calculate_monthly_gross_income!)
-          expect(employment.monthly_gross_income).to eq amounts.last
+      expect(Calculators::TaxNiRefundCalculator)
+        .to have_received(:call)
+        .with(employment)
+        .exactly(1).time
+    end
+
+    context "when there are employment payments" do
+      before do
+        _payment = create(
+          :employment_payment,
+          employment:,
+          date: Date.yesterday,
+          gross_income_monthly_equiv: 100,
+          national_insurance_monthly_equiv: 10,
+          tax_monthly_equiv: 20,
+        )
+        _recent_payment = create(
+          :employment_payment,
+          employment:,
+          date: Date.current,
+          gross_income_monthly_equiv: 500,
+          national_insurance_monthly_equiv: 20,
+          tax_monthly_equiv: 50,
+        )
+      end
+
+      context "when variation in employment income is below the threshold" do
+        before do
+          variation_checker = instance_double(
+            Utilities::EmploymentIncomeVariationChecker,
+            below_threshold?: true,
+          )
+          allow(Utilities::EmploymentIncomeVariationChecker)
+            .to receive(:new)
+            .and_return(variation_checker)
         end
 
-        it "does not add a remark" do
-          assessment_double = instance_double(Assessment, submission_date: Time.zone.today, marked_for_destruction?: false)
-          remarks_double = instance_double(Remarks)
-          allow(employment).to receive(:assessment).and_return(assessment_double)
-          allow(assessment_double).to receive(:remarks).and_return(remarks_double)
-          expect(remarks_double).not_to receive(:add)
-          employment.__send__(:calculate_monthly_gross_income!)
+        it "updates the monthly gross income, national insurance, and tax to " \
+           "the most recent payment" do
+          employment.calculate!
+
+          expect(employment).to have_attributes(
+            calculation_method: "most_recent",
+            monthly_gross_income: 500,
+            monthly_national_insurance: 20,
+            monthly_tax: 50,
+          )
         end
 
-        it "sets the calculation method" do
-          employment.__send__(:calculate_monthly_gross_income!)
-          expect(employment.calculation_method).to eq "most_recent"
+        it "does not add a remark to the assessment" do
+          employment.calculate!
+
+          remarks = employment.assessment.remarks.remarks_hash
+          expect(remarks).to be_blank
         end
       end
 
-      context "variance greater than 60 GBP" do
-        let(:amounts) { [2000, 1930, 2010] }
-
-        it "populates with the most a blunt average" do
-          employment.__send__(:calculate_monthly_gross_income!)
-          expect(employment.monthly_gross_income).to eq(amounts.sum / amounts.size)
+      context "when variation in employment income is above the threshold" do
+        before do
+          variation_checker = instance_double(
+            Utilities::EmploymentIncomeVariationChecker,
+            below_threshold?: false,
+          )
+          allow(Utilities::EmploymentIncomeVariationChecker)
+            .to receive(:new)
+            .and_return(variation_checker)
         end
 
-        it "adds a remark" do
-          employment.__send__(:calculate_monthly_gross_income!)
-          remarks_hash = assessment.remarks.remarks_hash
-          expect(remarks_hash.dig(:employment_gross_income, :amount_variation)).to match_array(employment.employment_payments.map(&:client_id))
+        it "updates the monthly gross income, national insurance, and tax to " \
+           "the blunt average" do
+          employment.calculate!
+
+          expect(employment).to have_attributes(
+            calculation_method: "blunt_average",
+            monthly_gross_income: 300,
+            monthly_national_insurance: 15,
+            monthly_tax: 35,
+          )
         end
 
-        it "sets the calculation method" do
-          employment.__send__(:calculate_monthly_gross_income!)
-          expect(employment.calculation_method).to eq "blunt_average"
+        it "adds a remark to the assessment" do
+          employment.calculate!
+
+          remarks = employment.assessment.remarks.remarks_hash
+          employment_payments = employment.employment_payments
+          expect(remarks[:employment_gross_income][:amount_variation])
+            .to contain_exactly(*employment_payments.map(&:client_id))
         end
       end
     end
 
-    describe "#calculate_monthly_ni_tax!" do
-      before { setup_ni_and_tax }
-
-      context "when using the blunt average" do
-        let(:calculation_method) { "blunt_average" }
-        let(:tax_amounts) { [100, 200.01, 120] }
-        let(:ni_amounts) { [10.94, 10.33, 12.88] }
-
-        it "uses the blunt average to calculate monthly NI" do
-          employment.__send__(:calculate_monthly_ni_tax!)
-          expect(employment.monthly_national_insurance).to eq 11.38
-        end
-
-        it "uses the blunt average to calculate monthly tax" do
-          employment.__send__(:calculate_monthly_ni_tax!)
-          expect(employment.monthly_tax).to eq 140.0
-        end
-      end
-
-      context "when using the most recent" do
-        let(:calculation_method) { "most_recent" }
-        let(:tax_amounts) { [100, 200.01, 120] }
-        let(:ni_amounts) { [10.94, 10.33, 12.88] }
-
-        it "uses the most recent payment for monthly NI" do
-          employment.__send__(:calculate_monthly_ni_tax!)
-          expect(employment.monthly_national_insurance).to eq 12.88
-        end
-
-        it "uses the most recent payment for monthly tax" do
-          employment.__send__(:calculate_monthly_ni_tax!)
-          expect(employment.monthly_tax).to eq 120
-        end
-      end
-
-      context "calculation method not populated" do
-        let(:calculation_method) { nil }
-        let(:tax_amounts) { [100, 200.01, 120] }
-        let(:ni_amounts) { [10.94, 10.33, 12.88] }
-
-        it "raises" do
-          expect {
-            employment.__send__(:calculate_monthly_ni_tax!)
-          }.to raise_error RuntimeError, "invalid calculation method: nil"
-        end
-      end
-    end
-
-    describe ".calculate!" do
-      it "calls the calculate methods" do
-        expect(employment).to receive(:calculate_monthly_gross_income!)
-        expect(Calculators::TaxNiRefundCalculator).to receive(:call)
-        expect(employment).to receive(:calculate_monthly_ni_tax!)
+    context "when there are no employment payments" do
+      it "zeros the monthly gross income, national insurance, and tax" do
         employment.calculate!
+
+        expect(employment).to have_attributes(
+          calculation_method: "blunt_average",
+          monthly_gross_income: 0,
+          monthly_national_insurance: 0,
+          monthly_tax: 0,
+        )
       end
-    end
-  end
-
-  def setup_employment_and_payments
-    date_strings.each_with_index do |date_string, i|
-      create :employment_payment,
-             employment:,
-             date: Date.parse(date_string),
-             gross_income: gross,
-             gross_income_monthly_equiv: amounts[i],
-             benefits_in_kind: bik,
-             tax:,
-             national_insurance: insurance
-    end
-  end
-
-  def setup_ni_and_tax
-    date_strings.each_with_index do |date_string, i|
-      create :employment_payment,
-             employment:,
-             date: Date.parse(date_string),
-             gross_income: gross,
-             gross_income_monthly_equiv: gross,
-             benefits_in_kind: bik,
-             tax: tax_amounts[i],
-             tax_monthly_equiv: tax_amounts[i],
-             national_insurance: ni_amounts[i],
-             national_insurance_monthly_equiv: ni_amounts[i]
     end
   end
 end
