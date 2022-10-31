@@ -20,6 +20,8 @@ gem "puma", "~> 5.6"
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 
+gem "faraday", "~> 1.0"
+
 gem "sentry-rails", ">= 5.3.1"
 gem "sentry-ruby"
 
