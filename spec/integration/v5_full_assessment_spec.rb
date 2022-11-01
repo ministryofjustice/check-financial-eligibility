@@ -443,67 +443,109 @@ RSpec.describe "Full V5 passported spec", :vcr do
   end
 
   def expected_remarks
-    { state_benefit_payment: { amount_variation: %w[TX-state-benefits-1 TX-state-benefits-2 TX-state-benefits-3],
-                               unknown_frequency: %w[TX-state-benefits-1 TX-state-benefits-2 TX-state-benefits-3] },
-      other_income_payment: { amount_variation: %w[TX-other-income-friends-family-1
-                                                   TX-other-income-friends-family-2
-                                                   TX-other-income-friends-family-3
-                                                   TX-other-income-maintenance-in-1
-                                                   TX-other-income-maintenance-in-2
-                                                   TX-other-income-maintenance-in-3
-                                                   TX-other-income-pension-1
-                                                   TX-other-income-pension-2
-                                                   TX-other-income-pension-3
-                                                   TX-other-income-property-1
-                                                   TX-other-income-property-2
-                                                   TX-other-income-property-3],
-                              unknown_frequency: %w[TX-other-income-friends-family-1
-                                                    TX-other-income-friends-family-2
-                                                    TX-other-income-friends-family-3
-                                                    TX-other-income-maintenance-in-1
-                                                    TX-other-income-maintenance-in-2
-                                                    TX-other-income-maintenance-in-3
-                                                    TX-other-income-pension-1
-                                                    TX-other-income-pension-2
-                                                    TX-other-income-pension-3
-                                                    TX-other-income-property-1
-                                                    TX-other-income-property-2
-                                                    TX-other-income-property-3] },
-      outgoings_maintenance: { amount_variation: %w[TX-outgoing-maintenance-1
-                                                    TX-outgoing-maintenance-2
-                                                    TX-outgoing-maintenance-3],
-                               unknown_frequency: %w[TX-outgoing-maintenance-1
-                                                     TX-outgoing-maintenance-2
-                                                     TX-outgoing-maintenance-3] },
-      outgoings_housing_cost: { amount_variation: %w[TX-outgoing-rent-mortgage-1
-                                                     TX-outgoing-rent-mortgage-2
-                                                     TX-outgoing-rent-mortgage-3],
-                                unknown_frequency: %w[TX-outgoing-rent-mortgage-1
-                                                      TX-outgoing-rent-mortgage-2
-                                                      TX-outgoing-rent-mortgage-3] },
-      outgoings_childcare: { amount_variation: %w[TX-outgoing-rent-child_care-1
-                                                  TX-outgoing-rent-child_care-2
-                                                  TX-outgoing-rent-child_care-3],
-                             unknown_frequency: %w[TX-outgoing-rent-child_care-1
-                                                   TX-outgoing-rent-child_care-2
-                                                   TX-outgoing-rent-child_care-3] },
-      outgoings_legal_aid: { amount_variation: %w[TX-outgoing-rent-legal-aid-1
-                                                  TX-outgoing-rent-legal-aid-2
-                                                  TX-outgoing-rent-legal-aid-3],
-                             unknown_frequency: %w[TX-outgoing-rent-legal-aid-1
-                                                   TX-outgoing-rent-legal-aid-2
-                                                   TX-outgoing-rent-legal-aid-3] } }
+    {
+      state_benefit_payment: {
+        amount_variation: contain_exactly(
+          "TX-state-benefits-1",
+          "TX-state-benefits-2",
+          "TX-state-benefits-3",
+        ),
+        unknown_frequency: contain_exactly(
+          "TX-state-benefits-1",
+          "TX-state-benefits-2",
+          "TX-state-benefits-3",
+        ),
+      },
+      other_income_payment: {
+        amount_variation: contain_exactly(
+          "TX-other-income-friends-family-1",
+          "TX-other-income-friends-family-2",
+          "TX-other-income-friends-family-3",
+          "TX-other-income-maintenance-in-1",
+          "TX-other-income-maintenance-in-2",
+          "TX-other-income-maintenance-in-3",
+          "TX-other-income-pension-1",
+          "TX-other-income-pension-2",
+          "TX-other-income-pension-3",
+          "TX-other-income-property-1",
+          "TX-other-income-property-2",
+          "TX-other-income-property-3",
+        ),
+        unknown_frequency: contain_exactly(
+          "TX-other-income-friends-family-1",
+          "TX-other-income-friends-family-2",
+          "TX-other-income-friends-family-3",
+          "TX-other-income-maintenance-in-1",
+          "TX-other-income-maintenance-in-2",
+          "TX-other-income-maintenance-in-3",
+          "TX-other-income-pension-1",
+          "TX-other-income-pension-2",
+          "TX-other-income-pension-3",
+          "TX-other-income-property-1",
+          "TX-other-income-property-2",
+          "TX-other-income-property-3",
+        ),
+      },
+      outgoings_maintenance: {
+        amount_variation: contain_exactly(
+          "TX-outgoing-maintenance-1",
+          "TX-outgoing-maintenance-2",
+          "TX-outgoing-maintenance-3",
+        ),
+        unknown_frequency: contain_exactly(
+          "TX-outgoing-maintenance-1",
+          "TX-outgoing-maintenance-2",
+          "TX-outgoing-maintenance-3",
+        ),
+      },
+      outgoings_housing_cost: {
+        amount_variation: contain_exactly(
+          "TX-outgoing-rent-mortgage-1",
+          "TX-outgoing-rent-mortgage-2",
+          "TX-outgoing-rent-mortgage-3",
+        ),
+        unknown_frequency: contain_exactly(
+          "TX-outgoing-rent-mortgage-1",
+          "TX-outgoing-rent-mortgage-2",
+          "TX-outgoing-rent-mortgage-3",
+        ),
+      },
+      outgoings_childcare: {
+        amount_variation: contain_exactly(
+          "TX-outgoing-rent-child_care-1",
+          "TX-outgoing-rent-child_care-2",
+          "TX-outgoing-rent-child_care-3",
+        ),
+        unknown_frequency: contain_exactly(
+          "TX-outgoing-rent-child_care-1",
+          "TX-outgoing-rent-child_care-2",
+          "TX-outgoing-rent-child_care-3",
+        ),
+      },
+      outgoings_legal_aid: {
+        amount_variation: contain_exactly(
+          "TX-outgoing-rent-legal-aid-1",
+          "TX-outgoing-rent-legal-aid-2",
+          "TX-outgoing-rent-legal-aid-3",
+        ),
+        unknown_frequency: contain_exactly(
+          "TX-outgoing-rent-legal-aid-1",
+          "TX-outgoing-rent-legal-aid-2",
+          "TX-outgoing-rent-legal-aid-3",
+        ),
+      },
+    }
   end
 
   def expected_gross_income
     {
       total_gross_income: 353.31333333333333,
-      proceeding_types: [
+      proceeding_types: contain_exactly(
         { ccms_code: "DA004", client_involvement_type: "A", upper_threshold: 999_999_999_999.0, lower_threshold: 0.0, result: "eligible" },
         { ccms_code: "DA020", client_involvement_type: "A", upper_threshold: 999_999_999_999.0, lower_threshold: 0.0, result: "eligible" },
         { ccms_code: "SE004", client_involvement_type: "A", upper_threshold: 2657.0, lower_threshold: 0.0, result: "eligible" },
         { ccms_code: "SE013", client_involvement_type: "A", upper_threshold: 2657.0, lower_threshold: 0.0, result: "eligible" },
-      ],
+      ),
     }
   end
 
@@ -518,10 +560,12 @@ RSpec.describe "Full V5 passported spec", :vcr do
       total_disposable_income: -21.936666666666667,
       employment_income: { gross_income: 0.0, benefits_in_kind: 0.0, tax: 0.0, national_insurance: 0.0, fixed_employment_deduction: 0.0, net_employment_income: 0.0 },
       income_contribution: 0.0,
-      proceeding_types: [{ ccms_code: "DA004", client_involvement_type: "A", upper_threshold: 999_999_999_999.0, lower_threshold: 315.0, result: "eligible" },
-                         { ccms_code: "DA020", client_involvement_type: "A", upper_threshold: 999_999_999_999.0, lower_threshold: 315.0, result: "eligible" },
-                         { ccms_code: "SE004", client_involvement_type: "A", upper_threshold: 733.0, lower_threshold: 315.0, result: "eligible" },
-                         { ccms_code: "SE013", client_involvement_type: "A", upper_threshold: 733.0, lower_threshold: 315.0, result: "eligible" }],
+      proceeding_types: contain_exactly(
+        { ccms_code: "DA004", client_involvement_type: "A", upper_threshold: 999_999_999_999.0, lower_threshold: 315.0, result: "eligible" },
+        { ccms_code: "DA020", client_involvement_type: "A", upper_threshold: 999_999_999_999.0, lower_threshold: 315.0, result: "eligible" },
+        { ccms_code: "SE004", client_involvement_type: "A", upper_threshold: 733.0, lower_threshold: 315.0, result: "eligible" },
+        { ccms_code: "SE013", client_involvement_type: "A", upper_threshold: 733.0, lower_threshold: 315.0, result: "eligible" },
+      ),
     }
   end
 
