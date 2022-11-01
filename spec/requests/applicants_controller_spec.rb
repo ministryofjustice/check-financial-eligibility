@@ -11,6 +11,7 @@ RSpec.describe ApplicantsController, type: :request do
           date_of_birth: 20.years.ago.to_date,
           has_partner_opponent: false,
           receives_qualifying_benefit: true,
+          employed: false,
         },
       }
     end
@@ -60,7 +61,7 @@ RSpec.describe ApplicantsController, type: :request do
       end
     end
 
-    context "with invalid payload" do
+    context "with non existent assessment id" do
       let(:non_existent_assessment_id) { SecureRandom.uuid }
 
       before do
@@ -69,6 +70,27 @@ RSpec.describe ApplicantsController, type: :request do
       end
 
       it_behaves_like "it fails with message", "No such assessment id"
+    end
+
+    context "with employed of null" do
+      let(:params) do
+        {
+          applicant: {
+            date_of_birth: 20.years.ago.to_date,
+            has_partner_opponent: false,
+            receives_qualifying_benefit: true,
+            employed: nil,
+          },
+        }
+      end
+
+      before do
+        post assessment_applicant_path(assessment.id), params: params.to_json, headers:
+      end
+
+      it "returns success" do
+        expect(response).to have_http_status(:success)
+      end
     end
 
     context "with malformed JSON payload" do
