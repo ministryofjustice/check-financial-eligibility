@@ -78,6 +78,7 @@ RSpec.describe "applicants", type: :request, swagger_doc: "v5/swagger.yaml" do
             applicant: {
               date_of_birth: "1992-07-22",
               has_partner_opponent: false,
+              involvement_type: "applicant",
               receives_qualifying_benefit: true,
             },
           }

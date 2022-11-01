@@ -111,6 +111,7 @@ RSpec.describe "Eligible Full Assessment with policy disregard remarks" do
     { "applicant" =>
           { "date_of_birth" => "1981-04-11",
             "has_partner_opponent" => false,
+            "involvement_type" => "applicant",
             "receives_qualifying_benefit" => false } }.to_json
   end
 

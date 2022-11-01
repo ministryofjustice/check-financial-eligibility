@@ -112,6 +112,7 @@ RSpec.describe "contribution_required Full Assessment with remarks" do
       applicant: {
         date_of_birth: 20.years.ago.to_date,
         has_partner_opponent: false,
+        involvement_type: "applicant",
         receives_qualifying_benefit: true,
       },
     }.to_json

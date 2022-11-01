@@ -10,6 +10,7 @@ RSpec.describe ApplicantsController, type: :request do
         applicant: {
           date_of_birth: 20.years.ago.to_date,
           has_partner_opponent: false,
+          involvement_type: "applicant",
           receives_qualifying_benefit: true,
           employed: false,
         },
@@ -40,8 +41,8 @@ RSpec.describe ApplicantsController, type: :request do
             assessment_id: assessment.id,
             applicant: {
               date_of_birth: future_date,
-              involvement_type: "applicant",
               has_partner_opponent: false,
+              involvement_type: "applicant",
               receives_qualifying_benefit: true,
             },
           }
@@ -78,6 +79,7 @@ RSpec.describe ApplicantsController, type: :request do
           applicant: {
             date_of_birth: 20.years.ago.to_date,
             has_partner_opponent: false,
+            involvement_type: "applicant",
             receives_qualifying_benefit: true,
             employed: nil,
           },
