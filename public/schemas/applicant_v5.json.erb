@@ -7,7 +7,11 @@
   "properties": {
     "applicant": {
       "type": "object",
-      "required": ["date_of_birth", "has_partner_opponent", "receives_qualifying_benefit"],
+      "required": [
+        "date_of_birth",
+        "has_partner_opponent",
+        "receives_qualifying_benefit"
+      ],
       "properties": {
         "date_of_birth": {
           "$ref": "<%= "file://#{@schema_dir}/common.json#date" %>"
@@ -18,7 +22,14 @@
         "has_partner_opponent": {
           "type": "boolean"
         },
+        "involvement_type": {
+          "type": ["string", "null"],
+          "enum": ["applicant", null]
+        },
         "receives_qualifying_benefit": {
+          "type": "boolean"
+        },
+        "self_employed": {
           "type": "boolean"
         }
       }

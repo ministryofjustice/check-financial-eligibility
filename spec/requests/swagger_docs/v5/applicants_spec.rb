@@ -15,31 +15,60 @@ RSpec.describe "applicants", type: :request, swagger_doc: "v5/swagger.yaml" do
 
       assessment_id_parameter
 
-      parameter name: :params,
-                in: :body,
-                required: true,
-                schema: {
-                  type: :object,
-                  required: %i[date_of_birth involvement_type has_partner_opponent receives_qualifying_benefit],
-                  properties: {
-                    applicant: {
-                      type: :object,
-                      description: "Object describing pertinent applicant details",
-                      properties: {
-                        date_of_birth: { type: :string,
-                                         format: :date,
-                                         example: "1992-07-22",
-                                         description: "Applicant date of birth" },
-                        has_partner_opponent: { type: :boolean,
-                                                example: false,
-                                                description: "Applicant has partner opponent" },
-                        receives_qualifying_benefit: { type: :boolean,
-                                                       example: false,
-                                                       description: "Applicant receives qualifying benefit" },
-                      },
-                    },
-                  },
-                }
+      parameter(
+        name: :params,
+        in: :body,
+        required: true,
+        schema: {
+          type: :object,
+          required: %i[
+            date_of_birth
+            has_partner_opponent
+            involvement_type
+            receives_qualifying_benefit
+          ],
+          properties: {
+            applicant: {
+              type: :object,
+              description: "Object describing pertinent applicant details",
+              properties: {
+                date_of_birth: {
+                  type: :string,
+                  format: :date,
+                  example: "1992-07-22",
+                  description: "Applicant date of birth",
+                },
+                employed: {
+                  type: :boolean,
+                  example: true,
+                  description: "Applicant is employed",
+                },
+                has_partner_opponent: {
+                  type: :boolean,
+                  example: false,
+                  description: "Applicant has partner opponent",
+                },
+                involvement_type: {
+                  type: :string,
+                  enum: %w[applicant],
+                  example: "applicant",
+                  description: "Applicant involvement type",
+                },
+                receives_qualifying_benefit: {
+                  type: :boolean,
+                  example: false,
+                  description: "Applicant receives qualifying benefit",
+                },
+                self_employed: {
+                  type: :boolean,
+                  example: false,
+                  description: "Applicant is self employed",
+                },
+              },
+            },
+          },
+        },
+      )
 
       response(200, "successful") do
         let(:assessment_id) { create(:assessment, version: "5").id }

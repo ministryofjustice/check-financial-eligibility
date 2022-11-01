@@ -43,8 +43,8 @@ paths:
               type: object
               required:
               - date_of_birth
-              - involvement_type
               - has_partner_opponent
+              - involvement_type
               - receives_qualifying_benefit
               properties:
                 applicant:
@@ -56,14 +56,28 @@ paths:
                       format: date
                       example: '1992-07-22'
                       description: Applicant date of birth
+                    employed:
+                      type: boolean
+                      example: true
+                      description: Applicant is employed
                     has_partner_opponent:
                       type: boolean
                       example: false
                       description: Applicant has partner opponent
+                    involvement_type:
+                      type: string
+                      enum:
+                      - applicant
+                      example: applicant
+                      description: Applicant involvement type
                     receives_qualifying_benefit:
                       type: boolean
                       example: false
                       description: Applicant receives qualifying benefit
+                    self_employed:
+                      type: boolean
+                      example: false
+                      description: Applicant is self employed
         required: true
   "/assessments":
     post:
