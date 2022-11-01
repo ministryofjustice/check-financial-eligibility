@@ -16,8 +16,10 @@ def print_failures(failures)
   end
 end
 
-def validate_response(result, value, version, attribute, assessment_id, condition = "")
+def validate_response(result, value, version = nil, attribute = nil, assessment_id = nil, condition = "")
   if value.to_s != result.to_s
+    return "\n==> [#{attribute}] Value mismatch. Expected (++), Actual (--): \n++ #{value}\n-- #{result}" unless version && attribute
+
     mapping = get_mapping version, attribute
     unless condition.empty?
       attribute += ".X/where[#{condition}"

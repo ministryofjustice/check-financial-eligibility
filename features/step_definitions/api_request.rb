@@ -147,3 +147,22 @@ Then("I should see the following {string} details where {string}:") do |attribut
 
   print_failures failures
 end
+
+Then("I should see the following {string} details:") do |attribute, table|
+  if assessment.nil? || assessment.response.empty? || assessment.version.nil?
+    raise "The reponse and version must be set before using this step definition."
+  end
+
+  response_section = get_value_from_response(assessment.response, assessment.version, attribute)
+
+  failures = []
+  table.hashes.each do |row|
+    failures.append valid_or_message unless validate_response(response_section[row["attribute"]], row["value"])
+  end
+
+  if failures.any?
+    failures.append "\n----\nSelected response being validated: #{response_section.to_json}\n----\n"
+  end
+
+  print_failures(failures)
+end
