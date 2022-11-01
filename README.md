@@ -158,9 +158,9 @@ the named worksheet using the `-w` command line switch.
 
 ## Integration tests (cucumber)
 
-The `features` folder holds two sample cucumber tests that are a POC for a future project to replace the above spreadsheet-based ispec tests.
+We are beginning the process of transitioning from "ispec" to cucumber. During the transition we have tests defined in both formats. Newer tests are written as cucumber features in the `features` folder.
 
-To run, ensure you have an instance of rails server running locally. Then run:
+To run them, ensure you have an instance of rails server running locally. Then run:
 
 ```
 bundle exec cucumber
