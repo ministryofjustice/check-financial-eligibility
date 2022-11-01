@@ -10,63 +10,50 @@ class Employment < ApplicationRecord
   validates :calculation_method, inclusion: { in: %w[blunt_average most_recent] }, allow_nil: true
 
   def calculate!
-    calculate_monthly_gross_income!
     Calculators::TaxNiRefundCalculator.call(self)
-    calculate_monthly_ni_tax!
-  end
 
-private
-
-  def calculate_monthly_gross_income!
-    if Utilities::EmploymentIncomeVariationChecker.new(self).below_threshold?
-      update!(
-        monthly_gross_income: employment_payments.order(:date).last.gross_income_monthly_equiv,
-        calculation_method: "most_recent",
-      )
+    if employment_payments.any? && employment_income_variation_below_threshold?
+      update_monthly_values!(calculation: :most_recent)
     else
-      update!(
-        monthly_gross_income: blunt_average(:gross_income_monthly_equiv),
-        calculation_method: "blunt_average",
-      )
+      update_monthly_values!(calculation: :blunt_average)
       add_amount_variation_remarks
     end
   end
 
-  def calculate_monthly_ni_tax!
-    case calculation_method
-    when "blunt_average"
-      use_ni_tax_blunt_average
-    when "most_recent"
-      use_ni_tax_most_recent
-    else
-      raise "invalid calculation method: #{calculation_method.inspect}"
-    end
+private
+
+  def employment_income_variation_below_threshold?
+    Utilities::EmploymentIncomeVariationChecker.new(self).below_threshold?
   end
 
-  def use_ni_tax_blunt_average
+  def update_monthly_values!(calculation:)
     update!(
-      monthly_national_insurance: blunt_average(:national_insurance_monthly_equiv),
-      monthly_tax: blunt_average(:tax_monthly_equiv),
-    )
-  end
-
-  def use_ni_tax_most_recent
-    most_recent_payment = employment_payments.order(:date).last
-
-    update!(
-      monthly_national_insurance: most_recent_payment.national_insurance_monthly_equiv,
-      monthly_tax: most_recent_payment.tax_monthly_equiv,
+      calculation_method: calculation.to_s,
+      monthly_gross_income: send(calculation, :gross_income_monthly_equiv),
+      monthly_national_insurance: send(calculation, :national_insurance_monthly_equiv),
+      monthly_tax: send(calculation, :tax_monthly_equiv),
     )
   end
 
   def blunt_average(attribute)
     values = employment_payments.map(&attribute)
+    return 0.0 if values.empty?
+
     (values.sum / values.size).round(2)
+  end
+
+  def most_recent(attribute)
+    payment = employment_payments.order(:date).last
+    payment.public_send(attribute)
   end
 
   def add_amount_variation_remarks
     my_remarks = assessment.remarks
-    my_remarks.add(:employment_gross_income, :amount_variation, employment_payments.map(&:client_id))
+    my_remarks.add(
+      :employment_gross_income,
+      :amount_variation,
+      employment_payments.map(&:client_id),
+    )
     assessment.update!(remarks: my_remarks)
   end
 end
