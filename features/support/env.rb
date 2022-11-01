@@ -6,14 +6,16 @@
 
 ENV["RAILS_ENV"] ||= "test"
 ENV["APP_ENV"] ||= "test"
+ENV["ENV"] ||= "test"
 
 # require 'cucumber/rails'
 require "capybara/cucumber"
 require "capybara/mechanize"
+require "pry"
 
 # frozen_string_literal: true
 
-Capybara.app_host = "http://127.0.0.1:3000"
+Capybara.app_host = "http://127.0.0.1:3456"
 
 # Capybara defaults to CSS3 selectors rather than XPath.
 # If you'd prefer to use XPath, just uncomment this line and adjust any
