@@ -3,6 +3,7 @@ class Property < ApplicationRecord
 
   scope :main_home, -> { where(main_home: true) }
   scope :additional, -> { where(main_home: false) }
+  scope :disputed, -> { where(subject_matter_of_dispute: true) }
 
   delegate :assessment, to: :capital_summary
   delegate :submission_date, to: :assessment
