@@ -1,4 +1,4 @@
-class Assessment
+class TestAssessment
   attr_accessor :version, :id, :response
   attr_reader :uris
   attr_writer :headers

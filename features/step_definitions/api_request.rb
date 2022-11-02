@@ -2,7 +2,7 @@ request_dispatcher = Request.new
 assessment = nil
 
 Given("I am using version {int} of the API") do |int|
-  assessment = Assessment.new
+  assessment = TestAssessment.new
   assessment.api_version int
 end
 
