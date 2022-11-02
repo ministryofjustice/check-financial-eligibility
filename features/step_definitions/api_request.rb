@@ -1,168 +1,111 @@
-request_dispatcher = Request.new
-assessment = nil
-
 Given("I am using version {int} of the API") do |int|
-  assessment = Assessment.new
-  assessment.api_version int
+  @api_version = int
 end
 
 Given("I create an assessment with the following details:") do |table|
-  data = assessment.cleanse table.rows_hash
+  data = table.rows_hash
 
   if data.key?("proceeding_types")
     data["proceeding_types"] = { 'ccms_codes': data["proceeding_types"].split(";") }
   end
 
-  payload = data.to_json
-  request = assessment.get_request("create_assessment", payload)
-  response = request_dispatcher.process request
-
-  assessment.id = response["assessment_id"]
+  response = submit_request(:post, "assessments", @api_version, data)
+  @assessment_id = response["assessment_id"]
 end
 
 Given("I add the following applicant details for the current assessment:") do |table|
-  data = { "applicant": table.rows_hash }
-  data = assessment.cleanse data
-
-  payload = data.to_json
-  request = assessment.get_request("add_applicant", payload, { "id" => assessment.id })
-  request_dispatcher.process request
+  data = { "applicant": cast_values(table.rows_hash) }
+  submit_request(:post, "assessments/#{@assessment_id}/applicant", @api_version, data)
 end
 
 Given("I add the following dependent details for the current assessment:") do |table|
-  data = { "dependants": table.hashes }
-  data = assessment.cleanse data
-
-  payload = data.to_json
-  request = assessment.get_request("add_dependants", payload, { "id" => assessment.id })
-  request_dispatcher.process request
+  data = { "dependants": table.hashes.map { cast_values(_1) } }
+  submit_request(:post, "assessments/#{@assessment_id}/dependants", @api_version, data)
 end
 
 Given("I add the following other_income details for {string} in the current assessment:") do |string, table|
-  data = { "other_incomes": [{ "source": string, "payments": table.hashes }] }
-  data = assessment.cleanse data
-
-  payload = data.to_json
-  request = assessment.get_request("add_other_incomes", payload, { "id" => assessment.id })
-  request_dispatcher.process request
+  data = { "other_incomes": [{ "source": string, "payments": table.hashes.map { cast_values(_1) } }] }
+  submit_request(:post, "assessments/#{@assessment_id}/other_incomes", @api_version, data)
 end
 
 Given("I add the following irregular_income details in the current assessment:") do |table|
-  data = { "payments": table.hashes }
-  data = assessment.cleanse data
-
-  payload = data.to_json
-  request = assessment.get_request("add_irregular_incomes", payload, { "id" => assessment.id })
-  request_dispatcher.process request
+  data = { "payments": table.hashes.map { cast_values(_1) } }
+  submit_request(:post, "assessments/#{@assessment_id}/irregular_incomes", @api_version, data)
 end
 
 Given("I add the following outgoing details for {string} in the current assessment:") do |string, table|
-  data = { "outgoings": ["name": string, "payments": table.hashes] }
-  data = assessment.cleanse data
-
-  payload = data.to_json
-  request = assessment.get_request("add_outgoings", payload, { "id" => assessment.id })
-  request_dispatcher.process request
+  data = { "outgoings": ["name": string, "payments": table.hashes.map { cast_values(_1) }] }
+  submit_request(:post, "assessments/#{@assessment_id}/outgoings", @api_version, data)
 end
 
 Given("I add the following capital details for {string} in the current assessment:") do |string, table|
-  data = { string.to_s => table.hashes }
-  data = assessment.cleanse data
-
-  payload = data.to_json
-  request = assessment.get_request("add_capitals", payload, { "id" => assessment.id })
-  request_dispatcher.process request
+  data = { string.to_s => table.hashes.map { cast_values(_1) } }
+  submit_request(:post, "assessments/#{@assessment_id}/capitals", @api_version, data)
 end
 
 Given("I add the following proceeding types in the current assessment:") do |table|
-  data = { "proceeding_types": table.hashes }
-  data = assessment.cleanse data
-
-  payload = data.to_json
-  request = assessment.get_request("add_proceeding_types", payload, { "id" => assessment.id })
-  request_dispatcher.process request
+  data = { "proceeding_types": table.hashes.map { cast_values(_1) } }
+  submit_request(:post, "assessments/#{@assessment_id}/proceeding_types", @api_version, data)
 end
 
 When("I retrieve the final assessment") do
-  request = assessment.get_request("retrieve_assessment", {}, { "id" => assessment.id })
-  assessment.response = request_dispatcher.process request
+  @response = submit_request(:get, "assessments/#{@assessment_id}", @api_version)
 end
 
 Then("I should see the following overall summary:") do |table|
-  if assessment.nil? || assessment.response.empty? || assessment.version.nil?
-    raise "The reponse and version must be set before using this step definition."
-  end
-
   failures = []
   table.hashes.each do |row|
-    result = get_value_from_response assessment.response, assessment.version, row["attribute"]
-    valid_or_message = validate_response result, row["value"], assessment.version, row["attribute"], assessment_id: assessment.id
+    result = extract_response_section(@response, @api_version, row["attribute"])
+    error = validate_response(result, row["value"], row["attribute"])
 
-    unless valid_or_message == true
-      failures.append valid_or_message
-    end
+    failures.append(error) if error.present?
   end
 
   unless failures.empty?
     failures.append "\n----\Response being validated: #{assessment.response.to_json}\n----\n"
   end
 
-  print_failures failures
+  raise_if_present(failures)
 end
 
 # To be used where the response has an array and you're asserting a block within it based on a conditional value within.
 Then("I should see the following {string} details where {string}:") do |attribute, condition, table|
-  if assessment.nil? || assessment.response.empty? || assessment.version.nil?
-    raise "The reponse and version must be set before using this step definition."
-  end
-
-  response_section = get_value_from_response assessment.response, assessment.version, attribute
+  response_section = extract_response_section @response, @api_version, attribute
 
   param, value = condition.split(":")
 
-  selected_item = {}
-  response_section.each do |item|
-    if item[param] == value
-      selected_item = item
-      break
-    end
-  end
+  selected_item = response_section.find { |item| item[param] == value }
 
-  if selected_item.empty?
+  if selected_item.nil?
     raise "Unable to find section in response based on condition '#{condition}' for attribute '#{attribute}'. Found: #{response_section}"
   end
 
   failures = []
   table.hashes.each do |row|
-    valid_or_message = validate_response selected_item[row["attribute"]], row["value"], assessment.version, attribute, assessment.id, condition: condition
+    error = validate_response(selected_item[row["attribute"]], row["value"], attribute, condition:)
 
-    unless valid_or_message == true
-      failures.append valid_or_message
-    end
+    failures.append(error) if error
   end
 
   unless failures.empty?
     failures.append "\n----\nSelected response being validated: #{selected_item.to_json}\n----\n"
   end
 
-  print_failures failures
+  raise_if_present(failures)
 end
 
-Then("I should see the following {string} details:") do |attribute, table|
-  if assessment.nil? || assessment.response.empty? || assessment.version.nil?
-    raise "The reponse and version must be set before using this step definition."
-  end
-
-  response_section = get_value_from_response(assessment.response, assessment.version, attribute)
+Then("I should see the following {string} details:") do |section_name, table|
+  response_section = extract_response_section(@response, @api_version, section_name)
 
   failures = []
   table.hashes.each do |row|
-    failures.append valid_or_message unless validate_response(response_section[row["attribute"]], row["value"])
+    error = validate_response(response_section[row["attribute"]], row["value"], row["attribute"])
+    failures.append(error) if error.present?
   end
 
   if failures.any?
     failures.append "\n----\nSelected response being validated: #{response_section.to_json}\n----\n"
   end
 
-  print_failures(failures)
+  raise_if_present(failures)
 end

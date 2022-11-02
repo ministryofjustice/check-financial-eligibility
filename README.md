@@ -160,13 +160,11 @@ the named worksheet using the `-w` command line switch.
 
 We are beginning the process of transitioning from "ispec" to cucumber. During the transition we have tests defined in both formats. Newer tests are written as cucumber features in the `features` folder.
 
-To run them, ensure you have an instance of rails server running locally. Then run:
+Run them with:
 
 ```
 bundle exec cucumber
 ```
-
-For convenience, we've also introduced git abstracted scripts for Windows based non-dev users. These can be found in the features folder. You will need to setup the `CUCUMBER_REPO_PATH` environment variable to get these scripts working. The name of the file describes the interaction it will perform. For example, save.bat is short for creating a branch, committing and pushing to Github repo.
 
 ## Replaying live API interactions for debugging purposes
 

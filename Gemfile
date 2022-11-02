@@ -73,9 +73,6 @@ group :development, :test do
   gem "faker"
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: %i[mri mingw x64_mingw]
-  gem "capybara", "~> 3.36", ">= 3.36.0"
-  gem "capybara-mechanize", "~> 1.12", ">= 1.12.1"
-  gem "cucumber-rails", "~> 2.5", ">= 2.5.1", require: false
   gem "pry-byebug"
   gem "rspec_junit_formatter"
   gem "rspec-rails", "~> 6.0"
@@ -97,6 +94,7 @@ group :development do
 end
 
 group :test do
+  gem "cucumber-rails", require: false
   gem "database_cleaner"
   gem "shoulda-matchers"
   gem "simplecov", require: false
