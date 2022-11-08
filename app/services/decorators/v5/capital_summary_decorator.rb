@@ -29,6 +29,7 @@ module Decorators
           total_mortgage_allowance: @record.total_mortgage_allowance,
           total_capital: @record.total_capital,
           pensioner_capital_disregard: @record.pensioner_capital_disregard,
+          subject_matter_of_dispute_disregard: @record.subject_matter_of_dispute_disregard,
           assessed_capital: @record.assessed_capital,
           lower_threshold: @record.eligibilities.first.lower_threshold,
           upper_threshold: @record.eligibilities.first.upper_threshold,

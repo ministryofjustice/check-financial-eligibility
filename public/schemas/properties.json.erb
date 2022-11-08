@@ -24,6 +24,10 @@
             },
             "shared_with_housing_assoc": {
               "type": "boolean"
+            },
+            "subject_matter_of_dispute": {
+              "description": "Whether this property is the subject of a dispute",
+              "type": "boolean"
             }
           }
         },
@@ -43,6 +47,10 @@
                 "$ref": "<%= "file://#{@schema_dir}/common.json#currency" %>"
               },
               "shared_with_housing_assoc": {
+                "type": "boolean"
+              },
+              "subject_matter_of_dispute": {
+                "description": "Whether this property is the subject of a dispute",
                 "type": "boolean"
               }
             }

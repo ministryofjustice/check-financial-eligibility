@@ -14,6 +14,7 @@ module Decorators
           total_mortgage_allowance: summary.total_mortgage_allowance.to_f,
           total_capital: summary.total_capital.to_f,
           pensioner_capital_disregard: summary.pensioner_capital_disregard.to_f,
+          subject_matter_of_dispute_disregard: summary.subject_matter_of_dispute_disregard.to_f,
           capital_contribution: summary.capital_contribution.to_f,
           assessed_capital: summary.assessed_capital.to_f,
           proceeding_types: ProceedingTypesResultDecorator.new(summary).as_json,

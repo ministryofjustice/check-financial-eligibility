@@ -12,6 +12,8 @@ module Creators
     let(:item1) { Faker::Appliance.equipment }
     let(:value1) { BigDecimal(Faker::Number.decimal(r_digits: 2), 2) }
     let(:value2) { BigDecimal(Faker::Number.decimal(r_digits: 2), 2) }
+    let(:smod_true) { true }
+    let(:smod_false) { false }
 
     subject(:creator) do
       described_class.call(
@@ -45,8 +47,10 @@ module Creators
 
           expect(items.first.description).to eq bank_name1
           expect(items.first.value).to eq value1
+          expect(items.first.subject_matter_of_dispute).to eq smod_true
           expect(items.last.description).to eq bank_name2
           expect(items.last.value).to eq value2
+          expect(items.last.subject_matter_of_dispute).to eq smod_false
         end
 
         it "does not create non-liquid capital items" do
@@ -64,6 +68,7 @@ module Creators
           expect(capital_summary.non_liquid_capital_items.size).to eq 1
           expect(capital_summary.non_liquid_capital_items.first.description).to eq item1
           expect(capital_summary.non_liquid_capital_items.first.value).to eq value1
+          expect(capital_summary.non_liquid_capital_items.first.subject_matter_of_dispute).to eq smod_true
         end
       end
 
@@ -105,10 +110,12 @@ module Creators
           {
             description: bank_name1,
             value: value1,
+            subject_matter_of_dispute: smod_true,
           },
           {
             description: bank_name2,
             value: value2,
+            subject_matter_of_dispute: smod_false,
           },
         ],
       }
@@ -120,6 +127,7 @@ module Creators
           {
             description: item1,
             value: value1,
+            subject_matter_of_dispute: smod_true,
           },
         ],
       }

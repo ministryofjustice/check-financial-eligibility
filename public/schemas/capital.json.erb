@@ -16,6 +16,10 @@
           },
           "value": {
             "$ref": "<%= "file://#{@schema_dir}/common.json#currency" %>"
+          },
+          "subject_matter_of_dispute": {
+            "description": "Whether the contents of this bank account are the subject of a dispute",
+            "type": "boolean"
           }
         },
         "additionalProperties": false,
@@ -37,6 +41,10 @@
           },
           "value": {
             "$ref": "<%= "file://#{@schema_dir}/common.json#positive_currency" %>"
+          },
+          "subject_matter_of_dispute": {
+            "description": "Whether the item is the subject of a dispute",
+            "type": "boolean"
           }
         },
         "additionalProperties": false,
