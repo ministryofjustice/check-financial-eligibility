@@ -158,7 +158,7 @@ the named worksheet using the `-w` command line switch.
 
 ## Integration tests (cucumber)
 
-We are beginning the process of transitioning from "ispec" to cucumber. During the transition we have tests defined in both formats. Newer tests are written as cucumber features in the `features` folder.
+We are exploring the use of cucumber for feature tests, in particular to document features added for the "[EFE](https://github.com/ministryofjustice/laa-estimate-financial-eligibility-for-legal-aid)" client. These cucumber tests are to be found in the `features` folder.
 
 Run them with:
 
