@@ -6,11 +6,11 @@ default: &default
 
 development:
   <<: *default
-  database: check_financial_eligibility_development
+  database: check_financial_eligibility_partner_development
 
 test:
   <<: *default
-  database: check_financial_eligibility_test
+  database: check_financial_eligibility_partner_test
 
 production:
   <<: *default
