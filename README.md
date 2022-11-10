@@ -2,6 +2,9 @@
 
 # Ministry of Justice
 
+## This is a fork of Check Financial Eligibility API
+
+The fork is to allow the Estimate Eligibility team to add partner functionality without impacting other users of the API. The intention is to merge this fork back into the main service at a later date.
 
 ## Legal Aid Financial Eligibility check API
 
