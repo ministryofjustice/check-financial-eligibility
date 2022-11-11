@@ -81,3 +81,12 @@ Rails/BulkChangeTable:
 Rake/DuplicateTask:
   Exclude:
     - 'Rakefile'
+    - 'lib/tasks/cucumber.rake'
+
+Rails/FilePath:
+  Exclude:
+    - 'lib/tasks/cucumber.rake'
+
+Rake/Desc:
+  Exclude:
+    - 'lib/tasks/cucumber.rake'

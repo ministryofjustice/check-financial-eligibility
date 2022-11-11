@@ -168,6 +168,22 @@ jobs:
       - store_artifacts:
           path: ./coverage
 
+  integration_tests:
+    executor: test-executor
+    steps:
+      - checkout
+      - *install_packages_for_testing
+      - *restore_gems_cache
+      - *install_gems
+      - *save_gems_cache
+      - *setup_database
+      - run:
+          name: Run cucumber tests
+          command: |
+            bundle exec cucumber --format html --out report.html --format pretty
+      - store_artifacts:
+          path: ./report.html
+
   check_swagger:
     executor: test-executor
     steps:
@@ -286,6 +302,11 @@ workflows:
               ignore: main
           <<: *generic-slack-fail-post-step
       - unit_tests:
+          filters:
+            branches:
+              ignore: main
+          <<: *generic-slack-fail-post-step
+      - integration_tests:
           filters:
             branches:
               ignore: main

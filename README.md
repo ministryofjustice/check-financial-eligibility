@@ -159,6 +159,16 @@ options:
 Each worksheet has an entry `Test Active` which can be either true or false.  If set to false, the worksheet will be skipped, unless it is
 the named worksheet using the `-w` command line switch.
 
+## Integration tests (cucumber)
+
+We are exploring the use of cucumber for feature tests, in particular to document features added for the "[EFE](https://github.com/ministryofjustice/laa-estimate-financial-eligibility-for-legal-aid)" client. These cucumber tests are to be found in the `features` folder.
+
+Run them with:
+
+```
+bundle exec cucumber
+```
+
 ## Replaying live API interactions for debugging purposes
 
 In the event that you need to investigate why a CFE result was produced on live, there is
