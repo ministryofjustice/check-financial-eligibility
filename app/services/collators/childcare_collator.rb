@@ -1,9 +1,23 @@
 module Collators
-  class ChildcareCollator < BaseWorkflowService
+  class ChildcareCollator
     include Transactions
 
+    class << self
+      def call(submission_date:, disposable_income_summary:, dependants:, gross_income_summary:, person:)
+        new(submission_date:, disposable_income_summary:, dependants:, gross_income_summary:, person:).call
+      end
+    end
+
+    def initialize(submission_date:, disposable_income_summary:, dependants:, gross_income_summary:, person:)
+      @submission_date = submission_date
+      @disposable_income_summary = disposable_income_summary
+      @dependants = dependants
+      @gross_income_summary = gross_income_summary
+      @person = person
+    end
+
     def call
-      disposable_income_summary.calculate_monthly_childcare_amount!(eligible_for_childcare_costs?, monthly_child_care_cash)
+      @disposable_income_summary.calculate_monthly_childcare_amount!(eligible_for_childcare_costs?, monthly_child_care_cash)
     end
 
   private
@@ -13,21 +27,21 @@ module Collators
     end
 
     def monthly_child_care_cash
-      monthly_cash_transaction_amount_by(operation: :debit, category: :child_care)
+      monthly_cash_transaction_amount_by(gross_income_summary: @gross_income_summary, operation: :debit, category: :child_care)
     end
 
     def applicant_has_dependant_child?
-      assessment.dependants.any? do |dependant|
-        assessment.submission_date.before?(dependant.becomes_adult_on)
+      @dependants.any? do |dependant|
+        @submission_date.before?(dependant.becomes_adult_on)
       end
     end
 
     def applicant_is_employed?
-      !!applicant&.employed?
+      !!@person&.employed?
     end
 
     def applicant_has_student_loan?
-      student_loan_payments.any?
+      @gross_income_summary.student_loan_payments.any?
     end
   end
 end

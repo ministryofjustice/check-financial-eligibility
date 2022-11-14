@@ -5,7 +5,7 @@ RSpec.describe Collators::RegularIncomeCollator do
   let(:gross_income_summary) { assessment.gross_income_summary }
 
   describe ".call" do
-    subject(:collator) { described_class.call(assessment) }
+    subject(:collator) { described_class.call(gross_income_summary) }
 
     context "without regular transactions" do
       it "does not increment #<cagtegory>_all_sources data" do

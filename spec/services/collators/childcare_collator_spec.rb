@@ -8,7 +8,13 @@ module Collators
       let(:gross_income_summary) { assessment.gross_income_summary }
       let(:target_time) { Date.current }
 
-      subject(:collator) { described_class.call(assessment) }
+      subject(:collator) do
+        described_class.call(submission_date: assessment.submission_date,
+                             dependants: assessment.dependants,
+                             person: assessment.applicant,
+                             gross_income_summary: assessment.gross_income_summary,
+                             disposable_income_summary: assessment.disposable_income_summary)
+      end
 
       before do
         travel_to target_time

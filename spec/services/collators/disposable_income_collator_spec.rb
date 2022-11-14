@@ -48,7 +48,10 @@ module Collators
     before { create :gross_income_summary, :with_all_records, assessment: }
 
     describe ".call" do
-      subject(:collator) { described_class.call(assessment) }
+      subject(:collator) do
+        described_class.call(gross_income_summary: assessment.gross_income_summary,
+                             disposable_income_summary: assessment.disposable_income_summary)
+      end
 
       context "total_monthly_outgoings" do
         it "sums childcare, legal_aid, maintenance, net housing costs and allowances" do

@@ -6,7 +6,10 @@ module Assessors
     let(:gross_income_summary) { assessment.gross_income_summary }
 
     describe ".call" do
-      subject(:assessor) { described_class.call(assessment) }
+      subject(:assessor) do
+        described_class.call(eligibilities: gross_income_summary.eligibilities,
+                             total_gross_income: gross_income_summary.total_gross_income)
+      end
 
       context "gross income has been summarised" do
         context "monthly income below upper threshold" do

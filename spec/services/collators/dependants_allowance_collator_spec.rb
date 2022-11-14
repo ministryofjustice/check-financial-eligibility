@@ -5,7 +5,10 @@ module Collators
     let(:assessment) { create :assessment, :with_disposable_income_summary }
     let(:disposable_income_summary) { assessment.disposable_income_summary }
 
-    subject(:collator) { described_class.call(assessment) }
+    subject(:collator) do
+      described_class.call(dependants: assessment.dependants,
+                           disposable_income_summary: assessment.disposable_income_summary)
+    end
 
     describe ".call" do
       context "no dependants" do

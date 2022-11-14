@@ -9,7 +9,12 @@ module Collators
       let(:disposable_income_summary) { assessment.disposable_income_summary }
       let(:gross_income_summary) { assessment.gross_income_summary }
 
-      subject(:collator) { described_class.call(assessment) }
+      subject(:collator) do
+        described_class.call(disposable_income_summary: assessment.disposable_income_summary,
+                             gross_income_summary: assessment.gross_income_summary,
+                             submission_date: assessment.submission_date,
+                             dependants: assessment.dependants)
+      end
 
       context "with no housing cost outgoings" do
         context "without housing benefit" do
