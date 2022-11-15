@@ -72,8 +72,6 @@ RSpec.configure do |config|
   config.include RequestHelpers, type: :request
   config.include ActiveSupport::Testing::TimeHelpers
 
-  # Allow apipie recording for API documentation
-  config.filter_run show_in_doc: true if ENV["APIPIE_RECORD"]
   config.before(:suite) do
     Faker::Config.locale = "en-GB"
     DatabaseCleaner.clean_with :truncation
@@ -110,5 +108,12 @@ def deep_match(actual, expected)
   expect(actual.keys.sort).to eq expected.keys.sort
   actual.each do |key, ids|
     expect(ids).to match_array(expected[key])
+  end
+end
+
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    with.test_framework :rspec
+    with.library :rails
   end
 end
