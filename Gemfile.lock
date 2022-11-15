@@ -206,9 +206,6 @@ GEM
     marcel (1.0.2)
     memoist (0.16.2)
     method_source (1.0.0)
-    mimemagic (0.4.3)
-      nokogiri (~> 1)
-      rake
     mini_mime (1.1.2)
     mini_portile2 (2.8.0)
     minitest (5.16.3)
@@ -257,8 +254,6 @@ GEM
       nio4r (~> 2.0)
     racc (1.6.0)
     rack (2.2.4)
-    rack-proxy (0.7.4)
-      rack
     rack-test (2.0.2)
       rack (>= 1.3)
     rails (7.0.4)
@@ -367,7 +362,6 @@ GEM
     ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
-    semantic_range (3.0.0)
     sentry-rails (5.6.0)
       railties (>= 5.0)
       sentry-ruby (~> 5.6.0)
@@ -409,11 +403,6 @@ GEM
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
-    webpacker (5.4.3)
-      activesupport (>= 5.2)
-      rack-proxy (>= 0.6.1)
-      railties (>= 5.2)
-      semantic_range (>= 2.3.0)
     webrick (1.7.0)
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
@@ -443,7 +432,6 @@ DEPENDENCIES
   guard-rubocop
   json-schema (~> 3.0.0)
   listen (>= 3.0.5, < 3.8)
-  mimemagic (>= 0.4.3)
   nesty
   net-imap
   net-pop
@@ -473,7 +461,6 @@ DEPENDENCIES
   tzinfo-data
   vcr
   webmock (>= 3.13.0)
-  webpacker (~> 5, >= 5.4.3)
 
 RUBY VERSION
    ruby 3.1.2p20
