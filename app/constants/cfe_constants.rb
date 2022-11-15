@@ -6,7 +6,7 @@ module CFEConstants
 
   # Valid CCMS Codes for proceeding types - probably need to get this from LFA in future
   #
-  VALID_PROCEEDING_TYPE_CCMS_CODES = %i[DA001 DA002 DA003 DA004 DA005 DA006 DA007 DA020 SE003 SE004 SE013 SE014].freeze
+  VALID_PROCEEDING_TYPE_CCMS_CODES = %i[DA001 DA002 DA003 DA004 DA005 DA006 DA007 DA020 SE003 SE007 SE004 SE013 SE014].freeze
 
   # Income categories
   #
