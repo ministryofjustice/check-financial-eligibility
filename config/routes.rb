@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     resources :employments, only: [:create]
     resources :proceeding_types, only: [:create]
     resources :regular_transactions, only: [:create]
+    resources :partner_financials, only: [:create]
   end
   resources :state_benefit_type, only: [:index]
 

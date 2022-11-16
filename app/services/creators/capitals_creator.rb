@@ -1,11 +1,10 @@
 module Creators
   class CapitalsCreator < BaseCreator
-    delegate :capital_summary, to: :assessment
-
-    def initialize(assessment_id:, capital_params:)
+    def initialize(assessment_id:, capital_params:, capital_summary: nil)
       super()
       @assessment_id = assessment_id
       @capital_params = capital_params
+      @explicit_capital_summary = capital_summary
     end
 
     def call
@@ -15,6 +14,10 @@ module Creators
         errors.concat(json_validator.errors)
       end
       self
+    end
+
+    def capital_summary
+      @explicit_capital_summary || assessment.capital_summary
     end
 
   private

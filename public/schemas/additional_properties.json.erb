@@ -1,0 +1,28 @@
+{
+  "id": "<%= "file://#{@schema_dir}/additional_properties.json" %>",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Legal Aid Check Financial Eligibility create additional properties payload schema",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["value", "outstanding_mortgage", "percentage_owned", "shared_with_housing_assoc"],
+    "properties": {
+      "value": {
+        "$ref": "<%= "file://#{@schema_dir}/common.json#currency" %>"
+      },
+      "outstanding_mortgage": {
+        "$ref": "<%= "file://#{@schema_dir}/common.json#positive_currency" %>"
+      },
+      "percentage_owned": {
+        "$ref": "<%= "file://#{@schema_dir}/common.json#currency" %>"
+      },
+      "shared_with_housing_assoc": {
+        "type": "boolean"
+      },
+      "subject_matter_of_dispute": {
+        "description": "Whether this property is the subject of a dispute",
+        "type": "boolean"
+      }
+    }
+  }
+}

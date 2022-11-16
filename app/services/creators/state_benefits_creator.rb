@@ -2,15 +2,14 @@ module Creators
   class StateBenefitsCreator < BaseCreator
     attr_accessor :assessment_id
 
-    delegate :gross_income_summary, to: :assessment
-
     attr_reader :result
 
-    def initialize(assessment_id:, state_benefits_params:)
+    def initialize(assessment_id:, state_benefits_params:, gross_income_summary: nil)
       super()
       @assessment_id = assessment_id
       @state_benefits_params = state_benefits_params
       @result = []
+      @explicit_gross_income_summary = gross_income_summary
     end
 
     def call
@@ -68,6 +67,10 @@ module Creators
 
     def json_validator
       @json_validator ||= JsonValidator.new("state_benefits", @state_benefits_params)
+    end
+
+    def gross_income_summary
+      @explicit_gross_income_summary || assessment.gross_income_summary
     end
   end
 end

@@ -1,0 +1,87 @@
+{
+  "partner": {
+    "date_of_birth": "1992-07-22",
+    "employed": true
+  },
+  "irregular_incomes": [
+    {
+      "income_type": "student_loan",
+      "frequency": "annual",
+      "amount": 101.01
+    }
+  ],
+  "employments": [
+    {
+      "name": "A",
+      "client_id": "B",
+      "payments": [
+        {
+          "client_id": "C",
+          "date": "1992-07-22",
+          "gross": 101.01,
+          "benefits_in_kind": 0,
+          "tax": 11,
+          "national_insurance": 3,
+          "net_employment_income": 87.01
+        }
+      ]
+    }
+  ],
+  "regular_transactions": [
+    {
+      "category": "benefits",
+      "operation": "credit",
+      "frequency": "three_monthly",
+      "amount": 101.01
+    }
+  ],
+  "state_benefits": [
+    {
+      "name": "D",
+      "payments": [
+        {
+          "client_id": "E",
+          "date": "1992-07-22",
+          "amount": 101.01,
+          "flags": {
+            "multi_benefit": false
+          }
+        }
+      ]
+    }
+  ],
+  "additional_properties": [
+    {
+      "value": 500000.01,
+      "outstanding_mortgage": 999.99,
+      "percentage_owned": 100,
+      "shared_with_housing_assoc": false,
+      "subject_matter_of_dispute": false
+    }
+  ],
+  "capital_items": {
+    "bank_accounts": [
+      {
+        "value": 1.01,
+        "description": "F",
+        "subject_matter_of_dispute": false
+      }
+    ],
+    "non_liquid_capital": [
+      {
+        "value": 1.01,
+        "description": "G",
+        "subject_matter_of_dispute": false
+      }
+    ]
+  },
+  "vehicles": [
+    {
+      "value": 5000,
+      "loan_amount_outstanding": 1000,
+      "date_of_purchase": "2017-01-23",
+      "in_regular_use": true,
+      "subject_matter_of_dispute": false
+    }
+  ]
+}

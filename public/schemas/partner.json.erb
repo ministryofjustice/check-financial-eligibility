@@ -1,0 +1,14 @@
+{
+  "id": "file://#{@schema_dir}/partner_financials.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Legal Aid Check Financial Eligibility create partner financials payload schema",
+  "required": ["date_of_birth", "employed"],
+  "properties": {
+    "date_of_birth": {
+      "type": "string"
+    },
+    "employed": {
+      "type": "boolean"
+    }
+  }
+}

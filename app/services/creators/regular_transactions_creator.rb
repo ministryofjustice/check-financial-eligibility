@@ -2,12 +2,11 @@ module Creators
   class RegularTransactionsCreator < BaseCreator
     attr_accessor :assessment_id
 
-    delegate :gross_income_summary, to: :assessment
-
-    def initialize(assessment_id:, regular_transaction_params: [])
+    def initialize(assessment_id:, regular_transaction_params: [], gross_income_summary: nil)
       super()
       @assessment_id = assessment_id
       @regular_transaction_params = regular_transaction_params
+      @explicit_gross_income_summary = gross_income_summary
     end
 
     def call
@@ -50,6 +49,10 @@ module Creators
 
     def json_validator
       @json_validator ||= JsonValidator.new("regular_transactions", @regular_transaction_params)
+    end
+
+    def gross_income_summary
+      @explicit_gross_income_summary || assessment.gross_income_summary
     end
   end
 end

@@ -1,9 +1,10 @@
 module Creators
   class EmploymentsCreator < BaseCreator
-    def initialize(assessment_id:, employments_params:)
+    def initialize(assessment_id:, employments_params:, employment_collection: nil)
       super()
       @assessment_id = assessment_id
       @employments_params = employments_params
+      @explicit_employment_collection = employment_collection
     end
 
     def call
@@ -35,29 +36,25 @@ module Creators
     end
 
     def create_employment
-      employment_attributes[:employment_income].each do |employment|
-        @assessment.employments.create!(assessment_id: @assessment_id,
-                                        name: employment[:name],
-                                        client_id: employment[:client_id])
-        create_payments(employment)
+      employment_attributes[:employment_income].each do |attributes|
+        employment = employment_collection.create!(attributes.slice(:name, :client_id))
+        create_payments(employment, attributes)
       end
     end
 
-    def create_payments(employment)
-      employment[:payments].each do |income|
-        emp = Employment.find_by(assessment_id: @assessment_id, name: employment[:name])
-        emp.employment_payments.create!(employment_id: emp.id,
-                                        client_id: income[:client_id],
-                                        date: income[:date],
-                                        gross_income: income[:gross],
-                                        benefits_in_kind: income[:benefits_in_kind],
-                                        tax: income[:tax],
-                                        national_insurance: income[:national_insurance])
+    def create_payments(employment, attributes)
+      attributes[:payments].each do |income|
+        employment.employment_payments.create!(client_id: income[:client_id],
+                                               date: income[:date],
+                                               gross_income: income[:gross],
+                                               benefits_in_kind: income[:benefits_in_kind],
+                                               tax: income[:tax],
+                                               national_insurance: income[:national_insurance])
       end
     end
 
-    def assessment
-      @assessment ||= Assessment.find_by(id: @assessment_id) || (raise CreationError, ["No such assessment id"])
+    def employment_collection
+      @explicit_employment_collection || assessment.employments
     end
   end
 end

@@ -2,10 +2,11 @@ module Creators
   class VehicleCreator < BaseCreator
     attr_accessor :assessment_id, :vehicles
 
-    def initialize(assessment_id:, vehicles_params:)
+    def initialize(assessment_id:, vehicles_params:, capital_summary: nil)
       super()
       @assessment_id = assessment_id
       @vehicles_params = vehicles_params
+      @explicit_capital_summary = capital_summary
     end
 
     def call
@@ -31,20 +32,16 @@ module Creators
       raise CreationError, e.record.errors.full_messages
     end
 
-    def assessment
-      @assessment ||= Assessment.find_by(id: assessment_id) || (raise CreationError, ["No such assessment id"])
-    end
-
-    def capital_summary
-      @capital_summary ||= assessment.capital_summary
-    end
-
     def vehicles_attributes
       @vehicles_attributes ||= JSON.parse(@vehicles_params, symbolize_names: true)[:vehicles]
     end
 
     def json_validator
       @json_validator ||= JsonValidator.new("vehicles", @vehicles_params)
+    end
+
+    def capital_summary
+      @explicit_capital_summary || assessment.capital_summary
     end
   end
 end
