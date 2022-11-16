@@ -1,0 +1,1 @@
+class ApplicantEmployment < Employment; end

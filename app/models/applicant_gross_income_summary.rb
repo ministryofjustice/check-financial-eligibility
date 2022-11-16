@@ -1,0 +1,1 @@
+class ApplicantGrossIncomeSummary < GrossIncomeSummary; end

@@ -23,10 +23,10 @@ module Decorators
       end
 
       def proceeding_types
-        case @assessment_or_summary.class.to_s
-        when "Assessment"
+        case @assessment_or_summary
+        when Assessment
           @assessment_or_summary.proceeding_types
-        when "DisposableIncomeSummary", "GrossIncomeSummary", "CapitalSummary"
+        when DisposableIncomeSummary, GrossIncomeSummary, CapitalSummary
           @assessment_or_summary.assessment.proceeding_types
         end
       end

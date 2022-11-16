@@ -9,9 +9,14 @@ class Assessment < ApplicationRecord
   validates :version, inclusion: { in: CFEConstants::VALID_ASSESSMENT_VERSIONS, message: "not valid in Accept header" }
 
   has_one :applicant, dependent: :destroy
-  has_one :capital_summary, dependent: :destroy
-  has_one :gross_income_summary, dependent: :destroy
-  has_one :disposable_income_summary, dependent: :destroy
+  has_one :capital_summary, dependent: :destroy, class_name: "ApplicantCapitalSummary"
+  has_one :gross_income_summary, dependent: :destroy, class_name: "ApplicantGrossIncomeSummary"
+  has_one :disposable_income_summary, dependent: :destroy, class_name: "ApplicantDisposableIncomeSummary"
+
+  has_one :partner, dependent: :destroy
+  has_one :partner_capital_summary, dependent: :destroy
+  has_one :partner_gross_income_summary, dependent: :destroy
+  has_one :partner_disposable_income_summary, dependent: :destroy
 
   has_many :dependants, dependent: :destroy
   has_many :properties, through: :capital_summary, dependent: :destroy
@@ -19,7 +24,8 @@ class Assessment < ApplicationRecord
   has_many :capital_items, through: :capital_summary, dependent: :destroy
   has_many :assessment_errors, dependent: :destroy
   has_many :explicit_remarks, dependent: :destroy
-  has_many :employments, dependent: :destroy
+  has_many :employments, dependent: :destroy, class_name: "ApplicantEmployment"
+  has_many :partner_employments, dependent: :destroy
   has_many :eligibilities,
            class_name: "Eligibility::Assessment",
            foreign_key: :parent_id,

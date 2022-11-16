@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_27_150350) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_14_092809) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -82,6 +82,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_27_150350) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.decimal "subject_matter_of_dispute_disregard", default: "0.0", null: false
+    t.string "type", default: "ApplicantCapitalSummary"
     t.index ["assessment_id"], name: "index_capital_summaries_on_assessment_id"
   end
 
@@ -147,6 +148,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_27_150350) do
     t.decimal "fixed_employment_allowance", default: "0.0", null: false
     t.decimal "tax", default: "0.0", null: false
     t.decimal "national_insurance", default: "0.0", null: false
+    t.string "type", default: "ApplicantDisposableIncomeSummary"
     t.index ["assessment_id"], name: "index_disposable_income_summaries_on_assessment_id"
   end
 
@@ -189,6 +191,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_27_150350) do
     t.decimal "monthly_national_insurance", default: "0.0", null: false
     t.string "client_id", null: false
     t.string "calculation_method"
+    t.string "type", default: "ApplicantEmployment"
     t.index ["assessment_id"], name: "index_employments_on_assessment_id"
   end
 
@@ -231,6 +234,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_27_150350) do
     t.decimal "benefits_in_kind", default: "0.0", null: false
     t.decimal "unspecified_source", default: "0.0"
     t.decimal "monthly_unspecified_source"
+    t.string "type", default: "ApplicantGrossIncomeSummary"
     t.index ["assessment_id"], name: "index_gross_income_summaries_on_assessment_id"
   end
 
@@ -276,6 +280,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_27_150350) do
     t.datetime "updated_at", null: false
     t.string "client_id"
     t.index ["disposable_income_summary_id"], name: "index_outgoings_on_disposable_income_summary_id"
+  end
+
+  create_table "partners", force: :cascade do |t|
+    t.uuid "assessment_id", null: false
+    t.date "date_of_birth"
+    t.boolean "employed"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["assessment_id"], name: "index_partners_on_assessment_id"
   end
 
   create_table "proceeding_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -395,6 +408,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_27_150350) do
   add_foreign_key "other_income_payments", "other_income_sources"
   add_foreign_key "other_income_sources", "gross_income_summaries"
   add_foreign_key "outgoings", "disposable_income_summaries"
+  add_foreign_key "partners", "assessments"
   add_foreign_key "proceeding_types", "assessments"
   add_foreign_key "properties", "capital_summaries"
   add_foreign_key "regular_transactions", "gross_income_summaries"

@@ -100,7 +100,7 @@ module Creators
 
       it "returns the created capital summary record" do
         result = creator.capital_summary
-        expect(result).to be_instance_of(CapitalSummary)
+        expect(result).to be_a(CapitalSummary)
       end
     end
 

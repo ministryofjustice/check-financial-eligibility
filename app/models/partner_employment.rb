@@ -1,0 +1,1 @@
+class PartnerEmployment < Employment; end
