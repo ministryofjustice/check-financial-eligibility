@@ -49,7 +49,7 @@ RSpec.describe "IntegrationTests::TestRunner", type: :request do
         end
         expect(failing_tests).to be_empty, "Failing tests: #{failing_tests.join(', ')}"
       end
-    else
+    elsif ENV["PRIVATE_KEY_ID"].present?
       TestCase::GroupRunner.new(0, "false").each do |worksheet|
         next if worksheet.skippable?
 
