@@ -2,8 +2,6 @@ module Collators
   class DisposableIncomeCollator
     include Transactions
 
-    attr_reader :monthly_cash_transactions_total
-
     delegate :net_housing_costs,
              :rent_or_mortgage_bank,
              :rent_or_mortgage_cash,
@@ -74,7 +72,7 @@ module Collators
       net_housing_costs +
         dependant_allowance +
         monthly_bank_transactions_total +
-        monthly_cash_transactions_total -
+        @monthly_cash_transactions_total -
         fixed_employment_allowance -
         employment_income_deductions
     end

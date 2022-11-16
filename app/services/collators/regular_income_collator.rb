@@ -41,7 +41,7 @@ module Collators
 
       income_categories.each do |category|
         category_all_sources = "#{category}_all_sources".to_sym
-        category_monthly_amount = monthly_regular_transaction_amount_by(operation: :credit, category:)
+        category_monthly_amount = monthly_regular_transaction_amount_by(gross_income_summary: @gross_income_summary, operation: :credit, category:)
 
         attrs[category_all_sources] += category_monthly_amount
         attrs[:total_gross_income] += category_monthly_amount

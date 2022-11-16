@@ -5,5 +5,10 @@ FactoryBot.define do
     operation { "credit" }
     frequency { "four_weekly" }
     amount { "9.99" }
+
+    factory :housing_cost do
+      category { "rent_or_mortgage" }
+      operation { "debit" }
+    end
   end
 end

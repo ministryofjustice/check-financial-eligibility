@@ -1,26 +1,35 @@
 module Assessors
-  class DisposableIncomeAssessor < BaseWorkflowService
-    delegate :total_disposable_income, :eligibilities, to: :disposable_income_summary
+  class DisposableIncomeAssessor
+    class << self
+      def call(total_disposable_income:, disposable_income_summary:)
+        new(total_disposable_income:, disposable_income_summary:).call
+      end
+    end
+
+    def initialize(total_disposable_income:, disposable_income_summary:)
+      @total_disposable_income = total_disposable_income
+      @disposable_income_summary = disposable_income_summary
+    end
 
     def call
       ActiveRecord::Base.transaction do
         update_eligibility_records
-        disposable_income_summary.update!(income_contribution:)
+        @disposable_income_summary.update!(income_contribution:)
       end
     end
 
   private
 
     def update_eligibility_records
-      eligibilities.each do |elig|
+      @disposable_income_summary.eligibilities.each do |elig|
         elig.update!(assessment_result: assessment_result(elig))
       end
     end
 
     def assessment_result(elig)
-      if total_disposable_income <= elig.lower_threshold
+      if @total_disposable_income <= elig.lower_threshold
         "eligible"
-      elsif total_disposable_income <= elig.upper_threshold
+      elsif @total_disposable_income <= elig.upper_threshold
         "contribution_required"
       else
         "ineligible"
@@ -32,11 +41,11 @@ module Assessors
     end
 
     def calculate_contribution
-      Calculators::IncomeContributionCalculator.call(total_disposable_income)
+      Calculators::IncomeContributionCalculator.call(@total_disposable_income)
     end
 
     def contribution_required?
-      eligibilities.map(&:assessment_result).include?("contribution_required")
+      @disposable_income_summary.eligibilities.map(&:assessment_result).include?("contribution_required")
     end
   end
 end

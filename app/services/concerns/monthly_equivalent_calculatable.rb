@@ -36,7 +36,7 @@ private
       unknown: :blunt_average }.with_indifferent_access
   end
 
-  def monthly_regular_transaction_amount_by(operation:, category:)
+  def monthly_regular_transaction_amount_by(gross_income_summary:, operation:, category:)
     transactions = gross_income_summary.regular_transactions.where(operation:).where(category:)
 
     all_monthly_amounts = transactions.each_with_object([]) do |transaction, amounts|

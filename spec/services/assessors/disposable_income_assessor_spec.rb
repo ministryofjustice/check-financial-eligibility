@@ -14,7 +14,12 @@ module Assessors
                upper_threshold:
       end
 
-      subject(:assessor) { described_class.call(assessment) }
+      subject(:assessor) do
+        described_class.call(
+          total_disposable_income: assessment.disposable_income_summary.total_disposable_income,
+          disposable_income_summary: assessment.disposable_income_summary,
+        )
+      end
 
       context "disposable income below lower threshold" do
         let(:total_disposable_income) { 310.0 }

@@ -1,25 +1,35 @@
 module Collators
   class OutgoingsCollator
     class << self
-      def call(submission_date:, dependants:, person:, gross_income_summary:, disposable_income_summary:)
-        collate_costs_and_allowances submission_date:, dependants:, person:, gross_income_summary:, disposable_income_summary:
+      def call(submission_date:, person:, gross_income_summary:, disposable_income_summary:)
+        collate_costs_and_allowances submission_date:, person:,
+                                     gross_income_summary:, disposable_income_summary:
       end
 
     private
 
-      def collate_costs_and_allowances(submission_date:, dependants:, person:, gross_income_summary:, disposable_income_summary:)
+      def collate_costs_and_allowances(submission_date:, person:,
+                                       gross_income_summary:, disposable_income_summary:)
+        # sets child_care_bank and child_care_cash fields in disposable_income_summary
         Collators::ChildcareCollator.call(submission_date:,
-                                          dependants:,
                                           person:,
                                           gross_income_summary:,
                                           disposable_income_summary:)
-        Collators::DependantsAllowanceCollator.call(dependants:,
+        # sets dependant_allowance on each dependant,
+        # and dependant_allowance on disposable_income_summary as the sum of them
+        Collators::DependantsAllowanceCollator.call(dependants: person.dependants,
                                                     disposable_income_summary:)
+        # sets maintenance_out_bank on disposable_income_summary
         Collators::MaintenanceCollator.call(disposable_income_summary)
+
+        # sets housing_benefit, gross_housing_costs, net_housing_costs
+        # on disposable_income_summary
+        # also sets rent_or_mortgage_bank via HousingCostsCalculator
         Collators::HousingCostsCollator.call(disposable_income_summary:,
                                              gross_income_summary:,
-                                             dependants:,
+                                             person:,
                                              submission_date:)
+        # sets legal_aid_bank on disposable_income_summary
         Collators::LegalAidCollator.call(disposable_income_summary)
       end
     end
