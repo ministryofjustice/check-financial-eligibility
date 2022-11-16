@@ -5,7 +5,7 @@ module Calculators
     let(:assessment) { create :assessment, :with_capital_summary, submission_date: }
     let(:capital_summary) { assessment.capital_summary }
     let(:submission_date) { Time.zone.local(2020, 10, 10) }
-    let(:service) { described_class.new(assessment) }
+    let(:service) { described_class.new(submission_date: assessment.submission_date, capital_summary: assessment.capital_summary) }
 
     describe "#call" do
       context "no properties" do

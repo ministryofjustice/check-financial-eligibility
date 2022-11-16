@@ -4,7 +4,6 @@ module Assessors
   RSpec.describe VehicleAssessor do
     let(:assessment) { create :assessment, :with_capital_summary }
     let(:capital_summary) { assessment.capital_summary }
-    let(:service) { described_class.new(assessment) }
     let!(:vehicle) do
       create :vehicle,
              capital_summary:,
@@ -15,7 +14,7 @@ module Assessors
     end
 
     before do
-      service.call
+      described_class.call capital_summary.vehicles
       vehicle.reload
     end
 

@@ -1,6 +1,11 @@
 module Calculators
-  class PensionerCapitalDisregardCalculator < BaseWorkflowService
-    delegate :applicant, to: :assessment
+  class PensionerCapitalDisregardCalculator
+    def initialize(submission_date:, person:, total_disposable_income:, receives_qualifying_benefit:)
+      @submission_date = submission_date
+      @person = person
+      @total_disposable_income = total_disposable_income
+      @receives_qualifying_benefit = receives_qualifying_benefit
+    end
 
     def value
       return 0 unless pensioner?
@@ -9,33 +14,33 @@ module Calculators
     end
 
     def thresholds
-      @thresholds ||= Threshold.value_for(:pensioner_capital_disregard, at: submission_date)
+      @thresholds ||= Threshold.value_for(:pensioner_capital_disregard, at: @submission_date)
     end
 
   private
 
     def pensioner?
-      earliest_dob_for_pensioner >= applicant_dob
+      earliest_dob_for_pensioner >= person_dob
     end
 
     def earliest_dob_for_pensioner
-      submission_date - minimum_pensioner_age.years
+      @submission_date - minimum_pensioner_age.years
     end
 
     def minimum_pensioner_age
       thresholds[:minimum_age_in_years]
     end
 
-    def applicant_dob
-      applicant.date_of_birth
+    def person_dob
+      @person.date_of_birth
     end
 
     def passported?
-      applicant.receives_qualifying_benefit
+      @receives_qualifying_benefit
     end
 
     def non_passported_value
-      income = assessment.disposable_income_summary&.total_disposable_income.to_f
+      income = @total_disposable_income.to_f
       thresholds[:monthly_income_values].each { |value_bands, banding| return banding if income_threshold_applies(income, value_bands) }
     end
 

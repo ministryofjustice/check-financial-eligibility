@@ -1,16 +1,16 @@
 module Assessors
-  class CapitalAssessor < BaseWorkflowService
-    delegate :assessed_capital, to: :capital_summary
+  class CapitalAssessor
+    class << self
+      def call(capital_summary, assessed_capital)
+        capital_summary.eligibilities.each { |elig| elig.update_assessment_result! assessed_capital }
+        summary_result capital_summary
+      end
 
-    def call
-      capital_summary.eligibilities.each(&:update_assessment_result!)
-      summary_result
-    end
+    private
 
-  private
-
-    def summary_result
-      Utilities::ResultSummarizer.call(capital_summary.eligibilities.map(&:assessment_result))
+      def summary_result(capital_summary)
+        Utilities::ResultSummarizer.call(capital_summary.eligibilities.map(&:assessment_result))
+      end
     end
   end
 end

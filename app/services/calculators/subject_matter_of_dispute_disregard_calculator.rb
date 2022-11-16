@@ -1,6 +1,11 @@
 module Calculators
-  class SubjectMatterOfDisputeDisregardCalculator < BaseWorkflowService
-    delegate :disputed_capital_items, :disputed_vehicles, :disputed_properties, to: :capital_summary
+  class SubjectMatterOfDisputeDisregardCalculator
+    delegate :disputed_capital_items, :disputed_vehicles, :disputed_properties, to: :@capital_summary
+
+    def initialize(submission_date:, capital_summary:)
+      @submission_date = submission_date
+      @capital_summary = capital_summary
+    end
 
     def value
       total_disputed_asset_value = disputed_capital_value +
@@ -8,7 +13,7 @@ module Calculators
         disputed_vehicle_value
 
       if total_disputed_asset_value.positive? && threshold.nil?
-        raise "SMOD assets listed but no threshold data found for #{submission_date}"
+        raise "SMOD assets listed but no threshold data found for #{@submission_date}"
       end
 
       [total_disputed_asset_value, threshold].compact.min
@@ -17,7 +22,7 @@ module Calculators
   private
 
     def threshold
-      @threshold ||= Threshold.value_for(:subject_matter_of_dispute_disregard, at: submission_date)
+      @threshold ||= Threshold.value_for(:subject_matter_of_dispute_disregard, at: @submission_date)
     end
 
     def disputed_capital_value
