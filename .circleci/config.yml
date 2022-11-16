@@ -234,12 +234,30 @@ jobs:
       - *authenticate_k8s
       - *decrypt_secrets
       - deploy:
-          name: Helm deployment to staging
+          name: Helm deploy CFE Partner to Staging
           command: |
             helm upgrade check-financial-eligibility-partner ./deploy/helm/. \
                           --install --wait \
                           --namespace=${K8S_NAMESPACE} \
                           --values ./deploy/helm/values-staging.yaml \
+                          --set image.repository="$ECR_ENDPOINT" \
+                          --set image.tag="${CIRCLE_SHA1}"
+
+  deploy_production:
+    executor: cloud-platform-executor
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - *authenticate_k8s
+      - *decrypt_secrets
+      - deploy:
+          name: Helm deploy CFE Partner to Production
+          command: |
+            helm upgrade check-financial-eligibility-partner ./deploy/helm/. \
+                          --install --wait \
+                          --namespace=${K8S_NAMESPACE} \
+                          --values ./deploy/helm/values-production.yaml \
                           --set image.repository="$ECR_ENDPOINT" \
                           --set image.tag="${CIRCLE_SHA1}"
 
@@ -307,6 +325,10 @@ workflows:
             - check_swagger
 #            - unit_tests
             - build_and_push
+      - deploy_production:
+          context: check-financial-eligibility-partner-production
+          requires:
+            - build_and_push
 #          <<: *generic-slack-fail-post-step
       - delete_dependabot_deployment:
           context: check-financial-eligibility-partner-uat
@@ -348,6 +370,10 @@ workflows:
 #          <<: *generic-slack-fail-post-step
       - deploy_staging:
           context: check-financial-eligibility-partner-staging
+          requires:
+            - build_and_push
+      - deploy_production:
+          context: check-financial-eligibility-partner-production
           requires:
             - build_and_push
 #          <<: *generic-slack-fail-post-step
