@@ -2,13 +2,20 @@ require "rails_helper"
 
 module Workflows
   RSpec.describe NonPassportedWorkflow do
-    let(:assessment) { create :assessment, :with_everything, applicant:, proceedings: [%w[SE003 A]] }
+    let(:assessment) do
+      create :assessment, :with_capital_summary, :with_disposable_income_summary,
+             :with_gross_income_summary,
+             applicant:, proceedings: [%w[SE003 A]]
+    end
 
     before do
       assessment.proceeding_type_codes.each do |ptc|
         create :capital_eligibility, capital_summary: assessment.capital_summary, proceeding_type_code: ptc
-        create :gross_income_eligibility, upper_threshold: 20_000, gross_income_summary: assessment.gross_income_summary, proceeding_type_code: ptc
-        create :disposable_income_eligibility, disposable_income_summary: assessment.disposable_income_summary, proceeding_type_code: ptc
+        create :gross_income_eligibility, gross_income_summary: assessment.gross_income_summary, proceeding_type_code: ptc,
+                                          upper_threshold: 20_000
+        create :disposable_income_eligibility, disposable_income_summary: assessment.disposable_income_summary,
+                                               lower_threshold: 500,
+                                               proceeding_type_code: ptc
       end
     end
 
@@ -24,7 +31,7 @@ module Workflows
         end
       end
 
-      context "without self employment or capital distractions" do
+      context "without capital distractions" do
         let(:applicant) { create :applicant, :over_pensionable_age, self_employed: false, employed: }
         let(:assessment_result) do
           assessment.reload
@@ -42,7 +49,9 @@ module Workflows
           end
         end
 
-        describe "childcare costs" do
+        context "with childcare costs (and at least 1 dependent child)" do
+          let(:salary) { 19_000 }
+
           before do
             create(:child_care_transaction_category,
                    gross_income_summary: assessment.gross_income_summary,
@@ -50,12 +59,11 @@ module Workflows
             create(:dependant, :under15, assessment:)
           end
 
-          context "with employment" do
+          context "when employed" do
             let(:employed) { true }
 
             before do
-              create(:employment, assessment:,
-                                  employment_payments: build_list(:employment_payment, 3, gross_income: 3_100))
+              create(:employment, :with_monthly_payments, assessment:, gross_monthly_income: salary / 12.0)
             end
 
             it "is eligible" do
@@ -74,8 +82,7 @@ module Workflows
             context "with partner employment" do
               before do
                 create(:partner, assessment:, employed: true)
-                create(:partner_employment, assessment:,
-                                            employment_payments: build_list(:employment_payment, 3, gross_income: 3_100))
+                create(:employment, :with_monthly_payments, assessment:, gross_monthly_income: salary / 12.0)
               end
 
               it "is eligible" do
@@ -123,29 +130,37 @@ module Workflows
           end
         end
 
-        context "without employment" do
-          let(:employed) { false }
+        context "with employment" do
+          let(:salary) { 15_300 }
 
-          it "is below the theshold and thus eligible" do
-            workflow_call
-            Assessors::MainAssessor.call(assessment)
-            expect(assessment.assessment_result).to eq("eligible")
-          end
+          context "when unemployed" do
+            let(:employed) { false }
 
-          context "with an employed partner" do
-            before do
-              create(:partner, assessment:)
-              create(:employment, type: "PartnerEmployment", assessment:,
-                                  employment_payments: build_list(:employment_payment, 1, gross_income: 105_000))
-              create(:gross_income_summary, assessment:, type: "PartnerGrossIncomeSummary")
-              create(:disposable_income_summary, assessment:, type: "PartnerDisposableIncomeSummary")
-              assessment.reload
+            it "is below the theshold and thus eligible" do
+              expect(assessment_result).to eq("eligible")
             end
 
-            it "is ineligible due to partner income" do
-              workflow_call
-              Assessors::MainAssessor.call(assessment)
-              expect(assessment.assessment_result).to eq("ineligible")
+            context "with an employed partner" do
+              before do
+                create(:partner, assessment:)
+                create(:partner_employment, :with_monthly_payments, assessment:, gross_monthly_income: salary / 12.0)
+              end
+
+              it "is eligible due to partner income" do
+                expect(assessment_result).to eq("eligible")
+              end
+            end
+          end
+
+          context "when employed" do
+            let(:employed) { true }
+
+            before do
+              create(:employment, :with_monthly_payments, assessment:, gross_monthly_income: salary / 12.0)
+            end
+
+            it "is not eligible due to income" do
+              expect(assessment_result).to eq("contribution_required")
             end
           end
         end
