@@ -70,7 +70,7 @@ module Decorators
         end
       end
 
-      subject(:decorator) { described_class.new(assessment).as_json }
+      subject(:decorator) { described_class.new(assessment.capital_summary).as_json }
 
       describe "#as_json" do
         it "returns the expected structure" do

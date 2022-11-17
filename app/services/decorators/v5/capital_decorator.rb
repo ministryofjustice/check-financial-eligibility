@@ -1,9 +1,8 @@
 module Decorators
   module V5
     class CapitalDecorator
-      def initialize(assessment)
-        @assessment = assessment
-        @summary = assessment.capital_summary
+      def initialize(summary)
+        @summary = summary
       end
 
       def as_json

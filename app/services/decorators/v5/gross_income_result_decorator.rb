@@ -1,25 +1,30 @@
 module Decorators
   module V5
     class GrossIncomeResultDecorator
-      delegate :gross_income_summary, to: :assessment
-
-      attr_reader :assessment
-
-      def initialize(assessment)
-        @assessment = assessment
+      def initialize(summary)
+        @summary = summary
       end
 
       def as_json
+        if @summary.is_a?(ApplicantGrossIncomeSummary)
+          basic_attributes.merge(proceeding_types:)
+        else
+          basic_attributes
+        end
+      end
+
+      def basic_attributes
         {
-          total_gross_income: gross_income_summary.total_gross_income.to_f,
-          proceeding_types: ProceedingTypesResultDecorator.new(summary).as_json,
+          total_gross_income: summary.total_gross_income.to_f,
         }
       end
 
     private
 
-      def summary
-        @summary ||= @assessment.gross_income_summary
+      attr_reader :summary
+
+      def proceeding_types
+        ProceedingTypesResultDecorator.new(summary).as_json
       end
     end
   end

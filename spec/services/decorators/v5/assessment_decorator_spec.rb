@@ -24,8 +24,11 @@ module Decorators
             submission_date
             applicant
             gross_income
+            partner_gross_income
             disposable_income
+            partner_disposable_income
             capital
+            partner_capital
             remarks
           ]
           expect(decorator.keys).to eq %i[version timestamp success result_summary assessment]
@@ -40,6 +43,22 @@ module Decorators
           allow(::Decorators::V5::RemarksDecorator).to receive(:new).and_return(instance_double("rmk", as_json: nil))
           allow(::Decorators::V5::ResultSummaryDecorator).to receive(:new).and_return(instance_double("rsd", as_json: nil))
           decorator
+        end
+
+        it "includes partner information" do
+          partner_financials_params = {
+            partner: {
+              employed: true,
+              date_of_birth: 30.years.ago.to_date.to_s,
+            },
+          }
+          Creators::PartnerFinancialsCreator.call(assessment_id: assessment.id, partner_financials_params:)
+          expect(decorator[:assessment][:partner_gross_income]).to be_present
+          expect(decorator[:assessment][:partner_disposable_income]).to be_present
+          expect(decorator[:assessment][:partner_capital]).to be_present
+          expect(decorator[:result_summary][:partner_gross_income]).to be_present
+          expect(decorator[:result_summary][:partner_disposable_income]).to be_present
+          expect(decorator[:result_summary][:partner_capital]).to be_present
         end
       end
     end

@@ -35,11 +35,33 @@ module Decorators
           client_reference_id: assessment.client_reference_id,
           submission_date: assessment.submission_date,
           applicant: ApplicantDecorator.new(applicant).as_json,
-          gross_income: GrossIncomeDecorator.new(@assessment).as_json,
-          disposable_income: DisposableIncomeDecorator.new(@assessment).as_json,
-          capital: CapitalDecorator.new(@assessment).as_json,
+          gross_income: GrossIncomeDecorator.new(gross_income_summary, assessment.employments).as_json,
+          partner_gross_income:,
+          disposable_income: DisposableIncomeDecorator.new(disposable_income_summary).as_json,
+          partner_disposable_income:,
+          capital: CapitalDecorator.new(capital_summary).as_json,
+          partner_capital:,
           remarks: RemarksDecorator.new(remarks, assessment).as_json,
         }
+      end
+
+      def partner_gross_income
+        return unless assessment.partner
+
+        GrossIncomeDecorator.new(assessment.partner_gross_income_summary,
+                                 assessment.partner_employments).as_json
+      end
+
+      def partner_disposable_income
+        return unless assessment.partner
+
+        DisposableIncomeDecorator.new(assessment.partner_disposable_income_summary).as_json
+      end
+
+      def partner_capital
+        return unless assessment.partner
+
+        CapitalDecorator.new(assessment.partner_capital_summary).as_json
       end
     end
   end

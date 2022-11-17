@@ -43,7 +43,7 @@ module Decorators
         }
       end
 
-      subject(:decorator) { described_class.new(assessment).as_json }
+      subject(:decorator) { described_class.new(summary).as_json }
 
       before do
         ptc_results.each do |ptc, thresh_and_result|

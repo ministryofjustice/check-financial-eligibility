@@ -82,7 +82,7 @@ module Decorators
         }
       end
 
-      subject(:decorator) { described_class.new(assessment).as_json }
+      subject(:decorator) { described_class.new(summary, assessment.gross_income_summary).as_json }
 
       before do
         pt_results.each do |ptc, details|
