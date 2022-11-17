@@ -1,5 +1,5 @@
 module Collators
-  class DisposableIncomeCollator < BaseWorkflowService
+  class DisposableIncomeCollator
     include Transactions
 
     attr_reader :monthly_cash_transactions_total
@@ -15,18 +15,25 @@ module Collators
              :legal_aid_bank,
              :legal_aid_cash,
              :fixed_employment_allowance,
-             :employment_income_deductions, to: :disposable_income_summary
+             :employment_income_deductions, to: :@disposable_income_summary
 
     delegate :total_gross_income,
-             :gross_employment_income, to: :gross_income_summary
+             :gross_employment_income, to: :@gross_income_summary
 
-    def initialize(assessment)
-      super(assessment)
+    class << self
+      def call(disposable_income_summary:, gross_income_summary:)
+        new(gross_income_summary:, disposable_income_summary:).call
+      end
+    end
+
+    def initialize(disposable_income_summary:, gross_income_summary:)
+      @disposable_income_summary = disposable_income_summary
+      @gross_income_summary = gross_income_summary
       @monthly_cash_transactions_total = 0
     end
 
     def call
-      disposable_income_summary.update!(populate_attrs)
+      @disposable_income_summary.update!(populate_attrs)
     end
 
   private
@@ -53,7 +60,7 @@ module Collators
     end
 
     def monthly_cash_by_category(category)
-      monthly_cash_transaction_amount_by(operation: :debit, category:)
+      monthly_cash_transaction_amount_by(gross_income_summary: @gross_income_summary, operation: :debit, category:)
     end
 
     def default_attrs

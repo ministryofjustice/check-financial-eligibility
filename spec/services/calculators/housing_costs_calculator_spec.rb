@@ -2,7 +2,12 @@ require "rails_helper"
 
 module Calculators
   RSpec.describe HousingCostsCalculator do
-    subject(:calculator) { described_class.new(assessment) }
+    subject(:calculator) do
+      described_class.new(disposable_income_summary: assessment.disposable_income_summary,
+                          dependants: assessment.dependants,
+                          submission_date: assessment.submission_date,
+                          gross_income_summary: assessment.gross_income_summary)
+    end
 
     context "when using outgoings and state_benefits" do
       let(:assessment) { create :assessment, :with_gross_income_summary_and_records, :with_disposable_income_summary, with_child_dependants: children }
@@ -307,7 +312,12 @@ module Calculators
     end
 
     context "when using regular_transactions" do
-      let(:instance) { described_class.new(assessment) }
+      let(:instance) do
+        described_class.new(disposable_income_summary: assessment.disposable_income_summary,
+                            gross_income_summary: assessment.gross_income_summary,
+                            submission_date: assessment.submission_date,
+                            dependants: assessment.dependants)
+      end
       let(:assessment) { create :assessment, :with_gross_income_summary, :with_disposable_income_summary }
       let(:dates) { [Date.current, 1.month.ago, 2.months.ago] }
 

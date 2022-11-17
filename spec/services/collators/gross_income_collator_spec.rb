@@ -18,7 +18,13 @@ module Collators
     end
 
     describe ".call" do
-      subject(:collator) { described_class.call assessment }
+      subject(:collator) do
+        described_class.call assessment:,
+                             submission_date: assessment.submission_date,
+                             employments: assessment.employments,
+                             disposable_income_summary: assessment.disposable_income_summary,
+                             gross_income_summary: assessment.gross_income_summary
+      end
 
       context "only domestic abuse proceeding type codes" do
         let(:proceeding_type_codes) { [%w[DA001 A]] }

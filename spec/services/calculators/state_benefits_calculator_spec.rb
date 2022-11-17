@@ -7,7 +7,7 @@ module Calculators
     let(:assessment) { create :assessment, :with_gross_income_summary }
     let(:gross_income_summary) { assessment.gross_income_summary }
 
-    subject(:collator) { described_class.call(assessment) }
+    subject(:collator) { described_class.call(gross_income_summary.state_benefits) }
 
     context "no state benefit records" do
       it "leaves the monthly state benefit value as zero" do

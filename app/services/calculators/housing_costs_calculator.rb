@@ -1,10 +1,20 @@
 module Calculators
-  class HousingCostsCalculator < BaseWorkflowService
+  class HousingCostsCalculator
     include Transactions
     include MonthlyEquivalentCalculatable
 
-    delegate :disposable_income_summary, :submission_date, :dependants, :applicant, to: :assessment
     delegate :housing_cost_outgoings, to: :disposable_income_summary
+
+    def initialize(disposable_income_summary:, gross_income_summary:, dependants:, submission_date:)
+      @disposable_income_summary = disposable_income_summary
+      @gross_income_summary = gross_income_summary
+      @dependants = dependants
+      @submission_date = submission_date
+    end
+
+    # for Transactions mixin
+    attr_reader :disposable_income_summary
+    attr_reader :gross_income_summary
 
     def net_housing_costs
       net_housing_costs = if housing_costs_cap_apply?
@@ -34,7 +44,7 @@ module Calculators
   private
 
     def gross_housing_costs_cash
-      monthly_cash_transaction_amount_by(operation: :debit, category: :rent_or_mortgage)
+      monthly_cash_transaction_amount_by(gross_income_summary: @gross_income_summary, operation: :debit, category: :rent_or_mortgage)
     end
 
     def gross_housing_costs_bank
@@ -88,7 +98,7 @@ module Calculators
     end
 
     def single_monthly_housing_costs_cap
-      Threshold.value_for(:single_monthly_housing_costs_cap, at: submission_date)
+      Threshold.value_for(:single_monthly_housing_costs_cap, at: @submission_date)
     end
 
     def housing_costs_cap_apply?
@@ -101,11 +111,11 @@ module Calculators
     end
 
     def applicant_has_no_dependants?
-      dependants.size.zero?
+      @dependants.size.zero?
     end
 
     def applicant_has_dependants?
-      dependants.present?
+      @dependants.present?
     end
   end
 end

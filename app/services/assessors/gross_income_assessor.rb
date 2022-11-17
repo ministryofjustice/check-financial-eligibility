@@ -1,7 +1,9 @@
 module Assessors
-  class GrossIncomeAssessor < BaseWorkflowService
-    def call
-      gross_income_summary.eligibilities.map(&:update_assessment_result!)
+  class GrossIncomeAssessor
+    class << self
+      def call(eligibilities:, total_gross_income:)
+        eligibilities.each { |e| e.update_assessment_result! total_gross_income }
+      end
     end
   end
 end

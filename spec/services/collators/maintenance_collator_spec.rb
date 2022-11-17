@@ -8,7 +8,7 @@ module Collators
     let(:disposable_income_summary) { assessment.disposable_income_summary }
 
     describe ".call" do
-      subject(:collator) { described_class.call(assessment) }
+      subject(:collator) { described_class.call(disposable_income_summary) }
 
       context "when there are no maintenance outgoings" do
         it "leaves the monthly maintenance field on the disposable income summary as zero" do

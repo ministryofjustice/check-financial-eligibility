@@ -1,40 +1,31 @@
 module Calculators
   class EmploymentIncomeCalculator
-    delegate :disposable_income_summary,
-             :employments,
-             :gross_income_summary,
-             :submission_date,
-             to: :assessment
-
-    attr_reader :assessment
-
-    def self.call(assessment)
-      new(assessment).call
+    def self.call(submission_date:, employment:, disposable_income_summary:, gross_income_summary:)
+      new(submission_date:, employment:, disposable_income_summary:, gross_income_summary:).call
     end
 
-    def initialize(assessment)
-      @assessment = assessment
+    def initialize(submission_date:, employment:, disposable_income_summary:, gross_income_summary:)
+      @submission_date = submission_date
+      @employment = employment
+      @disposable_income_summary = disposable_income_summary
+      @gross_income_summary = gross_income_summary
     end
 
     def call
-      if employments.count > 1
-        Calculators::MultipleEmploymentsCalculator.call(assessment)
-      else
-        process_single_employment
-      end
+      process_single_employment
     end
 
   private
 
     def process_single_employment
-      employments.map(&:calculate!)
+      @employment&.calculate!
 
-      gross_income_summary.update!(gross_employment_income:,
-                                   benefits_in_kind: monthly_benefits_in_kind)
-      disposable_income_summary.update!(employment_income_deductions: deductions,
-                                        fixed_employment_allowance: allowance,
-                                        tax: taxes,
-                                        national_insurance: ni_contributions)
+      @gross_income_summary.update!(gross_employment_income:,
+                                    benefits_in_kind: monthly_benefits_in_kind)
+      @disposable_income_summary.update!(employment_income_deductions: deductions,
+                                         fixed_employment_allowance: allowance,
+                                         tax: taxes,
+                                         national_insurance: ni_contributions)
     end
 
     def gross_employment_income
@@ -42,11 +33,11 @@ module Calculators
     end
 
     def monthly_incomes
-      employments.sum(&:monthly_gross_income)
+      @employment&.monthly_gross_income || 0.0
     end
 
     def monthly_benefits_in_kind
-      @monthly_benefits_in_kind ||= employments.sum(&:monthly_benefits_in_kind)
+      @employment&.monthly_benefits_in_kind || 0.0
     end
 
     def deductions
@@ -54,19 +45,19 @@ module Calculators
     end
 
     def taxes
-      @taxes ||= employments.sum(&:monthly_tax)
+      @employment&.monthly_tax || 0.0
     end
 
     def ni_contributions
-      employments.sum(&:monthly_national_insurance)
+      @employment&.monthly_national_insurance || 0.0
     end
 
     def allowance
-      employments.any? ? fixed_employment_allowance : 0.0
+      @employment.present? ? fixed_employment_allowance : 0.0
     end
 
     def fixed_employment_allowance
-      -Threshold.value_for(:fixed_employment_allowance, at: submission_date)
+      -Threshold.value_for(:fixed_employment_allowance, at: @submission_date)
     end
   end
 end

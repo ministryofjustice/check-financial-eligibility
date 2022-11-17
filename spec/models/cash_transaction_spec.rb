@@ -10,11 +10,11 @@ describe CashTransaction do
 
   describe "by_operation_and_category" do
     it "display all the cash transactions for benefits 1" do
-      expect(described_class.by_operation_and_category(assessment1, :credit, :benefits)).to eq benefits_transactions1
+      expect(described_class.by_operation_and_category(assessment1.gross_income_summary, :credit, :benefits)).to eq benefits_transactions1
     end
 
     it "display all the cash transactions for benefits 2" do
-      expect(described_class.by_operation_and_category(assessment2, :credit, :benefits)).to eq benefits_transactions2
+      expect(described_class.by_operation_and_category(assessment2.gross_income_summary, :credit, :benefits)).to eq benefits_transactions2
     end
   end
 end

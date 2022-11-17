@@ -10,14 +10,27 @@
 # 6. update that `<category>_all_sources` and `total_gross_income` column values on DB
 #
 module Collators
-  class RegularIncomeCollator < BaseWorkflowService
+  class RegularIncomeCollator
     include MonthlyEquivalentCalculatable
+
+    class << self
+      def call(gross_income_summary)
+        new(gross_income_summary).call
+      end
+    end
+
+    def initialize(gross_income_summary)
+      @gross_income_summary = gross_income_summary
+    end
 
     def call
       gross_income_summary.update!(gross_income_attributes)
     end
 
   private
+
+    # so that MonthlyEquivalentCalculatable can pick it up
+    attr_reader :gross_income_summary
 
     def income_categories
       CFEConstants::VALID_INCOME_CATEGORIES.map(&:to_sym)
