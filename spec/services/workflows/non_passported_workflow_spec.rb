@@ -25,7 +25,13 @@ module Workflows
       end
 
       context "without self employment or capital distractions" do
-        let(:applicant) { create :applicant, :over_pensionable_age, self_employed: false }
+        let(:applicant) { create :applicant, :over_pensionable_age, self_employed: false, employed: }
+        let(:assessment_result) do
+          assessment.reload
+          workflow_call
+          Assessors::MainAssessor.call(assessment)
+          assessment.assessment_result
+        end
 
         before do
           stub_request(:get, "https://www.gov.uk/bank-holidays.json")
@@ -34,29 +40,113 @@ module Workflows
           assessment.proceeding_type_codes.each do |ptc|
             create(:assessment_eligibility, assessment:, proceeding_type_code: ptc)
           end
-          assessment.reload
         end
 
-        it "below the theshold and thus eligible" do
-          workflow_call
-          Assessors::MainAssessor.call(assessment)
-          expect(assessment.assessment_result).to eq("eligible")
-        end
-
-        context "with an employed partner" do
+        describe "childcare costs" do
           before do
-            create(:partner, assessment:)
-            create(:employment, type: "PartnerEmployment", assessment:,
-                                employment_payments: build_list(:employment_payment, 1, gross_income: 105_000))
-            create(:gross_income_summary, assessment:, type: "PartnerGrossIncomeSummary")
-            create(:disposable_income_summary, assessment:, type: "PartnerDisposableIncomeSummary")
-            assessment.reload
+            create(:child_care_transaction_category,
+                   gross_income_summary: assessment.gross_income_summary,
+                   cash_transactions: build_list(:cash_transaction, 1, amount: 800))
+            create(:dependant, :under15, assessment:)
           end
 
-          it "is ineligible due to partner income" do
+          context "with employment" do
+            let(:employed) { true }
+
+            before do
+              create(:employment, assessment:,
+                                  employment_payments: build_list(:employment_payment, 3, gross_income: 3_100))
+            end
+
+            it "is eligible" do
+              expect(assessment_result).to eq("eligible")
+            end
+          end
+
+          context "when unemployed with partner" do
+            let(:employed) { false }
+
+            before do
+              create(:gross_income_summary, assessment:, type: "PartnerGrossIncomeSummary")
+              create(:disposable_income_summary, assessment:, type: "PartnerDisposableIncomeSummary")
+            end
+
+            context "with partner employment" do
+              before do
+                create(:partner, assessment:, employed: true)
+                create(:partner_employment, assessment:,
+                                            employment_payments: build_list(:employment_payment, 3, gross_income: 3_100))
+              end
+
+              it "is eligible" do
+                expect(assessment_result).to eq("eligible")
+              end
+            end
+
+            context "with partner student loan" do
+              before do
+                create(:partner, assessment:, employed: false)
+                create(:student_loan_payment, gross_income_summary: assessment.reload.partner_gross_income_summary)
+              end
+
+              it "is eligible" do
+                expect(assessment_result).to eq("eligible")
+              end
+            end
+          end
+        end
+
+        context "with housing costs" do
+          let(:employed) { true }
+
+          before do
+            create(:employment, assessment:,
+                                employment_payments: build_list(:employment_payment, 3, gross_income: 3_000))
+            create(:housing_cost, amount: 1000,
+                                  gross_income_summary: assessment.gross_income_summary)
+          end
+
+          it "is not eligible due to housing cost cap" do
+            expect(assessment_result).to eq("contribution_required")
+          end
+
+          context "with partner" do
+            before do
+              create(:partner, assessment:)
+              create(:gross_income_summary, assessment:, type: "PartnerGrossIncomeSummary")
+              create(:disposable_income_summary, assessment:, type: "PartnerDisposableIncomeSummary")
+            end
+
+            it "is eligible due to cap being removed" do
+              expect(assessment_result).to eq("eligible")
+            end
+          end
+        end
+
+        context "without employment" do
+          let(:employed) { false }
+
+          it "is below the theshold and thus eligible" do
             workflow_call
             Assessors::MainAssessor.call(assessment)
-            expect(assessment.assessment_result).to eq("ineligible")
+            expect(assessment.assessment_result).to eq("eligible")
+          end
+
+          context "with an employed partner" do
+            before do
+              create(:partner, assessment:)
+              create(:employment, type: "PartnerEmployment", assessment:,
+                                  employment_payments: build_list(:employment_payment, 1, gross_income: 105_000))
+              create(:gross_income_summary, assessment:, type: "PartnerGrossIncomeSummary")
+              create(:disposable_income_summary, assessment:, type: "PartnerDisposableIncomeSummary")
+              assessment.reload
+            end
+
+            it "is ineligible due to partner income" do
+              workflow_call
+              Assessors::MainAssessor.call(assessment)
+              expect(assessment.assessment_result).to eq("ineligible")
+            end
           end
         end
       end
@@ -89,7 +179,7 @@ module Workflows
           expect(Collators::RegularIncomeCollator).to receive(:call).with(assessment.gross_income_summary)
           expect(Assessors::GrossIncomeAssessor).to receive(:call)
           expect(Collators::OutgoingsCollator).to receive(:call)
-          expect(Assessors::DisposableIncomeAssessor).to receive(:call).with(assessment)
+          expect(Assessors::DisposableIncomeAssessor).to receive(:call)
           workflow_call
         end
       end

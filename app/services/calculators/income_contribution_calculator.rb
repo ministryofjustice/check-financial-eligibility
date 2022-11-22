@@ -14,6 +14,8 @@ module Calculators
       contribution
     end
 
+  private
+
     def band_details
       bands[band_name]
     end

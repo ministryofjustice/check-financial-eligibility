@@ -10,8 +10,9 @@ module Collators
 
       subject(:collator) do
         described_class.call(submission_date: assessment.submission_date,
-                             dependants: assessment.dependants,
-                             person: assessment.applicant,
+                             person: OpenStruct.new(employed?: assessment.applicant&.employed?,
+                                                    has_student_loan?: assessment.gross_income_summary.student_loan_payments.any?,
+                                                    dependants: assessment.dependants),
                              gross_income_summary: assessment.gross_income_summary,
                              disposable_income_summary: assessment.disposable_income_summary)
       end

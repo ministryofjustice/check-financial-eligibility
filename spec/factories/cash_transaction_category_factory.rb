@@ -8,5 +8,10 @@ FactoryBot.define do
       operation { "credit" }
       name { CFEConstants::VALID_INCOME_CATEGORIES.sample }
     end
+
+    factory :child_care_transaction_category do
+      operation { "debit" }
+      name { "child_care" }
+    end
   end
 end

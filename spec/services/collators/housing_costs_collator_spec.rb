@@ -11,9 +11,9 @@ module Collators
 
       subject(:collator) do
         described_class.call(disposable_income_summary: assessment.disposable_income_summary,
+                             person: OpenStruct.new(single?: true, dependants: assessment.dependants),
                              gross_income_summary: assessment.gross_income_summary,
-                             submission_date: assessment.submission_date,
-                             dependants: assessment.dependants)
+                             submission_date: assessment.submission_date)
       end
 
       context "with no housing cost outgoings" do

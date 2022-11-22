@@ -16,7 +16,7 @@ RSpec.describe Collators::RegularOutgoingsCollator do
   let(:disposable_income_summary) { assessment.disposable_income_summary }
 
   describe ".call" do
-    subject(:collator) { described_class.call(assessment) }
+    subject(:collator) { described_class.call(gross_income_summary:, disposable_income_summary:) }
 
     context "without monthly regular transactions" do
       it "does increments #<cagtegory>_all_sources data" do
