@@ -3,12 +3,16 @@
 # transactions (cash typically). Also, except for :rent_or_mortgate**,
 # increment the total_outgoings_and_allowances and decrement the total_disposable_income.
 #
-# ** :rent_or_mortgate that has already been added to totals by the
+# ** :rent_or_mortgage that has already been added to totals by the
 # HousingCostCollator/HousingCostCalculator and DisposableIncomeCollator :(
+#
+# *§ :child_care should not be added unless eligible (see Collators::ChildcareCollator)
+# to emulate behaviour for bank and cash transactions.
 #
 module Collators
   class RegularOutgoingsCollator < BaseWorkflowService
     include MonthlyEquivalentCalculatable
+    include ChildcareEligibility
 
     def call
       disposable_income_summary.update!(disposable_income_attributes)
@@ -24,6 +28,8 @@ module Collators
       attrs = initialize_attributes
 
       outgoing_categories.each do |category|
+        next if category == :child_care && !eligible_for_childcare_costs? # see *§ above
+
         category_all_sources = "#{category}_all_sources".to_sym
         category_monthly_amount = monthly_regular_transaction_amount_by(operation: :debit, category:)
 

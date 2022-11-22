@@ -1,8 +1,7 @@
 module TestCase
   class Applicant
     def initialize(rows)
-      @rows = rows
-      @rows.each { |row| populate_instance_vars(row) }
+      @rows = rows.reject { |row| row[2].nil? }
     end
 
     def url_method
@@ -11,12 +10,7 @@ module TestCase
 
     def payload
       {
-        applicant: {
-          date_of_birth: @date_of_birth,
-          involvement_type: @involvement_type,
-          has_partner_opponent: @has_partner_opponent,
-          receives_qualifying_benefit: @receives_qualifying_benefit,
-        },
+        applicant: { **attributes_from_rows },
       }
     end
 
@@ -26,16 +20,9 @@ module TestCase
 
   private
 
-    def populate_instance_vars(row)
-      case row[2]
-      when "date_of_birth"
-        @date_of_birth = row[3]
-      when "has_partner_opponent"
-        @has_partner_opponent = row[3]
-      when "receives_qualifying_benefit"
-        @receives_qualifying_benefit = row[3]
-      when "involvement_type"
-        @involvement_type = row[3]
+    def attributes_from_rows
+      @rows.each_with_object({}) do |row, h|
+        h[row[2].to_sym] = row[3]
       end
     end
   end

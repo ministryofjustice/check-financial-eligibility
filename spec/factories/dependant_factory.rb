@@ -9,10 +9,12 @@ FactoryBot.define do
 
     trait :child_relative do
       relationship { :child_relative }
+      date_of_birth { assessment.submission_date - 16.years + 1.day }
     end
 
     trait :adult_relative do
       relationship { :adult_relative }
+      date_of_birth { assessment.submission_date - 16.years }
     end
 
     trait :under15 do
