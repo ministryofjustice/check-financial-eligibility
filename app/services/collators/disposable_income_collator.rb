@@ -39,22 +39,28 @@ module Collators
       attrs = {}
 
       outgoing_categories.each do |category|
-        monthly_cash_amount = category == :child_care ? __send__("#{category}_cash") : monthly_cash_by_category(category)
+        monthly_cash_amount = monthly_cash_amount_for(category)
+        monthly_bank_amount = monthly_bank_amount_for(category)
+
         @monthly_cash_transactions_total += monthly_cash_amount unless category == :rent_or_mortgage
 
         attrs[:"#{category}_cash"] = monthly_cash_amount
-        attrs[:"#{category}_all_sources"] = bank_amount_for(category) + attrs[:"#{category}_cash"]
+        attrs[:"#{category}_all_sources"] = monthly_bank_amount + monthly_cash_amount
       end
 
       attrs.merge(default_attrs)
     end
 
-    def bank_amount_for(category)
-      __send__("#{category}_bank")
+    def monthly_cash_amount_for(category)
+      if category == :child_care
+        public_send("#{category}_cash")
+      else
+        monthly_cash_transaction_amount_by(operation: :debit, category:)
+      end
     end
 
-    def monthly_cash_by_category(category)
-      monthly_cash_transaction_amount_by(operation: :debit, category:)
+    def monthly_bank_amount_for(category)
+      public_send("#{category}_bank")
     end
 
     def default_attrs
