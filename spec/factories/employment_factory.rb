@@ -4,15 +4,20 @@ FactoryBot.define do
     client_id { SecureRandom.uuid }
     sequence(:name) { |n| sprintf("Job %04d", n) }
 
-    factory :partner_employment do
+    transient do
+      gross_monthly_income { 1500 }
     end
-  end
 
-  trait :with_monthly_payments do
-    after(:create) do |record|
-      [Time.zone.today, 1.month.ago.to_date, 2.months.ago.to_date].each do |date|
-        create :employment_payment, employment: record, date:, gross_income: 1500, gross_income_monthly_equiv: 1500
+    trait :with_monthly_payments do
+      after(:create) do |record, evaluator|
+        [Time.zone.today, 1.month.ago.to_date, 2.months.ago.to_date].each do |date|
+          create :employment_payment, employment: record, date:,
+                                      gross_income: evaluator.gross_monthly_income
+        end
       end
+    end
+
+    factory :partner_employment do
     end
   end
 

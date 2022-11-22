@@ -87,7 +87,8 @@ module Workflows
         Assessors::DisposableIncomeAssessor.call(
           disposable_income_summary: assessment.disposable_income_summary,
           total_disposable_income: assessment.disposable_income_summary.total_disposable_income +
-            assessment.partner_disposable_income_summary.total_disposable_income,
+            assessment.partner_disposable_income_summary.total_disposable_income -
+            Threshold.value_for(:partner_allowance, at: assessment.submission_date),
         )
       else
         applicant = PersonWrapper.new person: assessment.applicant, is_single: true,
