@@ -14,9 +14,15 @@ RSpec.describe Collators::RegularOutgoingsCollator do
   let(:assessment) { create(:assessment, :with_applicant, :with_gross_income_summary, :with_disposable_income_summary) }
   let(:gross_income_summary) { assessment.gross_income_summary }
   let(:disposable_income_summary) { assessment.disposable_income_summary }
+  let(:person) do
+    OpenStruct.new(employed?: assessment.applicant.employed?,
+                   dependants: assessment.dependants,
+                   has_student_loan?: assessment.gross_income_summary.student_loan_payments.any?)
+  end
+  let(:submission_date) { assessment.submission_date }
 
   describe ".call" do
-    subject(:collator) { described_class.call(gross_income_summary:, disposable_income_summary:) }
+    subject(:collator) { described_class.call(gross_income_summary:, disposable_income_summary:, person:, submission_date:) }
 
     context "without monthly regular transactions" do
       it "does increments #<cagtegory>_all_sources data" do
@@ -173,7 +179,7 @@ RSpec.describe Collators::RegularOutgoingsCollator do
         create(:regular_transaction, gross_income_summary:, operation: "debit", category: "rent_or_mortgage", frequency: "monthly", amount: 222.22)
       end
 
-      it "increments #<cagtegory>_all_sources data" do
+      it "increments #rent_or_mortgage_all_sources data" do
         collator
         disposable_income_summary.reload
         expect(disposable_income_summary).to have_attributes(
@@ -194,6 +200,91 @@ RSpec.describe Collators::RegularOutgoingsCollator do
         collator
         disposable_income_summary.reload
         expect(disposable_income_summary.total_disposable_income).to be_zero
+      end
+    end
+
+    context "with monthly regular transaction of :child_care" do
+      before do
+        create(:regular_transaction,
+               gross_income_summary:,
+               operation: "debit",
+               category: "child_care",
+               frequency: "monthly", amount: 111.11)
+      end
+
+      shared_examples "a child care eligible disposable income collator" do
+        it "increments #child_care_all_sources data" do
+          expect { collator }.to change { disposable_income_summary.reload.child_care_all_sources }.from(0).to(111.11)
+        end
+
+        it "increments #total_outgoings_and_allowances" do
+          expect { collator }.to change { disposable_income_summary.reload.total_outgoings_and_allowances }.from(0).to(111.11)
+        end
+
+        it "decrements #total_disposable_income" do
+          expect { collator }.to change { disposable_income_summary.reload.total_disposable_income }.from(0).to(-111.11)
+        end
+      end
+
+      shared_examples "a child care ineligible disposable income collator" do
+        it "does not increment #child_care_all_sources data" do
+          expect { collator }.not_to change { disposable_income_summary.reload.child_care_all_sources }.from(0)
+        end
+
+        it "does not increment #total_outgoings_and_allowances" do
+          expect { collator }.not_to change { disposable_income_summary.reload.total_outgoings_and_allowances }.from(0)
+        end
+
+        it "does not decrement #total_disposable_income" do
+          expect { collator }.not_to change { disposable_income_summary.reload.total_disposable_income }.from(0)
+        end
+      end
+
+      context "with child dependant and a student loan but unemployed" do
+        before do
+          assessment.dependants << build(:dependant, :child_relative)
+          assessment.applicant.employed = false
+          assessment.gross_income_summary.student_loan_payments << build(:irregular_income_payment)
+        end
+
+        it_behaves_like "a child care eligible disposable income collator"
+      end
+
+      context "with child dependant and employed applicant but no student loan" do
+        before do
+          assessment.dependants << build(:dependant, :child_relative)
+          assessment.applicant.employed = true
+          assessment.gross_income_summary.student_loan_payments.destroy_all
+        end
+
+        it_behaves_like "a child care eligible disposable income collator"
+      end
+
+      context "with adult dependant" do
+        before do
+          assessment.dependants << build(:dependant, :adult_relative)
+        end
+
+        it_behaves_like "a child care ineligible disposable income collator"
+      end
+
+      context "with no dependants but employed" do
+        before do
+          assessment.dependants.destroy_all
+          assessment.applicant.employed = true
+        end
+
+        it_behaves_like "a child care ineligible disposable income collator"
+      end
+
+      context "with child dependant but unemployed applicant without a student loan" do
+        before do
+          assessment.dependants << build(:dependant, :child_relative)
+          assessment.applicant.update!(employed: false)
+          assessment.gross_income_summary.student_loan_payments.destroy_all
+        end
+
+        it_behaves_like "a child care ineligible disposable income collator"
       end
     end
 
