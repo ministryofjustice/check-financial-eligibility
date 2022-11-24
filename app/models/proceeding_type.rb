@@ -7,6 +7,6 @@ class ProceedingType < ApplicationRecord
 private
 
   def proceeding_type_code_validations
-    errors.add(:ccms_code, "invalid ccms_code: #{ccms_code}") unless ccms_code.to_sym.in?(ProceedingTypeThreshold.valid_ccms_codes)
+    errors.add(:ccms_code, "invalid ccms_code: #{ccms_code}") unless ccms_code.to_sym.in?(CFEConstants::VALID_PROCEEDING_TYPE_CCMS_CODES)
   end
 end

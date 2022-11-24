@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :proceeding_type do
     assessment
 
-    sequence(:ccms_code) { |n| ProceedingTypeThreshold.valid_ccms_codes[n % ProceedingTypeThreshold.valid_ccms_codes.size] }
+    sequence(:ccms_code) { |n| CFEConstants::VALID_PROCEEDING_TYPE_CCMS_CODES[n % CFEConstants::VALID_PROCEEDING_TYPE_CCMS_CODES.size] }
     client_involvement_type { CFEConstants::VALID_CLIENT_INVOLVEMENT_TYPES.sample }
 
     trait :with_invalid_ccms_code do
