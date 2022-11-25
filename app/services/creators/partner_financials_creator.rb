@@ -31,6 +31,7 @@ module Creators
       create_additional_properties
       create_capitals
       create_vehicles
+      create_dependants
     rescue CreationError => e
       self.errors = e.errors
     end
@@ -133,6 +134,18 @@ module Creators
       errors.concat(creator.errors)
     end
 
+    def create_dependants
+      return if dependant_params.blank?
+
+      creator = DependantsCreator.call(
+        assessment_id: @assessment_id,
+        dependants_params: { dependants: dependant_params }.to_json,
+        relationship: :partner_dependants,
+      )
+
+      errors.concat(creator.errors)
+    end
+
     def assessment
       @assessment ||= Assessment.find_by(id: assessment_id)
     end
@@ -167,6 +180,10 @@ module Creators
 
     def vehicle_params
       @vehicle_params ||= @partner_financials_params[:vehicles]
+    end
+
+    def dependant_params
+      @dependant_params ||= @partner_financials_params[:dependants]
     end
 
     def json_validator

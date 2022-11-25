@@ -1,0 +1,1 @@
+class PartnerDependant < Dependant; end

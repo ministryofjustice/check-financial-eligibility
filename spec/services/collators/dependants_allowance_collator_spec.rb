@@ -7,7 +7,8 @@ module Collators
 
     subject(:collator) do
       described_class.call(dependants: assessment.dependants,
-                           disposable_income_summary: assessment.disposable_income_summary)
+                           disposable_income_summary: assessment.disposable_income_summary,
+                           submission_date: assessment.submission_date)
     end
 
     describe ".call" do
@@ -25,10 +26,10 @@ module Collators
 
         it "updates the dependant records and writes the sum to the diposable income summary" do
           allow(Calculators::DependantAllowanceCalculator).to receive(:new)
-            .with(dependant1)
+            .with(dependant1, assessment.submission_date)
             .and_return(instance_double(Calculators::DependantAllowanceCalculator, call: 123.45))
           allow(Calculators::DependantAllowanceCalculator).to receive(:new)
-            .with(dependant2)
+            .with(dependant2, assessment.submission_date)
             .and_return(instance_double(Calculators::DependantAllowanceCalculator, call: 456.78))
           collator
           expect(dependant1.reload.dependant_allowance).to eq 123.45

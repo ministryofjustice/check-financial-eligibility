@@ -8,7 +8,8 @@ module Collators
       described_class.call(submission_date: assessment.submission_date,
                            person: OpenStruct.new(employed?: assessment.applicant&.employed?, dependants: assessment.dependants),
                            gross_income_summary: assessment.gross_income_summary,
-                           disposable_income_summary: assessment.disposable_income_summary)
+                           disposable_income_summary: assessment.disposable_income_summary,
+                           eligible_for_childcare: true)
     end
 
     describe ".call" do

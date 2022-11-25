@@ -489,6 +489,59 @@ module Creators
           expect { creator }.not_to change(Vehicle, :count)
         end
       end
+
+      context "with valid dependants" do
+        let(:partner_financials_params) do
+          {
+            partner: {
+              date_of_birth:,
+              employed: true,
+            },
+            dependants: [
+              {
+                in_full_time_education: false,
+                date_of_birth: 1.year.ago.to_date,
+                relationship: "child_relative",
+              },
+            ],
+          }
+        end
+
+        it "returns a success status flag" do
+          expect(creator.success?).to be true
+        end
+
+        it "creates dependants" do
+          creator
+          expect(assessment.partner_dependants.count).to eq 1
+        end
+      end
+
+      context "with invalid dependants" do
+        let(:partner_financials_params) do
+          {
+            partner: {
+              date_of_birth:,
+              employed: true,
+            },
+            dependants: [
+              {
+                in_full_time_education: false,
+                date_of_birth: 1.year.ago.to_date,
+                relationship: "quirky",
+              },
+            ],
+          }
+        end
+
+        it "returns error" do
+          expect(creator.errors[0]).to include("relationship")
+        end
+
+        it "does not create any dependants" do
+          expect { creator }.not_to change(Dependant, :count)
+        end
+      end
     end
   end
 end

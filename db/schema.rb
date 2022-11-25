@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_23_103859) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_24_120203) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -117,6 +117,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_23_103859) do
     t.decimal "monthly_income"
     t.decimal "assets_value"
     t.decimal "dependant_allowance", default: "0.0"
+    t.string "type", default: "ApplicantDependant"
   end
 
   create_table "disposable_income_summaries", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

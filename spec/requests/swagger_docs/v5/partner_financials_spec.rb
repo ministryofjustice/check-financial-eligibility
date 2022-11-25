@@ -345,6 +345,44 @@ RSpec.describe "partner_financials", type: :request, swagger_doc: "v5/swagger.ya
                         },
                       },
                     },
+                    dependants: {
+                      type: :array,
+                      description: "One or more dependants details",
+                      items: {
+                        type: :object,
+                        required: %i[date_of_birth in_full_time_education relationship],
+                        properties: {
+                          date_of_birth: {
+                            type: :string,
+                            format: :date,
+                            example: "1992-07-22",
+                          },
+                          in_full_time_education: {
+                            type: :boolean,
+                            example: false,
+                            description: "Dependant is in full time education or not",
+                          },
+                          relationship: {
+                            type: :string,
+                            enum: Dependant.relationships.values,
+                            example: Dependant.relationships.values.first,
+                            description: "Dependant's relationship to the applicant's partner",
+                          },
+                          monthly_income: {
+                            type: :number,
+                            format: :decimal,
+                            description: "Dependant's monthly income",
+                            example: 101.01,
+                          },
+                          assets_value: {
+                            type: :number,
+                            format: :decimal,
+                            description: "Dependant's total assets value",
+                            example: 0.0,
+                          },
+                        },
+                      },
+                    },
                   },
                 }
 
@@ -439,6 +477,15 @@ RSpec.describe "partner_financials", type: :request, swagger_doc: "v5/swagger.ya
                 date_of_purchase: "2017-01-23",
                 in_regular_use: true,
                 subject_matter_of_dispute: false,
+              },
+            ],
+            dependants: [
+              {
+                date_of_birth: "1983-08-08",
+                in_full_time_education: false,
+                relationship: "adult_relative",
+                monthly_income: 4448.63,
+                assets_value: 0.0,
               },
             ],
           }

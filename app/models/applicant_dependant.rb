@@ -1,0 +1,1 @@
+class ApplicantDependant < Dependant; end

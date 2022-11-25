@@ -18,7 +18,8 @@ class Assessment < ApplicationRecord
   has_one :partner_gross_income_summary, dependent: :destroy
   has_one :partner_disposable_income_summary, dependent: :destroy
 
-  has_many :dependants, dependent: :destroy
+  has_many :dependants, dependent: :destroy, class_name: "ApplicantDependant"
+  has_many :partner_dependants, dependent: :destroy, class_name: "PartnerDependant"
   has_many :properties, through: :capital_summary, dependent: :destroy
   has_many :vehicles, through: :capital_summary, dependent: :destroy
   has_many :capital_items, through: :capital_summary, dependent: :destroy

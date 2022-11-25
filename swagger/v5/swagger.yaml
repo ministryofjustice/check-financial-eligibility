@@ -1239,6 +1239,41 @@ paths:
                       subject_matter_of_dispute:
                         type: boolean
                         description: Whether this vehicle is the subject of a dispute
+                dependants:
+                  type: array
+                  description: One or more dependants details
+                  items:
+                    type: object
+                    required:
+                    - date_of_birth
+                    - in_full_time_education
+                    - relationship
+                    properties:
+                      date_of_birth:
+                        type: string
+                        format: date
+                        example: '1992-07-22'
+                      in_full_time_education:
+                        type: boolean
+                        example: false
+                        description: Dependant is in full time education or not
+                      relationship:
+                        type: string
+                        enum:
+                        - child_relative
+                        - adult_relative
+                        example: child_relative
+                        description: Dependant's relationship to the applicant's partner
+                      monthly_income:
+                        type: number
+                        format: decimal
+                        description: Dependant's monthly income
+                        example: 101.01
+                      assets_value:
+                        type: number
+                        format: decimal
+                        description: Dependant's total assets value
+                        example: 0.0
         required: true
   "/assessments/{assessment_id}/proceeding_types":
     post:

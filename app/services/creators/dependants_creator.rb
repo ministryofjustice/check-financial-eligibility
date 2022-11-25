@@ -2,10 +2,11 @@ module Creators
   class DependantsCreator < BaseCreator
     attr_accessor :assessment_id, :dependants
 
-    def initialize(assessment_id:, dependants_params:)
+    def initialize(assessment_id:, dependants_params:, relationship: :dependants)
       super()
       @assessment_id = assessment_id
       @dependants_params = dependants_params
+      @relationship = relationship
     end
 
     def call
@@ -26,7 +27,7 @@ module Creators
     end
 
     def create_dependants
-      self.dependants = assessment.dependants.create!(dependants_attributes)
+      self.dependants = assessment.send(@relationship).create!(dependants_attributes)
     rescue ActiveRecord::RecordInvalid => e
       raise CreationError, e.record.errors.full_messages
     end

@@ -9,12 +9,7 @@ module Collators
       let(:target_time) { Date.current }
 
       subject(:collator) do
-        described_class.call(submission_date: assessment.submission_date,
-                             person: OpenStruct.new(employed?: assessment.applicant&.employed?,
-                                                    has_student_loan?: assessment.gross_income_summary.student_loan_payments.any?,
-                                                    dependants: assessment.dependants),
-                             gross_income_summary: assessment.gross_income_summary,
-                             disposable_income_summary: assessment.disposable_income_summary)
+        described_class.call(gross_income_summary:, disposable_income_summary:, eligible_for_childcare:)
       end
 
       before do
@@ -25,102 +20,21 @@ module Collators
         create :childcare_outgoing, disposable_income_summary:, payment_date: 2.months.ago, amount: 155.63
       end
 
-      context "No dependants under 15" do
-        before do
-          create :dependant, assessment:, date_of_birth: 16.years.ago
-        end
+      context "Not eligible for childcare" do
+        let(:eligible_for_childcare) { false }
 
-        context "Employed" do
-          before do
-            create(:applicant, assessment:, employed: true)
-          end
-
-          context "in receipt of Student grant in irregular income payments" do
-            before { create :irregular_income_payment, gross_income_summary: }
-
-            it "does not update the childcare value on the disposable income summary" do
-              collator
-              expect(disposable_income_summary.child_care_bank).to eq 0.0
-            end
-          end
-
-          context "not in receipt of Student grant" do
-            it "does not update the childcare value on the disposable income summary" do
-              collator
-              expect(disposable_income_summary.child_care_bank).to eq 0.0
-            end
-          end
-        end
-
-        context "not employed" do
-          context "in receipt of Student grant" do
-            context "in irregular income payments" do
-              before { create :irregular_income_payment, gross_income_summary: }
-
-              it "does not update the childcare value on the disposable income summary" do
-                collator
-                expect(disposable_income_summary.child_care_bank).to eq 0.0
-              end
-            end
-          end
-
-          context "not in receipt of Student grant" do
-            it "does not update the childcare value on the disposable income summary" do
-              collator
-              expect(disposable_income_summary.child_care_bank).to eq 0.0
-            end
-          end
+        it "does not update the childcare value on the disposable income summary" do
+          collator
+          expect(disposable_income_summary.child_care_bank).to eq 0.0
         end
       end
 
-      context "a dependant under 15" do
-        let(:target_time) { Time.zone.local(2021, 4, 11) }
+      context "Eligible for childcare" do
+        let(:eligible_for_childcare) { true }
 
-        before do
-          create :dependant, assessment: assessment, date_of_birth: 16.years.ago
-          create :dependant, assessment:, date_of_birth: 14.years.ago
-        end
-
-        context "Employed" do
-          before do
-            create(:applicant, assessment:, employed: true)
-          end
-
-          context "in receipt of Student grant in irregular income payments" do
-            before { create :irregular_income_payment, gross_income_summary: }
-
-            it "updates the childcare value on the disposable income summary" do
-              collator
-              expect(disposable_income_summary.child_care_bank).to eq 155.63
-            end
-          end
-
-          context "not in receipt of Student grant" do
-            it "updates the childcare value on the disposable income summary" do
-              collator
-              expect(disposable_income_summary.child_care_bank).to eq 155.63
-            end
-          end
-        end
-
-        context "not employed" do
-          context "in receipt of Student grant in irregular income payments" do
-            before { create :irregular_income_payment, amount: 0.0, gross_income_summary: }
-
-            it "updates the childcare value on the disposable income summary" do
-              collator
-              expect(disposable_income_summary.child_care_bank).to eq 155.63
-            end
-          end
-
-          context "not in receipt of Student grant" do
-            before { create :other_income_source, gross_income_summary:, name: "friends_or_family" }
-
-            it "does not update the childcare value on the disposable income summary" do
-              collator
-              expect(disposable_income_summary.child_care_bank).to eq 0.0
-            end
-          end
+        it "updates the childcare value on the disposable income summary" do
+          collator
+          expect(disposable_income_summary.child_care_bank).to eq 155.63
         end
       end
     end

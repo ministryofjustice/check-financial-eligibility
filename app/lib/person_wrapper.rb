@@ -11,7 +11,7 @@ class PersonWrapper
     @gross_income_summary = gross_income_summary
   end
 
-  def has_student_loan?
+  def is_student?
     @gross_income_summary.student_loan_payments.any?
   end
 

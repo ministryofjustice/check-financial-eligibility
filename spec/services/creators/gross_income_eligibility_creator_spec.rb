@@ -10,7 +10,12 @@ module Creators
       travel_back
     end
 
-    subject(:creator) { described_class.call(assessment) }
+    subject(:creator) do
+      described_class.call(assessment.gross_income_summary,
+                           assessment.dependants,
+                           assessment.proceeding_types,
+                           assessment.submission_date)
+    end
 
     context "version 5" do
       let(:assessment) { create :assessment, :with_gross_income_summary, proceedings: [%w[DA002 A], %w[SE013 Z]] }
