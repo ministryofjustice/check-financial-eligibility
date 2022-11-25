@@ -15,7 +15,9 @@ module Decorators
                maintenance_out_all_sources: 330.21,
                total_outgoings_and_allowances: 660.21,
                total_disposable_income: 732.55,
-               income_contribution: 75
+               income_contribution: 75,
+               combined_total_disposable_income: 900.0,
+               combined_total_outgoings_and_allowances: 400.32
       end
       let(:employment1) { create :employment, :with_monthly_payments, assessment: }
       let(:employment2) { create :employment, :with_monthly_payments, assessment: }
@@ -79,6 +81,8 @@ module Decorators
               result: "ineligible",
             },
           ],
+          combined_total_disposable_income: 900.0,
+          combined_total_outgoings_and_allowances: 400.32,
         }
       end
 

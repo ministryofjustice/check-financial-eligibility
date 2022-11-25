@@ -7,7 +7,7 @@ module Decorators
 
       def as_json
         if @summary.is_a?(ApplicantCapitalSummary)
-          basic_attributes.merge(proceeding_types:)
+          basic_attributes.merge(proceeding_types:, combined_assessed_capital:)
         else
           basic_attributes
         end
@@ -34,6 +34,10 @@ module Decorators
 
       def proceeding_types
         ProceedingTypesResultDecorator.new(summary).as_json
+      end
+
+      def combined_assessed_capital
+        summary.combined_assessed_capital.to_f
       end
     end
   end

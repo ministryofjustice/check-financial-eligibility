@@ -41,16 +41,17 @@ module Workflows
                                             disposable_income_summary: assessment.partner_disposable_income_summary,
                                             gross_income_summary: assessment.partner_gross_income_summary)
         Collators::RegularIncomeCollator.call(assessment.partner_gross_income_summary)
-        # we pass the non-partner eligibilities here, as partner eligibilities don't exist
-        Assessors::GrossIncomeAssessor.call(
-          eligibilities: assessment.gross_income_summary.eligibilities,
-          total_gross_income: assessment.gross_income_summary.total_gross_income +
-            assessment.partner_gross_income_summary.total_gross_income,
-        )
+
+        assessment.gross_income_summary.update!(combined_total_gross_income: assessment.gross_income_summary.total_gross_income +
+                                                                            assessment.partner_gross_income_summary.total_gross_income)
       else
-        Assessors::GrossIncomeAssessor.call(eligibilities: assessment.gross_income_summary.eligibilities,
-                                            total_gross_income: assessment.gross_income_summary.total_gross_income)
+        assessment.gross_income_summary.update!(combined_total_gross_income: assessment.gross_income_summary.total_gross_income)
       end
+
+      Assessors::GrossIncomeAssessor.call(
+        eligibilities: assessment.gross_income_summary.eligibilities,
+        total_gross_income: assessment.gross_income_summary.combined_total_gross_income,
+      )
     end
 
     # TODO: make the Collators::DisposableIncomeCollator increment/sum to existing values so order of "collation" becomes unimportant
@@ -88,11 +89,12 @@ module Workflows
                                                  person: applicant_partner,
                                                  submission_date: assessment.submission_date)
 
-        Assessors::DisposableIncomeAssessor.call(
-          disposable_income_summary: assessment.disposable_income_summary,
-          total_disposable_income: assessment.disposable_income_summary.total_disposable_income +
-            assessment.partner_disposable_income_summary.total_disposable_income -
-            Threshold.value_for(:partner_allowance, at: assessment.submission_date),
+        assessment.disposable_income_summary.update!(
+          combined_total_disposable_income: assessment.disposable_income_summary.total_disposable_income +
+                                              assessment.partner_disposable_income_summary.total_disposable_income -
+                                              Threshold.value_for(:partner_allowance, at: assessment.submission_date),
+          combined_total_outgoings_and_allowances: assessment.disposable_income_summary.total_outgoings_and_allowances +
+                                                     assessment.partner_disposable_income_summary.total_outgoings_and_allowances,
         )
       else
         applicant = PersonWrapper.new person: assessment.applicant, is_single: true,
@@ -108,9 +110,11 @@ module Workflows
                                                  disposable_income_summary: assessment.disposable_income_summary,
                                                  person: applicant,
                                                  submission_date: assessment.submission_date)
-        Assessors::DisposableIncomeAssessor.call(disposable_income_summary: assessment.disposable_income_summary,
-                                                 total_disposable_income: assessment.disposable_income_summary.total_disposable_income)
+        assessment.disposable_income_summary.update!(combined_total_disposable_income: assessment.disposable_income_summary.total_disposable_income,
+                                                     combined_total_outgoings_and_allowances: assessment.disposable_income_summary.total_outgoings_and_allowances)
       end
+      Assessors::DisposableIncomeAssessor.call(disposable_income_summary: assessment.disposable_income_summary,
+                                               total_disposable_income: assessment.disposable_income_summary.combined_total_disposable_income)
     end
 
     def collate_and_assess_capital

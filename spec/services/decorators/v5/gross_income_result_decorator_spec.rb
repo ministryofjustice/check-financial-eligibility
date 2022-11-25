@@ -40,6 +40,7 @@ module Decorators
               result: "ineligible",
             },
           ],
+          combined_total_gross_income: 0.0,
         }
       end
 

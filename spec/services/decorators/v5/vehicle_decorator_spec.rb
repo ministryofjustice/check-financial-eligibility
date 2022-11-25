@@ -29,12 +29,13 @@ RSpec.describe Decorators::V5::VehicleDecorator do
         date_of_purchase: purchase_date,
         in_regular_use: false,
         included_in_assessment: false,
+        disregards_and_deductions: 10_749.56,
         assessed_value: 0.0,
       }
     end
 
     def expected_json
-      %({"value":12000.0,"loan_amount_outstanding":1250.44,"date_of_purchase":"2022-08-13","in_regular_use":false,"included_in_assessment":false,"assessed_value":0.0})
+      %({"value":12000.0,"loan_amount_outstanding":1250.44,"date_of_purchase":"2022-08-13","in_regular_use":false,"included_in_assessment":false,"disregards_and_deductions":10749.56,"assessed_value":0.0})
     end
   end
 end

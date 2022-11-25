@@ -18,11 +18,12 @@ class CapitalCollatorAndAssessor
           pensioner_capital_disregard: 0,
         )
         assessment.partner_capital_summary.update!(partner_data)
-        Assessors::CapitalAssessor.call(assessment.capital_summary,
-                                        assessment.capital_summary.assessed_capital + assessment.partner_capital_summary.assessed_capital)
+        assessment.capital_summary.update!(combined_assessed_capital: assessment.capital_summary.assessed_capital +
+                                                                  assessment.partner_capital_summary.assessed_capital)
       else
-        Assessors::CapitalAssessor.call(assessment.capital_summary, assessment.capital_summary.assessed_capital)
+        assessment.capital_summary.update!(combined_assessed_capital: assessment.capital_summary.assessed_capital)
       end
+      Assessors::CapitalAssessor.call(assessment.capital_summary, assessment.capital_summary.combined_assessed_capital)
     end
 
   private

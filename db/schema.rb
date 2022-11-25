@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_14_092809) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_23_103859) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -83,6 +83,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_14_092809) do
     t.datetime "updated_at", precision: nil, null: false
     t.decimal "subject_matter_of_dispute_disregard", default: "0.0", null: false
     t.string "type", default: "ApplicantCapitalSummary"
+    t.decimal "combined_assessed_capital"
     t.index ["assessment_id"], name: "index_capital_summaries_on_assessment_id"
   end
 
@@ -149,6 +150,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_14_092809) do
     t.decimal "tax", default: "0.0", null: false
     t.decimal "national_insurance", default: "0.0", null: false
     t.string "type", default: "ApplicantDisposableIncomeSummary"
+    t.decimal "combined_total_disposable_income"
+    t.decimal "combined_total_outgoings_and_allowances"
     t.index ["assessment_id"], name: "index_disposable_income_summaries_on_assessment_id"
   end
 
@@ -235,6 +238,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_14_092809) do
     t.decimal "unspecified_source", default: "0.0"
     t.decimal "monthly_unspecified_source"
     t.string "type", default: "ApplicantGrossIncomeSummary"
+    t.decimal "combined_total_gross_income"
     t.index ["assessment_id"], name: "index_gross_income_summaries_on_assessment_id"
   end
 

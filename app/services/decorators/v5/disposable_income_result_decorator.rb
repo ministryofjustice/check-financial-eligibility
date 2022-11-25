@@ -8,7 +8,7 @@ module Decorators
 
       def as_json
         if summary.is_a?(ApplicantDisposableIncomeSummary)
-          basic_attributes.merge(proceeding_types:)
+          basic_attributes.merge(proceeding_types:, combined_total_disposable_income:, combined_total_outgoings_and_allowances:)
         else
           basic_attributes.merge(partner_allowance:)
         end
@@ -53,6 +53,14 @@ module Decorators
 
       def partner_allowance
         Threshold.value_for(:partner_allowance, at: @summary.assessment.submission_date)
+      end
+
+      def combined_total_disposable_income
+        summary.combined_total_disposable_income.to_f
+      end
+
+      def combined_total_outgoings_and_allowances
+        summary.combined_total_outgoings_and_allowances.to_f
       end
     end
   end

@@ -24,7 +24,8 @@ module Decorators
                pensioner_capital_disregard: 10_000,
                subject_matter_of_dispute_disregard: 3_000,
                capital_contribution: 0.0,
-               assessed_capital: 9_355
+               assessed_capital: 9_355,
+               combined_assessed_capital: 12_000
       end
 
       let(:expected_result) do
@@ -55,6 +56,7 @@ module Decorators
               result: "ineligible",
             },
           ],
+          combined_assessed_capital: 12_000.0,
         }
       end
 

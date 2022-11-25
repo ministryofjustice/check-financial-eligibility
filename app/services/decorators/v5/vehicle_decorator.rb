@@ -12,6 +12,7 @@ module Decorators
           date_of_purchase: @record.date_of_purchase,
           in_regular_use: @record.in_regular_use,
           included_in_assessment: @record.included_in_assessment,
+          disregards_and_deductions: @record.value.to_f - @record.assessed_value.to_f - @record.loan_amount_outstanding.to_f,
           assessed_value: @record.assessed_value.to_f,
         }
       end

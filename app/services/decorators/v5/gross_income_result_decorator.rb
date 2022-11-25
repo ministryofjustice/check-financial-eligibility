@@ -7,7 +7,7 @@ module Decorators
 
       def as_json
         if @summary.is_a?(ApplicantGrossIncomeSummary)
-          basic_attributes.merge(proceeding_types:)
+          basic_attributes.merge(proceeding_types:, combined_total_gross_income:)
         else
           basic_attributes
         end
@@ -25,6 +25,10 @@ module Decorators
 
       def proceeding_types
         ProceedingTypesResultDecorator.new(summary).as_json
+      end
+
+      def combined_total_gross_income
+        summary.combined_total_gross_income.to_f
       end
     end
   end
