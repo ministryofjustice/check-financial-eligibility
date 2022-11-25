@@ -4,6 +4,7 @@ module Workflows
   RSpec.describe PassportedWorkflow do
     let(:assessment) do
       create :assessment,
+             :with_disposable_income_summary,
              :with_gross_income_summary_and_eligibilities,
              :with_capital_summary_and_eligibilities,
              proceedings: [%w[DA003 A], %w[SE014 Z]],
@@ -17,16 +18,16 @@ module Workflows
       subject(:workflow_call) { described_class.call(assessment) }
 
       it "calls Capital collator and updates capital summary record" do
-        allow(Collators::CapitalCollator).to receive(:call).with(assessment).and_return(capital_data)
-        expect(Collators::CapitalCollator).to receive(:call).with(assessment)
+        allow(Collators::CapitalCollator).to receive(:call).and_return(capital_data)
+        expect(Collators::CapitalCollator).to receive(:call)
         workflow_call
         expect(capital_summary.reload).to have_matching_attributes(capital_data)
       end
 
       it "calls CapitalAssessor and updates capital summary record with result" do
-        allow(Collators::CapitalCollator).to receive(:call).with(assessment).and_return(capital_data)
-        expect(Collators::CapitalCollator).to receive(:call).with(assessment)
-        expect(Assessors::CapitalAssessor).to receive(:call).with(assessment).and_call_original
+        allow(Collators::CapitalCollator).to receive(:call).and_return(capital_data)
+        expect(Collators::CapitalCollator).to receive(:call)
+        expect(Assessors::CapitalAssessor).to receive(:call).and_call_original
         workflow_call
         expect(capital_summary.summarized_assessment_result).to eq :eligible
       end

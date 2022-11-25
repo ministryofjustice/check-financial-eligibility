@@ -2,7 +2,10 @@ require "rails_helper"
 
 module Calculators
   RSpec.describe SubjectMatterOfDisputeDisregardCalculator do
-    subject(:value) { described_class.new(assessment).value }
+    subject(:value) do
+      described_class.new(submission_date: assessment.submission_date,
+                          capital_summary: assessment.capital_summary).value
+    end
 
     let(:assessment) { create :assessment, capital_summary: }
     let(:capital_summary) do

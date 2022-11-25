@@ -2,9 +2,16 @@ require "rails_helper"
 
 module Calculators
   RSpec.describe PensionerCapitalDisregardCalculator do
-    subject(:value) { described_class.new(assessment).value }
+    subject(:value) do
+      service.value
+    end
 
-    let(:service) { described_class.new(assessment) }
+    let(:service) do
+      described_class.new(submission_date: assessment.submission_date,
+                          person: assessment.applicant,
+                          receives_qualifying_benefit: assessment.applicant.receives_qualifying_benefit,
+                          total_disposable_income: assessment.disposable_income_summary.total_disposable_income)
+    end
     let(:assessment) { create :assessment, disposable_income_summary:, applicant: }
     let(:capital_summary) { assessment.capital_summary }
     let(:disposable_income_summary) { create :disposable_income_summary, total_disposable_income: disposable_income }

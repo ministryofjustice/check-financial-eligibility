@@ -114,9 +114,7 @@ module Workflows
     end
 
     def collate_and_assess_capital
-      data = Collators::CapitalCollator.call(assessment)
-      assessment.capital_summary.update!(data)
-      Assessors::CapitalAssessor.call(assessment)
+      CapitalCollatorAndAssessor.call assessment
     end
   end
 end

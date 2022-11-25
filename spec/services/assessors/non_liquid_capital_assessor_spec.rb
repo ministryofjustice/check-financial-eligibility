@@ -4,7 +4,6 @@ module Assessors
   RSpec.describe NonLiquidCapitalAssessor do
     let(:assessment) { create :assessment, :with_capital_summary }
     let(:capital_summary) { assessment.capital_summary }
-    let(:service) { described_class.new(assessment) }
 
     context "all positive supplied" do
       before do
@@ -12,13 +11,13 @@ module Assessors
       end
 
       it "adds them all together" do
-        expect(service.call).to eq capital_summary.non_liquid_capital_items.sum(&:value)
+        expect(described_class.call(capital_summary)).to eq capital_summary.non_liquid_capital_items.sum(&:value)
       end
     end
 
     context "no values supplied" do
       it "returns zero" do
-        expect(service.call).to eq 0.0
+        expect(described_class.call(capital_summary)).to eq 0.0
       end
     end
   end

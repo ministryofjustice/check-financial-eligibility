@@ -1,15 +1,9 @@
 module Workflows
-  class PassportedWorkflow < BaseWorkflowService
-    def call
-      collate_capitals
-      Assessors::CapitalAssessor.call(assessment)
-    end
-
-  private
-
-    def collate_capitals
-      data = Collators::CapitalCollator.call(assessment)
-      capital_summary.update!(data)
+  class PassportedWorkflow
+    class << self
+      def call(assessment)
+        CapitalCollatorAndAssessor.call assessment
+      end
     end
   end
 end
