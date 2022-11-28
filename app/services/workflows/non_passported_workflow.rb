@@ -74,9 +74,12 @@ module Workflows
                                           eligible_for_childcare:)
 
         Collators::DisposableIncomeCollator.call(gross_income_summary: assessment.gross_income_summary.freeze,
-                                                 disposable_income_summary: assessment.disposable_income_summary)
+                                                 disposable_income_summary: assessment.disposable_income_summary,
+                                                 eligible_for_partner_allowance: false)
         Collators::DisposableIncomeCollator.call(gross_income_summary: assessment.partner_gross_income_summary.freeze,
-                                                 disposable_income_summary: assessment.partner_disposable_income_summary)
+                                                 disposable_income_summary: assessment.partner_disposable_income_summary,
+                                                 eligible_for_partner_allowance: true,
+                                                 submission_date: assessment.submission_date)
 
         Collators::RegularOutgoingsCollator.call(gross_income_summary: assessment.gross_income_summary.freeze,
                                                  disposable_income_summary: assessment.disposable_income_summary,
@@ -87,8 +90,7 @@ module Workflows
 
         assessment.disposable_income_summary.update!(
           combined_total_disposable_income: assessment.disposable_income_summary.total_disposable_income +
-                                              assessment.partner_disposable_income_summary.total_disposable_income -
-                                              Threshold.value_for(:partner_allowance, at: assessment.submission_date),
+                                              assessment.partner_disposable_income_summary.total_disposable_income,
           combined_total_outgoings_and_allowances: assessment.disposable_income_summary.total_outgoings_and_allowances +
                                                      assessment.partner_disposable_income_summary.total_outgoings_and_allowances,
         )
@@ -102,7 +104,8 @@ module Workflows
                                           disposable_income_summary: assessment.disposable_income_summary,
                                           eligible_for_childcare:)
         Collators::DisposableIncomeCollator.call(gross_income_summary: assessment.gross_income_summary.freeze,
-                                                 disposable_income_summary: assessment.disposable_income_summary)
+                                                 disposable_income_summary: assessment.disposable_income_summary,
+                                                 eligible_for_partner_allowance: false)
         Collators::RegularOutgoingsCollator.call(gross_income_summary: assessment.gross_income_summary.freeze,
                                                  disposable_income_summary: assessment.disposable_income_summary,
                                                  eligible_for_childcare:)
