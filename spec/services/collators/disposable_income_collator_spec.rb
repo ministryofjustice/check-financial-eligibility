@@ -11,8 +11,8 @@ module Collators
     let(:net_housing) { gross_housing - housing_benefit }
     let(:employment_income_deductions) { Faker::Number.decimal(l_digits: 3, r_digits: 2).to_d(Float::DIG) }
     let(:fixed_employment_allowance) { 45.0 }
-
     let(:dependant_allowance) { 582.98 }
+    let(:partner_allowance) { 481.29 }
 
     let(:disposable_income_summary) do
       summary = create :disposable_income_summary,
@@ -42,7 +42,8 @@ module Collators
         net_housing +
         dependant_allowance -
         employment_income_deductions -
-        fixed_employment_allowance
+        fixed_employment_allowance +
+        partner_allowance
     end
 
     before { create :gross_income_summary, :with_all_records, assessment: }
@@ -50,7 +51,8 @@ module Collators
     describe ".call" do
       subject(:collator) do
         described_class.call(gross_income_summary: assessment.gross_income_summary,
-                             disposable_income_summary: assessment.disposable_income_summary)
+                             disposable_income_summary: assessment.disposable_income_summary,
+                             partner_allowance:)
       end
 
       context "total_monthly_outgoings" do

@@ -19,14 +19,15 @@ module Collators
              :gross_employment_income, to: :@gross_income_summary
 
     class << self
-      def call(disposable_income_summary:, gross_income_summary:)
-        new(gross_income_summary:, disposable_income_summary:).call
+      def call(disposable_income_summary:, gross_income_summary:, partner_allowance:)
+        new(gross_income_summary:, disposable_income_summary:, partner_allowance:).call
       end
     end
 
-    def initialize(disposable_income_summary:, gross_income_summary:)
+    def initialize(disposable_income_summary:, gross_income_summary:, partner_allowance:)
       @disposable_income_summary = disposable_income_summary
       @gross_income_summary = gross_income_summary
+      @partner_allowance = partner_allowance
       @monthly_cash_transactions_total = 0
     end
 
@@ -74,7 +75,8 @@ module Collators
         monthly_bank_transactions_total +
         @monthly_cash_transactions_total -
         fixed_employment_allowance -
-        employment_income_deductions
+        employment_income_deductions +
+        @partner_allowance
     end
 
     def monthly_bank_transactions_total
