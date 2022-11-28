@@ -1,12 +1,10 @@
 class CapitalCollatorAndAssessor
   class << self
     def call(assessment)
-      smod_disregard = Calculators::SubjectMatterOfDisputeDisregardCalculator.new(submission_date: assessment.submission_date,
-                                                                                  capital_summary: assessment.capital_summary).value
       data = Collators::CapitalCollator.call(
         submission_date: assessment.submission_date,
         capital_summary: assessment.capital_summary,
-        subject_matter_of_dispute_disregard: smod_disregard,
+        maximum_subject_matter_of_dispute_disregard: maximum_subject_matter_of_dispute_disregard(assessment),
         pensioner_capital_disregard: pensioner_capital_disregard(assessment),
       )
       assessment.capital_summary.update!(data)
@@ -14,8 +12,8 @@ class CapitalCollatorAndAssessor
         partner_data = Collators::CapitalCollator.call(
           submission_date: assessment.submission_date,
           capital_summary: assessment.partner_capital_summary,
-          subject_matter_of_dispute_disregard: 0,
           pensioner_capital_disregard: 0,
+          maximum_subject_matter_of_dispute_disregard: 0,
         )
         assessment.partner_capital_summary.update!(partner_data)
         assessment.capital_summary.update!(combined_assessed_capital: assessment.capital_summary.assessed_capital +
@@ -53,6 +51,10 @@ class CapitalCollatorAndAssessor
         ).value
       end
       [applicant_value, partner_value].compact.max
+    end
+
+    def maximum_subject_matter_of_dispute_disregard(assessment)
+      Threshold.value_for(:subject_matter_of_dispute_disregard, at: assessment.submission_date)
     end
   end
 end

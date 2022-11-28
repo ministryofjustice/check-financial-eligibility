@@ -14,16 +14,16 @@ module Collators
     }.freeze
 
     class << self
-      def call(submission_date:, capital_summary:, pensioner_capital_disregard:, subject_matter_of_dispute_disregard:)
-        new(submission_date:, capital_summary:, subject_matter_of_dispute_disregard:, pensioner_capital_disregard:).call
+      def call(submission_date:, capital_summary:, pensioner_capital_disregard:, maximum_subject_matter_of_dispute_disregard:)
+        new(submission_date:, capital_summary:, pensioner_capital_disregard:, maximum_subject_matter_of_dispute_disregard:).call
       end
     end
 
-    def initialize(submission_date:, capital_summary:, pensioner_capital_disregard:, subject_matter_of_dispute_disregard:)
+    def initialize(submission_date:, capital_summary:, pensioner_capital_disregard:, maximum_subject_matter_of_dispute_disregard:)
       @submission_date = submission_date
       @capital_summary = capital_summary
       @pensioner_capital_disregard = pensioner_capital_disregard
-      @subject_matter_of_dispute_disregard = subject_matter_of_dispute_disregard
+      @maximum_subject_matter_of_dispute_disregard = maximum_subject_matter_of_dispute_disregard
     end
 
     def call
@@ -32,10 +32,15 @@ module Collators
 
   private
 
-    attr_reader :pensioner_capital_disregard, :subject_matter_of_dispute_disregard
+    attr_reader :pensioner_capital_disregard
 
     def assessed_capital
       total_capital - pensioner_capital_disregard - subject_matter_of_dispute_disregard
+    end
+
+    def subject_matter_of_dispute_disregard
+      Calculators::SubjectMatterOfDisputeDisregardCalculator.new(capital_summary: @capital_summary,
+                                                                 maximum_disregard: @maximum_subject_matter_of_dispute_disregard).value
     end
 
     def total_capital

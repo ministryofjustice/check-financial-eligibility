@@ -1,10 +1,12 @@
+# WARNING: This calculator assumes that the assessed value/equity of all disputed properties and vehicles
+# has already been calculated. If this is not the case, it will produce inaccurate results.
 module Calculators
   class SubjectMatterOfDisputeDisregardCalculator
     delegate :disputed_capital_items, :disputed_vehicles, :disputed_properties, to: :@capital_summary
 
-    def initialize(submission_date:, capital_summary:)
-      @submission_date = submission_date
+    def initialize(capital_summary:, maximum_disregard:)
       @capital_summary = capital_summary
+      @maximum_disregard = maximum_disregard
     end
 
     def value
@@ -12,18 +14,14 @@ module Calculators
         disputed_property_value +
         disputed_vehicle_value
 
-      if total_disputed_asset_value.positive? && threshold.nil?
-        raise "SMOD assets listed but no threshold data found for #{@submission_date}"
+      if total_disputed_asset_value.positive? && @maximum_disregard.nil?
+        raise "SMOD assets listed but no threshold data found"
       end
 
-      [total_disputed_asset_value, threshold].compact.min
+      [total_disputed_asset_value, @maximum_disregard].compact.min
     end
 
   private
-
-    def threshold
-      @threshold ||= Threshold.value_for(:subject_matter_of_dispute_disregard, at: @submission_date)
-    end
 
     def disputed_capital_value
       disputed_capital_items.sum(:value)

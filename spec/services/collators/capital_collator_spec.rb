@@ -15,7 +15,7 @@ module Collators
         described_class.call submission_date: assessment.submission_date,
                              capital_summary: assessment.capital_summary,
                              pensioner_capital_disregard: pcd_value,
-                             subject_matter_of_dispute_disregard: smod_value
+                             maximum_subject_matter_of_dispute_disregard: smod_value
       end
 
       it "always returns a hash" do
@@ -57,7 +57,6 @@ module Collators
 
       context "summarization of result_fields" do
         let(:pcd_value) { 100_000 }
-        let(:smod_value) { 5_000 }
 
         it "summarizes the results it gets from the subservices" do
           property_service = instance_double Calculators::PropertyCalculator
@@ -78,8 +77,8 @@ module Collators
           expect(collator[:total_mortgage_allowance]).to eq 999_999_999_999
           expect(collator[:total_capital]).to eq 26_145.83
           expect(collator[:pensioner_capital_disregard]).to eq 100_000
-          expect(collator[:subject_matter_of_dispute_disregard]).to eq 5_000
-          expect(collator[:assessed_capital]).to eq(-78_854.17)
+          expect(collator[:subject_matter_of_dispute_disregard]).to eq 0
+          expect(collator[:assessed_capital]).to eq(-73_854.17)
         end
       end
     end

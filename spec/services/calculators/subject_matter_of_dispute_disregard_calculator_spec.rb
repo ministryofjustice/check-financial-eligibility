@@ -3,11 +3,10 @@ require "rails_helper"
 module Calculators
   RSpec.describe SubjectMatterOfDisputeDisregardCalculator do
     subject(:value) do
-      described_class.new(submission_date: assessment.submission_date,
-                          capital_summary: assessment.capital_summary).value
+      described_class.new(capital_summary:,
+                          maximum_disregard:).value
     end
 
-    let(:assessment) { create :assessment, capital_summary: }
     let(:capital_summary) do
       create :capital_summary,
              vehicles: [vehicle],
@@ -17,11 +16,7 @@ module Calculators
     let(:vehicle) { create :vehicle, subject_matter_of_dispute: false }
     let(:capital_item) { create :liquid_capital_item, subject_matter_of_dispute: false }
     let(:property) { create :property, subject_matter_of_dispute: false }
-    let(:threshold_value) { 10_000 }
-
-    before do
-      allow(Threshold).to receive(:value_for).and_return(threshold_value)
-    end
+    let(:maximum_disregard) { 10_000 }
 
     describe "#value" do
       context "without any SMOD assets" do
@@ -74,11 +69,11 @@ module Calculators
         end
       end
 
-      context "if there is no valid threshold provided" do
+      context "if there is no valid upper limit provided" do
         let(:capital_item) { create :liquid_capital_item, value: 3_000, subject_matter_of_dispute: true }
         let(:vehicle) { create :vehicle, assessed_value: 1_000, subject_matter_of_dispute: true }
         let(:property) { create :property, assessed_equity: 9_000, subject_matter_of_dispute: true }
-        let(:threshold_value) { nil }
+        let(:maximum_disregard) { nil }
 
         it "raises an exception" do
           expect { value }.to raise_error RuntimeError
