@@ -2,9 +2,11 @@ RESPONSE_SECTION_MAPPINGS = {
   "v5" => {
     "assessment_result" => "result_summary.overall_result.result",
     "disposable_income_summary" => "result_summary.disposable_income",
+    "capital summary" => "result_summary.capital",
     "capital_lower_threshold" => "result_summary.capital.proceeding_types.0.lower_threshold",
     "gross_income_upper_threshold" => "result_summary.gross_income.proceeding_types.1.upper_threshold",
     "gross_income_proceeding_types" => "result_summary.gross_income.proceeding_types",
+    "main property" => "assessment.capital.capital_items.properties.main_home",
   },
 }.freeze
 

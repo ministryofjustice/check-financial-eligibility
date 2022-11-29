@@ -1,3 +1,17 @@
+Given("I am undertaking a standard assessment with an applicant who receives passporting benefits") do
+  @api_version = 5
+  response = submit_request(:post, "assessments", @api_version,
+                            { client_reference_id: "N/A", submission_date: "2022-05-10" })
+  @assessment_id = response["assessment_id"]
+  submit_request(:post, "assessments/#{@assessment_id}/applicant", @api_version,
+                 { applicant: { date_of_birth: "1979-12-20",
+                                involvement_type: "applicant",
+                                has_partner_opponent: false,
+                                receives_qualifying_benefit: true } })
+  submit_request(:post, "assessments/#{@assessment_id}/proceeding_types", @api_version,
+                 { "proceeding_types": [{ ccms_code: "DA001", client_involvement_type: "A" }] })
+end
+
 Given("I am using version {int} of the API") do |int|
   @api_version = int
 end
@@ -41,6 +55,11 @@ end
 Given("I add the following capital details for {string} in the current assessment:") do |string, table|
   data = { string.to_s => table.hashes.map { cast_values(_1) } }
   submit_request(:post, "assessments/#{@assessment_id}/capitals", @api_version, data)
+end
+
+Given("I add the following main property details for the current assessment:") do |table|
+  data = { "properties": { "main_home": cast_values(table.rows_hash) } }
+  submit_request(:post, "assessments/#{@assessment_id}/properties", @api_version, data)
 end
 
 Given("I add the following proceeding types in the current assessment:") do |table|

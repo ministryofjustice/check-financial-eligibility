@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_24_120203) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_28_152328) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -322,7 +322,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_24_120203) do
     t.decimal "allowable_outstanding_mortgage", default: "0.0", null: false
     t.decimal "net_value", default: "0.0", null: false
     t.decimal "net_equity", default: "0.0", null: false
-    t.decimal "assessed_equity", default: "0.0", null: false
+    t.decimal "assessed_equity"
     t.decimal "main_home_equity_disregard", default: "0.0", null: false
     t.boolean "subject_matter_of_dispute"
     t.index ["capital_summary_id"], name: "index_properties_on_capital_summary_id"
@@ -394,7 +394,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_24_120203) do
     t.datetime "updated_at", precision: nil, null: false
     t.uuid "capital_summary_id"
     t.boolean "included_in_assessment", default: false, null: false
-    t.decimal "assessed_value", default: "0.0", null: false
+    t.decimal "assessed_value"
     t.boolean "subject_matter_of_dispute"
     t.index ["capital_summary_id"], name: "index_vehicles_on_capital_summary_id"
   end
