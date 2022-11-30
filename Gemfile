@@ -74,7 +74,6 @@ group :development, :test do
   gem "rswag-specs"
   gem "rubocop-govuk", require: false
   gem "rubocop-performance"
-  gem "timecop"
 end
 
 group :development do
