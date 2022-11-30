@@ -389,7 +389,6 @@ GEM
       diff-lcs
       patience_diff
     thor (1.2.1)
-    timecop (0.9.5)
     timeout (0.3.0)
     trailblazer-option (0.1.2)
     tzinfo (2.0.5)
@@ -457,7 +456,6 @@ DEPENDENCIES
   simplecov-rcov
   spring
   super_diff
-  timecop
   tzinfo-data
   vcr
   webmock (>= 3.13.0)
