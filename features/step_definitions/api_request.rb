@@ -27,6 +27,16 @@ Given("I create an assessment with the following details:") do |table|
   @assessment_id = response["assessment_id"]
 end
 
+Given("I add the following partner details to the current assessment:") do |table|
+  data = { "partner": cast_values(table.rows_hash) }
+  submit_request(:post, "assessments/#{@assessment_id}/partner_financials", @api_version, data)
+end
+
+Given("I add the following vehicle details for the partner in the current assessment:") do |table|
+  data = { "vehicles": cast_values(table.rows_hash) }
+  submit_request(:post, "assessments/#{@assessment_id}/partner_financials", @api_version, data)
+end
+
 Given("I add the following applicant details for the current assessment:") do |table|
   data = { "applicant": cast_values(table.rows_hash) }
   submit_request(:post, "assessments/#{@assessment_id}/applicant", @api_version, data)
@@ -46,6 +56,34 @@ Given("I add the following irregular_income details in the current assessment:")
   data = { "payments": table.hashes.map { cast_values(_1) } }
   submit_request(:post, "assessments/#{@assessment_id}/irregular_incomes", @api_version, data)
 end
+
+Given("I add the following irregular_income details for the partner in the current assessment:") do |table|
+  data = {
+    "partner": {
+      "date_of_birth": "1992-07-22",
+      "employed": true
+    },
+    "irregular_incomes":  table.hashes.map { cast_values(_1) }
+  }
+
+  pp data
+  submit_request(:post, "assessments/#{@assessment_id}/partner_financials", @api_version, data)
+end
+
+{
+  "partner": {
+    "date_of_birth": "1992-07-22",
+    "employed": true
+  },
+  "irregular_incomes": [
+    {
+      "income_type": "student_loan",
+      "frequency": "annual",
+      "amount": 101.01
+    }
+  ]
+}
+
 
 Given("I add the following outgoing details for {string} in the current assessment:") do |string, table|
   data = { "outgoings": ["name": string, "payments": table.hashes.map { cast_values(_1) }] }
@@ -114,6 +152,22 @@ Then("I should see the following {string} details where {string}:") do |attribut
 end
 
 Then("I should see the following {string} details:") do |section_name, table|
+  response_section = extract_response_section(@response, @api_version, section_name)
+
+  failures = []
+  table.hashes.each do |row|
+    error = validate_response(response_section[row["attribute"]], row["value"], row["attribute"])
+    failures.append(error) if error.present?
+  end
+
+  if failures.any?
+    failures.append "\n----\nSelected response being validated: #{response_section.to_json}\n----\n"
+  end
+
+  raise_if_present(failures)
+end
+
+Then("I should see the following {string} details for the partner:") do |section_name, table|
   response_section = extract_response_section(@response, @api_version, section_name)
 
   failures = []
