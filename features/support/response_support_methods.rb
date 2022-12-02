@@ -9,6 +9,8 @@ RESPONSE_SECTION_MAPPINGS = {
     "main property" => "assessment.capital.capital_items.properties.main_home",
     "additional property" => "assessment.capital.capital_items.properties.additional_properties.0",
     "vehicle" => "assessment.capital.capital_items.vehicles.0",
+    "partner_capital" => "assessment.partner_capital.capital_items.properties.additional_properties",
+    "overall_disposable_income" => "result_summary.partner_disposable_income",
   },
 }.freeze
 
@@ -32,6 +34,7 @@ def extract_response_section(response, version, section_name)
 
   # Drill down into the JSON and extract the value out. Works with hash and array structures.
   relevant_section = response
+
   section_path.split(".").each do |key|
     key = key.to_i if relevant_section.is_a?(Array)
 
