@@ -7,6 +7,8 @@ RESPONSE_SECTION_MAPPINGS = {
     "gross_income_upper_threshold" => "result_summary.gross_income.proceeding_types.1.upper_threshold",
     "gross_income_proceeding_types" => "result_summary.gross_income.proceeding_types",
     "main property" => "assessment.capital.capital_items.properties.main_home",
+    "partner irregular income" => "assessment.partner_gross_income.irregular_income.monthly_equivalents",
+    "partner_capital" => "assessment.partner_capital.capital_items.properties.additional_properties",
   },
 }.freeze
 
@@ -48,6 +50,12 @@ def raise_if_present(failures)
 end
 
 def validate_response(result, value, attribute, condition: nil)
+  puts 99999999
+  pp result
+  puts 7777777
+  pp value
+  puts 66666666
+  pp attribute
   return if value.to_s == result.to_s
 
   condition_clause = " with condition: #{condition}" if condition

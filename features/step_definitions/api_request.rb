@@ -27,16 +27,6 @@ Given("I create an assessment with the following details:") do |table|
   @assessment_id = response["assessment_id"]
 end
 
-Given("I add the following partner details to the current assessment:") do |table|
-  data = { "partner": cast_values(table.rows_hash) }
-  submit_request(:post, "assessments/#{@assessment_id}/partner_financials", @api_version, data)
-end
-
-Given("I add the following vehicle details for the partner in the current assessment:") do |table|
-  data = { "vehicles": cast_values(table.rows_hash) }
-  submit_request(:post, "assessments/#{@assessment_id}/partner_financials", @api_version, data)
-end
-
 Given("I add the following applicant details for the current assessment:") do |table|
   data = { "applicant": cast_values(table.rows_hash) }
   submit_request(:post, "assessments/#{@assessment_id}/applicant", @api_version, data)
@@ -57,6 +47,12 @@ Given("I add the following irregular_income details in the current assessment:")
   submit_request(:post, "assessments/#{@assessment_id}/irregular_incomes", @api_version, data)
 end
 
+# Given("I add the following partner details to the current assessment:") do |table|
+#   data = { "partner": cast_values(table.rows_hash) }
+#   submit_request(:post, "assessments/#{@assessment_id}/partner_financials", @api_version, data)
+# end
+#
+
 Given("I add the following irregular_income details for the partner in the current assessment:") do |table|
   data = {
     "partner": {
@@ -65,25 +61,37 @@ Given("I add the following irregular_income details for the partner in the curre
     },
     "irregular_incomes":  table.hashes.map { cast_values(_1) }
   }
-
+  puts 11111122223333
   pp data
   submit_request(:post, "assessments/#{@assessment_id}/partner_financials", @api_version, data)
 end
 
-{
-  "partner": {
-    "date_of_birth": "1992-07-22",
-    "employed": true
-  },
-  "irregular_incomes": [
-    {
-      "income_type": "student_loan",
-      "frequency": "annual",
-      "amount": 101.01
-    }
-  ]
-}
-
+Given("I add the following capital details for the partner in the current assessment:") do |table|
+  data = {
+    "partner": {
+      "date_of_birth": "1992-07-22",
+      "employed": true
+    },
+    # "irregular_incomes":[],
+    # "employments": [],
+    # "regular_transactions":[],
+    # "state_benefits": [],
+    "additional_properties": [
+      {
+        "value": 235000.01,
+        "outstanding_mortgage": 14999.99,
+        "percentage_owned": 50,
+        "shared_with_housing_assoc": false,
+        "subject_matter_of_dispute": false
+      }
+    ],
+    "capital_items": { "bank_accounts": [] },
+    "vehicles": []
+  }
+  puts 11111122223333
+  pp data
+  submit_request(:post, "assessments/#{@assessment_id}/partner_financials", @api_version, data)
+end
 
 Given("I add the following outgoing details for {string} in the current assessment:") do |string, table|
   data = { "outgoings": ["name": string, "payments": table.hashes.map { cast_values(_1) }] }
@@ -168,11 +176,21 @@ Then("I should see the following {string} details:") do |section_name, table|
 end
 
 Then("I should see the following {string} details for the partner:") do |section_name, table|
+  # puts section_name
+  # puts 2222222222
+  # pp @response
   response_section = extract_response_section(@response, @api_version, section_name)
-
+  # puts 444444444
+  # pp response_section
   failures = []
   table.hashes.each do |row|
-    error = validate_response(response_section[row["attribute"]], row["value"], row["attribute"])
+    # puts 5555555
+    # puts row
+    # binding.pry
+    # puts response_section
+    # puts 55555
+    # pp response_section[row["attribute"]], row["value"], row["attribute"]
+    error = validate_response(response_section.first[row["attribute"]], row["value"], row["attribute"])
     failures.append(error) if error.present?
   end
 
