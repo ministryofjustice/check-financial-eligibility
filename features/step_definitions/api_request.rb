@@ -61,8 +61,6 @@ Given("I add the following irregular_income details for the partner in the curre
     },
     "irregular_incomes":  table.hashes.map { cast_values(_1) }
   }
-  puts 11111122223333
-  pp data
   submit_request(:post, "assessments/#{@assessment_id}/partner_financials", @api_version, data)
 end
 
@@ -72,24 +70,11 @@ Given("I add the following capital details for the partner in the current assess
       "date_of_birth": "1992-07-22",
       "employed": true
     },
-    # "irregular_incomes":[],
-    # "employments": [],
-    # "regular_transactions":[],
-    # "state_benefits": [],
-    "additional_properties": [
-      {
-        "value": 235000.01,
-        "outstanding_mortgage": 14999.99,
-        "percentage_owned": 50,
-        "shared_with_housing_assoc": false,
-        "subject_matter_of_dispute": false
-      }
-    ],
+    "additional_properties":
+      [cast_values(table.rows_hash)],
     "capital_items": { "bank_accounts": [] },
     "vehicles": []
   }
-  puts 11111122223333
-  pp data
   submit_request(:post, "assessments/#{@assessment_id}/partner_financials", @api_version, data)
 end
 

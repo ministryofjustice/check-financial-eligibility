@@ -50,12 +50,6 @@ def raise_if_present(failures)
 end
 
 def validate_response(result, value, attribute, condition: nil)
-  puts 99999999
-  pp result
-  puts 7777777
-  pp value
-  puts 66666666
-  pp attribute
   return if value.to_s == result.to_s
 
   condition_clause = " with condition: #{condition}" if condition

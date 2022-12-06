@@ -11,9 +11,11 @@ Feature:
 #      | student_loan              | annual       | 9999.99 |
 #      | unspecified_source        | quarterly    | 336.33  |
     And I add the following capital details for the partner in the current assessment:
-      | income_type               | frequency    | amount  |
-      | student_loan              | annual       | 9999.99 |
-      | unspecified_source        | quarterly    | 336.33  |
+      | value                       | 235000.01 |
+      | outstanding_mortgage        | 14999.99  |
+      | percentage_owned            | 50        |
+      | shared_with_housing_assoc   | false     |
+      | subject_matter_of_dispute   | false     |
     And I add the following main property details for the current assessment:
       | value                     | 150000 |
       | outstanding_mortgage      | 0      |
