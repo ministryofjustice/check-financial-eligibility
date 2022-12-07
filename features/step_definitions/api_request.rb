@@ -58,8 +58,11 @@ Given("I add the following capital details for {string} in the current assessmen
 end
 
 Given("I add the following main property details for the current assessment:") do |table|
-  data = { "properties": { "main_home": cast_values(table.rows_hash) } }
-  submit_request(:post, "assessments/#{@assessment_id}/properties", @api_version, data)
+  @main_home = cast_values(table.rows_hash)
+end
+
+Given("I add the following additional property details for the current assessment:") do |table|
+  @secondary_home = cast_values(table.rows_hash)
 end
 
 Given("I add the following proceeding types in the current assessment:") do |table|
@@ -67,7 +70,19 @@ Given("I add the following proceeding types in the current assessment:") do |tab
   submit_request(:post, "assessments/#{@assessment_id}/proceeding_types", @api_version, data)
 end
 
+Given("I add the following vehicle details for the current assessment:") do |table|
+  data = { "vehicles": [cast_values(table.rows_hash)] }
+  submit_request(:post, "assessments/#{@assessment_id}/vehicles", @api_version, data)
+end
+
 When("I retrieve the final assessment") do
+  if @main_home || @secondary_home
+    additional_properties = @secondary_home ? [@secondary_home] : []
+    main_home = @main_home || blank_main_home
+    data = { "properties": { main_home:, additional_properties: } }
+    submit_request(:post, "assessments/#{@assessment_id}/properties", @api_version, data)
+  end
+
   @response = submit_request(:get, "assessments/#{@assessment_id}", @api_version)
 end
 

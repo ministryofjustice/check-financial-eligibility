@@ -7,6 +7,8 @@ RESPONSE_SECTION_MAPPINGS = {
     "gross_income_upper_threshold" => "result_summary.gross_income.proceeding_types.1.upper_threshold",
     "gross_income_proceeding_types" => "result_summary.gross_income.proceeding_types",
     "main property" => "assessment.capital.capital_items.properties.main_home",
+    "additional property" => "assessment.capital.capital_items.properties.additional_properties.0",
+    "vehicle" => "assessment.capital.capital_items.vehicles.0",
   },
 }.freeze
 

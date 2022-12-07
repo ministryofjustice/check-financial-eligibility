@@ -24,3 +24,13 @@ def substitute_boolean(value)
 
   value
 end
+
+def blank_main_home
+  {
+    value: 0,
+    outstanding_mortgage: 0,
+    percentage_owned: 0,
+    shared_with_housing_assoc: false,
+    subject_matter_of_dispute: false,
+  }
+end
