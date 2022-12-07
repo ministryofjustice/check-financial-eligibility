@@ -1,0 +1,69 @@
+Feature:
+  "Applicant has a partner"
+
+  Scenario: An applicant with a partner who has additional property (capital)
+    Given I am undertaking a standard assessment with an applicant who receives passporting benefits
+    And I add the following main property details for the current assessment:
+      | value                     | 150000 |
+      | outstanding_mortgage      | 145000 |
+      | percentage_owned          | 100    |
+      | shared_with_housing_assoc | false  |
+      | subject_matter_of_dispute | true   |
+    And I add the following additional property details for the partner in the current assessment:
+      | value                       | 170000.00 |
+      | outstanding_mortgage        | 100000.00 |
+      | percentage_owned            | 100       |
+      | shared_with_housing_assoc   | false     |
+      | subject_matter_of_dispute   | false     |
+    When I retrieve the final assessment
+    Then I should see the following "main property" details:
+      | attribute                  | value    |
+      | value                      | 150000.0 |
+      | main_home_equity_disregard | 100000.0 |
+      | transaction_allowance      | 4500.0   |
+      | assessed_equity            | 0.0      |
+    And I should see the following "partner_capital" details for the partner:
+      | attribute                  | value     |
+      | value                      | 170000.0  |
+      | outstanding_mortgage       | 100000.0  |
+      | percentage_owned           | 100.0     |
+      | shared_with_housing_assoc  | false     |
+      | assessed_equity            | 64900.0   |
+      | net_value                  | 64900.0   |
+    And I should see the following overall summary:
+      | attribute                    | value                 |
+      | assessment_result            | contribution_required |
+
+  Scenario: An unemployed applicant with an employed partner
+    Given I am undertaking a standard assessment with a pensioner applicant who is not passported
+    And I add the following employment details for the partner:
+      | client_id |     date     |  gross | benefits_in_kind  | tax   | national_insurance | net_employment_income |
+      |     C     |  2022-07-22  | 500.50 |       0           | 75.00 |       15.0         |        410.5          |
+      |     C     |  2022-08-22  | 500.50 |       0           | 75.00 |       15.0         |        410.5          |
+      |     C     |  2022-09-22  | 500.50 |       0           | 75.00 |       15.0         |        410.5          |
+    When I retrieve the final assessment
+    Then I should see the following "overall_disposable_income" details:
+      | attribute                    | value    |
+      | total_disposable_income      | 354.09   |
+    And I should see the following overall summary:
+      | attribute                    | value                 |
+      | assessment_result            | contribution_required |
+
+  Scenario: A applicant with a partner with capital and both pensioners
+    Given I am undertaking a standard assessment with a pensioner applicant who is not passported
+    And I add the following employment details for the partner:
+      | client_id |     date     |  gross | benefits_in_kind  | tax   | national_insurance | net_employment_income |
+      |     C     |  2022-07-22  | 500.50 |       0           | 75.00 |       15.0         |        410.5          |
+      |     C     |  2022-08-22  | 500.50 |       0           | 75.00 |       15.0         |        410.5          |
+      |     C     |  2022-09-22  | 500.50 |       0           | 75.00 |       15.0         |        410.5          |
+    And I add the following additional property details for the partner in the current assessment:
+      | value                       | 170000.00 |
+      | outstanding_mortgage        | 100000.00 |
+      | percentage_owned            | 100       |
+      | shared_with_housing_assoc   | false     |
+      | subject_matter_of_dispute   | false     |
+    When I retrieve the final assessment
+    And I should see the following overall summary:
+      | attribute                    | value                   |
+      | assessment_result            | contribution_required   |
+

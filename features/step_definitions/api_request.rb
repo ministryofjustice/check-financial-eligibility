@@ -12,6 +12,20 @@ Given("I am undertaking a standard assessment with an applicant who receives pas
                  { "proceeding_types": [{ ccms_code: "DA001", client_involvement_type: "A" }] })
 end
 
+Given("I am undertaking a standard assessment with a pensioner applicant who is not passported") do
+  @api_version = 5
+  response = submit_request(:post, "assessments", @api_version,
+                            { client_reference_id: "N/A", submission_date: "2022-05-10" })
+  @assessment_id = response["assessment_id"]
+  submit_request(:post, "assessments/#{@assessment_id}/applicant", @api_version,
+                 { applicant: { date_of_birth: "1939-12-20",
+                                involvement_type: "applicant",
+                                has_partner_opponent: false,
+                                receives_qualifying_benefit: false } })
+  submit_request(:post, "assessments/#{@assessment_id}/proceeding_types", @api_version,
+                 { "proceeding_types": [{ ccms_code: "DA001", client_involvement_type: "A" }] })
+end
+
 Given("I am using version {int} of the API") do |int|
   @api_version = int
 end
@@ -57,6 +71,16 @@ Given("I add the following capital details for {string} in the current assessmen
   submit_request(:post, "assessments/#{@assessment_id}/capitals", @api_version, data)
 end
 
+Given("I add the following employment details for the partner:") do |table|
+  @partner_employments = [{ "name": "A",
+                            "client_id": "B",
+                            "payments": table.hashes.map { cast_values(_1) } }]
+end
+
+Given("I add the following additional property details for the partner in the current assessment:") do |table|
+  @partner_property = [cast_values(table.rows_hash)]
+end
+
 Given("I add the following main property details for the current assessment:") do |table|
   @main_home = cast_values(table.rows_hash)
 end
@@ -81,6 +105,13 @@ When("I retrieve the final assessment") do
     main_home = @main_home || blank_main_home
     data = { "properties": { main_home:, additional_properties: } }
     submit_request(:post, "assessments/#{@assessment_id}/properties", @api_version, data)
+  end
+
+  if @partner_employments || @partner_property
+    employments = @partner_employments || []
+    additional_properties = @partner_property || []
+    data = { "partner": { "date_of_birth": "1992-07-22", "employed": true }, employments:, additional_properties: }
+    submit_request(:post, "assessments/#{@assessment_id}/partner_financials", @api_version, data)
   end
 
   @response = submit_request(:get, "assessments/#{@assessment_id}", @api_version)
@@ -137,6 +168,21 @@ Then("I should see the following {string} details:") do |section_name, table|
     failures.append(error) if error.present?
   end
 
+  if failures.any?
+    failures.append "\n----\nSelected response being validated: #{response_section.to_json}\n----\n"
+  end
+
+  raise_if_present(failures)
+end
+
+Then("I should see the following {string} details for the partner:") do |section_name, table|
+  response_section = extract_response_section(@response, @api_version, section_name)
+
+  failures = []
+  table.hashes.each do |row|
+    error = validate_response(response_section.first[row["attribute"]], row["value"], row["attribute"])
+    failures.append(error) if error.present?
+  end
   if failures.any?
     failures.append "\n----\nSelected response being validated: #{response_section.to_json}\n----\n"
   end
