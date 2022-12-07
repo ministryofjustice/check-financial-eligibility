@@ -347,6 +347,11 @@ workflows:
             branches:
               only: main
       #          <<: *generic-slack-fail-post-step
+      - integration_tests:
+          filters:
+            branches:
+              ignore: main
+      #          <<: *generic-slack-fail-post-stepa
       - check_swagger:
           filters:
             branches:
