@@ -376,10 +376,18 @@ workflows:
             branches:
               only:
                 - main
+      - deploy_production_approval:
+          type: approval
+          requires:
+            - build_and_push
+          filters:
+            branches:
+              only:
+                - main
       - deploy_production:
           context: check-financial-eligibility-partner-production
           requires:
-            - build_and_push
+            - deploy_production_approval
           filters:
             branches:
               only:
