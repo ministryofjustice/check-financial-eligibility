@@ -53,8 +53,6 @@ gem "nesty"
 # parse spreadsheets
 gem "roo", "~> 2.9.0"
 
-gem "webpacker", "~> 5", ">= 5.4.3"
-
 # Required following upgrade to ruby 3.1.0
 gem "net-imap"
 gem "net-pop"
@@ -103,6 +101,3 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data"
-
-# Identify file types before uploads
-gem "mimemagic", ">= 0.4.3"

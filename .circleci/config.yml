@@ -115,10 +115,6 @@ references:
       key: check-financial-eligibility-partner-{{ checksum "Gemfile.lock" }}
       paths:
         - vendor/bundle
-  install_js_packages: &install_js_packages
-    run:
-      name: Install npm packages
-      command: npm install
   setup_database: &setup_database
     run:
       name: Database Setup
@@ -147,7 +143,6 @@ jobs:
       - *install_gems
       - *save_gems_cache
       - *setup_database
-      - *install_js_packages
       - run:
           name: Setup Code Climate test-reporter
           command: |
@@ -190,7 +185,6 @@ jobs:
       - *install_gems
       - *save_gems_cache
       - *setup_database
-      - *install_js_packages
       - run:
           name: Check for unapplied swagger documentation specs
           command: |

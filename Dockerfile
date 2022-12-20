@@ -8,13 +8,7 @@ RUN set -ex
 RUN apk --no-cache add --virtual build-dependencies \
                     build-base \
                     postgresql-dev \
-&& apk --no-cache add \
-                  postgresql-client \
-                  nodejs \
-                  libxml2-dev \
-                  libxslt-dev \
-                  shared-mime-info \
-                  yarn
+&& apk --no-cache add postgresql-client
 
 RUN mkdir /myapp
 WORKDIR /myapp
@@ -24,16 +18,10 @@ RUN adduser --disabled-password apply -u 1001
 COPY Gemfile /myapp/Gemfile
 COPY Gemfile.lock /myapp/Gemfile.lock
 
-RUN gem update --system \
-&& bundle config --local without test:development \
-&& bundle config build.nokogiri --use-system-libraries \
-&& bundle install
+RUN gem update --system
+RUN bundle config --local without test:development && bundle install
 
 COPY . /myapp
-
-RUN yarn --prod
-
-RUN bundle exec rake assets:precompile SECRET_KEY_BASE=a-real-secret-key-is-not-needed-here
 
 RUN apk del build-dependencies
 
