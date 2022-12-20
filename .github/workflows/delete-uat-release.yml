@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: Delete UAT release action
         id: delete_uat
-        uses: ministryofjustice/laa-civil-apply-delete-uat-release@v1.0.0
+        uses: ./.github/actions/delete-uat-release
         with:
           k8s_cluster: ${{ secrets.K8S_GHA_UAT_CLUSTER_NAME }}
           k8s_cluster_cert: ${{ secrets.K8S_GHA_UAT_CLUSTER_CERT }}
@@ -20,4 +20,4 @@ jobs:
           k8s_token: ${{ secrets.K8S_GHA_UAT_TOKEN }}
       - name: Result
         shell: bash
-        run: echo ${{ steps.delete_uat.outputs.delete-message }}
+        run: echo ${{ steps.delete_uat.outputs.delete-message }}\
