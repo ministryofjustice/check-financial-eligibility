@@ -42,9 +42,6 @@ gem "json-schema", "~> 3.0.0"
 # Seeding tools
 gem "dibber"
 
-# Api documentation
-gem "apipie-rails", "~> 0.8.2"
-
 # Adds Statistical methods to objects such as arrays
 gem "descriptive_statistics", require: "descriptive_statistics/safe"
 

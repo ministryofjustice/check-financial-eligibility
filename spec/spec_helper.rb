@@ -1,6 +1,5 @@
 require "simplecov"
 require "vcr"
-require "support/apipie_helper"
 
 SimpleCov.minimum_coverage 100 unless ENV["SKIP_COVERAGE"]
 
@@ -128,11 +127,4 @@ RSpec.configure do |config|
   #   # test failures related to randomization by passing the same `--seed` value
   #   # as the one that triggered the failure.
   #   Kernel.srand config.seed
-end
-
-Shoulda::Matchers.configure do |config|
-  config.integrate do |with|
-    with.test_framework :rspec
-    with.library :rails
-  end
 end

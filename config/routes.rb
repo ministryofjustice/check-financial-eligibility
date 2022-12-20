@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   mount Rswag::Ui::Engine => "/api-docs"
   mount Rswag::Api::Engine => "/api-docs"
-  apipie
+
   resources :assessments, only: %i[create show] do
     resource :applicant, only: [:create]
     resources :capitals, only: [:create]
