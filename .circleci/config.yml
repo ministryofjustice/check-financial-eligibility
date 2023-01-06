@@ -77,7 +77,7 @@ references:
     run:
       name: Authenticate with cluster
       command: |
-        echo -n ${K8S_CLUSTER_CERT_UAT_LIVE} | base64 -d > ./ca.crt
+        echo -n ${K8S_CLUSTER_CERT_LIVE} | base64 -d > ./ca.crt
         kubectl config set-cluster ${K8S_CLUSTER_NAME} --certificate-authority=./ca.crt --server=https://${K8S_CLUSTER_NAME}
         kubectl config set-credentials circleci --token=${K8S_TOKEN}
         kubectl config set-context ${K8S_CLUSTER_NAME} --cluster=${K8S_CLUSTER_NAME} --user=circleci --namespace=${K8S_NAMESPACE}
