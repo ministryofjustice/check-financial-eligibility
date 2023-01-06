@@ -76,10 +76,10 @@ To run the integration tests you will need to set up a `.env` file in the root f
 
 It should contain the following values:
 ```shell script
-PRIVATE_KEY_ID
-PRIVATE_KEY
-CLIENT_EMAIL
-CLIENT_ID
+GOOGLE_SHEETS_PRIVATE_KEY_ID
+GOOGLE_SHEETS_PRIVATE_KEY
+GOOGLE_SHEETS_CLIENT_EMAIL
+GOOGLE_SHEETS_CLIENT_ID
 ALLOW_FUTURE_SUBMISSION_DATE
 LEGAL_FRAMEWORK_API_HOST
 ```
