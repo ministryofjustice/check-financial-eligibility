@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_28_152328) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_04_121138) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -84,6 +84,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_28_152328) do
     t.decimal "subject_matter_of_dispute_disregard", default: "0.0", null: false
     t.string "type", default: "ApplicantCapitalSummary"
     t.decimal "combined_assessed_capital"
+    t.decimal "combined_capital_contribution"
     t.index ["assessment_id"], name: "index_capital_summaries_on_assessment_id"
   end
 

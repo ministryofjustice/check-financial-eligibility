@@ -127,7 +127,7 @@ Then("I should see the following overall summary:") do |table|
   end
 
   unless failures.empty?
-    failures.append "\n----\Response being validated: #{assessment.response.to_json}\n----\n"
+    failures.append "\n----\Response being validated: #{@response.to_json}\n----\n"
   end
 
   raise_if_present(failures)

@@ -57,6 +57,7 @@ module Decorators
             },
           ],
           combined_assessed_capital: 12_000.0,
+          combined_capital_contribution: 0,
         }
       end
 

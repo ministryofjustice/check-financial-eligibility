@@ -46,8 +46,10 @@ Feature:
       | attribute                    | value    |
       | total_disposable_income      | 354.09   |
     And I should see the following overall summary:
-      | attribute                    | value                 |
-      | assessment_result            | contribution_required |
+      | attribute                  | value                 |
+      | assessment_result          | contribution_required |
+      | income contribution        | 15.08                 |
+      | capital contribution       | 0.0                   |
 
   Scenario: A applicant with a partner with capital and both pensioners
     Given I am undertaking a standard assessment with a pensioner applicant who is not passported
@@ -64,6 +66,8 @@ Feature:
       | subject_matter_of_dispute   | false     |
     When I retrieve the final assessment
     And I should see the following overall summary:
-      | attribute                    | value                   |
-      | assessment_result            | contribution_required   |
+      | attribute                  | value                 |
+      | assessment_result          | contribution_required |
+      | income contribution        | 15.08                 |
+      | capital contribution       | 61900.0               |
 
