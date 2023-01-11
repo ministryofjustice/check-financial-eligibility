@@ -344,7 +344,7 @@ workflows:
       - integration_tests:
           filters:
             branches:
-              ignore: main
+              only: main
       #          <<: *generic-slack-fail-post-stepa
       - check_swagger:
           filters:
