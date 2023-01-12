@@ -71,3 +71,19 @@ Feature:
       | income contribution        | 15.08                 |
       | capital contribution       | 61900.0               |
 
+  Scenario: A applicant with housing benefit and a partner with housing costs
+    Given I am undertaking a standard assessment with a pensioner applicant who is not passported
+    And I add the following housing benefit details for the applicant:
+      | client_id |     date     |  amount |
+      |     C     |  2022-07-22  | 500.0   |
+      |     C     |  2022-08-22  | 500.0   |
+      |     C     |  2022-09-22  | 500.0   |
+    And I add the following regular_transaction details for the partner:
+      | operation | category         | frequency | amount |
+      | debit     | rent_or_mortgage | monthly   | 600.0  |
+    When I retrieve the final assessment
+    And I should see the following overall summary:
+      | attribute                      | value    |
+      | partner allowance              | 191.41   |
+      | total outgoings and allowances | 291.41   |
+

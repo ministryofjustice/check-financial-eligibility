@@ -66,12 +66,14 @@ module Workflows
                                           person: applicant,
                                           gross_income_summary: assessment.gross_income_summary.freeze,
                                           disposable_income_summary: assessment.disposable_income_summary,
-                                          eligible_for_childcare:)
+                                          eligible_for_childcare:,
+                                          allow_negative_net: true)
         Collators::OutgoingsCollator.call(submission_date: assessment.submission_date,
                                           person: partner,
                                           gross_income_summary: assessment.partner_gross_income_summary.freeze,
                                           disposable_income_summary: assessment.partner_disposable_income_summary,
-                                          eligible_for_childcare:)
+                                          eligible_for_childcare:,
+                                          allow_negative_net: true)
 
         Collators::DisposableIncomeCollator.call(gross_income_summary: assessment.gross_income_summary.freeze,
                                                  disposable_income_summary: assessment.disposable_income_summary,
@@ -101,7 +103,8 @@ module Workflows
                                           person: applicant,
                                           gross_income_summary: assessment.gross_income_summary.freeze,
                                           disposable_income_summary: assessment.disposable_income_summary,
-                                          eligible_for_childcare:)
+                                          eligible_for_childcare:,
+                                          allow_negative_net: false)
         Collators::DisposableIncomeCollator.call(gross_income_summary: assessment.gross_income_summary.freeze,
                                                  disposable_income_summary: assessment.disposable_income_summary,
                                                  partner_allowance: 0)

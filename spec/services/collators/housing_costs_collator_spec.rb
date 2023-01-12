@@ -13,7 +13,8 @@ module Collators
         described_class.call(disposable_income_summary: assessment.disposable_income_summary,
                              person: OpenStruct.new(single?: true, dependants: assessment.dependants),
                              gross_income_summary: assessment.gross_income_summary,
-                             submission_date: assessment.submission_date)
+                             submission_date: assessment.submission_date,
+                             allow_negative_net: false)
       end
 
       context "with no housing cost outgoings" do

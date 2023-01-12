@@ -401,12 +401,6 @@ module Calculators
 
             expect(net_housing_costs).to eq 545.00
           end
-
-          it "has zero floor" do
-            create(:regular_transaction, gross_income_summary: assessment.gross_income_summary, operation: "credit", category: "housing_benefit", frequency: "monthly", amount: 400.00)
-
-            expect(net_housing_costs).to eq 0.00
-          end
         end
 
         context "when has dependants and receives housing benefit" do
@@ -419,12 +413,6 @@ module Calculators
             create(:regular_transaction, gross_income_summary: assessment.gross_income_summary, operation: "credit", category: "housing_benefit", frequency: "monthly", amount: 500.00)
 
             expect(net_housing_costs).to eq 500.00
-          end
-
-          it "has zero floor" do
-            create(:regular_transaction, gross_income_summary: assessment.gross_income_summary, operation: "credit", category: "housing_benefit", frequency: "monthly", amount: 400.00)
-
-            expect(net_housing_costs).to eq 0.00
           end
         end
 

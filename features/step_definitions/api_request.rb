@@ -13,6 +13,7 @@ Given("I am undertaking a standard assessment with an applicant who receives pas
 end
 
 Given("I am undertaking a standard assessment with a pensioner applicant who is not passported") do
+  StateBenefitType.create! label: "housing_benefit", name: "Housing benefit", exclude_from_gross_income: true
   @api_version = 5
   response = submit_request(:post, "assessments", @api_version,
                             { client_reference_id: "N/A", submission_date: "2022-05-10" })
@@ -56,6 +57,12 @@ Given("I add the following other_income details for {string} in the current asse
   submit_request(:post, "assessments/#{@assessment_id}/other_incomes", @api_version, data)
 end
 
+Given("I add the following housing benefit details for the applicant:") do |table|
+  data = { state_benefits: [{ "name": "housing_benefit",
+                              "payments": table.hashes.map { cast_values(_1) } }] }
+  submit_request(:post, "assessments/#{@assessment_id}/state_benefits", @api_version, data)
+end
+
 Given("I add the following irregular_income details in the current assessment:") do |table|
   data = { "payments": table.hashes.map { cast_values(_1) } }
   submit_request(:post, "assessments/#{@assessment_id}/irregular_incomes", @api_version, data)
@@ -75,6 +82,10 @@ Given("I add the following employment details for the partner:") do |table|
   @partner_employments = [{ "name": "A",
                             "client_id": "B",
                             "payments": table.hashes.map { cast_values(_1) } }]
+end
+
+Given("I add the following regular_transaction details for the partner:") do |table|
+  @partner_regular_transactions = table.hashes.map { cast_values(_1) }
 end
 
 Given("I add the following additional property details for the partner in the current assessment:") do |table|
@@ -107,10 +118,11 @@ When("I retrieve the final assessment") do
     submit_request(:post, "assessments/#{@assessment_id}/properties", @api_version, data)
   end
 
-  if @partner_employments || @partner_property
+  if @partner_employments || @partner_property || @partner_regular_transactions
     employments = @partner_employments || []
     additional_properties = @partner_property || []
-    data = { "partner": { "date_of_birth": "1992-07-22", "employed": true }, employments:, additional_properties: }
+    regular_transactions = @partner_regular_transactions || []
+    data = { "partner": { "date_of_birth": "1992-07-22", "employed": true }, employments:, additional_properties:, regular_transactions: }
     submit_request(:post, "assessments/#{@assessment_id}/partner_financials", @api_version, data)
   end
 
