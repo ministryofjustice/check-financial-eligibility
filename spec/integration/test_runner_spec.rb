@@ -24,10 +24,7 @@ RSpec.describe "IntegrationTests::TestRunner", type: :request do
   let(:worksheet_names) { spreadsheet.sheets }
   let(:headers) { { "CONTENT_TYPE" => "application/json", "Accept" => "application/json;version=5" } }
 
-  before do
-    setup_test_data
-    mock_lfa_responses
-  end
+  before { setup_test_data }
 
   describe "run integration_tests", :vcr do
     ispec_run = ENV["ISPEC_RUN"].present?

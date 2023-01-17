@@ -7,7 +7,6 @@ module Collators
 
     before do
       create :bank_holiday
-      mock_lfa_responses
       assessment.proceeding_type_codes.each do |ptc|
         create :gross_income_eligibility,
                gross_income_summary:,

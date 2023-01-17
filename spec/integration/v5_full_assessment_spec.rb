@@ -11,7 +11,6 @@ RSpec.describe "Full V5 passported spec", :vcr do
 
     ENV["VERBOSE"] = "false"
     create :bank_holiday
-    mock_lfa_responses
   end
 
   context "when applicant is passported" do
