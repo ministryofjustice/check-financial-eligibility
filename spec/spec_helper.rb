@@ -24,7 +24,7 @@ VCR.configure do |vcr_config|
   vcr_config.ignore_hosts "www.googleapis.com"
   vcr_config.configure_rspec_metadata!
   vcr_config.debug_logger = $stdout if vcr_debug
-  vcr_config.filter_sensitive_data("<GOOGLE_SHEETS_PRIVATE_KEY>") { ENV["GOOGLE_SHEETS_PRIVATE_KEYD"] }
+  vcr_config.filter_sensitive_data("<GOOGLE_SHEETS_PRIVATE_KEY>") { ENV["GOOGLE_SHEETS_PRIVATE_KEY"] }
   vcr_config.filter_sensitive_data("<GOOGLE_SHEETS_PRIVATE_KEY_ID>") { ENV["GOOGLE_SHEETS_PRIVATE_KEY_ID"] }
 end
 
