@@ -32,6 +32,14 @@ module Creators
       }.to_json
     end
 
+    let(:raw_post_controlled) do
+      {
+        client_reference_id: "psr-123",
+        submission_date: "2019-06-06",
+        level_of_representation: "controlled",
+      }.to_json
+    end
+
     subject(:creator) { described_class.call(remote_ip:, assessment_params:, version:) }
 
     context "version 5" do
@@ -53,6 +61,7 @@ module Creators
           expect(assessment.version).to eq "5"
           expect(assessment.remote_ip).to eq "127.0.0.1"
           expect(assessment.proceeding_type_codes).to eq []
+          expect(assessment.level_of_representation).to eq "certificated"
         end
 
         it "creates a CapitalSummary record" do
@@ -178,6 +187,15 @@ module Creators
 
         it "has errors" do
           expect(creator.errors).to include("Remote ip can't be blank")
+        end
+      end
+
+      context "when level of representation is specified" do
+        let(:assessment_params) { raw_post_controlled }
+
+        it "sets the level appropriately" do
+          expect(creator.success?).to eq true
+          expect(Assessment.first.level_of_representation).to eq "controlled"
         end
       end
     end

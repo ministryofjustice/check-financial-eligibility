@@ -38,7 +38,7 @@ module Creators
         submission_date: Date.parse(@parsed_raw_post[:submission_date]),
         version: @version,
         remote_ip:,
-      }
+      }.merge(@parsed_raw_post.slice(:level_of_representation))
     end
 
     def new_assessment

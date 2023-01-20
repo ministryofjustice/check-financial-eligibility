@@ -18,4 +18,5 @@
 ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.acronym "CFE"
   inflect.acronym "API"
+  inflect.irregular "level_of_representation", "levels_of_representation"
 end
