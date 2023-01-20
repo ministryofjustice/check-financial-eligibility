@@ -22,11 +22,16 @@ class Property < ApplicationRecord
 private
 
   def calculate_property_transaction_allowance
-    self.transaction_allowance = (value * notional_transaction_cost_pctg).round(2)
+    if level_of_representation == "controlled"
+      allowance = 0
+    else
+      allowance = (value * notional_transaction_cost_pctg).round(2)
+    end
+    self.transaction_allowance = allowance
   end
 
   def notional_transaction_cost_pctg
-    level_of_representation == :controlled ? 0.0 : Threshold.value_for(:property_notional_sale_costs_percentage, at: submission_date) / 100.0
+    Threshold.value_for(:property_notional_sale_costs_percentage, at: submission_date) / 100.0
   end
 
   def calculate_outstanding_mortgage(remaining_mortgage_allowance)
