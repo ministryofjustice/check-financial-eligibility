@@ -7,6 +7,7 @@ class Property < ApplicationRecord
 
   delegate :assessment, to: :capital_summary
   delegate :submission_date, to: :assessment
+  delegate :level_of_representation, to: :assessment
 
   def assess_equity!(remaining_mortgage_allowance)
     calculate_property_transaction_allowance
@@ -25,7 +26,7 @@ private
   end
 
   def notional_transaction_cost_pctg
-    Threshold.value_for(:property_notional_sale_costs_percentage, at: submission_date) / 100.0
+    level_of_representation == :controlled ? 0.0 : Threshold.value_for(:property_notional_sale_costs_percentage, at: submission_date) / 100.0
   end
 
   def calculate_outstanding_mortgage(remaining_mortgage_allowance)
