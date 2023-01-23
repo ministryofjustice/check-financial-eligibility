@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_04_121138) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_20_122437) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -45,6 +45,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_04_121138) do
     t.string "assessment_result", default: "pending", null: false
     t.text "remarks"
     t.string "version"
+    t.integer "level_of_representation", default: 0
     t.index ["client_reference_id"], name: "index_assessments_on_client_reference_id"
   end
 

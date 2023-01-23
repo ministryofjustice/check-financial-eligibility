@@ -10,6 +10,9 @@
     },
     "submission_date": {
       "$ref": "<%= "file://#{@schema_dir}/common.json#date" %>"
+    },
+    "level_of_representation": {
+      "enum": <%= Assessment.levels_of_representation.keys %>
     }
   }
 }
