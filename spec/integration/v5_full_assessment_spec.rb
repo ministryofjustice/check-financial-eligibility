@@ -35,6 +35,90 @@ RSpec.describe "Full V5 passported spec", :vcr do
       expect(remarks).to eq({})
     end
 
+    it "returns liquid assets" do
+      assets = parsed_response.dig(:assessment, :capital, :capital_items, :liquid)
+      expect(assets).to eq([
+        {
+          description: "Money not in a bank account",
+          value: 50.0,
+        },
+      ])
+    end
+
+    it "returns fixed assets" do
+      assets = parsed_response.dig(:assessment, :capital, :capital_items, :non_liquid)
+      expect(assets).to eq(
+        [
+          {
+            description: "Any valuable items worth more than £500",
+            value: 700.0,
+          },
+        ],
+      )
+    end
+
+    it "returns the vehicle data" do
+      vehicles = parsed_response.dig(:assessment, :capital, :capital_items, :vehicles)
+      expect(vehicles).to eq([
+        {
+          value: 12_000.0,
+          loan_amount_outstanding: 0.0,
+          date_of_purchase: "2020-08-18",
+          in_regular_use: true,
+          included_in_assessment: false,
+          disregards_and_deductions: 12_000.0,
+          assessed_value: 0.0,
+        },
+      ])
+    end
+
+    it "returns the property data" do
+      properties = parsed_response.dig(:assessment, :capital, :capital_items, :properties)
+      expect(properties.fetch(:main_home))
+        .to eq(
+          { value: 500_000.01,
+            main_home: true,
+            percentage_owned: 15.0,
+            allowable_outstanding_mortgage: 999.99,
+            net_value: 484_000.02,
+            net_equity: 59_000.01,
+            main_home_equity_disregard: 100_000.0,
+            assessed_equity: 0.0,
+            transaction_allowance: 15_000.0,
+            shared_with_housing_assoc: true,
+            outstanding_mortgage: 999.99 },
+        )
+      expect(properties.fetch(:additional_properties))
+        .to match_array([
+          {
+            value: 1_000.01,
+            outstanding_mortgage: 1.0,
+            allowable_outstanding_mortgage: 1.0,
+            main_home: false,
+            percentage_owned: 99.99,
+            net_value: 969.01,
+            net_equity: 968.91,
+            main_home_equity_disregard: 0.0,
+            assessed_equity: 968.91,
+            transaction_allowance: 30.0,
+            shared_with_housing_assoc: false,
+          },
+          {
+            value: 10_000.01,
+            outstanding_mortgage: 40.0,
+            percentage_owned: 80.0,
+            main_home: false,
+            shared_with_housing_assoc: true,
+            transaction_allowance: 300.0,
+            allowable_outstanding_mortgage: 40.0,
+            net_value: 9660.01,
+            net_equity: 7660.01,
+            main_home_equity_disregard: 0.0,
+            assessed_equity: 7660.01,
+          },
+        ])
+    end
+
     it "returns a SMOD disregard" do
       capital_summary = parsed_response.dig(:result_summary, :capital)
       expect(capital_summary[:subject_matter_of_dispute_disregard]).to eq(700)
@@ -61,24 +145,22 @@ RSpec.describe "Full V5 passported spec", :vcr do
       post_irregular_income(assessment_id)
 
       get assessment_path(assessment_id), headers: v5_headers
+      output_response(:get, :assessment)
     end
 
     it "returns the expected remarks in payload" do
-      output_response(:get, :assessment)
       remarks = parsed_response[:assessment][:remarks]
 
       expect(remarks).to include(expected_remarks)
     end
 
     it "returns the expected gross income in payload" do
-      output_response(:get, :assessment)
       gross_income = parsed_response[:result_summary][:gross_income]
 
       expect(gross_income).to include(expected_gross_income)
     end
 
     it "returns the expected disposable income in payload" do
-      output_response(:get, :assessment)
       disposable_income = parsed_response[:result_summary][:disposable_income]
 
       expect(disposable_income).to include(expected_disposable_income)
