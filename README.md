@@ -50,6 +50,8 @@ The client will create an assessment by posting a payload to the `/assessments` 
 is then given on all subsequent posts to the other endpoints to build up a record of capital, income and outgoings, finally requesting an assessment result
 by sending a GET request to the /assessments endpoint.
 
+**TODO** When in future this API has endpoints to allow direct submission of monthly income and outgoings figures (rather than collections of transactions from which these figures are inferred), make clear in the documentation for those endpoints that for controlled work that the API client should only submit figures that are valid for the calendar month leading up to the submission date, not an average of the previous 3 months.
+
 ### Logic flow
 
 The `AssessmentController` calls the `MainWorkflow`, which immediately branches off to the `PassportedWorkflow` or `UnpassportedWorkflow`.  The main difference is that unpassported applications are assessed on capital, gross income and disposable income, whereas passported applications are only assessed on capital.

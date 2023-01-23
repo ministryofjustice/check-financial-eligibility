@@ -18,7 +18,8 @@ RSpec.describe "vehicles", type: :request, swagger_doc: "v5/swagger.yaml" do
                 required: true,
                 schema: {
                   type: :object,
-                  description: "Details of vehicles owned by the applicant",
+                  description: "Details of all vehicles owned by the applicant for certificated work, "\
+                               "and all vehicles owned by the applicant that are in regular use for controlled work",
                   example: { vehicles: [{ value: 10_000.01, loan_amount_outstanding: 9999.99, date_of_purchase: "2020-01-27", in_regular_use: true }] },
                   properties: {
                     vehicles: {

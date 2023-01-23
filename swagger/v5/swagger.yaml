@@ -1673,7 +1673,9 @@ paths:
           application/json:
             schema:
               type: object
-              description: Details of vehicles owned by the applicant
+              description: Details of all vehicles owned by the applicant for certificated
+                work, and all vehicles owned by the applicant that are in regular
+                use for controlled work
               example:
                 vehicles:
                 - value: 10000.01
