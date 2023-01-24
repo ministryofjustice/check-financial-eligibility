@@ -1,16 +1,20 @@
 module Decorators
   module V5
     class DisposableIncomeResultDecorator
-      def initialize(summary, gross_income_summary)
+      def initialize(summary, gross_income_summary, partner_present:)
         @summary = summary
         @gross_income_summary = gross_income_summary
+        @partner_present = partner_present
       end
 
       def as_json
         if summary.is_a?(ApplicantDisposableIncomeSummary)
-          basic_attributes.merge(proceeding_types:, combined_total_disposable_income:, combined_total_outgoings_and_allowances:)
+          basic_attributes.merge(proceeding_types:,
+                                 combined_total_disposable_income:,
+                                 combined_total_outgoings_and_allowances:,
+                                 partner_allowance:)
         else
-          basic_attributes.merge(partner_allowance:)
+          basic_attributes
         end
       end
 
@@ -52,6 +56,8 @@ module Decorators
       end
 
       def partner_allowance
+        return 0 unless @partner_present
+
         Threshold.value_for(:partner_allowance, at: @summary.assessment.submission_date)
       end
 

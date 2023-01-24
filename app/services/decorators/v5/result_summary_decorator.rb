@@ -23,7 +23,8 @@ module Decorators
           gross_income: GrossIncomeResultDecorator.new(gross_income_summary).as_json,
           partner_gross_income:,
           disposable_income: DisposableIncomeResultDecorator.new(disposable_income_summary,
-                                                                 gross_income_summary).as_json,
+                                                                 gross_income_summary,
+                                                                 partner_present: assessment.partner.present?).as_json,
           partner_disposable_income:,
           capital: CapitalResultDecorator.new(capital_summary).as_json,
           partner_capital:,
@@ -40,7 +41,8 @@ module Decorators
         return unless assessment.partner
 
         DisposableIncomeResultDecorator.new(assessment.partner_disposable_income_summary,
-                                            assessment.partner_gross_income_summary).as_json
+                                            assessment.partner_gross_income_summary,
+                                            partner_present: true).as_json
       end
 
       def partner_capital

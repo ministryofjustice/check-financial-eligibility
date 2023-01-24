@@ -31,7 +31,7 @@ module Decorators
         }
       end
       let(:proceeding_hash) { [%w[DA003 A], %w[DA005 A], %w[SE003 A], %w[SE014 A]] }
-
+      let(:partner_present) { true }
       let(:expected_result) do
         {
           dependant_allowance: 220.21,
@@ -83,10 +83,11 @@ module Decorators
           ],
           combined_total_disposable_income: 900.0,
           combined_total_outgoings_and_allowances: 400.32,
+          partner_allowance: 191.41,
         }
       end
 
-      subject(:decorator) { described_class.new(summary, assessment.gross_income_summary).as_json }
+      subject(:decorator) { described_class.new(summary, assessment.gross_income_summary, partner_present:).as_json }
 
       before do
         pt_results.each do |ptc, details|
