@@ -7,6 +7,7 @@ class Property < ApplicationRecord
 
   delegate :assessment, to: :capital_summary
   delegate :submission_date, to: :assessment
+  delegate :level_of_representation, to: :assessment
 
   def assess_equity!(remaining_mortgage_allowance)
     calculate_property_transaction_allowance
@@ -21,7 +22,8 @@ class Property < ApplicationRecord
 private
 
   def calculate_property_transaction_allowance
-    self.transaction_allowance = (value * notional_transaction_cost_pctg).round(2)
+    allowance = level_of_representation == "controlled" ? 0 : (value * notional_transaction_cost_pctg).round(2)
+    self.transaction_allowance = allowance
   end
 
   def notional_transaction_cost_pctg
