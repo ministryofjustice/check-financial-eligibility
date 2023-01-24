@@ -41,7 +41,7 @@ module Decorators
       end
 
       def combined_capital_contribution
-        summary.combined_capital_contribution.to_f
+        summary.capital_contribution.to_f
       end
     end
   end

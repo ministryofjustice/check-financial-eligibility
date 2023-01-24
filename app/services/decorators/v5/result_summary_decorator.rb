@@ -16,7 +16,7 @@ module Decorators
         {
           overall_result: {
             result: @assessment.assessment_result,
-            capital_contribution: capital_summary.combined_capital_contribution.to_f,
+            capital_contribution: capital_summary.capital_contribution.to_f,
             income_contribution: disposable_income_summary.income_contribution.to_f,
             proceeding_types: ProceedingTypesResultDecorator.new(assessment).as_json,
           },

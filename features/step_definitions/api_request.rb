@@ -124,6 +124,10 @@ Given("I add the following vehicle details for the current assessment:") do |tab
   submit_request(:post, "assessments/#{@assessment_id}/vehicles", @api_version, data)
 end
 
+Given("I add the following capital details for {string} for the partner:") do |string, table|
+  @partner_capitals = { string.to_s => table.hashes.map { cast_values(_1) } }
+end
+
 When("I retrieve the final assessment") do
   if @main_home || @secondary_home
     additional_properties = @secondary_home ? [@secondary_home] : []
@@ -132,11 +136,16 @@ When("I retrieve the final assessment") do
     submit_request(:post, "assessments/#{@assessment_id}/properties", @api_version, data)
   end
 
-  if @partner_employments || @partner_property || @partner_regular_transactions
+  if @partner_employments || @partner_property || @partner_regular_transactions || @partner_capitals
     employments = @partner_employments || []
     additional_properties = @partner_property || []
     regular_transactions = @partner_regular_transactions || []
-    data = { "partner": { "date_of_birth": "1992-07-22", "employed": true }, employments:, additional_properties:, regular_transactions: }
+    capitals = @partner_capitals || {}
+    data = { "partner": { "date_of_birth": "1992-07-22", "employed": true },
+             employments:,
+             additional_properties:,
+             regular_transactions:,
+             capitals: }
     submit_request(:post, "assessments/#{@assessment_id}/partner_financials", @api_version, data)
   end
 
