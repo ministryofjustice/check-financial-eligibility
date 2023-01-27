@@ -10,7 +10,6 @@ module Collators
       subject_matter_of_dispute_disregard: "subject_matter_of_dispute_disregard",
       total_capital: "total_capital",
       assessed_capital: "assessed_capital",
-      capital_contribution: "capital_contribution",
     }.freeze
 
     class << self
@@ -57,14 +56,6 @@ module Collators
 
     def property_maximum_mortgage_allowance_threshold
       Threshold.value_for(:property_maximum_mortgage_allowance, at: @submission_date)
-    end
-
-    def lower_threshold
-      Threshold.value_for(:capital_lower, at: @submission_date)
-    end
-
-    def capital_contribution
-      [0, assessed_capital - lower_threshold].max
     end
   end
 end

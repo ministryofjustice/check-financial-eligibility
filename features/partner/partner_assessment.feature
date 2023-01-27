@@ -34,6 +34,20 @@ Feature:
       | attribute                    | value                 |
       | assessment_result            | contribution_required |
 
+Scenario: An applicant and partner's combined capital is over the lower threshold
+  Given I am undertaking a standard assessment with an applicant who receives passporting benefits
+    And I add the following capital details for "bank_accounts" in the current assessment:
+      | description  | value   | subject_matter_of_dispute |
+      | Bank account | 2000.0  | false                     |
+    And I add the following capital details for "bank_accounts" for the partner:
+      | description  | value   |
+      | Bank account | 2000.0  |
+    When I retrieve the final assessment
+    And I should see the following overall summary:
+      | attribute                    | value                 |
+      | assessment_result            | contribution_required |
+      | capital contribution         | 1000.0                |
+
   Scenario: An unemployed applicant with an employed partner
     Given I am undertaking a standard assessment with a pensioner applicant who is not passported
     And I add the following employment details for the partner:
