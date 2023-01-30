@@ -17,6 +17,6 @@ Feature:
       | transaction_allowance      | 0.0      |
       | assessed_equity            | 50000.0  |
     And I should see the following overall summary:
-      | attribute                  | value                 |
-      | assessment_result          | contribution_required |
+      | attribute                  | value      |
+      | assessment_result          | ineligible |
 

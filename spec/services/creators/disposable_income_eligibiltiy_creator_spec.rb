@@ -7,7 +7,7 @@ module Creators
     before { mock_lfa_responses }
 
     around do |example|
-      travel_to Date.new(2021, 4, 20)
+      travel_to Date.new(2022, 4, 20)
       example.run
       travel_back
     end
@@ -39,6 +39,22 @@ module Creators
         elig = eligibilities.find_by!(proceeding_type_code: "SE013")
         expect(elig.upper_threshold).to eq pt.disposable_income_upper_threshold
         expect(elig.lower_threshold).to eq 315.0
+      end
+
+      context "for controlled work" do
+        let(:assessment) do
+          create :assessment,
+                 :with_disposable_income_summary,
+                 proceedings: proceeding_hash,
+                 level_of_representation: "controlled"
+        end
+
+        it "uses controlled lower threshold" do
+          pt = proceeding_types.find_by!(ccms_code: "SE013", client_involvement_type: "Z")
+          elig = eligibilities.find_by!(proceeding_type_code: "SE013")
+          expect(elig.upper_threshold).to eq pt.disposable_income_upper_threshold
+          expect(elig.lower_threshold).to eq 733.0
+        end
       end
     end
   end

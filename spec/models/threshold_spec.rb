@@ -16,7 +16,7 @@ RSpec.describe Threshold do
       let(:data) { YAML.load_file(test_data_file).deep_symbolize_keys }
 
       it "returns the expected value" do
-        expect(described_class.value_for(:capital_lower, at: time)).to eq(data[:capital_lower])
+        expect(described_class.value_for(:capital_lower_certificated, at: time)).to eq(data[:capital_lower_certificated])
       end
 
       context "for dates before oldest" do
@@ -25,7 +25,7 @@ RSpec.describe Threshold do
         let(:data) { YAML.load_file("#{threshold_test_data_folder}/2018-04-08.yml").deep_symbolize_keys }
 
         it "returns the value from oldest file" do
-          expect(described_class.value_for(:capital_lower, at: time)).to eq(data[:capital_lower])
+          expect(described_class.value_for(:capital_lower_certificated, at: time)).to eq(data[:capital_lower_certificated])
         end
       end
 

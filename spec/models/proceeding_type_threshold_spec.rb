@@ -15,7 +15,7 @@ RSpec.describe ProceedingTypeThreshold do
 
   describe ".value_for" do
     let(:ccms_code) { :DA005 }
-    let(:threshold) { :capital_lower }
+    let(:threshold) { :capital_lower_certificated }
 
     context "not a waivable threshold" do
       it "forwards the request on to Threshold" do

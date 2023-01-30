@@ -5,6 +5,6 @@ gross_income_upper:
     many: 7
 disposable_income_lower: 2000
 disposable_income_upper: 20000
-capital_lower: 5
+capital_lower_certificated: 5
 capital_upper: 20000
 property_maximum_mortgage_allowance: 666_666_666_666

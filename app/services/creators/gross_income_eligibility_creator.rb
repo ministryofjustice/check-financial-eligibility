@@ -27,7 +27,6 @@ module Creators
 
     def upper_threshold(ptc)
       base_threshold = threshold_from_proceeding_type(ptc)
-
       return base_threshold if base_threshold == 999_999_999_999
 
       base_threshold + dependant_increase

@@ -87,6 +87,21 @@ module Utilities
         expect(pt.disposable_income_upper_threshold).to eq 999_999_999_999.0
         expect(pt.capital_upper_threshold).to eq 999_999_999_999.0
       end
+
+      context "for controlled work" do
+        before { assessment.update(level_of_representation: "controlled") }
+
+        it "ignores waivers" do
+          expect(LegalFrameworkAPI::ThresholdWaivers).not_to receive(:call)
+
+          described_class.call(assessment)
+
+          pt = assessment.reload.proceeding_types.find_by(ccms_code: "DA001")
+          expect(pt.gross_income_upper_threshold).to eq 2657.0
+          expect(pt.disposable_income_upper_threshold).to eq 733.0
+          expect(pt.capital_upper_threshold).to eq 8000.0
+        end
+      end
     end
   end
 end

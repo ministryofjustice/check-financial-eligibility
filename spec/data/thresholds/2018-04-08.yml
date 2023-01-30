@@ -4,7 +4,7 @@ gross_income_upper:
     one: 1
     two: 3
     many: 7
-disposable_income_lower: 1000
+disposable_income_lower_certificated: 1000
 disposable_income_upper: 10000
-capital_lower: 10
+capital_lower_certificated: 10
 capital_upper: 10000

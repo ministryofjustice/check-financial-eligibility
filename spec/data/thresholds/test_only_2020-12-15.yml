@@ -4,9 +4,9 @@ gross_income_upper: 2657
 infinite_gross_income_upper: 999_999_999_999
 dependant_step: 222
 dependant_increase_starts_after: 4
-disposable_income_lower: 315
+disposable_income_lower_certificated: 315
 disposable_income_upper: 733
-capital_lower: 3_000
+capital_lower_certificated: 3_000
 capital_upper: 8_000
 pensioner_capital_disregard:
   minimum_age_in_years: 60
