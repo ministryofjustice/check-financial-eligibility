@@ -19,6 +19,8 @@ Rails.application.routes.draw do
   end
   resources :state_benefit_type, only: [:index]
 
+  root to: "main#index"
+
   get "ping", to: "status#ping", format: :json
   get "healthcheck", to: "status#status", format: :json
   get "status", to: "status#ping", format: :json
