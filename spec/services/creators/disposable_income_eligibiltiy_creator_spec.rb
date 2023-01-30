@@ -4,8 +4,6 @@ module Creators
   RSpec.describe DisposableIncomeEligibilityCreator do
     let(:summary) { assessment.disposable_income_summary }
 
-    before { mock_lfa_responses }
-
     around do |example|
       travel_to Date.new(2021, 4, 20)
       example.run
