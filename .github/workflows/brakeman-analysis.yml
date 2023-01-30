@@ -1,7 +1,7 @@
 name: Brakeman Scan
 
 on:
-  pull_requent:
+  pull_request:
     branches: [main]
 
 jobs:
