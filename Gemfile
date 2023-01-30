@@ -61,6 +61,9 @@ gem "net-smtp"
 gem "rswag-api"
 gem "rswag-ui"
 
+gem "exception_notification"
+gem "govuk_notify_rails", "~> 2.2.0"
+
 group :development, :test do
   gem "awesome_print"
   gem "dotenv-rails", ">= 2.7.6"

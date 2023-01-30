@@ -80,6 +80,13 @@ Rails.application.configure do
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end
 
+  unless ENV["SENTRY"]&.casecmp("enabled")&.zero?
+    # Detect unhandled exceptions and, using grouping to avoid notification overload in the case
+    # of large numbers of similar errors, use app/lib/exception_notifider/templated_notifier.rb to
+    # communicate them
+    config.middleware.use ExceptionNotification::Rack, templated: {}, error_grouping: true
+  end
+
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 

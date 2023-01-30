@@ -73,4 +73,24 @@ env:
       secretKeyRef:
         name: {{ template "app.fullname" . }}
         key: legalFrameworkApiHost
+  - name: SENTRY
+    valueFrom:
+      secretKeyRef:
+        name: {{ template "app.fullname" . }}
+        key: sentryEnabled
+  - name: NOTIFICATIONS_API_KEY
+    valueFrom:
+      secretKeyRef:
+        name: {{ template "app.fullname" . }}
+        key: notificationsApiKey
+  - name: NOTIFICATIONS_ERROR_MESSAGE_TEMPLATE_ID
+    valueFrom:
+      secretKeyRef:
+        name: {{ template "app.fullname" . }}
+        key: notificationsErrorMessageTemplateId
+  - name: NOTIFICATIONS_RECIPIENT
+    valueFrom:
+      secretKeyRef:
+        name: {{ template "app.fullname" . }}
+        key: notificationsRecipient
 {{- end }}
