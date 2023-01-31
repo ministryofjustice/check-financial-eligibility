@@ -3,7 +3,6 @@ require "rails_helper"
 module Calculators
   RSpec.describe EmploymentIncomeCalculator, :vcr do
     let(:assessment) { create :assessment, gross_income_summary: build(:gross_income_summary) }
-    let!(:disposable_income_summary) { create :disposable_income_summary, assessment: }
     let(:employment1) { create :employment, assessment: }
     let(:employment2) { create :employment, assessment: }
     let(:gross) { BigDecimal(rand(2022.35...3096.52), 2) }
@@ -24,17 +23,13 @@ module Calculators
       it "does not call the Multiple Employments Calculator" do
         allow(employment1).to receive(:calculate!)
         described_class.call(submission_date: assessment.submission_date,
-                             employment: employment1,
-                             disposable_income_summary: assessment.disposable_income_summary,
-                             gross_income_summary: assessment.gross_income_summary)
+                             employment: employment1)
       end
 
       it "calls #calculate! on each employment record" do
         expect(employment1).to receive(:calculate!)
         described_class.call(submission_date: assessment.submission_date,
-                             employment: employment1,
-                             disposable_income_summary: assessment.disposable_income_summary,
-                             gross_income_summary: assessment.gross_income_summary)
+                             employment: employment1)
       end
     end
 
@@ -42,21 +37,15 @@ module Calculators
       context "at least one employment record exists" do
         it "adds the fixed employment allowance from the threshold files" do
           create_payments_for_single_employment
-          described_class.call(submission_date: assessment.submission_date,
-                               employment: assessment.employments.first,
-                               disposable_income_summary: assessment.disposable_income_summary,
-                               gross_income_summary: assessment.gross_income_summary)
-          expect(disposable_income_summary.fixed_employment_allowance).to eq(-45)
+          expect(described_class.call(submission_date: assessment.submission_date,
+                                      employment: assessment.employments.first).fixed_employment_allowance).to eq(-45)
         end
       end
 
       context "no employment records exist" do
         it "leaves the fixed employment allowance as zero" do
-          described_class.call(submission_date: assessment.submission_date,
-                               employment: assessment.employments.first,
-                               disposable_income_summary: assessment.disposable_income_summary,
-                               gross_income_summary: assessment.gross_income_summary)
-          expect(disposable_income_summary.fixed_employment_allowance).to eq 0.0
+          expect(described_class.call(submission_date: assessment.submission_date,
+                                      employment: assessment.employments.first).fixed_employment_allowance).to eq 0.0
         end
       end
     end

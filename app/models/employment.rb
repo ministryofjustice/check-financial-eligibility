@@ -1,18 +1,16 @@
 class Employment < ApplicationRecord
   include MonthlyEquivalentCalculator
 
-  delegate :gross_income_summary, to: :assessment
-
   belongs_to :assessment
 
   has_many :employment_payments, dependent: :destroy
 
   validates :calculation_method, inclusion: { in: %w[blunt_average most_recent] }, allow_nil: true
 
-  def calculate!
+  def calculate!(submission_date)
     Calculators::TaxNiRefundCalculator.call(self)
 
-    if employment_payments.any? && employment_income_variation_below_threshold?
+    if employment_payments.any? && employment_income_variation_below_threshold?(submission_date)
       update_monthly_values!(calculation: :most_recent)
     else
       update_monthly_values!(calculation: :blunt_average)
@@ -22,8 +20,8 @@ class Employment < ApplicationRecord
 
 private
 
-  def employment_income_variation_below_threshold?
-    Utilities::EmploymentIncomeVariationChecker.new(self).below_threshold?
+  def employment_income_variation_below_threshold?(submission_date)
+    Utilities::EmploymentIncomeVariationChecker.new(employment_payments).below_threshold?(submission_date)
   end
 
   def update_monthly_values!(calculation:)

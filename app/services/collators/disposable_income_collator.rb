@@ -15,8 +15,7 @@ module Collators
              :fixed_employment_allowance,
              :employment_income_deductions, to: :@disposable_income_summary
 
-    delegate :total_gross_income,
-             :gross_employment_income, to: :@gross_income_summary
+    delegate :total_gross_income, to: :@gross_income_summary
 
     class << self
       def call(disposable_income_summary:, gross_income_summary:, partner_allowance:)

@@ -19,23 +19,35 @@ module Collators
     def call
       if @employments.any?
         @employments.each { |employment| Utilities::EmploymentIncomeMonthlyEquivalentCalculator.call(employment) }
-        if @employments.count > 1
-          # only pass assessment here so that remarks about multiple employments can be added
-          Calculators::MultipleEmploymentsCalculator.call(assessment: @assessment,
-                                                          employments: @employments,
-                                                          disposable_income_summary: @disposable_income_summary,
-                                                          gross_income_summary: @gross_income_summary)
-        else
-          Calculators::EmploymentIncomeCalculator.call(submission_date: @submission_date,
-                                                       employment: @employments.first,
-                                                       disposable_income_summary: @disposable_income_summary,
-                                                       gross_income_summary: @gross_income_summary)
-        end
+        result = if @employments.count > 1
+                   Calculators::MultipleEmploymentsCalculator.call(assessment: @assessment,
+                                                                   employments: @employments)
+                 else
+                   Calculators::EmploymentIncomeCalculator.call(submission_date: @submission_date,
+                                                                employment: @employments.first)
+                 end
+        @gross_income_summary.update!(gross_employment_income: result.gross_employment_income,
+                                      benefits_in_kind: result.benefits_in_kind)
+        @disposable_income_summary.update!(employment_income_deductions: result.employment_income_deductions,
+                                           fixed_employment_allowance: result.fixed_employment_allowance,
+                                           tax: result.tax,
+                                           national_insurance: result.national_insurance)
+        add_remarks if @employments.count > 1
       end
       @gross_income_summary.update!(populate_attrs)
     end
 
   private
+
+    def add_remarks
+      my_remarks = @assessment.remarks
+      my_remarks.add(:employment, :multiple_employments, employment_client_ids)
+      @assessment.update!(remarks: my_remarks)
+    end
+
+    def employment_client_ids
+      @employments.map(&:client_id)
+    end
 
     def income_categories
       CFEConstants::VALID_INCOME_CATEGORIES.map(&:to_sym)
