@@ -1,22 +1,18 @@
 module Utilities
   class EmploymentIncomeVariationChecker
-    def initialize(employment)
-      @employment = employment
+    def initialize(employment_payments)
+      @employment_payments = employment_payments
     end
 
-    def below_threshold?
+    def below_threshold?(submission_date)
       variance < Threshold.value_for(:employment_income_variance, at: submission_date)
     end
 
   private
 
     def variance
-      amounts = @employment.employment_payments.map(&:gross_income_monthly_equiv)
+      amounts = @employment_payments.map(&:gross_income_monthly_equiv)
       (amounts.max - amounts.min)
-    end
-
-    def submission_date
-      @employment.assessment.submission_date
     end
   end
 end

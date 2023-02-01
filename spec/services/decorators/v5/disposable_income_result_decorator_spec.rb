@@ -106,10 +106,14 @@ module Decorators
         it "returns the expected structure" do
           employment1
           employment2
-          Calculators::MultipleEmploymentsCalculator.call(assessment:,
-                                                          employments: assessment.employments,
-                                                          disposable_income_summary: assessment.disposable_income_summary,
-                                                          gross_income_summary: assessment.gross_income_summary)
+          result = Calculators::MultipleEmploymentsCalculator.call(assessment:,
+                                                                   employments: assessment.employments)
+          assessment.gross_income_summary.update!(gross_employment_income: result.gross_employment_income,
+                                                  benefits_in_kind: result.benefits_in_kind)
+          assessment.disposable_income_summary.update!(employment_income_deductions: result.employment_income_deductions,
+                                                       fixed_employment_allowance: result.fixed_employment_allowance,
+                                                       tax: result.tax,
+                                                       national_insurance: result.national_insurance)
 
           expect(decorator).to eq expected_result
         end

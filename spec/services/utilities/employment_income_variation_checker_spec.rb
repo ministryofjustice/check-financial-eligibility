@@ -3,7 +3,7 @@ require "rails_helper"
 module Utilities
   RSpec.describe EmploymentIncomeVariationChecker do
     let(:employment) { create :employment }
-    let(:result) { described_class.new(employment).below_threshold? }
+    let(:result) { described_class.new(employment.employment_payments).below_threshold?(employment.assessment.submission_date) }
 
     before do
       amounts.each do |amount|

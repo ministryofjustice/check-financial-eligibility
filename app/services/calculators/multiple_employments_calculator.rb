@@ -1,50 +1,41 @@
 module Calculators
   class MultipleEmploymentsCalculator
-    def self.call(assessment:, employments:, disposable_income_summary:, gross_income_summary:)
-      new(assessment:, employments:, disposable_income_summary:, gross_income_summary:).call
+    def self.call(assessment:, employments:)
+      new(assessment:, employments:).call
     end
 
-    def initialize(assessment:, employments:, disposable_income_summary:, gross_income_summary:)
+    def initialize(assessment:, employments:)
       @employments = employments
-      @disposable_income_summary = disposable_income_summary
-      @gross_income_summary = gross_income_summary
       @assessment = assessment
     end
 
     def call
-      ActiveRecord::Base.transaction do
-        update_gross_income_summary
-        update_disposable_income_summary
-        add_remarks
-      end
+      EmploymentIncomeResult.new(
+        gross_employment_income: gross_income_values.fetch(:gross_employment_income),
+        benefits_in_kind: gross_income_values.fetch(:benefits_in_kind),
+        employment_income_deductions: disposable_income_values.fetch(:employment_income_deductions),
+        tax: disposable_income_values.fetch(:tax),
+        national_insurance: disposable_income_values.fetch(:national_insurance),
+        fixed_employment_allowance: disposable_income_values.fetch(:fixed_employment_allowance),
+      ).freeze
     end
 
   private
 
-    def update_gross_income_summary
-      @gross_income_summary.update(
+    def gross_income_values
+      {
         gross_employment_income: 0.0,
         benefits_in_kind: 0.0,
-      )
+      }
     end
 
-    def update_disposable_income_summary
-      @disposable_income_summary.update(
+    def disposable_income_values
+      {
         employment_income_deductions: 0.0,
         tax: 0.0,
         national_insurance: 0.0,
         fixed_employment_allowance: -Threshold.value_for(:fixed_employment_allowance, at: @assessment.submission_date),
-      )
-    end
-
-    def add_remarks
-      my_remarks = @assessment.remarks
-      my_remarks.add(:employment, :multiple_employments, employment_client_ids)
-      @assessment.update!(remarks: my_remarks)
-    end
-
-    def employment_client_ids
-      @employments.map(&:client_id)
+      }
     end
   end
 end

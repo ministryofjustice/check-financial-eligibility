@@ -1,14 +1,12 @@
 module Calculators
   class EmploymentIncomeCalculator
-    def self.call(submission_date:, employment:, disposable_income_summary:, gross_income_summary:)
-      new(submission_date:, employment:, disposable_income_summary:, gross_income_summary:).call
+    def self.call(submission_date:, employment:)
+      new(submission_date:, employment:).call
     end
 
-    def initialize(submission_date:, employment:, disposable_income_summary:, gross_income_summary:)
+    def initialize(submission_date:, employment:)
       @submission_date = submission_date
       @employment = employment
-      @disposable_income_summary = disposable_income_summary
-      @gross_income_summary = gross_income_summary
     end
 
     def call
@@ -18,14 +16,14 @@ module Calculators
   private
 
     def process_single_employment
-      @employment&.calculate!
+      @employment&.calculate! @submission_date
 
-      @gross_income_summary.update!(gross_employment_income:,
-                                    benefits_in_kind: monthly_benefits_in_kind)
-      @disposable_income_summary.update!(employment_income_deductions: deductions,
-                                         fixed_employment_allowance: allowance,
-                                         tax: taxes,
-                                         national_insurance: ni_contributions)
+      EmploymentIncomeResult.new(gross_employment_income:,
+                                 benefits_in_kind: monthly_benefits_in_kind,
+                                 employment_income_deductions: deductions,
+                                 fixed_employment_allowance: allowance,
+                                 tax: taxes,
+                                 national_insurance: ni_contributions).freeze
     end
 
     def gross_employment_income
