@@ -2,7 +2,6 @@ class Applicant < ApplicationRecord
   extend EnumHash
 
   belongs_to :assessment, optional: true
-  delegate :submission_date, to: :assessment, allow_nil: true
 
   enum involvement_type: enum_hash_for(:applicant)
 

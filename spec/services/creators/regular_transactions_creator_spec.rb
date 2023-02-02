@@ -22,7 +22,7 @@ RSpec.describe Creators::RegularTransactionsCreator do
   describe ".call" do
     subject(:creator) do
       described_class.call(assessment_id: assessment.id,
-                           regular_transaction_params: params.to_json)
+                           regular_transaction_params: params)
     end
 
     let(:valid_params) do

@@ -1,6 +1,6 @@
 module Creators
   class ProceedingTypesCreator < BaseCreator
-    attr_accessor :assessment_id, :proceeding_types
+    attr_accessor :proceeding_types
 
     def initialize(assessment_id:, proceeding_types_params:)
       super()
@@ -19,6 +19,8 @@ module Creators
 
   private
 
+    attr_reader :assessment_id
+
     def create_records
       create_proceeding_types
     rescue CreationError => e
@@ -36,7 +38,7 @@ module Creators
     end
 
     def proceeding_types_attributes
-      @proceeding_types_attributes ||= JSON.parse(@proceeding_types_params, symbolize_names: true)[:proceeding_types]
+      @proceeding_types_attributes ||= @proceeding_types_params[:proceeding_types]
     end
 
     def json_validator

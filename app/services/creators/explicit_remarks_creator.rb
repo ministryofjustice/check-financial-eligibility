@@ -50,7 +50,7 @@ module Creators
   private
 
     def explicit_remarks_attributes
-      @explicit_remarks_attributes ||= JSON.parse(@explicit_remarks_params, symbolize_names: true).fetch(:explicit_remarks, nil)
+      @explicit_remarks_attributes ||= @explicit_remarks_params.fetch(:explicit_remarks, nil)
     end
 
     def json_validator

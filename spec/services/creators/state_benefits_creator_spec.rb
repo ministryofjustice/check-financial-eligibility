@@ -9,7 +9,7 @@ module Creators
       let!(:state_benefit_type3) { create :state_benefit_type }
       let(:state_benefits) { state_benefits_params }
 
-      subject(:creator) { described_class.call(assessment_id: assessment.id, state_benefits_params: state_benefits_params.to_json) }
+      subject(:creator) { described_class.call(assessment_id: assessment.id, state_benefits_params:) }
 
       it "creates all the required state benefits records" do
         expect { creator }.to change(StateBenefitPayment, :count).by(6)
@@ -22,7 +22,7 @@ module Creators
               {
                 name: state_benefit_type1.label,
                 payments: [
-                  { date: 3.days.from_now.to_date, amount: 266.95, client_id: "abc123" },
+                  { date: 3.days.from_now.to_date.to_s, amount: 266.95, client_id: "abc123" },
                 ],
               },
             ],

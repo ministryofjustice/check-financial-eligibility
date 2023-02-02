@@ -67,7 +67,7 @@ module Creators
 
       creator = RegularTransactionsCreator.call(
         assessment_id: @assessment_id,
-        regular_transaction_params: { regular_transactions: regular_transaction_params }.to_json,
+        regular_transaction_params: { regular_transactions: regular_transaction_params },
         gross_income_summary: assessment.partner_gross_income_summary,
       )
 
@@ -77,7 +77,7 @@ module Creators
     def create_employments
       return if employment_params.blank?
 
-      employments_params = { employment_income: employment_params }.to_json
+      employments_params = { employment_income: employment_params }
       creator = EmploymentsCreator.call(
         assessment_id: @assessment_id,
         employments_params:,
@@ -92,7 +92,7 @@ module Creators
 
       creator = StateBenefitsCreator.call(
         assessment_id: @assessment_id,
-        state_benefits_params: { state_benefits: state_benefit_params }.to_json,
+        state_benefits_params: { state_benefits: state_benefit_params },
         gross_income_summary: assessment.partner_gross_income_summary,
       )
 
@@ -115,7 +115,7 @@ module Creators
 
       creator = CapitalsCreator.call(
         assessment_id: @assessment_id,
-        capital_params: capital_params.to_json,
+        capital_params:,
         capital_summary: assessment.partner_capital_summary,
       )
 
@@ -127,7 +127,7 @@ module Creators
 
       creator = VehicleCreator.call(
         assessment_id: @assessment_id,
-        vehicles_params: { vehicles: vehicle_params }.to_json,
+        vehicles_params: { vehicles: vehicle_params },
         capital_summary: assessment.partner_capital_summary,
       )
 
@@ -139,7 +139,7 @@ module Creators
 
       creator = DependantsCreator.call(
         assessment_id: @assessment_id,
-        dependants_params: { dependants: dependant_params }.to_json,
+        dependants_params: { dependants: dependant_params },
         relationship: :partner_dependants,
       )
 

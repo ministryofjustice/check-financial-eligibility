@@ -12,6 +12,7 @@ RSpec.describe "V5 Assessments", type: :request, vcr: true, swagger_doc: "v5/swa
                 required: true,
                 schema: {
                   type: :object,
+                  additionalProperties: false,
                   properties: {
                     client_reference_id: {
                       type: :string,

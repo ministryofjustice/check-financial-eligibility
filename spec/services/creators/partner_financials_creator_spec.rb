@@ -281,7 +281,7 @@ module Creators
               {
                 name: state_benefit_type.label,
                 payments: [
-                  { date: 3.days.ago.to_date, amount: 266.95, client_id: "abc123" },
+                  { date: 3.days.ago.to_date.to_s, amount: 266.95, client_id: "abc123" },
                 ],
               },
             ],
@@ -449,7 +449,7 @@ module Creators
               {
                 value: 5000,
                 in_regular_use: true,
-                date_of_purchase: 1.year.ago.to_date,
+                date_of_purchase: 1.year.ago.to_date.to_s,
                 loan_amount_outstanding: 0,
               },
             ],
@@ -500,7 +500,7 @@ module Creators
             dependants: [
               {
                 in_full_time_education: false,
-                date_of_birth: 1.year.ago.to_date,
+                date_of_birth: 1.year.ago.to_date.to_s,
                 relationship: "child_relative",
               },
             ],
@@ -527,7 +527,7 @@ module Creators
             dependants: [
               {
                 in_full_time_education: false,
-                date_of_birth: 1.year.ago.to_date,
+                date_of_birth: 1.year.ago.to_date.to_s,
                 relationship: "quirky",
               },
             ],

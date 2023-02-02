@@ -24,7 +24,7 @@ module Creators
 
     describe ".call" do
       context "with empty bank_accounts and non_liquid_capital" do
-        let(:capital_params) { {}.to_json }
+        let(:capital_params) { {} }
 
         it "returns an instance of CapitalCreationObject" do
           expect(creator).to be_instance_of(described_class)
@@ -37,7 +37,7 @@ module Creators
 
       context "with liquid assets only" do
         let(:bank_accounts) { liquid_assets_hash }
-        let(:capital_params) { bank_accounts.to_json }
+        let(:capital_params) { bank_accounts }
 
         before { creator }
 
@@ -60,7 +60,7 @@ module Creators
 
       context "non_liquid_capital_items_only" do
         let(:non_liquid_assets) { non_liquid_assets_hash }
-        let(:capital_params) { non_liquid_assets.to_json }
+        let(:capital_params) { non_liquid_assets }
 
         before { creator }
 
@@ -73,7 +73,7 @@ module Creators
       end
 
       context "with invalid capital item" do
-        let(:capital_params) { invalid_liquid_assets_hash.to_json }
+        let(:capital_params) { invalid_liquid_assets_hash }
 
         before { creator }
 
@@ -88,7 +88,7 @@ module Creators
     end
 
     describe "#success?" do
-      let(:capital_params) { {}.to_json }
+      let(:capital_params) { {} }
 
       it "returns true" do
         expect(creator.success?).to be true
@@ -96,7 +96,7 @@ module Creators
     end
 
     describe "#capital_summary" do
-      let(:capital_params) { liquid_assets_hash.merge(non_liquid_assets_hash).to_json }
+      let(:capital_params) { liquid_assets_hash.merge(non_liquid_assets_hash) }
 
       it "returns the created capital summary record" do
         result = creator.capital_summary
@@ -139,7 +139,7 @@ module Creators
 
     context "no such assessment id" do
       let(:assessment_id) { SecureRandom.uuid }
-      let(:capital_params) { {}.to_json }
+      let(:capital_params) { {} }
 
       it "does not create capital_items" do
         expect { creator }.not_to change(CapitalItem, :count)

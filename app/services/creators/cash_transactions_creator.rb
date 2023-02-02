@@ -87,11 +87,11 @@ module Creators
     end
 
     def income_attributes
-      @income_attributes ||= JSON.parse(@cash_transaction_params, symbolize_names: true)[:income]
+      @income_attributes ||= @cash_transaction_params[:income]
     end
 
     def outgoings_attributes
-      @outgoings_attributes ||= JSON.parse(@cash_transaction_params, symbolize_names: true)[:outgoings]
+      @outgoings_attributes ||= @cash_transaction_params[:outgoings]
     end
   end
 end

@@ -12,7 +12,11 @@ private
   def creation_service
     @creation_service ||= Creators::VehicleCreator.call(
       assessment_id: params[:assessment_id],
-      vehicles_params: request.raw_post,
+      vehicles_params:,
     )
+  end
+
+  def vehicles_params
+    JSON.parse(request.raw_post, symbolize_names: true)
   end
 end

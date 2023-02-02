@@ -33,7 +33,7 @@ module Creators
     end
 
     def dependants_attributes
-      @dependants_attributes ||= JSON.parse(@dependants_params, symbolize_names: true)[:dependants]
+      @dependants_attributes ||= @dependants_params[:dependants]
     end
 
     def json_validator

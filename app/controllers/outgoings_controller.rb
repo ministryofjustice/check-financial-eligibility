@@ -11,8 +11,12 @@ private
 
   def outgoing_creation_service
     @outgoing_creation_service ||= Creators::OutgoingsCreator.call(
-      outgoings_params: request.raw_post,
+      outgoings_params:,
       assessment_id: params[:assessment_id],
     )
+  end
+
+  def outgoings_params
+    JSON.parse(request.raw_post, symbolize_names: true)
   end
 end

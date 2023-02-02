@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe Creators::EmploymentsCreator do
   let(:assessment) { create :assessment }
 
-  let(:creator) { described_class.new(assessment_id: assessment.id, employments_params: params.to_json) }
+  let(:creator) { described_class.new(assessment_id: assessment.id, employments_params: params) }
 
   context "with client ids" do
     let(:params) { employment_income_params }

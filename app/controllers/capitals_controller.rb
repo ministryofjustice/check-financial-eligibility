@@ -12,7 +12,11 @@ private
   def creation_service
     @creation_service ||= Creators::CapitalsCreator.call(
       assessment_id: params[:assessment_id],
-      capital_params: request.raw_post,
+      capital_params:,
     )
+  end
+
+  def capital_params
+    JSON.parse(request.raw_post, symbolize_names: true)
   end
 end

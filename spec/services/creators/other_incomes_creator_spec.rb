@@ -11,7 +11,7 @@ module Creators
         assessment_id: assessment.id,
         other_incomes_params: {
           other_incomes: other_income_params,
-        }.to_json,
+        },
       )
     end
 

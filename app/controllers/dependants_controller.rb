@@ -12,7 +12,11 @@ private
   def creation_service
     @creation_service ||= Creators::DependantsCreator.call(
       assessment_id: params[:assessment_id],
-      dependants_params: request.raw_post,
+      dependants_params:,
     )
+  end
+
+  def dependants_params
+    JSON.parse(request.raw_post, symbolize_names: true)
   end
 end

@@ -12,7 +12,11 @@ private
   def creation_service
     @creation_service ||= Creators::StateBenefitsCreator.call(
       assessment_id: params[:assessment_id],
-      state_benefits_params: request.raw_post,
+      state_benefits_params:,
     )
+  end
+
+  def state_benefits_params
+    JSON.parse(request.raw_post, symbolize_names: true)
   end
 end

@@ -22,7 +22,7 @@ RSpec.describe AssessmentsController, type: :request do
       end
 
       it "calls the assessment creator with version and params" do
-        expect(Creators::AssessmentCreator).to receive(:call).with(remote_ip: ipaddr, assessment_params: params.to_json, version: "5").and_call_original
+        expect(Creators::AssessmentCreator).to receive(:call).with(remote_ip: ipaddr, assessment_params: params, version: "5").and_call_original
         post(assessments_path, params: params.to_json, headers:)
         expect(response).to have_http_status(:ok)
         expect(parsed_response[:success]).to be true
@@ -66,7 +66,7 @@ RSpec.describe AssessmentsController, type: :request do
       end
 
       it "calls the assessment creator with the default version 5 and params" do
-        expect(Creators::AssessmentCreator).to receive(:call).with(remote_ip: ipaddr, assessment_params: params.to_json, version: "5").and_call_original
+        expect(Creators::AssessmentCreator).to receive(:call).with(remote_ip: ipaddr, assessment_params: params, version: "5").and_call_original
         post(assessments_path, params: params.to_json, headers:)
         expect(response).to have_http_status(:ok)
         expect(parsed_response[:success]).to be true

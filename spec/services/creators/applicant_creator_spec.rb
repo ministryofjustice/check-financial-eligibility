@@ -5,7 +5,7 @@ module Creators
     describe "POST applicant" do
       let(:assessment) { create :assessment }
       let(:assessment_id) { assessment.id }
-      let(:date_of_birth) { Faker::Date.backward }
+      let(:date_of_birth) { Faker::Date.backward.to_s }
       let(:applicant_params) do
         {
           applicant: {
@@ -14,7 +14,7 @@ module Creators
             has_partner_opponent: true,
             receives_qualifying_benefit: true,
           },
-        }.to_json
+        }
       end
 
       subject(:creator) { described_class.call(assessment_id:, applicant_params:) }
@@ -46,7 +46,7 @@ module Creators
 
         context "ActiveRecord validation fails" do
           context "date of birth cannot be in future" do
-            let(:date_of_birth) { Date.tomorrow.to_date }
+            let(:date_of_birth) { Date.tomorrow.to_date.to_s }
 
             describe "#success?" do
               it "returns false" do

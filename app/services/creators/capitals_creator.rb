@@ -53,11 +53,11 @@ module Creators
     end
 
     def bank_accounts_attributes
-      @bank_accounts_attributes ||= JSON.parse(@capital_params, symbolize_names: true)[:bank_accounts]
+      @bank_accounts_attributes ||= @capital_params[:bank_accounts]
     end
 
     def non_liquid_capital_attributes
-      @non_liquid_capital_attributes ||= JSON.parse(@capital_params, symbolize_names: true)[:non_liquid_capital]
+      @non_liquid_capital_attributes ||= @capital_params[:non_liquid_capital]
     end
   end
 end

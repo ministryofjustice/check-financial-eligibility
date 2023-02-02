@@ -22,7 +22,7 @@ RSpec.describe CashTransactionsController, type: :request do
       end
 
       it "calls cash transactions creator" do
-        expect(creator_class).to receive(:call).with(assessment_id:, cash_transaction_params: params.to_json)
+        expect(creator_class).to receive(:call).with(assessment_id:, cash_transaction_params: params)
         post_payload
       end
 

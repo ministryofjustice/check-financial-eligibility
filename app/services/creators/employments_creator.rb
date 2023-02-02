@@ -18,10 +18,6 @@ module Creators
 
   private
 
-    def employment_attributes
-      @employment_attributes ||= JSON.parse(@employments_params, symbolize_names: true)
-    end
-
     def json_validator
       @json_validator ||= JsonValidator.new("employment", @employments_params)
     end
@@ -36,7 +32,7 @@ module Creators
     end
 
     def create_employment
-      employment_attributes[:employment_income].each do |attributes|
+      @employments_params[:employment_income].each do |attributes|
         employment = employment_collection.create!(attributes.slice(:name, :client_id))
         create_payments(employment, attributes)
       end

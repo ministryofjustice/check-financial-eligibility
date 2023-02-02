@@ -13,7 +13,7 @@ describe Creators::CashTransactionsCreator do
     subject(:creator) { described_class.call(assessment_id: assessment.id, cash_transaction_params:) }
 
     context "happy_path" do
-      let(:params) { valid_params.to_json }
+      let(:params) { valid_params }
       let(:expected_category_details) do
         [
           %w[child_care debit],
@@ -63,7 +63,7 @@ describe Creators::CashTransactionsCreator do
       end
 
       context "not exactly three occurrences of payments" do
-        let(:params) { invalid_params_two_payments.to_json }
+        let(:params) { invalid_params_two_payments }
 
         before { creator }
 
@@ -75,7 +75,7 @@ describe Creators::CashTransactionsCreator do
       end
 
       context "not consecutive months" do
-        let(:params) { invalid_params_not_consecutive_months.to_json }
+        let(:params) { invalid_params_not_consecutive_months }
 
         before { creator }
 
@@ -87,7 +87,7 @@ describe Creators::CashTransactionsCreator do
       end
 
       context "not the expected dates" do
-        let(:params) { invalid_params_wrong_dates.to_json }
+        let(:params) { invalid_params_wrong_dates }
 
         before { creator }
 
@@ -99,7 +99,7 @@ describe Creators::CashTransactionsCreator do
       end
 
       context "exception raised" do
-        let(:params) { valid_params.to_json }
+        let(:params) { valid_params }
 
         before do
           allow(CashTransaction).to receive(:create!).and_raise(ArgumentError, "xxxx")

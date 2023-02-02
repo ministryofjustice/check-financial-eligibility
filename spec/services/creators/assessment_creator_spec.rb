@@ -5,28 +5,12 @@ module Creators
     before { stub_call_to_json_schema }
 
     let(:remote_ip) { "127.0.0.1" }
-    let(:raw_post_v3) do
-      {
-        client_reference_id: "psr-123",
-        submission_date: "2019-06-06",
-      }.to_json
-    end
-
-    let(:raw_post_v4) do
-      {
-        client_reference_id: "psr-123",
-        submission_date: "2019-06-06",
-        proceeding_types: {
-          ccms_codes: %w[DA005 SE003 SE014],
-        },
-      }.to_json
-    end
 
     let(:raw_post_v5) do
       {
         client_reference_id: "psr-123",
         submission_date: "2019-06-06",
-      }.to_json
+      }
     end
 
     let(:raw_post_controlled) do
@@ -34,7 +18,7 @@ module Creators
         client_reference_id: "psr-123",
         submission_date: "2019-06-06",
         level_of_representation: "controlled",
-      }.to_json
+      }
     end
 
     subject(:creator) { described_class.call(remote_ip:, assessment_params:, version:) }
@@ -49,11 +33,11 @@ module Creators
         end
 
         it "creates an Assessment record" do
-          expect { creator.success? }.to change(Assessment, :count).by(1)
+          expect { creator }.to change(Assessment, :count).by(1)
         end
 
         it "populates the assessment record with expected values" do
-          creator.success?
+          creator
           assessment = Assessment.first
           expect(assessment.version).to eq "5"
           expect(assessment.remote_ip).to eq "127.0.0.1"
@@ -62,24 +46,11 @@ module Creators
         end
 
         it "creates a CapitalSummary record" do
-          expect { creator.success? }.to change(CapitalSummary, :count).by(1)
+          expect { creator }.to change(CapitalSummary, :count).by(1)
         end
 
         it "has no errors" do
           expect(creator.errors).to be_empty
-        end
-
-        describe "#as_json" do
-          it "returns a successful json struct including the assessment it has created" do
-            creator.success?
-
-            expected_response = {
-              success: true,
-              assessment_id: Assessment.last.id,
-              errors: [],
-            }
-            expect(creator.as_json).to eq expected_response
-          end
         end
       end
     end
@@ -94,11 +65,11 @@ module Creators
         end
 
         it "creates an Assessment record" do
-          expect { creator.success? }.to change(Assessment, :count).by(1)
+          expect { creator }.to change(Assessment, :count).by(1)
         end
 
         it "populates the assessment record with expected values" do
-          creator.success?
+          creator
           assessment = Assessment.first
           expect(assessment.version).to eq "5"
           expect(assessment.remote_ip).to eq "127.0.0.1"
@@ -106,24 +77,11 @@ module Creators
         end
 
         it "creates a CapitalSummary record" do
-          expect { creator.success? }.to change(CapitalSummary, :count).by(1)
+          expect { creator }.to change(CapitalSummary, :count).by(1)
         end
 
         it "has no errors" do
           expect(creator.errors).to be_empty
-        end
-
-        describe "#as_json" do
-          it "returns a successful json struct including the assessment it has created" do
-            creator.success?
-
-            expected_response = {
-              success: true,
-              assessment_id: Assessment.last.id,
-              errors: [],
-            }
-            expect(creator.as_json).to eq expected_response
-          end
         end
       end
 
@@ -135,7 +93,7 @@ module Creators
         end
 
         it "does not create an Assessment record" do
-          expect { creator.success? }.not_to change(Assessment, :count)
+          expect { creator }.not_to change(Assessment, :count)
         end
 
         it "has errors" do

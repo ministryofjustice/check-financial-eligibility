@@ -1,7 +1,7 @@
 class AssessmentsController < ApplicationController
   def create
     if assessment_creation_service.success?
-      render json: assessment_creation_service
+      render json: { success: true, assessment_id: assessment_creation_service.assessment.id, errors: [] }
     else
       render_unprocessable(assessment_creation_service.errors)
     end
@@ -42,7 +42,11 @@ private
   end
 
   def assessment_creation_service
-    @assessment_creation_service ||= Creators::AssessmentCreator.call(remote_ip: request.remote_ip, assessment_params: request.raw_post, version:)
+    @assessment_creation_service ||= Creators::AssessmentCreator.call(remote_ip: request.remote_ip, assessment_params:, version:)
+  end
+
+  def assessment_params
+    JSON.parse(request.raw_post, symbolize_names: true)
   end
 
   def assessment
