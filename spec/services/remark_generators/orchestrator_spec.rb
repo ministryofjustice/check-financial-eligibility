@@ -14,8 +14,8 @@ module RemarkGenerators
     let(:employment_payments) { assessment.employments.first.employment_payments }
 
     before do
-      create :disposable_income_summary, :with_everything, assessment: assessment
-      create :gross_income_summary, :with_everything, :with_employment, assessment: assessment
+      create(:disposable_income_summary, :with_everything, assessment:)
+      create(:gross_income_summary, :with_everything, :with_employment, assessment:)
       create :bank_holiday
     end
 

@@ -64,7 +64,7 @@ FactoryBot.define do
 
     trait :with_disposable_income_summary_and_eligibilities do
       after(:create) do |assessment|
-        dis = create :disposable_income_summary, assessment: assessment
+        dis = create(:disposable_income_summary, assessment:)
         assessment.proceeding_type_codes.each do |ptc|
           create :disposable_income_eligibility, disposable_income_summary: dis, proceeding_type_code: ptc
         end
@@ -79,7 +79,7 @@ FactoryBot.define do
 
     trait :with_capital_summary_and_eligibilities do
       after(:create) do |assessment|
-        capsum = create :capital_summary, assessment: assessment
+        capsum = create(:capital_summary, assessment:)
         assessment.proceeding_type_codes.each do |ptc|
           create :capital_eligibility, capital_summary: capsum, proceeding_type_code: ptc
         end
@@ -94,7 +94,7 @@ FactoryBot.define do
 
     trait :with_gross_income_summary_and_eligibilities do
       after(:create) do |assessment|
-        gis = create :gross_income_summary, assessment: assessment
+        gis = create(:gross_income_summary, assessment:)
         assessment.proceeding_type_codes.each do |ptc|
           create :gross_income_eligibility, gross_income_summary: gis, proceeding_type_code: ptc
         end
@@ -119,8 +119,8 @@ FactoryBot.define do
     trait :with_everything do
       with_non_passported_applicant
       after(:create) do |assessment|
-        create :gross_income_summary, :with_everything, assessment: assessment
-        create :disposable_income_summary, :with_everything, assessment: assessment
+        create(:gross_income_summary, :with_everything, assessment:)
+        create(:disposable_income_summary, :with_everything, assessment:)
         create :capital_summary, :with_everything, assessment:
       end
     end
