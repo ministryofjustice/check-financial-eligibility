@@ -23,10 +23,5 @@
     "description": "A negative or positive number (including zero) with two decimal places",
     "not": {"type": "null"},
     "pattern": "^[-+]?\\d+(\\.\\d{1,2})?$"
-  },
-  "nullable_currency": {
-    "id": "common/nullable_currency",
-    "description": "A negative or positive number (including zero) with two decimal places, or nil",
-    "pattern": "^[-+]?\\d+(\\.\\d{1,2})?$"
   }
 }
