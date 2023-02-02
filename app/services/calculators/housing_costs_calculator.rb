@@ -101,7 +101,7 @@ module Calculators
     end
 
     def applicant_has_no_dependants?
-      dependants.size.zero?
+      dependants.empty?
     end
 
     def applicant_has_dependants?

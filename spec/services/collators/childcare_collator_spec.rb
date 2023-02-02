@@ -13,8 +13,8 @@ module Collators
       before do
         travel_to target_time
         create :bank_holiday
-        create :childcare_outgoing, disposable_income_summary: disposable_income_summary, payment_date: Date.yesterday, amount: 155.63
-        create :childcare_outgoing, disposable_income_summary: disposable_income_summary, payment_date: 1.month.ago, amount: 155.63
+        create :childcare_outgoing, disposable_income_summary:, payment_date: Date.yesterday, amount: 155.63
+        create :childcare_outgoing, disposable_income_summary:, payment_date: 1.month.ago, amount: 155.63
         create :childcare_outgoing, disposable_income_summary:, payment_date: 2.months.ago, amount: 155.63
       end
 
@@ -70,7 +70,7 @@ module Collators
         let(:target_time) { Time.zone.local(2021, 4, 11) }
 
         before do
-          create :dependant, assessment: assessment, date_of_birth: 16.years.ago
+          create :dependant, assessment:, date_of_birth: 16.years.ago
           create :dependant, assessment:, date_of_birth: 14.years.ago
         end
 
