@@ -70,13 +70,6 @@ RSpec.describe "vehicles", type: :request, swagger_doc: "v5/swagger.yaml" do
                 in_regular_use: true,
                 subject_matter_of_dispute: true,
               },
-              {
-                value: 2098.16,
-                loan_amount_outstanding: nil,
-                date_of_purchase: "2022-03-07",
-                in_regular_use: true,
-                subject_matter_of_dispute: true,
-              },
             ],
           }
         end
