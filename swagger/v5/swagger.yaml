@@ -634,10 +634,11 @@ paths:
                       frequency:
                         type: string
                         enum:
+                        - monthly
                         - annual
                         - quarterly
                         description: Frequency of the payment received
-                        example: annual
+                        example: monthly
                       amount:
                         type: number
                         format: decimal
@@ -962,10 +963,11 @@ paths:
                       frequency:
                         type: string
                         enum:
+                        - monthly
                         - annual
                         - quarterly
                         description: Frequency of the payment received
-                        example: annual
+                        example: monthly
                       amount:
                         type: number
                         format: decimal

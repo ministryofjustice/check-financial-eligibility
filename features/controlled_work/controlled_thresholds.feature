@@ -5,14 +5,14 @@ Feature:
         Given I am undertaking a controlled assessment
         And I add the following other_income details for "friends_or_family" in the current assessment:
             | date       | client_id | amount  |
-            | 2021-05-10 | id3       | 2100.00 |
-            | 2021-04-10 | id2       | 2100.00 |
-            | 2021-03-10 | id3       | 2100.00 |
+            | 2021-05-10 | id3       | 2600.00 |
+            | 2021-04-10 | id2       | 2600.00 |
+            | 2021-03-10 | id3       | 2600.00 |
         And I add the following outgoing details for "maintenance_out" in the current assessment:
             | payment_date | housing_cost_type | client_id | amount   |
-            | 2021-05-10   | rent              | id7       | 2000.00  |
-            | 2021-04-10   | rent              | id8       | 2000.00  |
-            | 2021-03-10   | rent              | id9       | 2000.00  |
+            | 2021-05-10   | rent              | id7       | 2500.00  |
+            | 2021-04-10   | rent              | id8       | 2500.00  |
+            | 2021-03-10   | rent              | id9       | 2500.00  |
         When I retrieve the final assessment
         Then I should see the following overall summary:
             | attribute                    | value    |
@@ -22,14 +22,14 @@ Feature:
         Given I am undertaking a controlled assessment
         And I add the following other_income details for "friends_or_family" in the current assessment:
             | date       | client_id | amount  |
-            | 2021-05-10 | id3       | 22000.00|
-            | 2021-04-10 | id2       | 2200.00 |
-            | 2021-03-10 | id3       | 2200.00 |
+            | 2021-05-10 | id3       | 2700.00|
+            | 2021-04-10 | id2       | 2700.00 |
+            | 2021-03-10 | id3       | 2700.00 |
         And I add the following outgoing details for "maintenance_out" in the current assessment:
             | payment_date | housing_cost_type | client_id | amount   |
-            | 2021-05-10   | rent              | id7       | 2000.00  |
-            | 2021-04-10   | rent              | id8       | 2000.00  |
-            | 2021-03-10   | rent              | id9       | 2000.00  |
+            | 2021-05-10   | rent              | id7       | 2600.00  |
+            | 2021-04-10   | rent              | id8       | 2600.00  |
+            | 2021-03-10   | rent              | id9       | 2600.00  |
         When I retrieve the final assessment
         Then I should see the following overall summary:
             | attribute                    | value      |

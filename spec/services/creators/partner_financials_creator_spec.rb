@@ -80,7 +80,7 @@ module Creators
             irregular_incomes: [
               {
                 income_type: "unspecified_source",
-                frequency: "quarterly",
+                frequency: "monthly",
                 amount: 101.01,
               },
             ],
