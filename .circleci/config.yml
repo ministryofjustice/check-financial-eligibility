@@ -52,6 +52,7 @@ references:
     run:
       name: Push image to ecr repo
       command: |
+        $(aws ecr get-login --no-include-email)
         docker tag app "${ECR_ENDPOINT}/laa-apply-for-legal-aid/check-financial-eligibility-service:${CIRCLE_SHA1}"
         docker push "${ECR_ENDPOINT}/laa-apply-for-legal-aid/check-financial-eligibility-service:${CIRCLE_SHA1}"
 
@@ -177,16 +178,13 @@ jobs:
             bundle exec rails check_swaggerization
 
   build_and_push:
-    executor: basic-executor
+    executor: cloud-platform-executor
     steps:
     - checkout
     - setup_remote_docker:
         version: 20.10.7
-    - *update_packages
-    - *install_git_crypt
     - *decrypt_secrets
     - *build_docker_image
-    - *setup_aws_login
     - *push_to_ecr
 
   deploy_uat: &deploy_uat
