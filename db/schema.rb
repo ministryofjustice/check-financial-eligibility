@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_25_161914) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_31_154602) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -70,7 +70,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_25_161914) do
     t.uuid "assessment_id"
     t.decimal "total_liquid", default: "0.0", null: false
     t.decimal "total_non_liquid", default: "0.0", null: false
-    t.decimal "total_vehicle", default: "0.0", null: false
     t.decimal "total_property", default: "0.0", null: false
     t.decimal "total_mortgage_allowance", default: "0.0", null: false
     t.decimal "total_capital", default: "0.0", null: false

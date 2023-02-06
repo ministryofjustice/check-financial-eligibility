@@ -14,7 +14,7 @@ module Assessors
     end
 
     before do
-      described_class.call capital_summary.vehicles
+      described_class.call capital_summary.vehicles, assessment.submission_date
       vehicle.reload
     end
 

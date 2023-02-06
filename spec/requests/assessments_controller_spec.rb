@@ -80,14 +80,14 @@ RSpec.describe AssessmentsController, type: :request do
   describe "GET /assessments/:id" do
     let(:option) { :below_lower_threshold }
     let(:now) { Time.zone.now }
+    let(:calculation_output) { CalculationOutput.new }
 
     subject(:get_assessment) { get assessment_path(assessment), headers: }
 
     context "calling the correct workflows assessors and decorators" do
       before do
         allow(Assessment).to receive(:find).with(assessment.id.to_s).and_return(assessment)
-        allow(Workflows::MainWorkflow).to receive(:call).with(assessment)
-        allow(Assessors::MainAssessor).to receive(:call).with(assessment)
+        allow(Workflows::MainWorkflow).to receive(:call).with(assessment).and_return(calculation_output)
       end
 
       let(:assessment) { create :assessment, :passported, :with_everything }
@@ -96,7 +96,8 @@ RSpec.describe AssessmentsController, type: :request do
         let(:decorator) { instance_double Decorators::V5::AssessmentDecorator }
 
         it "calls the required services and uses the V5 decorator" do
-          allow(Decorators::V5::AssessmentDecorator).to receive(:new).with(assessment).and_return(decorator)
+          allow(Decorators::V5::AssessmentDecorator).to receive(:new).with(assessment, calculation_output)
+                                                                     .and_return(decorator)
           allow(decorator).to receive(:as_json).and_return("")
 
           get_assessment

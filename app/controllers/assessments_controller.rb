@@ -29,8 +29,8 @@ private
   end
 
   def perform_assessment
-    Workflows::MainWorkflow.call(assessment)
-    render json: decorator_klass.new(assessment).as_json
+    calculation_output = Workflows::MainWorkflow.call(assessment)
+    render json: decorator_klass.new(assessment, calculation_output).as_json
   end
 
   def version

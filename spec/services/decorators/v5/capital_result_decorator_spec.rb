@@ -17,7 +17,6 @@ module Decorators
                assessment:,
                total_liquid: 9_355.23,
                total_non_liquid: 12_553.22,
-               total_vehicle: 3500,
                total_property: 835_500,
                total_mortgage_allowance: 750_000,
                total_capital: 24_000,
@@ -27,6 +26,7 @@ module Decorators
                assessed_capital: 9_355,
                combined_assessed_capital: 12_000
       end
+      let(:subtotals) { PersonCapitalSubtotals.new(total_vehicle: 3500) }
 
       let(:expected_result) do
         {
@@ -73,7 +73,7 @@ module Decorators
         end
       end
 
-      subject(:decorator) { described_class.new(assessment.capital_summary).as_json }
+      subject(:decorator) { described_class.new(assessment.capital_summary, subtotals).as_json }
 
       describe "#as_json" do
         it "returns the expected structure" do

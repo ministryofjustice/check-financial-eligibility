@@ -9,8 +9,9 @@ module Decorators
                :remarks,
                :disposable_income_summary, to: :assessment
 
-      def initialize(assessment)
+      def initialize(assessment, calculation_output)
         @assessment = assessment
+        @calculation_output = calculation_output
       end
 
       def as_json
@@ -24,7 +25,7 @@ module Decorators
           version: assessment.version,
           timestamp: Time.current,
           success: true,
-          result_summary: ResultSummaryDecorator.new(assessment).as_json,
+          result_summary: ResultSummaryDecorator.new(assessment, @calculation_output).as_json,
           assessment: assessment_details,
         }
       end

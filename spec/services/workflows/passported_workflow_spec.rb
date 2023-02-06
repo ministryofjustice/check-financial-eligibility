@@ -20,8 +20,9 @@ module Workflows
       it "calls Capital collator and updates capital summary record" do
         allow(Collators::CapitalCollator).to receive(:call).and_return(capital_data)
         expect(Collators::CapitalCollator).to receive(:call)
-        workflow_call
-        expect(capital_summary.reload).to have_matching_attributes(capital_data)
+        result = workflow_call
+        expect(result.capital_subtotals.applicant_capital_subtotals.total_vehicle).to eq 500
+        expect(capital_summary.reload).to have_matching_attributes(capital_data.except(:total_vehicle))
       end
 
       it "calls CapitalAssessor and updates capital summary record with result" do

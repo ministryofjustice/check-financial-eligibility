@@ -76,7 +76,6 @@ module Creators
           it "creates all fields as zero" do
             expect(capital_summary.total_liquid).to eq 0.0
             expect(capital_summary.total_non_liquid).to eq 0.0
-            expect(capital_summary.total_vehicle).to eq 0.0
             expect(capital_summary.total_property).to eq 0.0
             expect(capital_summary.total_mortgage_allowance).to eq 0.0
             expect(capital_summary.pensioner_capital_disregard).to eq 0.0
@@ -142,7 +141,6 @@ module Creators
           it "creates all fields as zero" do
             expect(capital_summary.total_liquid).to eq 0.0
             expect(capital_summary.total_non_liquid).to eq 0.0
-            expect(capital_summary.total_vehicle).to eq 0.0
             expect(capital_summary.total_property).to eq 0.0
             expect(capital_summary.total_mortgage_allowance).to eq 0.0
             expect(capital_summary.pensioner_capital_disregard).to eq 0.0

@@ -36,7 +36,7 @@ module Collators
       @liquid_capital = Assessors::LiquidCapitalAssessor.call(@capital_summary)
       @non_liquid_capital = Assessors::NonLiquidCapitalAssessor.call(@capital_summary)
       @property = Calculators::PropertyCalculator.call(submission_date: @submission_date, capital_summary: @capital_summary)
-      @vehicles = Assessors::VehicleAssessor.call(@capital_summary.vehicles)
+      @vehicles = Assessors::VehicleAssessor.call(@capital_summary.vehicles, @submission_date)
     end
 
     attr_reader :pensioner_capital_disregard, :liquid_capital, :non_liquid_capital, :property, :vehicles

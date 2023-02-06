@@ -2,13 +2,14 @@ module Workflows
   class MainWorkflow < BaseWorkflowService
     def call
       version_5_verification(assessment)
-      if applicant_passported?
-        PassportedWorkflow.call(assessment)
-      else
-        NonPassportedWorkflow.call(assessment)
-      end
+      calculation_output = if applicant_passported?
+                             PassportedWorkflow.call(assessment)
+                           else
+                             NonPassportedWorkflow.call(assessment)
+                           end
       RemarkGenerators::Orchestrator.call(assessment)
       Assessors::MainAssessor.call(assessment)
+      calculation_output
     end
 
   private
