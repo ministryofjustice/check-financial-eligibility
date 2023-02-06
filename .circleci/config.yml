@@ -4,9 +4,6 @@ orbs:
   slack: circleci/slack@4.5.2
 
 executors:
-  basic-executor:
-    docker:
-      - image: cimg/base:2020.01
   cloud-platform-executor:
     docker:
       - image: ministryofjustice/cloud-platform-tools:2.1
@@ -18,12 +15,6 @@ executors:
         environment:
           RAILS_ENV: test
           TZ: "Europe/London"
-  notification-executor:
-    docker:
-      - image: 'cibuilds/base:latest'
-        environment:
-          TERM: dumb
-    resource_class: small
   test-executor:
     docker:
       - image: cimg/ruby:3.2.0-node
@@ -52,6 +43,7 @@ references:
     run:
       name: Push image to ecr repo
       command: |
+        $(aws ecr get-login --no-include-email)
         docker tag app "${ECR_ENDPOINT}/laa-apply-for-legal-aid/check-financial-eligibility-service:${CIRCLE_SHA1}"
         docker push "${ECR_ENDPOINT}/laa-apply-for-legal-aid/check-financial-eligibility-service:${CIRCLE_SHA1}"
 
@@ -59,20 +51,6 @@ references:
           docker tag app "${ECR_ENDPOINT}/laa-apply-for-legal-aid/check-financial-eligibility-service:latest"
           docker push "${ECR_ENDPOINT}/laa-apply-for-legal-aid/check-financial-eligibility-service:latest"
         fi
-  setup_aws_login: &setup_aws_login
-    run:
-      name: Setup aws login
-      command: |
-        sudo apt-get update
-        sudo apt-get install -y python3-pip
-        sudo pip3 install awscli
-        $(aws ecr get-login --region eu-west-2 --no-include-email)
-  setup_kubectl: &setup_kubectl
-    run:
-      name: Kubectl deployment setup
-      command: |
-        $(aws ecr get-login --region eu-west-2 --no-include-email)
-        setup-kube-auth
   authenticate_k8s: &authenticate_k8s
     run:
       name: Authenticate with cluster
@@ -82,20 +60,12 @@ references:
         kubectl config set-credentials circleci --token=${K8S_TOKEN}
         kubectl config set-context ${K8S_CLUSTER_NAME} --cluster=${K8S_CLUSTER_NAME} --user=circleci --namespace=${K8S_NAMESPACE}
         kubectl config use-context ${K8S_CLUSTER_NAME}
-  update_packages: &update_packages
-    run:
-      name: Update packages
-      command: sudo apt-get update
   install_packages_for_testing: &install_packages_for_testing
     run:
       name: Install System packages needed for testing
       command: |
         sudo apt-get update
         sudo apt-get install -y postgresql-client
-  install_git_crypt: &install_git_crypt
-    run:
-      name: Install git-crypt
-      command: sudo apt-get install -y git-crypt
   decrypt_secrets: &decrypt_secrets
     run:
       name: Decrypt secrets file
@@ -177,16 +147,13 @@ jobs:
             bundle exec rails check_swaggerization
 
   build_and_push:
-    executor: basic-executor
+    executor: cloud-platform-executor
     steps:
     - checkout
     - setup_remote_docker:
         version: 20.10.7
-    - *update_packages
-    - *install_git_crypt
     - *decrypt_secrets
     - *build_docker_image
-    - *setup_aws_login
     - *push_to_ecr
 
   deploy_uat: &deploy_uat
@@ -253,11 +220,10 @@ jobs:
             ./bin/delete_dependabot_deployment
 
   clean_up_ecr:
-    executor: linting-executor
+    executor: cloud-platform-executor
     steps:
       - checkout
       - setup_remote_docker
-      - *setup_aws_login
       - run:
           name: Delete old images from ecr repo
           command: |
