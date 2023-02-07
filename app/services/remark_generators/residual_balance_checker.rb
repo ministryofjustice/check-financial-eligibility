@@ -1,11 +1,12 @@
 module RemarkGenerators
   class ResidualBalanceChecker
-    def self.call(assessment)
-      new(assessment).call
+    def self.call(assessment, assessed_capital)
+      new(assessment, assessed_capital).call
     end
 
-    def initialize(assessment)
+    def initialize(assessment, assessed_capital)
       @assessment = assessment
+      @assessed_capital = assessed_capital
     end
 
     def call
@@ -21,7 +22,7 @@ module RemarkGenerators
     end
 
     def capital_exceeds_lower_threshold?
-      assessment.capital_summary.assessed_capital > lower_capital_threshold
+      @assessed_capital > lower_capital_threshold
     end
 
     def populate_remarks

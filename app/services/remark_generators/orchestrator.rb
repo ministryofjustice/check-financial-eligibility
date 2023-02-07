@@ -8,12 +8,13 @@ module RemarkGenerators
 
     delegate :outgoings, to: :disposable_income_summary
 
-    def self.call(assessment)
-      new(assessment).call
+    def self.call(assessment, assessed_capital)
+      new(assessment, assessed_capital).call
     end
 
-    def initialize(assessment)
+    def initialize(assessment, assessed_capital)
       @assessment = assessment
+      @assessed_capital = assessed_capital
     end
 
     def call
@@ -61,7 +62,7 @@ module RemarkGenerators
     end
 
     def check_residual_balances
-      ResidualBalanceChecker.call(@assessment)
+      ResidualBalanceChecker.call(@assessment, @assessed_capital) if @assessed_capital
     end
 
     def check_flags

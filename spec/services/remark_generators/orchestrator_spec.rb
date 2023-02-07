@@ -35,9 +35,9 @@ module RemarkGenerators
       expect(FrequencyChecker).to receive(:call).with(assessment, legal_aid_outgoings)
       expect(FrequencyChecker).to receive(:call).with(assessment, employment_payments, :date)
 
-      expect(ResidualBalanceChecker).to receive(:call).with(assessment)
+      expect(ResidualBalanceChecker).to receive(:call).with(assessment, 0)
 
-      described_class.call(assessment)
+      described_class.call(assessment, 0)
     end
   end
 end

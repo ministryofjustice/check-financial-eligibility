@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_31_154602) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_06_122959) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -68,22 +68,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_31_154602) do
 
   create_table "capital_summaries", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "assessment_id"
-    t.decimal "total_liquid", default: "0.0", null: false
-    t.decimal "total_non_liquid", default: "0.0", null: false
-    t.decimal "total_property", default: "0.0", null: false
-    t.decimal "total_mortgage_allowance", default: "0.0", null: false
-    t.decimal "total_capital", default: "0.0", null: false
-    t.decimal "pensioner_capital_disregard", default: "0.0", null: false
-    t.decimal "assessed_capital", default: "0.0", null: false
-    t.decimal "capital_contribution", default: "0.0", null: false
-    t.decimal "lower_threshold", default: "0.0", null: false
-    t.decimal "upper_threshold", default: "0.0", null: false
-    t.string "assessment_result", default: "pending", null: false
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.decimal "subject_matter_of_dispute_disregard", default: "0.0", null: false
     t.string "type", default: "ApplicantCapitalSummary"
-    t.decimal "combined_assessed_capital"
     t.index ["assessment_id"], name: "index_capital_summaries_on_assessment_id"
   end
 

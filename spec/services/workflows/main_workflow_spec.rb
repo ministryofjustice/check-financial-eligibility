@@ -22,12 +22,12 @@ module Workflows
 
       it "calls PassportedWorkflow" do
         allow(Assessors::MainAssessor).to receive(:call)
-        expect(PassportedWorkflow).to receive(:call).with(assessment)
+        allow(PassportedWorkflow).to receive(:call).with(assessment).and_return(CalculationOutput.new)
         workflow_call
       end
 
       it "calls MainAssessor" do
-        allow(PassportedWorkflow).to receive(:call)
+        allow(PassportedWorkflow).to receive(:call).and_return(CalculationOutput.new)
         expect(Assessors::MainAssessor).to receive(:call).with(assessment)
         workflow_call
       end
@@ -40,12 +40,12 @@ module Workflows
 
       it "calls PassportedWorkflow" do
         allow(Assessors::MainAssessor).to receive(:call)
-        expect(NonPassportedWorkflow).to receive(:call).with(assessment)
+        allow(NonPassportedWorkflow).to receive(:call).with(assessment).and_return(CalculationOutput.new)
         workflow_call
       end
 
       it "calls MainAssessor" do
-        allow(NonPassportedWorkflow).to receive(:call)
+        allow(NonPassportedWorkflow).to receive(:call).and_return(CalculationOutput.new)
         expect(Assessors::MainAssessor).to receive(:call).with(assessment)
         workflow_call
       end
@@ -71,9 +71,9 @@ module Workflows
           expect(Utilities::ProceedingTypeThresholdPopulator).to receive(:call).with(assessment)
 
           allow(Creators::EligibilitiesCreator).to receive(:call).with(assessment)
-          allow(NonPassportedWorkflow).to receive(:call).with(assessment)
+          allow(NonPassportedWorkflow).to receive(:call).with(assessment).and_return(CalculationOutput.new)
           allow(Assessors::MainAssessor).to receive(:call).with(assessment)
-          allow(RemarkGenerators::Orchestrator).to receive(:call).with(assessment)
+          allow(RemarkGenerators::Orchestrator).to receive(:call).with(assessment, nil)
 
           workflow_call
         end
@@ -82,9 +82,9 @@ module Workflows
           expect(Creators::EligibilitiesCreator).to receive(:call).with(assessment)
 
           allow(Utilities::ProceedingTypeThresholdPopulator).to receive(:call).with(assessment)
-          allow(NonPassportedWorkflow).to receive(:call).with(assessment)
+          allow(NonPassportedWorkflow).to receive(:call).with(assessment).and_return(CalculationOutput.new)
           allow(Assessors::MainAssessor).to receive(:call).with(assessment)
-          allow(RemarkGenerators::Orchestrator).to receive(:call).with(assessment)
+          allow(RemarkGenerators::Orchestrator).to receive(:call).with(assessment, nil)
 
           workflow_call
         end

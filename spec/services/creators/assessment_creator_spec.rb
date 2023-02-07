@@ -68,27 +68,6 @@ module Creators
           expect { creator.success? }.to change(CapitalSummary, :count).by(1)
         end
 
-        context "capital summary record" do
-          before { creator.success? }
-
-          let(:capital_summary) { CapitalSummary.first }
-
-          it "creates all fields as zero" do
-            expect(capital_summary.total_liquid).to eq 0.0
-            expect(capital_summary.total_non_liquid).to eq 0.0
-            expect(capital_summary.total_property).to eq 0.0
-            expect(capital_summary.total_mortgage_allowance).to eq 0.0
-            expect(capital_summary.pensioner_capital_disregard).to eq 0.0
-            expect(capital_summary.assessed_capital).to eq 0.0
-            expect(capital_summary.capital_contribution).to eq 0.0
-            expect(capital_summary.total_capital).to eq 0.0
-            expect(capital_summary.pensioner_capital_disregard).to eq 0.0
-            expect(capital_summary.lower_threshold).to eq 0.0
-            expect(capital_summary.assessed_capital).to eq 0.0
-            expect(capital_summary.upper_threshold).to eq 0.0
-          end
-        end
-
         it "has no errors" do
           expect(creator.errors).to be_empty
         end
@@ -131,27 +110,6 @@ module Creators
 
         it "creates a CapitalSummary record" do
           expect { creator.success? }.to change(CapitalSummary, :count).by(1)
-        end
-
-        context "capital summary record" do
-          before { creator.success? }
-
-          let(:capital_summary) { CapitalSummary.first }
-
-          it "creates all fields as zero" do
-            expect(capital_summary.total_liquid).to eq 0.0
-            expect(capital_summary.total_non_liquid).to eq 0.0
-            expect(capital_summary.total_property).to eq 0.0
-            expect(capital_summary.total_mortgage_allowance).to eq 0.0
-            expect(capital_summary.pensioner_capital_disregard).to eq 0.0
-            expect(capital_summary.assessed_capital).to eq 0.0
-            expect(capital_summary.capital_contribution).to eq 0.0
-            expect(capital_summary.total_capital).to eq 0.0
-            expect(capital_summary.pensioner_capital_disregard).to eq 0.0
-            expect(capital_summary.lower_threshold).to eq 0.0
-            expect(capital_summary.assessed_capital).to eq 0.0
-            expect(capital_summary.upper_threshold).to eq 0.0
-          end
         end
 
         it "has no errors" do

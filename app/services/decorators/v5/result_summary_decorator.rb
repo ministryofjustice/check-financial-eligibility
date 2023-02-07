@@ -17,7 +17,7 @@ module Decorators
         {
           overall_result: {
             result: @assessment.assessment_result,
-            capital_contribution: capital_summary.capital_contribution.to_f,
+            capital_contribution: @calculation_output.capital_subtotals.capital_contribution.to_f,
             income_contribution: disposable_income_summary.income_contribution.to_f,
             proceeding_types: ProceedingTypesResultDecorator.new(assessment).as_json,
           },
@@ -28,7 +28,9 @@ module Decorators
                                                                  partner_present: assessment.partner.present?).as_json,
           partner_disposable_income:,
           capital: CapitalResultDecorator.new(capital_summary,
-                                              @calculation_output.capital_subtotals.applicant_capital_subtotals).as_json,
+                                              @calculation_output.capital_subtotals.applicant_capital_subtotals,
+                                              @calculation_output.capital_subtotals.capital_contribution.to_f,
+                                              @calculation_output.capital_subtotals.combined_assessed_capital.to_f).as_json,
           partner_capital:,
         }
       end
@@ -51,7 +53,8 @@ module Decorators
         return unless assessment.partner
 
         CapitalResultDecorator.new(assessment.partner_capital_summary,
-                                   @calculation_output.capital_subtotals&.partner_capital_subtotals).as_json
+                                   @calculation_output.capital_subtotals&.partner_capital_subtotals,
+                                   0, 0).as_json
       end
     end
   end

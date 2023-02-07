@@ -19,13 +19,13 @@ module Collators
       end
 
       it "always returns a hash" do
-        expect(collator).to be_a Hash
+        expect(collator).to be_a PersonCapitalSubtotals
       end
 
       context "liquid capital" do
         it "calls LiquidCapitalAssessment and updates capital summary with the result" do
           allow(Assessors::LiquidCapitalAssessor).to receive(:call).and_return(145.83)
-          expect(collator[:total_liquid]).to eq 145.83
+          expect(collator.total_liquid).to eq 145.83
         end
       end
 
@@ -35,7 +35,7 @@ module Collators
           allow(Calculators::PropertyCalculator).to receive(:new).and_return(property_service)
           allow(property_service).to receive(:call).and_return(23_000.0)
           collator
-          expect(collator[:total_property]).to eq 23_000.0
+          expect(collator.total_property).to eq 23_000.0
         end
       end
 
@@ -43,7 +43,7 @@ module Collators
         it "instantiates and calls the Vehicle Assesment service" do
           allow(Assessors::VehicleAssessor).to receive(:call).and_return(2_500.0)
           collator
-          expect(collator[:total_vehicle]).to eq 2_500.0
+          expect(collator.total_vehicle).to eq 2_500.0
         end
       end
 
@@ -51,7 +51,7 @@ module Collators
         it "instantiates and calls NonLiquidCapitalAssessment" do
           allow(Assessors::NonLiquidCapitalAssessor).to receive(:call).and_return(500)
           collator
-          expect(collator[:total_non_liquid]).to eq 500.0
+          expect(collator.total_non_liquid).to eq 500.0
         end
       end
 
@@ -70,15 +70,15 @@ module Collators
 
           collator
 
-          expect(collator[:total_liquid]).to eq 145.83
-          expect(collator[:total_non_liquid]).to eq 500
-          expect(collator[:total_vehicle]).to eq 2_500
-          expect(collator[:total_property]).to eq 23_000
-          expect(collator[:total_mortgage_allowance]).to eq 999_999_999_999
-          expect(collator[:total_capital]).to eq 26_145.83
-          expect(collator[:pensioner_capital_disregard]).to eq 100_000
-          expect(collator[:subject_matter_of_dispute_disregard]).to eq 0
-          expect(collator[:assessed_capital]).to eq(-73_854.17)
+          expect(collator.total_liquid).to eq 145.83
+          expect(collator.total_non_liquid).to eq 500
+          expect(collator.total_vehicle).to eq 2_500
+          expect(collator.total_property).to eq 23_000
+          expect(collator.total_mortgage_allowance).to eq 999_999_999_999
+          expect(collator.total_capital).to eq 26_145.83
+          expect(collator.pensioner_capital_disregard).to eq 100_000
+          expect(collator.subject_matter_of_dispute_disregard).to eq 0
+          expect(collator.assessed_capital).to eq(-73_854.17)
         end
       end
     end
