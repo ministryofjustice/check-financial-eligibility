@@ -1,13 +1,13 @@
 require "rails_helper"
 
-RSpec.describe Employment do
-  describe "#calculate!" do
+RSpec.describe Calculators::EmploymentMonthlyValueCalculator do
+  describe ".call" do
     let(:employment) { create(:employment) }
 
     it "calls the tax and national insurance refund calculator" do
       allow(Calculators::TaxNiRefundCalculator).to receive(:call)
 
-      employment.calculate! employment.assessment.submission_date
+      described_class.call employment, employment.assessment.submission_date
 
       expect(Calculators::TaxNiRefundCalculator)
         .to have_received(:call)
@@ -48,7 +48,7 @@ RSpec.describe Employment do
 
         it "updates the monthly gross income, national insurance, and tax to " \
            "the most recent payment" do
-          employment.calculate! employment.assessment.submission_date
+          described_class.call employment, employment.assessment.submission_date
 
           expect(employment).to have_attributes(
             calculation_method: "most_recent",
@@ -59,7 +59,7 @@ RSpec.describe Employment do
         end
 
         it "does not add a remark to the assessment" do
-          employment.calculate! employment.assessment.submission_date
+          described_class.call employment, employment.assessment.submission_date
 
           remarks = employment.assessment.remarks.remarks_hash
           expect(remarks).to be_blank
@@ -79,7 +79,7 @@ RSpec.describe Employment do
 
         it "updates the monthly gross income, national insurance, and tax to " \
            "the blunt average" do
-          employment.calculate! employment.assessment.submission_date
+          described_class.call employment, employment.assessment.submission_date
 
           expect(employment).to have_attributes(
             calculation_method: "blunt_average",
@@ -90,7 +90,7 @@ RSpec.describe Employment do
         end
 
         it "adds a remark to the assessment" do
-          employment.calculate! employment.assessment.submission_date
+          described_class.call employment, employment.assessment.submission_date
 
           remarks = employment.assessment.remarks.remarks_hash
           employment_payments = employment.employment_payments
@@ -102,7 +102,7 @@ RSpec.describe Employment do
 
     context "when there are no employment payments" do
       it "zeros the monthly gross income, national insurance, and tax" do
-        employment.calculate! employment.assessment.submission_date
+        described_class.call employment, employment.assessment.submission_date
 
         expect(employment).to have_attributes(
           calculation_method: "blunt_average",

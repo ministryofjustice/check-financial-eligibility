@@ -14,7 +14,7 @@ module Calculators
 
     def net_housing_costs
       if housing_costs_cap_apply?
-        [gross_housing_costs, gross_cost_minus_housing_benefit, single_monthly_housing_costs_cap].min.to_f
+        [gross_housing_costs, gross_cost_minus_housing_benefit, single_monthly_housing_costs_cap].min
       elsif should_halve_full_cost_minus_benefits?
         (monthly_actual_housing_costs - monthly_housing_benefit) / 2
       else
@@ -29,8 +29,13 @@ module Calculators
     end
 
     def monthly_housing_benefit
-      @monthly_housing_benefit ||= @disposable_income_summary.calculate_monthly_equivalent(collection: housing_benefit_records) +
-        monthly_housing_benefit_regular_transactions
+      @monthly_housing_benefit ||= begin
+        housing_benefit_payments = Calculators::MonthlyEquivalentCalculator.call(
+          assessment_errors: @disposable_income_summary.assessment.assessment_errors,
+          collection: housing_benefit_records,
+        )
+        housing_benefit_payments + monthly_housing_benefit_regular_transactions
+      end
     end
 
   private
@@ -40,8 +45,16 @@ module Calculators
     end
 
     def gross_housing_costs_bank
-      @disposable_income_summary.calculate_monthly_rent_or_mortgage_amount!
-      @disposable_income_summary.rent_or_mortgage_bank
+      monthly_amount = Calculators::MonthlyEquivalentCalculator.call(
+        assessment_errors: @disposable_income_summary.assessment.assessment_errors,
+        collection: @disposable_income_summary.housing_cost_outgoings,
+        amount_method: :allowable_amount,
+      )
+
+      # TODO: Stop persisting this to DB
+      @disposable_income_summary.update!(rent_or_mortgage_bank: monthly_amount)
+
+      monthly_amount
     end
 
     def gross_housing_costs_regular_transactions
@@ -60,7 +73,10 @@ module Calculators
     end
 
     def calculate_actual_housing_costs
-      @disposable_income_summary.calculate_monthly_equivalent(collection: housing_cost_outgoings)
+      Calculators::MonthlyEquivalentCalculator.call(
+        assessment_errors: @disposable_income_summary.assessment.assessment_errors,
+        collection: housing_cost_outgoings,
+      )
     end
 
     def gross_cost_minus_housing_benefit

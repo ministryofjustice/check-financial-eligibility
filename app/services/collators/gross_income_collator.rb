@@ -68,7 +68,7 @@ module Collators
     end
 
     def populate_income_attrs(attrs, category)
-      attrs[:"#{category}_bank"] = category == :benefits ? monthly_state_benefits : categorised_income[category].to_d
+      attrs[:"#{category}_bank"] = category == :benefits ? monthly_state_benefits : categorised_income[category]
       attrs[:"#{category}_cash"] = monthly_cash_transaction_amount_by(gross_income_summary: @gross_income_summary, operation: :credit, category:)
       attrs[:"#{category}_all_sources"] = attrs[:"#{category}_bank"] + attrs[:"#{category}_cash"]
       attrs[:total_gross_income] += attrs[:"#{category}_all_sources"]
@@ -99,7 +99,7 @@ module Collators
     def calculate_monthly_student_loan
       return 0.0 if categorised_income.key?(:student_loan)
 
-      @gross_income_summary.student_loan_payments.sum(&:monthly_equivalent_amount)
+      @gross_income_summary.student_loan_payments.sum { monthly_equivalent_amount(_1) }
     end
 
     def monthly_unspecified_source
@@ -109,7 +109,7 @@ module Collators
     def calculate_monthly_unspecified_source
       return 0.0 if categorised_income.key?(:unspecified_source)
 
-      @gross_income_summary.unspecified_source_payments.sum(&:monthly_equivalent_amount)
+      @gross_income_summary.unspecified_source_payments.sum { monthly_equivalent_amount(_1) }
     end
 
     def categorised_income
@@ -119,11 +119,30 @@ module Collators
     def categorise_income
       result = Hash.new(0.0)
       @gross_income_summary.other_income_sources.each do |source|
-        monthly_income = BigDecimal(source.calculate_monthly_income!, Float::DIG)
-        result[source.name.to_sym] = monthly_income
-        result[:total] += monthly_income
+        monthly_income = Calculators::MonthlyEquivalentCalculator.call(
+          assessment_errors: @gross_income_summary.assessment.assessment_errors,
+          collection: source.other_income_payments,
+        )
+
+        # TODO: Stop persisting this
+        source.update!(monthly_income:)
+
+        formatted = BigDecimal(monthly_income, Float::DIG)
+        result[source.name.to_sym] = formatted
+        result[:total] += formatted
       end
+
       result
     end
+
+    def monthly_equivalent_amount(payment)
+      payment.amount / MONTHS_PER_PERIOD.fetch(payment.frequency)
+    end
+
+    MONTHS_PER_PERIOD = {
+      CFEConstants::ANNUAL_FREQUENCY => 12,
+      CFEConstants::QUARTERLY_FREQUENCY => 3,
+      CFEConstants::MONTHLY_FREQUENCY => 1,
+    }.freeze
   end
 end

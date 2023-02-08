@@ -16,7 +16,7 @@ module Calculators
   private
 
     def process_single_employment
-      @employment&.calculate! @submission_date
+      EmploymentMonthlyValueCalculator.call(@employment, @submission_date) if @employment
 
       EmploymentIncomeResult.new(gross_employment_income:,
                                  benefits_in_kind: monthly_benefits_in_kind,

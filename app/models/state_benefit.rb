@@ -1,6 +1,4 @@
 class StateBenefit < ApplicationRecord
-  include MonthlyEquivalentCalculator
-
   belongs_to :gross_income_summary
   belongs_to :state_benefit_type
   has_many :state_benefit_payments, dependent: :destroy
@@ -25,11 +23,6 @@ class StateBenefit < ApplicationRecord
       state_benefit_type: StateBenefitType.find_by(label: "other"),
       name:,
     )
-  end
-
-  def calculate_monthly_amount!
-    calculate_monthly_equivalent!(target_field: :monthly_value,
-                                  collection: state_benefit_payments)
   end
 
   def state_benefit_name

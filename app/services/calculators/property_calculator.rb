@@ -3,14 +3,15 @@ module Calculators
     attr_writer :remaining_mortgage_allowance
 
     class << self
-      def call(submission_date:, capital_summary:)
-        new(submission_date:, capital_summary:).call
+      def call(submission_date:, capital_summary:, level_of_representation:)
+        new(submission_date:, capital_summary:, level_of_representation:).call
       end
     end
 
-    def initialize(submission_date:, capital_summary:)
+    def initialize(submission_date:, capital_summary:, level_of_representation:)
       @submission_date = submission_date
       @capital_summary = capital_summary
+      @level_of_representation = level_of_representation
     end
 
     def call
@@ -27,10 +28,16 @@ module Calculators
     def calculate_property
       Property.transaction do
         @capital_summary.additional_properties.each do |property|
-          property.assess_equity!(remaining_mortgage_allowance)
-          self.remaining_mortgage_allowance -= property.allowable_outstanding_mortgage
+          property_assessment = Assessors::PropertyAssessor.call(property, remaining_mortgage_allowance, @level_of_representation, @submission_date)
+          self.remaining_mortgage_allowance -= property_assessment.allowable_outstanding_mortgage
         end
-        @capital_summary.main_home&.assess_equity!(remaining_mortgage_allowance)
+
+        if @capital_summary.main_home
+          Assessors::PropertyAssessor.call(@capital_summary.main_home,
+                                           remaining_mortgage_allowance,
+                                           @level_of_representation,
+                                           @submission_date)
+        end
       end
     end
   end

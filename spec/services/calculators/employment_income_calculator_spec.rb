@@ -21,13 +21,13 @@ module Calculators
 
     context "when there is only one employment" do
       it "does not call the Multiple Employments Calculator" do
-        allow(employment1).to receive(:calculate!)
+        allow(Calculators::EmploymentMonthlyValueCalculator).to receive(:call)
         described_class.call(submission_date: assessment.submission_date,
                              employment: employment1)
       end
 
-      it "calls #calculate! on each employment record" do
-        expect(employment1).to receive(:calculate!)
+      it "requests an employment calculation" do
+        expect(Calculators::EmploymentMonthlyValueCalculator).to receive(:call)
         described_class.call(submission_date: assessment.submission_date,
                              employment: employment1)
       end

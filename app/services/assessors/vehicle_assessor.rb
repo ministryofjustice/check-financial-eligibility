@@ -21,14 +21,14 @@ module Assessors
       def assess_in_regular_use(vehicle, submission_date)
         net_value = vehicle.value - vehicle.loan_amount_outstanding
         if too_old_to_count(vehicle, submission_date) || net_value <= vehicle_disregard(submission_date)
-          Result.new(value: 0, included_in_assessment: false)
+          Result.new(value: 0, included_in_assessment: false).freeze
         else
-          Result.new(value: net_value - vehicle_disregard(submission_date), included_in_assessment: true)
+          Result.new(value: net_value - vehicle_disregard(submission_date), included_in_assessment: true).freeze
         end
       end
 
       def assess_not_in_regular_use(vehicle)
-        Result.new(value: vehicle.value, included_in_assessment: true)
+        Result.new(value: vehicle.value, included_in_assessment: true).freeze
       end
 
       def too_old_to_count(vehicle, submission_date)

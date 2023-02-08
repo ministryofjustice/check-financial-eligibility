@@ -40,11 +40,11 @@ module Calculators
     end
 
     def process_unknown
-      (@payments.sum.to_f / CFEConstants::NUMBER_OF_MONTHS_TO_AVERAGE).round(2)
+      (@payments.sum.to_d / CFEConstants::NUMBER_OF_MONTHS_TO_AVERAGE).round(2)
     end
 
     def payment_average
-      @payments.sum.to_f / @payments.size
+      @payments.sum.to_d / @payments.size
     end
   end
 end
