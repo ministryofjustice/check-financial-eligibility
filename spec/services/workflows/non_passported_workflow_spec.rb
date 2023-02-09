@@ -5,20 +5,23 @@ module Workflows
     let(:assessment) do
       create :assessment, :with_capital_summary, :with_disposable_income_summary,
              :with_gross_income_summary,
-             applicant:, proceedings: [%w[SE003 A]]
+             applicant:, proceedings: proceeding_types.map { |p| [p, "A"] }, level_of_representation:
     end
 
     before do
       assessment.proceeding_type_codes.each do |ptc|
-        create :capital_eligibility, upper_threshold: 20_000, capital_summary: assessment.capital_summary, proceeding_type_code: ptc
         create :gross_income_eligibility, gross_income_summary: assessment.gross_income_summary, proceeding_type_code: ptc
         create :disposable_income_eligibility, disposable_income_summary: assessment.disposable_income_summary,
                                                lower_threshold: 500,
                                                proceeding_type_code: ptc
       end
+      Creators::CapitalEligibilityCreator.call(assessment)
     end
 
     describe ".call" do
+      let(:level_of_representation) { "certificated" }
+      let(:proceeding_types) { %w[SE003] }
+
       subject(:assessment_result) do
         assessment.reload
         described_class.call(assessment)
@@ -41,6 +44,44 @@ module Workflows
         it "calls the self-employed workflow" do
           expect(SelfEmployedWorkflow).to receive(:call).with(assessment)
           described_class.call(assessment)
+        end
+      end
+
+      describe "capital thresholds for controlled" do
+        let(:level_of_representation) { "controlled" }
+        let(:applicant) { build :applicant, :under_pensionable_age, self_employed: false }
+
+        before do
+          create(:property, :additional_property, capital_summary: assessment.capital_summary,
+                                                  value: property_value, outstanding_mortgage: 0, percentage_owned: 100)
+        end
+
+        context "with 8k capital" do
+          let(:property_value) { 8_000 }
+
+          it "is eligible" do
+            expect(assessment_result).to eq("eligible")
+          end
+        end
+
+        context "with a first-tier immigration case" do
+          let(:proceeding_types) { [CFEConstants::IMMIGRATION_PROCEEDING_TYPE_CCMS_CODE] }
+
+          context "with 8k capital" do
+            let(:property_value) { 8_000 }
+
+            it "is ineligible" do
+              expect(assessment_result).to eq("ineligible")
+            end
+          end
+
+          context "with 3k capital" do
+            let(:property_value) { 3_000 }
+
+            it "is eligible" do
+              expect(assessment_result).to eq("eligible")
+            end
+          end
         end
       end
 

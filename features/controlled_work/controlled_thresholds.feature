@@ -88,3 +88,43 @@ Feature:
         Then I should see the following overall summary:
             | attribute                    | value      |
             | assessment_result            | ineligible |
+
+    Scenario: Immigration case with capital above threshold
+      Given Performing a controlled assessment with first tier immigration case
+      And I add the following capital details for "bank_accounts" in the current assessment:
+        | description  | value   | subject_matter_of_dispute |
+        | Bank account | 6000.0  | false                     |
+      When I retrieve the final assessment
+      Then I should see the following overall summary:
+        | attribute                    | value      |
+        | assessment_result            | ineligible |
+
+  Scenario: Immigration case with capital below threshold
+    Given Performing a controlled assessment with first tier immigration case
+    And I add the following capital details for "bank_accounts" in the current assessment:
+      | description  | value   | subject_matter_of_dispute |
+      | Bank account | 3000.0  | false                     |
+    When I retrieve the final assessment
+    Then I should see the following overall summary:
+      | attribute                    | value      |
+      | assessment_result            | eligible |
+
+  Scenario: Asylum case with capital above threshold
+    Given Performing a controlled assessment with first tier asylum case
+    And I add the following capital details for "bank_accounts" in the current assessment:
+      | description  | value   | subject_matter_of_dispute |
+      | Bank account | 8001.0  | false                     |
+    When I retrieve the final assessment
+    Then I should see the following overall summary:
+      | attribute                    | value      |
+      | assessment_result            | ineligible |
+
+  Scenario: Asylum case with capital below threshold
+    Given Performing a controlled assessment with first tier asylum case
+    And I add the following capital details for "bank_accounts" in the current assessment:
+      | description  | value   | subject_matter_of_dispute |
+      | Bank account | 8000.0  | false                     |
+    When I retrieve the final assessment
+    Then I should see the following overall summary:
+      | attribute                    | value      |
+      | assessment_result            | eligible |

@@ -18,20 +18,33 @@ module Creators
     def create_eligibility(ptc)
       return if eligibility_record_exists?(ptc)
 
-      @summary.eligibilities.create!(
-        proceeding_type_code: ptc,
-        upper_threshold: upper_threshold(ptc),
-        lower_threshold:,
-        assessment_result: "pending",
-      )
+      if @assessment.level_of_representation == "controlled"
+        @summary.eligibilities.create!(
+          proceeding_type_code: ptc,
+          upper_threshold: controlled_threshold(ptc),
+          lower_threshold: controlled_threshold(ptc),
+          assessment_result: "pending",
+        )
+      else
+        @summary.eligibilities.create!(
+          proceeding_type_code: ptc,
+          upper_threshold: upper_threshold(ptc),
+          lower_threshold:,
+          assessment_result: "pending",
+        )
+      end
+    end
+
+    def controlled_threshold(ptc)
+      if ptc.to_sym == CFEConstants::IMMIGRATION_PROCEEDING_TYPE_CCMS_CODE
+        Threshold.value_for(:capital_immigration_first_tier_tribunal_controlled, at: @assessment.submission_date)
+      else
+        upper_threshold(ptc)
+      end
     end
 
     def lower_threshold
-      if @assessment.level_of_representation == "controlled"
-        Threshold.value_for(:capital_lower_controlled, at: @assessment.submission_date)
-      else
-        Threshold.value_for(:capital_lower_certificated, at: @assessment.submission_date)
-      end
+      Threshold.value_for(:capital_lower_certificated, at: @assessment.submission_date)
     end
 
     def upper_threshold(ptc)

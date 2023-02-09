@@ -56,6 +56,36 @@ Given("I am undertaking a controlled assessment") do
                  { "proceeding_types": [{ ccms_code: "DA001", client_involvement_type: "A" }] })
 end
 
+Given("Performing a controlled assessment with first tier immigration case") do
+  StateBenefitType.create! label: "housing_benefit", name: "Housing benefit", exclude_from_gross_income: true
+  @api_version = 5
+  response = submit_request(:post, "assessments", @api_version,
+                            { client_reference_id: "N/A", submission_date: "2022-05-10", level_of_representation: "controlled" })
+  @assessment_id = response["assessment_id"]
+  submit_request(:post, "assessments/#{@assessment_id}/applicant", @api_version,
+                 { applicant: { date_of_birth: "1989-12-20",
+                                involvement_type: "applicant",
+                                has_partner_opponent: false,
+                                receives_qualifying_benefit: false } })
+  submit_request(:post, "assessments/#{@assessment_id}/proceeding_types", @api_version,
+                 { "proceeding_types": [{ ccms_code: CFEConstants::IMMIGRATION_PROCEEDING_TYPE_CCMS_CODE, client_involvement_type: "A" }] })
+end
+
+Given("Performing a controlled assessment with first tier asylum case") do
+  StateBenefitType.create! label: "housing_benefit", name: "Housing benefit", exclude_from_gross_income: true
+  @api_version = 5
+  response = submit_request(:post, "assessments", @api_version,
+                            { client_reference_id: "N/A", submission_date: "2022-05-10", level_of_representation: "controlled" })
+  @assessment_id = response["assessment_id"]
+  submit_request(:post, "assessments/#{@assessment_id}/applicant", @api_version,
+                 { applicant: { date_of_birth: "1989-12-20",
+                                involvement_type: "applicant",
+                                has_partner_opponent: false,
+                                receives_qualifying_benefit: false } })
+  submit_request(:post, "assessments/#{@assessment_id}/proceeding_types", @api_version,
+                 { "proceeding_types": [{ ccms_code: "IA031", client_involvement_type: "A" }] })
+end
+
 Given("I am using version {int} of the API") do |int|
   @api_version = int
 end
