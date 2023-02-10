@@ -232,6 +232,18 @@ module Calculators
           end
         end
 
+        context "with a different housing benefit frequency" do
+          let(:housing_benefit_amount) { 500.00 }
+          let(:housing_cost_type) { "rent" }
+
+          before { create_housing_benefit_payments(housing_benefit_amount, dates: [4.weeks.ago, 3.weeks.ago, 2.weeks.ago, 1.week.ago, Date.current]) }
+
+          it "records the full monthly housing costs" do
+            expect(calculator.gross_housing_costs - monthly_cash_housing).to eq(1200.00)
+            expect(calculator.monthly_housing_benefit).to eq 833.33
+          end
+        end
+
         context "with housing benefit as a state_benefit" do
           let(:housing_benefit_amount) { 500.00 }
 
@@ -436,12 +448,13 @@ module Calculators
       end
     end
 
-    def create_housing_benefit_payments(amount)
+    def create_housing_benefit_payments(amount, dates: [2.months.ago, 1.month.ago, Date.current])
       housing_benefit_type = create :state_benefit_type, label: "housing_benefit"
       state_benefit = create :state_benefit, gross_income_summary: assessment.gross_income_summary, state_benefit_type: housing_benefit_type
-      [2.months.ago, 1.month.ago, Date.current].each do |pay_date|
+      dates.each do |pay_date|
         create :state_benefit_payment, state_benefit:, amount:, payment_date: pay_date
       end
+      assessment.gross_income_summary.reload
     end
   end
 end
