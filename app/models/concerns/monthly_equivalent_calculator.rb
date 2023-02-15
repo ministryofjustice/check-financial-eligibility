@@ -17,6 +17,7 @@ module MonthlyEquivalentCalculator
 
   def calculate_monthly_equivalent(collection:, date_method: :payment_date, amount_method: :amount)
     @converter = nil # reset the converter each time it's used
+    @frequency = nil
     return 0.0 if collection.empty?
 
     @monthly_equivalent_calculator_collection = collection
