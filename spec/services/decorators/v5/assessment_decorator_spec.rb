@@ -3,8 +3,6 @@ require "rails_helper"
 module Decorators
   module V5
     RSpec.describe AssessmentDecorator do
-      before { mock_lfa_responses }
-
       let(:assessment) do
         create :assessment,
                :with_gross_income_summary,

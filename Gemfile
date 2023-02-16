@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.1.2"
+ruby "3.2.0"
 
 gem "active_model_serializers", "~> 0.10.13"
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -9,7 +9,7 @@ gem "rails", "~> 7.0.4"
 # Use postgresql as the database for Active Record
 gem "pg", ">= 0.18", "< 2.0"
 # Use Puma as the app server
-gem "puma", "~> 5.6"
+gem "puma", "~> 6.0"
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
@@ -20,7 +20,7 @@ gem "puma", "~> 5.6"
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 
-gem "faraday", "~> 1.0"
+gem "faraday", "~> 1.10"
 
 gem "sentry-rails", ">= 5.3.1"
 gem "sentry-ruby"
@@ -51,7 +51,7 @@ gem "google_drive", ">= 3.0.7"
 gem "nesty"
 
 # parse spreadsheets
-gem "roo", "~> 2.9.0"
+gem "roo", "~> 2.10.0"
 
 # Required following upgrade to ruby 3.1.0
 gem "net-imap"
@@ -77,14 +77,13 @@ group :development, :test do
   gem "rswag-specs"
   gem "rubocop-govuk", require: false
   gem "rubocop-performance"
-  gem "timecop"
 end
 
 group :development do
   gem "guard"
   gem "guard-rspec"
   gem "guard-rubocop"
-  gem "listen", ">= 3.0.5", "< 3.8"
+  gem "listen", ">= 3.0.5", "< 3.9"
   gem "pry-rescue"
   gem "pry-stack_explorer"
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring

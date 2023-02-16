@@ -7,12 +7,10 @@ module Collators
 
     before do
       create :bank_holiday
-      mock_lfa_responses
       assessment.proceeding_type_codes.each do |ptc|
         create :gross_income_eligibility,
                gross_income_summary:,
                proceeding_type_code: ptc,
-               upper_threshold: ProceedingTypeThreshold.value_for(ptc.to_sym, :gross_income_upper, assessment.submission_date),
                assessment_result: "pending"
       end
     end
@@ -39,8 +37,8 @@ module Collators
 
           context "monthly_other_income_sources_exist" do
             before do
-              source1 = create :other_income_source, gross_income_summary: gross_income_summary, name: "friends_or_family"
-              source2 = create :other_income_source, gross_income_summary: gross_income_summary, name: "property_or_lodger"
+              source1 = create :other_income_source, gross_income_summary:, name: "friends_or_family"
+              source2 = create :other_income_source, gross_income_summary:, name: "property_or_lodger"
               create :other_income_payment, other_income_source: source1, payment_date: Date.current, amount: 105.13
               create :other_income_payment, other_income_source: source1, payment_date: 1.month.ago.to_date, amount: 105.23
               create :other_income_payment, other_income_source: source1, payment_date: 1.month.ago.to_date, amount: 105.03

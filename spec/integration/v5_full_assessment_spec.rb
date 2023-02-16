@@ -11,7 +11,6 @@ RSpec.describe "Full V5 passported spec", :vcr do
 
     ENV["VERBOSE"] = "false"
     create :bank_holiday
-    mock_lfa_responses
   end
 
   context "when applicant is passported" do
@@ -206,27 +205,27 @@ RSpec.describe "Full V5 passported spec", :vcr do
       assessment_id = parsed_response[:assessment_id]
 
       rq = "{\"proceeding_types\":[{\"ccms_code\":\"DA002\",\"client_involvement_type\":\"A\"},{\"ccms_code\":\"SE013\",\"client_involvement_type\":\"A\"}]}"
-      post assessment_proceeding_types_path(assessment_id), params: rq, headers: headers
+      post(assessment_proceeding_types_path(assessment_id), params: rq, headers:)
       output_response(:post, :proceeding_types)
 
       rq = "{\"applicant\":{\"date_of_birth\":\"1980-01-10\",\"involvement_type\":\"applicant\",\"has_partner_opponent\":false,\"receives_qualifying_benefit\":true}}"
-      post assessment_applicant_path(assessment_id), params: rq, headers: headers
+      post(assessment_applicant_path(assessment_id), params: rq, headers:)
       output_response(:post, :applicant)
 
       rq = "{\"bank_accounts\":[{\"description\":\"Current accounts\",\"value\":\"788.0\"}],\"non_liquid_capital\":[]}"
-      post assessment_capitals_path(assessment_id), params: rq, headers: headers
+      post(assessment_capitals_path(assessment_id), params: rq, headers:)
       output_response(:post, :capitals)
 
       rq = "{\"vehicles\":[{\"value\":\"3000.0\",\"loan_amount_outstanding\":\"0.0\",\"date_of_purchase\":\"2018-07-15\",\"in_regular_use\":true}]}"
-      post assessment_vehicles_path(assessment_id), params: rq, headers: headers
+      post(assessment_vehicles_path(assessment_id), params: rq, headers:)
       output_response(:post, :vehicles)
 
       rq = "{\"properties\":{\"main_home\":{\"value\":0.0,\"outstanding_mortgage\":0.0,\"percentage_owned\":0.0,\"shared_with_housing_assoc\":false},\"additional_properties\":[{\"value\":0,\"outstanding_mortgage\":0,\"percentage_owned\":0,\"shared_with_housing_assoc\":false}]}}"
-      post assessment_properties_path(assessment_id), params: rq, headers: headers
+      post(assessment_properties_path(assessment_id), params: rq, headers:)
       output_response(:post, :vehicles)
 
       rq = "{\"explicit_remarks\":[{\"category\":\"policy_disregards\",\"details\":[]}]}"
-      post assessment_explicit_remarks_path(assessment_id), params: rq, headers: headers
+      post(assessment_explicit_remarks_path(assessment_id), params: rq, headers:)
       output_response(:post, :vehicles)
 
       get assessment_path(assessment_id), headers: v5_headers
@@ -241,57 +240,57 @@ RSpec.describe "Full V5 passported spec", :vcr do
   end
 
   def post_proceeding_types(assessment_id)
-    post assessment_proceeding_types_path(assessment_id), params: proceeding_type_params, headers: headers
+    post(assessment_proceeding_types_path(assessment_id), params: proceeding_type_params, headers:)
     output_response(:post, :proceeding_types)
   end
 
   def post_applicant(assessment_id)
-    post assessment_applicant_path(assessment_id), params: applicant_params, headers: headers
+    post(assessment_applicant_path(assessment_id), params: applicant_params, headers:)
     output_response(:post, :applicant)
   end
 
   def post_capitals(assessment_id)
-    post assessment_capitals_path(assessment_id), params: capitals_params, headers: headers
+    post(assessment_capitals_path(assessment_id), params: capitals_params, headers:)
     output_response(:post, :capitals)
   end
 
   def post_vehicles(assessment_id)
-    post assessment_vehicles_path(assessment_id), params: vehicle_params, headers: headers
+    post(assessment_vehicles_path(assessment_id), params: vehicle_params, headers:)
     output_response(:post, :vehicles)
   end
 
   def post_properties(assessment_id)
-    post assessment_properties_path(assessment_id), params: property_params, headers: headers
+    post(assessment_properties_path(assessment_id), params: property_params, headers:)
     output_response(:post, :properties)
   end
 
   def post_dependants(assessment_id)
-    post assessment_dependants_path(assessment_id), params: dependants_params, headers: headers
+    post(assessment_dependants_path(assessment_id), params: dependants_params, headers:)
     output_response(:post, :dependants)
   end
 
   def post_outgoings(assessment_id)
-    post assessment_outgoings_path(assessment_id), params: outgoings_params, headers: headers
+    post(assessment_outgoings_path(assessment_id), params: outgoings_params, headers:)
     output_response(:post, :outgoings)
   end
 
   def post_state_benefits(assessment_id)
-    post assessment_state_benefits_path(assessment_id), params: state_benefit_params, headers: headers
+    post(assessment_state_benefits_path(assessment_id), params: state_benefit_params, headers:)
     output_response(:post, :state_benefits)
   end
 
   def post_other_incomes(assessment_id)
-    post assessment_other_incomes_path(assessment_id), params: other_income_params, headers: headers
+    post(assessment_other_incomes_path(assessment_id), params: other_income_params, headers:)
     output_response(:post, :other_incomes)
   end
 
   def post_regular_transactions(assessment_id)
-    post assessment_regular_transactions_path(assessment_id), params: regular_transaction_params, headers: headers
+    post(assessment_regular_transactions_path(assessment_id), params: regular_transaction_params, headers:)
     output_response(:post, :regular_transactions)
   end
 
   def post_irregular_income(assessment_id)
-    post assessment_irregular_incomes_path(assessment_id), params: irregular_income_params, headers: headers
+    post(assessment_irregular_incomes_path(assessment_id), params: irregular_income_params, headers:)
     output_response(:post, :irregular_income)
   end
 

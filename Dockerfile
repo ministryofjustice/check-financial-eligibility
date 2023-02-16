@@ -1,4 +1,4 @@
-FROM ruby:3.1.2-alpine3.16 as builder
+FROM ruby:3.2.0-alpine3.17 as builder
 
 ENV RAILS_ENV production
 
@@ -14,7 +14,7 @@ RUN gem update --system
 RUN bundle config --local without test:development && bundle install
 
 
-FROM ruby:3.1.2-alpine3.16
+FROM ruby:3.2.0-alpine3.17
 RUN apk --no-cache add postgresql-client
 
 COPY --from=builder /usr/local/bundle/ /usr/local/bundle/

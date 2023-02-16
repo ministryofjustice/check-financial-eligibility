@@ -28,8 +28,8 @@ module Calculators
 
     context "has excluded state benefit payments" do
       before do
-        create :state_benefit, :with_monthly_payments, state_benefit_type: excluded_state_benefit_type, gross_income_summary: gross_income_summary
-        create :state_benefit, :with_monthly_payments, state_benefit_type: included_state_benefit_type, gross_income_summary: gross_income_summary
+        create(:state_benefit, :with_monthly_payments, state_benefit_type: excluded_state_benefit_type, gross_income_summary:)
+        create(:state_benefit, :with_monthly_payments, state_benefit_type: included_state_benefit_type, gross_income_summary:)
         create :state_benefit, :with_monthly_payments, state_benefit_type: excluded_state_benefit_type, gross_income_summary:
       end
 

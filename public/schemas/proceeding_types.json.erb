@@ -12,7 +12,7 @@
         "required": ["ccms_code", "client_involvement_type"],
         "properties": {
           "ccms_code": {
-            "enum": <%= ProceedingTypeThreshold.valid_ccms_codes.as_json %>
+            "enum": <%= CFEConstants::VALID_PROCEEDING_TYPE_CCMS_CODES.as_json %>
           },
           "client_involvement_type": {
             "enum": <%= CFEConstants::VALID_CLIENT_INVOLVEMENT_TYPES.as_json %>

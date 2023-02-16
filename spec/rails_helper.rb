@@ -97,13 +97,6 @@ def json_schema_definitions
   File.read(Rails.root.join("public/schemas/assessment_request.json"))
 end
 
-def mock_lfa_responses
-  allow(LegalFrameworkAPI::QueryService).to receive(:waived?) do |ccms_code, threshold_type|
-    threshold_type.in?(%i[capital_upper disposable_income_upper gross_income_upper]) && ccms_code.to_s =~ /^DA/ ? true : false
-  end
-  allow(LegalFrameworkAPI::QueryService).to receive(:matter_type) { |ccms_code| /^DA/.match?(ccms_code.to_s) ? "domestic_abuse" : "section8" }
-end
-
 def deep_match(actual, expected)
   expect(actual.keys.sort).to eq expected.keys.sort
   actual.each do |key, ids|

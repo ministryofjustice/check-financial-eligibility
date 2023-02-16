@@ -23,8 +23,8 @@ module Assessors
 
     context "result summarizer" do
       before do
-        create :assessment_eligibility, assessment: assessment, proceeding_type_code: "DA003", assessment_result: "eligible"
-        create :assessment_eligibility, assessment: assessment, proceeding_type_code: "SE014", assessment_result: "ineligible"
+        create :assessment_eligibility, assessment:, proceeding_type_code: "DA003", assessment_result: "eligible"
+        create :assessment_eligibility, assessment:, proceeding_type_code: "SE014", assessment_result: "ineligible"
 
         allow(AssessmentProceedingTypeAssessor).to receive(:call).with(assessment, "DA003")
         allow(AssessmentProceedingTypeAssessor).to receive(:call).with(assessment, "SE014")

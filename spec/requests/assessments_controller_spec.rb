@@ -1,10 +1,7 @@
 require "rails_helper"
 
 RSpec.describe AssessmentsController, type: :request do
-  before do
-    create :bank_holiday
-    mock_lfa_responses
-  end
+  before { create :bank_holiday }
 
   describe "POST assessments" do
     let(:ipaddr) { "127.0.0.1" }
@@ -26,7 +23,7 @@ RSpec.describe AssessmentsController, type: :request do
 
       it "calls the assessment creator with version and params" do
         expect(Creators::AssessmentCreator).to receive(:call).with(remote_ip: ipaddr, assessment_params: params.to_json, version: "5").and_call_original
-        post assessments_path, params: params.to_json, headers: headers
+        post(assessments_path, params: params.to_json, headers:)
         expect(response).to have_http_status(:ok)
         expect(parsed_response[:success]).to be true
       end
@@ -47,7 +44,7 @@ RSpec.describe AssessmentsController, type: :request do
       end
 
       it "returns error" do
-        post assessments_path, params: params.to_json, headers: headers
+        post(assessments_path, params: params.to_json, headers:)
         expect(response).to have_http_status(:unprocessable_entity)
         expect(parsed_response[:success]).to be false
         expect(parsed_response[:errors]).to eq ["Version not valid in Accept header"]
@@ -70,7 +67,7 @@ RSpec.describe AssessmentsController, type: :request do
 
       it "calls the assessment creator with the default version 5 and params" do
         expect(Creators::AssessmentCreator).to receive(:call).with(remote_ip: ipaddr, assessment_params: params.to_json, version: "5").and_call_original
-        post assessments_path, params: params.to_json, headers: headers
+        post(assessments_path, params: params.to_json, headers:)
         expect(response).to have_http_status(:ok)
         expect(parsed_response[:success]).to be true
       end

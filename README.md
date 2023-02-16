@@ -58,7 +58,6 @@ The `AssessmentController` calls the `MainWorkflow`, which immediately branches 
 
 In each case, the workflow takes each of the assessments in turn, calls a collator to look at all the sub-records under the summary and come up with a total figure in the case of capital, or a monthly equivalent figure in the case of gross or disposable  income, and these results are stored on the associated summary record.  After collation, an assessor is called for each summary which stores the results (eligible, ineligible, contribution required) in each of the eligibility records (one for each proceeding type).  Finally, the main assessor is called to work out the overall result for each proceeding type taking into account the results from the capital, gross income and disposable income assessments.  The assessments controller then calls the main decorator to format the output in the required structure to send back to the client.
 
-
 ## Generation of API documentation using Rswag
 
 see [Rswag readme](https://github.com/rswag/rswag/blob/master/README.md) for initial setup and/or modifications.
@@ -82,16 +81,16 @@ To run the integration tests you will need to set up a `.env` file in the root f
 
 It should contain the following values:
 ```shell script
-PRIVATE_KEY_ID
-PRIVATE_KEY
-CLIENT_EMAIL
-CLIENT_ID
+GOOGLE_SHEETS_PRIVATE_KEY_ID
+GOOGLE_SHEETS_PRIVATE_KEY
+GOOGLE_SHEETS_CLIENT_EMAIL
+GOOGLE_SHEETS_CLIENT_ID
 ALLOW_FUTURE_SUBMISSION_DATE
 LEGAL_FRAMEWORK_API_HOST
 ```
 
 Set ALLOW_FUTURE_SUBMISSION_DATE to true to allow integration tests to run with submission dates that are in the future.
-A copy of the `.env` file including the current values can be found in the `Shared-LAA` section of LastPass.
+A copy of the `.env` file including the current values can be found in the `Shared-LAA` section of LastPass (reach out to the team if you don't have access).
 
 ## Threshold configuration files
 
@@ -106,6 +105,13 @@ This allows the insertion of test data on an arbitrary date specified in the `va
 for testing new thresholds before they come into affect on production.
 
 ## Setup
+
+Please install the following dependencies prior to running the application setup:
+
+```
+brew install shared-mime-info
+brew install postgresql
+```
 
 You can run `bin/setup` from the command line to install dependencies and setup the development and test databases.
 

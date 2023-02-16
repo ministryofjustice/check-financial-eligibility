@@ -54,7 +54,7 @@ module RemarkGenerators
     context "with multiple current accounts" do
       context "when there is a residual_balance in any account" do
         before do
-          create :liquid_capital_item, description: "Current accounts", value: 100, capital_summary: capital_summary
+          create(:liquid_capital_item, description: "Current accounts", value: 100, capital_summary:)
           create :liquid_capital_item, description: "Current accounts", value: -200, capital_summary:
         end
 
@@ -66,7 +66,7 @@ module RemarkGenerators
 
       context "when there is no residual_balance in any account" do
         before do
-          create :liquid_capital_item, description: "Current accounts", value: 0, capital_summary: capital_summary
+          create(:liquid_capital_item, description: "Current accounts", value: 0, capital_summary:)
           create :liquid_capital_item, description: "Current accounts", value: -100, capital_summary:
         end
 

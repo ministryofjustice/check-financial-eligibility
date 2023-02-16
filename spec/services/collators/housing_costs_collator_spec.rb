@@ -33,9 +33,9 @@ module Collators
         context "with housing benefit as a state_benefit" do
           before do
             housing_benefit_type = create :state_benefit_type, label: "housing_benefit"
-            state_benefit = create :state_benefit, gross_income_summary: gross_income_summary, state_benefit_type: housing_benefit_type
-            create :state_benefit_payment, state_benefit: state_benefit, amount: 101.02, payment_date: Date.current
-            create :state_benefit_payment, state_benefit: state_benefit, amount: 101.02, payment_date: 1.month.ago
+            state_benefit = create :state_benefit, gross_income_summary:, state_benefit_type: housing_benefit_type
+            create :state_benefit_payment, state_benefit:, amount: 101.02, payment_date: Date.current
+            create :state_benefit_payment, state_benefit:, amount: 101.02, payment_date: 1.month.ago
             create :state_benefit_payment, state_benefit:, amount: 101.02, payment_date: 2.months.ago
           end
 
@@ -53,8 +53,8 @@ module Collators
 
       context "with housing cost outgoings" do
         before do
-          create :housing_cost_outgoing, disposable_income_summary: disposable_income_summary, amount: 355.44, payment_date: Date.current, housing_cost_type: housing_cost_type
-          create :housing_cost_outgoing, disposable_income_summary: disposable_income_summary, amount: 355.44, payment_date: 1.month.ago, housing_cost_type: housing_cost_type
+          create(:housing_cost_outgoing, disposable_income_summary:, amount: 355.44, payment_date: Date.current, housing_cost_type:)
+          create(:housing_cost_outgoing, disposable_income_summary:, amount: 355.44, payment_date: 1.month.ago, housing_cost_type:)
           create :housing_cost_outgoing, disposable_income_summary:, amount: 355.44, payment_date: 2.months.ago, housing_cost_type:
         end
 
@@ -91,9 +91,9 @@ module Collators
         context "with housing benefit as a state_benefit" do
           before do
             housing_benefit_type = create :state_benefit_type, label: "housing_benefit"
-            state_benefit = create :state_benefit, gross_income_summary: gross_income_summary, state_benefit_type: housing_benefit_type
-            create :state_benefit_payment, state_benefit: state_benefit, amount: 101.02, payment_date: Date.current
-            create :state_benefit_payment, state_benefit: state_benefit, amount: 101.02, payment_date: 1.month.ago
+            state_benefit = create :state_benefit, gross_income_summary:, state_benefit_type: housing_benefit_type
+            create :state_benefit_payment, state_benefit:, amount: 101.02, payment_date: Date.current
+            create :state_benefit_payment, state_benefit:, amount: 101.02, payment_date: 1.month.ago
             create :state_benefit_payment, state_benefit:, amount: 101.02, payment_date: 2.months.ago
           end
 

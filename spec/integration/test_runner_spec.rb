@@ -24,10 +24,7 @@ RSpec.describe "IntegrationTests::TestRunner", type: :request do
   let(:worksheet_names) { spreadsheet.sheets }
   let(:headers) { { "CONTENT_TYPE" => "application/json", "Accept" => "application/json;version=5" } }
 
-  before do
-    setup_test_data
-    mock_lfa_responses
-  end
+  before { setup_test_data }
 
   describe "run integration_tests", :vcr do
     ispec_run = ENV["ISPEC_RUN"].present?
@@ -49,7 +46,7 @@ RSpec.describe "IntegrationTests::TestRunner", type: :request do
         end
         expect(failing_tests).to be_empty, "Failing tests: #{failing_tests.join(', ')}"
       end
-    elsif ENV["PRIVATE_KEY_ID"].present?
+    elsif ENV["GOOGLE_SHEETS_PRIVATE_KEY_ID"].present?
       TestCase::GroupRunner.new(0, "false").each do |worksheet|
         next if worksheet.skippable?
 

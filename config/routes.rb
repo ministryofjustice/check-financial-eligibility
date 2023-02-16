@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   mount Rswag::Ui::Engine => "/api-docs"
   mount Rswag::Api::Engine => "/api-docs"
-
   resources :assessments, only: %i[create show] do
     resource :applicant, only: [:create]
     resources :capitals, only: [:create]
@@ -20,6 +19,8 @@ Rails.application.routes.draw do
     resources :partner_financials, only: [:create]
   end
   resources :state_benefit_type, only: [:index]
+
+  root to: "main#index"
 
   get "ping", to: "status#ping", format: :json
   get "healthcheck", to: "status#status", format: :json
