@@ -24,7 +24,7 @@ Given("I am undertaking a standard assessment with a pensioner applicant who is 
                                 has_partner_opponent: false,
                                 receives_qualifying_benefit: false } })
   submit_request(:post, "assessments/#{@assessment_id}/proceeding_types", @api_version,
-                 { "proceeding_types": [{ ccms_code: "DA001", client_involvement_type: "A" }] })
+                 { "proceeding_types": [{ ccms_code: "SE003", client_involvement_type: "A" }] })
 end
 
 Given("I am undertaking a controlled work assessment with an applicant who receives passporting benefits") do

@@ -81,7 +81,7 @@ Scenario: An applicant and partner's combined capital is over the lower threshol
     When I retrieve the final assessment
     And I should see the following overall summary:
       | attribute                  | value                 |
-      | assessment_result          | contribution_required |
+      | assessment_result          | ineligible            |
       | income contribution        | 15.08                 |
       | capital contribution       | 61900.0               |
 
@@ -100,4 +100,16 @@ Scenario: An applicant and partner's combined capital is over the lower threshol
       | attribute                      | value    |
       | partner allowance              | 191.41   |
       | total outgoings and allowances | 291.41   |
+
+  Scenario: An applicant with an employed partner who is over the gross income threshold
+    Given I am undertaking a standard assessment with a pensioner applicant who is not passported
+    And I add the following employment details for the partner:
+      | client_id |     date     |  gross | benefits_in_kind  | tax   | national_insurance | net_employment_income |
+      |     C     |  2022-07-22  | 5000.50 |       0           | 75.00 |       15.0         |        410.5          |
+      |     C     |  2022-08-22  | 5000.50 |       0           | 75.00 |       15.0         |        410.5          |
+      |     C     |  2022-09-22  | 5000.50 |       0           | 75.00 |       15.0         |        410.5          |
+    When I retrieve the final assessment
+    Then I should see the following overall summary:
+      | attribute                  | value                 |
+      | assessment_result          | ineligible            |
 
