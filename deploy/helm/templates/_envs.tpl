@@ -6,22 +6,13 @@ Environment variables for web and worker containers
 env:
   {{ if .Values.postgresql.enabled }}
   - name: POSTGRES_USER
-    valueFrom:
-      secretKeyRef:
-        name: {{ template "app.fullname" . }}
-        key: postgresqlUsername
+    value: {{ .Values.postgresql.postgresqlUsername }}
   - name: POSTGRES_PASSWORD
-    valueFrom:
-      secretKeyRef:
-        name: {{ template "app.fullname" . }}
-        key: postgresqlPassword
+    value: {{ .Values.postgresql.postgresqlPassword }}
   - name: POSTGRES_HOST
     value: {{ printf "%s-%s" .Release.Name "postgresql" | trunc 63 | trimSuffix "-" }}
   - name: POSTGRES_DATABASE
-    valueFrom:
-      secretKeyRef:
-        name: {{ template "app.fullname" . }}
-        key: postgresqlDatabase
+    value: {{ .Values.postgresql.postgresqlDatabase }}
   {{ else }}
   - name: POSTGRES_USER
     valueFrom:
@@ -47,50 +38,32 @@ env:
   - name: SECRET_KEY_BASE
     valueFrom:
       secretKeyRef:
-        name: {{ template "app.fullname" . }}
-        key: secretKeyBase
+        name: kube-secrets
+        key: secret-key-base
   - name: SENTRY_DSN
     valueFrom:
       secretKeyRef:
-        name: {{ template "app.fullname" . }}
-        key: sentryDsn
+        name: kube-secrets
+        key: sentry-dsn
   - name: RAILS_ENV
     value: production
   - name: RAILS_LOG_TO_STDOUT
     value: 'true'
   - name: USE_TEST_THRESHOLD_DATA
-    valueFrom:
-      secretKeyRef:
-        name: {{ template "app.fullname" . }}
-        key: useTestThresholdData
+    value: {{ .Values.threshold.useTestData | quote }}
   - name: HOST
-    valueFrom:
-      secretKeyRef:
-        name: {{ template "app.fullname" . }}
-        key: deployHost
+    value: {{ .Values.deploy.host }}
   - name: LEGAL_FRAMEWORK_API_HOST
-    valueFrom:
-      secretKeyRef:
-        name: {{ template "app.fullname" . }}
-        key: legalFrameworkApiHost
+    value: {{ .Values.legalFrameworkApi.host }}
   - name: SENTRY
-    valueFrom:
-      secretKeyRef:
-        name: {{ template "app.fullname" . }}
-        key: sentryEnabled
+    value: {{ .Values.sentry.enabled | quote }}
   - name: NOTIFICATIONS_API_KEY
     valueFrom:
       secretKeyRef:
-        name: {{ template "app.fullname" . }}
-        key: notificationsApiKey
+        name: kube-secrets
+        key: notifications-api-key
   - name: NOTIFICATIONS_ERROR_MESSAGE_TEMPLATE_ID
-    valueFrom:
-      secretKeyRef:
-        name: {{ template "app.fullname" . }}
-        key: notificationsErrorMessageTemplateId
+    value: {{ .Values.notifications.errorMessageTemplateId }}
   - name: NOTIFICATIONS_RECIPIENT
-    valueFrom:
-      secretKeyRef:
-        name: {{ template "app.fullname" . }}
-        key: notificationsRecipient
+    value: {{ .Values.notifications.recipient }}
 {{- end }}

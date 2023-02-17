@@ -1,0 +1,43 @@
+# Default values for CFE Partner fork PRODUCTION.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 5
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 1G
+  requests:
+    cpu: 10m
+    memory: 125Mi
+
+ingress:
+  className: modsec
+  hosts:
+    - check-financial-eligibility-partner.cloud-platform.service.justice.gov.uk
+  annotations:
+    external-dns.alpha.kubernetes.io/set-identifier: "check-financial-eligibility-partner-check-financial-partner-check-financial-eligibility-partner-production-green"
+    external-dns.alpha.kubernetes.io/aws-weight: "100"
+    nginx.ingress.kubernetes.io/enable-modsecurity: "true"
+    nginx.ingress.kubernetes.io/modsecurity-snippet: |
+      SecRuleEngine On
+
+deploy:
+  host: check-financial-eligibility-partner.cloud-platform.service.justice.gov.uk
+
+postgresql:
+  enabled: false
+
+threshold:
+  useTestData: 'true'
+
+legalFrameworkApi:
+  host: https://legal-framework-api.cloud-platform.service.justice.gov.uk
+
+sentry:
+  enabled: not_enabled
+
+notifications:
+  errorMessageTemplateId: 59fae8bd-fed2-4548-a372-6fcaf195644d
+  recipient: patrick.gleeson@digital.justice.gov.uk,michael.blatherwick@digital.justice.gov.uk,stephen.p.dicks@digital.justice.gov.uk,william.clarke@digital.justice.gov.uk
