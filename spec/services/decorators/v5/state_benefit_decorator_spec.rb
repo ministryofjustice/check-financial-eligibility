@@ -8,7 +8,7 @@ module Decorators
 
         let(:state_benefit) { create :state_benefit, :with_monthly_payments, name: "Childcare allowance" }
         let(:excluded) { state_benefit.state_benefit_type.exclude_from_gross_income }
-        let!(:gross_income_summary) { create :gross_income_summary, :with_all_transaction_types }
+        let!(:gross_income_summary) { create :gross_income_summary }
 
         subject(:decorator) { described_class.new(state_benefit).as_json }
 

@@ -1,7 +1,6 @@
 module Calculators
   class HousingCostsCalculator
     include Transactions
-    include MonthlyEquivalentCalculatable
 
     delegate :housing_cost_outgoings, to: :@disposable_income_summary
 
@@ -58,11 +57,11 @@ module Calculators
     end
 
     def gross_housing_costs_regular_transactions
-      monthly_regular_transaction_amount_by(gross_income_summary: @gross_income_summary, operation: :debit, category: :rent_or_mortgage)
+      Calculators::MonthlyRegularTransactionAmountCalculator.call(gross_income_summary: @gross_income_summary, operation: :debit, category: :rent_or_mortgage)
     end
 
     def monthly_housing_benefit_regular_transactions
-      monthly_regular_transaction_amount_by(gross_income_summary: @gross_income_summary, operation: :credit, category: :housing_benefit)
+      Calculators::MonthlyRegularTransactionAmountCalculator.call(gross_income_summary: @gross_income_summary, operation: :credit, category: :housing_benefit)
     end
 
     # TODO: regular transactions may need accounting for here at some point

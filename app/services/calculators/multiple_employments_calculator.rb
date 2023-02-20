@@ -10,7 +10,7 @@ module Calculators
     end
 
     def call
-      EmploymentIncomeResult.new(
+      EmploymentIncomeSubtotals.new(
         gross_employment_income: gross_income_values.fetch(:gross_employment_income),
         benefits_in_kind: gross_income_values.fetch(:benefits_in_kind),
         employment_income_deductions: disposable_income_values.fetch(:employment_income_deductions),

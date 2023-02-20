@@ -1,5 +1,5 @@
 class PersonCapitalSubtotals
-  def initialize(data = {})
+  def initialize(data = Hash.new(0.0))
     @total_vehicle = data[:total_vehicle]
     @assessed_capital = data[:assessed_capital]
     @assessment_result = data[:assessment_result]

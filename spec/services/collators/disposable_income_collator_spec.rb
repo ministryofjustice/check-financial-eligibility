@@ -13,6 +13,7 @@ module Collators
     let(:fixed_employment_allowance) { 45.0 }
     let(:dependant_allowance) { 582.98 }
     let(:partner_allowance) { 481.29 }
+    let(:total_gross_income) { 0 }
 
     let(:disposable_income_summary) do
       summary = create(:disposable_income_summary,
@@ -52,7 +53,8 @@ module Collators
       subject(:collator) do
         described_class.call(gross_income_summary: assessment.gross_income_summary,
                              disposable_income_summary: assessment.disposable_income_summary,
-                             partner_allowance:)
+                             partner_allowance:,
+                             total_gross_income:)
       end
 
       context "total_monthly_outgoings" do
@@ -63,25 +65,21 @@ module Collators
       end
 
       context "total disposable income" do
-        before do
-          assessment.gross_income_summary.update!(total_gross_income: total_outgoings + 1500.0)
-        end
+        let(:total_gross_income) { total_outgoings + 1_500 }
 
         it "is populated with result of gross income minus total outgoings and allowances" do
           collator
-          result = assessment.gross_income_summary.total_gross_income + assessment.gross_income_summary.gross_employment_income - disposable_income_summary.reload.total_outgoings_and_allowances
+          result = total_gross_income - disposable_income_summary.reload.total_outgoings_and_allowances
           expect(disposable_income_summary.total_disposable_income).to eq result
         end
       end
 
       context "when total disposable income is negative" do
-        before do
-          assessment.gross_income_summary.update!(total_gross_income: total_outgoings - 1500.0)
-        end
+        let(:total_gross_income) { total_outgoings - 1_500 }
 
         it "returns the correct negative amount" do
           collator
-          result = assessment.gross_income_summary.total_gross_income + assessment.gross_income_summary.gross_employment_income - disposable_income_summary.reload.total_outgoings_and_allowances
+          result = total_gross_income - disposable_income_summary.reload.total_outgoings_and_allowances
           expect(disposable_income_summary.total_disposable_income).to eq result
           expect(disposable_income_summary.total_disposable_income).to be_negative
         end

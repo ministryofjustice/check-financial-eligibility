@@ -18,12 +18,12 @@ module Calculators
     def process_single_employment
       EmploymentMonthlyValueCalculator.call(@employment, @submission_date) if @employment
 
-      EmploymentIncomeResult.new(gross_employment_income:,
-                                 benefits_in_kind: monthly_benefits_in_kind,
-                                 employment_income_deductions: deductions,
-                                 fixed_employment_allowance: allowance,
-                                 tax: taxes,
-                                 national_insurance: ni_contributions).freeze
+      EmploymentIncomeSubtotals.new(gross_employment_income:,
+                                    benefits_in_kind: monthly_benefits_in_kind,
+                                    employment_income_deductions: deductions,
+                                    fixed_employment_allowance: allowance,
+                                    tax: taxes,
+                                    national_insurance: ni_contributions).freeze
     end
 
     def gross_employment_income

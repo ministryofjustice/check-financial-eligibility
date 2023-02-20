@@ -13,6 +13,18 @@ module Decorators
       end
       let(:calculation_output) do
         CalculationOutput.new(
+          gross_income_subtotals: GrossIncomeSubtotals.new(
+            applicant_gross_income_subtotals: PersonGrossIncomeSubtotals.new(
+              regular_income_categories: CFEConstants::VALID_INCOME_CATEGORIES.map do |category|
+                GrossIncomeCategorySubtotals.new(category: category.to_sym, bank: 0, cash: 0, regular: 0)
+              end,
+            ),
+            partner_gross_income_subtotals: PersonGrossIncomeSubtotals.new(
+              regular_income_categories: CFEConstants::VALID_INCOME_CATEGORIES.map do |category|
+                GrossIncomeCategorySubtotals.new(category: category.to_sym, bank: 0, cash: 0, regular: 0)
+              end,
+            ),
+          ),
           capital_subtotals: CapitalSubtotals.new(
             applicant_capital_subtotals: PersonCapitalSubtotals.new(total_vehicle: 0),
             partner_capital_subtotals: PersonCapitalSubtotals.new(total_vehicle: 0),

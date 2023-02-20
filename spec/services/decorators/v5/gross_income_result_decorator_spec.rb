@@ -13,7 +13,7 @@ module Decorators
       end
       let(:ptcs) { ptc_results.keys }
       let(:assessment) { create :assessment, proceedings: [%w[DA002 A], %w[DA003 A], %w[SE013 A]] }
-      let(:summary) { create :gross_income_summary, assessment:, total_gross_income: 16_615.40 }
+      let(:summary) { create :gross_income_summary, assessment: }
       let(:expected_hash) do
         {
           total_gross_income: 16_615.40,
@@ -44,7 +44,9 @@ module Decorators
         }
       end
 
-      subject(:decorator) { described_class.new(summary).as_json }
+      subject(:decorator) do
+        described_class.new(summary, PersonGrossIncomeSubtotals.new(total_gross_income: 16_615.40), 0).as_json
+      end
 
       before do
         ptc_results.each do |ptc, thresh_and_result|

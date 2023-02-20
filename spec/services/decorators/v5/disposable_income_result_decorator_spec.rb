@@ -87,7 +87,9 @@ module Decorators
         }
       end
 
-      subject(:decorator) { described_class.new(summary, assessment.gross_income_summary, partner_present:).as_json }
+      let(:employment_income_subtotals) { EmploymentIncomeSubtotals.new(gross_employment_income: 0, benefits_in_kind: 0) }
+
+      subject(:decorator) { described_class.new(summary, assessment.gross_income_summary, employment_income_subtotals, partner_present:).as_json }
 
       before do
         pt_results.each do |ptc, details|
@@ -108,8 +110,6 @@ module Decorators
           employment2
           result = Calculators::MultipleEmploymentsCalculator.call(assessment:,
                                                                    employments: assessment.employments)
-          assessment.gross_income_summary.update!(gross_employment_income: result.gross_employment_income,
-                                                  benefits_in_kind: result.benefits_in_kind)
           assessment.disposable_income_summary.update!(employment_income_deductions: result.employment_income_deductions,
                                                        fixed_employment_allowance: result.fixed_employment_allowance,
                                                        tax: result.tax,

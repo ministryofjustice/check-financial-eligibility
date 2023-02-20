@@ -11,8 +11,7 @@ module Calculators
 
     context "no state benefit records" do
       it "leaves the monthly state benefit value as zero" do
-        collator
-        expect(gross_income_summary.reload.monthly_state_benefits).to eq 0.0
+        expect(collator).to eq 0.0
       end
     end
 

@@ -13,50 +13,52 @@ module Workflows
     def call
       return SelfEmployedWorkflow.call(assessment) if assessment.applicant.self_employed?
 
-      collate_and_assess_gross_income
-      return CalculationOutput.new if assessment.gross_income_summary.ineligible?
+      gross_income_subtotals = collate_and_assess_gross_income
+      return CalculationOutput.new(gross_income_subtotals:) if assessment.gross_income_summary.ineligible?
 
-      disposable_income_assessment
-      return CalculationOutput.new if assessment.disposable_income_summary.ineligible?
+      disposable_income_assessment(gross_income_subtotals)
+      return CalculationOutput.new(gross_income_subtotals:) if assessment.disposable_income_summary.ineligible?
 
       capital_subtotals = collate_and_assess_capital
-      CalculationOutput.new(capital_subtotals:)
+      CalculationOutput.new(capital_subtotals:, gross_income_subtotals:)
     end
 
   private
 
     attr_reader :assessment
 
-    # TODO: make the Collators::GrossIncomeCollator increment/sum to existing values so order of "collation" becomes unimportant
     def collate_and_assess_gross_income
-      Collators::GrossIncomeCollator.call(assessment:,
-                                          submission_date: assessment.submission_date,
-                                          employments: assessment.employments,
-                                          disposable_income_summary: assessment.disposable_income_summary,
-                                          gross_income_summary: assessment.gross_income_summary)
-      Collators::RegularIncomeCollator.call(assessment.gross_income_summary) # here OR call in Collators::GrossIncomeCollator
+      applicant_gross_income_subtotals = Collators::GrossIncomeCollator.call(assessment:,
+                                                                             submission_date: assessment.submission_date,
+                                                                             employments: assessment.employments,
+                                                                             disposable_income_summary: assessment.disposable_income_summary,
+                                                                             gross_income_summary: assessment.gross_income_summary)
       if assessment.partner.present?
-        Collators::GrossIncomeCollator.call(assessment:,
-                                            submission_date: assessment.submission_date,
-                                            employments: assessment.partner_employments,
-                                            disposable_income_summary: assessment.partner_disposable_income_summary,
-                                            gross_income_summary: assessment.partner_gross_income_summary)
-        Collators::RegularIncomeCollator.call(assessment.partner_gross_income_summary)
-
-        assessment.gross_income_summary.update!(combined_total_gross_income: assessment.gross_income_summary.total_gross_income +
-                                                                            assessment.partner_gross_income_summary.total_gross_income)
+        partner_gross_income_subtotals = Collators::GrossIncomeCollator.call(assessment:,
+                                                                             submission_date: assessment.submission_date,
+                                                                             employments: assessment.partner_employments,
+                                                                             disposable_income_summary: assessment.partner_disposable_income_summary,
+                                                                             gross_income_summary: assessment.partner_gross_income_summary)
+        combined_monthly_gross_income = applicant_gross_income_subtotals.total_gross_income +
+          partner_gross_income_subtotals.total_gross_income
       else
-        assessment.gross_income_summary.update!(combined_total_gross_income: assessment.gross_income_summary.total_gross_income)
+        combined_monthly_gross_income = applicant_gross_income_subtotals.total_gross_income
       end
 
       Assessors::GrossIncomeAssessor.call(
         eligibilities: assessment.gross_income_summary.eligibilities,
-        total_gross_income: assessment.gross_income_summary.combined_total_gross_income,
+        total_gross_income: combined_monthly_gross_income,
+      )
+
+      GrossIncomeSubtotals.new(
+        applicant_gross_income_subtotals:,
+        partner_gross_income_subtotals:,
+        combined_monthly_gross_income:,
       )
     end
 
     # TODO: make the Collators::DisposableIncomeCollator increment/sum to existing values so order of "collation" becomes unimportant
-    def disposable_income_assessment
+    def disposable_income_assessment(gross_income_subtotals)
       if assessment.partner.present?
         applicant = PersonWrapper.new person: assessment.applicant, is_single: false,
                                       dependants: assessment.dependants, gross_income_summary: assessment.gross_income_summary
@@ -78,10 +80,12 @@ module Workflows
 
         Collators::DisposableIncomeCollator.call(gross_income_summary: assessment.gross_income_summary.freeze,
                                                  disposable_income_summary: assessment.disposable_income_summary,
-                                                 partner_allowance: 0)
+                                                 partner_allowance: 0,
+                                                 total_gross_income: gross_income_subtotals.applicant_gross_income_subtotals.total_gross_income)
         Collators::DisposableIncomeCollator.call(gross_income_summary: assessment.partner_gross_income_summary.freeze,
                                                  disposable_income_summary: assessment.partner_disposable_income_summary,
-                                                 partner_allowance:)
+                                                 partner_allowance:,
+                                                 total_gross_income: gross_income_subtotals.partner_gross_income_subtotals.total_gross_income)
 
         Collators::RegularOutgoingsCollator.call(gross_income_summary: assessment.gross_income_summary.freeze,
                                                  disposable_income_summary: assessment.disposable_income_summary,
@@ -108,7 +112,8 @@ module Workflows
                                           allow_negative_net: false)
         Collators::DisposableIncomeCollator.call(gross_income_summary: assessment.gross_income_summary.freeze,
                                                  disposable_income_summary: assessment.disposable_income_summary,
-                                                 partner_allowance: 0)
+                                                 partner_allowance: 0,
+                                                 total_gross_income: gross_income_subtotals.applicant_gross_income_subtotals.total_gross_income)
         Collators::RegularOutgoingsCollator.call(gross_income_summary: assessment.gross_income_summary.freeze,
                                                  disposable_income_summary: assessment.disposable_income_summary,
                                                  eligible_for_childcare:)

@@ -1,9 +1,10 @@
 module Decorators
   module V5
     class DisposableIncomeResultDecorator
-      def initialize(summary, gross_income_summary, partner_present:)
+      def initialize(summary, gross_income_summary, employment_income_subtotals, partner_present:)
         @summary = summary
         @gross_income_summary = gross_income_summary
+        @employment_income_subtotals = employment_income_subtotals
         @partner_present = partner_present
       end
 
@@ -37,13 +38,13 @@ module Decorators
       attr_reader :summary, :gross_income_summary
 
       def net_employment_income
-        gross_income_summary.gross_employment_income + summary.employment_income_deductions + summary.fixed_employment_allowance
+        @employment_income_subtotals.gross_employment_income + summary.employment_income_deductions + summary.fixed_employment_allowance
       end
 
       def employment_income
         {
-          gross_income: gross_income_summary.gross_employment_income.to_f,
-          benefits_in_kind: gross_income_summary.benefits_in_kind.to_f,
+          gross_income: @employment_income_subtotals.gross_employment_income.to_f,
+          benefits_in_kind: @employment_income_subtotals.benefits_in_kind.to_f,
           tax: summary.tax.to_f,
           national_insurance: summary.national_insurance.to_f,
           fixed_employment_deduction: summary.fixed_employment_allowance.to_f,

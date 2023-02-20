@@ -21,10 +21,13 @@ module Decorators
             income_contribution: disposable_income_summary.income_contribution.to_f,
             proceeding_types: ProceedingTypesResultDecorator.new(assessment).as_json,
           },
-          gross_income: GrossIncomeResultDecorator.new(gross_income_summary).as_json,
+          gross_income: GrossIncomeResultDecorator.new(gross_income_summary,
+                                                       @calculation_output.gross_income_subtotals.applicant_gross_income_subtotals,
+                                                       @calculation_output.gross_income_subtotals.combined_monthly_gross_income.to_f).as_json,
           partner_gross_income:,
           disposable_income: DisposableIncomeResultDecorator.new(disposable_income_summary,
                                                                  gross_income_summary,
+                                                                 @calculation_output.gross_income_subtotals.applicant_gross_income_subtotals.employment_income_subtotals,
                                                                  partner_present: assessment.partner.present?).as_json,
           partner_disposable_income:,
           capital: CapitalResultDecorator.new(capital_summary,
@@ -38,7 +41,8 @@ module Decorators
       def partner_gross_income
         return unless assessment.partner
 
-        GrossIncomeResultDecorator.new(assessment.partner_gross_income_summary).as_json
+        GrossIncomeResultDecorator.new(assessment.partner_gross_income_summary,
+                                       @calculation_output.gross_income_subtotals.partner_gross_income_subtotals).as_json
       end
 
       def partner_disposable_income
@@ -46,6 +50,7 @@ module Decorators
 
         DisposableIncomeResultDecorator.new(assessment.partner_disposable_income_summary,
                                             assessment.partner_gross_income_summary,
+                                            @calculation_output.gross_income_subtotals.partner_gross_income_subtotals.employment_income_subtotals,
                                             partner_present: true).as_json
       end
 

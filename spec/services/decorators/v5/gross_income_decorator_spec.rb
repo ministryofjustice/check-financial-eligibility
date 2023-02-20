@@ -5,20 +5,20 @@ module Decorators
     RSpec.describe GrossIncomeDecorator do
       let(:assessment) { create :assessment }
 
-      let(:summary) do
-        create :gross_income_summary,
-               assessment:,
-               monthly_student_loan: 250,
-               monthly_unspecified_source: 423.35,
-               benefits_all_sources: 1_322.6,
-               benefits_bank: 1_322.6,
-               maintenance_in_all_sources: 350,
-               maintenance_in_bank: 200,
-               maintenance_in_cash: 150,
-               friends_or_family_all_sources: 50,
-               friends_or_family_cash: 50,
-               property_or_lodger_all_sources: 250,
-               property_or_lodger_bank: 250
+      let(:summary) { create :gross_income_summary, assessment: }
+
+      let(:subtotals) do
+        PersonGrossIncomeSubtotals.new(
+          monthly_student_loan: 250,
+          monthly_unspecified_source: 423.35,
+          regular_income_categories: [
+            GrossIncomeCategorySubtotals.new(category: :benefits, bank: 1322.6, cash: 0, regular: 0, all_sources: 1322.6),
+            GrossIncomeCategorySubtotals.new(category: :maintenance_in, bank: 200, cash: 150, regular: 0, all_sources: 350),
+            GrossIncomeCategorySubtotals.new(category: :friends_or_family, bank: 0, cash: 50, regular: 0, all_sources: 50),
+            GrossIncomeCategorySubtotals.new(category: :property_or_lodger, bank: 250, cash: 0, regular: 0, all_sources: 250),
+            GrossIncomeCategorySubtotals.new(category: :pension, bank: 0, cash: 0, regular: 0, all_sources: 0),
+          ],
+        )
       end
 
       let!(:employment1) { create :employment, :with_monthly_payments, assessment: }
@@ -144,7 +144,7 @@ module Decorators
           create(:state_benefit, state_benefit_type: child_benefit, gross_income_summary: summary, monthly_value: 343.27)
         end
 
-        subject(:decorator) { described_class.new(assessment.gross_income_summary, assessment.employments).as_json }
+        subject(:decorator) { described_class.new(assessment.gross_income_summary, assessment.employments, subtotals).as_json }
 
         it "returns the expected structure" do
           expect(decorator).to match(expected_results)

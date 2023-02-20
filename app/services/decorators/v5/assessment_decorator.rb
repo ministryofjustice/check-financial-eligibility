@@ -36,7 +36,7 @@ module Decorators
           client_reference_id: assessment.client_reference_id,
           submission_date: assessment.submission_date,
           applicant: ApplicantDecorator.new(applicant).as_json,
-          gross_income: GrossIncomeDecorator.new(gross_income_summary, assessment.employments).as_json,
+          gross_income:,
           partner_gross_income:,
           disposable_income: DisposableIncomeDecorator.new(disposable_income_summary).as_json,
           partner_disposable_income:,
@@ -46,11 +46,18 @@ module Decorators
         }
       end
 
+      def gross_income
+        GrossIncomeDecorator.new(gross_income_summary,
+                                 assessment.employments,
+                                 @calculation_output.gross_income_subtotals.applicant_gross_income_subtotals).as_json
+      end
+
       def partner_gross_income
         return unless assessment.partner
 
         GrossIncomeDecorator.new(assessment.partner_gross_income_summary,
-                                 assessment.partner_employments).as_json
+                                 assessment.partner_employments,
+                                 @calculation_output.gross_income_subtotals.partner_gross_income_subtotals).as_json
       end
 
       def partner_disposable_income

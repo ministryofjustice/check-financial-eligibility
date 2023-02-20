@@ -17,8 +17,6 @@ module Collators
       end
     end
 
-    include MonthlyEquivalentCalculatable
-
     def initialize(disposable_income_summary:, gross_income_summary:, eligible_for_childcare:)
       @disposable_income_summary = disposable_income_summary
       @gross_income_summary = gross_income_summary
@@ -42,7 +40,7 @@ module Collators
         next if category == :child_care && !@eligible_for_childcare # see *§ above
 
         category_all_sources = "#{category}_all_sources".to_sym
-        category_monthly_amount = monthly_regular_transaction_amount_by(gross_income_summary: @gross_income_summary, operation: :debit, category:)
+        category_monthly_amount = Calculators::MonthlyRegularTransactionAmountCalculator.call(gross_income_summary: @gross_income_summary, operation: :debit, category:)
 
         attrs[category_all_sources] += category_monthly_amount
         next if category == :rent_or_mortgage # see ** above

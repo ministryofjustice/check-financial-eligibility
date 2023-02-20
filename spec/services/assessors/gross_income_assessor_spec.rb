@@ -8,42 +8,38 @@ module Assessors
     describe ".call" do
       subject(:assessor) do
         described_class.call(eligibilities: gross_income_summary.eligibilities,
-                             total_gross_income: gross_income_summary.total_gross_income)
+                             total_gross_income:)
       end
 
       context "gross income has been summarised" do
         context "monthly income below upper threshold" do
+          let(:total_gross_income) { 2_400 }
+
           it "is eligible" do
-            set_gross_income_values gross_income_summary, 1_023, 0.0, 0.0, 45.3, 2_567
+            create :gross_income_eligibility, gross_income_summary:, upper_threshold: 2_567
             assessor
             expect(gross_income_summary.summarized_assessment_result).to eq :eligible
           end
         end
 
         context "monthly income equals upper threshold" do
+          let(:total_gross_income) { 2_567 }
+
           it "is not eligible" do
-            set_gross_income_values gross_income_summary, 2_000, 0.0, 0.0, 567.00, 2_567.00
+            create :gross_income_eligibility, gross_income_summary:, upper_threshold: 2_567
             assessor
             expect(gross_income_summary.summarized_assessment_result).to eq :ineligible
           end
         end
 
         context "monthly income above upper threshold" do
+          let(:total_gross_income) { 2_600 }
+
           it "is not eligible" do
-            set_gross_income_values gross_income_summary, 2_100.0, 0.0, 0.0, 500.2, 2_567
+            create :gross_income_eligibility, gross_income_summary:, upper_threshold: 2_567
             assessor
             expect(gross_income_summary.summarized_assessment_result).to eq :ineligible
           end
-        end
-
-        def set_gross_income_values(record, other_income, monthly_student_loan, monthly_unspecified_source, state_benefits, threshold)
-          record.update!(monthly_other_income: other_income,
-                         monthly_student_loan:,
-                         monthly_state_benefits: state_benefits,
-                         total_gross_income: other_income + state_benefits + monthly_student_loan + monthly_unspecified_source,
-                         upper_threshold: threshold,
-                         assessment_result: "summarised")
-          create :gross_income_eligibility, gross_income_summary: record, upper_threshold: threshold
         end
       end
     end

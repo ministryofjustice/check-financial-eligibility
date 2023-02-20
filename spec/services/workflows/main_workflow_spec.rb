@@ -73,7 +73,7 @@ module Workflows
           allow(Creators::EligibilitiesCreator).to receive(:call).with(assessment)
           allow(NonPassportedWorkflow).to receive(:call).with(assessment).and_return(CalculationOutput.new)
           allow(Assessors::MainAssessor).to receive(:call).with(assessment)
-          allow(RemarkGenerators::Orchestrator).to receive(:call).with(assessment, nil)
+          allow(RemarkGenerators::Orchestrator).to receive(:call).with(assessment, 0)
 
           workflow_call
         end
@@ -84,7 +84,7 @@ module Workflows
           allow(Utilities::ProceedingTypeThresholdPopulator).to receive(:call).with(assessment)
           allow(NonPassportedWorkflow).to receive(:call).with(assessment).and_return(CalculationOutput.new)
           allow(Assessors::MainAssessor).to receive(:call).with(assessment)
-          allow(RemarkGenerators::Orchestrator).to receive(:call).with(assessment, nil)
+          allow(RemarkGenerators::Orchestrator).to receive(:call).with(assessment, 0)
 
           workflow_call
         end

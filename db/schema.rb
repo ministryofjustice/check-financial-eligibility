@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_06_122959) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_09_115454) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -198,35 +198,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_06_122959) do
     t.uuid "assessment_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.decimal "upper_threshold", default: "0.0", null: false
-    t.decimal "monthly_other_income"
-    t.boolean "assessment_error", default: false
-    t.string "assessment_result", default: "pending", null: false
-    t.decimal "monthly_state_benefits", default: "0.0", null: false
-    t.decimal "total_gross_income", default: "0.0"
-    t.decimal "student_loan", default: "0.0"
-    t.decimal "monthly_student_loan"
-    t.decimal "benefits_all_sources", default: "0.0"
-    t.decimal "friends_or_family_all_sources", default: "0.0"
-    t.decimal "maintenance_in_all_sources", default: "0.0"
-    t.decimal "property_or_lodger_all_sources", default: "0.0"
-    t.decimal "pension_all_sources", default: "0.0"
-    t.decimal "benefits_bank", default: "0.0"
-    t.decimal "friends_or_family_bank", default: "0.0"
-    t.decimal "maintenance_in_bank", default: "0.0"
-    t.decimal "property_or_lodger_bank", default: "0.0"
-    t.decimal "pension_bank", default: "0.0"
-    t.decimal "benefits_cash", default: "0.0"
-    t.decimal "friends_or_family_cash", default: "0.0"
-    t.decimal "maintenance_in_cash", default: "0.0"
-    t.decimal "property_or_lodger_cash", default: "0.0"
-    t.decimal "pension_cash", default: "0.0"
-    t.decimal "gross_employment_income", default: "0.0", null: false
-    t.decimal "benefits_in_kind", default: "0.0", null: false
-    t.decimal "unspecified_source", default: "0.0"
-    t.decimal "monthly_unspecified_source"
     t.string "type", default: "ApplicantGrossIncomeSummary"
-    t.decimal "combined_total_gross_income"
     t.index ["assessment_id"], name: "index_gross_income_summaries_on_assessment_id"
   end
 
