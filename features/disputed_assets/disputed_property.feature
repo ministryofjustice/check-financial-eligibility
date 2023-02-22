@@ -2,7 +2,7 @@ Feature:
     "I have a property that is disputed"
 
     Scenario: A SMOD property where the value of the client's share of its equity is entirely disregarded
-        Given I am undertaking a standard assessment with an applicant who receives passporting benefits
+        Given I am undertaking a certificated assessment with an applicant who receives passporting benefits
         And I add the following main property details for the current assessment:
             | value                     | 150000 |
             | outstanding_mortgage      | 0      |
@@ -23,7 +23,7 @@ Feature:
             | assessed_capital                    | 0.0     |
 
     Scenario: The SMOD disregard is capped if the property is assessed as being worth more than £100k.
-        Given I am undertaking a standard assessment with an applicant who receives passporting benefits
+        Given I am undertaking a certificated assessment with an applicant who receives passporting benefits
         And I add the following main property details for the current assessment:
             | value                     | 250000 |
             | outstanding_mortgage      | 0      |
@@ -44,7 +44,7 @@ Feature:
             | assessed_capital                    | 42500.0  |
 
     Scenario: Disputed main and additional properties which, combined, are assessed as worth less than £100k
-        Given I am undertaking a standard assessment with an applicant who receives passporting benefits
+        Given I am undertaking a certificated assessment with an applicant who receives passporting benefits
         And I add the following main property details for the current assessment:
             | value                     | 250000 |
             | outstanding_mortgage      | 0      |
