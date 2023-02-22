@@ -91,5 +91,5 @@ module CFEConstants
 
   # Number of days before assessment is considered stale and eligible for deletion
   #
-  STALE_ASSESSMENT_THRESHOLD_DAYS = 30
+  STALE_ASSESSMENT_THRESHOLD_DAYS = 14
 end
