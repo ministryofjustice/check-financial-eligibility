@@ -14,7 +14,7 @@ RSpec.describe Creators::ExplicitRemarksCreator do
             details: %w[disregard_1 disregard_2],
           },
         ],
-      }.to_json
+      }
     end
 
     let(:invalid_params) do
@@ -29,7 +29,7 @@ RSpec.describe Creators::ExplicitRemarksCreator do
             details: %w[xxxx zzzzz],
           },
         ],
-      }.to_json
+      }
     end
 
     context "with valid payload" do

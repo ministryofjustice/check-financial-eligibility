@@ -62,7 +62,7 @@ module Creators
     end
 
     def state_benefits
-      @state_benefits ||= JSON.parse(@state_benefits_params, symbolize_names: true)[:state_benefits]
+      @state_benefits ||= @state_benefits_params[:state_benefits]
     end
 
     def json_validator

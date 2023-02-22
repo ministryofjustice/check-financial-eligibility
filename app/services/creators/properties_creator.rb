@@ -57,7 +57,7 @@ module Creators
     end
 
     def properties_attributes
-      @properties_attributes ||= JSON.parse(@properties_params, symbolize_names: true)[:properties]
+      @properties_attributes ||= @properties_params[:properties]
     end
 
     def json_validator

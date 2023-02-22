@@ -36,6 +36,7 @@ RSpec.describe "proceeding_types", type: :request, swagger_doc: "v5/swagger.yaml
                           },
                           client_involvement_type: {
                             type: :string,
+                            enum: CFEConstants::VALID_CLIENT_INVOLVEMENT_TYPES,
                             example: "A",
                             description: "The client_involvement_type expected by CCMS",
                           },

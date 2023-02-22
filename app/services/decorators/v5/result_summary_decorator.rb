@@ -14,7 +14,7 @@ module Decorators
       end
 
       def as_json
-        {
+        details = {
           overall_result: {
             result: @assessment.assessment_result,
             capital_contribution: @calculation_output.capital_subtotals.capital_contribution.to_f,
@@ -24,30 +24,28 @@ module Decorators
           gross_income: GrossIncomeResultDecorator.new(gross_income_summary,
                                                        @calculation_output.gross_income_subtotals.applicant_gross_income_subtotals,
                                                        @calculation_output.gross_income_subtotals.combined_monthly_gross_income.to_f).as_json,
-          partner_gross_income:,
           disposable_income: DisposableIncomeResultDecorator.new(disposable_income_summary,
                                                                  gross_income_summary,
                                                                  @calculation_output.gross_income_subtotals.applicant_gross_income_subtotals.employment_income_subtotals,
                                                                  partner_present: assessment.partner.present?).as_json,
-          partner_disposable_income:,
           capital: CapitalResultDecorator.new(capital_summary,
                                               @calculation_output.capital_subtotals.applicant_capital_subtotals,
                                               @calculation_output.capital_subtotals.capital_contribution.to_f,
                                               @calculation_output.capital_subtotals.combined_assessed_capital.to_f).as_json,
-          partner_capital:,
         }
+        if assessment.partner
+          details.merge(partner_capital:, partner_gross_income:, partner_disposable_income:)
+        else
+          details
+        end
       end
 
       def partner_gross_income
-        return unless assessment.partner
-
         GrossIncomeResultDecorator.new(assessment.partner_gross_income_summary,
                                        @calculation_output.gross_income_subtotals.partner_gross_income_subtotals).as_json
       end
 
       def partner_disposable_income
-        return unless assessment.partner
-
         DisposableIncomeResultDecorator.new(assessment.partner_disposable_income_summary,
                                             assessment.partner_gross_income_summary,
                                             @calculation_output.gross_income_subtotals.partner_gross_income_subtotals.employment_income_subtotals,
@@ -55,8 +53,6 @@ module Decorators
       end
 
       def partner_capital
-        return unless assessment.partner
-
         CapitalResultDecorator.new(assessment.partner_capital_summary,
                                    @calculation_output.capital_subtotals&.partner_capital_subtotals,
                                    0, 0).as_json

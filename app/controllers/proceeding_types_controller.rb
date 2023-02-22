@@ -12,7 +12,11 @@ private
   def creation_service
     @creation_service ||= Creators::ProceedingTypesCreator.call(
       assessment_id: params[:assessment_id],
-      proceeding_types_params: request.raw_post,
+      proceeding_types_params:,
     )
+  end
+
+  def proceeding_types_params
+    JSON.parse(request.raw_post, symbolize_names: true)
   end
 end

@@ -38,6 +38,33 @@ RSpec.configure do |config|
         },
         version: "v5",
       },
+      components: {
+        schemas: {
+          ProceedingTypeResult: {
+            type: :object,
+            required: %i[ccms_code client_involvement_type upper_threshold lower_threshold result],
+            properties: {
+              ccms_code: {
+                type: :string,
+                enum: CFEConstants::VALID_PROCEEDING_TYPE_CCMS_CODES,
+                description: "The code expected by CCMS",
+              },
+              client_involvement_type: {
+                type: :string,
+                enum: CFEConstants::VALID_CLIENT_INVOLVEMENT_TYPES,
+                example: "A",
+                description: "The client_involvement_type expected by CCMS",
+              },
+              upper_threshold: { type: :number },
+              lower_threshold: { type: :number },
+              result: {
+                type: :string,
+                enum: %w[eligible ineligible contribution_required],
+              },
+            },
+          },
+        },
+      },
       paths: {},
     },
   }

@@ -33,7 +33,7 @@ module Creators
     end
 
     def vehicles_attributes
-      @vehicles_attributes ||= JSON.parse(@vehicles_params, symbolize_names: true)[:vehicles]
+      @vehicles_attributes ||= @vehicles_params[:vehicles]
     end
 
     def json_validator

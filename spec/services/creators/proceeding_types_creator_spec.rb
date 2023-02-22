@@ -6,7 +6,7 @@ module Creators
     let(:assessment) { create :assessment, proceedings: [] }
     let(:assessment_id) { assessment.id }
     let(:proceeding_types_attributes) { attributes_for_list(:proceeding_type, 2) }
-    let(:proceeding_types_params) { { proceeding_types: proceeding_types_attributes }.to_json }
+    let(:proceeding_types_params) { { proceeding_types: proceeding_types_attributes } }
 
     subject(:creator) { described_class.call(assessment_id:, proceeding_types_params:) }
 

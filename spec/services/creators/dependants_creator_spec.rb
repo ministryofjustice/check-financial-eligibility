@@ -5,8 +5,8 @@ module Creators
     include Rails.application.routes.url_helpers
     let(:assessment) { create :assessment }
     let(:assessment_id) { assessment.id }
-    let(:dependants_attributes) { attributes_for_list(:dependant, 2) }
-    let(:dependants_params) { { dependants: dependants_attributes }.to_json }
+    let(:dependants_attributes) { attributes_for_list(:dependant, 2).map { |v| v.merge(date_of_birth: v.fetch(:date_of_birth).to_s) } }
+    let(:dependants_params) { { dependants: dependants_attributes } }
 
     subject(:creator) { described_class.call(assessment_id:, dependants_params:) }
 
@@ -39,7 +39,7 @@ module Creators
     end
 
     context "payload fails ActiveRecord validations" do
-      let(:dependants_attributes) { attributes_for_list(:dependant, 2, date_of_birth: Faker::Date.forward) }
+      let(:dependants_attributes) { attributes_for_list(:dependant, 2, date_of_birth: Faker::Date.forward.to_s) }
 
       describe "#success?" do
         it "returns false" do

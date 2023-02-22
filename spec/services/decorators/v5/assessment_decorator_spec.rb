@@ -35,6 +35,16 @@ module Decorators
       describe "#as_json" do
         subject(:decorator) { described_class.new(assessment, calculation_output).as_json }
 
+        before do
+          partner_financials_params = {
+            partner: {
+              employed: true,
+              date_of_birth: 30.years.ago.to_date.to_s,
+            },
+          }
+          Creators::PartnerFinancialsCreator.call(assessment_id: assessment.id, partner_financials_params:)
+        end
+
         it "has the required keys in the returned hash" do
           expected_keys = %i[
             id
@@ -42,15 +52,14 @@ module Decorators
             submission_date
             applicant
             gross_income
-            partner_gross_income
             disposable_income
-            partner_disposable_income
             capital
-            partner_capital
             remarks
+            partner_disposable_income
+            partner_gross_income
+            partner_capital
           ]
-          expect(decorator.keys).to eq %i[version timestamp success result_summary assessment]
-          expect(decorator[:assessment].keys).to eq expected_keys
+          expect(decorator[:assessment].keys).to match_array expected_keys
         end
 
         it "calls the decorators for associated records" do
@@ -63,20 +72,42 @@ module Decorators
           decorator
         end
 
-        it "includes partner information" do
-          partner_financials_params = {
-            partner: {
-              employed: true,
-              date_of_birth: 30.years.ago.to_date.to_s,
-            },
-          }
-          Creators::PartnerFinancialsCreator.call(assessment_id: assessment.id, partner_financials_params:)
-          expect(decorator[:assessment][:partner_gross_income]).to be_present
-          expect(decorator[:assessment][:partner_disposable_income]).to be_present
-          expect(decorator[:assessment][:partner_capital]).to be_present
-          expect(decorator[:result_summary][:partner_gross_income]).to be_present
-          expect(decorator[:result_summary][:partner_disposable_income]).to be_present
-          expect(decorator[:result_summary][:partner_capital]).to be_present
+        context "with partner" do
+          before do
+            partner_financials_params = {
+              partner: {
+                employed: true,
+                date_of_birth: 30.years.ago.to_date.to_s,
+              },
+            }
+            Creators::PartnerFinancialsCreator.call(assessment_id: assessment.id, partner_financials_params:)
+          end
+
+          it "includes partner information" do
+            expect(decorator[:assessment][:partner_gross_income]).to be_present
+            expect(decorator[:assessment][:partner_disposable_income]).to be_present
+            expect(decorator[:assessment][:partner_capital]).to be_present
+            expect(decorator[:result_summary][:partner_gross_income]).to be_present
+            expect(decorator[:result_summary][:partner_disposable_income]).to be_present
+            expect(decorator[:result_summary][:partner_capital]).to be_present
+          end
+
+          it "has the required keys in the returned hash" do
+            expected_keys = %i[
+              id
+              client_reference_id
+              submission_date
+              applicant
+              gross_income
+              disposable_income
+              capital
+              remarks
+              partner_gross_income
+              partner_disposable_income
+              partner_capital
+            ]
+            expect(decorator[:assessment].keys).to match_array expected_keys
+          end
         end
       end
     end

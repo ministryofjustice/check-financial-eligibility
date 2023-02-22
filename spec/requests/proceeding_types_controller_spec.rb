@@ -17,7 +17,7 @@ RSpec.describe ProceedingTypesController, type: :request do
             client_involvement_type: "Z",
           },
         ],
-      }.to_json
+      }
     end
     let(:params) do
       {
@@ -28,7 +28,7 @@ RSpec.describe ProceedingTypesController, type: :request do
 
     before do
       allow(Creators::ProceedingTypesCreator).to receive(:call).with(params).and_return(mock_creator)
-      post assessment_proceeding_types_path(assessment.id), params: payload, headers:
+      post assessment_proceeding_types_path(assessment.id), params: payload.to_json, headers:
     end
 
     context "sucessful creation" do

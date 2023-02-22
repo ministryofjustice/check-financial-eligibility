@@ -44,7 +44,7 @@ module Creators
     end
 
     def regular_transactions
-      @regular_transactions ||= JSON.parse(@regular_transaction_params, symbolize_names: true).fetch(:regular_transactions)
+      @regular_transactions ||= @regular_transaction_params.fetch(:regular_transactions)
     end
 
     def json_validator

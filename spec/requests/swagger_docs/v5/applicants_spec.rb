@@ -20,7 +20,7 @@ RSpec.describe "applicants", type: :request, swagger_doc: "v5/swagger.yaml" do
                 required: true,
                 schema: {
                   type: :object,
-                  required: %i[date_of_birth involvement_type has_partner_opponent receives_qualifying_benefit],
+                  required: %i[date_of_birth has_partner_opponent receives_qualifying_benefit],
                   properties: {
                     applicant: {
                       type: :object,

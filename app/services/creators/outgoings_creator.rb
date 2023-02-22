@@ -38,7 +38,7 @@ module Creators
     end
 
     def outgoings
-      @outgoings ||= JSON.parse(@outgoings_params, symbolize_names: true)[:outgoings]
+      @outgoings ||= @outgoings_params[:outgoings]
     end
 
     def json_validator

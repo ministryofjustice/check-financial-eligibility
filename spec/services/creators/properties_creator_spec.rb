@@ -37,7 +37,7 @@ module Creators
           main_home:,
           additional_properties:,
         },
-      }.to_json
+      }
     end
 
     subject(:creator) do
