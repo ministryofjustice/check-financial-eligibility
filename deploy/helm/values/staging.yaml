@@ -36,7 +36,7 @@ legalFrameworkApi:
   host: https://legal-framework-api-staging.cloud-platform.service.justice.gov.uk
 
 sentry:
-  enabled: not_enabled
+  enabled: enabled
 
 notifications:
   errorMessageTemplateId: e6d49396-455c-4aca-aab0-16f8411e76f5

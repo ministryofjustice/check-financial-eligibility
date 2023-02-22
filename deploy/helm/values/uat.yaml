@@ -36,7 +36,7 @@ postgresql:
     enabled: false
 
 sentry:
-  enabled: not_enabled
+  enabled: enabled
 
 notifications:
   errorMessageTemplateId: 55ec1022-736a-40bf-b3f4-0fe85de17525
