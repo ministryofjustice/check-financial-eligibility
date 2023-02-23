@@ -116,10 +116,11 @@ module V2
         end
 
         it "returns error JSON" do
+          codes = CFEConstants::VALID_PROCEEDING_TYPE_CCMS_CODES.join(", ")
           expect(parsed_response)
             .to eq({
               success: false,
-              errors: ["The property '#/proceeding_types/0/ccms_code' value \"ZZ\" did not match one of the following values: DA001, DA002, DA003, DA004, DA005, DA006, DA007, DA020, SE003, SE004, SE013, SE014, SE007, SE008, SE015, SE016, SE095, SE097, SE003A, SE004A, SE007A, SE008A, SE013A, SE014A, SE015A, SE016A, SE095A, SE097A, SE101A, SE003E, SE004E, SE007E, SE008E, SE013E, SE014E, SE015E, SE016E, SE096E, SE099E, SE100E, SE101E in schema file://#"],
+              errors: ["The property '#/proceeding_types/0/ccms_code' value \"ZZ\" did not match one of the following values: #{codes} in schema file://#"],
             })
         end
       end
