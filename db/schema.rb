@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_15_110407) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_24_091833) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -279,7 +279,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_15_110407) do
     t.datetime "updated_at", precision: nil, null: false
     t.uuid "capital_summary_id"
     t.decimal "transaction_allowance", default: "0.0", null: false
-    t.decimal "allowable_outstanding_mortgage", default: "0.0", null: false
     t.decimal "net_value", default: "0.0", null: false
     t.decimal "net_equity", default: "0.0", null: false
     t.decimal "assessed_equity"

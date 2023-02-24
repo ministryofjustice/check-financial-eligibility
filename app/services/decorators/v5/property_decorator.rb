@@ -19,7 +19,7 @@ module Decorators
           main_home: @record.main_home,
           shared_with_housing_assoc: @record.shared_with_housing_assoc,
           transaction_allowance: @record.transaction_allowance,
-          allowable_outstanding_mortgage: @record.allowable_outstanding_mortgage,
+          allowable_outstanding_mortgage: @record.outstanding_mortgage,
           net_value: @record.net_value,
           net_equity: @record.net_equity,
           main_home_equity_disregard: @record.main_home_equity_disregard,

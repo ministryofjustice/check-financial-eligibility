@@ -65,3 +65,4 @@ disposable_income_contribution_bands:
 
 fixed_employment_allowance: 45.0
 employment_income_variance: 60.0
+subject_matter_of_dispute_disregard: 100000.0

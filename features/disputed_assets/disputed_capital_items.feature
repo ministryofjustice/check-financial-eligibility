@@ -26,7 +26,6 @@ Feature:
             | subject_matter_of_dispute_disregard | 50000.0 |
             | assessed_capital                    | 25000.0 |
 
-
     Scenario: A SMOD bank account whose value is over the SMOD disregard limit
         Given I am undertaking a certificated assessment with an applicant who receives passporting benefits
         And I add the following capital details for "bank_accounts" in the current assessment:
