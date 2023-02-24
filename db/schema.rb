@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_09_115454) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_15_110407) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -25,6 +25,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_09_115454) do
     t.datetime "updated_at", precision: nil, null: false
     t.boolean "self_employed", default: false
     t.boolean "employed"
+    t.boolean "receives_asylum_support", default: false
     t.index ["assessment_id"], name: "index_applicants_on_assessment_id"
   end
 

@@ -141,6 +141,11 @@ paths:
                       type: boolean
                       example: false
                       description: Applicant receives qualifying benefit
+                    receives_asylum_support:
+                      type: boolean
+                      example: false
+                      description: Applicant receives section 4 or section 95 Asylum
+                        Support
         required: true
   "/assessments":
     post:

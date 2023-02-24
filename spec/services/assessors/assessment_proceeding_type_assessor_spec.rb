@@ -8,9 +8,10 @@ module Assessors
              :with_gross_income_summary,
              :with_disposable_income_summary,
              :with_eligibilities,
-             :with_applicant
+             :with_applicant,
+             proceedings: [[ptc, "A"]]
     end
-    let(:ptc) { assessment.proceeding_type_codes.first }
+    let(:ptc) { "DA003" }
     let(:gross_income_eligibility) { assessment.gross_income_summary.eligibilities.find_by(proceeding_type_code: ptc) }
     let(:disposable_income_eligibility) { assessment.disposable_income_summary.eligibilities.find_by(proceeding_type_code: ptc) }
     let(:capital_eligibility) { assessment.capital_summary.eligibilities.find_by(proceeding_type_code: ptc) }
@@ -18,6 +19,55 @@ module Assessors
 
     describe ".call" do
       describe "successful result" do
+        context "asylum supported applicant" do
+          before { assessment.applicant.update!(receives_asylum_support: true) }
+
+          context "when using non-immigration/asylum proceeding type codes" do
+            # specify assessment results in order: gross_income_eligibility, disposable_income_eligibility, capital_eligibility
+            [
+              [:e, :cr, :e, "contribution_required"],
+              [:e, :cr, :i, "ineligible"],
+              [:e, :e, :cr, "contribution_required"],
+              [:e, :e, :e, "eligible"],
+              [:e, :e, :i, "ineligible"],
+              [:e, :i, :cr, "ineligible"],
+              [:e, :i, :e, "ineligible"],
+              [:e, :i, :i, "ineligible"],
+              [:e, :i, :p, "ineligible"],
+              [:i, :cr, :cr, "ineligible"],
+              [:i, :cr, :e, "ineligible"],
+              [:i, :cr, :i, "ineligible"],
+              [:i, :cr, :p, "ineligible"],
+              [:i, :e, :cr, "ineligible"],
+              [:i, :e, :e, "ineligible"],
+              [:i, :e, :i, "ineligible"],
+              [:i, :e, :p, "ineligible"],
+              [:i, :i, :cr, "ineligible"],
+              [:i, :i, :e, "ineligible"],
+              [:i, :i, :i, "ineligible"],
+              [:i, :i, :p, "ineligible"],
+              [:i, :p, :cr, "ineligible"],
+              [:i, :p, :e, "ineligible"],
+              [:i, :p, :i, "ineligible"],
+              [:i, :p, :p, "ineligible"],
+            ].each do |params|
+              it "updates the assessment eligibility record with the correct result" do
+                gross, disposable, capital, expected_result = params
+                expect(setup_and_test_result(gross, disposable, capital)).to eq(expected_result), "Expected #{gross}, #{disposable}, #{capital} to give #{expected_result}"
+              end
+            end
+          end
+
+          context "when using immigration/asylum proceeding type codes" do
+            let(:ptc) { "IM030" }
+
+            it "returns eligible for immigration/asylum proceeding type codes" do
+              described_class.call(assessment, ptc)
+              expect(assessment_eligibility.assessment_result).to eq "eligible"
+            end
+          end
+        end
+
         context "passported applicant" do
           before { assessment.applicant.update!(receives_qualifying_benefit: true) }
 

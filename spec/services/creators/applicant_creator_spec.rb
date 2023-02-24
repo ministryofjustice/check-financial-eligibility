@@ -13,6 +13,7 @@ module Creators
             involvement_type: "applicant",
             has_partner_opponent: true,
             receives_qualifying_benefit: true,
+            receives_asylum_support: true,
           },
         }
       end

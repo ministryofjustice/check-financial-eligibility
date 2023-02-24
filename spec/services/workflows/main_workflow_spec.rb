@@ -15,6 +15,27 @@ module Workflows
       allow(GovukBankHolidayRetriever).to receive(:dates).and_return(bank_holiday_response)
     end
 
+    context "applicant is asylum_supported" do
+      let(:applicant) { create :applicant, receives_asylum_support: true }
+
+      it "calls normal workflows by default" do
+        allow(PassportedWorkflow).to receive(:call).and_return(CalculationOutput.new)
+        expect(Assessors::MainAssessor).to receive(:call).with(assessment)
+        MainWorkflow.call(assessment)
+      end
+
+      context "for immigration/asylum proceeding types" do
+        let(:proceedings_hash) { [%w[IM030 A]] }
+
+        it "does not call a workflow" do
+          expect(PassportedWorkflow).not_to receive(:call)
+          expect(NonPassportedWorkflow).not_to receive(:call)
+          expect(Assessors::MainAssessor).to receive(:call).with(assessment)
+          MainWorkflow.call(assessment)
+        end
+      end
+    end
+
     context "applicant is passported" do
       let(:applicant) { create :applicant, :with_qualifying_benefits }
 
@@ -38,7 +59,7 @@ module Workflows
 
       subject(:workflow_call) { MainWorkflow.call(assessment) }
 
-      it "calls PassportedWorkflow" do
+      it "calls NonPassportedWorkflow" do
         allow(Assessors::MainAssessor).to receive(:call)
         allow(NonPassportedWorkflow).to receive(:call).with(assessment).and_return(CalculationOutput.new)
         workflow_call
