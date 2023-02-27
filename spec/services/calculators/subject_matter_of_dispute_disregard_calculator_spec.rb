@@ -33,14 +33,6 @@ module Calculators
         end
       end
 
-      context "with a SMOD property worth less than the disregard" do
-        let(:property) { create :property, assessed_equity: 5_000, subject_matter_of_dispute: true }
-
-        it "returns the value of the property" do
-          expect(value).to eq 5_000
-        end
-      end
-
       context "with a SMOD capital item worth less than the disregard" do
         let(:capital_item) { create :liquid_capital_item, value: 3_000, subject_matter_of_dispute: true }
 
@@ -55,7 +47,7 @@ module Calculators
         let(:property) { create :property, assessed_equity: 5_000, subject_matter_of_dispute: true }
 
         it "returns the combined value of the assets" do
-          expect(value).to eq 9_000
+          expect(value).to eq 4_000
         end
       end
 
@@ -65,7 +57,7 @@ module Calculators
         let(:property) { create :property, assessed_equity: 9_000, subject_matter_of_dispute: true }
 
         it "returns the disregard value" do
-          expect(value).to eq 10_000
+          expect(value).to eq 4_000
         end
       end
 

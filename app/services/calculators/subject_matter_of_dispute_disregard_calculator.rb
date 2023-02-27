@@ -11,7 +11,6 @@ module Calculators
 
     def value
       total_disputed_asset_value = disputed_capital_value +
-        disputed_property_value +
         disputed_vehicle_value
 
       if total_disputed_asset_value.positive? && @maximum_disregard.nil?
@@ -25,10 +24,6 @@ module Calculators
 
     def disputed_capital_value
       disputed_capital_items.sum(:value)
-    end
-
-    def disputed_property_value
-      disputed_properties.sum(:assessed_equity)
     end
 
     def disputed_vehicle_value

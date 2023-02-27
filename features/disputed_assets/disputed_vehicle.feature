@@ -59,14 +59,14 @@ Feature:
             | value                      | 200000.0 |
             | main_home_equity_disregard | 100000.0 |
             | transaction_allowance      | 6000.0   |
-            | assessed_equity            | 94000.0  |
+            | assessed_equity            | 0.0      |
         And I should see the following "vehicle" details:
             | attribute       | value   |
             | value           | 18000.0 |
             | assessed_value  | 18000.0 |
         And I should see the following "capital summary" details:
             | attribute                           | value    |
-            | total_property                      | 94000.0  |
+            | total_property                      | 0.0      |
             | total_vehicle                       | 18000.0  |
             | subject_matter_of_dispute_disregard | 100000.0 |
-            | assessed_capital                    | 12000.0  |
+            | assessed_capital                    | 18000.0  |

@@ -795,7 +795,7 @@ module V2
               end
 
               it "has bank_transactions" do
-                expect(state_benefits.fetch(:bank_transactions).map { |g| g.except(:name) }).to eq(
+                expect(state_benefits.fetch(:bank_transactions).map { |g| g.except(:name) }).to match_array(
                   [
                     { monthly_value: 1033.44, excluded_from_income_assessment: true },
                     { monthly_value: 266.02, excluded_from_income_assessment: false },

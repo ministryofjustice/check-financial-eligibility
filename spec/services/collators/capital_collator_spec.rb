@@ -33,9 +33,8 @@ module Collators
 
       context "property_assessment" do
         it "instantiates and calls the Property Assessment service" do
-          property_service = instance_double Calculators::PropertyCalculator
-          allow(Calculators::PropertyCalculator).to receive(:new).and_return(property_service)
-          allow(property_service).to receive(:call).and_return(23_000.0)
+          property_result = Calculators::PropertyCalculator::Result.new(assessed_equity: 23_000.0, smod_applied: 0)
+          allow(Calculators::PropertyCalculator).to receive(:call).and_return([property_result])
           collator
           expect(collator.total_property).to eq 23_000.0
         end
@@ -43,7 +42,7 @@ module Collators
 
       context "vehicle assessment" do
         it "instantiates and calls the Vehicle Assesment service" do
-          allow(Assessors::VehicleAssessor).to receive(:call).and_return(2_500.0)
+          allow(Assessors::VehicleAssessor).to receive(:call).and_return([OpenStruct.new(value: 2_500.0)])
           collator
           expect(collator.total_vehicle).to eq 2_500.0
         end
@@ -61,14 +60,13 @@ module Collators
         let(:pcd_value) { 100_000 }
 
         it "summarizes the results it gets from the subservices" do
-          property_service = instance_double Calculators::PropertyCalculator
+          property_result = Calculators::PropertyCalculator::Result.new(assessed_equity: 23_000.0, smod_applied: 0)
 
-          allow(Calculators::PropertyCalculator).to receive(:new).and_return(property_service)
+          allow(Calculators::PropertyCalculator).to receive(:call).and_return([property_result])
 
           allow(Assessors::LiquidCapitalAssessor).to receive(:call).and_return(145.83)
           allow(Assessors::NonLiquidCapitalAssessor).to receive(:call).and_return(500)
-          allow(Assessors::VehicleAssessor).to receive(:call).and_return(2_500.0)
-          allow(property_service).to receive(:call).and_return(23_000.0)
+          allow(Assessors::VehicleAssessor).to receive(:call).and_return([OpenStruct.new(value: 2_500.0)])
 
           collator
 

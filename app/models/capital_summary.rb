@@ -15,7 +15,6 @@ class CapitalSummary < ApplicationRecord
            dependent: :destroy
   has_many :disputed_capital_items, -> { disputed }, class_name: "CapitalItem"
   has_many :disputed_vehicles, -> { disputed }, class_name: "Vehicle"
-  has_many :disputed_properties, -> { disputed }, class_name: "Property"
 
   def summarized_assessment_result
     Utilities::ResultSummarizer.call(eligibilities.map(&:assessment_result))
