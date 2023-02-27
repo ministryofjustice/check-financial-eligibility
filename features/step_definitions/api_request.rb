@@ -1,4 +1,4 @@
-Given("I am undertaking a standard assessment with an applicant who receives passporting benefits") do
+Given("I am undertaking a certificated assessment with an applicant who receives passporting benefits") do
   @api_version = 5
   response = submit_request(:post, "assessments", @api_version,
                             { client_reference_id: "N/A", submission_date: "2022-05-10" })
@@ -12,7 +12,7 @@ Given("I am undertaking a standard assessment with an applicant who receives pas
                  { "proceeding_types": [{ ccms_code: "DA001", client_involvement_type: "A" }] })
 end
 
-Given("I am undertaking a standard assessment with a pensioner applicant who is not passported") do
+Given("I am undertaking a certificated assessment with a pensioner applicant who is not passported") do
   StateBenefitType.create! label: "housing_benefit", name: "Housing benefit", exclude_from_gross_income: true
   @api_version = 5
   response = submit_request(:post, "assessments", @api_version,
