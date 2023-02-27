@@ -36,10 +36,13 @@ module LegalFrameworkAPI
     end
 
     def matter_type(pt_detail)
-      if /^DA/.match?(pt_detail[:ccms_code])
+      case pt_detail[:ccms_code]
+      when /^DA/
         "Domestic abuse"
-      else
+      when /^SE/
         "Children - section 8"
+      else
+        raise "Unrecognised CCMS code: #{pt_detail[:ccms_code]}"
       end
     end
 

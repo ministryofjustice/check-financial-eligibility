@@ -6,15 +6,7 @@ module LegalFrameworkAPI
       allow(SecureRandom).to receive(:uuid).and_return("52fb18ad-257e-4ab1-91da-d7d5e4ff1068")
     end
 
-    describe ".call" do
-      subject(:service) { described_class.call(proceeding_details) }
-
-      it "returns expected response" do
-        expect(service).to eq expected_response
-      end
-    end
-
-    def proceeding_details
+    let(:proceeding_details) do
       [
         {
           ccms_code: "DA004",
@@ -37,6 +29,29 @@ module LegalFrameworkAPI
           client_involvement_type: "Z",
         },
       ]
+    end
+
+    describe ".call" do
+      subject(:service) { described_class.call(proceeding_details) }
+
+      it "returns expected response" do
+        expect(service).to eq expected_response
+      end
+
+      context "when given an unrecognised proceeding type" do
+        let(:proceeding_details) do
+          [
+            {
+              ccms_code: "IM039",
+              client_involvement_type: "A",
+            },
+          ]
+        end
+
+        it "raises an error" do
+          expect { service }.to raise_error "Unrecognised CCMS code: IM039"
+        end
+      end
     end
 
     def expected_response

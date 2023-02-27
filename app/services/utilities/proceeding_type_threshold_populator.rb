@@ -59,7 +59,9 @@ module Utilities
     end
 
     def waivers_may_apply?
-      @assessment.level_of_representation == "certificated"
+      @assessment.level_of_representation == "certificated" && @assessment.proceeding_types.none? do |type|
+        type.ccms_code.in?(CFEConstants::IMMIGRATION_AND_ASYLUM_PROCEEDING_TYPE_CCMS_CODES.map(&:to_s))
+      end
     end
   end
 end

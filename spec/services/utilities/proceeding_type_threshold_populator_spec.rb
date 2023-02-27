@@ -62,7 +62,7 @@ module Utilities
       end
 
       it "updates the threshold values on the proceeding type records where the threshold is not waived" do
-        allow(LegalFrameworkAPI::ThresholdWaivers).to receive(:call).and_return(response)
+        allow(LegalFrameworkAPI::MockThresholdWaivers).to receive(:call).and_return(response)
 
         described_class.call(assessment)
 
@@ -78,7 +78,7 @@ module Utilities
       end
 
       it "updates threshold values on proceeding type records where the threshold is waived" do
-        allow(LegalFrameworkAPI::ThresholdWaivers).to receive(:call).and_return(response)
+        allow(LegalFrameworkAPI::MockThresholdWaivers).to receive(:call).and_return(response)
 
         described_class.call(assessment)
 
@@ -92,11 +92,26 @@ module Utilities
         before { assessment.update(level_of_representation: "controlled") }
 
         it "ignores waivers" do
-          expect(LegalFrameworkAPI::ThresholdWaivers).not_to receive(:call)
+          expect(LegalFrameworkAPI::MockThresholdWaivers).not_to receive(:call)
 
           described_class.call(assessment)
 
           pt = assessment.reload.proceeding_types.find_by(ccms_code: "DA001")
+          expect(pt.gross_income_upper_threshold).to eq 2657.0
+          expect(pt.disposable_income_upper_threshold).to eq 733.0
+          expect(pt.capital_upper_threshold).to eq 8000.0
+        end
+      end
+
+      context "for certificated upper tribunal work" do
+        let(:proceeding_hash) { [%w[IM030 A]] }
+
+        it "ignores waivers" do
+          expect(LegalFrameworkAPI::MockThresholdWaivers).not_to receive(:call)
+
+          described_class.call(assessment)
+
+          pt = assessment.reload.proceeding_types.find_by(ccms_code: "IM030")
           expect(pt.gross_income_upper_threshold).to eq 2657.0
           expect(pt.disposable_income_upper_threshold).to eq 733.0
           expect(pt.capital_upper_threshold).to eq 8000.0
