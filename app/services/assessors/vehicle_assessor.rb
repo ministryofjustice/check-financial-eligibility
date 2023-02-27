@@ -3,7 +3,7 @@ module Assessors
     Result = Struct.new(:value, :included_in_assessment, keyword_init: true)
     class << self
       def call(vehicles, submission_date)
-        vehicles.sum { assess(_1, submission_date) }
+        vehicles.map { assess(_1, submission_date) }
       end
 
       def assess(vehicle, submission_date)
@@ -13,7 +13,7 @@ module Assessors
                    assess_not_in_regular_use(vehicle)
                  end
         save_assessed_value(vehicle, result)
-        result.value
+        result
       end
 
     private

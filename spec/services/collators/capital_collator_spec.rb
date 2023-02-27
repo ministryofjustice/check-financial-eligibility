@@ -42,7 +42,7 @@ module Collators
 
       context "vehicle assessment" do
         it "instantiates and calls the Vehicle Assesment service" do
-          allow(Assessors::VehicleAssessor).to receive(:call).and_return(2_500.0)
+          allow(Assessors::VehicleAssessor).to receive(:call).and_return([OpenStruct.new(value: 2_500.0)])
           collator
           expect(collator.total_vehicle).to eq 2_500.0
         end
@@ -66,7 +66,7 @@ module Collators
 
           allow(Assessors::LiquidCapitalAssessor).to receive(:call).and_return(145.83)
           allow(Assessors::NonLiquidCapitalAssessor).to receive(:call).and_return(500)
-          allow(Assessors::VehicleAssessor).to receive(:call).and_return(2_500.0)
+          allow(Assessors::VehicleAssessor).to receive(:call).and_return([OpenStruct.new(value: 2_500.0)])
 
           collator
 
