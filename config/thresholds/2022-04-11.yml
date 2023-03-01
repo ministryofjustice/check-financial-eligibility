@@ -6,9 +6,12 @@ dependant_increase_starts_after: 4
 disposable_income_lower_certificated: 315
 disposable_income_lower_controlled: 733
 disposable_income_upper: 733
+disposable_income_certificated_immigration_asylum_upper_tribunal: 733
 capital_lower_certificated: 3_000
 capital_upper: 8_000
 capital_immigration_first_tier_tribunal_controlled: 3_000
+capital_immigration_upper_tribunal_certificated: 3_000
+capital_asylum_upper_tribunal_certificated: 8_000
 partner_allowance: 191.41
 pensioner_capital_disregard:
   minimum_age_in_years: 60
