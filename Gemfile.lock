@@ -139,6 +139,9 @@ GEM
       database_cleaner-core (~> 2.0.0)
     database_cleaner-core (2.0.1)
     date (3.3.3)
+    date_validator (0.12.0)
+      activemodel (>= 3)
+      activesupport (>= 3)
     debug_inspector (1.1.0)
     declarative (0.0.20)
     descriptive_statistics (2.5.1)
@@ -486,6 +489,7 @@ DEPENDENCIES
   colorize
   cucumber-rails
   database_cleaner
+  date_validator
   descriptive_statistics
   dibber
   dotenv-rails (>= 2.7.6)

@@ -36,6 +36,7 @@ gem "business", "~> 2.3"
 # gem 'rack-cors'
 
 gem "colorize"
+gem "date_validator"
 
 gem "json-schema", "~> 3.0.0"
 

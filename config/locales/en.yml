@@ -25,9 +25,37 @@
 #
 # en:
 #   'true': 'foo'
+# en.activerecord.errors.models.outgoings/childcare.attributes.payment_date.not_in_the_future
 #
 # To learn more, please read the Rails Internationalization guide
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
   hello: "Hello world"
+  activerecord:
+    errors:
+      models:
+        outgoings/maintenance:
+          attributes:
+            payment_date:
+              not_in_the_future: cannot be in the future
+        outgoings/childcare:
+          attributes:
+            payment_date:
+              not_in_the_future: cannot be in the future
+        outgoings/housing_costs:
+          attributes:
+            payment_date:
+              not_in_the_future: cannot be in the future
+        outgoings/legal_aid:
+          attributes:
+            payment_date:
+              not_in_the_future: cannot be in the future
+        vehicle:
+          attributes:
+            date_of_purchase:
+              not_in_the_future: cannot be in the future
+        partner:
+          attributes:
+            date_of_birth:
+              not_in_the_future: cannot be in the future

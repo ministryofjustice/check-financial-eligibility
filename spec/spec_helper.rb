@@ -10,6 +10,10 @@ unless ENV["NOCOVERAGE"]
     add_filter "lib/integration_helpers"
     add_filter "app/mailers/exception_alert_mailer.rb"
     add_filter "app/lib/exception_notifier/templated_notifier.rb"
+
+    enable_coverage :branch
+    primary_coverage :branch
+    minimum_coverage branch: 95.27, line: 100
   end
 end
 

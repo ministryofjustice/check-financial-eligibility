@@ -4,6 +4,8 @@ module Outgoings
 
     self.table_name = "outgoings"
 
-    validates :payment_date, cfe_date: { not_in_the_future: true }
+    validates :payment_date, date: {
+      before: proc { Time.zone.tomorrow }, message: :not_in_the_future
+    }
   end
 end
