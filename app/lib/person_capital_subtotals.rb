@@ -10,6 +10,7 @@ class PersonCapitalSubtotals
     @total_property = data[:total_property]
     @subject_matter_of_dispute_disregard = data[:subject_matter_of_dispute_disregard]
     @pensioner_capital_disregard = data[:pensioner_capital_disregard]
+    @pensioner_disregard_applied = data[:pensioner_disregard_applied]
   end
 
   attr_reader :total_vehicle,
@@ -21,5 +22,6 @@ class PersonCapitalSubtotals
               :total_non_liquid,
               :total_property,
               :subject_matter_of_dispute_disregard,
-              :pensioner_capital_disregard
+              :pensioner_capital_disregard,
+              :pensioner_disregard_applied
 end

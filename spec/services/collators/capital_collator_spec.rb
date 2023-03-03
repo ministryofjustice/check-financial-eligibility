@@ -35,7 +35,6 @@ module Collators
         it "instantiates and calls the Property Assessment service" do
           property_result = Calculators::PropertyCalculator::Result.new(assessed_equity: 23_000.0, smod_applied: 0)
           allow(Calculators::PropertyCalculator).to receive(:call).and_return([property_result])
-          collator
           expect(collator.total_property).to eq 23_000.0
         end
       end
@@ -43,7 +42,6 @@ module Collators
       context "vehicle assessment" do
         it "instantiates and calls the Vehicle Assesment service" do
           allow(Assessors::VehicleAssessor).to receive(:call).and_return([OpenStruct.new(value: 2_500.0)])
-          collator
           expect(collator.total_vehicle).to eq 2_500.0
         end
       end
@@ -51,7 +49,6 @@ module Collators
       context "non_liquid_capital_assessment" do
         it "instantiates and calls NonLiquidCapitalAssessment" do
           allow(Assessors::NonLiquidCapitalAssessor).to receive(:call).and_return(500)
-          collator
           expect(collator.total_non_liquid).to eq 500.0
         end
       end
@@ -68,8 +65,6 @@ module Collators
           allow(Assessors::NonLiquidCapitalAssessor).to receive(:call).and_return(500)
           allow(Assessors::VehicleAssessor).to receive(:call).and_return([OpenStruct.new(value: 2_500.0)])
 
-          collator
-
           expect(collator.total_liquid).to eq 145.83
           expect(collator.total_non_liquid).to eq 500
           expect(collator.total_vehicle).to eq 2_500
@@ -78,7 +73,8 @@ module Collators
           expect(collator.total_capital).to eq 26_145.83
           expect(collator.pensioner_capital_disregard).to eq 100_000
           expect(collator.subject_matter_of_dispute_disregard).to eq 0
-          expect(collator.assessed_capital).to eq(-73_854.17)
+          expect(collator.assessed_capital).to eq(-0.0)
+          expect(collator.pensioner_disregard_applied).to eq(26_145.83)
         end
       end
     end

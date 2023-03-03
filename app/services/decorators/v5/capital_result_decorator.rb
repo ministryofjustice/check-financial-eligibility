@@ -10,7 +10,10 @@ module Decorators
 
       def as_json
         if @summary.is_a?(ApplicantCapitalSummary)
-          basic_attributes.merge(proceeding_types:, combined_assessed_capital:, combined_capital_contribution:)
+          basic_attributes.merge(proceeding_types:,
+                                 pensioner_disregard_applied: @person_capital_subtotals.pensioner_disregard_applied.to_f,
+                                 combined_assessed_capital:,
+                                 combined_capital_contribution:)
         else
           basic_attributes
         end

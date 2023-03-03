@@ -635,6 +635,7 @@ module V2
                 pensioner_capital_disregard: 0.0,
                 subject_matter_of_dispute_disregard: 0.0,
                 assessed_capital: 11_258.99,
+                pensioner_disregard_applied: 0.0,
               })
           end
 

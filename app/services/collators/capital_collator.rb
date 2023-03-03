@@ -45,9 +45,10 @@ module Collators
         total_mortgage_allowance: property_maximum_mortgage_allowance_threshold,
         total_property: property_value,
         pensioner_capital_disregard: @pensioner_capital_disregard,
+        pensioner_disregard_applied: [@pensioner_capital_disregard, total_capital].min,
         subject_matter_of_dispute_disregard: subject_matter_of_dispute_disregard + property_smod,
         total_capital:,
-        assessed_capital:,
+        assessed_capital: [assessed_capital, 0].max,
       )
     end
 

@@ -22,6 +22,7 @@ Given("I am undertaking a certificated assessment with a pensioner applicant who
                  { applicant: { date_of_birth: "1939-12-20",
                                 involvement_type: "applicant",
                                 has_partner_opponent: false,
+                                employed: @employments.present?,
                                 receives_qualifying_benefit: false } })
   submit_request(:post, "assessments/#{@assessment_id}/proceeding_types", @api_version,
                  { "proceeding_types": [{ ccms_code: "SE003", client_involvement_type: "A" }] })
@@ -143,6 +144,12 @@ Given("I add the following employment details for the partner:") do |table|
                             "payments": table.hashes.map { cast_values(_1) } }]
 end
 
+Given("I add the following employment details:") do |table|
+  @employments = [{ "name": "A",
+                    "client_id": "B",
+                    "payments": table.hashes.map { cast_values(_1) } }]
+end
+
 Given("I add the following regular_transaction details for the partner:") do |table|
   @partner_regular_transactions = table.hashes.map { cast_values(_1) }
 end
@@ -179,6 +186,11 @@ When("I retrieve the final assessment") do
     main_home = @main_home || blank_main_home
     data = { "properties": { main_home:, additional_properties: } }
     submit_request(:post, "assessments/#{@assessment_id}/properties", @api_version, data)
+  end
+
+  if @employments
+    data = { employment_income: @employments }
+    submit_request(:post, "assessments/#{@assessment_id}/employments", @api_version, data)
   end
 
   if @partner_employments || @partner_property || @partner_regular_transactions || @partner_capitals

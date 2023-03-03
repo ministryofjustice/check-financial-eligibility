@@ -1150,6 +1150,7 @@ RSpec.describe "full_assessment", type: :request, swagger_doc: "v5/swagger.yaml"
                      },
                      capital: {
                        type: :object,
+                       additionalProperties: false,
                        properties: {
                          proceeding_types: {
                            type: :array,
@@ -1161,10 +1162,21 @@ RSpec.describe "full_assessment", type: :request, swagger_doc: "v5/swagger.yaml"
                          total_property: { type: :number },
                          total_mortgage_allowance: { type: :number },
                          total_capital: { type: :number },
-                         pensioner_capital_disregard: { type: :number },
+                         pensioner_capital_disregard: {
+                           type: :number,
+                           description: "Cap on pensioner capital disregard for this assessment (based on disposable_income)",
+                         },
+                         pensioner_disregard_applied: {
+                           type: :number,
+                           description: "Amount of pensioner capital disregard applied to this assessment",
+                         },
                          subject_matter_of_dispute_disregard: { type: :number },
                          capital_contribution: { type: :number },
-                         assessed_capital: { type: :number },
+                         assessed_capital: {
+                           type: :number,
+                           minimum: 0,
+                           description: "Amount of assessed capital. Zero if deductions exceed total capital.",
+                         },
                          combined_assessed_capital: { type: :number },
                          combined_capital_contribution: { type: :number },
                        },
