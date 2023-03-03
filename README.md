@@ -76,22 +76,6 @@ You can update an existing endpoint by modifying it's spec and then running:
 rake rswag:specs:swaggerize
 ```
 
-## Setting the env vars
-To run the integration tests you will need to set up a `.env` file in the root folder.
-
-It should contain the following values:
-```shell script
-GOOGLE_SHEETS_PRIVATE_KEY_ID
-GOOGLE_SHEETS_PRIVATE_KEY
-GOOGLE_SHEETS_CLIENT_EMAIL
-GOOGLE_SHEETS_CLIENT_ID
-ALLOW_FUTURE_SUBMISSION_DATE
-LEGAL_FRAMEWORK_API_HOST
-```
-
-Set ALLOW_FUTURE_SUBMISSION_DATE to true to allow integration tests to run with submission dates that are in the future.
-A copy of the `.env` file including the current values can be found in the `Shared-LAA` section of LastPass (reach out to the team if you don't have access).
-
 ## Threshold configuration files
 
 Files holding details of all thresholds values used in calculating eligibility are stored in `config/thresholds`.
@@ -104,21 +88,74 @@ false for production.
 This allows the insertion of test data on an arbitrary date specified in the `values.yml` file to be used
 for testing new thresholds before they come into affect on production.
 
-## Setup
+## Developer Setup
 
-Please install the following dependencies prior to running the application setup:
+1.  Ensure Ruby is installed - for example using rbenv - with the version specified in `.ruby-version`
 
+2.  Install these system dependencies:
+
+    ```sh
+    brew install shared-mime-info
+    brew install postgresql
+    ```
+
+3.  Run the setup script:
+
+    ```sh
+    bin/setup
+    ```
+
+    This installs Ruby gem dependencies and setup the local postgres with the development and test databases.
+
+## Running the API locally
+
+Start rails server:
+
+```sh
+bin/rails server
 ```
-brew install shared-mime-info
-brew install postgresql
+
+A simple test that it's working:
+```
+$ curl http://127.0.0.1:3000/healthcheck
+{"checks":{"database":true}}
 ```
 
-You can run `bin/setup` from the command line to install dependencies and setup the development and test databases.
+## Tests
 
-## Running tests
+There are several kinds of tests:
 
-The full rspec test suite can be run with
+* Integration tests using Spreadsheets
+* Integration tests using Cucumber
+* other RSpec tests
+
+### Setup for running tests
+
+#### Environment variables for Integration tests (spreadsheets)
+
+Before you can run the spreadsheet integration tests you will need to set up a `.env` file in the root folder of your clone of this repo.
+
+Obtain the `.env` file from LastPass - look in the folder `Shared-LAA-Eligibility`, under item `Environment variables to run CFE ISPEC (spreadsheet) tests`. Reach out to the team if you don't have access.
+
+Environment variables:
+
+| Name | Value examples & commentary |
+| GOOGLE_SHEETS_PRIVATE_KEY_ID | (secret) |
+| GOOGLE_SHEETS_PRIVATE_KEY | (secret) |
+| GOOGLE_SHEETS_CLIENT_EMAIL | (secret) |
+| GOOGLE_SHEETS_CLIENT_ID | (secret) |
+| ALLOW_FUTURE_SUBMISSION_DATE | `true` allows integration tests to run with submission dates that are in the future / `false` |
+| RUNNING_AS_GITHUB_WORKFLOW | `TRUE` / `FALSE` |
+| LEGAL_FRAMEWORK_API_HOST | `https://legal-framework-api-staging.apps.live-1.cloud-platform.service.justice.gov.uk` |
 ```
+
+### Running RSpec tests
+
+The RSpec test suite includes "Integration tests (spreadsheets)" and "other RSpec tests", but not "Integration tests (cucumber)"
+
+Run them with:
+
+```sh
 bundle exec rspec
 ```
 
@@ -128,12 +165,41 @@ bundle exec rescue rspec
 ```
 will cause any failing tests or unhandled exceptions to automatically open a `pry` prompt for immediate investigation.
 
-## Integration tests
+#### Common errors
+
+Error:
+
+   An error occurred while loading ./spec/integration/policy_disregards_spec.rb.
+   Failure/Error: require File.expand_path("../config/environment", __dir__)
+
+   NoMethodError:
+     undefined method `gsub' for nil:NilClass
+
+Solution: fix your .env file. See: [Environment variables for Integration tests (spreadsheets)](#environment-variables-for-integration-tests-spreadsheets)
+
+Error:
+
+   An error occurred while loading ./spec/validators/json_validator_spec.rb.
+   Failure/Error: ActiveRecord::Migration.maintain_test_schema!
+
+   ActiveRecord::NoDatabaseError:
+     We could not find your database: cfe_civil_test. Which can be found in the database configuration file located at config/database.yml.
+
+Solution: fix your database, which should have been created with `bin/setup` - see [Developer setup](developer-setup)
+
+### Integration tests (spreadsheets)
+
 A series of spreadsheets is used to provide use cases and their expected results, and are run as part of the normal `rspec` test suite, or can be run individually with more control using the script `bin/ispec` (see below).
 
-There is a  [Master CFE Integration Tests Spreadsheet](https://docs.google.com/spreadsheets/d/1lkRmiqi4KpoAIxzui3hTnHddsdWgN9VquEE_Cxjy9AM/edit#gid=651307264) which lists all the other spreadsheets to be run, as well as contain skeleton worksheets for creating new tests scenarios.  Each spreadsheet can hold multiple worksheet, each of which is a test scenario.
+The [Master CFE Integration Tests Spreadsheet](https://docs.google.com/spreadsheets/d/1lkRmiqi4KpoAIxzui3hTnHddsdWgN9VquEE_Cxjy9AM/edit#gid=651307264) lists all the other spreadsheets to be run, as well as contain skeleton worksheets for creating new tests scenarios.  Each spreadsheet can hold multiple worksheets, each of which is a test scenario.
 
-When run as part of the `rspec` test suite each worksheet is handled as a separate example.
+You can run these tests, in the standard rspec way:
+
+```sh
+bundle exec rspec --pattern=spec/integration/test_runner_spec.rb -fd
+```
+
+Each worksheet is a test scenario, which is run as an rspec example.
 
 For more fine control over the amount of verbosity, to run just one test case, or to force download the google spreadsheet,
 use `bin/ispec`, the help text of which is given below.
@@ -152,14 +218,24 @@ options:
 Each worksheet has an entry `Test Active` which can be either true or false.  If set to false, the worksheet will be skipped, unless it is
 the named worksheet using the `-w` command line switch.
 
-## Integration tests (cucumber)
+### Integration tests (cucumber)
 
-We are exploring the use of cucumber for feature tests, in particular to document features added for the "[EFE](https://github.com/ministryofjustice/laa-estimate-financial-eligibility-for-legal-aid)" client. These cucumber tests are to be found in the `features` folder.
+We are [trialling the use of cucumber for integration tests](https://dsdmoj.atlassian.net/wiki/spaces/LE/pages/4229660824/Architectural+Design+Records#Cucumber-tests-trial-in-CFE-Partner), in particular to document features added for the "[EFE](https://github.com/ministryofjustice/laa-estimate-financial-eligibility-for-legal-aid)" client. These cucumber tests are to be found in the `features` folder.
 
 Run them with:
 
 ```
 bundle exec cucumber
+```
+
+### Other RSpec tests
+
+The aim is for these to be "unit test" style - i.e. numerous tests that cover the detail of the functionality - the bottom level of the [test pyramid](https://martinfowler.com/articles/practical-test-pyramid.html).
+
+Run them with:
+
+```sh
+bundle exec rspec --exclude-pattern=spec/integration/test_runner_spec.rb
 ```
 
 ## Replaying live API interactions for debugging purposes
