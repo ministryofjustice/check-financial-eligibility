@@ -12,7 +12,7 @@ module Decorators
         end
       end
 
-      subject(:decorator) { described_class.new(assessment).as_json }
+      subject(:decorator) { described_class.new(assessment.eligibilities, assessment.proceeding_types).as_json }
 
       describe "#as_json" do
         it "returns an array with three elements" do

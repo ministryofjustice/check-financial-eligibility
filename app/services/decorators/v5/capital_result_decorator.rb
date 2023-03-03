@@ -37,7 +37,7 @@ module Decorators
     private
 
       def proceeding_types
-        ProceedingTypesResultDecorator.new(@summary).as_json
+        ProceedingTypesResultDecorator.new(@summary.eligibilities, @summary.assessment.proceeding_types).as_json
       end
 
       def combined_assessed_capital

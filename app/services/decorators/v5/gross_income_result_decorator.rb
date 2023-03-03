@@ -26,7 +26,7 @@ module Decorators
       attr_reader :summary
 
       def proceeding_types
-        ProceedingTypesResultDecorator.new(summary).as_json
+        ProceedingTypesResultDecorator.new(summary.eligibilities, summary.assessment.proceeding_types).as_json
       end
     end
   end

@@ -53,7 +53,7 @@ module Decorators
       end
 
       def proceeding_types
-        ProceedingTypesResultDecorator.new(summary).as_json
+        ProceedingTypesResultDecorator.new(summary.eligibilities, summary.assessment.proceeding_types).as_json
       end
 
       def partner_allowance

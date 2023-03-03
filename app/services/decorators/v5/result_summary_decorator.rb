@@ -19,7 +19,7 @@ module Decorators
             result: @assessment.assessment_result,
             capital_contribution: @calculation_output.capital_subtotals.capital_contribution.to_f,
             income_contribution: disposable_income_summary.income_contribution.to_f,
-            proceeding_types: ProceedingTypesResultDecorator.new(assessment).as_json,
+            proceeding_types: ProceedingTypesResultDecorator.new(assessment.eligibilities, assessment.proceeding_types).as_json,
           },
           gross_income: GrossIncomeResultDecorator.new(gross_income_summary,
                                                        @calculation_output.gross_income_subtotals.applicant_gross_income_subtotals,
