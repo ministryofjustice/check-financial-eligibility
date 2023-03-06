@@ -138,6 +138,14 @@ Given("I add the following capital details for {string} in the current assessmen
   submit_request(:post, "assessments/#{@assessment_id}/capitals", @api_version, data)
 end
 
+Given("I add the following statutory sick pay details for the client:") do |table|
+  data = { employment_income: [{ "name": "A",
+                                 "client_id": "B",
+                                 "receiving_only_statutory_sick_or_maternity_pay": true,
+                                 "payments": table.hashes.map { cast_values(_1) } }] }
+  submit_request(:post, "assessments/#{@assessment_id}/employments", @api_version, data)
+end
+
 Given("I add the following employment details for the partner:") do |table|
   @partner_employments = [{ "name": "A",
                             "client_id": "B",

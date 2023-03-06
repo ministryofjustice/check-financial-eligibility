@@ -33,7 +33,7 @@ module Creators
 
     def create_employment
       @employments_params[:employment_income].each do |attributes|
-        employment = employment_collection.create!(attributes.slice(:name, :client_id))
+        employment = employment_collection.create!(attributes.slice(:name, :client_id, :receiving_only_statutory_sick_or_maternity_pay))
         create_payments(employment, attributes)
       end
     end

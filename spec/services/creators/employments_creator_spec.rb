@@ -11,6 +11,7 @@ RSpec.describe Creators::EmploymentsCreator do
     it "creates the expected employment records" do
       expect { creator.call }.to change(Employment, :count).by(2)
       expect(Employment.all.map(&:client_id)).to match_array %w[employment-id-1 employment-id-2]
+      expect(Employment.find_by(client_id: "employment-id-1")).to be_receiving_only_statutory_sick_or_maternity_pay
     end
 
     it "creates the expected employment_payment records" do
@@ -29,6 +30,7 @@ RSpec.describe Creators::EmploymentsCreator do
         {
           name: "Job 1",
           client_id: "employment-id-1",
+          receiving_only_statutory_sick_or_maternity_pay: true,
           payments: [
             {
               client_id: "employment-1-payment-1",

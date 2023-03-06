@@ -25,7 +25,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_25_142836) do
     t.datetime "updated_at", precision: nil, null: false
     t.boolean "self_employed", default: false
     t.boolean "employed"
-    t.boolean "receives_asylum_support", default: false
+    t.boolean "receives_asylum_support", default: false, null: false
     t.index ["assessment_id"], name: "index_applicants_on_assessment_id"
   end
 
@@ -184,6 +184,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_25_142836) do
     t.string "client_id", null: false
     t.string "calculation_method"
     t.string "type", default: "ApplicantEmployment"
+    t.boolean "receiving_only_statutory_sick_or_maternity_pay", default: false
     t.index ["assessment_id"], name: "index_employments_on_assessment_id"
   end
 

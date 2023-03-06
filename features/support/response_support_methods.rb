@@ -15,6 +15,7 @@ RESPONSE_SECTION_MAPPINGS = {
     "vehicle" => "assessment.capital.capital_items.vehicles.0",
     "partner_capital" => "assessment.partner_capital.capital_items.properties.additional_properties",
     "overall_disposable_income" => "result_summary.partner_disposable_income",
+    "employment" => "result_summary.disposable_income.employment_income",
   },
 }.freeze
 

@@ -282,6 +282,10 @@ RSpec.describe "full_assessment", type: :request, swagger_doc: "v5/swagger.yaml"
                             type: :string,
                             description: "Client supplied id to identify the employment",
                           },
+                          receiving_only_statutory_sick_or_maternity_pay: {
+                            type: :boolean,
+                            description: "Client is in receipt only of Statutory Sick Pay (SSP) or Statutory Maternity Pay (SMP)",
+                          },
                           payments: {
                             type: :array,
                             additionalProperties: false,
