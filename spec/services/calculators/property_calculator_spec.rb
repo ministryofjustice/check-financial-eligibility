@@ -13,7 +13,7 @@ module Calculators
           described_class.call(submission_date: assessment.submission_date,
                                properties: assessment.capital_summary.properties,
                                smod_level: 100_000,
-                               level_of_representation: "certificated")
+                               level_of_help: "certificated")
           main_home.reload
         end
 
@@ -241,7 +241,7 @@ module Calculators
           described_class.call(submission_date: assessment.submission_date,
                                smod_level: 0,
                                properties: assessment.capital_summary.properties,
-                               level_of_representation: "certificated")
+                               level_of_help: "certificated")
           [main_home, ap1, ap2].each(&:reload)
         end
 
@@ -318,7 +318,7 @@ module Calculators
           described_class.call(submission_date: assessment.submission_date,
                                smod_level: 0,
                                properties: assessment.capital_summary.properties,
-                               level_of_representation: "certificated")
+                               level_of_help: "certificated")
           additional_property.reload
         end
 

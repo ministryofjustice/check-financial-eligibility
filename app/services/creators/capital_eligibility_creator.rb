@@ -18,7 +18,7 @@ module Creators
     def create_eligibility(ptc)
       return if eligibility_record_exists?(ptc)
 
-      if @assessment.level_of_representation == "controlled"
+      if @assessment.level_of_help == "controlled"
         @summary.eligibilities.create!(
           proceeding_type_code: ptc,
           upper_threshold: controlled_threshold(ptc),

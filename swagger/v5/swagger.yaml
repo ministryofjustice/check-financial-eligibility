@@ -174,14 +174,21 @@ paths:
                   type: string
                   description: Date of the original submission (iso8601 format)
                   example: '2022-05-19'
+                level_of_help:
+                  type: string
+                  enum:
+                  - certificated
+                  - controlled
+                  example: certificated
+                  description: The level of help required by the client. Defaults
+                    to 'certificated'
                 level_of_representation:
                   type: string
                   enum:
                   - certificated
                   - controlled
                   example: certificated
-                  description: The level of representation required by the client.
-                    Defaults to 'certificated'
+                  description: Temporary synonym for level of help
         required: true
   "/assessments/{id}":
     parameters:
@@ -935,7 +942,7 @@ paths:
                   additionalProperties: false
                   required:
                   - submission_date
-                  - level_of_representation
+                  - level_of_help
                   properties:
                     submission_date:
                       type: string
@@ -947,7 +954,7 @@ paths:
                       example: LA-FOO-BAR
                       description: Client's reference number for this application
                         (free text)
-                    level_of_representation:
+                    level_of_help:
                       type: string
                       enum:
                       - certificated

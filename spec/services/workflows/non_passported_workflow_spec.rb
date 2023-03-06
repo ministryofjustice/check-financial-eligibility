@@ -5,7 +5,7 @@ module Workflows
     let(:assessment) do
       create :assessment, :with_capital_summary, :with_disposable_income_summary,
              :with_gross_income_summary,
-             applicant:, proceedings: proceeding_types.map { |p| [p, "A"] }, level_of_representation:
+             applicant:, proceedings: proceeding_types.map { |p| [p, "A"] }, level_of_help:
     end
 
     before do
@@ -19,7 +19,7 @@ module Workflows
     end
 
     describe ".call" do
-      let(:level_of_representation) { "certificated" }
+      let(:level_of_help) { "certificated" }
       let(:proceeding_types) { %w[SE003] }
 
       subject(:assessment_result) do
@@ -48,7 +48,7 @@ module Workflows
       end
 
       describe "capital thresholds for controlled" do
-        let(:level_of_representation) { "controlled" }
+        let(:level_of_help) { "controlled" }
         let(:applicant) { build :applicant, :under_pensionable_age, self_employed: false }
 
         before do

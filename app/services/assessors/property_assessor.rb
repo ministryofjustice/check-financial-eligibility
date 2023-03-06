@@ -5,8 +5,8 @@ module Assessors
                         :net_equity,
                         keyword_init: true)
     class << self
-      def call(property:, allowable_outstanding_mortgage:, level_of_representation:, submission_date:)
-        transaction_allowance = calculate_property_transaction_allowance(property, level_of_representation, submission_date)
+      def call(property:, allowable_outstanding_mortgage:, level_of_help:, submission_date:)
+        transaction_allowance = calculate_property_transaction_allowance(property, level_of_help, submission_date)
         net_value = calculate_net_value(property, transaction_allowance, allowable_outstanding_mortgage)
         net_equity = calculate_net_equity(property, net_value)
         Result.new(transaction_allowance:, net_value:, net_equity:)
@@ -15,8 +15,8 @@ module Assessors
 
     private
 
-      def calculate_property_transaction_allowance(property, level_of_representation, submission_date)
-        level_of_representation == "controlled" ? 0 : (property.value * notional_transaction_cost_pctg(submission_date)).round(2)
+      def calculate_property_transaction_allowance(property, level_of_help, submission_date)
+        level_of_help == "controlled" ? 0 : (property.value * notional_transaction_cost_pctg(submission_date)).round(2)
       end
 
       def notional_transaction_cost_pctg(submission_date)

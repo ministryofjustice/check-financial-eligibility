@@ -24,11 +24,17 @@ RSpec.describe "V5 Assessments", type: :request, vcr: true, swagger_doc: "v5/swa
                       description: "Date of the original submission (iso8601 format)",
                       example: "2022-05-19",
                     },
+                    level_of_help: {
+                      type: :string,
+                      enum: Assessment.levels_of_help.keys,
+                      example: Assessment.levels_of_help.keys.first,
+                      description: "The level of help required by the client. Defaults to 'certificated'",
+                    },
                     level_of_representation: {
                       type: :string,
-                      enum: Assessment.levels_of_representation.keys,
-                      example: Assessment.levels_of_representation.keys.first,
-                      description: "The level of representation required by the client. Defaults to 'certificated'",
+                      enum: Assessment.levels_of_help.keys,
+                      example: Assessment.levels_of_help.keys.first,
+                      description: "Temporary synonym for level of help",
                     },
                   },
                 }

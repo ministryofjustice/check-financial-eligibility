@@ -38,9 +38,10 @@ module Creators
       {
         client_reference_id: @assessment_params[:client_reference_id],
         submission_date: Date.parse(@assessment_params[:submission_date]),
+        level_of_help: @assessment_params[:level_of_help] || @assessment_params[:level_of_representation] || "certificated",
         version: @version,
         remote_ip: @remote_ip,
-      }.merge(@assessment_params.slice(:level_of_representation))
+      }
     end
 
     def create_new_assessment_and_summary_records

@@ -50,7 +50,7 @@ module Creators
           create :assessment,
                  :with_disposable_income_summary,
                  proceedings: proceeding_hash,
-                 level_of_representation: "controlled"
+                 level_of_help: "controlled"
         end
 
         it "uses controlled lower threshold" do

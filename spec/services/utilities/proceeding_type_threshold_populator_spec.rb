@@ -89,7 +89,7 @@ module Utilities
       end
 
       context "for controlled work" do
-        before { assessment.update(level_of_representation: "controlled") }
+        before { assessment.update(level_of_help: "controlled") }
 
         it "ignores waivers" do
           expect(LegalFrameworkAPI::MockThresholdWaivers).not_to receive(:call)

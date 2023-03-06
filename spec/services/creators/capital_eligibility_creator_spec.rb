@@ -58,7 +58,7 @@ module Creators
           create :assessment,
                  :with_capital_summary,
                  proceedings: [%w[DA002 A], %w[SE013 Z]],
-                 level_of_representation: "controlled"
+                 level_of_help: "controlled"
         end
 
         it "uses controlled lower threshold" do

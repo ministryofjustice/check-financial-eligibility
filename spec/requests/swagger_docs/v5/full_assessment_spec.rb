@@ -19,7 +19,7 @@ RSpec.describe "full_assessment", type: :request, swagger_doc: "v5/swagger.yaml"
                     assessment: {
                       type: :object,
                       additionalProperties: false,
-                      required: %i[submission_date level_of_representation],
+                      required: %i[submission_date level_of_help],
                       properties: {
                         submission_date: {
                           type: :string,
@@ -32,10 +32,10 @@ RSpec.describe "full_assessment", type: :request, swagger_doc: "v5/swagger.yaml"
                           example: "LA-FOO-BAR",
                           description: "Client's reference number for this application (free text)",
                         },
-                        level_of_representation: {
+                        level_of_help: {
                           type: :string,
-                          enum: Assessment.levels_of_representation.keys,
-                          example: Assessment.levels_of_representation.keys.first,
+                          enum: Assessment.levels_of_help.keys,
+                          example: Assessment.levels_of_help.keys.first,
                           description: "The level of representation required by the client",
                         },
                       },

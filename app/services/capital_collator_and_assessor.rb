@@ -25,7 +25,7 @@ class CapitalCollatorAndAssessor
         capital_summary: assessment.capital_summary,
         maximum_subject_matter_of_dispute_disregard: maximum_subject_matter_of_dispute_disregard(assessment),
         pensioner_capital_disregard: pensioner_capital_disregard(assessment),
-        level_of_representation: assessment.level_of_representation,
+        level_of_help: assessment.level_of_help,
       )
     end
 
@@ -35,7 +35,7 @@ class CapitalCollatorAndAssessor
         capital_summary: assessment.partner_capital_summary,
         pensioner_capital_disregard: 0,
         maximum_subject_matter_of_dispute_disregard: 0,
-        level_of_representation: assessment.level_of_representation,
+        level_of_help: assessment.level_of_help,
       )
     end
 

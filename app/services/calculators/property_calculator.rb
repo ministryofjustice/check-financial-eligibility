@@ -9,7 +9,7 @@ module Calculators
                         keyword_init: true)
 
     class << self
-      def call(submission_date:, properties:, level_of_representation:, smod_level:)
+      def call(submission_date:, properties:, level_of_help:, smod_level:)
         remaining_mortgage_allowance ||= Threshold.value_for(:property_maximum_mortgage_allowance, at: submission_date)
 
         Property.transaction do
@@ -18,7 +18,7 @@ module Calculators
             remaining_mortgage_allowance -= allowable_outstanding_mortgage
             assessor_result = Assessors::PropertyAssessor.call(property:,
                                                                allowable_outstanding_mortgage:,
-                                                               level_of_representation:,
+                                                               level_of_help:,
                                                                submission_date:)
             equity_disregard = calculate_main_home_disregard(property, submission_date)
             smod_applied = calculate_smod_disregard(property, assessor_result.net_equity, smod_level)

@@ -9,7 +9,7 @@ module Collators
     let(:today) { Date.new(2019, 4, 2) }
     let(:pcd_value) { 0 }
     let(:smod_value) { 0 }
-    let(:level_of_representation) { "controlled" }
+    let(:level_of_help) { "controlled" }
 
     describe ".call" do
       subject(:collator) do
@@ -17,7 +17,7 @@ module Collators
                              capital_summary: assessment.capital_summary,
                              pensioner_capital_disregard: pcd_value,
                              maximum_subject_matter_of_dispute_disregard: smod_value,
-                             level_of_representation:
+                             level_of_help:
       end
 
       it "always returns a hash" do
