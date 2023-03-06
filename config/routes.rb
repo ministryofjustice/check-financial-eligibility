@@ -29,6 +29,6 @@ Rails.application.routes.draw do
 
   get "ping", to: "status#ping", format: :json
   get "healthcheck", to: "status#status", format: :json
-  get "status", to: "status#ping", format: :json
+  get "status", to: "status#status", format: :json
   get "state_benefit_type", to: "state_benefit_type#index", format: :json
 end
