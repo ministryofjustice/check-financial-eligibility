@@ -6,7 +6,7 @@ module Decorators
       end
 
       def as_json
-        payload unless @summary.nil?
+        payload
       end
 
     private
@@ -28,7 +28,7 @@ module Decorators
 
       def properties
         {
-          main_home: PropertyDecorator.new(@summary.main_home)&.as_json,
+          main_home: PropertyDecorator.new(@summary.main_home).as_json,
           additional_properties:,
         }
       end

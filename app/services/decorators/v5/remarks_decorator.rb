@@ -7,8 +7,6 @@ module Decorators
       end
 
       def as_json
-        return if @record.nil?
-
         contribution_required? ? @record.as_json : @record.as_json.except!(:policy_disregards)
       end
 
