@@ -36,7 +36,8 @@ module Collators
         maximum_disregard: @maximum_subject_matter_of_dispute_disregard - property_smod,
       ).value
       total_capital = liquid_capital + non_liquid_capital + vehicle_value + property_value
-      assessed_capital = total_capital - @pensioner_capital_disregard - subject_matter_of_dispute_disregard
+      total_capital_with_smod = total_capital - subject_matter_of_dispute_disregard
+      assessed_capital = total_capital_with_smod - @pensioner_capital_disregard
 
       PersonCapitalSubtotals.new(
         total_liquid: liquid_capital,
@@ -48,6 +49,7 @@ module Collators
         pensioner_disregard_applied: [@pensioner_capital_disregard, total_capital].min,
         subject_matter_of_dispute_disregard: subject_matter_of_dispute_disregard + property_smod,
         total_capital:,
+        total_capital_with_smod:,
         assessed_capital: [assessed_capital, 0].max,
         main_home: @capital_summary.main_home.present? ? PropertySubtotals.new(properties.detect(&:main_home)) : PropertySubtotals.new,
         additional_properties: properties.reject(&:main_home).map { |p| PropertySubtotals.new(p) },

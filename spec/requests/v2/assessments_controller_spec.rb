@@ -635,6 +635,7 @@ module V2
                 pensioner_capital_disregard: 0.0,
                 subject_matter_of_dispute_disregard: 0.0,
                 assessed_capital: 11_258.99,
+                total_capital_with_smod: 11_258.99,
                 pensioner_disregard_applied: 0.0,
               })
           end
@@ -648,6 +649,7 @@ module V2
                   total_vehicle: 2638.69,
                   total_property: 8620.3,
                   total_capital: 11_377.87,
+                  total_capital_with_smod: 11_377.87,
                   pensioner_capital_disregard: 0.0,
                   subject_matter_of_dispute_disregard: 0.0,
                   capital_contribution: 0.0,

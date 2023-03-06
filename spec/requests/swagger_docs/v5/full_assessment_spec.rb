@@ -1126,6 +1126,11 @@ RSpec.describe "full_assessment", type: :request, swagger_doc: "v5/swagger.yaml"
                            type: :number,
                            description: "Cap on pensioner capital disregard for this assessment (based on disposable_income)",
                          },
+                         total_capital_with_smod: {
+                           type: :number,
+                           minimum: 0,
+                           description: "Amount of capital with subject matter of dispute deduction applied",
+                         },
                          pensioner_disregard_applied: {
                            type: :number,
                            description: "Amount of pensioner capital disregard applied to this assessment",
