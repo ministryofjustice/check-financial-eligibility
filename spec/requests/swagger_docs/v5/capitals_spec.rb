@@ -31,30 +31,7 @@ RSpec.describe "capitals", type: :request, swagger_doc: "v5/swagger.yaml" do
                   additionalProperties: false,
                   required: %i[bank_accounts non_liquid_capital],
                   properties: {
-                    bank_accounts: {
-                      type: :array,
-                      description: "Describes the name of the bank account and the lowest balance during the computation period",
-                      example: [{ value: 1.01, description: "test name 1", subject_matter_of_dispute: false },
-                                { value: 100.01, description: "test name 2", subject_matter_of_dispute: true }],
-                      items: {
-                        type: :object,
-                        additionalProperties: false,
-                        description: "Account detail",
-                        required: %i[value description],
-                        properties: {
-                          value: {
-                            type: :number,
-                            format: :decimal,
-                          },
-                          description: {
-                            type: :string,
-                          },
-                          subject_matter_of_dispute: {
-                            type: :boolean,
-                          },
-                        },
-                      },
-                    },
+                    bank_accounts: { "$ref" => "#/components/schemas/BankAccounts" },
                     non_liquid_capital: {
                       type: :array,
                       description: "One or more assets details",

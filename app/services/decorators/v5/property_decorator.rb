@@ -22,6 +22,7 @@ module Decorators
           allowable_outstanding_mortgage: @record.outstanding_mortgage,
           net_value: @record.net_value,
           net_equity: @record.net_equity,
+          smod_allowance: @record.smod_allowance,
           main_home_equity_disregard: @record.main_home_equity_disregard,
           assessed_equity: @record.assessed_equity,
         }

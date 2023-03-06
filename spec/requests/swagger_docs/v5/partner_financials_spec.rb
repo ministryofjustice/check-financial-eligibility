@@ -266,28 +266,7 @@ RSpec.describe "partner_financials", type: :request, swagger_doc: "v5/swagger.ya
                       required: %i[bank_accounts non_liquid_capital],
                       description: "Element's of the applicant's partners capital",
                       properties: {
-                        bank_accounts: {
-                          type: :array,
-                          description: "One or more account details",
-                          example: [{ value: 1.01, description: "test name 1", subject_matter_of_dispute: false },
-                                    { value: 100.01, description: "test name 2", subject_matter_of_dispute: true }],
-                          items: {
-                            type: :object,
-                            description: "Account detail",
-                            properties: {
-                              value: {
-                                type: :number,
-                                format: :decimal,
-                              },
-                              description: {
-                                type: :string,
-                              },
-                              subject_matter_of_dispute: {
-                                type: :boolean,
-                              },
-                            },
-                          },
-                        },
+                        bank_accounts: { "$ref" => "#/components/schemas/BankAccounts" },
                         non_liquid_capital: {
                           type: :array,
                           description: "One or more non liquid assets owned by the client's partner",

@@ -33,7 +33,7 @@ pensioner_capital_disregard:
 property_notional_sale_costs_percentage: 3.0
 property_maximum_mortgage_allowance: 999_999_999_999
 property_disregard:
-  main_home: 100_000
+  main_home: 100_000.0
   additional_property: 0.0
 vehicle_disregard: 15_000
 vehicle_out_of_scope_months: 36

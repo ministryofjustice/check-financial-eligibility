@@ -1,8 +1,9 @@
 module Decorators
   module V5
     class CapitalDecorator
-      def initialize(summary)
+      def initialize(summary, capital_subtotals)
         @summary = summary
+        @capital_subtotals = capital_subtotals
       end
 
       def as_json
@@ -28,7 +29,7 @@ module Decorators
 
       def properties
         {
-          main_home: PropertyDecorator.new(@summary.main_home).as_json,
+          main_home: PropertyDecorator.new(@capital_subtotals.main_home).as_json,
           additional_properties:,
         }
       end
@@ -42,7 +43,7 @@ module Decorators
       end
 
       def additional_properties
-        @summary.additional_properties.map { |p| PropertyDecorator.new(p).as_json }
+        @capital_subtotals.additional_properties.map { |p| PropertyDecorator.new(p).as_json }
       end
 
       def vehicles

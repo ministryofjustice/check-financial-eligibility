@@ -3,12 +3,6 @@ module Decorators
     class AssessmentDecorator
       attr_reader :assessment
 
-      delegate :applicant,
-               :capital_summary,
-               :gross_income_summary,
-               :remarks,
-               :disposable_income_summary, to: :assessment
-
       def initialize(assessment, calculation_output)
         @assessment = assessment
         @calculation_output = calculation_output
@@ -26,7 +20,7 @@ module Decorators
           timestamp: Time.current,
           success: true,
           result_summary: ResultSummaryDecorator.new(assessment, @calculation_output).as_json,
-          assessment: assessment_details,
+          assessment: assessment_details.transform_values(&:as_json),
         }
       end
 
@@ -35,11 +29,12 @@ module Decorators
           id: assessment.id,
           client_reference_id: assessment.client_reference_id,
           submission_date: assessment.submission_date,
-          applicant: ApplicantDecorator.new(applicant).as_json,
+          applicant: ApplicantDecorator.new(assessment.applicant),
           gross_income:,
-          disposable_income: DisposableIncomeDecorator.new(disposable_income_summary).as_json,
-          capital: CapitalDecorator.new(capital_summary).as_json,
-          remarks: RemarksDecorator.new(remarks, assessment).as_json,
+          disposable_income: DisposableIncomeDecorator.new(assessment.disposable_income_summary),
+          capital: CapitalDecorator.new(assessment.capital_summary,
+                                        @calculation_output.capital_subtotals.applicant_capital_subtotals),
+          remarks: RemarksDecorator.new(assessment.remarks, assessment),
         }
         if assessment.partner
           details.merge(partner_gross_income:, partner_disposable_income:, partner_capital:)
@@ -49,23 +44,24 @@ module Decorators
       end
 
       def gross_income
-        GrossIncomeDecorator.new(gross_income_summary,
+        GrossIncomeDecorator.new(assessment.gross_income_summary,
                                  assessment.employments,
-                                 @calculation_output.gross_income_subtotals.applicant_gross_income_subtotals).as_json
+                                 @calculation_output.gross_income_subtotals.applicant_gross_income_subtotals)
       end
 
       def partner_gross_income
         GrossIncomeDecorator.new(assessment.partner_gross_income_summary,
                                  assessment.partner_employments,
-                                 @calculation_output.gross_income_subtotals.partner_gross_income_subtotals).as_json
+                                 @calculation_output.gross_income_subtotals.partner_gross_income_subtotals)
       end
 
       def partner_disposable_income
-        DisposableIncomeDecorator.new(assessment.partner_disposable_income_summary).as_json
+        DisposableIncomeDecorator.new(assessment.partner_disposable_income_summary)
       end
 
       def partner_capital
-        CapitalDecorator.new(assessment.partner_capital_summary).as_json
+        CapitalDecorator.new(assessment.partner_capital_summary,
+                             @calculation_output.capital_subtotals.partner_capital_subtotals)
       end
     end
   end

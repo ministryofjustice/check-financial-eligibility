@@ -63,6 +63,83 @@ RSpec.configure do |config|
               },
             },
           },
+          Property: {
+            type: :object,
+            additionalProperties: false,
+            properties: {
+              value: {
+                type: :number,
+                minimum: 0.0,
+              },
+              outstanding_mortgage: {
+                type: :number,
+                minimum: 0.0,
+              },
+              # The minimum has to be zero because we have to have a 'dummy' main home sometimes
+              percentage_owned: {
+                type: :integer,
+                minimum: 0,
+                maximum: 100,
+              },
+              main_home: {
+                type: :boolean,
+              },
+              shared_with_housing_assoc: {
+                type: :boolean,
+              },
+              transaction_allowance: {
+                type: :number,
+                minimum: 0.0,
+              },
+              allowable_outstanding_mortgage: {
+                type: :number,
+                minimum: 0.0,
+              },
+              net_value: {
+                type: :number,
+              },
+              net_equity: {
+                type: :number,
+              },
+              smod_allowance: {
+                type: :number,
+                description: "Amount of subject matter of dispute disregard applied to this property",
+                minimum: 0.0,
+                maximum: 100_000.0,
+              },
+              main_home_equity_disregard: {
+                type: :number,
+              },
+              assessed_equity: {
+                type: :number,
+                minimum: 0.0,
+              },
+            },
+          },
+          BankAccounts: {
+            type: :array,
+            description: "Describes the name of the bank account and the lowest balance during the computation period",
+            example: [{ value: 1.01, description: "test name 1", subject_matter_of_dispute: false },
+                      { value: 100.01, description: "test name 2", subject_matter_of_dispute: true }],
+            items: {
+              type: :object,
+              description: "Account detail",
+              required: %i[value],
+              properties: {
+                value: {
+                  type: :number,
+                  format: :decimal,
+                },
+                description: {
+                  type: :string,
+                },
+                subject_matter_of_dispute: {
+                  description: "Whether the contents of this bank account are the subject of a dispute",
+                  type: :boolean,
+                },
+              },
+            },
+          },
         },
       },
       paths: {},

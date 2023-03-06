@@ -54,7 +54,7 @@ module Decorators
 
       def partner_capital
         CapitalResultDecorator.new(assessment.partner_capital_summary,
-                                   @calculation_output.capital_subtotals&.partner_capital_subtotals,
+                                   @calculation_output.capital_subtotals.partner_capital_subtotals,
                                    0, 0).as_json
       end
     end

@@ -28,7 +28,7 @@ module Collators
                                                         smod_level: @maximum_subject_matter_of_dispute_disregard,
                                                         level_of_help: @level_of_help)
       property_value = properties.sum(&:assessed_equity)
-      property_smod = properties.sum(&:smod_applied)
+      property_smod = properties.sum(&:smod_allowance)
       vehicles = Assessors::VehicleAssessor.call(@capital_summary.vehicles, @submission_date)
       vehicle_value = vehicles.sum(&:value)
       subject_matter_of_dispute_disregard = Calculators::SubjectMatterOfDisputeDisregardCalculator.new(
@@ -49,6 +49,8 @@ module Collators
         subject_matter_of_dispute_disregard: subject_matter_of_dispute_disregard + property_smod,
         total_capital:,
         assessed_capital: [assessed_capital, 0].max,
+        main_home: @capital_summary.main_home.present? ? PropertySubtotals.new(properties.detect(&:main_home)) : PropertySubtotals.new,
+        additional_properties: properties.reject(&:main_home).map { |p| PropertySubtotals.new(p) },
       )
     end
 

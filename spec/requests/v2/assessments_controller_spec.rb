@@ -911,6 +911,7 @@ module V2
                     net_equity: 59_800.0,
                     main_home_equity_disregard: 100_000.0,
                     assessed_equity: 0.0,
+                    smod_allowance: 0.0,
                   })
               end
 
@@ -930,6 +931,7 @@ module V2
                         net_equity: 960.3,
                         main_home_equity_disregard: 0.0,
                         assessed_equity: 960.3,
+                        smod_allowance: 0.0,
                       },
                       {
                         value: 10_000.0,
@@ -943,6 +945,7 @@ module V2
                         net_equity: 7660.0,
                         main_home_equity_disregard: 0.0,
                         assessed_equity: 7660.0,
+                        smod_allowance: 0.0,
                       },
                     ],
                   )
@@ -1000,6 +1003,7 @@ module V2
                       net_equity: 960.3,
                       main_home_equity_disregard: 0.0,
                       assessed_equity: 960.3,
+                      smod_allowance: 0.0,
                     },
                     {
                       value: 10_000.0,
@@ -1013,6 +1017,7 @@ module V2
                       net_equity: 7660.0,
                       main_home_equity_disregard: 0.0,
                       assessed_equity: 7660.0,
+                      smod_allowance: 0.0,
                     },
                   ],
                 )

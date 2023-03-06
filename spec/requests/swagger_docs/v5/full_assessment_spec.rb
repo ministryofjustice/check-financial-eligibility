@@ -82,30 +82,7 @@ RSpec.describe "full_assessment", type: :request, swagger_doc: "v5/swagger.yaml"
                     capitals: {
                       type: :object,
                       properties: {
-                        bank_accounts: {
-                          type: :array,
-                          description: "One or more account details",
-                          example: [{ value: 1.01, description: "test name 1", subject_matter_of_dispute: false },
-                                    { value: 100.01, description: "test name 2", subject_matter_of_dispute: true }],
-                          items: {
-                            type: :object,
-                            description: "Account detail",
-                            required: %i[value],
-                            properties: {
-                              value: {
-                                type: :number,
-                                format: :decimal,
-                              },
-                              description: {
-                                type: :string,
-                              },
-                              subject_matter_of_dispute: {
-                                description: "Whether the contents of this bank account are the subject of a dispute",
-                                type: :boolean,
-                              },
-                            },
-                          },
-                        },
+                        bank_accounts: { "$ref" => "#/components/schemas/BankAccounts" },
                         non_liquid_capital: {
                           type: :array,
                           description: "One or more assets details",
@@ -925,28 +902,7 @@ RSpec.describe "full_assessment", type: :request, swagger_doc: "v5/swagger.yaml"
                           required: %i[bank_accounts non_liquid_capital],
                           description: "Element's of the applicant's partners capital",
                           properties: {
-                            bank_accounts: {
-                              type: :array,
-                              description: "One or more account details",
-                              example: [{ value: 1.01, description: "test name 1", subject_matter_of_dispute: false },
-                                        { value: 100.01, description: "test name 2", subject_matter_of_dispute: true }],
-                              items: {
-                                type: :object,
-                                description: "Account detail",
-                                properties: {
-                                  value: {
-                                    type: :number,
-                                    format: :decimal,
-                                  },
-                                  description: {
-                                    type: :string,
-                                  },
-                                  subject_matter_of_dispute: {
-                                    type: :boolean,
-                                  },
-                                },
-                              },
-                            },
+                            bank_accounts: { "$ref" => "#/components/schemas/BankAccounts" },
                             non_liquid_capital: {
                               type: :array,
                               description: "One or more non liquid assets owned by the client's partner",
@@ -1211,7 +1167,43 @@ RSpec.describe "full_assessment", type: :request, swagger_doc: "v5/swagger.yaml"
                      applicant: { type: :object },
                      gross_income: { type: :object },
                      disposable_income: { type: :object },
-                     capital: { type: :object },
+                     capital: {
+                       type: :object,
+                       additionalProperties: false,
+                       properties: {
+                         capital_items: {
+                           type: :object,
+                           additionalProperties: false,
+                           required: %i[liquid non_liquid vehicles properties],
+                           properties: {
+                             liquid: {
+                               type: :array,
+                             },
+                             non_liquid: {
+                               type: :array,
+                             },
+                             vehicles: {
+                               type: :array,
+                             },
+                             properties: {
+                               type: :object,
+                               additionalProperties: false,
+                               properties: {
+                                 main_home: {
+                                   "$ref" => "#/components/schemas/Property",
+                                 },
+                                 additional_properties: {
+                                   type: :array,
+                                   items: {
+                                     "$ref" => "#/components/schemas/Property",
+                                   },
+                                 },
+                               },
+                             },
+                           },
+                         },
+                       },
+                     },
                    },
                  },
                  version: {

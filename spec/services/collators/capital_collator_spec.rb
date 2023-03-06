@@ -32,8 +32,14 @@ module Collators
       end
 
       context "property_assessment" do
+        before do
+          create :property, :main_home, capital_summary: assessment.capital_summary
+        end
+
         it "instantiates and calls the Property Assessment service" do
-          property_result = Calculators::PropertyCalculator::Result.new(assessed_equity: 23_000.0, smod_applied: 0)
+          property_result = Calculators::PropertyCalculator::Result.new(assessed_equity: 23_000.0,
+                                                                        property: assessment.capital_summary.main_home,
+                                                                        smod_allowance: 0)
           allow(Calculators::PropertyCalculator).to receive(:call).and_return([property_result])
           expect(collator.total_property).to eq 23_000.0
         end
@@ -56,8 +62,14 @@ module Collators
       context "summarization of result_fields" do
         let(:pcd_value) { 100_000 }
 
+        before do
+          create :property, :main_home, capital_summary: assessment.capital_summary
+        end
+
         it "summarizes the results it gets from the subservices" do
-          property_result = Calculators::PropertyCalculator::Result.new(assessed_equity: 23_000.0, smod_applied: 0)
+          property_result = Calculators::PropertyCalculator::Result.new(assessed_equity: 23_000.0,
+                                                                        property: assessment.capital_summary.main_home,
+                                                                        smod_allowance: 0)
 
           allow(Calculators::PropertyCalculator).to receive(:call).and_return([property_result])
 

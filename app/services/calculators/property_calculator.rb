@@ -3,10 +3,14 @@ module Calculators
     Result = Struct.new(:transaction_allowance,
                         :net_value,
                         :net_equity,
+                        :property,
                         :main_home_equity_disregard,
                         :assessed_equity,
-                        :smod_applied,
-                        keyword_init: true)
+                        :smod_allowance,
+                        keyword_init: true) do
+      delegate :main_home, :value, :percentage_owned,
+               :outstanding_mortgage, :percentage_owned, :shared_with_housing_assoc, to: :property
+    end
 
     class << self
       def call(submission_date:, properties:, level_of_help:, smod_level:)
@@ -27,7 +31,8 @@ module Calculators
                        net_value: assessor_result.net_value,
                        net_equity: assessor_result.net_equity,
                        main_home_equity_disregard: equity_disregard,
-                       smod_applied:,
+                       property:,
+                       smod_allowance: smod_applied,
                        assessed_equity: calculate_assessed_equity(assessor_result.net_equity - smod_applied,
                                                                   equity_disregard))
                   .freeze.tap do |result|
@@ -46,7 +51,7 @@ module Calculators
       end
 
       def calculate_assessed_equity(net_equity, main_home_equity_disregard)
-        [net_equity - main_home_equity_disregard, 0].max
+        [net_equity - main_home_equity_disregard, 0.0].max
       end
 
       def calculate_outstanding_mortgage(property, remaining_mortgage_allowance)
@@ -60,7 +65,7 @@ module Calculators
 
       # TODO: Remove this side effect
       def save!(property, result)
-        property.update!(result.to_h.except(:smod_applied))
+        property.update!(result.to_h.except(:smod_allowance, :property))
       end
     end
   end

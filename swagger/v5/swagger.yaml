@@ -93,6 +93,71 @@ components:
           - eligible
           - ineligible
           - contribution_required
+    Property:
+      type: object
+      additionalProperties: false
+      properties:
+        value:
+          type: number
+          minimum: 0.0
+        outstanding_mortgage:
+          type: number
+          minimum: 0.0
+        percentage_owned:
+          type: integer
+          minimum: 0
+          maximum: 100
+        main_home:
+          type: boolean
+        shared_with_housing_assoc:
+          type: boolean
+        transaction_allowance:
+          type: number
+          minimum: 0.0
+        allowable_outstanding_mortgage:
+          type: number
+          minimum: 0.0
+        net_value:
+          type: number
+        net_equity:
+          type: number
+        smod_allowance:
+          type: number
+          description: Amount of subject matter of dispute disregard applied to this
+            property
+          minimum: 0.0
+          maximum: 100000.0
+        main_home_equity_disregard:
+          type: number
+        assessed_equity:
+          type: number
+          minimum: 0.0
+    BankAccounts:
+      type: array
+      description: Describes the name of the bank account and the lowest balance during
+        the computation period
+      example:
+      - value: 1.01
+        description: test name 1
+        subject_matter_of_dispute: false
+      - value: 100.01
+        description: test name 2
+        subject_matter_of_dispute: true
+      items:
+        type: object
+        description: Account detail
+        required:
+        - value
+        properties:
+          value:
+            type: number
+            format: decimal
+          description:
+            type: string
+          subject_matter_of_dispute:
+            description: Whether the contents of this bank account are the subject
+              of a dispute
+            type: boolean
 paths:
   "/assessments/{assessment_id}/applicant":
     post:
@@ -245,31 +310,7 @@ paths:
               - non_liquid_capital
               properties:
                 bank_accounts:
-                  type: array
-                  description: Describes the name of the bank account and the lowest
-                    balance during the computation period
-                  example:
-                  - value: 1.01
-                    description: test name 1
-                    subject_matter_of_dispute: false
-                  - value: 100.01
-                    description: test name 2
-                    subject_matter_of_dispute: true
-                  items:
-                    type: object
-                    additionalProperties: false
-                    description: Account detail
-                    required:
-                    - value
-                    - description
-                    properties:
-                      value:
-                        type: number
-                        format: decimal
-                      description:
-                        type: string
-                      subject_matter_of_dispute:
-                        type: boolean
+                  "$ref": "#/components/schemas/BankAccounts"
                 non_liquid_capital:
                   type: array
                   description: One or more assets details
@@ -925,6 +966,33 @@ paths:
                         type: object
                       capital:
                         type: object
+                        additionalProperties: false
+                        properties:
+                          capital_items:
+                            type: object
+                            additionalProperties: false
+                            required:
+                            - liquid
+                            - non_liquid
+                            - vehicles
+                            - properties
+                            properties:
+                              liquid:
+                                type: array
+                              non_liquid:
+                                type: array
+                              vehicles:
+                                type: array
+                              properties:
+                                type: object
+                                additionalProperties: false
+                                properties:
+                                  main_home:
+                                    "$ref": "#/components/schemas/Property"
+                                  additional_properties:
+                                    type: array
+                                    items:
+                                      "$ref": "#/components/schemas/Property"
                   version:
                     type: string
                     enum:
@@ -1014,30 +1082,7 @@ paths:
                   type: object
                   properties:
                     bank_accounts:
-                      type: array
-                      description: One or more account details
-                      example:
-                      - value: 1.01
-                        description: test name 1
-                        subject_matter_of_dispute: false
-                      - value: 100.01
-                        description: test name 2
-                        subject_matter_of_dispute: true
-                      items:
-                        type: object
-                        description: Account detail
-                        required:
-                        - value
-                        properties:
-                          value:
-                            type: number
-                            format: decimal
-                          description:
-                            type: string
-                          subject_matter_of_dispute:
-                            description: Whether the contents of this bank account
-                              are the subject of a dispute
-                            type: boolean
+                      "$ref": "#/components/schemas/BankAccounts"
                     non_liquid_capital:
                       type: array
                       description: One or more assets details
@@ -1976,26 +2021,7 @@ paths:
                       description: Element's of the applicant's partners capital
                       properties:
                         bank_accounts:
-                          type: array
-                          description: One or more account details
-                          example:
-                          - value: 1.01
-                            description: test name 1
-                            subject_matter_of_dispute: false
-                          - value: 100.01
-                            description: test name 2
-                            subject_matter_of_dispute: true
-                          items:
-                            type: object
-                            description: Account detail
-                            properties:
-                              value:
-                                type: number
-                                format: decimal
-                              description:
-                                type: string
-                              subject_matter_of_dispute:
-                                type: boolean
+                          "$ref": "#/components/schemas/BankAccounts"
                         non_liquid_capital:
                           type: array
                           description: One or more non liquid assets owned by the
@@ -2703,26 +2729,7 @@ paths:
                   description: Element's of the applicant's partners capital
                   properties:
                     bank_accounts:
-                      type: array
-                      description: One or more account details
-                      example:
-                      - value: 1.01
-                        description: test name 1
-                        subject_matter_of_dispute: false
-                      - value: 100.01
-                        description: test name 2
-                        subject_matter_of_dispute: true
-                      items:
-                        type: object
-                        description: Account detail
-                        properties:
-                          value:
-                            type: number
-                            format: decimal
-                          description:
-                            type: string
-                          subject_matter_of_dispute:
-                            type: boolean
+                      "$ref": "#/components/schemas/BankAccounts"
                     non_liquid_capital:
                       type: array
                       description: One or more non liquid assets owned by the client's

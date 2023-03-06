@@ -16,7 +16,7 @@ module Assessors
     private
 
       def calculate_property_transaction_allowance(property, level_of_help, submission_date)
-        level_of_help == "controlled" ? 0 : (property.value * notional_transaction_cost_pctg(submission_date)).round(2)
+        level_of_help == "controlled" ? 0.0 : (property.value * notional_transaction_cost_pctg(submission_date)).round(2)
       end
 
       def notional_transaction_cost_pctg(submission_date)
