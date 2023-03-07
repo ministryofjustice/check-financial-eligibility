@@ -78,6 +78,7 @@ group :development, :test do
   gem "rswag-specs"
   gem "rubocop-govuk", require: false
   gem "rubocop-performance"
+  gem "undercover"
 end
 
 group :development do
@@ -95,7 +96,8 @@ group :test do
   gem "cucumber-rails", require: false
   gem "database_cleaner"
   gem "shoulda-matchers"
-  gem "simplecov", require: false
+  gem "simplecov"
+  gem "simplecov-lcov"
   gem "simplecov-rcov"
   gem "super_diff"
   gem "vcr"

@@ -88,7 +88,7 @@ references:
       name: Install System packages needed for testing
       command: |
         sudo apt-get update
-        sudo apt-get install -y postgresql-client
+        sudo apt-get install -y postgresql-client cmake
   restore_gems_cache: &restore_gems_cache
     restore_cache:
       keys:
@@ -138,13 +138,23 @@ jobs:
           command: |
             curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./tmp/cc-test-reporter
             chmod +x ./tmp/cc-test-reporter
+            ./tmp/cc-test-reporter before-build
       - run:
           name: Run ruby tests
           command: |
-            ./tmp/cc-test-reporter before-build
             bundle exec rspec --format progress --format RspecJunitFormatter -o /tmp/test-results/rspec/rspec.xml
-            ./tmp/cc-test-reporter format-coverage -t simplecov -o tmp/coverage/codeclimate.json
+      - run:
+          name: Format Code Climate Test Coverage
+          command: |
+            ./tmp/cc-test-reporter format-coverage -t lcov -o tmp/coverage/codeclimate.json
+      - run:
+          name: Upload Code Climate Test coverage
+          command: |
             ./tmp/cc-test-reporter upload-coverage -i tmp/coverage/codeclimate.json
+      - run:
+          name: Check coverage with undercover
+          command: |
+            bundle exec undercover -l coverage/lcov.info
       - store_test_results:
           path: /tmp/test-results/rspec
       - store_artifacts:
