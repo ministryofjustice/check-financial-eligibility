@@ -83,7 +83,7 @@ module Calculators
     end
 
     def housing_benefit_records
-      @gross_income_summary&.housing_benefit_payments
+      @gross_income_summary.housing_benefit_payments
     end
 
     def all_board_and_lodging?
@@ -100,7 +100,7 @@ module Calculators
     end
 
     def receiving_housing_benefits?
-      @gross_income_summary&.housing_benefit_payments.present? ||
+      @gross_income_summary.housing_benefit_payments.present? ||
         monthly_housing_benefit_regular_transactions.positive?
     end
 

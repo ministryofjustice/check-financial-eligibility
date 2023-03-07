@@ -2,7 +2,7 @@ require "rails_helper"
 
 module Collators
   RSpec.describe OutgoingsCollator do
-    let(:assessment) { create :assessment }
+    let(:assessment) { create :assessment, :with_everything }
 
     subject(:collator) do
       described_class.call(submission_date: assessment.submission_date,

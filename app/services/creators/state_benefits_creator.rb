@@ -33,8 +33,6 @@ module Creators
     end
 
     def create_state_benefits
-      return if state_benefits.empty?
-
       state_benefits.each do |state_benefit_attributes|
         @result << create_state_benefit(state_benefit_attributes)
       end
