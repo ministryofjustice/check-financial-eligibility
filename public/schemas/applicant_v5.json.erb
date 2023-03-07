@@ -10,7 +10,8 @@
       "required": ["date_of_birth", "has_partner_opponent", "receives_qualifying_benefit"],
       "properties": {
         "date_of_birth": {
-          "$ref": "<%= "file://#{@schema_dir}/common.json#date" %>"
+          "type": "string",
+          "format": "date"
         },
         "employed": {
           "type": ["boolean", "null"]

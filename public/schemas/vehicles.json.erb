@@ -17,7 +17,8 @@
             "$ref": "<%= "file://#{@schema_dir}/common.json#currency" %>"
           },
           "date_of_purchase": {
-            "$ref": "<%= "file://#{@schema_dir}/common.json#date" %>"
+            "type": "string",
+            "format": "date"
           },
           "in_regular_use": {
             "type": "boolean"

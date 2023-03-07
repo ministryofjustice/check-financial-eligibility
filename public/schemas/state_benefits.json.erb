@@ -18,7 +18,8 @@
               "required": ["date", "amount", "client_id"],
               "properties": {
                 "date": {
-                  "$ref": "<%= "file://#{@schema_dir}/common.json#date" %>"
+                  "type": "string",
+                  "format": "date"
                 },
                 "amount": {
                   "$ref": "<%= "file://#{@schema_dir}/common.json#positive_currency" %>"

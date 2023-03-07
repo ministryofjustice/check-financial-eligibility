@@ -104,14 +104,14 @@ RSpec.describe ApplicantsController, type: :request do
       end
 
       context "with invalid date of birth" do
-        let(:dob) { "2002-12-32" }
+        let(:dob) { "3002-12-31" }
 
         before do
           params[:applicant][:date_of_birth] = dob
           post assessment_applicant_path(assessment.id), params: params.to_json, headers:
         end
 
-        it_behaves_like "it fails with message", /The property '#\/applicant\/date_of_birth' value "2002-12-32" did not match the regex/
+        it_behaves_like "it fails with message", /Date of birth cannot be in future/
       end
 
       context "has_partner_opponent not a boolean" do

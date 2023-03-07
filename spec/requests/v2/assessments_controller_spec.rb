@@ -97,7 +97,7 @@ module V2
       end
 
       context "with an assessment error" do
-        let(:params) { { assessment: { submission_date: "3000-01-01" } } }
+        let(:params) { { assessment: { client_reference_id: "3000-01-01" } } }
 
         it "returns error" do
           expect(response).to have_http_status(:unprocessable_entity)

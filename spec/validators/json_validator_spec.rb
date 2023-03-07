@@ -24,18 +24,6 @@ RSpec.describe "JsonValidator" do
     it { expect(validator).to be_valid }
   end
 
-  context "when dob is invalid and involvement type not applicant" do
-    let(:dob) { "3002-12-23" }
-    let(:involvement_type) { "defendant" }
-
-    it { expect(validator).not_to be_valid }
-
-    it "displays errors" do
-      expect(validator.errors)
-        .to include(match(/The property '#\/applicant\/date_of_birth' value "3002-12-23" did not match the rege/))
-    end
-  end
-
   context "when not all required elements are present" do
     let(:payload) do
       {

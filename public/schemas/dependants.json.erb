@@ -12,7 +12,8 @@
         "required": ["date_of_birth", "in_full_time_education", "relationship"],
         "properties": {
           "date_of_birth": {
-            "$ref": "<%= "file://#{@schema_dir}/common.json#date" %>"
+            "type": "string",
+            "format": "date"
           },
           "in_full_time_education": {
             "type": "boolean"

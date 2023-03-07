@@ -27,7 +27,8 @@
                   "type": "string"
                 },
                 "date": {
-                  "$ref": "<%= "file://#{@schema_dir}/common.json#date" %>"
+                  "type": "string",
+                  "format": "date"
                 },
                 "gross": {
                   "$ref": "<%= "file://#{@schema_dir}/common.json#positive_currency" %>"

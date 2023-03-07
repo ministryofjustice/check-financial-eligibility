@@ -17,7 +17,8 @@
               "required": ["payment_date", "amount", "client_id"],
               "properties": {
                 "payment_date": {
-                  "$ref": "<%= "file://#{@schema_dir}/common.json#date" %>"
+                  "type": "string",
+                  "format": "date"
                 },
                 "housing_costs_type": {
                   "enum": <%= CFEConstants::VALID_OUTGOING_HOUSING_COST_TYPES.as_json %>
