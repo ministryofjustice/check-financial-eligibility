@@ -18,8 +18,6 @@ module RemarkGenerators
     end
 
     def call
-      return if gross_income_summary.nil?
-
       check_amount_variations
       check_frequencies
       check_residual_balances
@@ -35,16 +33,14 @@ module RemarkGenerators
     end
 
     def check_state_benefit_variations
-      state_benefits&.each { |sb| AmountVariationChecker.call(@assessment, sb.state_benefit_payments) }
+      state_benefits.each { |sb| AmountVariationChecker.call(@assessment, sb.state_benefit_payments) }
     end
 
     def check_other_income_variaions
-      other_income_sources&.each { |oi| AmountVariationChecker.call(@assessment, oi.other_income_payments) }
+      other_income_sources.each { |oi| AmountVariationChecker.call(@assessment, oi.other_income_payments) }
     end
 
     def check_outgoings_variation
-      return if outgoings.blank?
-
       outgoings.group_by(&:type).each do |_type, collection|
         AmountVariationChecker.call(@assessment, collection)
       end
@@ -57,28 +53,28 @@ module RemarkGenerators
         FrequencyChecker.call(@assessment, collection)
       end
       assessment.employments.each do |job|
-        FrequencyChecker.call(@assessment, job.employment_payments, :date) if job.employment_payments.present?
+        FrequencyChecker.call(@assessment, job.employment_payments, :date)
       end
     end
 
     def check_residual_balances
-      ResidualBalanceChecker.call(@assessment, @assessed_capital) if @assessed_capital
+      ResidualBalanceChecker.call(@assessment, @assessed_capital)
     end
 
     def check_flags
-      state_benefits&.each { |sb| MultiBenefitChecker.call(@assessment, sb.state_benefit_payments) }
+      state_benefits.each { |sb| MultiBenefitChecker.call(@assessment, sb.state_benefit_payments) }
     end
 
     def state_benefits
-      gross_income_summary.state_benefits || []
+      gross_income_summary.state_benefits
     end
 
     def other_income_sources
-      gross_income_summary.other_income_sources || []
+      gross_income_summary.other_income_sources
     end
 
     def outgoings
-      disposable_income_summary.outgoings || []
+      disposable_income_summary.outgoings
     end
   end
 end

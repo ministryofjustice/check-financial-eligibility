@@ -17,12 +17,8 @@ module RemarkGenerators
       Utilities::PaymentPeriodAnalyser.new(dates).period_pattern == :unknown
     end
 
-    def dates_and_amounts
-      @collection.map { |rec| [rec.send(@date_attribute), nil] }
-    end
-
     def dates
-      dates_and_amounts.map(&:first)
+      @collection.map { |rec| rec.send(@date_attribute) }
     end
 
     def populate_remarks
