@@ -38,6 +38,7 @@ gem "business", "~> 2.3"
 gem "colorize"
 gem "date_validator"
 
+gem "api_error_handler"
 gem "json-schema", "~> 3.0.0"
 
 # Seeding tools

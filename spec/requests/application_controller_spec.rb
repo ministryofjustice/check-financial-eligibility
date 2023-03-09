@@ -43,7 +43,7 @@ RSpec.describe ApplicationController, type: :request do
     end
 
     it "is captured by Sentry" do
-      expect(Sentry).to receive(:capture_exception).with(instance_of(ZeroDivisionError))
+      expect(Sentry).to receive(:capture_exception).with(instance_of(ZeroDivisionError), extra: {})
       get "/my_test?raise_error=1"
     end
   end

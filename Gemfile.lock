@@ -73,6 +73,10 @@ GEM
       tzinfo (~> 2.0)
     addressable (2.8.1)
       public_suffix (>= 2.0.2, < 6.0)
+    api_error_handler (0.2.1)
+      actionpack (>= 5.0)
+      activesupport (>= 5.0)
+      rack (>= 1.0)
     ast (2.4.2)
     attr_extras (7.1.0)
     awesome_print (1.9.2)
@@ -490,6 +494,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers (~> 0.10.13)
+  api_error_handler
   awesome_print
   bootsnap (>= 1.1.0)
   business (~> 2.3)
