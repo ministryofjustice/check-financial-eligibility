@@ -7,6 +7,7 @@ RSpec.describe CashTransactionsController, type: :request do
     let(:gross_income_summary) { assessment.gross_income_summary }
     let(:headers) { { "CONTENT_TYPE" => "application/json" } }
     let(:creator_class) { Creators::CashTransactionsCreator }
+    let(:creator_instance) { instance_double(creator_class) }
     let(:month1) { Date.current.beginning_of_month - 3.months }
     let(:month2) { Date.current.beginning_of_month - 2.months }
     let(:month3) { Date.current.beginning_of_month - 1.month }
@@ -22,8 +23,12 @@ RSpec.describe CashTransactionsController, type: :request do
       end
 
       it "calls cash transactions creator" do
-        expect(creator_class).to receive(:call).with(assessment_id:, cash_transaction_params: params)
+        allow(creator_instance).to receive(:success?).and_return(true)
+        allow(creator_class)
+          .to receive(:call)
+               .with(assessment_id:, cash_transaction_params: params).and_return(creator_instance)
         post_payload
+        expect(response).to have_http_status(:success)
       end
 
       context "creation is valid" do
