@@ -177,6 +177,11 @@ paths:
       responses:
         '200':
           description: successful
+          content:
+            application/json:
+              example:
+                success: true
+                errors: []
         '422':
           description: Unprocessable Entity
       requestBody:
@@ -221,6 +226,12 @@ paths:
       responses:
         '200':
           description: successful
+          content:
+            application/json:
+              example:
+                success: true
+                assessment_id: c2250fb3-d7c3-4ae7-aacb-05f378218805
+                errors: []
         '422':
           description: Unprocessable Entity
       requestBody:
@@ -270,6 +281,185 @@ paths:
       responses:
         '200':
           description: successful
+          content:
+            application/json:
+              example:
+                version: '5'
+                timestamp: '2023-03-10T16:42:16.491Z'
+                success: true
+                result_summary:
+                  overall_result:
+                    result: eligible
+                    capital_contribution: 0.0
+                    income_contribution: 0.0
+                    proceeding_types:
+                    - ccms_code: DA003
+                      client_involvement_type: A
+                      upper_threshold: 0.0
+                      lower_threshold: 0.0
+                      result: eligible
+                  gross_income:
+                    total_gross_income: 163.3
+                    proceeding_types:
+                    - ccms_code: DA003
+                      client_involvement_type: A
+                      upper_threshold: 999999999999.0
+                      lower_threshold: 0.0
+                      result: eligible
+                    combined_total_gross_income: 163.3
+                  disposable_income:
+                    dependant_allowance: 0.0
+                    gross_housing_costs: 125.0
+                    housing_benefit: 0.0
+                    net_housing_costs: 125.0
+                    maintenance_allowance: 50.0
+                    total_outgoings_and_allowances: 538.0
+                    total_disposable_income: -374.7
+                    employment_income:
+                      gross_income: 0.0
+                      benefits_in_kind: 0.0
+                      tax: 0.0
+                      national_insurance: 0.0
+                      fixed_employment_deduction: 0.0
+                      net_employment_income: 0.0
+                    income_contribution: 0.0
+                    proceeding_types:
+                    - ccms_code: DA003
+                      client_involvement_type: A
+                      upper_threshold: 999999999999.0
+                      lower_threshold: 315.0
+                      result: eligible
+                    combined_total_disposable_income: -374.7
+                    combined_total_outgoings_and_allowances: 538.0
+                    partner_allowance: 0
+                  capital:
+                    total_liquid: 1205.56
+                    total_non_liquid: 8169.39
+                    total_vehicle: 0.0
+                    total_property: 221.37
+                    total_mortgage_allowance: 999999999999.0
+                    total_capital: 9596.32
+                    pensioner_capital_disregard: 100000.0
+                    subject_matter_of_dispute_disregard: 0.0
+                    capital_contribution: 0.0
+                    assessed_capital: 0.0
+                    total_capital_with_smod: 9596.32
+                    proceeding_types:
+                    - ccms_code: DA003
+                      client_involvement_type: A
+                      upper_threshold: 999999999999.0
+                      lower_threshold: 3000.0
+                      result: eligible
+                    pensioner_disregard_applied: 9596.32
+                    combined_assessed_capital: 0.0
+                    combined_capital_contribution: 0.0
+                assessment:
+                  id: 1c51b611-0be6-49b3-a536-fed50ad4c7c7
+                  client_reference_id: CLIENT-REF-0517
+                  submission_date: '2023-03-10'
+                  applicant:
+                    date_of_birth: '1961-11-14'
+                    involvement_type: applicant
+                    employed:
+                    has_partner_opponent: false
+                    receives_qualifying_benefit: false
+                    self_employed: false
+                  gross_income:
+                    employment_income: []
+                    irregular_income:
+                      monthly_equivalents:
+                        student_loan: 0.0
+                        unspecified_source: 0.0
+                    state_benefits:
+                      monthly_equivalents:
+                        all_sources: 88.3
+                        cash_transactions: 0.0
+                        bank_transactions:
+                        - name: benefit_type_137
+                          monthly_value: 88.3
+                          excluded_from_income_assessment: false
+                    other_income:
+                      monthly_equivalents:
+                        all_sources:
+                          friends_or_family: 0.0
+                          maintenance_in: 75.0
+                          property_or_lodger: 0.0
+                          pension: 0.0
+                        bank_transactions:
+                          friends_or_family: 0.0
+                          maintenance_in: 75.0
+                          property_or_lodger: 0.0
+                          pension: 0.0
+                        cash_transactions:
+                          friends_or_family: 0.0
+                          maintenance_in: 0.0
+                          property_or_lodger: 0.0
+                          pension: 0.0
+                  disposable_income:
+                    monthly_equivalents:
+                      all_sources:
+                        child_care: 0.0
+                        rent_or_mortgage: 125.0
+                        maintenance_out: 50.0
+                        legal_aid: 363.0
+                      bank_transactions:
+                        child_care: 0.0
+                        rent_or_mortgage: 125.0
+                        maintenance_out: 50.0
+                        legal_aid: 363.0
+                      cash_transactions:
+                        child_care: 0.0
+                        rent_or_mortgage: 0.0
+                        maintenance_out: 0.0
+                        legal_aid: 0.0
+                    childcare_allowance: 0.0
+                    deductions:
+                      dependants_allowance: 0.0
+                      disregarded_state_benefits: 0.0
+                  capital:
+                    capital_items:
+                      liquid:
+                      - description: Omnis distinctio quia quasi.
+                        value: 1205.56
+                      non_liquid:
+                      - description: Aut magnam fugit temporibus.
+                        value: 8169.39
+                      vehicles:
+                      - value: 6812.97
+                        loan_amount_outstanding: 8423.55
+                        date_of_purchase: '2018-09-30'
+                        in_regular_use: true
+                        included_in_assessment: false
+                        disregards_and_deductions: -1610.579999999999
+                        assessed_value: 0.0
+                      properties:
+                        main_home:
+                          value: 9779.87
+                          outstanding_mortgage: 3551.67
+                          percentage_owned: 1.13
+                          main_home: true
+                          shared_with_housing_assoc: false
+                          transaction_allowance: 293.4
+                          allowable_outstanding_mortgage: 3551.67
+                          net_value: 5934.8
+                          net_equity: 67.06
+                          smod_allowance: 0
+                          main_home_equity_disregard: 100000.0
+                          assessed_equity: 0.0
+                        additional_properties:
+                        - value: 7101.86
+                          outstanding_mortgage: 3549.86
+                          percentage_owned: 6.63
+                          main_home: false
+                          shared_with_housing_assoc: false
+                          transaction_allowance: 213.06
+                          allowable_outstanding_mortgage: 3549.86
+                          net_value: 3338.94
+                          net_equity: 221.37
+                          smod_allowance: 0
+                          main_home_equity_disregard: 0.0
+                          assessed_equity: 221.37
+                  remarks: {}
   "/assessments/{assessment_id}/capitals":
     post:
       summary: create capital
@@ -297,6 +487,11 @@ paths:
       responses:
         '200':
           description: successful
+          content:
+            application/json:
+              example:
+                success: true
+                errors: []
         '422':
           description: Unprocessable Entity
       requestBody:
@@ -356,6 +551,11 @@ paths:
       responses:
         '200':
           description: successful
+          content:
+            application/json:
+              example:
+                success: true
+                errors: []
         '422':
           description: Unprocessable Entity
       requestBody:
@@ -498,6 +698,11 @@ paths:
       responses:
         '200':
           description: successful
+          content:
+            application/json:
+              example:
+                success: true
+                errors: []
         '422':
           description: Unprocessable Entity
       requestBody:
@@ -573,6 +778,11 @@ paths:
       responses:
         '200':
           description: successful
+          content:
+            application/json:
+              example:
+                success: true
+                errors: []
         '422':
           description: Unprocessable Entity
       requestBody:
@@ -716,6 +926,11 @@ paths:
       responses:
         '200':
           description: successful
+          content:
+            application/json:
+              example:
+                success: true
+                errors: []
         '422':
           description: Unprocessable Entity
       requestBody:
@@ -1469,7 +1684,7 @@ paths:
                         - maintenance_out
                         - legal_aid
                         description: Type of outgoing
-                        example: child_care
+                        example: rent_or_mortgage
                       payments:
                         type: array
                         required:
@@ -1490,7 +1705,7 @@ paths:
                               format: date
                               description: Date payment made
                               example: '1992-07-22'
-                            housing_costs_type:
+                            housing_cost_type:
                               type: string
                               enum:
                               - rent
@@ -2154,6 +2369,11 @@ paths:
       responses:
         '200':
           description: successful
+          content:
+            application/json:
+              example:
+                success: true
+                errors: []
         '422':
           description: Unprocessable Entity
       requestBody:
@@ -2215,6 +2435,11 @@ paths:
       responses:
         '200':
           description: successful
+          content:
+            application/json:
+              example:
+                success: true
+                errors: []
         '422':
           description: Unprocessable Entity
       requestBody:
@@ -2310,6 +2535,11 @@ paths:
       responses:
         '200':
           description: successful
+          content:
+            application/json:
+              example:
+                success: true
+                errors: []
         '422':
           description: Unprocessable Entity
       requestBody:
@@ -2417,6 +2647,11 @@ paths:
       responses:
         '200':
           description: successful
+          content:
+            application/json:
+              example:
+                success: true
+                errors: []
         '422':
           description: Unprocessable Entity
       requestBody:
@@ -2837,6 +3072,11 @@ paths:
       responses:
         '200':
           description: successful
+          content:
+            application/json:
+              example:
+                success: true
+                errors: []
         '422':
           description: Unprocessable Entity
       requestBody:
@@ -2894,6 +3134,11 @@ paths:
       responses:
         '200':
           description: successful
+          content:
+            application/json:
+              example:
+                success: true
+                errors: []
         '422':
           description: Unprocessable Entity
       requestBody:
@@ -3014,6 +3259,11 @@ paths:
       responses:
         '200':
           description: successful
+          content:
+            application/json:
+              example:
+                success: true
+                errors: []
         '422':
           description: Unprocessable Entity
       requestBody:
@@ -3092,6 +3342,9 @@ paths:
       responses:
         '200':
           description: successful
+          content:
+            application/json:
+              example: []
   "/assessments/{assessment_id}/state_benefits":
     post:
       summary: create state_benefit
@@ -3108,6 +3361,11 @@ paths:
       responses:
         '200':
           description: successful
+          content:
+            application/json:
+              example:
+                success: true
+                errors: []
         '422':
           description: Unprocessable Entity
       requestBody:
@@ -3210,6 +3468,11 @@ paths:
       responses:
         '200':
           description: successful
+          content:
+            application/json:
+              example:
+                success: true
+                errors: []
         '422':
           description: Unprocessable Entity
       requestBody:
