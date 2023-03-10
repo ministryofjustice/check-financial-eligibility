@@ -13,7 +13,7 @@ Given("I am undertaking a certificated assessment with a pensioner applicant who
   @applicant_data = { applicant: { date_of_birth: "1939-12-20",
                                    involvement_type: "applicant",
                                    has_partner_opponent: false,
-                                   employed: @employments.present?,
+                                   employed: false,
                                    receives_qualifying_benefit: false } }
   @proceeding_type_data = { "proceeding_types": [{ ccms_code: "SE003", client_involvement_type: "A" }] }
 end
@@ -103,10 +103,11 @@ Given("I add the following capital details for {string} in the current assessmen
 end
 
 Given("I add the following statutory sick pay details for the client:") do |table|
-  @employments_data = { employment_income: [{ "name": "A",
-                                              "client_id": "B",
-                                              "receiving_only_statutory_sick_or_maternity_pay": true,
-                                              "payments": table.hashes.map { cast_values(_1) } }] }
+  @employments = [{ "name": "A",
+                    "client_id": "B",
+                    "receiving_only_statutory_sick_or_maternity_pay": true,
+                    "payments": table.hashes.map { cast_values(_1) } }]
+  @applicant_data = { applicant: @applicant_data.fetch(:applicant).merge(employed: true) }
 end
 
 Given("I add the following employment details for the partner:") do |table|
@@ -119,6 +120,7 @@ Given("I add the following employment details:") do |table|
   @employments = [{ "name": "A",
                     "client_id": "B",
                     "payments": table.hashes.map { cast_values(_1) } }]
+  @applicant_data = { applicant: @applicant_data.fetch(:applicant).merge(employed: true) }
 end
 
 Given("I add the following regular_transaction details for the partner:") do |table|
