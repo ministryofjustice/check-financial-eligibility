@@ -1,56 +1,48 @@
 module Creators
-  class EmploymentsCreator < BaseCreator
-    def initialize(assessment_id:, employments_params:, employment_collection: nil)
-      super()
-      @assessment_id = assessment_id
-      @employments_params = employments_params
-      @explicit_employment_collection = employment_collection
-    end
-
-    def call
-      if json_validator.valid?
-        create_records
-      else
-        errors.concat(json_validator.errors)
+  class EmploymentsCreator
+    Result = Struct.new :errors, keyword_init: true do
+      def success?
+        errors.empty?
       end
-      self
     end
+    class << self
+      def call(employments_params:, employment_collection:)
+        json_validator = JsonValidator.new("employment", employments_params)
+        if json_validator.valid?
+          create_records employments_params, employment_collection
+        else
+          Result.new(errors: json_validator.errors).freeze
+        end
+      end
 
   private
 
-    def json_validator
-      @json_validator ||= JsonValidator.new("employment", @employments_params)
-    end
-
-    def create_records
-      ActiveRecord::Base.transaction do
-        assessment
-        create_employment
-      rescue CreationError => e
-        self.errors = e.errors
+      def create_records(employments_params, employment_collection)
+        ActiveRecord::Base.transaction do
+          create_employment employments_params, employment_collection
+          Result.new(errors: []).freeze
+        rescue ActiveRecord::RecordInvalid => e
+          Result.new(errors: [e.message]).freeze
+        end
       end
-    end
 
-    def create_employment
-      @employments_params[:employment_income].each do |attributes|
-        employment = employment_collection.create!(attributes.slice(:name, :client_id, :receiving_only_statutory_sick_or_maternity_pay))
-        create_payments(employment, attributes)
+      def create_employment(employments_params, employment_collection)
+        employments_params[:employment_income].each do |attributes|
+          employment = employment_collection.create!(attributes.slice(:name, :client_id, :receiving_only_statutory_sick_or_maternity_pay))
+          create_payments(employment, attributes)
+        end
       end
-    end
 
-    def create_payments(employment, attributes)
-      attributes[:payments].each do |income|
-        employment.employment_payments.create!(client_id: income[:client_id],
-                                               date: income[:date],
-                                               gross_income: income[:gross],
-                                               benefits_in_kind: income[:benefits_in_kind],
-                                               tax: income[:tax],
-                                               national_insurance: income[:national_insurance])
+      def create_payments(employment, attributes)
+        attributes[:payments].each do |income|
+          employment.employment_payments.create!(client_id: income[:client_id],
+                                                 date: income[:date],
+                                                 gross_income: income[:gross],
+                                                 benefits_in_kind: income[:benefits_in_kind],
+                                                 tax: income[:tax],
+                                                 national_insurance: income[:national_insurance])
+        end
       end
-    end
-
-    def employment_collection
-      @explicit_employment_collection || assessment.employments
-    end
+  end
   end
 end

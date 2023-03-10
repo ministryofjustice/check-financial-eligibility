@@ -21,8 +21,7 @@
           "gross": 101.01,
           "benefits_in_kind": 0,
           "tax": 11,
-          "national_insurance": 3,
-          "net_employment_income": 87.01
+          "national_insurance": 3
         }
       ]
     }

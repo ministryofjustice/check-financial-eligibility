@@ -158,6 +158,45 @@ components:
             description: Whether the contents of this bank account are the subject
               of a dispute
             type: boolean
+    EmploymentPaymentList:
+      type: array
+      description: One or more employment payment details
+      minItems: 1
+      items:
+        type: object
+        additionalProperties: true
+        description: Employment payment detail
+        properties:
+          client_id:
+            type: string
+            description: Client supplied id to identify the payment
+            example: '05459c0f-a620-4743-9f0c-b3daa93e5711'
+          date:
+            type: string
+            format: date
+            description: Date payment received
+            example: '1992-07-22'
+          gross:
+            type: number
+            format: decimal
+            description: Gross payment income received
+            example: '101.01'
+          benefits_in_kind:
+            type: number
+            format: decimal
+            description: Benefit in kind amount received
+          tax:
+            type: number
+            format: decimal
+            description: Amount of tax paid - normally negative, but can be positive
+              for a tax refund
+            example: "-10.01"
+          national_insurance:
+            type: number
+            format: decimal
+            description: Amount of national insurance paid - normally negative, but
+              can be positive for a tax refund
+            example: "-5.24"
 paths:
   "/assessments/{assessment_id}/applicant":
     post:
@@ -592,21 +631,18 @@ paths:
                     benefits_in_kind: 16.6
                     tax: -104.1
                     national_insurance: -18.66
-                    net_employment_income: 898.84
                   - client_id: bf3356a7-681b-4a2d-bab2-a224f52f0c6f
                     date: '2021-10-30'
                     gross: 1046.0
                     benefits_in_kind: 16.6
                     tax: -104.1
                     national_insurance: -18.66
-                    net_employment_income: 898.84
                   - client_id: 66971129-6685-4acd-9deb-60581601dca6
                     date: '2021-10-30'
                     gross: 1046.0
                     benefits_in_kind: 16.6
                     tax: -104.1
                     national_insurance: -18.66
-                    net_employment_income: 898.84
                 - name: Job 2
                   client_id: 27355c60-d969-459f-a283-ffbedde42ab3
                   payments:
@@ -616,21 +652,18 @@ paths:
                     benefits_in_kind: 16.6
                     tax: -104.1
                     national_insurance: -18.66
-                    net_employment_income: 898.84
                   - client_id: cc9bd6d9-9680-43d6-890b-bc06a12da124
                     date: '2021-10-30'
                     gross: 1046.0
                     benefits_in_kind: 16.6
                     tax: -104.1
                     national_insurance: -18.66
-                    net_employment_income: 898.84
                   - client_id: 46f99ca3-9702-4fbc-b824-b68908884f06
                     date: '2021-10-30'
                     gross: 1046.0
                     benefits_in_kind: 16.6
                     tax: -104.1
                     national_insurance: -18.66
-                    net_employment_income: 898.84
               properties:
                 employment_income:
                   type: array
@@ -655,50 +688,7 @@ paths:
                         description: Client is in receipt only of Statutory Sick Pay
                           (SSP) or Statutory Maternity Pay (SMP)
                       payments:
-                        type: array
-                        required:
-                        - client_id
-                        - date
-                        - gross
-                        - benefits_in_kind
-                        - tax
-                        - national_insurance
-                        - net_employment_income
-                        description: One or more employment payment details
-                        items:
-                          type: object
-                          description: Employment payment detail
-                          properties:
-                            client_id:
-                              type: string
-                              description: Client supplied id to identify the payment
-                              example: '05459c0f-a620-4743-9f0c-b3daa93e5711'
-                            date:
-                              type: string
-                              format: date
-                              description: Date payment received
-                              example: '1992-07-22'
-                            gross:
-                              type: number
-                              format: decimal
-                              description: Gross payment income received
-                              example: '101.01'
-                            benefits_in_kind:
-                              type: number
-                              format: decimal
-                              description: Benefit in kind amount received
-                            tax:
-                              type: number
-                              format: decimal
-                              description: Amount of tax paid
-                            national_insurance:
-                              type: number
-                              format: decimal
-                              description: Amount of national insurance paid
-                            net_employment_income:
-                              type: number
-                              format: decimal
-                              description: Net payment income received
+                        "$ref": "#/components/schemas/EmploymentPaymentList"
         required: true
   "/assessments/{assessment_id}/explicit_remarks":
     post:
@@ -1308,51 +1298,7 @@ paths:
                         description: Client is in receipt only of Statutory Sick Pay
                           (SSP) or Statutory Maternity Pay (SMP)
                       payments:
-                        type: array
-                        additionalProperties: false
-                        required:
-                        - client_id
-                        - date
-                        - gross
-                        - benefits_in_kind
-                        - tax
-                        - national_insurance
-                        - net_employment_income
-                        description: One or more employment payment details
-                        items:
-                          type: object
-                          description: Employment payment detail
-                          properties:
-                            client_id:
-                              type: string
-                              description: Client supplied id to identify the payment
-                              example: '05459c0f-a620-4743-9f0c-b3daa93e5711'
-                            date:
-                              type: string
-                              format: date
-                              description: Date payment received
-                              example: '1992-07-22'
-                            gross:
-                              type: number
-                              format: decimal
-                              description: Gross payment income received
-                              example: '101.01'
-                            benefits_in_kind:
-                              type: number
-                              format: decimal
-                              description: Benefit in kind amount received
-                            tax:
-                              type: number
-                              format: decimal
-                              description: Amount of tax paid
-                            national_insurance:
-                              type: number
-                              format: decimal
-                              description: Amount of national insurance paid
-                            net_employment_income:
-                              type: number
-                              format: decimal
-                              description: Net payment income received
+                        "$ref": "#/components/schemas/EmploymentPaymentList"
                 irregular_incomes:
                   type: object
                   description: A set of irregular income payments
@@ -1735,7 +1681,6 @@ paths:
                         benefits_in_kind: 0
                         tax: 11
                         national_insurance: 3
-                        net_employment_income: 87.01
                     regular_transactions:
                     - category: benefits
                       operation: credit
@@ -1837,51 +1782,7 @@ paths:
                             type: string
                             description: Client supplied id to identify the employment
                           payments:
-                            type: array
-                            required:
-                            - client_id
-                            - date
-                            - gross
-                            - benefits_in_kind
-                            - tax
-                            - national_insurance
-                            - net_employment_income
-                            description: One or more employment payment details
-                            items:
-                              type: object
-                              description: Employment payment detail
-                              properties:
-                                client_id:
-                                  type: string
-                                  description: Client supplied id to identify the
-                                    payment
-                                  example: '05459c0f-a620-4743-9f0c-b3daa93e5711'
-                                date:
-                                  type: string
-                                  format: date
-                                  description: Date payment received
-                                  example: '1992-07-22'
-                                gross:
-                                  type: number
-                                  format: decimal
-                                  description: Gross payment income received
-                                  example: '101.01'
-                                benefits_in_kind:
-                                  type: number
-                                  format: decimal
-                                  description: Benefit in kind amount received
-                                tax:
-                                  type: number
-                                  format: decimal
-                                  description: Amount of tax paid
-                                national_insurance:
-                                  type: number
-                                  format: decimal
-                                  description: Amount of national insurance paid
-                                net_employment_income:
-                                  type: number
-                                  format: decimal
-                                  description: Net payment income received
+                            "$ref": "#/components/schemas/EmploymentPaymentList"
                     regular_transactions:
                       type: array
                       required:
@@ -2445,7 +2346,6 @@ paths:
                     benefits_in_kind: 0
                     tax: 11
                     national_insurance: 3
-                    net_employment_income: 87.01
                 regular_transactions:
                 - category: benefits
                   operation: credit
@@ -2528,68 +2428,7 @@ paths:
                         format: decimal
                         example: 101.01
                 employments:
-                  type: array
-                  required:
-                  - name
-                  - client_id
-                  - payments
-                  description: One or more employment income details
-                  items:
-                    type: object
-                    description: Employment income detail
-                    properties:
-                      name:
-                        type: string
-                        description: Identifying name for this employment - e.g. employer's
-                          name
-                      client_id:
-                        type: string
-                        description: Client supplied id to identify the employment
-                      payments:
-                        type: array
-                        required:
-                        - client_id
-                        - date
-                        - gross
-                        - benefits_in_kind
-                        - tax
-                        - national_insurance
-                        - net_employment_income
-                        description: One or more employment payment details
-                        items:
-                          type: object
-                          description: Employment payment detail
-                          properties:
-                            client_id:
-                              type: string
-                              description: Client supplied id to identify the payment
-                              example: '05459c0f-a620-4743-9f0c-b3daa93e5711'
-                            date:
-                              type: string
-                              format: date
-                              description: Date payment received
-                              example: '1992-07-22'
-                            gross:
-                              type: number
-                              format: decimal
-                              description: Gross payment income received
-                              example: '101.01'
-                            benefits_in_kind:
-                              type: number
-                              format: decimal
-                              description: Benefit in kind amount received
-                            tax:
-                              type: number
-                              format: decimal
-                              description: Amount of tax paid
-                            national_insurance:
-                              type: number
-                              format: decimal
-                              description: Amount of national insurance paid
-                            net_employment_income:
-                              type: number
-                              format: decimal
-                              description: Net payment income received
+                  "$ref": "#/components/schemas/EmploymentPaymentList"
                 regular_transactions:
                   type: array
                   required:

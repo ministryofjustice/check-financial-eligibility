@@ -67,7 +67,6 @@ module TestCase
       data_rows.each do |row|
         transform_row_to_hash(row, payment_hash)
       end
-      payment_hash[:net_employment_income] = calculate_net(payment_hash)
       payment_hash
     end
 

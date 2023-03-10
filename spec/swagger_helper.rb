@@ -140,6 +140,53 @@ RSpec.configure do |config|
               },
             },
           },
+          EmploymentPaymentList: {
+            type: :array,
+            description: "One or more employment payment details",
+            minItems: 1,
+            items: {
+              type: :object,
+              # allow for legacy redundant net_employment_income field
+              additionalProperties: true,
+              description: "Employment payment detail",
+              properties: {
+                client_id: {
+                  type: :string,
+                  description: "Client supplied id to identify the payment",
+                  example: "05459c0f-a620-4743-9f0c-b3daa93e5711",
+                },
+                date: {
+                  type: :string,
+                  format: :date,
+                  description: "Date payment received",
+                  example: "1992-07-22",
+                },
+                gross: {
+                  type: :number,
+                  format: :decimal,
+                  description: "Gross payment income received",
+                  example: "101.01",
+                },
+                benefits_in_kind: {
+                  type: :number,
+                  format: :decimal,
+                  description: "Benefit in kind amount received",
+                },
+                tax: {
+                  type: :number,
+                  format: :decimal,
+                  description: "Amount of tax paid - normally negative, but can be positive for a tax refund",
+                  example: "-10.01",
+                },
+                national_insurance: {
+                  type: :number,
+                  format: :decimal,
+                  description: "Amount of national insurance paid - normally negative, but can be positive for a tax refund",
+                  example: "-5.24",
+                },
+              },
+            },
+          },
         },
       },
       paths: {},

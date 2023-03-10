@@ -79,7 +79,6 @@ module Creators
 
       employments_params = { employment_income: employment_params }
       creator = EmploymentsCreator.call(
-        assessment_id: @assessment_id,
         employments_params:,
         employment_collection: assessment.partner_employments,
       )

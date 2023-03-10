@@ -10,8 +10,7 @@
           "gross": 1046.0,
           "benefits_in_kind": 16.6,
           "tax": -104.1,
-          "national_insurance": -18.66,
-          "net_employment_income": 898.84
+          "national_insurance": -18.66
         },
         {
           "client_id": "bf3356a7-681b-4a2d-bab2-a224f52f0c6f",
@@ -19,8 +18,7 @@
           "gross": 1046.0,
           "benefits_in_kind": 16.6,
           "tax": -104.1,
-          "national_insurance": -18.66,
-          "net_employment_income": 898.84
+          "national_insurance": -18.66
         },
         {
           "client_id": "66971129-6685-4acd-9deb-60581601dca6",
@@ -28,8 +26,7 @@
           "gross": 1046.0,
           "benefits_in_kind": 16.6,
           "tax": -104.1,
-          "national_insurance": -18.66,
-          "net_employment_income": 898.84
+          "national_insurance": -18.66
         }
       ]
     },
@@ -43,8 +40,7 @@
           "gross": 1046.0,
           "benefits_in_kind": 16.6,
           "tax": -104.1,
-          "national_insurance": -18.66,
-          "net_employment_income": 898.84
+          "national_insurance": -18.66
         },
         {
           "client_id": "cc9bd6d9-9680-43d6-890b-bc06a12da124",
@@ -52,8 +48,7 @@
           "gross": 1046.0,
           "benefits_in_kind": 16.6,
           "tax": -104.1,
-          "national_insurance": -18.66,
-          "net_employment_income": 898.84
+          "national_insurance": -18.66
         },
         {
           "client_id": "46f99ca3-9702-4fbc-b824-b68908884f06",
@@ -61,8 +56,7 @@
           "gross": 1046.0,
           "benefits_in_kind": 16.6,
           "tax": -104.1,
-          "national_insurance": -18.66,
-          "net_employment_income": 898.84
+          "national_insurance": -18.66
         }
       ]
     }

@@ -144,7 +144,6 @@ module TestCase
                 benefits_in_kind: 0.0,
                 tax: -745.31,
                 national_insurance: -144.06,
-                net_employment_income: 1660.96,
               },
               {
                 client_id: "id4",
@@ -153,7 +152,6 @@ module TestCase
                 benefits_in_kind: 0.0,
                 tax: -745.31,
                 national_insurance: -144.06,
-                net_employment_income: 1660.96,
               },
               {
                 client_id: "id7",
@@ -162,7 +160,6 @@ module TestCase
                 benefits_in_kind: 0.0,
                 tax: -745.31,
                 national_insurance: -144.06,
-                net_employment_income: 1660.96,
               },
             ],
           },
@@ -184,7 +181,6 @@ module TestCase
                 benefits_in_kind: 0.0,
                 tax: -745.31,
                 national_insurance: -144.06,
-                net_employment_income: 1660.96,
               },
               {
                 client_id: "id5",
@@ -193,7 +189,6 @@ module TestCase
                 benefits_in_kind: 0.0,
                 tax: -745.31,
                 national_insurance: -144.06,
-                net_employment_income: 1660.96,
               },
               {
                 client_id: "id6",
@@ -202,7 +197,6 @@ module TestCase
                 benefits_in_kind: 0.0,
                 tax: -745.31,
                 national_insurance: -144.06,
-                net_employment_income: 1660.96,
               },
             ],
           },
@@ -217,7 +211,6 @@ module TestCase
                 benefits_in_kind: 0.0,
                 tax: -98,
                 national_insurance: 0,
-                net_employment_income: 252.2,
               },
               {
                 client_id: "id7",
@@ -226,7 +219,6 @@ module TestCase
                 benefits_in_kind: 0.0,
                 tax: -45.87,
                 national_insurance: 0,
-                net_employment_income: 344.13,
               },
             ],
           },

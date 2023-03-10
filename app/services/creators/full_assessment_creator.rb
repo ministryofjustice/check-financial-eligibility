@@ -47,7 +47,7 @@ module Creators
         },
         lambda { |assessment, params|
           if params[:employment_income]
-            Creators::EmploymentsCreator.call(assessment_id: assessment.id,
+            Creators::EmploymentsCreator.call(employment_collection: assessment.employments,
                                               employments_params: { employment_income: params[:employment_income] })
           end
         },

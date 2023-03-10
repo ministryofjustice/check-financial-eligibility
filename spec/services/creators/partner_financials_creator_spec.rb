@@ -143,7 +143,6 @@ module Creators
                     benefits_in_kind: 16.60,
                     tax: -104.10,
                     national_insurance: -18.66,
-                    net_employment_income: 898.84,
                   },
                   {
                     client_id: "employment-1-payment-2",
@@ -152,7 +151,6 @@ module Creators
                     benefits_in_kind: 16.60,
                     tax: -104.10,
                     national_insurance: -18.66,
-                    net_employment_income: 898.84,
                   },
                   {
                     client_id: "employment-1-payment-3",
@@ -161,7 +159,6 @@ module Creators
                     benefits_in_kind: 16.60,
                     tax: -104.10,
                     national_insurance: -18.66,
-                    net_employment_income: 898.84,
                   },
                 ],
               },
@@ -195,7 +192,6 @@ module Creators
                     client_id: "employment-1-payment-1",
                     date: "2021-10-30",
                     national_insurance: -18.66,
-                    net_employment_income: 898.84,
                   },
                 ],
               },

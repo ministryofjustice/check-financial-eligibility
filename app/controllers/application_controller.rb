@@ -30,4 +30,10 @@ class ApplicationController < ActionController::API
     duration = Time.zone.now - start_time
     rec.update_from_response(response, duration) if /^\/assessment/.match?(request.path)
   end
+
+private
+
+  def load_assessment
+    @assessment = Assessment.find_by(id: params[:assessment_id]) || render_unprocessable(["No such assessment id"])
+  end
 end

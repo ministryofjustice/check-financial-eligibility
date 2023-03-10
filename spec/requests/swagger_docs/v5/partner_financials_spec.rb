@@ -68,73 +68,7 @@ RSpec.describe "partner_financials", type: :request, swagger_doc: "v5/swagger.ya
                         },
                       },
                     },
-                    employments: {
-                      type: :array,
-                      required: %i[name client_id payments],
-                      description: "One or more employment income details",
-                      items: {
-                        type: :object,
-                        description: "Employment income detail",
-                        properties: {
-                          name: {
-                            type: :string,
-                            description: "Identifying name for this employment - e.g. employer's name",
-                          },
-                          client_id: {
-                            type: :string,
-                            description: "Client supplied id to identify the employment",
-                          },
-                          payments: {
-                            type: :array,
-                            required: %i[client_id date gross benefits_in_kind tax national_insurance net_employment_income],
-                            description: "One or more employment payment details",
-                            items: {
-                              type: :object,
-                              description: "Employment payment detail",
-                              properties: {
-                                client_id: {
-                                  type: :string,
-                                  description: "Client supplied id to identify the payment",
-                                  example: "05459c0f-a620-4743-9f0c-b3daa93e5711",
-                                },
-                                date: {
-                                  type: :string,
-                                  format: :date,
-                                  description: "Date payment received",
-                                  example: "1992-07-22",
-                                },
-                                gross: {
-                                  type: :number,
-                                  format: :decimal,
-                                  description: "Gross payment income received",
-                                  example: "101.01",
-                                },
-                                benefits_in_kind: {
-                                  type: :number,
-                                  format: :decimal,
-                                  description: "Benefit in kind amount received",
-                                },
-                                tax: {
-                                  type: :number,
-                                  format: :decimal,
-                                  description: "Amount of tax paid",
-                                },
-                                national_insurance: {
-                                  type: :number,
-                                  format: :decimal,
-                                  description: "Amount of national insurance paid",
-                                },
-                                net_employment_income: {
-                                  type: :number,
-                                  format: :decimal,
-                                  description: "Net payment income received",
-                                },
-                              },
-                            },
-                          },
-                        },
-                      },
-                    },
+                    employments: { "$ref" => "#/components/schemas/EmploymentPaymentList" },
                     regular_transactions: {
                       type: :array,
                       required: %i[category operation frequency amount],
@@ -396,7 +330,6 @@ RSpec.describe "partner_financials", type: :request, swagger_doc: "v5/swagger.ya
                     benefits_in_kind: 0.0,
                     tax: 11,
                     national_insurance: 3.0,
-                    net_employment_income: 87.01,
                   },
                 ],
               },
