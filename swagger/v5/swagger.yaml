@@ -1068,7 +1068,7 @@ paths:
                     submission_date:
                       type: string
                       format: date
-                      example: '2023-02-05'
+                      example: '2022-06-07'
                       description: Date of the original submission (iso8601 format)
                     client_reference_id:
                       type: string
@@ -1165,47 +1165,47 @@ paths:
                     income:
                     - category: maintenance_in
                       payments:
-                      - date: '2022-01-01'
+                      - date: '2022-03-01'
                         amount: 1046.44
                         client_id: '05459c0f-a620-4743-9f0c-b3daa93e5711'
-                      - date: '2022-02-01'
+                      - date: '2022-04-01'
                         amount: 1034.33
                         client_id: 10318f7b-289a-4fa5-a986-fc6f499fecd0
-                      - date: '2022-03-01'
+                      - date: '2022-05-01'
                         amount: 1033.44
                         client_id: 5cf62a12-c92b-4cc1-b8ca-eeb4efbcce21
                     - category: friends_or_family
                       payments:
-                      - date: '2022-02-01'
+                      - date: '2022-04-01'
                         amount: 250.0
                         client_id: e47b707b-d795-47c2-8b39-ccf022eae33b
-                      - date: '2022-03-01'
+                      - date: '2022-05-01'
                         amount: 266.02
                         client_id: b0c46cc7-8478-4658-a7f9-85ec85d420b1
-                      - date: '2022-01-01'
+                      - date: '2022-03-01'
                         amount: 250.0
                         client_id: f3ec68a3-8748-4ed5-971a-94d133e0efa0
                     outgoings:
                     - category: maintenance_out
                       payments:
-                      - date: '2022-02-01'
+                      - date: '2022-04-01'
                         amount: 256.0
                         client_id: 347b707b-d795-47c2-8b39-ccf022eae33b
-                      - date: '2022-03-01'
+                      - date: '2022-05-01'
                         amount: 256.0
                         client_id: 722b707b-d795-47c2-8b39-ccf022eae33b
-                      - date: '2022-01-01'
+                      - date: '2022-03-01'
                         amount: 256.0
                         client_id: abcb707b-d795-47c2-8b39-ccf022eae33b
                     - category: child_care
                       payments:
-                      - date: '2022-03-01'
+                      - date: '2022-05-01'
                         amount: 258.0
                         client_id: ff7b707b-d795-47c2-8b39-ccf022eae33b
-                      - date: '2022-02-01'
+                      - date: '2022-04-01'
                         amount: 257.0
                         client_id: ee7b707b-d795-47c2-8b39-ccf022eae33b
-                      - date: '2022-01-01'
+                      - date: '2022-03-01'
                         amount: 256.0
                         client_id: ec7b707b-d795-47c2-8b39-ccf022eae33b
                   properties:
@@ -1453,57 +1453,96 @@ paths:
                               example: '05459c0f-a620-4743-9f0c-b3daa93e5711'
                 outgoings:
                   type: array
-                  required:
-                  - name
-                  - payments
                   description: One or more outgoings categorized by name
                   items:
-                    type: object
-                    description: Outgoing payments detail
-                    properties:
-                      name:
-                        type: string
-                        enum:
-                        - child_care
-                        - rent_or_mortgage
-                        - maintenance_out
-                        - legal_aid
-                        description: Type of outgoing
-                        example: child_care
-                      payments:
-                        type: array
-                        required:
-                        - client_id
-                        - payment_date
-                        - amount
-                        description: One or more outgoing payments detail
-                        items:
-                          type: object
-                          description: Payment detail
-                          properties:
-                            client_id:
-                              type: string
-                              description: Client identifier for outgoing payment
-                              example: '05459c0f-a620-4743-9f0c-b3daa93e5711'
-                            payment_date:
-                              type: string
-                              format: date
-                              description: Date payment made
-                              example: '1992-07-22'
-                            housing_costs_type:
-                              type: string
-                              enum:
-                              - rent
-                              - mortgage
-                              - board_and_lodging
-                              description: Housing cost type (omit for non-housing
-                                cost outgoings)
-                              example: rent
-                            amount:
-                              type: number
-                              format: decimal
-                              description: Amount of payment made
-                              example: 101.01
+                    oneOf:
+                    - type: object
+                      required:
+                      - name
+                      - payments
+                      additionalProperties: false
+                      description: Outgoing payments detail
+                      properties:
+                        name:
+                          type: string
+                          enum:
+                          - child_care
+                          - maintenance_out
+                          - legal_aid
+                          description: Type of outgoing
+                          example: child_care
+                        payments:
+                          type: array
+                          description: One or more outgoing payments detail
+                          items:
+                            type: object
+                            additionalProperties: false
+                            required:
+                            - client_id
+                            - payment_date
+                            - amount
+                            description: Payment detail
+                            properties:
+                              client_id:
+                                type: string
+                                description: Client identifier for outgoing payment
+                                example: '05459c0f-a620-4743-9f0c-b3daa93e5711'
+                              payment_date:
+                                type: string
+                                format: date
+                                description: Date payment made
+                                example: '1992-07-22'
+                              amount:
+                                type: number
+                                format: decimal
+                                description: Amount of payment made
+                                example: 101.01
+                    - type: object
+                      required:
+                      - name
+                      - payments
+                      additionalProperties: false
+                      description: Outgoing payments detail
+                      properties:
+                        name:
+                          type: string
+                          enum:
+                          - rent_or_mortgage
+                          description: Type of outgoing
+                        payments:
+                          type: array
+                          description: One or more outgoing payments detail
+                          items:
+                            type: object
+                            additionalProperties: false
+                            required:
+                            - client_id
+                            - payment_date
+                            - amount
+                            - housing_cost_type
+                            description: Payment detail
+                            properties:
+                              client_id:
+                                type: string
+                                description: Client identifier for outgoing payment
+                                example: '05459c0f-a620-4743-9f0c-b3daa93e5711'
+                              payment_date:
+                                type: string
+                                format: date
+                                description: Date payment made
+                                example: '1992-07-22'
+                              housing_cost_type:
+                                type: string
+                                enum:
+                                - rent
+                                - mortgage
+                                - board_and_lodging
+                                description: Housing cost type
+                              amount:
+                                type: number
+                                format: decimal
+                                description: Amount of payment made
+                                example: 101.01
                 properties:
                   type: object
                   required:
@@ -2341,7 +2380,7 @@ paths:
                               format: date
                               description: Date payment made
                               example: '1992-07-22'
-                            housing_costs_type:
+                            housing_cost_type:
                               type: string
                               enum:
                               - rent

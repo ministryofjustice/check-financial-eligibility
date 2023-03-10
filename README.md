@@ -100,6 +100,8 @@ for testing new thresholds before they come into affect on production.
     brew install postgresql
     # run postgres now AND on every boot
     brew services start postgresql
+    # run postgres now AND on every boot
+    brew services start postgresql
     ```
 
 3.  Run the setup script:

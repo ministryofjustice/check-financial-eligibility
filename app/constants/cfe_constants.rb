@@ -36,6 +36,7 @@ module CFEConstants
     legal_aid: Outgoings::LegalAid,
   }.freeze
   VALID_OUTGOING_CATEGORIES = OUTGOING_KLASSES.keys.map(&:to_s).freeze
+  NON_HOUSING_OUTGOING_CATEGORIES = OUTGOING_KLASSES.except(:rent_or_mortgage).keys.map(&:to_s).freeze
   VALID_OUTGOING_HOUSING_COST_TYPES = %w[rent mortgage board_and_lodging].freeze
 
   # Remark categories
