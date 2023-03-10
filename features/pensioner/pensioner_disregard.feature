@@ -5,7 +5,7 @@ Feature:
     Given I am undertaking a certificated assessment with a pensioner applicant who is not passported
     And I am using version 5 of the API
     And I add the following employment details:
-      | client_id |     date     |  gross  | benefits_in_kind  | tax   | national_insurance | net_employment_income |
+      | client_id |     date     |  gross | benefits_in_kind  | tax   | national_insurance | net_employment_income |
       |     C     |  2022-07-22  | 900.50 |       0           | 75.00 |       15.0         |        410.5          |
       |     C     |  2022-08-22  | 900.50 |       0           | 75.00 |       15.0         |        410.5          |
       |     C     |  2022-09-22  | 900.50 |       0           | 75.00 |       15.0         |        410.5          |
@@ -35,6 +35,47 @@ Feature:
     And I should see the following "capital summary" details:
       | attribute                     | value   |
       | total_capital                 | 19800.0 |
-      | pensioner_capital_disregard  | 20000.0  |
+      | pensioner_capital_disregard   | 20000.0 |
       | assessed_capital              | 0.0     |
       | pensioner_disregard_applied   | 19800.0 |
+
+  Scenario: A pensioner applicant with a partner - pensioner disregard applies across combined capital
+    Given I am undertaking a certificated assessment with a pensioner applicant who is not passported
+    And I am using version 5 of the API
+    And I add the following employment details:
+      | client_id |     date     |  gross | benefits_in_kind  | tax   | national_insurance |
+      |     C     |  2022-07-22  | 200.50 |       0           | 75.00 |       15.0         |
+      |     C     |  2022-08-22  | 200.50 |       0           | 75.00 |       15.0         |
+      |     C     |  2022-09-22  | 200.50 |       0           | 75.00 |       15.0         |
+    And I add the following capital details for "non_liquid_capital" in the current assessment:
+      | description    | value   | subject_matter_of_dispute |
+      | Investment     | 10000.0 | false                     |
+    And I add the following additional property details for the partner in the current assessment:
+      | value                       | 170000.00 |
+      | outstanding_mortgage        | 100000.00 |
+      | percentage_owned            | 100       |
+      | shared_with_housing_assoc   | false     |
+      | subject_matter_of_dispute   | false     |
+    When I retrieve the final assessment
+    Then I should see the following "partner property" details for the partner:
+      | attribute                   | value    |
+      | value                       | 170000.0 |
+      | transaction_allowance       | 5100.0   |
+      | net_value                   | 64900.0  |
+      | net_equity                  | 64900.0  |
+      | assessed_equity             | 64900.0  |
+    Then I should see the following "capital summary" details:
+      | attribute                   | value    |
+      | total_capital               | 10000.0  |
+      | pensioner_capital_disregard | 80000.0  |
+      | assessed_capital            | 0.0      |
+      | pensioner_disregard_applied | 10000.0  |
+    Then I should see the following "partner capital summary" details:
+      | attribute                   | value    |
+      | total_capital               | 64900.0  |
+      | assessed_capital            | 0.0      |
+      | pensioner_disregard_applied | 64900.0  |
+    And I should see the following overall summary:
+      | attribute                   | value    |
+      | assessment_result           | eligible |
+      | combined_assessed_capital   | 0.0      |

@@ -11,7 +11,7 @@ module Decorators
       def as_json
         if @summary.is_a?(ApplicantCapitalSummary)
           basic_attributes.merge(proceeding_types:,
-                                 pensioner_disregard_applied: @person_capital_subtotals.pensioner_disregard_applied.to_f,
+                                 pensioner_capital_disregard: @person_capital_subtotals.pensioner_capital_disregard.to_f,
                                  combined_assessed_capital:,
                                  combined_capital_contribution:)
         else
@@ -21,13 +21,13 @@ module Decorators
 
       def basic_attributes
         {
+          pensioner_disregard_applied: @person_capital_subtotals.pensioner_disregard_applied.to_f,
           total_liquid: @person_capital_subtotals.total_liquid.to_f,
           total_non_liquid: @person_capital_subtotals.total_non_liquid.to_f,
           total_vehicle: @person_capital_subtotals.total_vehicle.to_f,
           total_property: @person_capital_subtotals.total_property.to_f,
           total_mortgage_allowance: @person_capital_subtotals.total_mortgage_allowance.to_f,
           total_capital: @person_capital_subtotals.total_capital.to_f,
-          pensioner_capital_disregard: @person_capital_subtotals.pensioner_capital_disregard.to_f,
           subject_matter_of_dispute_disregard: @person_capital_subtotals.subject_matter_of_dispute_disregard.to_f,
           capital_contribution: @capital_contribution,
           assessed_capital: @person_capital_subtotals.assessed_capital.to_f,

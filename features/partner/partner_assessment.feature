@@ -23,7 +23,7 @@ Feature:
       | main_home_equity_disregard | 100000.0 |
       | transaction_allowance      | 4500.0   |
       | assessed_equity            | 0.0      |
-    And I should see the following "partner_capital" details for the partner:
+    And I should see the following "partner property" details for the partner:
       | attribute                  | value     |
       | value                      | 170000.0  |
       | outstanding_mortgage       | 100000.0  |

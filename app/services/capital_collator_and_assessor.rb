@@ -1,9 +1,11 @@
 class CapitalCollatorAndAssessor
   class << self
     def call(assessment)
-      applicant_subtotals = collate_applicant_capital(assessment)
+      pensioner_capital_disregard = pensioner_capital_disregard(assessment)
+      applicant_subtotals = collate_applicant_capital(assessment, pensioner_capital_disregard:)
       if assessment.partner.present?
-        partner_subtotals = collate_partner_capital(assessment)
+        partner_subtotals = collate_partner_capital(assessment,
+                                                    pensioner_capital_disregard: pensioner_capital_disregard - applicant_subtotals.pensioner_disregard_applied)
         combined_assessed_capital = applicant_subtotals.assessed_capital + partner_subtotals.assessed_capital
       else
         combined_assessed_capital = applicant_subtotals.assessed_capital
@@ -19,21 +21,22 @@ class CapitalCollatorAndAssessor
 
   private
 
-    def collate_applicant_capital(assessment)
+    def collate_applicant_capital(assessment, pensioner_capital_disregard:)
       Collators::CapitalCollator.call(
         submission_date: assessment.submission_date,
         capital_summary: assessment.capital_summary,
         maximum_subject_matter_of_dispute_disregard: maximum_subject_matter_of_dispute_disregard(assessment),
-        pensioner_capital_disregard: pensioner_capital_disregard(assessment),
+        pensioner_capital_disregard:,
         level_of_help: assessment.level_of_help,
       )
     end
 
-    def collate_partner_capital(assessment)
+    def collate_partner_capital(assessment, pensioner_capital_disregard:)
       Collators::CapitalCollator.call(
         submission_date: assessment.submission_date,
         capital_summary: assessment.partner_capital_summary,
-        pensioner_capital_disregard: 0,
+        pensioner_capital_disregard:,
+        # partner assets cannot be considered as a subject matter of dispute
         maximum_subject_matter_of_dispute_disregard: 0,
         level_of_help: assessment.level_of_help,
       )

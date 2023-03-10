@@ -275,7 +275,7 @@ Then("I should see the following {string} details for the partner:") do |section
 
   failures = []
   table.hashes.each do |row|
-    error = validate_response(response_section.first[row["attribute"]], row["value"], row["attribute"])
+    error = validate_response(response_section[row["attribute"]], row["value"], row["attribute"])
     failures.append(error) if error.present?
   end
   if failures.any?
