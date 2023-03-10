@@ -19,15 +19,12 @@ module LegalFrameworkAPI
 
     def query_legal_framework_api
       raw_response = post_request
-      raise ResponseError, raw_response unless raw_response.status == 200
-
-      JSON.parse(raw_response.body, symbolize_names: true)
+      raw_response.body
     end
 
     def post_request
       conn.post do |request|
         request.url ENDPOINT
-        request.headers["Content-Type"] = "application/json"
         request.body = request_payload
       end
     end
@@ -36,17 +33,16 @@ module LegalFrameworkAPI
       {
         request_id: @request_id,
         proceedings: @proceeding_type_details,
-      }.to_json
+      }
     end
 
     def conn
-      @conn ||= Faraday.new(url: host, headers:)
-    end
+      @conn ||= Faraday.new(url: host) do |faraday|
+        faraday.request :json
 
-    def headers
-      {
-        "Content-Type" => "application/json",
-      }
+        faraday.response :raise_error
+        faraday.response :json, parser_options: { symbolize_names: true }
+      end
     end
 
     def host

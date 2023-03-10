@@ -3,12 +3,6 @@ require "rails_helper"
 RSpec.describe LegalFrameworkAPI::ThresholdWaivers do
   before { allow(SecureRandom).to receive(:uuid).and_return(request_id) }
 
-  around do |example|
-    VCR.turn_off!
-    example.run
-    VCR.turn_on!
-  end
-
   describe ".call" do
     let(:proceeding_type_details) do
       [
@@ -41,14 +35,16 @@ RSpec.describe LegalFrameworkAPI::ThresholdWaivers do
         proceedings: [
           {
             ccms_code: "DA001",
-            client_involvement_type: "A",
+            full_s8_only: false,
+            matter_type: "Domestic abuse",
             gross_income_upper: true,
             disposable_income_upper: true,
             capital_upper: true,
-            matter_type: "Domestic abuse",
+            client_involvement_type: "A",
           },
           {
             ccms_code: "DA005",
+            full_s8_only: false,
             client_involvement_type: "Z",
             gross_income_upper: false,
             disposable_income_upper: false,
@@ -57,6 +53,7 @@ RSpec.describe LegalFrameworkAPI::ThresholdWaivers do
           },
           {
             ccms_code: "SE014",
+            full_s8_only: false,
             client_involvement_type: "A",
             gross_income_upper: false,
             disposable_income_upper: false,
@@ -71,10 +68,8 @@ RSpec.describe LegalFrameworkAPI::ThresholdWaivers do
     let(:request_id) { "e76bd31f-dd62-444f-9d7d-a731b40b7eea" }
     let(:api_endpoint) { "#{Rails.configuration.x.legal_framework_api_host}/#{described_class::ENDPOINT}" }
 
-    context "successful API call" do
+    context "successful API call", :vcr do
       it "responds to calling service with parsed response" do
-        stub_request(:post, api_endpoint).with(body: request_body, headers:).to_return(body: expected_json_response, status: 200)
-
         actual_response = described_class.call(proceeding_type_details)
         expect(actual_response).to eq expected_parsed_response
       end
@@ -84,8 +79,8 @@ RSpec.describe LegalFrameworkAPI::ThresholdWaivers do
       it "raises ResponseError" do
         stub_request(:post, api_endpoint).with(body: request_body, headers:).to_return(body: "xxx", status: 500)
         expect {
-          described_class.call(proceeding_type_details)
-        }.to raise_error LegalFrameworkAPI::ResponseError, "Invalid response from Legal Framework API\nStatus: 500\nResponse: xxx"
+          described_class.new(proceeding_type_details).call
+        }.to raise_error Faraday::ServerError, "the server responded with status 500"
       end
     end
 
