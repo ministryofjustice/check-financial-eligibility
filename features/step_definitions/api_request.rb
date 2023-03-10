@@ -1,94 +1,65 @@
 Given("I am undertaking a certificated assessment with an applicant who receives passporting benefits") do
-  @api_version = 5
-  response = submit_request(:post, "assessments", @api_version,
-                            { client_reference_id: "N/A", submission_date: "2022-05-10" })
-  @assessment_id = response["assessment_id"]
-  submit_request(:post, "assessments/#{@assessment_id}/applicant", @api_version,
-                 { applicant: { date_of_birth: "1979-12-20",
-                                involvement_type: "applicant",
-                                has_partner_opponent: false,
-                                receives_qualifying_benefit: true } })
-  submit_request(:post, "assessments/#{@assessment_id}/proceeding_types", @api_version,
-                 { "proceeding_types": [{ ccms_code: "DA001", client_involvement_type: "A" }] })
+  @assessment_data = { client_reference_id: "N/A", submission_date: "2022-05-10" }
+  @applicant_data = { applicant: { date_of_birth: "1979-12-20",
+                                   involvement_type: "applicant",
+                                   has_partner_opponent: false,
+                                   receives_qualifying_benefit: true } }
+  @proceeding_type_data = { "proceeding_types": [{ ccms_code: "DA001", client_involvement_type: "A" }] }
 end
 
 Given("I am undertaking a certificated assessment with a pensioner applicant who is not passported") do
   StateBenefitType.create! label: "housing_benefit", name: "Housing benefit", exclude_from_gross_income: true
-  @api_version = 5
-  response = submit_request(:post, "assessments", @api_version,
-                            { client_reference_id: "N/A", submission_date: "2022-05-10" })
-  @assessment_id = response["assessment_id"]
-  submit_request(:post, "assessments/#{@assessment_id}/applicant", @api_version,
-                 { applicant: { date_of_birth: "1939-12-20",
-                                involvement_type: "applicant",
-                                has_partner_opponent: false,
-                                employed: @employments.present?,
-                                receives_qualifying_benefit: false } })
-  submit_request(:post, "assessments/#{@assessment_id}/proceeding_types", @api_version,
-                 { "proceeding_types": [{ ccms_code: "SE003", client_involvement_type: "A" }] })
+  @assessment_data = { client_reference_id: "N/A", submission_date: "2022-05-10" }
+  @applicant_data = { applicant: { date_of_birth: "1939-12-20",
+                                   involvement_type: "applicant",
+                                   has_partner_opponent: false,
+                                   employed: @employments.present?,
+                                   receives_qualifying_benefit: false } }
+  @proceeding_type_data = { "proceeding_types": [{ ccms_code: "SE003", client_involvement_type: "A" }] }
 end
 
 Given("I am undertaking a controlled work assessment with an applicant who receives passporting benefits") do
-  @api_version = 5
-  response = submit_request(:post, "assessments", @api_version,
-                            { client_reference_id: "N/A", submission_date: "2022-05-10", level_of_help: "controlled" })
-  @assessment_id = response["assessment_id"]
-  submit_request(:post, "assessments/#{@assessment_id}/applicant", @api_version,
-                 { applicant: { date_of_birth: "1979-12-20",
-                                involvement_type: "applicant",
-                                has_partner_opponent: false,
-                                receives_qualifying_benefit: true } })
-  submit_request(:post, "assessments/#{@assessment_id}/proceeding_types", @api_version,
-                 { "proceeding_types": [{ ccms_code: "DA001", client_involvement_type: "A" }] })
+  @assessment_data = { client_reference_id: "N/A", submission_date: "2022-05-10", level_of_help: "controlled" }
+  @applicant_data = { applicant: { date_of_birth: "1979-12-20",
+                                   involvement_type: "applicant",
+                                   has_partner_opponent: false,
+                                   receives_qualifying_benefit: true } }
+  @proceeding_type_data = { "proceeding_types": [{ ccms_code: "DA001", client_involvement_type: "A" }] }
 end
 
 Given("I am undertaking a controlled assessment") do
   StateBenefitType.create! label: "housing_benefit", name: "Housing benefit", exclude_from_gross_income: true
-  @api_version = 5
-  response = submit_request(:post, "assessments", @api_version,
-                            { client_reference_id: "N/A", submission_date: "2022-05-10", level_of_help: "controlled" })
-  @assessment_id = response["assessment_id"]
-  submit_request(:post, "assessments/#{@assessment_id}/applicant", @api_version,
-                 { applicant: { date_of_birth: "1989-12-20",
-                                involvement_type: "applicant",
-                                has_partner_opponent: false,
-                                receives_qualifying_benefit: false } })
-  submit_request(:post, "assessments/#{@assessment_id}/proceeding_types", @api_version,
-                 { "proceeding_types": [{ ccms_code: "DA001", client_involvement_type: "A" }] })
+  @assessment_data = { client_reference_id: "N/A", submission_date: "2022-05-10", level_of_help: "controlled" }
+  @applicant_data = { applicant: { date_of_birth: "1989-12-20",
+                                   involvement_type: "applicant",
+                                   has_partner_opponent: false,
+                                   receives_qualifying_benefit: false } }
+  @proceeding_type_data = { "proceeding_types": [{ ccms_code: "DA001", client_involvement_type: "A" }] }
 end
 
 Given("Performing a controlled assessment with first tier immigration case") do
   StateBenefitType.create! label: "housing_benefit", name: "Housing benefit", exclude_from_gross_income: true
-  @api_version = 5
-  response = submit_request(:post, "assessments", @api_version,
-                            { client_reference_id: "N/A", submission_date: "2022-05-10", level_of_help: "controlled" })
-  @assessment_id = response["assessment_id"]
-  submit_request(:post, "assessments/#{@assessment_id}/applicant", @api_version,
-                 { applicant: { date_of_birth: "1989-12-20",
-                                involvement_type: "applicant",
-                                has_partner_opponent: false,
-                                receives_qualifying_benefit: false } })
-  submit_request(:post, "assessments/#{@assessment_id}/proceeding_types", @api_version,
-                 { "proceeding_types": [{ ccms_code: CFEConstants::IMMIGRATION_PROCEEDING_TYPE_CCMS_CODE, client_involvement_type: "A" }] })
+  @assessment_data = { client_reference_id: "N/A", submission_date: "2022-05-10", level_of_help: "controlled" }
+  @applicant_data = { applicant: { date_of_birth: "1989-12-20",
+                                   involvement_type: "applicant",
+                                   has_partner_opponent: false,
+                                   receives_qualifying_benefit: false } }
+  @proceeding_type_data = { "proceeding_types": [{ ccms_code: CFEConstants::IMMIGRATION_PROCEEDING_TYPE_CCMS_CODE, client_involvement_type: "A" }] }
 end
 
 Given("Performing a controlled assessment with first tier asylum case") do
   StateBenefitType.create! label: "housing_benefit", name: "Housing benefit", exclude_from_gross_income: true
-  @api_version = 5
-  response = submit_request(:post, "assessments", @api_version,
-                            { client_reference_id: "N/A", submission_date: "2022-05-10", level_of_help: "controlled" })
-  @assessment_id = response["assessment_id"]
-  submit_request(:post, "assessments/#{@assessment_id}/applicant", @api_version,
-                 { applicant: { date_of_birth: "1989-12-20",
-                                involvement_type: "applicant",
-                                has_partner_opponent: false,
-                                receives_qualifying_benefit: false } })
-  submit_request(:post, "assessments/#{@assessment_id}/proceeding_types", @api_version,
-                 { "proceeding_types": [{ ccms_code: "IA031", client_involvement_type: "A" }] })
+  @assessment_data = { client_reference_id: "N/A", submission_date: "2022-05-10", level_of_help: "controlled" }
+  @applicant_data = { applicant: { date_of_birth: "1989-12-20",
+                                   involvement_type: "applicant",
+                                   has_partner_opponent: false,
+                                   receives_qualifying_benefit: false } }
+  @proceeding_type_data = { "proceeding_types": [{ ccms_code: "IA031", client_involvement_type: "A" }] }
 end
 
 Given("I am using version {int} of the API") do |int|
   @api_version = int
+  @capitals_data = {}
 end
 
 Given("I create an assessment with the following details:") do |table|
@@ -98,52 +69,44 @@ Given("I create an assessment with the following details:") do |table|
     data["proceeding_types"] = { 'ccms_codes': data["proceeding_types"].split(";") }
   end
 
-  response = submit_request(:post, "assessments", @api_version, data)
-  @assessment_id = response["assessment_id"]
+  @assessment_data = data
 end
 
 Given("I add the following applicant details for the current assessment:") do |table|
-  data = { "applicant": cast_values(table.rows_hash) }
-  submit_request(:post, "assessments/#{@assessment_id}/applicant", @api_version, data)
+  @applicant_data = { "applicant": cast_values(table.rows_hash) }
 end
 
 Given("I add the following dependent details for the current assessment:") do |table|
-  data = { "dependants": table.hashes.map { cast_values(_1) } }
-  submit_request(:post, "assessments/#{@assessment_id}/dependants", @api_version, data)
+  @dependant_data = { "dependants": table.hashes.map { cast_values(_1) } }
 end
 
 Given("I add the following other_income details for {string} in the current assessment:") do |string, table|
-  data = { "other_incomes": [{ "source": string, "payments": table.hashes.map { cast_values(_1) } }] }
-  submit_request(:post, "assessments/#{@assessment_id}/other_incomes", @api_version, data)
+  @other_incomes_data = { "other_incomes": [{ "source": string, "payments": table.hashes.map { cast_values(_1) } }] }
 end
 
 Given("I add the following housing benefit details for the applicant:") do |table|
-  data = { state_benefits: [{ "name": "housing_benefit",
-                              "payments": table.hashes.map { cast_values(_1) } }] }
-  submit_request(:post, "assessments/#{@assessment_id}/state_benefits", @api_version, data)
+  @benefits_data = { state_benefits: [{ "name": "housing_benefit",
+                                        "payments": table.hashes.map { cast_values(_1) } }] }
 end
 
 Given("I add the following irregular_income details in the current assessment:") do |table|
-  data = { "payments": table.hashes.map { cast_values(_1) } }
-  submit_request(:post, "assessments/#{@assessment_id}/irregular_incomes", @api_version, data)
+  @irregular_income_data = { "payments": table.hashes.map { cast_values(_1) } }
 end
 
 Given("I add the following outgoing details for {string} in the current assessment:") do |string, table|
-  data = { "outgoings": ["name": string, "payments": table.hashes.map { cast_values(_1) }] }
-  submit_request(:post, "assessments/#{@assessment_id}/outgoings", @api_version, data)
+  @outgoings_data = { "outgoings": ["name": string, "payments": table.hashes.map { cast_values(_1) }] }
 end
 
 Given("I add the following capital details for {string} in the current assessment:") do |string, table|
-  data = { string.to_s => table.hashes.map { cast_values(_1) } }
-  submit_request(:post, "assessments/#{@assessment_id}/capitals", @api_version, data)
+  capitals_data = { string.to_s => table.hashes.map { cast_values(_1) } }
+  @capitals_data.merge! capitals_data
 end
 
 Given("I add the following statutory sick pay details for the client:") do |table|
-  data = { employment_income: [{ "name": "A",
-                                 "client_id": "B",
-                                 "receiving_only_statutory_sick_or_maternity_pay": true,
-                                 "payments": table.hashes.map { cast_values(_1) } }] }
-  submit_request(:post, "assessments/#{@assessment_id}/employments", @api_version, data)
+  @employments_data = { employment_income: [{ "name": "A",
+                                              "client_id": "B",
+                                              "receiving_only_statutory_sick_or_maternity_pay": true,
+                                              "payments": table.hashes.map { cast_values(_1) } }] }
 end
 
 Given("I add the following employment details for the partner:") do |table|
@@ -175,13 +138,11 @@ Given("I add the following additional property details for the current assessmen
 end
 
 Given("I add the following proceeding types in the current assessment:") do |table|
-  data = { "proceeding_types": table.hashes.map { cast_values(_1) } }
-  submit_request(:post, "assessments/#{@assessment_id}/proceeding_types", @api_version, data)
+  @proceeding_type_data = { "proceeding_types": table.hashes.map { cast_values(_1) } }
 end
 
 Given("I add the following vehicle details for the current assessment:") do |table|
-  data = { "vehicles": [cast_values(table.rows_hash)] }
-  submit_request(:post, "assessments/#{@assessment_id}/vehicles", @api_version, data)
+  @vehicle_data = { "vehicles": [cast_values(table.rows_hash)] }
 end
 
 Given("I add the following capital details for {string} for the partner:") do |string, table|
@@ -192,13 +153,11 @@ When("I retrieve the final assessment") do
   if @main_home || @secondary_home
     additional_properties = @secondary_home ? [@secondary_home] : []
     main_home = @main_home || blank_main_home
-    data = { "properties": { main_home:, additional_properties: } }
-    submit_request(:post, "assessments/#{@assessment_id}/properties", @api_version, data)
+    main_home_data = { "properties": { main_home:, additional_properties: } }
   end
 
   if @employments
-    data = { employment_income: @employments }
-    submit_request(:post, "assessments/#{@assessment_id}/employments", @api_version, data)
+    employments_data = { employment_income: @employments }
   end
 
   if @partner_employments || @partner_property || @partner_regular_transactions || @partner_capitals
@@ -206,21 +165,57 @@ When("I retrieve the final assessment") do
     additional_properties = @partner_property || []
     regular_transactions = @partner_regular_transactions || []
     capitals = @partner_capitals || {}
-    data = { "partner": { "date_of_birth": "1992-07-22", "employed": true },
-             employments:,
-             additional_properties:,
-             regular_transactions:,
-             capitals: }
-    submit_request(:post, "assessments/#{@assessment_id}/partner_financials", @api_version, data)
+    partner_data = { "partner": { "date_of_birth": "1992-07-22", "employed": true },
+                     employments:,
+                     additional_properties:,
+                     regular_transactions:,
+                     capitals: }
   end
 
-  @response = submit_request(:get, "assessments/#{@assessment_id}", @api_version)
+  response = submit_request(:post, "assessments", @api_version, @assessment_data)
+  assessment_id = response["assessment_id"]
+  submit_request(:post, "assessments/#{assessment_id}/proceeding_types", @api_version, @proceeding_type_data)
+  submit_request(:post, "assessments/#{assessment_id}/applicant", @api_version, @applicant_data)
+  submit_request(:post, "assessments/#{assessment_id}/dependants", @api_version, @dependant_data) if @dependant_data
+
+  submit_request(:post, "assessments/#{assessment_id}/employments", @api_version, employments_data) if employments_data
+  submit_request(:post, "assessments/#{assessment_id}/other_incomes", @api_version, @other_incomes_data) if @other_incomes_data
+  submit_request(:post, "assessments/#{assessment_id}/irregular_incomes", @api_version, @irregular_income_data) if @irregular_income_data
+  submit_request(:post, "assessments/#{assessment_id}/state_benefits", @api_version, @benefits_data) if @benefits_data
+
+  submit_request(:post, "assessments/#{assessment_id}/outgoings", @api_version, @outgoings_data) if @outgoings_data
+
+  submit_request(:post, "assessments/#{assessment_id}/properties", @api_version, main_home_data) if main_home_data
+  submit_request(:post, "assessments/#{assessment_id}/vehicles", @api_version, @vehicle_data) if @vehicle_data
+  submit_request(:post, "assessments/#{assessment_id}/capitals", @api_version, @capitals_data) if @capitals_data
+
+  submit_request(:post, "assessments/#{assessment_id}/partner_financials", @api_version, partner_data) if partner_data
+
+  @response = submit_request(:get, "assessments/#{assessment_id}", @api_version)
+
+  single_shot_api_data = { assessment: @assessment_data }
+                           .merge(@applicant_data)
+                           .merge(@proceeding_type_data)
+  single_shot_api_data.merge!(@dependant_data) if @dependant_data
+  single_shot_api_data.merge!(employments_data) if employments_data
+  single_shot_api_data.merge!(@other_incomes_data) if @other_incomes_data
+  single_shot_api_data[:irregular_incomes] = @irregular_income_data if @irregular_income_data
+  single_shot_api_data.merge!(@benefits_data) if @benefits_data
+
+  single_shot_api_data.merge!(@outgoings_data) if @outgoings_data
+
+  single_shot_api_data.merge!(main_home_data) if main_home_data
+  single_shot_api_data.merge!(@vehicle_data) if @vehicle_data
+  single_shot_api_data[:capitals] = @capitals_data if @capitals_data
+  single_shot_api_data[:partner] = partner_data if partner_data
+
+  @single_shot_response = submit_request :post, "/v2/assessments", @api_version, single_shot_api_data
 end
 
 Then("I should see the following overall summary:") do |table|
   failures = []
   table.hashes.each do |row|
-    result = extract_response_section(@response, @api_version, row["attribute"])
+    result = extract_response_section(@response, @single_shot_response, @api_version, row["attribute"])
     error = validate_response(result, row["value"], row["attribute"])
 
     failures.append(error) if error.present?
@@ -235,7 +230,7 @@ end
 
 # To be used where the response has an array and you're asserting a block within it based on a conditional value within.
 Then("I should see the following {string} details where {string}:") do |attribute, condition, table|
-  response_section = extract_response_section @response, @api_version, attribute
+  response_section = extract_response_section @response, @single_shot_response, @api_version, attribute
 
   param, value = condition.split(":")
 
@@ -260,7 +255,7 @@ Then("I should see the following {string} details where {string}:") do |attribut
 end
 
 Then("I should see the following {string} details:") do |section_name, table|
-  response_section = extract_response_section(@response, @api_version, section_name)
+  response_section = extract_response_section(@response, @single_shot_response, @api_version, section_name)
 
   failures = []
   table.hashes.each do |row|
@@ -276,7 +271,7 @@ Then("I should see the following {string} details:") do |section_name, table|
 end
 
 Then("I should see the following {string} details for the partner:") do |section_name, table|
-  response_section = extract_response_section(@response, @api_version, section_name)
+  response_section = extract_response_section(@response, @single_shot_response, @api_version, section_name)
 
   failures = []
   table.hashes.each do |row|

@@ -3,6 +3,7 @@ Feature:
 
     Scenario: A SMOD vehicle whose assessed value is entirely disregarded
         Given I am undertaking a certificated assessment with an applicant who receives passporting benefits
+        And I am using version 5 of the API
         And I add the following vehicle details for the current assessment:
             | value                     | 18000      |
             | loan_amount_outstanding   | 0          |
@@ -22,6 +23,7 @@ Feature:
 
     Scenario: A SMOD vehicle whose assessed value is over the SMOD limit
         Given I am undertaking a certificated assessment with an applicant who receives passporting benefits
+        And I am using version 5 of the API
         And I add the following vehicle details for the current assessment:
             | value                     | 180000     |
             | loan_amount_outstanding   | 0          |
@@ -41,7 +43,8 @@ Feature:
 
     Scenario: A SMOD vehicle whose assessed value is partially disregarded due to other SMOD assets reaching SMOD cap
         Given I am undertaking a certificated assessment with an applicant who receives passporting benefits
-         And I add the following vehicle details for the current assessment:
+        And I am using version 5 of the API
+        And I add the following vehicle details for the current assessment:
             | value                     | 18000      |
             | loan_amount_outstanding   | 0          |
             | date_of_purchase          | 2018-11-23 |

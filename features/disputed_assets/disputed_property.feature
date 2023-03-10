@@ -3,6 +3,7 @@ Feature:
 
     Scenario: A SMOD property where the value of the client's share of its equity is entirely disregarded
         Given I am undertaking a certificated assessment with an applicant who receives passporting benefits
+        And I am using version 5 of the API
         And I add the following main property details for the current assessment:
             | value                     | 150000 |
             | outstanding_mortgage      | 0      |
@@ -24,6 +25,7 @@ Feature:
 
     Scenario: The SMOD disregard is capped if the property is assessed as being worth more than £100k.
         Given I am undertaking a certificated assessment with an applicant who receives passporting benefits
+        And I am using version 5 of the API
         And I add the following main property details for the current assessment:
             | value                     | 250000 |
             | outstanding_mortgage      | 0      |
@@ -45,6 +47,7 @@ Feature:
 
     Scenario: Disputed main and additional properties which, combined, are assessed as worth less than £100k
         Given I am undertaking a certificated assessment with an applicant who receives passporting benefits
+        And I am using version 5 of the API
         And I add the following main property details for the current assessment:
             | value                     | 250000 |
             | outstanding_mortgage      | 0      |
@@ -78,6 +81,7 @@ Feature:
 
   Scenario: Disputed main and additional property under 100k with controlled work
     Given I am undertaking a controlled work assessment with an applicant who receives passporting benefits
+    And I am using version 5 of the API
     And I add the following main property details for the current assessment:
       | value                     | 300000 |
       | outstanding_mortgage      | 80000  |
@@ -111,6 +115,7 @@ Feature:
 
   Scenario: Disputed main and additional property where main equity > 100k and < 200k
     Given I am undertaking a certificated assessment with an applicant who receives passporting benefits
+    And I am using version 5 of the API
     And I add the following main property details for the current assessment:
       | value                     | 400000 |
       | outstanding_mortgage      | 0      |

@@ -3,6 +3,7 @@ Feature:
 
     Scenario: Gross income is below threshold (and so is disposable income)
         Given I am undertaking a controlled assessment
+        And I am using version 5 of the API
         And I add the following other_income details for "friends_or_family" in the current assessment:
             | date       | client_id | amount  |
             | 2021-05-10 | id3       | 2600.00 |
@@ -20,6 +21,7 @@ Feature:
 
     Scenario: Gross income is above threshold (but disposable income is under it)
         Given I am undertaking a controlled assessment
+        And I am using version 5 of the API
         And I add the following other_income details for "friends_or_family" in the current assessment:
             | date       | client_id | amount  |
             | 2021-05-10 | id3       | 2700.00|
@@ -37,6 +39,7 @@ Feature:
 
     Scenario: Disposable income is below threshold
         Given I am undertaking a controlled assessment
+        And I am using version 5 of the API
         And I add the following other_income details for "friends_or_family" in the current assessment:
             | date       | client_id | amount  |
             | 2021-05-10 | id3       | 1000.00 |
@@ -54,6 +57,7 @@ Feature:
 
     Scenario: Disposable income is above threshold
         Given I am undertaking a controlled assessment
+        And I am using version 5 of the API
         And I add the following other_income details for "friends_or_family" in the current assessment:
             | date       | client_id | amount  |
             | 2021-05-10 | id3       | 1000.00 |
@@ -71,6 +75,7 @@ Feature:
 
     Scenario: Capital is below threshold
         Given I am undertaking a controlled assessment
+        And I am using version 5 of the API
         And I add the following capital details for "bank_accounts" in the current assessment:
             | description  | value   | subject_matter_of_dispute |
             | Bank account | 7000.0  | false                     |
@@ -81,6 +86,7 @@ Feature:
 
     Scenario: Capital is above threshold
         Given I am undertaking a controlled assessment
+        And I am using version 5 of the API
         And I add the following capital details for "bank_accounts" in the current assessment:
             | description  | value   | subject_matter_of_dispute |
             | Bank account | 9000.0  | false                     |
@@ -91,6 +97,7 @@ Feature:
 
     Scenario: Immigration case with capital above threshold
       Given Performing a controlled assessment with first tier immigration case
+      And I am using version 5 of the API
       And I add the following capital details for "bank_accounts" in the current assessment:
         | description  | value   | subject_matter_of_dispute |
         | Bank account | 6000.0  | false                     |
@@ -101,6 +108,7 @@ Feature:
 
   Scenario: Immigration case with capital below threshold
     Given Performing a controlled assessment with first tier immigration case
+    And I am using version 5 of the API
     And I add the following capital details for "bank_accounts" in the current assessment:
       | description  | value   | subject_matter_of_dispute |
       | Bank account | 3000.0  | false                     |
@@ -111,6 +119,7 @@ Feature:
 
   Scenario: Asylum case with capital above threshold
     Given Performing a controlled assessment with first tier asylum case
+    And I am using version 5 of the API
     And I add the following capital details for "bank_accounts" in the current assessment:
       | description  | value   | subject_matter_of_dispute |
       | Bank account | 8001.0  | false                     |
@@ -121,6 +130,7 @@ Feature:
 
   Scenario: Asylum case with capital below threshold
     Given Performing a controlled assessment with first tier asylum case
+    And I am using version 5 of the API
     And I add the following capital details for "bank_accounts" in the current assessment:
       | description  | value   | subject_matter_of_dispute |
       | Bank account | 8000.0  | false                     |

@@ -73,6 +73,7 @@ group :development, :test do
   gem "faker"
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: %i[mri mingw x64_mingw]
+  gem "hashdiff"
   gem "pry-byebug"
   gem "rspec_junit_formatter"
   gem "rspec-rails", "~> 6.0"
