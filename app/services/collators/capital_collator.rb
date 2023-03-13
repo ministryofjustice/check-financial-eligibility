@@ -31,12 +31,12 @@ module Collators
       property_smod = properties.sum(&:smod_allowance)
       vehicles = Assessors::VehicleAssessor.call(@capital_summary.vehicles, @submission_date)
       vehicle_value = vehicles.sum(&:value)
-      subject_matter_of_dispute_disregard = Calculators::SubjectMatterOfDisputeDisregardCalculator.new(
+      non_property_smod_allowance = Calculators::SubjectMatterOfDisputeDisregardCalculator.new(
         capital_summary: @capital_summary,
         maximum_disregard: @maximum_subject_matter_of_dispute_disregard - property_smod,
       ).value
       total_capital = liquid_capital + non_liquid_capital + vehicle_value + property_value
-      total_capital_with_smod = total_capital - subject_matter_of_dispute_disregard
+      total_capital_with_smod = total_capital - non_property_smod_allowance
       assessed_capital = total_capital_with_smod - @pensioner_capital_disregard
 
       PersonCapitalSubtotals.new(
@@ -47,7 +47,8 @@ module Collators
         total_property: property_value,
         pensioner_capital_disregard: @pensioner_capital_disregard,
         pensioner_disregard_applied: [@pensioner_capital_disregard, total_capital].min,
-        subject_matter_of_dispute_disregard: subject_matter_of_dispute_disregard + property_smod,
+        subject_matter_of_dispute_disregard: non_property_smod_allowance + property_smod,
+        disputed_non_property_disregard: non_property_smod_allowance,
         total_capital:,
         total_capital_with_smod:,
         assessed_capital: [assessed_capital, 0].max,

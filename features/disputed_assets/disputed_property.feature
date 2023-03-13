@@ -18,10 +18,10 @@ Feature:
             | transaction_allowance      | 4500.0   |
             | assessed_equity            | 0.0      |
         And I should see the following "capital summary" details:
-            | attribute                           | value   |
-            | total_property                      | 0.0     |
+            | attribute                           | value    |
+            | total_property                      | 0.0      |
             | subject_matter_of_dispute_disregard | 100000.0 |
-            | assessed_capital                    | 0.0     |
+            | assessed_capital                    | 0.0      |
 
     Scenario: The SMOD disregard is capped if the property is assessed as being worth more than £100k.
         Given I am undertaking a certificated assessment with an applicant who receives passporting benefits

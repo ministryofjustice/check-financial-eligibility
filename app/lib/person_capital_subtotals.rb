@@ -14,6 +14,7 @@ class PersonCapitalSubtotals
     @total_capital_with_smod = data[:total_capital_with_smod]
     @main_home = data.fetch(:main_home, PropertySubtotals.new)
     @additional_properties = data.fetch(:additional_properties, [])
+    @disputed_non_property_disregard = data[:disputed_non_property_disregard]
   end
 
   attr_reader :total_vehicle,
@@ -29,5 +30,6 @@ class PersonCapitalSubtotals
               :main_home,
               :additional_properties,
               :pensioner_disregard_applied,
-              :total_capital_with_smod
+              :total_capital_with_smod,
+              :disputed_non_property_disregard
 end

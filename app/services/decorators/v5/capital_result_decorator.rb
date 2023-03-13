@@ -32,6 +32,7 @@ module Decorators
           capital_contribution: @capital_contribution,
           assessed_capital: @person_capital_subtotals.assessed_capital.to_f,
           total_capital_with_smod: @person_capital_subtotals.total_capital_with_smod,
+          disputed_non_property_disregard: @person_capital_subtotals.disputed_non_property_disregard,
         }
       end
 

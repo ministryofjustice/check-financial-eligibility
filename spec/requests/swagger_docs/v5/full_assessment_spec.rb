@@ -1036,6 +1036,11 @@ RSpec.describe "full_assessment", type: :request, swagger_doc: "v5/swagger.yaml"
                            minimum: 0,
                            description: "Amount of capital with subject matter of dispute deduction applied",
                          },
+                         disputed_non_property_disregard: {
+                           type: :number,
+                           minimum: 0,
+                           description: "Amount of subject matter of dispute deduction applied for assets other than property",
+                         },
                          pensioner_disregard_applied: {
                            type: :number,
                            description: "Amount of pensioner capital disregard applied to this assessment",
