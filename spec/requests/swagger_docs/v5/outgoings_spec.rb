@@ -76,7 +76,7 @@ RSpec.describe "outgoings", type: :request, swagger_doc: "v5/swagger.yaml" do
                 }
 
       response(200, "successful") do
-        let(:assessment_id) { create(:assessment).id }
+        let(:assessment_id) { create(:assessment, :with_disposable_income_summary).id }
 
         let(:params) do
           JSON.parse(file_fixture("outgoings.json").read)

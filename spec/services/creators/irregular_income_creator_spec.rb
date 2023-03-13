@@ -6,10 +6,9 @@ module Creators
     let(:assessment) { gross_income_summary.assessment }
     let(:frequency) { "annual" }
     let(:student_loan) { "student_loan" }
-    let(:assessment_id) { assessment.id }
     let(:irregular_income_params) { irregular_income_params }
 
-    subject(:creator) { described_class.call(assessment_id:, irregular_income_params:) }
+    subject(:creator) { described_class.call(irregular_income_params:, gross_income_summary:) }
 
     describe ".call" do
       context "payload" do
@@ -31,14 +30,6 @@ module Creators
 
         it "does not create any records" do
           expect { creator }.not_to change(IrregularIncomePayment, :count)
-        end
-      end
-
-      context "invalid assessment id" do
-        let(:assessment_id) { "abcd" }
-
-        it "returns an error" do
-          expect(creator.errors).to eq ["No such assessment id"]
         end
       end
 

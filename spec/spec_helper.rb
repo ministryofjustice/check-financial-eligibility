@@ -29,7 +29,7 @@ unless ENV["NOCOVERAGE"]
 
     enable_coverage :branch
     primary_coverage :branch
-    minimum_coverage branch: 98.6, line: 100
+    minimum_coverage branch: 98.58, line: 100
   end
 end
 

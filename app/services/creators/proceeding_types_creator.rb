@@ -33,10 +33,6 @@ module Creators
       raise CreationError, "#{e.class} - #{e.message}"
     end
 
-    def assessment
-      @assessment ||= Assessment.find_by(id: assessment_id) || (raise CreationError, ["No such assessment id"])
-    end
-
     def proceeding_types_attributes
       @proceeding_types_attributes ||= @proceeding_types_params[:proceeding_types]
     end

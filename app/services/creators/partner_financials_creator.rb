@@ -54,7 +54,6 @@ module Creators
       return if irregular_income_params.blank?
 
       creator = IrregularIncomeCreator.call(
-        assessment_id: @assessment_id,
         irregular_income_params: { payments: irregular_income_params },
         gross_income_summary: assessment.partner_gross_income_summary,
       )

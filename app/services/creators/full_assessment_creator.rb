@@ -53,8 +53,8 @@ module Creators
         },
         lambda { |assessment, params|
           if params[:irregular_incomes]
-            Creators::IrregularIncomeCreator.call(assessment_id: assessment.id,
-                                                  irregular_income_params: params[:irregular_incomes])
+            Creators::IrregularIncomeCreator.call(irregular_income_params: params[:irregular_incomes],
+                                                  gross_income_summary: assessment.gross_income_summary)
           end
         },
         lambda { |assessment, params|

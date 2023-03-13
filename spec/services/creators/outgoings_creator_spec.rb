@@ -3,21 +3,12 @@ require "rails_helper"
 module Creators
   RSpec.describe OutgoingsCreator do
     describe ".call" do
-      let(:assessment) { create :assessment }
+      let(:assessment) { create :assessment, :with_disposable_income_summary }
       let(:outgoings) { outgoings_params }
       let(:housing_cost_type_rent) { "rent" }
       let(:housing_cost_type_mortgage) { "mortgage" }
 
       subject(:creator) { described_class.call(assessment_id: assessment.id, outgoings_params:) }
-
-      it "creates a disposable_income_summary if one doesnt already exist" do
-        expect { creator }.to change(DisposableIncomeSummary, :count).by(1)
-      end
-
-      it "does not create an additional disposable_income_summary if one exists already" do
-        assessment.create_disposable_income_summary
-        expect { creator }.not_to change(DisposableIncomeSummary, :count)
-      end
 
       it "creates all the required outgoing records" do
         expect { creator }.to change(Outgoings::BaseOutgoing, :count).by(6)

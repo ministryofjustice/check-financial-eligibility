@@ -68,10 +68,34 @@ RSpec.describe "IntegrationTests::TestRunner", type: :request do
 
     def run_test_case(worksheet)
       worksheet.parse_worksheet
+      payloads_hash = worksheet.payload_objects.reject(&:blank?).map { |obj| [obj.url_method, obj.payload] }.to_h
       assessment_id = post_assessment(worksheet)
-      worksheet.payload_objects.each { |obj| post_object(obj, assessment_id, worksheet.version) }
-      actual_results = get_assessment(assessment_id, worksheet.version)
-      worksheet.compare_results(actual_results)
+      payloads_hash.each do |url_method, payload|
+        url = Rails.application.routes.url_helpers.__send__(url_method, assessment_id)
+        noisy_post(url, payload, worksheet.version)
+      end
+      v1_api_results = get_assessment(assessment_id, worksheet.version)
+      worksheet.compare_results(v1_api_results)
+      url_method_mapping = {
+        assessment_capitals_path: :capitals,
+        assessment_cash_transactions_path: :cash_transactions,
+        assessment_irregular_incomes_path: :irregular_incomes,
+      }
+      v2_payloads = payloads_hash.map do |url_method, payload|
+        if url_method_mapping.key? url_method
+          { url_method_mapping.fetch(url_method) => payload }
+        else
+          payload
+        end
+      end
+      v2_payload = v2_payloads.reduce(assessment: worksheet.assessment.payload) { |hash, elem| hash.merge(elem) }
+      v2_api_results = noisy_post("/v2/assessments", v2_payload, worksheet.version)
+      puts Hashdiff.diff(*[v1_api_results, v2_api_results].map { |x| remove_result_noise(x) })
+      worksheet.compare_results(v2_api_results)
+    end
+
+    def remove_result_noise(api_results)
+      api_results.except(:timestamp).merge(assessment: api_results.fetch(:assessment).except(:id))
     end
 
     def get_assessment(assessment_id, version)
@@ -99,15 +123,6 @@ RSpec.describe "IntegrationTests::TestRunner", type: :request do
       payload = worksheet.assessment.payload
       noisy_post url, payload, worksheet.version
       parsed_response[:assessment_id]
-    end
-
-    def post_object(obj, assessment_id, version)
-      return if obj.blank?
-
-      url_method = obj.__send__(:url_method)
-      url = Rails.application.routes.url_helpers.__send__(url_method, assessment_id)
-      payload = obj.__send__(:payload)
-      noisy_post(url, payload, version)
     end
 
     def silent?

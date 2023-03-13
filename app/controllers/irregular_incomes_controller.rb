@@ -1,4 +1,6 @@
 class IrregularIncomesController < ApplicationController
+  before_action :load_assessment
+
   def create
     if creation_service.success?
       render_success
@@ -11,8 +13,8 @@ private
 
   def creation_service
     @creation_service ||= Creators::IrregularIncomeCreator.call(
-      assessment_id: params[:assessment_id],
       irregular_income_params:,
+      gross_income_summary: @assessment.gross_income_summary,
     )
   end
 

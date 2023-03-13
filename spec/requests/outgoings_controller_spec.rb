@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe OutgoingsController, type: :request do
   describe "POST /assessments/:assessment_id/outgoings" do
-    let(:assessment) { create :assessment }
+    let(:assessment) { create :assessment, :with_disposable_income_summary }
     let(:disposable_income_summary) { assessment.disposable_income_summary }
     let(:payment_date) { 3.weeks.ago.strftime("%Y-%m-%d") }
     let(:housing_cost_type) { Outgoings::HousingCost.housing_cost_types.values.sample }

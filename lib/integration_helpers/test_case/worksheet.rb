@@ -73,10 +73,6 @@ module TestCase
 
   private
 
-    # def post_payload(obj)
-    #   post obj.path, params: obj.payload.to_json, headers: @headers
-    # end
-
     def skip_header_rows
       4.times { @rows.shift }
     end

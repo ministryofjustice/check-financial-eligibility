@@ -23,18 +23,10 @@ module Creators
       klass = CFEConstants::OUTGOING_KLASSES[outgoing[:name].to_sym]
       payments = outgoing[:payments]
       payments.each do |payment_params|
-        klass.create! payment_params.merge(disposable_income_summary:)
+        klass.create! payment_params.merge(disposable_income_summary: assessment.disposable_income_summary)
       end
     rescue CreationError => e
       self.errors = e.errors
-    end
-
-    def disposable_income_summary
-      @disposable_income_summary ||= find_or_create_disposable_income_summary
-    end
-
-    def find_or_create_disposable_income_summary
-      assessment.disposable_income_summary || assessment.create_disposable_income_summary
     end
 
     def outgoings
