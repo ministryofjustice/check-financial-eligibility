@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Full V5 passported spec", :vcr do
+RSpec.describe "Full V5 passported spec" do
   let(:client_id) { "uuid or any unique string" }
 
   before do
