@@ -300,14 +300,14 @@ module V2
 
           it "has liquid" do
             expect(capital_items.fetch(:liquid))
-              .to eq(
+              .to match_array(
                 [{ description: bank_1, value: 28.34 }, { description: bank_2, value: 67.23 }],
               )
           end
 
           it "has non_liquid" do
             expect(capital_items.fetch(:non_liquid))
-              .to eq(
+              .to match_array(
                 [{ description: "R.J.Ewing Trust", value: 17.12 }, { description: "Ming Vase", value: 6.19 }],
               )
           end
@@ -913,7 +913,7 @@ module V2
                     allowable_outstanding_mortgage: 200.0,
                     net_value: 484_800.0,
                     net_equity: 59_800.0,
-                    main_home_equity_disregard: 100_000.0,
+                    main_home_equity_disregard: 59_800.0,
                     assessed_equity: 0.0,
                     smod_allowance: 0.0,
                   })

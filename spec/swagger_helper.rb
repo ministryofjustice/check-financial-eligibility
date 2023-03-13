@@ -109,6 +109,7 @@ RSpec.configure do |config|
               },
               main_home_equity_disregard: {
                 type: :number,
+                description: "Amount of main home equity disregard applied to this property",
               },
               assessed_equity: {
                 type: :number,

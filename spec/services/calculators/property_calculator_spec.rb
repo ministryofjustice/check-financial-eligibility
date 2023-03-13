@@ -193,7 +193,7 @@ module Calculators
                 { transaction_allowance: 4_800.0, # 3% of 160,000
                   net_value: 85_200.0, # 160,000 - 4,800 - 70,000
                   net_equity: 5_200.0, # 85,200.0 - (50% of 160,000)
-                  main_home_equity_disregard: 100_000.0,
+                  main_home_equity_disregard: 5_200.0,
                   assessed_equity: 0 },
               )
           end

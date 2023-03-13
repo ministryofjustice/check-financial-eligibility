@@ -24,17 +24,17 @@ module Calculators
                                                                allowable_outstanding_mortgage:,
                                                                level_of_help:,
                                                                submission_date:)
-            equity_disregard = calculate_main_home_disregard(property, submission_date)
-            smod_applied = calculate_smod_disregard(property, assessor_result.net_equity, smod_level)
+            equity_disregard_cap = main_home_equity_disregard_cap(property, submission_date)
+            equity_disregard_applied = Utilities::NumberUtilities.negative_to_zero [equity_disregard_cap, assessor_result.net_equity].min
+            smod_applied = Utilities::NumberUtilities.negative_to_zero calculate_smod_disregard(property, assessor_result.net_equity, smod_level)
             smod_level -= smod_applied
             Result.new(transaction_allowance: assessor_result.transaction_allowance,
                        net_value: assessor_result.net_value,
                        net_equity: assessor_result.net_equity,
-                       main_home_equity_disregard: equity_disregard,
+                       main_home_equity_disregard: equity_disregard_applied,
                        property:,
                        smod_allowance: smod_applied,
-                       assessed_equity: calculate_assessed_equity(assessor_result.net_equity - smod_applied,
-                                                                  equity_disregard))
+                       assessed_equity: Utilities::NumberUtilities.negative_to_zero(assessor_result.net_equity - smod_applied - equity_disregard_applied))
                   .freeze.tap do |result|
               save!(property, result)
             end
@@ -50,15 +50,11 @@ module Calculators
         end
       end
 
-      def calculate_assessed_equity(net_equity, main_home_equity_disregard)
-        [net_equity - main_home_equity_disregard, 0.0].max
-      end
-
       def calculate_outstanding_mortgage(property, remaining_mortgage_allowance)
         property.outstanding_mortgage > remaining_mortgage_allowance ? remaining_mortgage_allowance : property.outstanding_mortgage
       end
 
-      def calculate_main_home_disregard(property, submission_date)
+      def main_home_equity_disregard_cap(property, submission_date)
         property_type = property.main_home ? :main_home : :additional_property
         Threshold.value_for(:property_disregard, at: submission_date)[property_type]
       end

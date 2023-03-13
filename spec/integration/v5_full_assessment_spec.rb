@@ -81,7 +81,7 @@ RSpec.describe "Full V5 passported spec", :vcr do
             allowable_outstanding_mortgage: 999.99,
             net_value: 484_000.02,
             net_equity: 59_000.01,
-            main_home_equity_disregard: 100_000.0,
+            main_home_equity_disregard: 59_000.01,
             assessed_equity: 0.0,
             smod_allowance: 0.0,
             transaction_allowance: 15_000.0,

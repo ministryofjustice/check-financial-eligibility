@@ -6,8 +6,10 @@ module Assessors
                         keyword_init: true)
     class << self
       def call(property:, allowable_outstanding_mortgage:, level_of_help:, submission_date:)
-        transaction_allowance = calculate_property_transaction_allowance(property, level_of_help, submission_date)
-        net_value = calculate_net_value(property, transaction_allowance, allowable_outstanding_mortgage)
+        transaction_allowance_cap = property_transaction_allowance_cap(property, level_of_help, submission_date)
+        equity = property.value - allowable_outstanding_mortgage
+        transaction_allowance = Utilities::NumberUtilities.negative_to_zero [equity, transaction_allowance_cap].min
+        net_value = equity - transaction_allowance
         net_equity = calculate_net_equity(property, net_value)
         Result.new(transaction_allowance:, net_value:, net_equity:)
                        .freeze
@@ -15,16 +17,12 @@ module Assessors
 
     private
 
-      def calculate_property_transaction_allowance(property, level_of_help, submission_date)
+      def property_transaction_allowance_cap(property, level_of_help, submission_date)
         level_of_help == "controlled" ? 0.0 : (property.value * notional_transaction_cost_pctg(submission_date)).round(2)
       end
 
       def notional_transaction_cost_pctg(submission_date)
         Threshold.value_for(:property_notional_sale_costs_percentage, at: submission_date) / 100.0
-      end
-
-      def calculate_net_value(property, transaction_allowance, allowable_outstanding_mortgage)
-        property.value - transaction_allowance - allowable_outstanding_mortgage
       end
 
       def calculate_net_equity(property, net_value)
