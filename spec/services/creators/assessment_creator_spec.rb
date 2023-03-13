@@ -21,29 +21,7 @@ module Creators
       }
     end
 
-    let(:raw_post_old_name) do
-      {
-        client_reference_id: "psr-123",
-        submission_date: "2019-06-06",
-        level_of_representation: "certificated",
-      }
-    end
-
     subject(:creator) { described_class.call(remote_ip:, assessment_params:, version:) }
-
-    context "using the old level_of_representation name" do
-      let(:assessment_params) { raw_post_old_name }
-      let(:version) { "5" }
-
-      it "populates the assessment record with expected values" do
-        expect { creator }.to change(Assessment, :count).by(1)
-        assessment = Assessment.first
-        expect(assessment.version).to eq "5"
-        expect(assessment.remote_ip).to eq "127.0.0.1"
-        expect(assessment.proceeding_type_codes).to eq []
-        expect(assessment.level_of_help).to eq "certificated"
-      end
-    end
 
     context "version 5" do
       let(:assessment_params) { raw_post_v5 }

@@ -30,12 +30,6 @@ RSpec.describe "V5 Assessments", type: :request, vcr: true, swagger_doc: "v5/swa
                       example: Assessment.levels_of_help.keys.first,
                       description: "The level of help required by the client. Defaults to 'certificated'",
                     },
-                    level_of_representation: {
-                      type: :string,
-                      enum: Assessment.levels_of_help.keys,
-                      example: Assessment.levels_of_help.keys.first,
-                      description: "Temporary synonym for level of help",
-                    },
                   },
                 }
 

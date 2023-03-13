@@ -287,13 +287,6 @@ paths:
                   example: certificated
                   description: The level of help required by the client. Defaults
                     to 'certificated'
-                level_of_representation:
-                  type: string
-                  enum:
-                  - certificated
-                  - controlled
-                  example: certificated
-                  description: Temporary synonym for level of help
         required: true
   "/assessments/{id}":
     parameters:
