@@ -8,7 +8,7 @@ module Calculators
                         :assessed_equity,
                         :smod_allowance,
                         keyword_init: true) do
-      delegate :main_home, :value, :percentage_owned,
+      delegate :main_home, :value,
                :outstanding_mortgage, :percentage_owned, :shared_with_housing_assoc, to: :property
     end
 
