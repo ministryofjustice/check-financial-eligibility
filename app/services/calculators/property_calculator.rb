@@ -12,8 +12,10 @@ module Calculators
                :outstanding_mortgage, :percentage_owned, :shared_with_housing_assoc, to: :property
     end
 
+    Disregard = Data.define(:result, :applied)
+
     class << self
-      def call(submission_date:, properties:, level_of_help:, smod_level:)
+      def call(submission_date:, properties:, level_of_help:, smod_cap:)
         remaining_mortgage_allowance ||= Threshold.value_for(:property_maximum_mortgage_allowance, at: submission_date)
 
         Property.transaction do
@@ -24,17 +26,23 @@ module Calculators
                                                                allowable_outstanding_mortgage:,
                                                                level_of_help:,
                                                                submission_date:)
-            equity_disregard_cap = main_home_equity_disregard_cap(property, submission_date)
-            equity_disregard_applied = Utilities::NumberUtilities.negative_to_zero [equity_disregard_cap, assessor_result.net_equity].min
-            smod_applied = Utilities::NumberUtilities.negative_to_zero calculate_smod_disregard(property, assessor_result.net_equity, smod_level)
-            smod_level -= smod_applied
+
+            smod_disregard = if property.subject_matter_of_dispute
+                               calculate_and_apply_disregard(assessor_result.net_equity, smod_cap)
+                             else
+                               Disregard.new(result: assessor_result.net_equity, applied: 0)
+                             end
+            smod_cap -= smod_disregard.applied
+
+            equity_disregard = calculate_and_apply_disregard smod_disregard.result, main_home_equity_disregard_cap(property, submission_date)
+
             Result.new(transaction_allowance: assessor_result.transaction_allowance,
                        net_value: assessor_result.net_value,
                        net_equity: assessor_result.net_equity,
-                       main_home_equity_disregard: equity_disregard_applied,
+                       main_home_equity_disregard: equity_disregard.applied,
                        property:,
-                       smod_allowance: smod_applied,
-                       assessed_equity: Utilities::NumberUtilities.negative_to_zero(assessor_result.net_equity - smod_applied - equity_disregard_applied))
+                       smod_allowance: smod_disregard.applied,
+                       assessed_equity: equity_disregard.result)
                   .freeze.tap do |result|
               save!(property, result)
             end
@@ -42,12 +50,14 @@ module Calculators
         end
       end
 
-      def calculate_smod_disregard(property, net_equity, smod_level)
-        if property.subject_matter_of_dispute
-          [net_equity, smod_level].min
-        else
-          0
-        end
+      def calculate_and_apply_disregard(equity, disregard)
+        equity_without_smod = apply_disregard(equity, disregard)
+        applied = equity - equity_without_smod
+        Disregard.new(result: equity_without_smod, applied:)
+      end
+
+      def apply_disregard(value, disregard)
+        Utilities::NumberUtilities.negative_to_zero value - disregard
       end
 
       def calculate_outstanding_mortgage(property, remaining_mortgage_allowance)
