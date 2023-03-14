@@ -25,7 +25,7 @@ module Collators
       non_liquid_capital = Assessors::NonLiquidCapitalAssessor.call(@capital_summary)
       properties = Calculators::PropertyCalculator.call(submission_date: @submission_date,
                                                         properties: @capital_summary.properties,
-                                                        smod_level: @maximum_subject_matter_of_dispute_disregard,
+                                                        smod_cap: @maximum_subject_matter_of_dispute_disregard,
                                                         level_of_help: @level_of_help)
       property_value = properties.sum(&:assessed_equity)
       property_smod = properties.sum(&:smod_allowance)

@@ -23,7 +23,9 @@ Feature:
     Then I should see the following "main property" details:
       | attribute                  | value    |
       | value                      | 150000.0 |
-      | main_home_equity_disregard | 45500.0 |
+      | net_equity                 |  45500.0 |
+      | smod_allowance             |  45500.0 |
+      | main_home_equity_disregard |      0.0 |
       | transaction_allowance      | 4500.0   |
       | assessed_equity            | 0.0      |
     And I should see the following "capital summary" details:

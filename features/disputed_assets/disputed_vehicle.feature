@@ -60,7 +60,9 @@ Feature:
         Then I should see the following "main property" details:
             | attribute                  | value    |
             | value                      | 200000.0 |
-            | main_home_equity_disregard | 100000.0 |
+            | net_equity                 | 194000.0 |
+            | smod_allowance             | 100000.0 |
+            | main_home_equity_disregard |  94000.0 |
             | transaction_allowance      | 6000.0   |
             | assessed_equity            | 0.0      |
         And I should see the following "vehicle" details:

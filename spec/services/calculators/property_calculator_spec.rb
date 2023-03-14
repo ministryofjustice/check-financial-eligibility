@@ -10,7 +10,7 @@ module Calculators
       let(:properties) do
         described_class.call(submission_date: assessment.submission_date,
                              properties: assessment.capital_summary.properties,
-                             smod_level: 100_000,
+                             smod_cap: 100_000,
                              level_of_help: "certificated")
       end
 

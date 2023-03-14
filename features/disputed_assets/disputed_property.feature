@@ -89,7 +89,9 @@ Feature:
         Then I should see the following "main property" details:
             | attribute                  | value    |
             | value                      | 250000.0 |
-            | main_home_equity_disregard | 100000.0 |
+            | net_equity                 | 121250.0 |
+            | smod_allowance             | 100000.0 |
+            | main_home_equity_disregard |  21250.0 |
             | transaction_allowance      | 7500.0   |
             | assessed_equity            | 0.0      |
         Then I should see the following "additional property" details:
@@ -125,7 +127,8 @@ Feature:
       | value                      | 300000.0 |
       | net_value                  | 220000.0 |
       | net_equity                 | 110000.0 |
-      | main_home_equity_disregard | 100000.0 |
+      | smod_allowance             | 100000.0 |
+      | main_home_equity_disregard |  10000.0 |
       | assessed_equity            | 0.0      |
     And I should see the following "additional property" details:
       | attribute                  | value   |
@@ -160,7 +163,8 @@ Feature:
       | transaction_allowance      | 12000.0  |
       | net_value                  | 388000.0 |
       | net_equity                 | 194000.0 |
-      | main_home_equity_disregard | 100000.0 |
+      | smod_allowance             | 100000.0 |
+      | main_home_equity_disregard |  94000.0 |
       | assessed_equity            | 0.0      |
     And I should see the following "additional property" details:
       | attribute                  | value   |

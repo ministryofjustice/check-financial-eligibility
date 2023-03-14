@@ -30,7 +30,7 @@ module Decorators
           end
           let(:property) do
             result = Calculators::PropertyCalculator.call(submission_date: Date.current, properties: [record],
-                                                          level_of_help: "certificated", smod_level: 100_000)
+                                                          level_of_help: "certificated", smod_cap: 100_000)
             PropertySubtotals.new result.first
           end
 
