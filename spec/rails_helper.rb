@@ -87,23 +87,6 @@ require Rails.root.join("spec/fixtures/base_assessment_fixture")
 require Rails.root.join("spec/fixtures/assessment_request_fixture")
 require Rails.root.join("spec/fixtures/assessment_response_fixture")
 
-# helper methods
-def stub_call_to_json_schema
-  stub_request(:get, "http://localhost:3000/schemas/assessment_request.json")
-    .to_return(status: 200, body: json_schema_definitions)
-end
-
-def json_schema_definitions
-  File.read(Rails.root.join("public/schemas/assessment_request.json"))
-end
-
-def deep_match(actual, expected)
-  expect(actual.keys.sort).to eq expected.keys.sort
-  actual.each do |key, ids|
-    expect(ids).to match_array(expected[key])
-  end
-end
-
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|
     with.test_framework :rspec
