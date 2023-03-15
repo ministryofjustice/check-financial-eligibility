@@ -8,7 +8,7 @@ module Calculators
                         :assessed_equity,
                         :smod_allowance,
                         keyword_init: true) do
-      delegate :main_home, :value, :percentage_owned,
+      delegate :main_home, :value,
                :outstanding_mortgage, :percentage_owned, :shared_with_housing_assoc, to: :property
     end
 
@@ -28,13 +28,13 @@ module Calculators
                                                                submission_date:)
 
             smod_disregard = if property.subject_matter_of_dispute
-                               calculate_and_apply_disregard(assessor_result.net_equity, smod_cap)
+                               apply_disregard(assessor_result.net_equity, smod_cap)
                              else
                                Disregard.new(result: assessor_result.net_equity, applied: 0)
                              end
             smod_cap -= smod_disregard.applied
 
-            equity_disregard = calculate_and_apply_disregard smod_disregard.result, main_home_equity_disregard_cap(property, submission_date)
+            equity_disregard = apply_disregard smod_disregard.result, main_home_equity_disregard_cap(property, submission_date)
 
             Result.new(transaction_allowance: assessor_result.transaction_allowance,
                        net_value: assessor_result.net_value,
@@ -50,14 +50,9 @@ module Calculators
         end
       end
 
-      def calculate_and_apply_disregard(equity, disregard)
-        equity_without_smod = apply_disregard(equity, disregard)
-        applied = equity - equity_without_smod
-        Disregard.new(result: equity_without_smod, applied:)
-      end
-
-      def apply_disregard(value, disregard)
-        Utilities::NumberUtilities.negative_to_zero value - disregard
+      def apply_disregard(equity, disregard)
+        equity_after_disregard = Utilities::NumberUtilities.negative_to_zero equity - disregard
+        Disregard.new(result: equity_after_disregard, applied: equity - equity_after_disregard)
       end
 
       def calculate_outstanding_mortgage(property, remaining_mortgage_allowance)
