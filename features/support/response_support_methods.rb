@@ -6,6 +6,7 @@ RESPONSE_SECTION_MAPPINGS = {
     "disposable_income_summary" => "result_summary.disposable_income",
     "total outgoings and allowances" => "result_summary.disposable_income.combined_total_outgoings_and_allowances",
     "partner allowance" => "result_summary.disposable_income.partner_allowance",
+    "dependant allowance" => "result_summary.disposable_income.dependant_allowance",
     "capital summary" => "result_summary.capital",
     "partner capital summary" => "result_summary.partner_capital",
     "capital_lower_threshold" => "result_summary.capital.proceeding_types.0.lower_threshold",

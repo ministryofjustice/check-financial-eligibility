@@ -7,6 +7,19 @@ Given("I am undertaking a certificated assessment with an applicant who receives
   @proceeding_type_data = { "proceeding_types": [{ ccms_code: "DA001", client_involvement_type: "A" }] }
 end
 
+Given("I am undertaking a certificated assessment") do
+  @assessment_data = { client_reference_id: "N/A", submission_date: "2022-05-10" }
+  @applicant_data = { applicant: { date_of_birth: "1979-12-20",
+                                   involvement_type: "applicant",
+                                   has_partner_opponent: false,
+                                   receives_qualifying_benefit: false } }
+  @proceeding_type_data = { "proceeding_types": [{ ccms_code: "DA001", client_involvement_type: "A" }] }
+end
+
+Given("A submission date of {string}") do |date|
+  @assessment_data.merge! submission_date: date
+end
+
 Given("I am undertaking a certificated assessment with a pensioner applicant who is not passported") do
   StateBenefitType.create! label: "housing_benefit", name: "Housing benefit", exclude_from_gross_income: true
   @assessment_data = { client_reference_id: "N/A", submission_date: "2022-05-10" }
