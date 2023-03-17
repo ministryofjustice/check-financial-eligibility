@@ -624,7 +624,7 @@ module V2
           end
 
           it "has capital" do
-            expect(summary.fetch(:capital).except(:proceeding_types, :capital_contribution, :combined_capital_contribution,
+            expect(summary.fetch(:capital).except(:proceeding_types, :capital_contribution,
                                                   :total_mortgage_allowance, :combined_assessed_capital))
               .to eq({
                 total_liquid: 0.0,

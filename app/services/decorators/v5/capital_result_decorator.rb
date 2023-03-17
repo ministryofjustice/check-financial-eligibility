@@ -12,8 +12,7 @@ module Decorators
         if @summary.is_a?(ApplicantCapitalSummary)
           basic_attributes.merge(proceeding_types:,
                                  pensioner_capital_disregard: @person_capital_subtotals.pensioner_capital_disregard.to_f,
-                                 combined_assessed_capital:,
-                                 combined_capital_contribution:)
+                                 combined_assessed_capital:)
         else
           basic_attributes
         end
@@ -44,10 +43,6 @@ module Decorators
 
       def combined_assessed_capital
         @combined_assessed_capital.to_f
-      end
-
-      def combined_capital_contribution
-        @capital_contribution
       end
     end
   end

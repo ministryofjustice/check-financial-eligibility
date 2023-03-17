@@ -1100,12 +1100,6 @@ RSpec.describe "full_assessment", type: :request, swagger_doc: "v5/swagger.yaml"
                            minimum: 0,
                            description: "Amount of assessed capital for both client and partner",
                          },
-                         combined_capital_contribution: {
-                           type: :number,
-                           format: :decimal,
-                           minimum: 0,
-                           description: "Synonym for capital_contribution",
-                         },
                        },
                      },
                      partner_capital: {
