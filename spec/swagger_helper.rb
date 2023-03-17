@@ -229,6 +229,21 @@ RSpec.configure do |config|
               },
             },
           },
+          Asset: {
+            type: :object,
+            additionalProperties: false,
+            required: %i[value description],
+            value: {
+              type: :number,
+              format: :decimal,
+              description: "Value of asset",
+            },
+            description: {
+              type: :number,
+              format: :decimal,
+              description: "Description of asset",
+            },
+          },
         },
       },
       paths: {},

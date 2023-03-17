@@ -963,39 +963,91 @@ RSpec.describe "full_assessment", type: :request, swagger_doc: "v5/swagger.yaml"
                            type: :array,
                            items: { "$ref" => "#/components/schemas/ProceedingTypeResult" },
                          },
-                         total_liquid: { type: :number },
-                         total_non_liquid: { type: :number },
-                         total_vehicle: { type: :number },
-                         total_property: { type: :number },
-                         total_mortgage_allowance: { type: :number },
-                         total_capital: { type: :number },
+                         total_liquid: {
+                           type: :number,
+                           description: "Total value of all client liquid assets in submission",
+                           format: :decimal,
+                         },
+                         total_non_liquid: {
+                           description: "Total value of all client non-liquid assets in submission",
+                           type: :number,
+                           format: :decimal,
+                           minimum: 0.0,
+                         },
+                         total_vehicle: {
+                           description: "Total value of all client vehicle assets in submission",
+                           type: :number,
+                           format: :decimal,
+                         },
+                         total_property: {
+                           description: "Total value of all client property assets in submission",
+                           type: :number,
+                           format: :decimal,
+                         },
+                         total_mortgage_allowance: {
+                           description: "Maxiumum mortgage allowance used in submission. Cases April 2020 will all be set to 999_999_999",
+                           type: :number,
+                           format: :decimal,
+                         },
+                         total_capital: {
+                           description: "Total value of all capital assets in submission",
+                           type: :number,
+                           format: :decimal,
+                         },
                          pensioner_capital_disregard: {
                            type: :number,
+                           format: :decimal,
                            description: "Cap on pensioner capital disregard for this assessment (based on disposable_income)",
+                           minimum: 0.0,
                          },
                          total_capital_with_smod: {
                            type: :number,
+                           format: :decimal,
                            minimum: 0,
                            description: "Amount of capital with subject matter of dispute deduction applied",
                          },
                          disputed_non_property_disregard: {
                            type: :number,
+                           format: :decimal,
                            minimum: 0,
                            description: "Amount of subject matter of dispute deduction applied for assets other than property",
                          },
                          pensioner_disregard_applied: {
                            type: :number,
+                           format: :decimal,
+                           minimum: 0,
                            description: "Amount of pensioner capital disregard applied to this assessment",
                          },
-                         subject_matter_of_dispute_disregard: { type: :number },
-                         capital_contribution: { type: :number },
+                         subject_matter_of_dispute_disregard: {
+                           type: :number,
+                           format: :decimal,
+                           minimum: 0,
+                           description: "Total amount of subject matter of dispute disregard applied on this submission",
+                         },
+                         capital_contribution: {
+                           type: :number,
+                           format: :decimal,
+                           minimum: 0,
+                           description: "Assessed capital contribution. Will only be non-zero for 'contribution_required' cases",
+                         },
                          assessed_capital: {
                            type: :number,
+                           format: :decimal,
                            minimum: 0,
-                           description: "Amount of assessed capital. Zero if deductions exceed total capital.",
+                           description: "Amount of assessed client capital. Zero if deductions exceed total capital.",
                          },
-                         combined_assessed_capital: { type: :number },
-                         combined_capital_contribution: { type: :number },
+                         combined_assessed_capital: {
+                           type: :number,
+                           format: :decimal,
+                           minimum: 0,
+                           description: "Amount of assessed capital for both client and partner",
+                         },
+                         combined_capital_contribution: {
+                           type: :number,
+                           format: :decimal,
+                           minimum: 0,
+                           description: "Synonym for capital_contribution",
+                         },
                        },
                      },
                      partner_capital: {
@@ -1035,12 +1087,15 @@ RSpec.describe "full_assessment", type: :request, swagger_doc: "v5/swagger.yaml"
                            properties: {
                              liquid: {
                                type: :array,
+                               items: { "$ref" => "#/components/schemas/Asset" },
                              },
                              non_liquid: {
                                type: :array,
+                               items: { "$ref" => "#/components/schemas/Asset" },
                              },
                              vehicles: {
                                type: :array,
+                               items: { "$ref" => "#/components/schemas/Asset" },
                              },
                              properties: {
                                type: :object,
