@@ -126,10 +126,10 @@ RSpec.describe "Eligible Full Assessment with policy disregard remarks" do
 
   def capitals_params
     { "bank_accounts" =>
-          [{ "description" => "Money not in a bank account", "value" => 50.0 }],
+          [{ "description" => "Money not in a bank account", "value" => "50.0" }],
       "non_liquid_capital" =>
           [{ "description" => "Any valuable items worth more than £500",
-             "value" => 700.0 }] }.to_json
+             "value" => "700.0" }] }.to_json
   end
 
   def dependants_params

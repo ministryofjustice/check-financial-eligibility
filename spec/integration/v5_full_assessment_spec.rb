@@ -215,7 +215,7 @@ RSpec.describe "Full V5 passported spec" do
       post(assessment_applicant_path(assessment_id), params: rq, headers:)
       output_response(:post, :applicant)
 
-      rq = "{\"bank_accounts\":[{\"description\":\"Current accounts\",\"value\":788.0}],\"non_liquid_capital\":[]}"
+      rq = "{\"bank_accounts\":[{\"description\":\"Current accounts\",\"value\":\"788.0\"}],\"non_liquid_capital\":[]}"
       post(assessment_capitals_path(assessment_id), params: rq, headers:)
       output_response(:post, :capitals)
 
@@ -332,10 +332,10 @@ RSpec.describe "Full V5 passported spec" do
 
   def capitals_params
     { "bank_accounts" =>
-        [{ "description" => "Money not in a bank account", "value" => 50.0 }],
+        [{ "description" => "Money not in a bank account", "value" => "50.0" }],
       "non_liquid_capital" =>
         [{ "description" => "Any valuable items worth more than £500",
-           "value" => 700.0,
+           "value" => "700.0",
            "subject_matter_of_dispute" => true }] }.to_json
   end
 

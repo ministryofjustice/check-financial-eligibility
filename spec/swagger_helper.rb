@@ -40,19 +40,6 @@ RSpec.configure do |config|
       },
       components: {
         schemas: {
-          currency: {
-            description: "A negative or positive number (including zero) with two decimal places",
-            type: :number,
-            format: :decimal,
-            multipleOf: 0.01,
-          },
-          positive_currency: {
-            "description": "Non-negative number (including zero) with two decimal places",
-            type: :number,
-            format: :decimal,
-            minimum: 0.0,
-            multipleOf: 0.01,
-          },
           ProceedingTypeResult: {
             type: :object,
             required: %i[ccms_code client_involvement_type upper_threshold lower_threshold result],
@@ -138,46 +125,18 @@ RSpec.configure do |config|
             items: {
               type: :object,
               description: "Account detail",
-              additionalProperties: false,
-              required: %i[value description],
+              required: %i[value],
               properties: {
-                value: { "$ref" => "#/components/schemas/currency" },
+                value: {
+                  type: :number,
+                  format: :decimal,
+                },
                 description: {
                   type: :string,
                 },
                 subject_matter_of_dispute: {
                   description: "Whether the contents of this bank account are the subject of a dispute",
                   type: :boolean,
-                },
-              },
-            },
-          },
-          Capitals: {
-            type: :object,
-            additionalProperties: false,
-            properties: {
-              bank_accounts: { "$ref" => "#/components/schemas/BankAccounts" },
-              non_liquid_capital: {
-                type: :array,
-                description: "An array of objects describing applicant's non-liquid capital items (excluding property), e.g. valuable items, jewellery, trusts, other investments",
-                example: [{ value: 1.01, description: "asset name 1", subject_matter_of_dispute: false },
-                          { value: 100.01, description: "asset name 2", subject_matter_of_dispute: true }],
-                items: {
-                  type: :object,
-                  description: "Asset detail",
-                  required: %i[value description],
-                  additionalProperties: false,
-                  properties: {
-                    value: { "$ref" => "#/components/schemas/positive_currency" },
-                    description: {
-                      description: "Definition of a non-liquid capital item",
-                      type: :string,
-                    },
-                    subject_matter_of_dispute: {
-                      description: "Whether the item is the subject of a dispute",
-                      type: :boolean,
-                    },
-                  },
                 },
               },
             },
