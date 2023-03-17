@@ -18,21 +18,11 @@ def cast_values(payload)
   payload.map { |pair| [pair[0], substitute_boolean(pair[1])] }.to_h
 end
 
-def integer_or_float?(value)
-  !Float(value).nil?
-rescue ArgumentError
-  false
-end
-
 def substitute_boolean(value)
   return true if value&.casecmp("true")&.zero?
   return false if value&.casecmp("false")&.zero?
 
-  if integer_or_float?(value)
-    value.to_f
-  else
-    value
-  end
+  value
 end
 
 def blank_main_home

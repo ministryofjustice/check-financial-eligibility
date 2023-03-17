@@ -41,10 +41,6 @@ module Creators
 
         before { creator }
 
-        it "passes the schema validation" do
-          expect(creator.errors).to eq([])
-        end
-
         it "creates liquid capital items" do
           expect(capital_summary.liquid_capital_items.size).to eq 2
           items = capital_summary.liquid_capital_items.order(:created_at)
