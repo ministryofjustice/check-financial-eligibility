@@ -121,7 +121,7 @@ RSpec.describe CapitalsController, type: :request do
           let(:bank_account_params) { bank_account_params_with_invalid_value }
 
           it_behaves_like "it fails with message",
-                          /The property '#\/bank_accounts\/0\/value' value "one hundred pounds" did not match the regex/
+                          /The property '#\/bank_accounts\/0\/value' of type string did not match the following type: number/
         end
       end
 
@@ -135,7 +135,7 @@ RSpec.describe CapitalsController, type: :request do
 
         context "invalid non-liquid capital description" do
           let(:fake_asset_name) { true }
-          let(:non_liquid_params) { invalid_non_liquid_params }
+          let(:non_liquid_params) { [invalid_non_liquid_params.merge(value: 37)] }
 
           it_behaves_like "it fails with message",
                           /The property '#\/non_liquid_capital\/0\/description' of type boolean did not match the following type: string/
@@ -152,14 +152,14 @@ RSpec.describe CapitalsController, type: :request do
           let(:non_liquid_params) { negative_non_liquid_params }
 
           it_behaves_like "it fails with message",
-                          /The property '#\/non_liquid_capital\/0\/value' value "-123.45" did not match the regex/
+                          /The property '#\/non_liquid_capital\/0\/value' did not have a minimum value of 0.0/
         end
 
         context "invalid non-liquid capital value" do
-          let(:non_liquid_params) { invalid_non_liquid_params }
+          let(:non_liquid_params) { [invalid_non_liquid_params] }
 
           it_behaves_like "it fails with message",
-                          /The property '#\/non_liquid_capital\/0\/value' value "one hundred pounds" did not match the regex/
+                          /The property '#\/non_liquid_capital\/0\/value' of type string did not match the following type: number/
         end
       end
     end
@@ -220,18 +220,16 @@ RSpec.describe CapitalsController, type: :request do
       [
         {
           description: fake_asset_name,
-          value: "-123.45",
+          value: -123.45,
         },
       ]
     end
 
     def invalid_non_liquid_params
-      [
-        {
-          description: fake_asset_name,
-          value: "one hundred pounds",
-        },
-      ]
+      {
+        description: fake_asset_name,
+        value: "one hundred pounds",
+      }
     end
 
     def fake_asset_name

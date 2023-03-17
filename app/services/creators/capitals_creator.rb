@@ -49,7 +49,7 @@ module Creators
     end
 
     def json_validator
-      @json_validator ||= JsonValidator.new("capital", @capital_params)
+      @json_validator ||= JsonSwaggerValidator.new("capitals", @capital_params)
     end
 
     def bank_accounts_attributes

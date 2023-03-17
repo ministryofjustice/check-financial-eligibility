@@ -79,36 +79,7 @@ RSpec.describe "full_assessment", type: :request, swagger_doc: "v5/swagger.yaml"
                         },
                       },
                     },
-                    capitals: {
-                      type: :object,
-                      properties: {
-                        bank_accounts: { "$ref" => "#/components/schemas/BankAccounts" },
-                        non_liquid_capital: {
-                          type: :array,
-                          description: "One or more assets details",
-                          example: [{ value: 1.01, description: "asset name 1", subject_matter_of_dispute: false },
-                                    { value: 100.01, description: "asset name 2", subject_matter_of_dispute: true }],
-                          items: {
-                            type: :object,
-                            description: "Asset detail",
-                            required: %i[description value],
-                            properties: {
-                              value: {
-                                type: :number,
-                                format: :decimal,
-                              },
-                              description: {
-                                type: :string,
-                              },
-                              subject_matter_of_dispute: {
-                                "description": "Whether the item is the subject of a dispute",
-                                type: :boolean,
-                              },
-                            },
-                          },
-                        },
-                      },
-                    },
+                    capitals: { "$ref" => "#/components/schemas/Capitals" },
                     cash_transactions: {
                       type: :object,
                       description: "A set of cash income[ings] and outgoings payments by category",
@@ -802,36 +773,7 @@ RSpec.describe "full_assessment", type: :request, swagger_doc: "v5/swagger.yaml"
                             },
                           },
                         },
-                        capital_items: {
-                          type: :object,
-                          required: %i[bank_accounts non_liquid_capital],
-                          description: "Element's of the applicant's partners capital",
-                          properties: {
-                            bank_accounts: { "$ref" => "#/components/schemas/BankAccounts" },
-                            non_liquid_capital: {
-                              type: :array,
-                              description: "One or more non liquid assets owned by the client's partner",
-                              example: [{ value: 1.01, description: "test name 1", subject_matter_of_dispute: false },
-                                        { value: 100.01, description: "test name 2", subject_matter_of_dispute: true }],
-                              items: {
-                                type: :object,
-                                description: "Asset detail",
-                                properties: {
-                                  value: {
-                                    type: :number,
-                                    format: :decimal,
-                                  },
-                                  description: {
-                                    type: :string,
-                                  },
-                                  subject_matter_of_dispute: {
-                                    type: :boolean,
-                                  },
-                                },
-                              },
-                            },
-                          },
-                        },
+                        capital_items: { "$ref" => "#/components/schemas/Capitals" },
                         vehicles: {
                           type: :array,
                           description: "One or more vehicles' details",
