@@ -1,23 +1,18 @@
 class CapitalsController < ApplicationController
-  before_action :load_assessment
-
   def create
-    json_validator = JsonSwaggerValidator.new("capitals", capital_params)
-
-    if json_validator.valid?
-      create_capitals
+    if creation_service.success?
       render_success
     else
-      render_unprocessable(json_validator.errors)
+      render_unprocessable(creation_service.errors)
     end
   end
 
 private
 
-  def create_capitals
-    Creators::CapitalsCreator.call(
+  def creation_service
+    @creation_service ||= Creators::CapitalsCreator.call(
+      assessment_id: params[:assessment_id],
       capital_params:,
-      capital_summary: @assessment.capital_summary,
     )
   end
 

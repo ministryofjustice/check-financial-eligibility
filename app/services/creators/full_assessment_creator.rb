@@ -77,10 +77,8 @@ module Creators
         },
         lambda { |assessment, params|
           if params[:capitals]
-            Creators::CapitalsCreator.call(capital_params: params[:capitals],
-                                           capital_summary: assessment.capital_summary)
-            # CapitalsCreator no longer returns errors - it throws exceptions
-            CreationResult.new(errors: [])
+            Creators::CapitalsCreator.call(assessment_id: assessment.id,
+                                           capital_params: params[:capitals])
           end
         },
         lambda { |assessment, params|
