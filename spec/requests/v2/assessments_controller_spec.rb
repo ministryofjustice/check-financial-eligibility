@@ -608,8 +608,8 @@ module V2
                 housing_benefit: 0.0,
                 net_housing_costs: 0.0,
                 maintenance_allowance: 0.0,
-                total_outgoings_and_allowances: 974.45,
-                total_disposable_income: -194.375,
+                total_outgoings_and_allowances: 783.04,
+                total_disposable_income: -2.965,
                 employment_income: {
                   gross_income: 446.0,
                   benefits_in_kind: 0.0,

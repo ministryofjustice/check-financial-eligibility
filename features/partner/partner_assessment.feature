@@ -62,8 +62,11 @@ Scenario: An applicant and partner's combined capital is over the lower threshol
       |     C     |  2022-09-22  | 500.50 |       0           | 75.00 |       15.0         |        410.5          |
     When I retrieve the final assessment
     Then I should see the following "overall_disposable_income" details:
-      | attribute                    | value    |
-      | total_disposable_income      | 354.09   |
+      | attribute                        | value   |
+      | total_disposable_income          | 545.5   |
+    And I should see the following "disposable_income_summary" details:
+      | attribute                        | value   |
+      | combined_total_disposable_income | 354.09  |
     And I should see the following overall summary:
       | attribute                  | value                 |
       | assessment_result          | contribution_required |
