@@ -111,13 +111,15 @@ module Creators
     def create_capitals
       return if capital_params.blank?
 
-      creator = CapitalsCreator.call(
-        assessment_id: @assessment_id,
-        capital_params:,
-        capital_summary: assessment.partner_capital_summary,
-      )
-
-      errors.concat(creator.errors)
+      json_validator = JsonValidator.new("capitals", capital_params)
+      if json_validator.valid?
+        CapitalsCreator.call(
+          capital_params:,
+          capital_summary: assessment.partner_capital_summary,
+        )
+      else
+        errors.concat(json_validator.errors)
+      end
     end
 
     def create_vehicles

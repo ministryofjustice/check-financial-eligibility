@@ -17,18 +17,14 @@ module Creators
 
     subject(:creator) do
       described_class.call(
-        assessment_id:,
         capital_params:,
+        capital_summary: assessment.capital_summary,
       )
     end
 
     describe ".call" do
       context "with empty bank_accounts and non_liquid_capital" do
         let(:capital_params) { {} }
-
-        it "returns an instance of CapitalCreationObject" do
-          expect(creator).to be_instance_of(described_class)
-        end
 
         it "does not create any capital item records" do
           expect(assessment.capital_summary.capital_items).to be_empty
@@ -71,36 +67,13 @@ module Creators
           expect(capital_summary.non_liquid_capital_items.first.subject_matter_of_dispute).to eq smod_true
         end
       end
-
-      context "with invalid capital item" do
-        let(:capital_params) { invalid_liquid_assets_hash }
-
-        before { creator }
-
-        it "fails the schema validation" do
-          expect(creator.errors).not_to be_empty
-        end
-
-        it "does not create any capital item records" do
-          expect(assessment.capital_summary.capital_items).to be_empty
-        end
-      end
     end
 
     describe "#success?" do
       let(:capital_params) { {} }
 
-      it "returns true" do
-        expect(creator.success?).to be true
-      end
-    end
-
-    describe "#capital_summary" do
-      let(:capital_params) { liquid_assets_hash.merge(non_liquid_assets_hash) }
-
-      it "returns the created capital summary record" do
-        result = creator.capital_summary
-        expect(result).to be_a(CapitalSummary)
+      it "does not create any capital item records" do
+        expect(assessment.capital_summary.capital_items).to be_empty
       end
     end
 
@@ -135,28 +108,6 @@ module Creators
 
     def invalid_liquid_assets_hash
       "bank_accounts"
-    end
-
-    context "no such assessment id" do
-      let(:assessment_id) { SecureRandom.uuid }
-      let(:capital_params) { {} }
-
-      it "does not create capital_items" do
-        expect { creator }.not_to change(CapitalItem, :count)
-      end
-
-      describe "#success?" do
-        it "returns false" do
-          expect(creator.success?).to be false
-        end
-      end
-
-      describe "errors" do
-        it "returns an error" do
-          expect(creator.errors.size).to eq 1
-          expect(creator.errors[0]).to eq "No such assessment id"
-        end
-      end
     end
   end
 end
