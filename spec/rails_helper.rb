@@ -79,6 +79,11 @@ RSpec.configure do |config|
   config.after(:suite) do
     DatabaseCleaner.clean_with :truncation
   end
+
+  config.before(:each, :calls_bank_holiday) do
+    stub_request(:get, "https://www.gov.uk/bank-holidays.json")
+      .to_return(body: file_fixture("bank-holidays.json").read)
+  end
 end
 
 require "webmock/rspec"
