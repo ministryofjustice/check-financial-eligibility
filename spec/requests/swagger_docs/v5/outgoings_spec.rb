@@ -54,7 +54,7 @@ RSpec.describe "outgoings", type: :request, swagger_doc: "v5/swagger.yaml" do
                                   description: "Date payment made",
                                   example: "1992-07-22",
                                 },
-                                housing_costs_type: {
+                                housing_cost_type: {
                                   type: :string,
                                   enum: CFEConstants::VALID_OUTGOING_HOUSING_COST_TYPES,
                                   description: "Housing cost type (omit for non-housing cost outgoings)",

@@ -1,6 +1,11 @@
 require "swagger_helper"
 
 RSpec.describe "full_assessment", type: :request, swagger_doc: "v5/swagger.yaml" do
+  before do
+    stub_request(:get, "https://www.gov.uk/bank-holidays.json")
+      .to_return(body: file_fixture("bank-holidays.json").read)
+  end
+
   path "/v2/assessments" do
     post("create") do
       tags "Perform assessment with single call"
@@ -24,7 +29,7 @@ RSpec.describe "full_assessment", type: :request, swagger_doc: "v5/swagger.yaml"
                         submission_date: {
                           type: :string,
                           format: :date,
-                          example: "2023-02-05",
+                          example: "2022-06-07",
                           description: "Date of the original submission (iso8601 format)",
                         },
                         client_reference_id: {
@@ -113,9 +118,9 @@ RSpec.describe "full_assessment", type: :request, swagger_doc: "v5/swagger.yaml"
                       type: :object,
                       description: "A set of cash income[ings] and outgoings payments by category",
                       example: JSON.parse(File.read(Rails.root.join("spec/fixtures/cash_transactions.json"))
-                                              .gsub("3.months.ago", "2022-01-01")
-                                              .gsub("2.months.ago", "2022-02-01")
-                                              .gsub("1.month.ago", "2022-03-01")),
+                                              .gsub("3.months.ago", "2022-03-01")
+                                              .gsub("2.months.ago", "2022-04-01")
+                                              .gsub("1.month.ago", "2022-05-01")),
                       properties: {
                         income: {
                           type: :array,
@@ -354,53 +359,100 @@ RSpec.describe "full_assessment", type: :request, swagger_doc: "v5/swagger.yaml"
                     },
                     outgoings: {
                       type: :array,
-                      required: %i[name payments],
                       description: "One or more outgoings categorized by name",
                       items: {
-                        type: :object,
-                        description: "Outgoing payments detail",
-                        properties: {
-                          name: {
-                            type: :string,
-                            enum: CFEConstants::VALID_OUTGOING_CATEGORIES,
-                            description: "Type of outgoing",
-                            example: CFEConstants::VALID_OUTGOING_CATEGORIES.first,
-                          },
-                          payments: {
-                            type: :array,
-                            required: %i[client_id payment_date amount],
-                            description: "One or more outgoing payments detail",
-                            items: {
-                              type: :object,
-                              description: "Payment detail",
-                              properties: {
-                                client_id: {
-                                  type: :string,
-                                  description: "Client identifier for outgoing payment",
-                                  example: "05459c0f-a620-4743-9f0c-b3daa93e5711",
-                                },
-                                payment_date: {
-                                  type: :string,
-                                  format: :date,
-                                  description: "Date payment made",
-                                  example: "1992-07-22",
-                                },
-                                housing_costs_type: {
-                                  type: :string,
-                                  enum: CFEConstants::VALID_OUTGOING_HOUSING_COST_TYPES,
-                                  description: "Housing cost type (omit for non-housing cost outgoings)",
-                                  example: CFEConstants::VALID_OUTGOING_HOUSING_COST_TYPES.first,
-                                },
-                                amount: {
-                                  type: :number,
-                                  format: :decimal,
-                                  description: "Amount of payment made",
-                                  example: 101.01,
+                        oneOf: [
+                          {
+                            type: :object,
+                            required: %i[name payments],
+                            additionalProperties: false,
+                            description: "Outgoing payments detail",
+                            properties: {
+                              name: {
+                                type: :string,
+                                enum: CFEConstants::NON_HOUSING_OUTGOING_CATEGORIES,
+                                description: "Type of outgoing",
+                                example: CFEConstants::NON_HOUSING_OUTGOING_CATEGORIES.first,
+                              },
+                              payments: {
+                                type: :array,
+                                description: "One or more outgoing payments detail",
+                                items: {
+                                  type: :object,
+                                  additionalProperties: false,
+                                  required: %i[client_id payment_date amount],
+                                  description: "Payment detail",
+                                  properties: {
+                                    client_id: {
+                                      type: :string,
+                                      description: "Client identifier for outgoing payment",
+                                      example: "05459c0f-a620-4743-9f0c-b3daa93e5711",
+                                    },
+                                    payment_date: {
+                                      type: :string,
+                                      format: :date,
+                                      description: "Date payment made",
+                                      example: "1992-07-22",
+                                    },
+                                    amount: {
+                                      type: :number,
+                                      format: :decimal,
+                                      description: "Amount of payment made",
+                                      example: 101.01,
+                                    },
+                                  },
                                 },
                               },
                             },
                           },
-                        },
+                          {
+                            type: :object,
+                            required: %i[name payments],
+                            additionalProperties: false,
+                            description: "Outgoing payments detail",
+                            properties: {
+                              name: {
+                                type: :string,
+                                enum: %w[rent_or_mortgage],
+                                description: "Type of outgoing",
+                              },
+                              payments: {
+                                type: :array,
+                                description: "One or more outgoing payments detail",
+                                items: {
+                                  type: :object,
+                                  additionalProperties: false,
+                                  required: %i[client_id payment_date amount housing_cost_type],
+                                  description: "Payment detail",
+                                  properties: {
+                                    client_id: {
+                                      type: :string,
+                                      description: "Client identifier for outgoing payment",
+                                      example: "05459c0f-a620-4743-9f0c-b3daa93e5711",
+                                    },
+                                    payment_date: {
+                                      type: :string,
+                                      format: :date,
+                                      description: "Date payment made",
+                                      example: "1992-07-22",
+                                    },
+                                    housing_cost_type: {
+                                      type: :string,
+                                      enum: CFEConstants::VALID_OUTGOING_HOUSING_COST_TYPES,
+                                      description: "Housing cost type",
+                                    },
+                                    amount: {
+                                      type: :number,
+                                      format: :decimal,
+                                      description: "Amount of payment made",
+                                      example: 101.01,
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        ],
                       },
                     },
                     properties: {
@@ -1184,6 +1236,25 @@ RSpec.describe "full_assessment", type: :request, swagger_doc: "v5/swagger.yaml"
             assessment: { submission_date: "2022-06-06" },
             applicant: { date_of_birth: "2001-02-02", has_partner_opponent: false, receives_qualifying_benefit: false, employed: false },
             proceeding_types: [{ ccms_code: "DA001", client_involvement_type: "A" }],
+            outgoings: [
+              { name: "child_care", payments: [{ amount: 10.00, client_id: "blah", payment_date: "2022-05-06" }] },
+              { name: "rent_or_mortgage", payments: [{ amount: 10.00, client_id: "blah", payment_date: "2022-05-06", housing_cost_type: "rent" }] },
+            ],
+            cash_transactions: {
+              outgoings: [
+                { category: "child_care",
+                  payments: [{ amount: 10.00, client_id: "blah", date: "2022-03-01" },
+                             { amount: 10.00, client_id: "blah", date: "2022-04-01" },
+                             { amount: 10.00, client_id: "blah", date: "2022-05-01" }] },
+                { category: "rent_or_mortgage",
+                  payments: [
+                    { amount: 10.00, client_id: "blah", date: "2022-03-01", housing_cost_type: "rent" },
+                    { amount: 10.00, client_id: "blah", date: "2022-04-01", housing_cost_type: "rent" },
+                    { amount: 10.00, client_id: "blah", date: "2022-05-01", housing_cost_type: "rent" },
+                  ] },
+              ],
+              income: [],
+            },
           }
         end
 
