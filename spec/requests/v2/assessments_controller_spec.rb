@@ -623,6 +623,17 @@ module V2
                                                    partner_capital])
           end
 
+          describe "overall_result" do
+            it "is contribution_required" do
+              expect(summary.fetch(:overall_result).except(:proceeding_types))
+                .to eq({
+                  result: "contribution_required",
+                  capital_contribution: 19_636.86,
+                  income_contribution: 377.81,
+                })
+            end
+          end
+
           it "has disposable income" do
             expect(summary.fetch(:disposable_income).except(:proceeding_types,
                                                             :combined_total_outgoings_and_allowances,
