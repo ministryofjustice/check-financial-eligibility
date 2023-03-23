@@ -111,7 +111,9 @@ module V2
         end
 
         it "returns error JSON" do
-          expect(parsed_response.except(:errors)).to eq({ success: false })
+          expect(parsed_response)
+            .to eq({ success: false,
+                     errors: ["The property '#/' did not contain a required property of 'submission_date' in schema file://#"] })
         end
       end
 

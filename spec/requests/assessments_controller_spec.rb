@@ -72,6 +72,24 @@ RSpec.describe AssessmentsController, type: :request do
         expect(parsed_response[:success]).to be true
       end
     end
+
+    context "without submission date" do
+      let(:params) do
+        {
+          client_reference_id: "psr-123",
+        }
+      end
+
+      before do
+        post(assessments_path, params: params.to_json, headers:)
+      end
+
+      it "returns a friendly error" do
+        expect(parsed_response)
+          .to eq({ success: false,
+                   errors: ["The property '#/' did not contain a required property of 'submission_date' in schema file://#"] })
+      end
+    end
   end
 
   describe "GET /assessments/:id" do

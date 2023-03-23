@@ -1,4 +1,6 @@
 class OutgoingsController < ApplicationController
+  before_action :load_assessment
+
   def create
     if outgoing_creation_service.success?
       render_success
@@ -12,7 +14,7 @@ private
   def outgoing_creation_service
     @outgoing_creation_service ||= Creators::OutgoingsCreator.call(
       outgoings_params:,
-      assessment_id: params[:assessment_id],
+      assessment: @assessment,
     )
   end
 

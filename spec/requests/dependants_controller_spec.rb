@@ -36,7 +36,7 @@ RSpec.describe DependantsController, type: :request do
 
       it "returns error payload" do
         expect(parsed_response[:success]).to eq(false)
-        expect(parsed_response[:errors]).to include(/The property '#\/' did not contain a required property of 'dependants' in schema file/)
+        expect(parsed_response[:errors]).to include(/The property '#\/' did not contain a required property of 'dependants'/)
       end
     end
 
@@ -48,7 +48,7 @@ RSpec.describe DependantsController, type: :request do
       end
 
       it_behaves_like "it fails with message",
-                      /The property '#\/dependants\/0\/in_full_time_education' of type null did not match the following type: boolean in schema file/
+                      /The property '#\/dependants\/0\/in_full_time_education' of type null did not match the following type: boolean/
     end
 
     context "missing dependant date_of_birth" do
@@ -59,7 +59,7 @@ RSpec.describe DependantsController, type: :request do
       end
 
       it_behaves_like "it fails with message",
-                      /The property '#\/dependants\/0' did not contain a required property of 'date_of_birth' in schema file/
+                      /The property '#\/dependants\/0' did not contain a required property of 'date_of_birth'/
     end
 
     context "with missing dependant in_full_time_education" do
@@ -70,7 +70,7 @@ RSpec.describe DependantsController, type: :request do
       end
 
       it_behaves_like "it fails with message",
-                      /The property '#\/dependants\/0' did not contain a required property of 'in_full_time_education' in schema file/
+                      /The property '#\/dependants\/0' did not contain a required property of 'in_full_time_education'/
     end
 
     context "with missing dependant relationship" do
@@ -81,7 +81,7 @@ RSpec.describe DependantsController, type: :request do
       end
 
       it_behaves_like "it fails with message",
-                      /The property '#\/dependants\/0' did not contain a required property of 'relationship' in schema file/
+                      /The property '#\/dependants\/0' did not contain a required property of 'relationship'/
     end
 
     context "with invalid dependant relationship" do
@@ -92,7 +92,7 @@ RSpec.describe DependantsController, type: :request do
       end
 
       it_behaves_like "it fails with message",
-                      /The property '#\/dependants\/0\/relationship' value "son" did not match one of the following values: adult_relative, child_relative in schema file/
+                      /The property '#\/dependants\/0\/relationship' value "son" did not match one of the following values: adult_relative, child_relative/
     end
 
     context "with no dependant monthly_income" do

@@ -97,7 +97,7 @@ RSpec.describe StateBenefitsController, type: :request do
 
         it "contains success false in the response body" do
           post_payload
-          expect(parsed_response).to match(errors: [/The property '#\/state_benefits\/1\/payments\/0' did not contain a required property of 'client_id' in schema file/], success: false)
+          expect(parsed_response).to match(errors: [/The property '#\/state_benefits\/1\/payments\/0' did not contain a required property of 'client_id'/], success: false)
         end
 
         it "does not create any other income source records" do

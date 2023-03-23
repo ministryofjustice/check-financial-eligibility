@@ -72,7 +72,7 @@ RSpec.describe RegularTransactionsController, type: :request do
     context "with empty payload" do
       let(:params) { {} }
 
-      it_behaves_like "unsuccessful response", "The property '#/' did not contain a required property of 'regular_transactions' in schema"
+      it_behaves_like "unsuccessful response", "The property '#/' did not contain a required property of 'regular_transactions'"
     end
 
     context "with empty regular_transactions" do

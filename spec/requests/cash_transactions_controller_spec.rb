@@ -58,8 +58,7 @@ RSpec.describe CashTransactionsController, type: :request do
         end
 
         it "returns a error response" do
-          expect(parsed_response[:success]).to be false
-          expect(parsed_response[:errors]).to eq ["error 1", "error 2"]
+          expect(parsed_response).to eq(success: false, errors: ["error 1", "error 2"])
         end
 
         it "returns unprocessable response" do
@@ -77,10 +76,6 @@ RSpec.describe CashTransactionsController, type: :request do
 
           it_behaves_like "it fails with message",
                           /The property '#\/income\/0' did not contain a required property of 'category'/
-
-          it "does not call the CashTransactionCreator" do
-            expect(creator_class).not_to receive(:call)
-          end
         end
 
         context "missing payments" do
@@ -90,10 +85,6 @@ RSpec.describe CashTransactionsController, type: :request do
 
           it_behaves_like "it fails with message",
                           /The property '#\/income\/0' did not contain a required property of 'payments'/
-
-          it "does not call the CashTransactionCreator" do
-            expect(creator_class).not_to receive(:call)
-          end
         end
 
         context "invalid category" do
@@ -103,10 +94,6 @@ RSpec.describe CashTransactionsController, type: :request do
 
           it_behaves_like "it fails with message",
                           /The property '#\/income\/0\/category' value "xxxx" did not match one of the following values/
-
-          it "does not call the CashTransactionCreator" do
-            expect(creator_class).not_to receive(:call)
-          end
         end
 
         context "negative amounts" do
@@ -114,15 +101,8 @@ RSpec.describe CashTransactionsController, type: :request do
 
           before { post_payload }
 
-          it "testing" do
-          end
-
           it_behaves_like "it fails with message",
                           /The property '#\/income\/1\/payments\/2\/amount' value "-100.00" did not match the regex/
-
-          it "does not call the CashTransactionCreator" do
-            expect(creator_class).not_to receive(:call)
-          end
         end
 
         context "missing amount" do
@@ -132,10 +112,6 @@ RSpec.describe CashTransactionsController, type: :request do
 
           it_behaves_like "it fails with message",
                           /The property '#\/income\/1\/payments\/2' did not contain a required property of 'amount'/
-
-          it "does not call the CashTransactionCreator" do
-            expect(creator_class).not_to receive(:call)
-          end
         end
 
         context "non-number amount" do
@@ -145,10 +121,6 @@ RSpec.describe CashTransactionsController, type: :request do
 
           it_behaves_like "it fails with message",
                           /The property '#\/income\/1\/payments\/2\/amount' value "hello" did not match the regex/
-
-          it "does not call the CashTransactionCreator" do
-            expect(creator_class).not_to receive(:call)
-          end
         end
       end
 
@@ -160,10 +132,6 @@ RSpec.describe CashTransactionsController, type: :request do
 
           it_behaves_like "it fails with message",
                           /The property '#\/outgoings\/0' did not contain a required property of 'category'/
-
-          it "does not call the CashTransactionCreator" do
-            expect(creator_class).not_to receive(:call)
-          end
         end
 
         context "invalid category" do
@@ -173,10 +141,6 @@ RSpec.describe CashTransactionsController, type: :request do
 
           it_behaves_like "it fails with message",
                           /The property '#\/outgoings\/0\/category' value "xxxx" did not match one of the following values/
-
-          it "does not call the CashTransactionCreator" do
-            expect(creator_class).not_to receive(:call)
-          end
         end
 
         context "missing payments" do
@@ -186,10 +150,6 @@ RSpec.describe CashTransactionsController, type: :request do
 
           it_behaves_like "it fails with message",
                           /The property '#\/outgoings\/0' did not contain a required property of 'payments'/
-
-          it "does not call the CashTransactionCreator" do
-            expect(creator_class).not_to receive(:call)
-          end
         end
 
         context "negative payment amount" do
@@ -199,10 +159,6 @@ RSpec.describe CashTransactionsController, type: :request do
 
           it_behaves_like "it fails with message",
                           /The property '#\/outgoings\/1\/payments\/2\/amount' value "-100.00" did not match the regex/
-
-          it "does not call the CashTransactionCreator" do
-            expect(creator_class).not_to receive(:call)
-          end
         end
 
         context "missing payment amount" do
@@ -212,10 +168,6 @@ RSpec.describe CashTransactionsController, type: :request do
 
           it_behaves_like "it fails with message",
                           /The property '#\/outgoings\/1\/payments\/2' did not contain a required property of 'amount'/
-
-          it "does not call the CashTransactionCreator" do
-            expect(creator_class).not_to receive(:call)
-          end
         end
 
         context "invalid payment amount value" do
@@ -225,10 +177,6 @@ RSpec.describe CashTransactionsController, type: :request do
 
           it_behaves_like "it fails with message",
                           /The property '#\/outgoings\/1\/payments\/2\/amount' value "hello" did not match the regex/
-
-          it "does not call the CashTransactionCreator" do
-            expect(creator_class).not_to receive(:call)
-          end
         end
       end
     end

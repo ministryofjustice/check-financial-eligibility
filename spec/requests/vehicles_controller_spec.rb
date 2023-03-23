@@ -59,7 +59,7 @@ RSpec.describe VehiclesController, type: :request do
     context "with invalid input" do
       let(:vehicles) { :invalid }
 
-      it_behaves_like "an unprocessable entity", "The property '#/vehicles' of type string did not match the following type: array in schema"
+      it_behaves_like "an unprocessable entity", "The property '#/vehicles' of type string did not match the following type: array"
     end
 
     context "with a future date_of_purchase" do

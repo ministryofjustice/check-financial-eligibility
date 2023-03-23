@@ -93,7 +93,7 @@ module Creators
         },
         lambda { |assessment, params|
           if params[:outgoings]
-            Creators::OutgoingsCreator.call(assessment_id: assessment.id,
+            Creators::OutgoingsCreator.call(assessment:,
                                             outgoings_params: { outgoings: params[:outgoings] })
           end
         },

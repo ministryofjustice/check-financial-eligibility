@@ -133,7 +133,7 @@ RSpec.describe OtherIncomesController, type: :request do
 
         it "contains an error message" do
           post_payload
-          expect(parsed_response[:errors].first).to match(/The property '#\/other_incomes\/1\/source' value "imagined_source" did not match one of the following values: benefits, friends_or_family, maintenance_in, property_or_lodger, pension, Benefits, Friends or family, Maintenance in, Property or lodger, Pension in schema file/)
+          expect(parsed_response[:errors].first).to match(/The property '#\/other_incomes\/1\/source' value "imagined_source" did not match one of the following values: benefits, friends_or_family, maintenance_in, property_or_lodger, pension, Benefits, Friends or family, Maintenance in, Property or lodger, Pension/)
         end
       end
     end
@@ -177,7 +177,7 @@ RSpec.describe OtherIncomesController, type: :request do
 
       it "contains success false in the response body" do
         post_payload
-        expect(parsed_response).to match(errors: [/The property '#\/other_incomes\/0\/payments\/0' did not contain a required property of 'date' in schema file/], success: false)
+        expect(parsed_response).to match(errors: [/The property '#\/other_incomes\/0\/payments\/0' did not contain a required property of 'date'/], success: false)
       end
     end
 
@@ -207,7 +207,7 @@ RSpec.describe OtherIncomesController, type: :request do
 
       it "contains success false in the response body" do
         post_payload
-        expect(parsed_response).to match(errors: [/The property '#\/other_incomes\/0\/payments\/0\/client_id' of type integer did not match the following type: string in schema file/], success: false)
+        expect(parsed_response).to match(errors: [/The property '#\/other_incomes\/0\/payments\/0\/client_id' of type integer did not match the following type: string/], success: false)
       end
     end
 

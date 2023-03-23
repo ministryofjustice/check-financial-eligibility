@@ -41,11 +41,10 @@ RSpec.describe ExplicitRemarksController, type: :request do
 
         it "returns failure" do
           expect(response).to have_http_status(:unprocessable_entity)
-          expect(parsed_response[:success]).to be false
         end
 
         it "parsed responses contains errors" do
-          expect(parsed_response[:errors]).to include(%(Assessment must exist))
+          expect(parsed_response).to eq(success: false, errors: ["Assessment must exist"])
         end
       end
     end

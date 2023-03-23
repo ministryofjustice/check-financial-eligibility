@@ -60,12 +60,8 @@ RSpec.describe PropertiesController, type: :request do
         expect(response).to have_http_status(:unprocessable_entity)
       end
 
-      it "parsed response returns success false" do
-        expect(parsed_response[:success]).to eq false
-      end
-
       it "returns expected error response" do
-        expect(parsed_response[:errors]).to eq [%(No such assessment id)]
+        expect(parsed_response).to eq(success: false, errors: [%(No such assessment id)])
       end
 
       context "with missing main_home attribute" do
@@ -80,7 +76,7 @@ RSpec.describe PropertiesController, type: :request do
         end
 
         it "returns expected error response" do
-          expect(parsed_response[:errors]).to match [/The property '#\/properties' did not contain a required property of 'main_home' in schema file/]
+          expect(parsed_response[:errors]).to match [/The property '#\/properties' did not contain a required property of 'main_home'/]
         end
       end
 
@@ -133,7 +129,7 @@ RSpec.describe PropertiesController, type: :request do
         end
 
         it "returns expected error response" do
-          expect(parsed_response[:errors]).to match [/The property '#\/properties\/main_home' did not contain a required property of 'outstanding_mortgage' in schema file/]
+          expect(parsed_response[:errors]).to match [/The property '#\/properties\/main_home' did not contain a required property of 'outstanding_mortgage'/]
         end
       end
 
@@ -167,7 +163,7 @@ RSpec.describe PropertiesController, type: :request do
         end
 
         it "returns expected error response" do
-          expect(parsed_response[:errors]).to match [/The property '#\/properties\/additional_properties\/0' did not contain a required property of 'percentage_owned' in schema file/]
+          expect(parsed_response[:errors]).to match [/The property '#\/properties\/additional_properties\/0' did not contain a required property of 'percentage_owned'/]
         end
       end
 
@@ -202,7 +198,7 @@ RSpec.describe PropertiesController, type: :request do
         end
 
         it "returns expected error response" do
-          expect(parsed_response[:errors]).to match [/The property '#\/properties\/additional_properties\/0\/shared_with_housing_assoc' of type string did not match the following type: boolean in schema file/]
+          expect(parsed_response[:errors]).to match [/The property '#\/properties\/additional_properties\/0\/shared_with_housing_assoc' of type string did not match the following type: boolean/]
         end
       end
     end

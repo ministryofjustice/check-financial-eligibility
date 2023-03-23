@@ -69,11 +69,8 @@ RSpec.describe OutgoingsController, type: :request do
       end
 
       it "returns error information" do
-        expect(parsed_response[:errors].join).to match(/ActiveRecord::RecordInvalid: Validation failed: Payment date cannot be in the future/)
-      end
-
-      it "sets success flag to false" do
-        expect(parsed_response[:success]).to be false
+        expect(parsed_response)
+          .to eq(success: false, errors: ["Payment date cannot be in the future"])
       end
     end
 
@@ -93,7 +90,7 @@ RSpec.describe OutgoingsController, type: :request do
 
       it "contains success false in the response body" do
         post_payload
-        expect(parsed_response).to match(errors: [/The property '#\/outgoings\/2\/payments\/0' did not contain a required property of 'client_id' in schema file/], success: false)
+        expect(parsed_response).to match(errors: [/The property '#\/outgoings\/2\/payments\/0' did not contain a required property of 'client_id'/], success: false)
       end
 
       it "does not create outgoing records" do
@@ -117,7 +114,7 @@ RSpec.describe OutgoingsController, type: :request do
     end
 
     context "with a failure to save" do
-      let(:service) { instance_double Creators::OutgoingsCreator, success?: false, errors: [:foo] }
+      let(:service) { instance_double Creators::OutgoingsCreator::Result, success?: false, errors: [:foo] }
 
       before do
         allow(Creators::OutgoingsCreator).to receive(:call).and_return(service)

@@ -55,8 +55,7 @@ RSpec.describe ApplicantsController, type: :request do
         end
 
         it "returns expected response" do
-          expect(parsed_response[:success]).to eq(false)
-          expect(parsed_response[:errors]).to eq [expected_message]
+          expect(parsed_response).to eq(success: false, errors: [expected_message])
         end
       end
     end
