@@ -1,8 +1,6 @@
 module Decorators
   module V5
     class GrossIncomeDecorator
-      include Transactions
-
       def initialize(summary, employments, subtotals)
         @summary = summary
         @employments = employments
