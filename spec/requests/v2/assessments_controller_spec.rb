@@ -26,7 +26,6 @@ module V2
               {
                 client_id: SecureRandom.uuid,
                 gross: 546.00,
-                net_employment_income: 398.84,
                 benefits_in_kind: 16.60,
                 tax: -104.10,
                 national_insurance: -18.66,
@@ -89,6 +88,16 @@ module V2
           },
         ]
       end
+      let(:irregular_income_payments) do
+        [
+          {
+            income_type: "student_loan",
+            frequency: "annual",
+            amount: 456.78,
+          },
+        ]
+      end
+      let(:irregular_income_params) { { payments: irregular_income_payments } }
 
       before do
         post v2_assessments_path, params: default_params.merge(params).to_json, headers:
@@ -231,6 +240,9 @@ module V2
         let(:month3) { current_date.beginning_of_month - 1.month }
         let(:params) do
           {
+            # child_care won't show up unless student loan payments and dependants
+            irregular_incomes: irregular_income_params,
+            dependants: dependant_params,
             cash_transactions:
               {
                 income: [
@@ -242,6 +254,18 @@ module V2
                     category: "friends_or_family",
                     payments: cash_transactions(250.0),
                   },
+                  {
+                    category: "benefits",
+                    payments: cash_transactions(65.12),
+                  },
+                  {
+                    category: "property_or_lodger",
+                    payments: cash_transactions(91.87),
+                  },
+                  {
+                    category: "pension",
+                    payments: cash_transactions(34.12),
+                  },
                 ],
                 outgoings: [
                   {
@@ -252,6 +276,14 @@ module V2
                     category: "child_care",
                     payments: cash_transactions(257.0),
                   },
+                  {
+                    category: "legal_aid",
+                    payments: cash_transactions(44.54),
+                  },
+                  {
+                    category: "rent_or_mortgage",
+                    payments: cash_transactions(87.54),
+                  },
                 ],
               },
           }
@@ -261,9 +293,20 @@ module V2
           expect(assessment.dig(:gross_income, :other_income, :monthly_equivalents))
             .to eq(
               {
-                all_sources: { friends_or_family: 250.0, maintenance_in: 1033.44, property_or_lodger: 0.0, pension: 0.0 },
+                all_sources: { friends_or_family: 250.0, maintenance_in: 1033.44, property_or_lodger: 91.87, pension: 34.12 },
                 bank_transactions: { friends_or_family: 0.0, maintenance_in: 0.0, property_or_lodger: 0.0, pension: 0.0 },
-                cash_transactions: { friends_or_family: 250.0, maintenance_in: 1033.44, property_or_lodger: 0.0, pension: 0.0 },
+                cash_transactions: { friends_or_family: 250.0, maintenance_in: 1033.44, property_or_lodger: 91.87, pension: 34.12 },
+              },
+            )
+        end
+
+        it "has disposable income" do
+          expect(assessment.dig(:disposable_income, :monthly_equivalents))
+            .to eq(
+              {
+                all_sources: { child_care: 257.0, rent_or_mortgage: 87.54, maintenance_out: 256.0, legal_aid: 44.54 },
+                bank_transactions: { child_care: 0.0, rent_or_mortgage: 0.0, maintenance_out: 0.0, legal_aid: 0.0 },
+                cash_transactions: { child_care: 257.0, rent_or_mortgage: 87.54, maintenance_out: 256.0, legal_aid: 44.54 },
               },
             )
         end
@@ -400,6 +443,16 @@ module V2
         let(:outgoings_params) do
           [
             {
+              name: "child_care",
+              payments: [
+                {
+                  payment_date:,
+                  amount: 29.12,
+                  client_id: client_ids.first,
+                },
+              ],
+            },
+            {
               name: "legal_aid",
               payments: [
                 {
@@ -473,21 +526,6 @@ module V2
               ],
             },
           ]
-        end
-
-        let(:irregular_income_payments) do
-          [
-            {
-              income_type: "student_loan",
-              frequency: "annual",
-              amount: 456.78,
-            },
-          ]
-        end
-        let(:irregular_income_params) do
-          {
-            payments: irregular_income_payments,
-          }
         end
 
         let(:client_ids) { [SecureRandom.uuid, SecureRandom.uuid, SecureRandom.uuid] }
@@ -584,7 +622,7 @@ module V2
           end
 
           it "has disposable income" do
-            expect(summary.fetch(:disposable_income).except(:proceeding_types, :income_contribution,
+            expect(summary.fetch(:disposable_income).except(:proceeding_types,
                                                             :combined_total_outgoings_and_allowances,
                                                             :total_disposable_income, :combined_total_disposable_income,
                                                             :total_outgoings_and_allowances))
@@ -592,6 +630,7 @@ module V2
                 {
                   dependant_allowance: 0.0,
                   gross_housing_costs: 117.16,
+                  income_contribution: 377.81,
                   housing_benefit: 0.0,
                   net_housing_costs: 117.16,
                   maintenance_allowance: 333.07,
@@ -836,10 +875,10 @@ module V2
 
           it "has disposable income" do
             expect(assessment.fetch(:disposable_income)).to eq(
-              { monthly_equivalents: { all_sources: { child_care: 0.0, rent_or_mortgage: 117.16, maintenance_out: 333.07, legal_aid: 6.62 },
-                                       bank_transactions: { child_care: 0.0, rent_or_mortgage: 117.16, maintenance_out: 333.07, legal_aid: 6.62 },
+              { monthly_equivalents: { all_sources: { child_care: 9.71, rent_or_mortgage: 117.16, maintenance_out: 333.07, legal_aid: 6.62 },
+                                       bank_transactions: { child_care: 9.71, rent_or_mortgage: 117.16, maintenance_out: 333.07, legal_aid: 6.62 },
                                        cash_transactions: { child_care: 0.0, rent_or_mortgage: 0.0, maintenance_out: 0.0, legal_aid: 0.0 } },
-                childcare_allowance: 0.0,
+                childcare_allowance: 9.71,
                 deductions: { dependants_allowance: 0.0, disregarded_state_benefits: 1033.44 } },
             )
           end
