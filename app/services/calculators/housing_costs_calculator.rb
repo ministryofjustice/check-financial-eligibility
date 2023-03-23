@@ -1,7 +1,5 @@
 module Calculators
   class HousingCostsCalculator
-    include Transactions
-
     delegate :housing_cost_outgoings, to: :@disposable_income_summary
 
     def initialize(disposable_income_summary:, gross_income_summary:, submission_date:, person:)
@@ -40,7 +38,7 @@ module Calculators
   private
 
     def gross_housing_costs_cash
-      monthly_cash_transaction_amount_by(gross_income_summary: @gross_income_summary, operation: :debit, category: :rent_or_mortgage)
+      Calculators::MonthlyCashTransactionAmountCalculator.call(gross_income_summary: @gross_income_summary, operation: :debit, category: :rent_or_mortgage)
     end
 
     def gross_housing_costs_bank

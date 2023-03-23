@@ -16,11 +16,4 @@ module Transactions
 
     transactions
   end
-
-  def monthly_cash_transaction_amount_by(gross_income_summary:, operation:, category:)
-    transactions = CashTransaction.by_operation_and_category(gross_income_summary, operation, category)
-    return 0.0 if transactions.empty?
-
-    transactions.average(:amount).round(2)
-  end
 end

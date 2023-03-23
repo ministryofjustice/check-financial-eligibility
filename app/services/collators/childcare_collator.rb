@@ -1,7 +1,5 @@
 module Collators
   class ChildcareCollator
-    include Transactions
-
     class << self
       def call(disposable_income_summary:, gross_income_summary:, eligible_for_childcare:)
         new(disposable_income_summary:, gross_income_summary:, eligible_for_childcare:).call
@@ -34,7 +32,7 @@ module Collators
     end
 
     def child_care_cash
-      monthly_cash_transaction_amount_by(gross_income_summary: @gross_income_summary, operation: :debit, category: :child_care)
+      Calculators::MonthlyCashTransactionAmountCalculator.call(gross_income_summary: @gross_income_summary, operation: :debit, category: :child_care)
     end
   end
 end

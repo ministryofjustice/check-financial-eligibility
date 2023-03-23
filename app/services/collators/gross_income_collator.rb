@@ -1,7 +1,5 @@
 module Collators
   class GrossIncomeCollator
-    include Transactions
-
     class << self
       def call(assessment:, submission_date:, employments:, disposable_income_summary:, gross_income_summary:)
         new(assessment:, submission_date:, employments:, disposable_income_summary:, gross_income_summary:).call
@@ -82,7 +80,7 @@ module Collators
                categorised_bank_transactions[category]
              end
 
-      cash = monthly_cash_transaction_amount_by(gross_income_summary: @gross_income_summary, operation: :credit, category:)
+      cash = Calculators::MonthlyCashTransactionAmountCalculator.call(gross_income_summary: @gross_income_summary, operation: :credit, category:)
       regular = Calculators::MonthlyRegularTransactionAmountCalculator.call(gross_income_summary: @gross_income_summary, operation: :credit, category:)
       GrossIncomeCategorySubtotals.new(
         category: category.to_sym,

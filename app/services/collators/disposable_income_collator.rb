@@ -1,19 +1,6 @@
 module Collators
   class DisposableIncomeCollator
-    include Transactions
-
-    delegate :net_housing_costs,
-             :rent_or_mortgage_bank,
-             :rent_or_mortgage_cash,
-             :child_care_bank,
-             :child_care_cash,
-             :maintenance_out_bank,
-             :maintenance_out_cash,
-             :dependant_allowance,
-             :legal_aid_bank,
-             :legal_aid_cash,
-             :fixed_employment_allowance,
-             :employment_income_deductions, to: :@disposable_income_summary
+    Attrs = Data.define(:attrs, :monthly_cash_transactions_total)
 
     class << self
       def call(disposable_income_summary:, gross_income_summary:, partner_allowance:, total_gross_income:)
@@ -25,12 +12,16 @@ module Collators
       @disposable_income_summary = disposable_income_summary
       @gross_income_summary = gross_income_summary
       @partner_allowance = partner_allowance
-      @monthly_cash_transactions_total = 0
       @total_gross_income = total_gross_income
     end
 
     def call
-      @disposable_income_summary.update!(populate_attrs)
+      attrs = populate_attrs
+      @disposable_income_summary.update!(attrs.attrs)
+      @disposable_income_summary.update!(
+        total_outgoings_and_allowances: total_outgoings_and_allowances(attrs.monthly_cash_transactions_total),
+        total_disposable_income: disposable_income(attrs.monthly_cash_transactions_total),
+      )
     end
 
   private
@@ -43,46 +34,46 @@ module Collators
     # `attrs[:"#{category}_bank"] = __send__("#{category}_bank")`
     def populate_attrs
       attrs = {}
+      monthly_cash_transactions_total = 0
 
       outgoing_categories.each do |category|
-        monthly_cash_amount = category == :child_care ? __send__("#{category}_cash") : monthly_cash_by_category(category)
-        @monthly_cash_transactions_total += monthly_cash_amount unless category == :rent_or_mortgage
+        monthly_cash_amount = monthly_cash_by_category(category)
+        monthly_cash_transactions_total += monthly_cash_amount unless category == :rent_or_mortgage
 
-        attrs[:"#{category}_bank"] = __send__("#{category}_bank")
+        attrs[:"#{category}_bank"] = @disposable_income_summary.public_send("#{category}_bank")
         attrs[:"#{category}_cash"] = monthly_cash_amount
         attrs[:"#{category}_all_sources"] = attrs[:"#{category}_bank"] + attrs[:"#{category}_cash"]
       end
 
-      attrs.merge(default_attrs)
+      Attrs.new(attrs:, monthly_cash_transactions_total:)
     end
 
     def monthly_cash_by_category(category)
-      monthly_cash_transaction_amount_by(gross_income_summary: @gross_income_summary, operation: :debit, category:)
+      if category == :child_care
+        @disposable_income_summary.child_care_cash
+      else
+        Calculators::MonthlyCashTransactionAmountCalculator.call(gross_income_summary: @gross_income_summary, operation: :debit, category:)
+      end
     end
 
-    def default_attrs
-      {
-        total_outgoings_and_allowances:,
-        total_disposable_income: disposable_income,
-      }
-    end
-
-    def total_outgoings_and_allowances
-      net_housing_costs +
-        dependant_allowance +
+    def total_outgoings_and_allowances(monthly_cash_transactions_total)
+      @disposable_income_summary.net_housing_costs +
+        @disposable_income_summary.dependant_allowance +
         monthly_bank_transactions_total +
-        @monthly_cash_transactions_total -
-        fixed_employment_allowance -
-        employment_income_deductions +
+        monthly_cash_transactions_total -
+        @disposable_income_summary.fixed_employment_allowance -
+        @disposable_income_summary.employment_income_deductions +
         @partner_allowance
     end
 
     def monthly_bank_transactions_total
-      child_care_bank + maintenance_out_bank + legal_aid_bank
+      @disposable_income_summary.child_care_bank +
+        @disposable_income_summary.maintenance_out_bank +
+        @disposable_income_summary.legal_aid_bank
     end
 
-    def disposable_income
-      @total_gross_income - total_outgoings_and_allowances
+    def disposable_income(monthly_cash_transactions_total)
+      @total_gross_income - total_outgoings_and_allowances(monthly_cash_transactions_total)
     end
   end
 end
