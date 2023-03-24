@@ -9,7 +9,7 @@ executors:
       - image: cimg/base:2020.01
   cloud-platform-executor:
     docker:
-      - image: ministryofjustice/cloud-platform-tools:2.1
+      - image: ministryofjustice/cloud-platform-tools:2.3.0
         environment:
           GITHUB_TEAM_NAME_SLUG: laa-estimate-eligibility
   linting-executor:
@@ -68,7 +68,7 @@ references:
         sudo apt-get update
         sudo apt-get install -y python3-pip
         sudo pip3 install awscli
-        $(aws ecr get-login --region eu-west-2 --no-include-email)
+        aws ecr get-login-password --region eu-west-2 | docker login --username AWS --password-stdin ${ECR_ENDPOINT}
   authenticate_k8s: &authenticate_k8s
     run:
       name: Authenticate with cluster
