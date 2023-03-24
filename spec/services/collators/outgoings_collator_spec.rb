@@ -1,7 +1,7 @@
 require "rails_helper"
 
 module Collators
-  RSpec.describe OutgoingsCollator do
+  RSpec.describe OutgoingsCollator, :calls_bank_holiday do
     let(:assessment) { create :assessment, :with_everything }
 
     subject(:collator) do
@@ -15,11 +15,11 @@ module Collators
 
     describe ".call" do
       it "calls all the collators and calculators" do
-        expect(Collators::ChildcareCollator).to receive(:call).exactly(1)
-        expect(Collators::DependantsAllowanceCollator).to receive(:call).exactly(1)
-        expect(Collators::MaintenanceCollator).to receive(:call).with(assessment.disposable_income_summary).exactly(1)
-        expect(Collators::HousingCostsCollator).to receive(:call).exactly(1)
-        expect(Collators::LegalAidCollator).to receive(:call).with(assessment.disposable_income_summary).exactly(1)
+        expect(Collators::ChildcareCollator).to receive(:call).exactly(1).and_call_original
+        expect(Collators::DependantsAllowanceCollator).to receive(:call).exactly(1).and_call_original
+        expect(Collators::MaintenanceCollator).to receive(:call).with(assessment.disposable_income_summary).exactly(1).and_call_original
+        expect(Collators::HousingCostsCollator).to receive(:call).exactly(1).and_call_original
+        expect(Collators::LegalAidCollator).to receive(:call).with(assessment.disposable_income_summary).exactly(1).and_call_original
         collator
       end
     end

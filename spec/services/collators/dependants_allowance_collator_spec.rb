@@ -7,7 +7,6 @@ module Collators
 
     subject(:collator) do
       described_class.call(dependants: assessment.dependants,
-                           disposable_income_summary: assessment.disposable_income_summary,
                            submission_date: assessment.submission_date)
     end
 
@@ -15,8 +14,7 @@ module Collators
       context "no dependants" do
         it "leaves the monthly dependants allowance as zero" do
           expect(assessment.dependants).to be_empty
-          collator
-          expect(disposable_income_summary.dependant_allowance).to eq 0.0
+          expect(collator).to eq 0.0
         end
       end
 
@@ -31,10 +29,10 @@ module Collators
           allow(Calculators::DependantAllowanceCalculator).to receive(:new)
             .with(dependant2, assessment.submission_date)
             .and_return(instance_double(Calculators::DependantAllowanceCalculator, call: 456.78))
-          collator
+
+          expect(collator).to eq(123.45 + 456.78)
           expect(dependant1.reload.dependant_allowance).to eq 123.45
           expect(dependant2.reload.dependant_allowance).to eq 456.78
-          expect(disposable_income_summary.dependant_allowance).to eq(123.45 + 456.78)
         end
       end
     end

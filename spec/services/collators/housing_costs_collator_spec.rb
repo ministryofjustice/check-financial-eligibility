@@ -21,7 +21,7 @@ module Collators
         context "without housing benefit" do
           it "has expected housing cost attributes" do
             collator
-            expect(disposable_income_summary)
+            expect(collator)
               .to have_attributes(
                 gross_housing_costs: 0.0,
                 housing_benefit: 0.0,
@@ -40,8 +40,7 @@ module Collators
           end
 
           it "has expected housing cost attributes" do
-            collator
-            expect(disposable_income_summary)
+            expect(collator)
               .to have_attributes(
                 gross_housing_costs: 0.0,
                 housing_benefit: 101.02,
@@ -63,8 +62,7 @@ module Collators
             let(:housing_cost_type) { "board_and_lodging" }
 
             it "records half the monthly housing cost" do
-              collator
-              expect(disposable_income_summary)
+              expect(collator)
                 .to have_attributes(
                   gross_housing_costs: 177.72,
                   housing_benefit: 0.0,
@@ -77,8 +75,7 @@ module Collators
             let(:housing_cost_type) { "rent" }
 
             it "records the full monthly housing costs" do
-              collator
-              expect(disposable_income_summary)
+              expect(collator)
                 .to have_attributes(
                   gross_housing_costs: 355.44,
                   housing_benefit: 0.0,
@@ -101,8 +98,7 @@ module Collators
             let(:housing_cost_type) { "board_and_lodging" }
 
             it "records half the housing cost less the housing benefit" do
-              collator
-              expect(disposable_income_summary)
+              expect(collator)
                 .to have_attributes(
                   gross_housing_costs: 177.72,
                   housing_benefit: 101.02,
@@ -115,8 +111,7 @@ module Collators
             let(:housing_cost_type) { "mortgage" }
 
             it "records the full housing costs less the housing benefit" do
-              collator
-              expect(disposable_income_summary)
+              expect(collator)
                 .to have_attributes(
                   gross_housing_costs: 355.44,
                   housing_benefit: 101.02,
@@ -134,8 +129,7 @@ module Collators
 
         context "without housing benefit" do
           it "records the full monthly housing costs" do
-            collator
-            expect(disposable_income_summary)
+            expect(collator)
               .to have_attributes(
                 gross_housing_costs: 333.33,
                 housing_benefit: 0.0,
@@ -150,8 +144,7 @@ module Collators
           end
 
           it "records half the housing cost less the housing benefit" do
-            collator
-            expect(disposable_income_summary)
+            expect(collator)
               .to have_attributes(
                 gross_housing_costs: 333.33,
                 housing_benefit: 333.33,

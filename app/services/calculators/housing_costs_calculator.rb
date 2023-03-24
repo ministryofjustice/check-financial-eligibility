@@ -35,23 +35,18 @@ module Calculators
       end
     end
 
-  private
-
-    def gross_housing_costs_cash
-      Calculators::MonthlyCashTransactionAmountCalculator.call(gross_income_summary: @gross_income_summary, operation: :debit, category: :rent_or_mortgage)
-    end
-
     def gross_housing_costs_bank
-      monthly_amount = Calculators::MonthlyEquivalentCalculator.call(
+      Calculators::MonthlyEquivalentCalculator.call(
         assessment_errors: @disposable_income_summary.assessment.assessment_errors,
         collection: @disposable_income_summary.housing_cost_outgoings,
         amount_method: :allowable_amount,
       )
+    end
 
-      # TODO: Stop persisting this to DB
-      @disposable_income_summary.update!(rent_or_mortgage_bank: monthly_amount)
+  private
 
-      monthly_amount
+    def gross_housing_costs_cash
+      Calculators::MonthlyCashTransactionAmountCalculator.call(gross_income_summary: @gross_income_summary, operation: :debit, category: :rent_or_mortgage)
     end
 
     def gross_housing_costs_regular_transactions

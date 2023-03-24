@@ -58,18 +58,24 @@ module Collators
       end
 
       context "total_monthly_outgoings" do
-        it "sums childcare, legal_aid, maintenance, net housing costs and allowances" do
+        before do
           collator
-          expect(disposable_income_summary.reload.total_outgoings_and_allowances).to eq total_outgoings
+        end
+
+        it "sums childcare, legal_aid, maintenance, net housing costs and allowances" do
+          expect(disposable_income_summary.total_outgoings_and_allowances).to eq total_outgoings
         end
       end
 
       context "total disposable income" do
         let(:total_gross_income) { total_outgoings + 1_500 }
 
-        it "is populated with result of gross income minus total outgoings and allowances" do
+        before do
           collator
-          result = total_gross_income - disposable_income_summary.reload.total_outgoings_and_allowances
+        end
+
+        it "is populated with result of gross income minus total outgoings and allowances" do
+          result = total_gross_income - disposable_income_summary.total_outgoings_and_allowances
           expect(disposable_income_summary.total_disposable_income).to eq result
         end
       end
@@ -77,9 +83,12 @@ module Collators
       context "when total disposable income is negative" do
         let(:total_gross_income) { total_outgoings - 1_500 }
 
-        it "returns the correct negative amount" do
+        before do
           collator
-          result = total_gross_income - disposable_income_summary.reload.total_outgoings_and_allowances
+        end
+
+        it "returns the correct negative amount" do
+          result = total_gross_income - disposable_income_summary.total_outgoings_and_allowances
           expect(disposable_income_summary.total_disposable_income).to eq result
           expect(disposable_income_summary.total_disposable_income).to be_negative
         end

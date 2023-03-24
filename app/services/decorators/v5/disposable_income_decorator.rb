@@ -9,18 +9,14 @@ module Decorators
       end
 
       def as_json
-        payload unless @summary.nil?
-      end
-
-    private
-
-      def payload
         {
           monthly_equivalents:,
           childcare_allowance:,
           deductions:,
         }
       end
+
+    private
 
       def monthly_equivalents
         {

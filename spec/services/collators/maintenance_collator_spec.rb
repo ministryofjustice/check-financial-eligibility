@@ -12,8 +12,7 @@ module Collators
 
       context "when there are no maintenance outgoings" do
         it "leaves the monthly maintenance field on the disposable income summary as zero" do
-          collator
-          expect(disposable_income_summary.reload.maintenance_out_bank).to be_zero
+          expect(collator).to be_zero
         end
       end
 
@@ -31,8 +30,7 @@ module Collators
         end
 
         it "calculates the monthly equivalent and updates the disposable income summary" do
-          collator
-          expect(disposable_income_summary.reload.maintenance_out_bank).to eq 112.08
+          expect(collator).to eq 112.08
         end
       end
     end

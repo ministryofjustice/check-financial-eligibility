@@ -2,8 +2,6 @@ require "simplecov"
 require "simplecov-lcov"
 require "vcr"
 
-SimpleCov.minimum_coverage 100 unless ENV["SKIP_COVERAGE"]
-
 # This allows both LCOV and HTML formatting -
 # lcov for undercover gem and cc-test-reporter, HTML for humans
 class SimpleCov::Formatter::MergedFormatter
@@ -29,7 +27,7 @@ unless ENV["NOCOVERAGE"]
 
     enable_coverage :branch
     primary_coverage :branch
-    minimum_coverage branch: 98.58, line: 100
+    minimum_coverage branch: 98.77, line: 100
   end
 end
 

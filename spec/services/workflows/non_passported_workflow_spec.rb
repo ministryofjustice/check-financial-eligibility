@@ -18,7 +18,7 @@ module Workflows
       Creators::CapitalEligibilityCreator.call(assessment)
     end
 
-    describe ".call" do
+    describe "#call", :calls_bank_holiday do
       let(:level_of_help) { "certificated" }
       let(:proceeding_types) { %w[SE003] }
 
@@ -30,9 +30,6 @@ module Workflows
       end
 
       before do
-        stub_request(:get, "https://www.gov.uk/bank-holidays.json")
-          .to_return(body: file_fixture("bank-holidays.json").read)
-
         assessment.proceeding_type_codes.each do |ptc|
           create(:assessment_eligibility, assessment:, proceeding_type_code: ptc)
         end

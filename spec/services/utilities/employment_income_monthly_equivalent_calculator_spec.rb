@@ -1,15 +1,10 @@
 require "rails_helper"
 
-RSpec.describe Utilities::EmploymentIncomeMonthlyEquivalentCalculator do
+RSpec.describe Utilities::EmploymentIncomeMonthlyEquivalentCalculator, :calls_bank_holiday do
   let(:instance) { described_class.new(employment) }
   let(:assessment) { create :assessment }
   let(:employment) { create :employment, assessment: }
   let(:payments) { employment.employment_payments.order(:date) }
-
-  before do
-    stub_request(:get, "https://www.gov.uk/bank-holidays.json")
-      .to_return(body: file_fixture("bank-holidays.json").read)
-  end
 
   context "with valid payment period" do
     before do
