@@ -42,7 +42,8 @@ module Decorators
 
       def partner_gross_income
         GrossIncomeResultDecorator.new(assessment.partner_gross_income_summary,
-                                       @calculation_output.gross_income_subtotals.partner_gross_income_subtotals).as_json
+                                       @calculation_output.gross_income_subtotals.partner_gross_income_subtotals,
+                                       @calculation_output.gross_income_subtotals.combined_monthly_gross_income.to_f).as_json
       end
 
       def partner_disposable_income

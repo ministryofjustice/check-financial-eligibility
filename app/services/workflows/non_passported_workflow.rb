@@ -39,22 +39,17 @@ module Workflows
                                                                              employments: assessment.partner_employments,
                                                                              disposable_income_summary: assessment.partner_disposable_income_summary,
                                                                              gross_income_summary: assessment.partner_gross_income_summary)
-        combined_monthly_gross_income = applicant_gross_income_subtotals.total_gross_income +
-          partner_gross_income_subtotals.total_gross_income
-      else
-        combined_monthly_gross_income = applicant_gross_income_subtotals.total_gross_income
       end
-
-      Assessors::GrossIncomeAssessor.call(
-        eligibilities: assessment.gross_income_summary.eligibilities,
-        total_gross_income: combined_monthly_gross_income,
-      )
 
       GrossIncomeSubtotals.new(
         applicant_gross_income_subtotals:,
         partner_gross_income_subtotals:,
-        combined_monthly_gross_income:,
-      )
+      ).tap do |gross_income_subtotals|
+        Assessors::GrossIncomeAssessor.call(
+          eligibilities: assessment.gross_income_summary.eligibilities,
+          total_gross_income: gross_income_subtotals.combined_monthly_gross_income,
+        )
+      end
     end
 
     # TODO: make the Collators::DisposableIncomeCollator increment/sum to existing values so order of "collation" becomes unimportant
