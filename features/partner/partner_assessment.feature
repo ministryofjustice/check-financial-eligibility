@@ -2,7 +2,9 @@ Feature:
   "Applicant has a partner"
 
   Scenario: An applicant with a partner who has additional property (capital)
-    Given I am undertaking a certificated assessment with an applicant who receives passporting benefits
+    Given I am undertaking a certificated assessment
+    And An applicant who receives passporting benefits
+    And A domestic abuse case
     And I am using version 5 of the API
     And I add the following main property details for the current assessment:
       | value                     | 150000 |
@@ -38,7 +40,8 @@ Feature:
       | assessment_result            | contribution_required |
 
 Scenario: An applicant and partner's combined capital is over the lower threshold
-  Given I am undertaking a certificated assessment with an applicant who receives passporting benefits
+  Given I am undertaking a certificated assessment
+  And An applicant who receives passporting benefits
     And I am using version 5 of the API
     And I add the following capital details for "bank_accounts" in the current assessment:
       | description  | value   | subject_matter_of_dispute |
@@ -53,7 +56,8 @@ Scenario: An applicant and partner's combined capital is over the lower threshol
       | capital contribution         | 1000.0                |
 
   Scenario: An unemployed applicant with an employed partner
-    Given I am undertaking a certificated assessment with a pensioner applicant who is not passported
+    Given I am undertaking a certificated assessment
+    And An applicant who is a pensioner
     And I am using version 5 of the API
     And I add the following employment details for the partner:
       | client_id |     date     |  gross | benefits_in_kind  | tax   | national_insurance | net_employment_income |
@@ -74,7 +78,8 @@ Scenario: An applicant and partner's combined capital is over the lower threshol
       | capital contribution       | 0.0                   |
 
   Scenario: A applicant with a partner with capital and both pensioners
-    Given I am undertaking a certificated assessment with a pensioner applicant who is not passported
+    Given I am undertaking a certificated assessment
+    And An applicant who is a pensioner
     And I am using version 5 of the API
     And I add the following employment details for the partner:
       | client_id |     date     |  gross | benefits_in_kind  | tax   | national_insurance | net_employment_income |
@@ -95,7 +100,9 @@ Scenario: An applicant and partner's combined capital is over the lower threshol
       | capital contribution       | 61900.0               |
 
   Scenario: A applicant with housing benefit and a partner with housing costs
-    Given I am undertaking a certificated assessment with a pensioner applicant who is not passported
+    Given I am undertaking a certificated assessment
+    And An applicant who is a pensioner
+    And A domestic abuse case
     And I am using version 5 of the API
     And I add the following housing benefit details for the applicant:
       | client_id |     date     |  amount |
@@ -112,7 +119,8 @@ Scenario: An applicant and partner's combined capital is over the lower threshol
       | total outgoings and allowances | 291.41   |
 
   Scenario: An applicant with an employed partner who is over the gross income threshold
-    Given I am undertaking a certificated assessment with a pensioner applicant who is not passported
+    Given I am undertaking a certificated assessment
+    And An applicant who is a pensioner
     And I am using version 5 of the API
     And I add the following employment details for the partner:
       | client_id |     date     |  gross | benefits_in_kind  | tax   | national_insurance | net_employment_income |

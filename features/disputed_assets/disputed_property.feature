@@ -2,7 +2,8 @@ Feature:
     "I have a property that is disputed"
 
     Scenario: A SMOD property where equity is less than transaction_allowance
-      Given I am undertaking a certificated assessment with an applicant who receives passporting benefits
+      Given I am undertaking a certificated assessment
+      And An applicant who receives passporting benefits
       And I am using version 5 of the API
       And I add the following main property details for the current assessment:
         | value                     | 150000 |
@@ -27,7 +28,8 @@ Feature:
         | assessed_capital                    |     0.0 |
 
     Scenario: A SMOD property where the value of the client's share of its equity is entirely disregarded
-        Given I am undertaking a certificated assessment with an applicant who receives passporting benefits
+      Given I am undertaking a certificated assessment
+      And An applicant who receives passporting benefits
         And I am using version 5 of the API
         And I add the following main property details for the current assessment:
             | value                     | 150000 |
@@ -49,7 +51,8 @@ Feature:
             | assessed_capital                    | 0.0    |
 
     Scenario: The SMOD disregard is capped if the property is assessed as being worth more than £100k.
-        Given I am undertaking a certificated assessment with an applicant who receives passporting benefits
+      Given I am undertaking a certificated assessment
+      And An applicant who receives passporting benefits
         And I am using version 5 of the API
         And I add the following main property details for the current assessment:
             | value                     | 250000 |
@@ -71,7 +74,8 @@ Feature:
             | assessed_capital                    | 42500.0  |
 
     Scenario: Disputed main and additional properties which, combined, are assessed as worth less than £100k
-        Given I am undertaking a certificated assessment with an applicant who receives passporting benefits
+      Given I am undertaking a certificated assessment
+      And An applicant who receives passporting benefits
         And I am using version 5 of the API
         And I add the following main property details for the current assessment:
             | value                     | 250000 |
@@ -107,7 +111,8 @@ Feature:
             | assessed_capital                    | 48500.0  |
 
   Scenario: Disputed main and additional property under 100k with controlled work
-    Given I am undertaking a controlled work assessment with an applicant who receives passporting benefits
+    Given I am undertaking a controlled assessment
+    And An applicant who receives passporting benefits
     And I am using version 5 of the API
     And I add the following main property details for the current assessment:
       | value                     | 300000 |
@@ -142,7 +147,8 @@ Feature:
       | assessed_capital                     | 5000.0   |
 
   Scenario: Disputed main and additional property where main equity > 100k and < 200k
-    Given I am undertaking a certificated assessment with an applicant who receives passporting benefits
+    Given I am undertaking a certificated assessment
+    And An applicant who receives passporting benefits
     And I am using version 5 of the API
     And I add the following main property details for the current assessment:
       | value                     | 400000 |

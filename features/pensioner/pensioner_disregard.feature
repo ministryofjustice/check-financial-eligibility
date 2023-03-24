@@ -2,7 +2,8 @@ Feature:
   "Applicant is a pensioner"
 
   Scenario: An applicant over 60 with enough disposable income to reduce the pensioner disregard
-    Given I am undertaking a certificated assessment with a pensioner applicant who is not passported
+    Given I am undertaking a certificated assessment
+    And An applicant who is a pensioner
     And I am using version 5 of the API
     And I add the following employment details:
       | client_id |     date     |  gross | benefits_in_kind  | tax   | national_insurance | net_employment_income |
@@ -40,7 +41,8 @@ Feature:
       | pensioner_disregard_applied   | 19800.0 |
 
   Scenario: A pensioner applicant with a partner - pensioner disregard applies across combined capital
-    Given I am undertaking a certificated assessment with a pensioner applicant who is not passported
+    Given I am undertaking a certificated assessment
+    And An applicant who is a pensioner
     And I am using version 5 of the API
     And I add the following employment details:
       | client_id |     date     |  gross | benefits_in_kind  | tax   | national_insurance |

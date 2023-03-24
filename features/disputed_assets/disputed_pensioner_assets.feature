@@ -2,7 +2,8 @@ Feature:
   "I have multiple disputed assets"
 
   Scenario: A pensioner with disputed savings, property and vehicle
-    Given I am undertaking a certificated assessment with a pensioner applicant who is not passported
+    Given I am undertaking a certificated assessment
+    And An applicant who is a pensioner
     And I am using version 5 of the API
     And I add the following employment details:
       | client_id |     date     |  gross | benefits_in_kind  | tax   | national_insurance |

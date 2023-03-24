@@ -2,7 +2,8 @@ Feature:
   "Applicant is applying under controlled work and has a property so costs of sale (transaction_allowance) are not included"
 
   Scenario: An applicant has property and sale costs are not disregarded
-    Given I am undertaking a controlled work assessment with an applicant who receives passporting benefits
+    Given I am undertaking a controlled assessment
+    And An applicant who receives passporting benefits
     And I am using version 5 of the API
     And I add the following main property details for the current assessment:
       | value                     | 163000 |

@@ -1,43 +1,23 @@
-Given("I am undertaking a certificated assessment with an applicant who receives passporting benefits") do
-  @assessment_data = { client_reference_id: "N/A", submission_date: "2022-05-10" }
-  @applicant_data = { applicant: { date_of_birth: "1979-12-20",
-                                   involvement_type: "applicant",
-                                   has_partner_opponent: false,
-                                   receives_qualifying_benefit: true } }
-  @proceeding_type_data = { "proceeding_types": [{ ccms_code: "DA001", client_involvement_type: "A" }] }
-end
-
 Given("I am undertaking a certificated assessment") do
-  @assessment_data = { client_reference_id: "N/A", submission_date: "2022-05-10" }
-  @applicant_data = { applicant: { date_of_birth: "1979-12-20",
-                                   involvement_type: "applicant",
-                                   has_partner_opponent: false,
-                                   receives_qualifying_benefit: false } }
-  @proceeding_type_data = { "proceeding_types": [{ ccms_code: "DA001", client_involvement_type: "A" }] }
-end
-
-Given("A submission date of {string}") do |date|
-  @assessment_data.merge! submission_date: date
-end
-
-Given("I am undertaking a certificated assessment with a pensioner applicant who is not passported") do
   StateBenefitType.create! label: "housing_benefit", name: "Housing benefit", exclude_from_gross_income: true
   @assessment_data = { client_reference_id: "N/A", submission_date: "2022-05-10" }
-  @applicant_data = { applicant: { date_of_birth: "1939-12-20",
+  @applicant_data = { applicant: { date_of_birth: "1979-12-20",
                                    involvement_type: "applicant",
                                    has_partner_opponent: false,
-                                   employed: false,
                                    receives_qualifying_benefit: false } }
   @proceeding_type_data = { "proceeding_types": [{ ccms_code: "SE003", client_involvement_type: "A" }] }
 end
 
-Given("I am undertaking a controlled work assessment with an applicant who receives passporting benefits") do
-  @assessment_data = { client_reference_id: "N/A", submission_date: "2022-05-10", level_of_help: "controlled" }
-  @applicant_data = { applicant: { date_of_birth: "1979-12-20",
-                                   involvement_type: "applicant",
-                                   has_partner_opponent: false,
-                                   receives_qualifying_benefit: true } }
-  @proceeding_type_data = { "proceeding_types": [{ ccms_code: "DA001", client_involvement_type: "A" }] }
+Given("An applicant who receives passporting benefits") do
+  @applicant_data.merge! applicant: @applicant_data.fetch(:applicant).merge(receives_qualifying_benefit: true)
+end
+
+Given("An applicant who is a pensioner") do
+  @applicant_data.merge! applicant: @applicant_data.fetch(:applicant).merge(date_of_birth: "1939-12-20")
+end
+
+Given("A submission date of {string}") do |date|
+  @assessment_data.merge! submission_date: date
 end
 
 Given("I am undertaking a controlled assessment") do
@@ -50,23 +30,15 @@ Given("I am undertaking a controlled assessment") do
   @proceeding_type_data = { "proceeding_types": [{ ccms_code: "DA001", client_involvement_type: "A" }] }
 end
 
-Given("Performing a controlled assessment with first tier immigration case") do
-  StateBenefitType.create! label: "housing_benefit", name: "Housing benefit", exclude_from_gross_income: true
-  @assessment_data = { client_reference_id: "N/A", submission_date: "2022-05-10", level_of_help: "controlled" }
-  @applicant_data = { applicant: { date_of_birth: "1989-12-20",
-                                   involvement_type: "applicant",
-                                   has_partner_opponent: false,
-                                   receives_qualifying_benefit: false } }
+Given("A domestic abuse case") do
+  @proceeding_type_data = { "proceeding_types": [{ ccms_code: "DA001", client_involvement_type: "A" }] }
+end
+
+Given("A first tier immigration case") do
   @proceeding_type_data = { "proceeding_types": [{ ccms_code: CFEConstants::IMMIGRATION_PROCEEDING_TYPE_CCMS_CODE, client_involvement_type: "A" }] }
 end
 
-Given("Performing a controlled assessment with first tier asylum case") do
-  StateBenefitType.create! label: "housing_benefit", name: "Housing benefit", exclude_from_gross_income: true
-  @assessment_data = { client_reference_id: "N/A", submission_date: "2022-05-10", level_of_help: "controlled" }
-  @applicant_data = { applicant: { date_of_birth: "1989-12-20",
-                                   involvement_type: "applicant",
-                                   has_partner_opponent: false,
-                                   receives_qualifying_benefit: false } }
+Given("A first tier asylum case") do
   @proceeding_type_data = { "proceeding_types": [{ ccms_code: "IA031", client_involvement_type: "A" }] }
 end
 
