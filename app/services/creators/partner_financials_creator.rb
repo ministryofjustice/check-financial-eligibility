@@ -111,7 +111,7 @@ module Creators
     def create_capitals
       return if capital_params.blank?
 
-      json_validator = JsonValidator.new("capitals", capital_params)
+      json_validator = JsonSwaggerValidator.new("capitals", capital_params)
       if json_validator.valid?
         CapitalsCreator.call(
           capital_params:,

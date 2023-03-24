@@ -17,6 +17,24 @@ info:
   version: v5
 components:
   schemas:
+    currency:
+      description: A negative or positive number (including zero) with two decimal
+        places
+      oneOf:
+      - type: number
+        format: decimal
+        multipleOf: 0.01
+      - type: string
+        pattern: "^[-+]?\\d+(\\.\\d{1,2})?$"
+    positive_currency:
+      description: Non-negative number (including zero) with two decimal places
+      oneOf:
+      - type: number
+        format: decimal
+        minimum: 0.0
+        multipleOf: 0.01
+      - type: string
+        pattern: "^[+]?\\d+(\\.\\d{1,2})?$"
     ProceedingTypeResult:
       type: object
       required:
@@ -147,18 +165,53 @@ components:
       items:
         type: object
         description: Account detail
+        additionalProperties: false
         required:
         - value
+        - description
         properties:
           value:
-            type: number
-            format: decimal
+            "$ref": "#/components/schemas/currency"
           description:
             type: string
           subject_matter_of_dispute:
             description: Whether the contents of this bank account are the subject
               of a dispute
             type: boolean
+    Capitals:
+      type: object
+      additionalProperties: false
+      properties:
+        bank_accounts:
+          "$ref": "#/components/schemas/BankAccounts"
+        non_liquid_capital:
+          type: array
+          description: An array of objects describing applicant's non-liquid capital
+            items (excluding property), e.g. valuable items, jewellery, trusts, other
+            investments
+          example:
+          - value: 1.01
+            description: asset name 1
+            subject_matter_of_dispute: false
+          - value: 100.01
+            description: asset name 2
+            subject_matter_of_dispute: true
+          items:
+            type: object
+            description: Asset detail
+            required:
+            - value
+            - description
+            additionalProperties: false
+            properties:
+              value:
+                "$ref": "#/components/schemas/positive_currency"
+              description:
+                description: Definition of a non-liquid capital item
+                type: string
+              subject_matter_of_dispute:
+                description: Whether the item is the subject of a dispute
+                type: boolean
     EmploymentPaymentList:
       type: array
       description: One or more employment payment details
@@ -350,42 +403,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              additionalProperties: false
-              required:
-              - bank_accounts
-              - non_liquid_capital
-              properties:
-                bank_accounts:
-                  "$ref": "#/components/schemas/BankAccounts"
-                non_liquid_capital:
-                  type: array
-                  description: One or more assets details
-                  example:
-                  - value: 1.01
-                    description: asset name 1
-                    subject_matter_of_dispute: false
-                  - value: 100.01
-                    description: asset name 2
-                    subject_matter_of_dispute: true
-                  items:
-                    type: object
-                    description: Asset detail
-                    required:
-                    - value
-                    - description
-                    additionalProperties: false
-                    properties:
-                      value:
-                        type: number
-                        format: decimal
-                      description:
-                        description: Definition of a liquid or non-liquid capital
-                          item
-                        type: string
-                      subject_matter_of_dispute:
-                        description: Whether the item is the subject of a dispute
-                        type: boolean
+              "$ref": "#/components/schemas/Capitals"
         required: true
   "/assessments/{assessment_id}/cash_transactions":
     post:
@@ -1128,35 +1146,7 @@ paths:
                         example: A
                         description: The client_involvement_type expected by CCMS
                 capitals:
-                  type: object
-                  properties:
-                    bank_accounts:
-                      "$ref": "#/components/schemas/BankAccounts"
-                    non_liquid_capital:
-                      type: array
-                      description: One or more assets details
-                      example:
-                      - value: 1.01
-                        description: asset name 1
-                        subject_matter_of_dispute: false
-                      - value: 100.01
-                        description: asset name 2
-                        subject_matter_of_dispute: true
-                      items:
-                        type: object
-                        description: Asset detail
-                        required:
-                        - description
-                        - value
-                        properties:
-                          value:
-                            type: number
-                            format: decimal
-                          description:
-                            type: string
-                          subject_matter_of_dispute:
-                            description: Whether the item is the subject of a dispute
-                            type: boolean
+                  "$ref": "#/components/schemas/Capitals"
                 cash_transactions:
                   type: object
                   description: A set of cash income[ings] and outgoings payments by
@@ -2013,36 +2003,7 @@ paths:
                             type: boolean
                             description: Property is the subject of a dispute
                     capital_items:
-                      type: object
-                      required:
-                      - bank_accounts
-                      - non_liquid_capital
-                      description: Element's of the applicant's partners capital
-                      properties:
-                        bank_accounts:
-                          "$ref": "#/components/schemas/BankAccounts"
-                        non_liquid_capital:
-                          type: array
-                          description: One or more non liquid assets owned by the
-                            client's partner
-                          example:
-                          - value: 1.01
-                            description: test name 1
-                            subject_matter_of_dispute: false
-                          - value: 100.01
-                            description: test name 2
-                            subject_matter_of_dispute: true
-                          items:
-                            type: object
-                            description: Asset detail
-                            properties:
-                              value:
-                                type: number
-                                format: decimal
-                              description:
-                                type: string
-                              subject_matter_of_dispute:
-                                type: boolean
+                      "$ref": "#/components/schemas/Capitals"
                     vehicles:
                       type: array
                       description: One or more vehicles' details
@@ -2659,36 +2620,7 @@ paths:
                         type: boolean
                         description: Property is the subject of a dispute
                 capital_items:
-                  type: object
-                  required:
-                  - bank_accounts
-                  - non_liquid_capital
-                  description: Element's of the applicant's partners capital
-                  properties:
-                    bank_accounts:
-                      "$ref": "#/components/schemas/BankAccounts"
-                    non_liquid_capital:
-                      type: array
-                      description: One or more non liquid assets owned by the client's
-                        partner
-                      example:
-                      - value: 1.01
-                        description: test name 1
-                        subject_matter_of_dispute: false
-                      - value: 100.01
-                        description: test name 2
-                        subject_matter_of_dispute: true
-                      items:
-                        type: object
-                        description: Asset detail
-                        properties:
-                          value:
-                            type: number
-                            format: decimal
-                          description:
-                            type: string
-                          subject_matter_of_dispute:
-                            type: boolean
+                  "$ref": "#/components/schemas/Capitals"
                 vehicles:
                   type: array
                   description: One or more vehicles' details

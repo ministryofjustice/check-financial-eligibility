@@ -2,7 +2,7 @@ class CapitalsController < ApplicationController
   before_action :load_assessment
 
   def create
-    json_validator = JsonValidator.new("capitals", capital_params)
+    json_validator = JsonSwaggerValidator.new("capitals", capital_params)
 
     if json_validator.valid?
       create_capitals
