@@ -1019,6 +1019,13 @@ paths:
                         type: string
                         format: date
                         example: '2022-07-22'
+                      level_of_help:
+                        type: string
+                        enum:
+                        - certificated
+                        - controlled
+                        example: certificated
+                        description: The level of representation required by the client
                       applicant:
                         type: object
                       gross_income:
