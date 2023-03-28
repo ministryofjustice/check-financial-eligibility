@@ -29,6 +29,7 @@ module Decorators
           id: assessment.id,
           client_reference_id: assessment.client_reference_id,
           submission_date: assessment.submission_date,
+          level_of_help: assessment.level_of_help,
           applicant: ApplicantDecorator.new(assessment.applicant),
           gross_income:,
           disposable_income: DisposableIncomeDecorator.new(assessment.disposable_income_summary),

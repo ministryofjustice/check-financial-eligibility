@@ -52,6 +52,7 @@ module Decorators
             id
             client_reference_id
             submission_date
+            level_of_help
             applicant
             gross_income
             disposable_income
@@ -99,6 +100,7 @@ module Decorators
               id
               client_reference_id
               submission_date
+              level_of_help
               applicant
               gross_income
               disposable_income

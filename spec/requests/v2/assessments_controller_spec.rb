@@ -722,7 +722,7 @@ module V2
 
         describe "assessment" do
           it "has the correct keys" do
-            expect(assessment.keys).to match_array(%i[client_reference_id submission_date applicant gross_income partner_gross_income disposable_income partner_disposable_income capital partner_capital remarks])
+            expect(assessment.keys).to match_array(%i[client_reference_id submission_date level_of_help applicant gross_income partner_gross_income disposable_income partner_disposable_income capital partner_capital remarks])
           end
 
           describe "remarks" do

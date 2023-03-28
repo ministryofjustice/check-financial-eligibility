@@ -1119,6 +1119,12 @@ RSpec.describe "full_assessment", type: :request, swagger_doc: "v5/swagger.yaml"
                      id: { type: :string },
                      client_reference_id: { type: :string, nullable: true, example: "ref-11-22" },
                      submission_date: { type: :string, format: :date, example: "2022-07-22" },
+                     level_of_help: {
+                       type: :string,
+                       enum: Assessment.levels_of_help.keys,
+                       example: Assessment.levels_of_help.keys.first,
+                       description: "The level of representation required by the client",
+                     },
                      applicant: { type: :object },
                      gross_income: { type: :object },
                      disposable_income: { type: :object },
