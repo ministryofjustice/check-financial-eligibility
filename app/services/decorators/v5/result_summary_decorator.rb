@@ -27,7 +27,8 @@ module Decorators
           disposable_income: DisposableIncomeResultDecorator.new(disposable_income_summary,
                                                                  gross_income_summary,
                                                                  @calculation_output.gross_income_subtotals.applicant_gross_income_subtotals.employment_income_subtotals,
-                                                                 partner_present: assessment.partner.present?).as_json,
+                                                                 partner_present: assessment.partner.present?,
+                                                                 dependant_allowance: @calculation_output.dependant_allowance).as_json,
           capital: CapitalResultDecorator.new(capital_summary,
                                               @calculation_output.capital_subtotals.applicant_capital_subtotals,
                                               @calculation_output.capital_subtotals.capital_contribution.to_f,
@@ -50,7 +51,8 @@ module Decorators
         DisposableIncomeResultDecorator.new(assessment.partner_disposable_income_summary,
                                             assessment.partner_gross_income_summary,
                                             @calculation_output.gross_income_subtotals.partner_gross_income_subtotals.employment_income_subtotals,
-                                            partner_present: true).as_json
+                                            partner_present: true,
+                                            dependant_allowance: @calculation_output.partner_dependant_allowance).as_json
       end
 
       def partner_capital

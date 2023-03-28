@@ -8,7 +8,6 @@ module Decorators
       let(:summary) do
         create :disposable_income_summary,
                assessment:,
-               dependant_allowance: 220.21,
                gross_housing_costs: 990.42,
                housing_benefit: 440.21,
                net_housing_costs: 550.21,
@@ -19,8 +18,6 @@ module Decorators
                combined_total_disposable_income: 900.0,
                combined_total_outgoings_and_allowances: 400.32
       end
-      let(:employment1) { create :employment, :with_monthly_payments, assessment: }
-      let(:employment2) { create :employment, :with_monthly_payments, assessment: }
       let(:codes) { pt_results.keys }
       let(:pt_results) do
         {
@@ -87,9 +84,26 @@ module Decorators
         }
       end
 
-      let(:employment_income_subtotals) { EmploymentIncomeSubtotals.new }
+      let(:employment_income_subtotals) do
+        EmploymentIncomeSubtotals.new(
+          benefits_in_kind: 0.0,
+          fixed_employment_allowance: -45.0,
+          gross_employment_income: 0.0,
+          employment_income_deductions: 0.0,
+          national_insurance: 0.0,
+          net_employment_income: -45.0,
+          tax: 0.0,
+        )
+      end
 
-      subject(:decorator) { described_class.new(summary, assessment.gross_income_summary, employment_income_subtotals, partner_present:).as_json }
+      let(:combined_outgoings) { 400.32 }
+      let(:combined_disposable_income) { 900.0 }
+      let(:income_contribution) { 75 }
+
+      subject(:decorator) do
+        described_class.new(summary, assessment.gross_income_summary, employment_income_subtotals,
+                            partner_present:, dependant_allowance: 220.21).as_json
+      end
 
       before do
         pt_results.each do |ptc, details|
@@ -105,16 +119,6 @@ module Decorators
       end
 
       describe "#as_json" do
-        before do
-          employment1
-          employment2
-        end
-
-        let(:employment_income_subtotals) do
-          Calculators::MultipleEmploymentsCalculator.call(assessment:,
-                                                          employments: assessment.employments)
-        end
-
         it "returns the expected structure" do
           expect(decorator).to eq expected_result
         end

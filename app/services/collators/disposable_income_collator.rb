@@ -3,16 +3,17 @@ module Collators
     Attrs = Data.define(:attrs, :monthly_cash_transactions_total)
 
     class << self
-      def call(disposable_income_summary:, gross_income_summary:, partner_allowance:, gross_income_subtotals:)
-        new(gross_income_summary:, disposable_income_summary:, partner_allowance:, gross_income_subtotals:).call
+      def call(disposable_income_summary:, gross_income_summary:, partner_allowance:, gross_income_subtotals:, outgoings:)
+        new(gross_income_summary:, disposable_income_summary:, partner_allowance:, gross_income_subtotals:, outgoings:).call
       end
     end
 
-    def initialize(disposable_income_summary:, gross_income_summary:, partner_allowance:, gross_income_subtotals:)
+    def initialize(disposable_income_summary:, gross_income_summary:, partner_allowance:, gross_income_subtotals:, outgoings:)
       @disposable_income_summary = disposable_income_summary
       @gross_income_summary = gross_income_summary
       @partner_allowance = partner_allowance
       @gross_income_subtotals = gross_income_subtotals
+      @outgoings = outgoings
     end
 
     def call
@@ -58,7 +59,7 @@ module Collators
 
     def total_outgoings_and_allowances(monthly_cash_transactions_total)
       @disposable_income_summary.net_housing_costs +
-        @disposable_income_summary.dependant_allowance +
+        @outgoings.dependant_allowance +
         monthly_bank_transactions_total +
         monthly_cash_transactions_total -
         @gross_income_subtotals.employment_income_subtotals.fixed_employment_allowance -

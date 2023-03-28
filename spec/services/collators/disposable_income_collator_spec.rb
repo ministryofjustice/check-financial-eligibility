@@ -31,7 +31,6 @@ module Collators
                        housing_benefit:,
                        net_housing_costs: net_housing,
                        total_outgoings_and_allowances: 0.0,
-                       dependant_allowance:,
                        total_disposable_income: 0.0)
       create :disposable_income_eligibility, disposable_income_summary: summary, proceeding_type_code: "DA001"
       summary
@@ -58,7 +57,8 @@ module Collators
         described_class.call(gross_income_summary: assessment.gross_income_summary,
                              disposable_income_summary: assessment.disposable_income_summary,
                              partner_allowance:,
-                             gross_income_subtotals:)
+                             gross_income_subtotals:,
+                             outgoings: OutgoingsCollator::Result.new(dependant_allowance:))
       end
 
       context "total_monthly_outgoings" do
