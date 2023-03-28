@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_25_142836) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_24_150833) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -134,10 +134,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_25_142836) do
     t.decimal "maintenance_out_cash", default: "0.0"
     t.decimal "rent_or_mortgage_cash", default: "0.0"
     t.decimal "legal_aid_cash", default: "0.0"
-    t.decimal "employment_income_deductions", default: "0.0", null: false
-    t.decimal "fixed_employment_allowance", default: "0.0", null: false
-    t.decimal "tax", default: "0.0", null: false
-    t.decimal "national_insurance", default: "0.0", null: false
     t.string "type", default: "ApplicantDisposableIncomeSummary"
     t.decimal "combined_total_disposable_income"
     t.decimal "combined_total_outgoings_and_allowances"

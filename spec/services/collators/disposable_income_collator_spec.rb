@@ -14,6 +14,12 @@ module Collators
     let(:dependant_allowance) { 582.98 }
     let(:partner_allowance) { 481.29 }
     let(:total_gross_income) { 0 }
+    let(:gross_income_subtotals) do
+      PersonGrossIncomeSubtotals.new(
+        total_gross_income:,
+        employment_income_subtotals: EmploymentIncomeSubtotals.new(employment_income_deductions:, fixed_employment_allowance:),
+      )
+    end
 
     let(:disposable_income_summary) do
       summary = create(:disposable_income_summary,
@@ -26,9 +32,7 @@ module Collators
                        net_housing_costs: net_housing,
                        total_outgoings_and_allowances: 0.0,
                        dependant_allowance:,
-                       total_disposable_income: 0.0,
-                       employment_income_deductions:,
-                       fixed_employment_allowance:)
+                       total_disposable_income: 0.0)
       create :disposable_income_eligibility, disposable_income_summary: summary, proceeding_type_code: "DA001"
       summary
     end
@@ -54,7 +58,7 @@ module Collators
         described_class.call(gross_income_summary: assessment.gross_income_summary,
                              disposable_income_summary: assessment.disposable_income_summary,
                              partner_allowance:,
-                             total_gross_income:)
+                             gross_income_subtotals:)
       end
 
       context "total_monthly_outgoings" do

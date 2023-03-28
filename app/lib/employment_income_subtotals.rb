@@ -14,4 +14,8 @@ class EmploymentIncomeSubtotals
               :fixed_employment_allowance,
               :tax,
               :national_insurance
+
+  def net_employment_income
+    gross_employment_income + employment_income_deductions + fixed_employment_allowance
+  end
 end

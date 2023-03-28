@@ -37,18 +37,14 @@ module Decorators
 
       attr_reader :summary, :gross_income_summary
 
-      def net_employment_income
-        @employment_income_subtotals.gross_employment_income + summary.employment_income_deductions + summary.fixed_employment_allowance
-      end
-
       def employment_income
         {
           gross_income: @employment_income_subtotals.gross_employment_income.to_f,
           benefits_in_kind: @employment_income_subtotals.benefits_in_kind.to_f,
-          tax: summary.tax.to_f,
-          national_insurance: summary.national_insurance.to_f,
-          fixed_employment_deduction: summary.fixed_employment_allowance.to_f,
-          net_employment_income: net_employment_income.to_f,
+          tax: @employment_income_subtotals.tax.to_f,
+          national_insurance: @employment_income_subtotals.national_insurance.to_f,
+          fixed_employment_deduction: @employment_income_subtotals.fixed_employment_allowance.to_f,
+          net_employment_income: @employment_income_subtotals.net_employment_income.to_f,
         }
       end
 

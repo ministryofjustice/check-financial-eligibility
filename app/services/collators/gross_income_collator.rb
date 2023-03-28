@@ -18,7 +18,7 @@ module Collators
       employment_income_subtotals = if @employments.any?
                                       derive_employment_income_subtotals
                                     else
-                                      EmploymentIncomeSubtotals.new(gross_employment_income: 0, benefits_in_kind: 0)
+                                      EmploymentIncomeSubtotals.new
                                     end
       perform_collation(employment_income_subtotals)
     end
@@ -27,21 +27,19 @@ module Collators
 
     def derive_employment_income_subtotals
       @employments.each { |employment| Utilities::EmploymentIncomeMonthlyEquivalentCalculator.call(employment) }
-      result = if @employments.count > 1
-                 Calculators::MultipleEmploymentsCalculator.call(assessment: @assessment,
-                                                                 employments: @employments)
-               else
-                 Calculators::EmploymentIncomeCalculator.call(submission_date: @submission_date,
-                                                              employment: @employments.first)
-               end
+      calculate_subtotals.tap do
+        add_remarks if @employments.count > 1
+      end
+    end
 
-      @disposable_income_summary.update!(employment_income_deductions: result.employment_income_deductions,
-                                         fixed_employment_allowance: result.fixed_employment_allowance,
-                                         tax: result.tax,
-                                         national_insurance: result.national_insurance)
-      add_remarks if @employments.count > 1
-
-      result
+    def calculate_subtotals
+      if @employments.count > 1
+        Calculators::MultipleEmploymentsCalculator.call(assessment: @assessment,
+                                                        employments: @employments)
+      else
+        Calculators::EmploymentIncomeCalculator.call(submission_date: @submission_date,
+                                                     employment: @employments.first)
+      end
     end
 
     def add_remarks

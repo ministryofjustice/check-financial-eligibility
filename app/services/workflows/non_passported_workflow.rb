@@ -76,11 +76,11 @@ module Workflows
         Collators::DisposableIncomeCollator.call(gross_income_summary: assessment.gross_income_summary.freeze,
                                                  disposable_income_summary: assessment.disposable_income_summary,
                                                  partner_allowance:,
-                                                 total_gross_income: gross_income_subtotals.applicant_gross_income_subtotals.total_gross_income)
+                                                 gross_income_subtotals: gross_income_subtotals.applicant_gross_income_subtotals)
         Collators::DisposableIncomeCollator.call(gross_income_summary: assessment.partner_gross_income_summary.freeze,
                                                  disposable_income_summary: assessment.partner_disposable_income_summary,
                                                  partner_allowance: 0,
-                                                 total_gross_income: gross_income_subtotals.partner_gross_income_subtotals.total_gross_income)
+                                                 gross_income_subtotals: gross_income_subtotals.partner_gross_income_subtotals)
 
         Collators::RegularOutgoingsCollator.call(gross_income_summary: assessment.gross_income_summary.freeze,
                                                  disposable_income_summary: assessment.disposable_income_summary,
@@ -108,7 +108,7 @@ module Workflows
         Collators::DisposableIncomeCollator.call(gross_income_summary: assessment.gross_income_summary.freeze,
                                                  disposable_income_summary: assessment.disposable_income_summary,
                                                  partner_allowance: 0,
-                                                 total_gross_income: gross_income_subtotals.applicant_gross_income_subtotals.total_gross_income)
+                                                 gross_income_subtotals: gross_income_subtotals.applicant_gross_income_subtotals)
         Collators::RegularOutgoingsCollator.call(gross_income_summary: assessment.gross_income_summary.freeze,
                                                  disposable_income_summary: assessment.disposable_income_summary,
                                                  eligible_for_childcare:)

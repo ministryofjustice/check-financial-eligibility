@@ -152,17 +152,14 @@ module Collators
           let(:disposable_income_summary) { assessment.disposable_income_summary }
 
           it "has a total gross employed income" do
-            response = collator
-            expect(response.employment_income_subtotals.gross_employment_income).to eq 1500
+            expect(collator.employment_income_subtotals.gross_employment_income).to eq 1500
           end
 
-          it "updates disposable income summary" do
-            collator
-            disposable_income_summary.reload
-            expect(disposable_income_summary.employment_income_deductions).to eq(-645)
-            expect(disposable_income_summary.tax).to eq(-495)
-            expect(disposable_income_summary.national_insurance).to eq(-150)
-            expect(disposable_income_summary.fixed_employment_allowance).to eq(-45)
+          it "returns employment_income_subtotals" do
+            expect(collator.employment_income_subtotals.employment_income_deductions).to eq(-645)
+            expect(collator.employment_income_subtotals.tax).to eq(-495)
+            expect(collator.employment_income_subtotals.national_insurance).to eq(-150)
+            expect(collator.employment_income_subtotals.fixed_employment_allowance).to eq(-45)
           end
         end
       end

@@ -87,7 +87,7 @@ module Decorators
         }
       end
 
-      let(:employment_income_subtotals) { EmploymentIncomeSubtotals.new(gross_employment_income: 0, benefits_in_kind: 0) }
+      let(:employment_income_subtotals) { EmploymentIncomeSubtotals.new }
 
       subject(:decorator) { described_class.new(summary, assessment.gross_income_summary, employment_income_subtotals, partner_present:).as_json }
 
@@ -105,16 +105,17 @@ module Decorators
       end
 
       describe "#as_json" do
-        it "returns the expected structure" do
+        before do
           employment1
           employment2
-          result = Calculators::MultipleEmploymentsCalculator.call(assessment:,
-                                                                   employments: assessment.employments)
-          assessment.disposable_income_summary.update!(employment_income_deductions: result.employment_income_deductions,
-                                                       fixed_employment_allowance: result.fixed_employment_allowance,
-                                                       tax: result.tax,
-                                                       national_insurance: result.national_insurance)
+        end
 
+        let(:employment_income_subtotals) do
+          Calculators::MultipleEmploymentsCalculator.call(assessment:,
+                                                          employments: assessment.employments)
+        end
+
+        it "returns the expected structure" do
           expect(decorator).to eq expected_result
         end
       end
