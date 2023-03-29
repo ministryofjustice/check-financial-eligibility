@@ -6,11 +6,11 @@ module Creators
       end
     end
     class << self
-      def call(assessment:, outgoings_params:)
+      def call(disposable_income_summary:, outgoings_params:)
         json_validator = JsonValidator.new("outgoings", outgoings_params)
         if json_validator.valid?
           ActiveRecord::Base.transaction do
-            outgoings_params[:outgoings].each { |outgoing| create_outgoing_collection(assessment, outgoing) }
+            outgoings_params[:outgoings].each { |outgoing| create_outgoing_collection(disposable_income_summary, outgoing) }
           end
           Result.new(errors: []).freeze
         else
@@ -22,11 +22,11 @@ module Creators
 
     private
 
-      def create_outgoing_collection(assessment, outgoing)
+      def create_outgoing_collection(disposable_income_summary, outgoing)
         klass = CFEConstants::OUTGOING_KLASSES[outgoing[:name].to_sym]
         payments = outgoing[:payments]
         payments.each do |payment_params|
-          klass.create! payment_params.merge(disposable_income_summary: assessment.disposable_income_summary)
+          klass.create! payment_params.merge(disposable_income_summary:)
         end
       end
     end

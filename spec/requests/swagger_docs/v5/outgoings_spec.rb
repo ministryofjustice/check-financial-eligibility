@@ -7,9 +7,7 @@ RSpec.describe "outgoings", type: :request, swagger_doc: "v5/swagger.yaml" do
       consumes "application/json"
       produces "application/json"
 
-      description <<~DESCRIPTION.chomp
-        Add applicant's outgoings to an assessment.
-      DESCRIPTION
+      description << "Add applicant's outgoings to an assessment."
 
       assessment_id_parameter
 
@@ -21,57 +19,7 @@ RSpec.describe "outgoings", type: :request, swagger_doc: "v5/swagger.yaml" do
                   description: "A set of outgoings sources",
                   example: JSON.parse(File.read(Rails.root.join("spec/fixtures/outgoings.json"))),
                   properties: {
-                    outgoings: {
-                      type: :array,
-                      required: %i[name payments],
-                      description: "One or more outgoings categorized by name",
-                      items: {
-                        type: :object,
-                        description: "Outgoing payments detail",
-                        properties: {
-                          name: {
-                            type: :string,
-                            enum: CFEConstants::VALID_OUTGOING_CATEGORIES,
-                            description: "Type of outgoing",
-                            example: CFEConstants::VALID_OUTGOING_CATEGORIES.first,
-                          },
-                          payments: {
-                            type: :array,
-                            required: %i[client_id payment_date amount],
-                            description: "One or more outgoing payments detail",
-                            items: {
-                              type: :object,
-                              description: "Payment detail",
-                              properties: {
-                                client_id: {
-                                  type: :string,
-                                  description: "Client identifier for outgoing payment",
-                                  example: "05459c0f-a620-4743-9f0c-b3daa93e5711",
-                                },
-                                payment_date: {
-                                  type: :string,
-                                  format: :date,
-                                  description: "Date payment made",
-                                  example: "1992-07-22",
-                                },
-                                housing_cost_type: {
-                                  type: :string,
-                                  enum: CFEConstants::VALID_OUTGOING_HOUSING_COST_TYPES,
-                                  description: "Housing cost type (omit for non-housing cost outgoings)",
-                                  example: CFEConstants::VALID_OUTGOING_HOUSING_COST_TYPES.first,
-                                },
-                                amount: {
-                                  type: :number,
-                                  format: :decimal,
-                                  description: "Amount of payment made",
-                                  example: 101.01,
-                                },
-                              },
-                            },
-                          },
-                        },
-                      },
-                    },
+                    outgoings: { "$ref" => "#/components/schemas/OutgoingsList" },
                   },
                 }
 

@@ -14,7 +14,7 @@ private
   def outgoing_creation_service
     @outgoing_creation_service ||= Creators::OutgoingsCreator.call(
       outgoings_params:,
-      assessment: @assessment,
+      disposable_income_summary: @assessment.disposable_income_summary,
     )
   end
 

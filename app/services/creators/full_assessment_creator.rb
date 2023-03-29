@@ -93,7 +93,7 @@ module Creators
         },
         lambda { |assessment, params|
           if params[:outgoings]
-            Creators::OutgoingsCreator.call(assessment:,
+            Creators::OutgoingsCreator.call(disposable_income_summary: assessment.disposable_income_summary,
                                             outgoings_params: { outgoings: params[:outgoings] })
           end
         },

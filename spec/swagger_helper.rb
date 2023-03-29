@@ -261,6 +261,104 @@ RSpec.configure do |config|
               description: "Description of asset",
             },
           },
+          OutgoingsList: {
+            type: :array,
+            description: "One or more outgoings categorized by name",
+            items: {
+              oneOf: [
+                {
+                  type: :object,
+                  required: %i[name payments],
+                  additionalProperties: false,
+                  description: "Outgoing payments detail",
+                  properties: {
+                    name: {
+                      type: :string,
+                      enum: CFEConstants::NON_HOUSING_OUTGOING_CATEGORIES,
+                      description: "Type of outgoing",
+                      example: CFEConstants::NON_HOUSING_OUTGOING_CATEGORIES.first,
+                    },
+                    payments: {
+                      type: :array,
+                      description: "One or more outgoing payments detail",
+                      items: {
+                        type: :object,
+                        additionalProperties: false,
+                        required: %i[client_id payment_date amount],
+                        description: "Payment detail",
+                        properties: {
+                          client_id: {
+                            type: :string,
+                            description: "Client identifier for outgoing payment",
+                            example: "05459c0f-a620-4743-9f0c-b3daa93e5711",
+                          },
+                          payment_date: {
+                            type: :string,
+                            format: :date,
+                            description: "Date payment made",
+                            example: "1992-07-22",
+                          },
+                          amount: {
+                            type: :number,
+                            format: :decimal,
+                            description: "Amount of payment made",
+                            example: 101.01,
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+                {
+                  type: :object,
+                  required: %i[name payments],
+                  additionalProperties: false,
+                  description: "Outgoing payments detail",
+                  properties: {
+                    name: {
+                      type: :string,
+                      enum: %w[rent_or_mortgage],
+                      description: "Type of outgoing",
+                    },
+                    payments: {
+                      type: :array,
+                      description: "One or more outgoing payments detail",
+                      items: {
+                        type: :object,
+                        additionalProperties: false,
+                        required: %i[client_id payment_date amount housing_cost_type],
+                        description: "Payment detail",
+                        properties: {
+                          client_id: {
+                            type: :string,
+                            description: "Client identifier for outgoing payment",
+                            example: "05459c0f-a620-4743-9f0c-b3daa93e5711",
+                          },
+                          payment_date: {
+                            type: :string,
+                            format: :date,
+                            description: "Date payment made",
+                            example: "1992-07-22",
+                          },
+                          housing_cost_type: {
+                            type: :string,
+                            enum: CFEConstants::VALID_OUTGOING_HOUSING_COST_TYPES,
+                            description: "Housing cost type",
+                          },
+                          amount: {
+                            type: :number,
+                            format: :decimal,
+                            description: "Amount of payment made",
+                            example: 101.01,
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              ],
+            },
+          },
         },
       },
       paths: {},

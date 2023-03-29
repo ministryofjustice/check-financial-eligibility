@@ -162,11 +162,7 @@ module V2
         end
 
         it "returns error JSON" do
-          expect(parsed_response)
-            .to eq({
-              success: false,
-              errors: ["The property '#/applicant' did not contain a required property of 'date_of_birth' in schema file://#"],
-            })
+          expect(parsed_response[:errors]).to include(%r{The property '#/applicant' did not contain a required property of 'date_of_birth'})
         end
       end
 
@@ -428,20 +424,6 @@ module V2
 
       context "without dependants, cash transactions or employment income" do
         let(:payment_date) { "2022-05-15" }
-        let(:child_care_params) do
-          [
-            {
-              name: "child_care",
-              payments: [
-                {
-                  payment_date:,
-                  amount: Faker::Number.decimal(l_digits: 3, r_digits: 2),
-                  client_id: client_ids.first,
-                },
-              ],
-            },
-          ]
-        end
         let(:outgoings_params) do
           [
             {
@@ -591,7 +573,7 @@ module V2
               ],
               state_benefits: state_benefit_params,
               additional_properties: properties_params,
-              outgoings: child_care_params,
+              outgoings: outgoings_params,
               capitals: {
                 bank_accounts: bank_account_params,
                 non_liquid_capital: non_liquid_params,
@@ -629,7 +611,7 @@ module V2
                 .to eq({
                   result: "contribution_required",
                   capital_contribution: 19_636.86,
-                  income_contribution: 377.81,
+                  income_contribution: 76.44,
                 })
             end
           end
@@ -643,7 +625,7 @@ module V2
                 {
                   dependant_allowance: 0.0,
                   gross_housing_costs: 117.16,
-                  income_contribution: 377.81,
+                  income_contribution: 76.44,
                   housing_benefit: 0.0,
                   net_housing_costs: 117.16,
                   maintenance_allowance: 333.07,
@@ -664,12 +646,12 @@ module V2
             expect(summary.fetch(:partner_disposable_income)).to eq(
               {
                 dependant_allowance: 615.28,
-                gross_housing_costs: 0.0,
+                gross_housing_costs: 117.16,
                 housing_benefit: 0.0,
-                net_housing_costs: 0.0,
-                maintenance_allowance: 0.0,
-                total_outgoings_and_allowances: 856.31,
-                total_disposable_income: 23.765,
+                net_housing_costs: 117.16,
+                maintenance_allowance: 333.07,
+                total_outgoings_and_allowances: 1322.87,
+                total_disposable_income: -442.795,
                 employment_income: {
                   gross_income: 546.0,
                   benefits_in_kind: 0.0,
@@ -901,16 +883,16 @@ module V2
               {
                 monthly_equivalents: {
                   all_sources: {
-                    child_care: 73.27,
-                    rent_or_mortgage: 0.0,
-                    maintenance_out: 0.0,
-                    legal_aid: 0.0,
+                    child_care: 82.98,
+                    rent_or_mortgage: 117.16,
+                    maintenance_out: 333.07,
+                    legal_aid: 6.62,
                   },
                   bank_transactions: {
-                    child_care: 0.0,
-                    rent_or_mortgage: 0.0,
-                    maintenance_out: 0.0,
-                    legal_aid: 0.0,
+                    child_care: 9.71,
+                    rent_or_mortgage: 117.16,
+                    maintenance_out: 333.07,
+                    legal_aid: 6.62,
                   },
                   cash_transactions: {
                     child_care: 0.0,
@@ -919,7 +901,7 @@ module V2
                     legal_aid: 0.0,
                   },
                 },
-                childcare_allowance: 73.27,
+                childcare_allowance: 82.98,
                 deductions: { dependants_allowance: 615.28, disregarded_state_benefits: 1033.44 },
               },
             )

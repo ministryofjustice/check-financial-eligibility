@@ -265,6 +265,98 @@ components:
         type: number
         format: decimal
         description: Description of asset
+    OutgoingsList:
+      type: array
+      description: One or more outgoings categorized by name
+      items:
+        oneOf:
+        - type: object
+          required:
+          - name
+          - payments
+          additionalProperties: false
+          description: Outgoing payments detail
+          properties:
+            name:
+              type: string
+              enum:
+              - child_care
+              - maintenance_out
+              - legal_aid
+              description: Type of outgoing
+              example: child_care
+            payments:
+              type: array
+              description: One or more outgoing payments detail
+              items:
+                type: object
+                additionalProperties: false
+                required:
+                - client_id
+                - payment_date
+                - amount
+                description: Payment detail
+                properties:
+                  client_id:
+                    type: string
+                    description: Client identifier for outgoing payment
+                    example: '05459c0f-a620-4743-9f0c-b3daa93e5711'
+                  payment_date:
+                    type: string
+                    format: date
+                    description: Date payment made
+                    example: '1992-07-22'
+                  amount:
+                    type: number
+                    format: decimal
+                    description: Amount of payment made
+                    example: 101.01
+        - type: object
+          required:
+          - name
+          - payments
+          additionalProperties: false
+          description: Outgoing payments detail
+          properties:
+            name:
+              type: string
+              enum:
+              - rent_or_mortgage
+              description: Type of outgoing
+            payments:
+              type: array
+              description: One or more outgoing payments detail
+              items:
+                type: object
+                additionalProperties: false
+                required:
+                - client_id
+                - payment_date
+                - amount
+                - housing_cost_type
+                description: Payment detail
+                properties:
+                  client_id:
+                    type: string
+                    description: Client identifier for outgoing payment
+                    example: '05459c0f-a620-4743-9f0c-b3daa93e5711'
+                  payment_date:
+                    type: string
+                    format: date
+                    description: Date payment made
+                    example: '1992-07-22'
+                  housing_cost_type:
+                    type: string
+                    enum:
+                    - rent
+                    - mortgage
+                    - board_and_lodging
+                    description: Housing cost type
+                  amount:
+                    type: number
+                    format: decimal
+                    description: Amount of payment made
+                    example: 101.01
 paths:
   "/assessments/{assessment_id}/applicant":
     post:
@@ -410,7 +502,6 @@ paths:
       summary: create cash_transaction
       tags:
       - Assessment components
-      description: Add cash income and outgoings to an assessment.
       parameters:
       - name: assessment_id
         in: path
@@ -513,39 +604,7 @@ paths:
                               format: uuid
                               example: '05459c0f-a620-4743-9f0c-b3daa93e5711'
                 outgoings:
-                  type: array
-                  description: One or more outgoing details
-                  items:
-                    type: object
-                    description: Outgoing detail
-                    properties:
-                      category:
-                        type: string
-                        enum:
-                        - child_care
-                        - rent_or_mortgage
-                        - maintenance_out
-                        - legal_aid
-                        example: child_care
-                      payments:
-                        type: array
-                        description: One or more payment details
-                        items:
-                          type: object
-                          description: Payment detail
-                          properties:
-                            date:
-                              type: string
-                              format: date
-                              example: '1992-07-22'
-                            amount:
-                              type: number
-                              format: decimal
-                              example: '101.02'
-                            client_id:
-                              type: string
-                              format: uuid
-                              example: '05459c0f-a620-4743-9f0c-b3daa93e5711'
+                  "$ref": "#/components/schemas/OutgoingsList"
         required: true
   "/assessments/{assessment_id}/dependants":
     post:
@@ -1088,7 +1147,6 @@ paths:
                   additionalProperties: false
                   required:
                   - submission_date
-                  - level_of_help
                   properties:
                     submission_date:
                       type: string
@@ -1106,9 +1164,11 @@ paths:
                       - certificated
                       - controlled
                       example: certificated
-                      description: The level of representation required by the client
+                      description: The level of representation required by the client.
+                        Defaults to 'certificated'
                 applicant:
                   type: object
+                  additionalProperties: false
                   required:
                   - date_of_birth
                   - has_partner_opponent
@@ -1128,12 +1188,21 @@ paths:
                       type: boolean
                       example: false
                       description: Applicant receives qualifying benefit
+                    involvement_type:
+                      type: string
+                      enum:
+                      - applicant
+                    employed:
+                      type: boolean
+                    receives_asylum_support:
+                      type: boolean
                 proceeding_types:
                   type: array
                   description: One or more proceeding_type details
                   minItems: 1
                   items:
                     type: object
+                    additionalProperties: false
                     required:
                     - ccms_code
                     - client_involvement_type
@@ -1156,6 +1225,7 @@ paths:
                   "$ref": "#/components/schemas/Capitals"
                 cash_transactions:
                   type: object
+                  additionalProperties: false
                   description: A set of cash income[ings] and outgoings payments by
                     category
                   example:
@@ -1231,6 +1301,7 @@ paths:
                             description: One or more payment details
                             items:
                               type: object
+                              additionalProperties: false
                               description: Payment detail
                               required:
                               - amount
@@ -1296,6 +1367,7 @@ paths:
                   description: One or more dependants details
                   items:
                     type: object
+                    additionalProperties: false
                     required:
                     - date_of_birth
                     - in_full_time_education
@@ -1331,6 +1403,7 @@ paths:
                   description: One or more employment income details
                   items:
                     type: object
+                    additionalProperties: false
                     description: Employment income detail
                     required:
                     - name
@@ -1353,6 +1426,9 @@ paths:
                 irregular_incomes:
                   type: object
                   description: A set of irregular income payments
+                  required:
+                  - payments
+                  additionalProperties: false
                   example:
                     payments:
                     - income_type: student_loan
@@ -1403,6 +1479,7 @@ paths:
                     by source
                   items:
                     type: object
+                    additionalProperties: false
                     description: Other regular income detail
                     required:
                     - source
@@ -1428,6 +1505,7 @@ paths:
                         items:
                           type: object
                           description: Payment detail
+                          additionalProperties: false
                           required:
                           - date
                           - amount
@@ -1449,97 +1527,7 @@ paths:
                               description: Client identifier for payment received
                               example: '05459c0f-a620-4743-9f0c-b3daa93e5711'
                 outgoings:
-                  type: array
-                  description: One or more outgoings categorized by name
-                  items:
-                    oneOf:
-                    - type: object
-                      required:
-                      - name
-                      - payments
-                      additionalProperties: false
-                      description: Outgoing payments detail
-                      properties:
-                        name:
-                          type: string
-                          enum:
-                          - child_care
-                          - maintenance_out
-                          - legal_aid
-                          description: Type of outgoing
-                          example: child_care
-                        payments:
-                          type: array
-                          description: One or more outgoing payments detail
-                          items:
-                            type: object
-                            additionalProperties: false
-                            required:
-                            - client_id
-                            - payment_date
-                            - amount
-                            description: Payment detail
-                            properties:
-                              client_id:
-                                type: string
-                                description: Client identifier for outgoing payment
-                                example: '05459c0f-a620-4743-9f0c-b3daa93e5711'
-                              payment_date:
-                                type: string
-                                format: date
-                                description: Date payment made
-                                example: '1992-07-22'
-                              amount:
-                                type: number
-                                format: decimal
-                                description: Amount of payment made
-                                example: 101.01
-                    - type: object
-                      required:
-                      - name
-                      - payments
-                      additionalProperties: false
-                      description: Outgoing payments detail
-                      properties:
-                        name:
-                          type: string
-                          enum:
-                          - rent_or_mortgage
-                          description: Type of outgoing
-                        payments:
-                          type: array
-                          description: One or more outgoing payments detail
-                          items:
-                            type: object
-                            additionalProperties: false
-                            required:
-                            - client_id
-                            - payment_date
-                            - amount
-                            - housing_cost_type
-                            description: Payment detail
-                            properties:
-                              client_id:
-                                type: string
-                                description: Client identifier for outgoing payment
-                                example: '05459c0f-a620-4743-9f0c-b3daa93e5711'
-                              payment_date:
-                                type: string
-                                format: date
-                                description: Date payment made
-                                example: '1992-07-22'
-                              housing_cost_type:
-                                type: string
-                                enum:
-                                - rent
-                                - mortgage
-                                - board_and_lodging
-                                description: Housing cost type
-                              amount:
-                                type: number
-                                format: decimal
-                                description: Amount of payment made
-                                example: 101.01
+                  "$ref": "#/components/schemas/OutgoingsList"
                 properties:
                   type: object
                   required:
@@ -1790,7 +1778,7 @@ paths:
                       percentage_owned: 100
                       shared_with_housing_assoc: false
                       subject_matter_of_dispute: false
-                    capital_items:
+                    capitals:
                       bank_accounts:
                       - value: 1.01
                         description: F
@@ -2261,7 +2249,6 @@ paths:
       summary: create outgoing
       tags:
       - Assessment components
-      description: Add applicant's outgoings to an assessment.
       parameters:
       - name: assessment_id
         in: path
@@ -2310,65 +2297,13 @@ paths:
                     client_id: 6e87193e-3f3e-4187-aae8-14a937793221
               properties:
                 outgoings:
-                  type: array
-                  required:
-                  - name
-                  - payments
-                  description: One or more outgoings categorized by name
-                  items:
-                    type: object
-                    description: Outgoing payments detail
-                    properties:
-                      name:
-                        type: string
-                        enum:
-                        - child_care
-                        - rent_or_mortgage
-                        - maintenance_out
-                        - legal_aid
-                        description: Type of outgoing
-                        example: child_care
-                      payments:
-                        type: array
-                        required:
-                        - client_id
-                        - payment_date
-                        - amount
-                        description: One or more outgoing payments detail
-                        items:
-                          type: object
-                          description: Payment detail
-                          properties:
-                            client_id:
-                              type: string
-                              description: Client identifier for outgoing payment
-                              example: '05459c0f-a620-4743-9f0c-b3daa93e5711'
-                            payment_date:
-                              type: string
-                              format: date
-                              description: Date payment made
-                              example: '1992-07-22'
-                            housing_cost_type:
-                              type: string
-                              enum:
-                              - rent
-                              - mortgage
-                              - board_and_lodging
-                              description: Housing cost type (omit for non-housing
-                                cost outgoings)
-                              example: rent
-                            amount:
-                              type: number
-                              format: decimal
-                              description: Amount of payment made
-                              example: 101.01
+                  "$ref": "#/components/schemas/OutgoingsList"
         required: true
   "/assessments/{assessment_id}/partner_financials":
     post:
       summary: 'create '
       tags:
       - Assessment components
-      description: Adds details of an applicant's partner.
       parameters:
       - name: assessment_id
         in: path
@@ -2426,7 +2361,7 @@ paths:
                   percentage_owned: 100
                   shared_with_housing_assoc: false
                   subject_matter_of_dispute: false
-                capital_items:
+                capitals:
                   bank_accounts:
                   - value: 1.01
                     description: F
@@ -2441,6 +2376,7 @@ paths:
                   date_of_purchase: '2017-01-23'
                   in_regular_use: true
                   subject_matter_of_dispute: false
+              additionalProperties: false
               properties:
                 partner:
                   type: object
@@ -2490,6 +2426,8 @@ paths:
                         example: 101.01
                 employments:
                   "$ref": "#/components/schemas/EmploymentPaymentList"
+                outgoings:
+                  "$ref": "#/components/schemas/OutgoingsList"
                 regular_transactions:
                   type: array
                   required:
@@ -2626,7 +2564,7 @@ paths:
                       subject_matter_of_dispute:
                         type: boolean
                         description: Property is the subject of a dispute
-                capital_items:
+                capitals:
                   "$ref": "#/components/schemas/Capitals"
                 vehicles:
                   type: array

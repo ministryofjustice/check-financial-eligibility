@@ -20,8 +20,6 @@ module Creators
   private
 
     def create_records
-      raise(CreationError, ["No such assessment id"]) if assessment.nil?
-
       create_partner
       create_summaries
       create_irregular_income
@@ -32,6 +30,7 @@ module Creators
       create_capitals
       create_vehicles
       create_dependants
+      create_outgoings
     rescue CreationError => e
       self.errors = e.errors
     end
@@ -45,9 +44,9 @@ module Creators
     end
 
     def create_summaries
-      assessment.create_partner_capital_summary
-      assessment.create_partner_gross_income_summary
-      assessment.create_partner_disposable_income_summary
+      assessment.create_partner_capital_summary!
+      assessment.create_partner_gross_income_summary!
+      assessment.create_partner_disposable_income_summary!
     end
 
     def create_irregular_income
@@ -134,6 +133,17 @@ module Creators
       errors.concat(creator.errors)
     end
 
+    def create_outgoings
+      return if outgoings_params.blank?
+
+      creator = OutgoingsCreator.call(
+        disposable_income_summary: assessment.partner_disposable_income_summary,
+        outgoings_params: { outgoings: outgoings_params },
+      )
+
+      errors.concat(creator.errors)
+    end
+
     def create_dependants
       return if dependant_params.blank?
 
@@ -144,10 +154,6 @@ module Creators
       )
 
       errors.concat(creator.errors)
-    end
-
-    def assessment
-      @assessment ||= Assessment.find_by(id: assessment_id)
     end
 
     def partner_attributes
@@ -184,6 +190,10 @@ module Creators
 
     def dependant_params
       @dependant_params ||= @partner_financials_params[:dependants]
+    end
+
+    def outgoings_params
+      @partner_financials_params[:outgoings]
     end
 
     def json_validator

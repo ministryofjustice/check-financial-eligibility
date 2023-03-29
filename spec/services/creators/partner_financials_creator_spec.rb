@@ -406,34 +406,6 @@ module Creators
         end
       end
 
-      context "with invalid capitals" do
-        let(:partner_financials_params) do
-          {
-            partner: {
-              date_of_birth:,
-              employed: true,
-            },
-            capitals: {
-              bank_accounts: [
-                {
-                  description: "A",
-                  subject_matter_of_dispute: false,
-                },
-              ],
-              non_liquid_capital: [],
-            },
-          }
-        end
-
-        it "returns error" do
-          expect(creator.errors[0]).to include("value")
-        end
-
-        it "does not create any vehicles" do
-          expect { creator }.not_to change(LiquidCapitalItem, :count)
-        end
-      end
-
       context "with valid vehicles" do
         let(:partner_financials_params) do
           {

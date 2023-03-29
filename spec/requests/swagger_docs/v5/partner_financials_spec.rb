@@ -7,9 +7,7 @@ RSpec.describe "partner_financials", type: :request, swagger_doc: "v5/swagger.ya
       consumes "application/json"
       produces "application/json"
 
-      description <<~DESCRIPTION.chomp
-        Adds details of an applicant's partner.
-      DESCRIPTION
+      description << "Adds details of an applicant's partner."
 
       assessment_id_parameter
 
@@ -21,6 +19,7 @@ RSpec.describe "partner_financials", type: :request, swagger_doc: "v5/swagger.ya
                   required: %i[partner],
                   description: "Full information about an applicant's partner",
                   example: JSON.parse(File.read(Rails.root.join("spec/fixtures/partner_financials.json"))),
+                  additionalProperties: false,
                   properties: {
                     partner: {
                       type: :object,
@@ -69,6 +68,7 @@ RSpec.describe "partner_financials", type: :request, swagger_doc: "v5/swagger.ya
                       },
                     },
                     employments: { "$ref" => "#/components/schemas/EmploymentPaymentList" },
+                    outgoings: { "$ref" => "#/components/schemas/OutgoingsList" },
                     regular_transactions: {
                       type: :array,
                       required: %i[category operation frequency amount],
@@ -195,7 +195,7 @@ RSpec.describe "partner_financials", type: :request, swagger_doc: "v5/swagger.ya
                         },
                       },
                     },
-                    capital_items: { "$ref" => "#/components/schemas/Capitals" },
+                    capitals: { "$ref" => "#/components/schemas/Capitals" },
                     vehicles: {
                       type: :array,
                       description: "One or more vehicles' details",
@@ -337,7 +337,7 @@ RSpec.describe "partner_financials", type: :request, swagger_doc: "v5/swagger.ya
                 subject_matter_of_dispute: false,
               },
             ],
-            capital_items: {
+            capitals: {
               bank_accounts: [
                 {
                   value: 1.01,

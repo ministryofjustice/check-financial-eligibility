@@ -7,9 +7,7 @@ RSpec.describe "cash_transactions", type: :request, swagger_doc: "v5/swagger.yam
       consumes "application/json"
       produces "application/json"
 
-      description <<~DESCRIPTION.chomp
-        Add cash income and outgoings to an assessment.
-      DESCRIPTION
+      description << "Add cash income and outgoings to an assessment."
 
       assessment_id_parameter
 
@@ -64,46 +62,7 @@ RSpec.describe "cash_transactions", type: :request, swagger_doc: "v5/swagger.yam
                         },
                       },
                     },
-                    outgoings: {
-                      type: :array,
-                      description: "One or more outgoing details",
-                      items: {
-                        type: :object,
-                        description: "Outgoing detail",
-                        properties: {
-                          category: {
-                            type: :string,
-                            enum: CFEConstants::VALID_OUTGOING_CATEGORIES,
-                            example: CFEConstants::VALID_OUTGOING_CATEGORIES.first,
-                          },
-                          payments: {
-                            type: :array,
-                            description: "One or more payment details",
-                            items: {
-                              type: :object,
-                              description: "Payment detail",
-                              properties: {
-                                date: {
-                                  type: :string,
-                                  format: :date,
-                                  example: "1992-07-22",
-                                },
-                                amount: {
-                                  type: :number,
-                                  format: :decimal,
-                                  example: "101.02",
-                                },
-                                client_id: {
-                                  type: :string,
-                                  format: :uuid,
-                                  example: "05459c0f-a620-4743-9f0c-b3daa93e5711",
-                                },
-                              },
-                            },
-                          },
-                        },
-                      },
-                    },
+                    outgoings: { "$ref" => "#/components/schemas/OutgoingsList" },
                   },
                 }
 

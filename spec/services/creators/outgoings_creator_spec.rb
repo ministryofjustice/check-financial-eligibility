@@ -8,7 +8,7 @@ module Creators
       let(:housing_cost_type_rent) { "rent" }
       let(:housing_cost_type_mortgage) { "mortgage" }
 
-      subject(:creator) { described_class.call(assessment:, outgoings_params:) }
+      subject(:creator) { described_class.call(disposable_income_summary: assessment.disposable_income_summary, outgoings_params:) }
 
       it "creates all the required outgoing records" do
         expect { creator }.to change(Outgoings::BaseOutgoing, :count).by(6)
