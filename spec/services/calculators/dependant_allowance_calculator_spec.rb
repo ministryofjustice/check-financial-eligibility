@@ -274,5 +274,38 @@ module Calculators
         end
       end
     end
+
+    describe "retrieving threshold values for 2023" do
+      subject(:calculator) { described_class.new(dependant) }
+
+      let(:dependant) { build_stubbed(:dependant, assessment:) }
+      let(:assessment) { build_stubbed(:assessment, submission_date:) }
+
+      context "when the submission date is before the new allowances date" do
+        let(:submission_date) { Date.new(2023, 4, 9) }
+
+        it "returns the correct allowances" do
+          expect(calculator).to have_attributes(
+            child_under_15_allowance: 307.64,
+            child_aged_15_allowance: 307.64,
+            child_16_and_over_allowance: 307.64,
+            adult_allowance: 307.64,
+          )
+        end
+      end
+
+      context "when the submission date is after the new allowances date" do
+        let(:submission_date) { Date.new(2023, 4, 10) }
+
+        it "returns the correct allowances" do
+          expect(calculator).to have_attributes(
+            child_under_15_allowance: 338.90,
+            child_aged_15_allowance: 338.90,
+            child_16_and_over_allowance: 338.90,
+            adult_allowance: 338.90,
+          )
+        end
+      end
+    end
   end
 end
