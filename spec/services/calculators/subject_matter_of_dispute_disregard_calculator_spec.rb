@@ -10,12 +10,10 @@ module Calculators
     let(:capital_summary) do
       create :capital_summary,
              vehicles: [vehicle],
-             capital_items: [capital_item],
-             properties: [property]
+             capital_items: [capital_item]
     end
     let(:vehicle) { create :vehicle, subject_matter_of_dispute: false }
     let(:capital_item) { create :liquid_capital_item, subject_matter_of_dispute: false }
-    let(:property) { create :property, subject_matter_of_dispute: false }
     let(:maximum_disregard) { 10_000 }
 
     describe "#value" do
@@ -44,7 +42,6 @@ module Calculators
       context "with multiple SMOD assets worth less than the disregard" do
         let(:capital_item) { create :liquid_capital_item, value: 3_000, subject_matter_of_dispute: true }
         let(:vehicle) { create :vehicle, assessed_value: 1_000, subject_matter_of_dispute: true }
-        let(:property) { create :property, assessed_equity: 5_000, subject_matter_of_dispute: true }
 
         it "returns the combined value of the assets" do
           expect(value).to eq 4_000
@@ -54,7 +51,6 @@ module Calculators
       context "with multiple SMOD assets worth more than the disregard" do
         let(:capital_item) { create :liquid_capital_item, value: 3_000, subject_matter_of_dispute: true }
         let(:vehicle) { create :vehicle, assessed_value: 1_000, subject_matter_of_dispute: true }
-        let(:property) { create :property, assessed_equity: 9_000, subject_matter_of_dispute: true }
 
         it "returns the disregard value" do
           expect(value).to eq 4_000
@@ -64,7 +60,6 @@ module Calculators
       context "if there is no valid upper limit provided" do
         let(:capital_item) { create :liquid_capital_item, value: 3_000, subject_matter_of_dispute: true }
         let(:vehicle) { create :vehicle, assessed_value: 1_000, subject_matter_of_dispute: true }
-        let(:property) { create :property, assessed_equity: 9_000, subject_matter_of_dispute: true }
         let(:maximum_disregard) { nil }
 
         it "raises an exception" do

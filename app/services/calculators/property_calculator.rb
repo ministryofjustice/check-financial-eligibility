@@ -42,10 +42,7 @@ module Calculators
                        main_home_equity_disregard: equity_disregard.applied,
                        property:,
                        smod_allowance: smod_disregard.applied,
-                       assessed_equity: equity_disregard.result)
-                  .freeze.tap do |result|
-              save!(property, result)
-            end
+                       assessed_equity: equity_disregard.result).freeze
           end
         end
       end
@@ -62,11 +59,6 @@ module Calculators
       def main_home_equity_disregard_cap(property, submission_date)
         property_type = property.main_home ? :main_home : :additional_property
         Threshold.value_for(:property_disregard, at: submission_date)[property_type]
-      end
-
-      # TODO: Remove this side effect
-      def save!(property, result)
-        property.update!(result.to_h.except(:smod_allowance, :property))
       end
     end
   end

@@ -21,12 +21,7 @@ module Decorators
                    outstanding_mortgage: 454_533.64,
                    percentage_owned: 100.0,
                    main_home: true,
-                   shared_with_housing_assoc: false,
-                   transaction_allowance: 23_577.0,
-                   net_value: 697_523.0,
-                   net_equity: 697_523.0,
-                   main_home_equity_disregard: 100_000,
-                   assessed_equity: 597_523.0
+                   shared_with_housing_assoc: false
           end
           let(:property) do
             result = Calculators::PropertyCalculator.call(submission_date: Date.current, properties: [record],
