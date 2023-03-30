@@ -62,3 +62,13 @@ guard :cucumber, cucumber_options do
     Dir[File.join("**/#{m[1]}.feature")][0] || "features"
   end
 end
+
+### SWAGGER ###
+swagger_options = {
+  all_on_start: false,
+}
+guard :shell, swagger_options do
+  watch(%r{^spec/requests/swagger_docs/.+\.rb}) do
+    `NOCOVERAGE=1 bundle exec rake rswag:specs:swaggerize`
+  end
+end

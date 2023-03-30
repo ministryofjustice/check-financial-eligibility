@@ -242,6 +242,9 @@ GEM
     guard-rubocop (1.5.0)
       guard (~> 2.0)
       rubocop (< 2.0)
+    guard-shell (0.7.2)
+      guard (>= 2.0.0)
+      guard-compat (~> 1.0)
     hashdiff (1.0.1)
     httpclient (2.8.3)
     i18n (1.12.0)
@@ -519,6 +522,7 @@ DEPENDENCIES
   guard-cucumber
   guard-rspec
   guard-rubocop
+  guard-shell
   hashdiff
   json-schema (~> 3.0.0)
   listen (>= 3.0.5, < 3.9)
