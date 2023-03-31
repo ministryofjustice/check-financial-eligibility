@@ -220,6 +220,13 @@ components:
         type: object
         additionalProperties: true
         description: Employment payment detail
+        required:
+        - client_id
+        - date
+        - gross
+        - benefits_in_kind
+        - tax
+        - national_insurance
         properties:
           client_id:
             type: string
@@ -265,6 +272,29 @@ components:
         type: number
         format: decimal
         description: Description of asset
+    Employments:
+      type: array
+      required:
+      - name
+      - client_id
+      - payments
+      description: One or more employment income details
+      items:
+        type: object
+        description: Employment income detail
+        properties:
+          name:
+            type: string
+            description: Identifying name for this employment - e.g. employer's name
+          client_id:
+            type: string
+            description: Client supplied id to identify the employment
+          receiving_only_statutory_sick_or_maternity_pay:
+            type: boolean
+            description: Client is in receipt only of Statutory Sick Pay (SSP) or
+              Statutory Maternity Pay (SMP)
+          payments:
+            "$ref": "#/components/schemas/EmploymentPaymentList"
     OutgoingsList:
       type: array
       description: One or more outgoings categorized by name
@@ -2425,7 +2455,7 @@ paths:
                         format: decimal
                         example: 101.01
                 employments:
-                  "$ref": "#/components/schemas/EmploymentPaymentList"
+                  "$ref": "#/components/schemas/Employments"
                 outgoings:
                   "$ref": "#/components/schemas/OutgoingsList"
                 regular_transactions:

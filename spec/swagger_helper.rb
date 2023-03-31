@@ -208,6 +208,7 @@ RSpec.configure do |config|
               # allow for legacy redundant net_employment_income field
               additionalProperties: true,
               description: "Employment payment detail",
+              required: %i[client_id date gross benefits_in_kind tax national_insurance],
               properties: {
                 client_id: {
                   type: :string,
@@ -259,6 +260,30 @@ RSpec.configure do |config|
               type: :number,
               format: :decimal,
               description: "Description of asset",
+            },
+          },
+          Employments: {
+            type: :array,
+            required: %i[name client_id payments],
+            description: "One or more employment income details",
+            items: {
+              type: :object,
+              description: "Employment income detail",
+              properties: {
+                name: {
+                  type: :string,
+                  description: "Identifying name for this employment - e.g. employer's name",
+                },
+                client_id: {
+                  type: :string,
+                  description: "Client supplied id to identify the employment",
+                },
+                receiving_only_statutory_sick_or_maternity_pay: {
+                  type: :boolean,
+                  description: "Client is in receipt only of Statutory Sick Pay (SSP) or Statutory Maternity Pay (SMP)",
+                },
+                payments: { "$ref" => "#/components/schemas/EmploymentPaymentList" },
+              },
             },
           },
           OutgoingsList: {

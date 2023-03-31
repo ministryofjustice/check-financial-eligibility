@@ -67,7 +67,7 @@ RSpec.describe "partner_financials", type: :request, swagger_doc: "v5/swagger.ya
                         },
                       },
                     },
-                    employments: { "$ref" => "#/components/schemas/EmploymentPaymentList" },
+                    employments: { "$ref" => "#/components/schemas/Employments" },
                     outgoings: { "$ref" => "#/components/schemas/OutgoingsList" },
                     regular_transactions: {
                       type: :array,
