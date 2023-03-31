@@ -1,9 +1,22 @@
-guard :rubocop, all_on_start: false do
-  watch(%r{//.+\.rb$//})
-  watch(%r{(?:.+/)?\.(rubocop|rubocop_todo)\.yml$}) { |m| File.dirname(m[0]) }
+### RUBOCOP ###
+rubocop_options = {
+  cli: "-A",
+  all_on_start: false,
+}
+
+guard :rubocop, rubocop_options do
+  watch(%r{.+\.rb$})
+  watch(%r{(?:.+/)?\.rubocop(?:_todo)?\.yml$}) { |m| File.dirname(m[0]) }
 end
 
-guard :rspec, cmd: "VERBOSE=true bundle exec rspec", all_on_start: false do
+### RSPEC ###
+rspec_options = {
+  cmd: "VERBOSE=true bundle exec rspec",
+  cmd_additional_args: "--fail-fast",
+  all_on_start: false,
+}
+
+guard :rspec, rspec_options do
   require "guard/rspec/dsl"
   dsl = Guard::RSpec::Dsl.new(self)
 
@@ -30,4 +43,32 @@ guard :rspec, cmd: "VERBOSE=true bundle exec rspec", all_on_start: false do
   watch(rails.spec_helper)     { rspec.spec_dir }
   watch(rails.routes)          { "#{rspec.spec_dir}/requests" }
   watch(rails.app_controller)  { "#{rspec.spec_dir}/requests" }
+end
+
+### CUCUMBER ###
+cucumber_options = {
+  cmd: "VERBOSE=true bundle exec cucumber",
+  cmd_additional_args: "--publish-quiet",
+  notification: false,
+  all_after_pass: false,
+  all_on_start: false,
+}
+
+guard :cucumber, cucumber_options do
+  watch(%r{^features/.+\.feature$})
+  watch(%r{^features/support/.+$}) { "features" }
+
+  watch(%r{^features/step_definitions/(.+)_steps\.rb$}) do |m|
+    Dir[File.join("**/#{m[1]}.feature")][0] || "features"
+  end
+end
+
+### SWAGGER ###
+swagger_options = {
+  all_on_start: false,
+}
+guard :shell, swagger_options do
+  watch(%r{^spec/requests/swagger_docs/.+\.rb}) do
+    `NOCOVERAGE=1 bundle exec rake rswag:specs:swaggerize`
+  end
 end

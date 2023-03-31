@@ -85,8 +85,10 @@ end
 
 group :development do
   gem "guard"
+  gem "guard-cucumber"
   gem "guard-rspec"
   gem "guard-rubocop"
+  gem "guard-shell"
   gem "listen", ">= 3.0.5", "< 3.9"
   gem "pry-rescue"
   gem "pry-stack_explorer"
