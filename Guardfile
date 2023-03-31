@@ -1,6 +1,6 @@
 ### RUBOCOP ###
 rubocop_options = {
-  cmd_additional_args: "-A",
+  cli: "-A",
   all_on_start: false,
 }
 
