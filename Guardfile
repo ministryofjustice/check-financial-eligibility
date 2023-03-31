@@ -5,8 +5,8 @@ rubocop_options = {
 }
 
 guard :rubocop, rubocop_options do
-  watch(%r{//.+\.rb$//})
-  watch(%r{(?:.+/)?\.(rubocop|rubocop_todo)\.yml$}) { |m| File.dirname(m[0]) }
+  watch(%r{.+\.rb$})
+  watch(%r{(?:.+/)?\.rubocop(?:_todo)?\.yml$}) { |m| File.dirname(m[0]) }
 end
 
 ### RSPEC ###
