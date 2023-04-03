@@ -1,6 +1,6 @@
 require "rails_helper"
 
-module V2
+module V6
   RSpec.describe AssessmentsController, :calls_bank_holiday, type: :request do
     describe "POST /create" do
       let(:headers) { { "CONTENT_TYPE" => "application/json", "Accept" => "application/json" } }
@@ -100,7 +100,7 @@ module V2
       let(:irregular_income_params) { { payments: irregular_income_payments } }
 
       before do
-        post v2_assessments_path, params: default_params.merge(params).to_json, headers:
+        post v6_assessments_path, params: default_params.merge(params).to_json, headers:
       end
 
       context "with an assessment error" do
@@ -187,6 +187,10 @@ module V2
 
         it "returns http success" do
           expect(response).to have_http_status(:success)
+        end
+
+        it "returns a version of 6" do
+          expect(parsed_response.fetch(:version)).to eq("6")
         end
 
         it "has dependant_allowance" do
@@ -589,7 +593,7 @@ module V2
         end
 
         it "contains JSON version and success" do
-          expect(parsed_response.except(:timestamp, :result_summary, :assessment)).to eq({ version: "5", success: true })
+          expect(parsed_response.except(:timestamp, :result_summary, :assessment)).to eq({ version: "6", success: true })
         end
 
         describe "result summary" do

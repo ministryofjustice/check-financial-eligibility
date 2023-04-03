@@ -81,21 +81,21 @@ RSpec.describe "IntegrationTests::TestRunner", type: :request do
         assessment_cash_transactions_path: :cash_transactions,
         assessment_irregular_incomes_path: :irregular_incomes,
       }
-      v2_payloads = payloads_hash.map do |url_method, payload|
+      v6_payloads = payloads_hash.map do |url_method, payload|
         if url_method_mapping.key? url_method
           { url_method_mapping.fetch(url_method) => payload }
         else
           payload
         end
       end
-      v2_payload = v2_payloads.reduce(assessment: worksheet.assessment.payload) { |hash, elem| hash.merge(elem) }
-      v2_api_results = noisy_post("/v2/assessments", v2_payload, worksheet.version)
-      puts Hashdiff.diff(*[v1_api_results, v2_api_results].map { |x| remove_result_noise(x) })
-      worksheet.compare_results(v2_api_results)
+      single_shot_payload = v6_payloads.reduce(assessment: worksheet.assessment.payload) { |hash, elem| hash.merge(elem) }
+      v6_api_results = noisy_post("/v6/assessments", single_shot_payload, worksheet.version)
+      puts Hashdiff.diff(*[v1_api_results, v6_api_results].map { |x| remove_result_noise(x) }) unless silent?
+      worksheet.compare_results(v6_api_results)
     end
 
     def remove_result_noise(api_results)
-      api_results.except(:timestamp).merge(assessment: api_results.fetch(:assessment).except(:id))
+      api_results.except(:timestamp, :version).merge(assessment: api_results.fetch(:assessment).except(:id))
     end
 
     def get_assessment(assessment_id, version)

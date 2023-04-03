@@ -1,4 +1,4 @@
-module V2
+module V6
   class AssessmentsController < ApplicationController
     def create
       create = Creators::FullAssessmentCreator.call(remote_ip: request.remote_ip,

@@ -860,7 +860,7 @@ paths:
                         items:
                           type: string
         required: true
-  "/v2/assessments":
+  "/v6/assessments":
     post:
       summary: create
       tags:
@@ -1159,7 +1159,7 @@ paths:
                   version:
                     type: string
                     enum:
-                    - '5'
+                    - '6'
                   success:
                     type: boolean
       requestBody:

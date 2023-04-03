@@ -1,12 +1,7 @@
 require "swagger_helper"
 
-RSpec.describe "full_assessment", type: :request, swagger_doc: "v5/swagger.yaml" do
-  before do
-    stub_request(:get, "https://www.gov.uk/bank-holidays.json")
-      .to_return(body: file_fixture("bank-holidays.json").read)
-  end
-
-  path "/v2/assessments" do
+RSpec.describe "full_assessment", :calls_bank_holiday, type: :request, swagger_doc: "v5/swagger.yaml" do
+  path "/v6/assessments" do
     post("create") do
       tags "Perform assessment with single call"
       consumes "application/json"
@@ -1101,7 +1096,7 @@ RSpec.describe "full_assessment", type: :request, swagger_doc: "v5/swagger.yaml"
                  },
                  version: {
                    type: :string,
-                   enum: %w[5],
+                   enum: %w[6],
                  },
                  success: {
                    type: :boolean,

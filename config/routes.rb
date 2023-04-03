@@ -22,7 +22,7 @@ Rails.application.routes.draw do
 
   root to: "main#index"
 
-  namespace :v2 do
+  namespace :v6 do
     # single-shot version of the above POSTxN, GET sequence
     resources :assessments, only: [:create]
   end

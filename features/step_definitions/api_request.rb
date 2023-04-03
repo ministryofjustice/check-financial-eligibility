@@ -196,7 +196,7 @@ When("I retrieve the final assessment") do
   single_shot_api_data[:capitals] = @capitals_data if @capitals_data
   single_shot_api_data[:partner] = partner_data if partner_data
 
-  @single_shot_response = submit_request :post, "/v2/assessments", @api_version, single_shot_api_data
+  @single_shot_response = submit_request :post, "/v6/assessments", @api_version, single_shot_api_data
 end
 
 Then("I should see the following overall summary:") do |table|

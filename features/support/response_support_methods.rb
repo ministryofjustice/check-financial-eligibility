@@ -51,7 +51,7 @@ def section_from_path(relevant_section, section_path, section_name)
 end
 
 def remove_request_specific_data(response)
-  response.except("timestamp").merge("assessment" => response.fetch("assessment").except("id"))
+  response.except("timestamp", "version").merge("assessment" => response.fetch("assessment").except("id"))
 end
 
 # Fetch the json values from within the response based on the mapping defined for the section

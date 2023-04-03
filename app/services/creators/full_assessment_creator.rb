@@ -10,7 +10,7 @@ module Creators
       def call(remote_ip:, params:)
         create = Creators::AssessmentCreator.call(remote_ip:,
                                                   assessment_params: params[:assessment],
-                                                  version: CFEConstants::DEFAULT_ASSESSMENT_VERSION)
+                                                  version: CFEConstants::FULL_ASSESSMENT_VERSION)
         if create.success?
           assessment = create.assessment
 
