@@ -14,9 +14,10 @@ RSpec.describe Assessment, type: :model do
       }
     end
 
-    it "writes a valid record" do
+    it "writes current date into the date column" do
       assessment = described_class.create! param_hash
-      expect(assessment).to be_valid
+      expect(assessment.created_at).to eq(Date.current)
+      expect(assessment.updated_at).to eq(Date.current)
     end
   end
 
