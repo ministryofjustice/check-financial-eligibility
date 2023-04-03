@@ -106,7 +106,7 @@ describe PartnerFinancialsController, :calls_bank_holiday, type: :request do
       end
 
       it "returns error" do
-        expect(parsed_response[:errors]).to include(/The property '#\/bank_accounts\/0' did not contain a required property of 'description'/)
+        expect(parsed_response[:errors]).to include(/The property '#\/capitals\/bank_accounts\/0' did not contain a required property of 'description'/)
       end
     end
 

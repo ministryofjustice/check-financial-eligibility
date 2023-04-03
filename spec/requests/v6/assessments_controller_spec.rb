@@ -111,9 +111,7 @@ module V6
         end
 
         it "returns error JSON" do
-          expect(parsed_response)
-            .to eq({ success: false,
-                     errors: ["The property '#/' did not contain a required property of 'submission_date' in schema file://#"] })
+          expect(parsed_response[:errors]).to include(%r{The property '#/assessment' did not contain a required property of 'submission_date'})
         end
       end
 
@@ -220,11 +218,7 @@ module V6
         end
 
         it "returns error JSON" do
-          expect(parsed_response)
-            .to eq({
-              success: false,
-              errors: ["The property '#/income' of type object did not match the following type: array in schema file://public/schemas/cash_transactions.json"],
-            })
+          expect(parsed_response[:errors]).to include(%r{The property '#/cash_transactions/income' of type object did not match the following type: array in schema})
         end
       end
 

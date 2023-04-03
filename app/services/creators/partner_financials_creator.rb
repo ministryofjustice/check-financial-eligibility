@@ -9,11 +9,7 @@ module Creators
     end
 
     def call
-      if json_validator.valid?
-        Assessment.transaction { create_records }
-      else
-        self.errors = json_validator.errors
-      end
+      Assessment.transaction { create_records }
       self
     end
 
@@ -52,12 +48,10 @@ module Creators
     def create_irregular_income
       return if irregular_income_params.blank?
 
-      creator = IrregularIncomeCreator.call(
+      IrregularIncomeCreator.call(
         irregular_income_params: { payments: irregular_income_params },
         gross_income_summary: assessment.partner_gross_income_summary,
       )
-
-      errors.concat(creator.errors)
     end
 
     def create_regular_transactions
@@ -110,15 +104,10 @@ module Creators
     def create_capitals
       return if capital_params.blank?
 
-      json_validator = JsonSwaggerValidator.new("capitals", capital_params)
-      if json_validator.valid?
-        CapitalsCreator.call(
-          capital_params:,
-          capital_summary: assessment.partner_capital_summary,
-        )
-      else
-        errors.concat(json_validator.errors)
-      end
+      CapitalsCreator.call(
+        capital_params:,
+        capital_summary: assessment.partner_capital_summary,
+      )
     end
 
     def create_vehicles
@@ -194,10 +183,6 @@ module Creators
 
     def outgoings_params
       @partner_financials_params[:outgoings]
-    end
-
-    def json_validator
-      @json_validator ||= JsonValidator.new("partner", partner_attributes)
     end
   end
 end
