@@ -31,6 +31,32 @@ describe PartnerFinancialsController, :calls_bank_holiday, type: :request do
       end
     end
 
+    context "with invalid irregular income" do
+      let(:partner_financials_params) do
+        {
+          partner: {
+            date_of_birth:,
+            employed: true,
+          },
+          irregular_incomes: [
+            {
+              income_type: "unknown thing",
+              frequency: "quarterly",
+              amount: 101.01,
+            },
+          ],
+        }
+      end
+
+      it "returns error" do
+        expect(parsed_response[:errors]).to include(/unknown thing/)
+      end
+
+      it "does not create a payment" do
+        expect(IrregularIncomePayment.count).to eq(0)
+      end
+    end
+
     context "with invalid capitals" do
       let(:partner_financials_params) do
         {
@@ -49,7 +75,7 @@ describe PartnerFinancialsController, :calls_bank_holiday, type: :request do
       end
 
       it "returns error" do
-        expect(parsed_response[:errors]).to include(/The property '#\/bank_accounts\/0' did not contain a required property of 'description'/)
+        expect(parsed_response[:errors]).to include(/The property '#\/capitals\/bank_accounts\/0' did not contain a required property of 'description'/)
       end
     end
 
@@ -58,47 +84,28 @@ describe PartnerFinancialsController, :calls_bank_holiday, type: :request do
         {
           partner: {
             date_of_birth: "1980-11-20",
-            employed: true,
+            employed: false,
           },
-          "dependants": [
+          irregular_incomes: [
             {
-              "date_of_birth": "2022-11-20",
-              "in_full_time_education": false,
-              "relationship": "child_relative",
-              "monthly_income": 0,
-              "assets_value": 0,
+              income_type: "student_loan",
+              frequency: "annual",
+              amount: "102.34",
             },
           ],
-          "employments": [
+          regular_transactions: [
             {
-              "name": "job-1-dec",
-              "client_id": "job1-id-uuid",
-              "payments": [
-                {
-                  "client_id": "job1-december-pay-uuid",
-                  "date": "2020-12-1",
-                  "gross": 450.00,
-                  "benefits_in_kind": 0,
-                  "tax": -10.04,
-                  "national_insurance": -5.02,
-                },
-                {
-                  "client_id": "job-1-november-pay-uuid",
-                  "date": "2020-11-01",
-                  "gross": 450.00,
-                  "benefits_in_kind": 0,
-                  "tax": -10.04,
-                  "national_insurance": -5.02,
-                },
-                {
-                  "client_id": "job-1-october-pay-uuid",
-                  "date": "2020-10-01",
-                  "gross": 450,
-                  "benefits_in_kind": 0,
-                  "tax": -10.04,
-                  "national_insurance": -5.02,
-                },
-              ],
+              category: "friends_or_family",
+              amount: "12.34",
+              operation: "credit",
+              frequency: "weekly",
+            },
+          ],
+          vehicles: [
+            {
+              value: "560.0",
+              date_of_purchase: "2011-06-09",
+              loan_amount_outstanding: "234",
             },
           ],
           "outgoings": [
@@ -140,42 +147,6 @@ describe PartnerFinancialsController, :calls_bank_holiday, type: :request do
           },
         }
       end
-      let(:employments) do
-        {
-          "employment_income": [
-            {
-              "name": "job-1-dec",
-              "client_id": "job1-id-uuid",
-              "payments": [
-                {
-                  "client_id": "job1-december-pay-uuid",
-                  "date": "2020-12-18",
-                  "gross": 2526.00,
-                  "benefits_in_kind": 0,
-                  "tax": -244.60,
-                  "national_insurance": -208.08,
-                },
-                {
-                  "client_id": "job-1-november-pay-uuid",
-                  "date": "2020-11-28",
-                  "gross": 2526.00,
-                  "benefits_in_kind": 0,
-                  "tax": -244.6,
-                  "national_insurance": -208.08,
-                },
-                {
-                  "client_id": "job-1-october-pay-uuid",
-                  "date": "2020-10-28",
-                  "gross": 2526.00,
-                  "benefits_in_kind": 0,
-                  "tax": -244.6,
-                  "national_insurance": -208.08,
-                },
-              ],
-            },
-          ],
-        }
-      end
       let(:proceeding_types) do
         [
           {
@@ -194,7 +165,6 @@ describe PartnerFinancialsController, :calls_bank_holiday, type: :request do
       end
 
       before do
-        post("/assessments/#{assessment.id}/employments", params: employments.to_json, headers:)
         post("/assessments/#{assessment.id}/proceeding_types", params: proceeding_types.to_json, headers:)
 
         get("/assessments/#{assessment.id}")

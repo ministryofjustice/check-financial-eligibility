@@ -152,11 +152,14 @@ When("I retrieve the final assessment") do
     additional_properties = @partner_property || []
     regular_transactions = @partner_regular_transactions || []
     capitals = @partner_capitals || {}
-    partner_data = { "partner": { "date_of_birth": "1992-07-22", "employed": true },
-                     employments:,
+    partner_data = { partner: { "date_of_birth": "1992-07-22", "employed": false },
                      additional_properties:,
                      regular_transactions:,
                      capitals: }
+    if employments.any?
+      partner_data[:employments] = employments
+      partner_data[:partner] = partner_data.fetch(:partner).merge(employed: true)
+    end
   end
 
   response = submit_request(:post, "assessments", @api_version, @assessment_data)

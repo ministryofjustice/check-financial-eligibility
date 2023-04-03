@@ -20,15 +20,11 @@ module Creators
     end
 
     def call
-      if json_validator.valid?
-        new_assessment = create_new_assessment_and_summary_records
-        if new_assessment.valid?
-          CreationResult.new(errors: [], assessment: new_assessment).freeze
-        else
-          CreationResult.new(errors: new_assessment.errors.full_messages).freeze
-        end
+      new_assessment = create_new_assessment_and_summary_records
+      if new_assessment.valid?
+        CreationResult.new(errors: [], assessment: new_assessment).freeze
       else
-        CreationResult.new(errors: json_validator.errors).freeze
+        CreationResult.new(errors: new_assessment.errors.full_messages).freeze
       end
     end
 
@@ -54,10 +50,6 @@ module Creators
 
         assessment
       end
-    end
-
-    def json_validator
-      @json_validator ||= JsonValidator.new("assessment", @assessment_params)
     end
   end
 end

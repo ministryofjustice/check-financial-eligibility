@@ -11,17 +11,13 @@ module Creators
         create = Creators::AssessmentCreator.call(remote_ip:,
                                                   assessment_params: params[:assessment],
                                                   version: CFEConstants::FULL_ASSESSMENT_VERSION)
-        if create.success?
-          assessment = create.assessment
+        assessment = create.assessment
 
-          errors = CREATE_FUNCTIONS.map { |f|
-            f.call(assessment, params)
-          }.compact.map(&:errors).reduce([], :+)
+        errors = CREATE_FUNCTIONS.map { |f|
+          f.call(assessment, params)
+        }.compact.reject(&:success?).map(&:errors).reduce([], :+)
 
-          CreationResult.new(errors:, assessment: create.assessment.reload).freeze
-        else
-          CreationResult.new(errors: create.errors).freeze
-        end
+        CreationResult.new(errors:, assessment: create.assessment.reload).freeze
       end
 
       CREATE_FUNCTIONS = [
