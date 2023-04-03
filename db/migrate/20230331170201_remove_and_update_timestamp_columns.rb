@@ -1,7 +1,6 @@
 class RemoveAndUpdateTimestampColumns < ActiveRecord::Migration[7.0]
   RESOURCES = %i[
     applicants
-    bank_holidays
     capital_items
     capital_summaries
     cash_transaction_categories

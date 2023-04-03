@@ -39,14 +39,9 @@ module Creators
 
         it "creates liquid capital items" do
           expect(capital_summary.liquid_capital_items.size).to eq 2
-          items = capital_summary.liquid_capital_items.order(:created_at)
-
-          expect(items.first.description).to eq bank_name1
-          expect(items.first.value).to eq value1
-          expect(items.first.subject_matter_of_dispute).to eq smod_true
-          expect(items.last.description).to eq bank_name2
-          expect(items.last.value).to eq value2
-          expect(items.last.subject_matter_of_dispute).to eq smod_false
+          expect(capital_summary.liquid_capital_items.collect(&:description)).to match_array [bank_name1, bank_name2]
+          expect(capital_summary.liquid_capital_items.collect(&:value)).to match_array [value1, value2]
+          expect(capital_summary.liquid_capital_items.collect(&:subject_matter_of_dispute)).to match_array [smod_true, smod_false]
         end
 
         it "does not create non-liquid capital items" do
