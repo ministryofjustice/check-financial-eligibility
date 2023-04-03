@@ -32,6 +32,30 @@ module Creators
           expect { creator }.not_to change(IrregularIncomePayment, :count)
         end
       end
+
+      context "invalid payload - missing frequency" do
+        let(:irregular_income_params) { missing_frequency_params }
+
+        it "does not creat any records" do
+          expect { creator }.not_to change(IrregularIncomePayment, :count)
+        end
+
+        it "returns an error" do
+          expect(creator.errors).to eq ["The property '#/payments/0' did not contain a required property of 'frequency' in schema file://public/schemas/irregular_incomes.json"]
+        end
+      end
+
+      context "invalid payload - multiple payments" do
+        let(:irregular_income_params) { multiple_payments_params }
+
+        it "does not creat any records" do
+          expect { creator }.not_to change(IrregularIncomePayment, :count)
+        end
+
+        it "returns an error" do
+          expect(creator.errors).to eq ["The property '#/payments' had more items than the allowed 2 in schema file://public/schemas/irregular_incomes.json"]
+        end
+      end
     end
 
     def irregular_income_params
@@ -39,6 +63,39 @@ module Creators
         payments: [
           {
             income_type: "student_loan",
+            frequency:,
+            amount: 123_456.78,
+          },
+        ],
+      }
+    end
+
+    def missing_frequency_params
+      {
+        payments: [
+          {
+            income_type: "student_loan",
+            amount: 99_999.00,
+          },
+        ],
+      }
+    end
+
+    def multiple_payments_params
+      {
+        payments: [
+          {
+            income_type: "student_loan",
+            frequency:,
+            amount: 123_456.78,
+          },
+          {
+            income_type: "student_loan",
+            frequency:,
+            amount: 123_456.78,
+          },
+          {
+            income_type: "unspecified_source",
             frequency:,
             amount: 123_456.78,
           },

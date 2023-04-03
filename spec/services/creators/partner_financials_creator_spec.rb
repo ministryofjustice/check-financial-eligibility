@@ -97,6 +97,33 @@ module Creators
         end
       end
 
+      context "with invalid irregular income" do
+        let(:partner_financials_params) do
+          {
+            partner: {
+              date_of_birth:,
+              employed: true,
+            },
+            irregular_incomes: [
+              {
+                income_type: "unknown thing",
+                frequency: "quarterly",
+                amount: 101.01,
+              },
+            ],
+          }
+        end
+
+        it "returns error" do
+          expect(creator.errors.size).to eq 1
+          expect(creator.errors[0]).to include("unknown thing")
+        end
+
+        it "does not create a payment" do
+          expect { creator }.not_to change(IrregularIncomePayment, :count)
+        end
+      end
+
       context "with valid employment" do
         let(:partner_financials_params) do
           {

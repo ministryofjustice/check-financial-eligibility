@@ -2426,14 +2426,13 @@ paths:
                       description: Whether the applicant's partner is employed
                 irregular_incomes:
                   type: array
+                  required:
+                  - income_type
+                  - frequency
+                  - amount
                   description: One or more irregular payment details
                   items:
                     type: object
-                    additionalProperties: false
-                    required:
-                    - income_type
-                    - frequency
-                    - amount
                     description: Irregular payment detail
                     properties:
                       income_type:
@@ -2452,7 +2451,9 @@ paths:
                         description: Frequency of the payment received
                         example: monthly
                       amount:
-                        "$ref": "#/components/schemas/currency"
+                        type: number
+                        format: decimal
+                        example: 101.01
                 employments:
                   "$ref": "#/components/schemas/Employments"
                 outgoings:
@@ -2504,7 +2505,9 @@ paths:
                           or received
                         example: three_monthly
                       amount:
-                        "$ref": "#/components/schemas/currency"
+                        type: number
+                        format: decimal
+                        example: 101.01
                 state_benefits:
                   type: array
                   description: One or more state benefits receved by the applicant's
@@ -2522,13 +2525,13 @@ paths:
                         example: my_state_bnefit
                       payments:
                         type: array
+                        required:
+                        - client_id
+                        - date
+                        - amount
                         description: One or more state benefit payments details
                         items:
                           type: object
-                          required:
-                          - client_id
-                          - date
-                          - amount
                           description: Payment detail
                           properties:
                             client_id:
@@ -2542,7 +2545,10 @@ paths:
                               description: Date payment received
                               example: '1992-07-22'
                             amount:
-                              "$ref": "#/components/schemas/positive_currency"
+                              type: number
+                              format: decimal
+                              description: Amount of payment received
+                              example: 101.01
                             flags:
                               type: object
                               description: Line items that should be flagged to caseworkers
@@ -2554,23 +2560,25 @@ paths:
                                   type: boolean
                 additional_properties:
                   type: array
+                  required:
+                  - value
+                  - outstanding_mortgage
+                  - percentage_owned
+                  - shared_with_housing_assoc
                   description: One or more additional properties owned by the applicant's
                     partner
                   items:
                     type: object
-                    required:
-                    - value
-                    - outstanding_mortgage
-                    - percentage_owned
-                    - shared_with_housing_assoc
                     description: Additional property details
                     properties:
                       value:
-                        "$ref": "#/components/schemas/currency"
+                        type: number
+                        format: decimal
                         description: Financial value of the property
                         example: 500000.01
                       outstanding_mortgage:
-                        "$ref": "#/components/schemas/positive_currency"
+                        type: number
+                        format: decimal
                         description: Amount outstanding on all mortgages against this
                           property
                         example: 999.99
@@ -2580,8 +2588,6 @@ paths:
                         description: Percentage share of the property which is owned
                           by the applicant's partner
                         example: 99.99
-                        minimum: 0
-                        maximum: 100
                       shared_with_housing_assoc:
                         type: boolean
                         description: Property is shared with a housing association
@@ -2600,15 +2606,17 @@ paths:
                     - date_of_purchase
                     properties:
                       value:
-                        "$ref": "#/components/schemas/positive_currency"
+                        type: number
+                        format: decimal
                         description: Financial value of the vehicle
                       loan_amount_outstanding:
-                        "$ref": "#/components/schemas/currency"
+                        type: number
+                        format: decimal
                         description: Amount remaining, if any, of a loan used to purchase
                           the vehicle
                       date_of_purchase:
                         type: string
-                        format: date
+                        format: dates
                         description: Date vehicle purchased by the applicant's partner
                       in_regular_use:
                         type: boolean

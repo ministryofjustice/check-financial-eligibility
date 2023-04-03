@@ -1,14 +1,9 @@
 class PartnerFinancialsController < ApplicationController
   def create
-    json_validator = JsonSwaggerValidator.new("partner_financials", partner_financials_params)
-    if json_validator.valid?
-      if creation_service.success?
-        render_success
-      else
-        render_unprocessable(creation_service.errors)
-      end
+    if creation_service.success?
+      render_success
     else
-      render_unprocessable(json_validator.errors)
+      render_unprocessable(creation_service.errors)
     end
   end
 

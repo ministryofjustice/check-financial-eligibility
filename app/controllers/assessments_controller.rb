@@ -1,14 +1,9 @@
 class AssessmentsController < ApplicationController
   def create
-    json_validator ||= JsonValidator.new("assessment", assessment_params)
-    if json_validator.valid?
-      if assessment_creation_service.success?
-        render json: { success: true, assessment_id: assessment_creation_service.assessment.id, errors: [] }
-      else
-        render_unprocessable(assessment_creation_service.errors)
-      end
+    if assessment_creation_service.success?
+      render json: { success: true, assessment_id: assessment_creation_service.assessment.id, errors: [] }
     else
-      render_unprocessable(json_validator.errors)
+      render_unprocessable(assessment_creation_service.errors)
     end
   end
 
