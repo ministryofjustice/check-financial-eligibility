@@ -5,7 +5,7 @@ ruby "3.2.0"
 
 gem "active_model_serializers", "~> 0.10.13"
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem "rails", "~> 7.0.4"
+gem "rails", "~> 7.0.4", ">= 7.0.4.3"
 # Use postgresql as the database for Active Record
 gem "pg", ">= 0.18", "< 2.0"
 # Use Puma as the app server
@@ -22,7 +22,7 @@ gem "puma", "~> 6.2"
 
 gem "faraday", "~> 1.10"
 
-gem "sentry-rails", ">= 5.3.1"
+gem "sentry-rails", ">= 5.8.0"
 gem "sentry-ruby"
 
 # Use Capistrano for deployment
@@ -63,14 +63,14 @@ gem "rswag-ui"
 
 group :development, :test do
   gem "awesome_print"
-  gem "dotenv-rails", ">= 2.7.6"
+  gem "dotenv-rails", ">= 2.8.1"
   gem "factory_bot_rails", ">= 6.2.0"
   gem "faker"
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: %i[mri mingw x64_mingw]
   gem "pry-byebug"
   gem "rspec_junit_formatter"
-  gem "rspec-rails", "~> 6.0"
+  gem "rspec-rails", "~> 6.0", ">= 6.0.1"
   gem "rswag-specs"
   gem "rubocop-govuk", require: false
   gem "rubocop-performance"
