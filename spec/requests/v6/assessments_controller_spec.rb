@@ -142,11 +142,7 @@ module V6
         end
 
         it "returns error JSON" do
-          expect(parsed_response)
-            .to eq({
-              success: false,
-              errors: ["The property '#/proceeding_types' did not contain a minimum number of items 1 in schema file://#"],
-            })
+          expect(parsed_response[:errors]).to include(%r{The property '#/proceeding_types' did not contain a minimum number of items 1 in schema})
         end
       end
 
@@ -174,11 +170,7 @@ module V6
         end
 
         it "returns error JSON" do
-          expect(parsed_response)
-            .to eq({
-              success: false,
-              errors: ["The property '#/dependants' of type object did not match the following type: array in schema file://#"],
-            })
+          expect(parsed_response[:errors]).to include(%r{The property '#/dependants' of type object did not match the following type: array in schema})
         end
       end
 

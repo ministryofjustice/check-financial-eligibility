@@ -11,10 +11,10 @@ Feature:
       |     C     |  2022-08-22  | 900.50 |       0           | 75.00 |       15.0         |        410.5          |
       |     C     |  2022-09-22  | 900.50 |       0           | 75.00 |       15.0         |        410.5          |
     And I add the following outgoing details for "maintenance_out" in the current assessment:
-      | payment_date | housing_cost_type | client_id | amount  |
-      | 2022-05-10   | rent              | id7       | 550.00  |
-      | 2022-04-10   | rent              | id8       | 550.00  |
-      | 2022-03-10   | rent              | id9       | 550.00  |
+      | payment_date | client_id | amount  |
+      | 2022-05-10   | id7       | 550.00  |
+      | 2022-04-10   | id8       | 550.00  |
+      | 2022-03-10   | id9       | 550.00  |
     And I add the following main property details for the current assessment:
       | value                     | 140000 |
       | outstanding_mortgage      | 16000  |

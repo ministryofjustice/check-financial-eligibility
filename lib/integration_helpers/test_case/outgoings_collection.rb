@@ -52,20 +52,20 @@ module TestCase
     end
 
     def payment_with_meta(outgoings_data)
-      Payment.new(date: outgoings_data[0][3],
-                  client_id: outgoings_data[2][3],
-                  amount: outgoings_data[3][3],
-                  meta: outgoings_data[1][3])
-    rescue StandardError => e
-      puts e.class
-      puts e.message
-      pp outgoings_data
+      Payment.new date: outgoings_field(outgoings_data, "payment_date"),
+                  client_id: outgoings_field(outgoings_data, "client_id"),
+                  amount: outgoings_field(outgoings_data, "amount"),
+                  housing_cost_type: outgoings_field(outgoings_data, "housing_cost_type")
     end
 
     def payment_without_meta(outgoings_data)
-      Payment.new(date: outgoings_data[0][3],
-                  client_id: outgoings_data[1][3],
-                  amount: outgoings_data[2][3])
+      Payment.new date: outgoings_field(outgoings_data, "payment_date"),
+                  client_id: outgoings_field(outgoings_data, "client_id"),
+                  amount: outgoings_field(outgoings_data, "amount")
+    end
+
+    def outgoings_field(outgoings_data, field_name)
+      outgoings_data.detect { |d| d[2] == field_name }[3]
     end
   end
 end
