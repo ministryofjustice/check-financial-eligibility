@@ -1,7 +1,6 @@
 class PersonGrossIncomeSubtotals
   def initialize(gross_income_components = Hash.new(0.0))
     @gross_income_components = gross_income_components
-    @regular_income_categories = gross_income_components.fetch(:regular_income_categories, [])
   end
 
   def total_gross_income
