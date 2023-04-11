@@ -9,6 +9,7 @@ module Workflows
     end
 
     before do
+      travel_to Date.new(2023, 4, 6)
       assessment.proceeding_type_codes.each do |ptc|
         create :gross_income_eligibility, gross_income_summary: assessment.gross_income_summary, proceeding_type_code: ptc
         create :disposable_income_eligibility, disposable_income_summary: assessment.disposable_income_summary,
@@ -16,6 +17,10 @@ module Workflows
                                                proceeding_type_code: ptc
       end
       Creators::CapitalEligibilityCreator.call(assessment)
+    end
+
+    after do
+      travel_back
     end
 
     describe "#call", :calls_bank_holiday do

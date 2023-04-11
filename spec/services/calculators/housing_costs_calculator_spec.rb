@@ -9,18 +9,21 @@ module Calculators
                           gross_income_summary: assessment.gross_income_summary)
     end
 
-    context "when using outgoings and state_benefits" do
-      let(:assessment) { create :assessment, :with_gross_income_summary_and_records, :with_disposable_income_summary, with_child_dependants: children }
+    context "when using outgoings and state_benefits", :calls_bank_holiday do
+      let(:current_date) { Date.new(2022, 6, 6) }
+      let(:assessment) do
+        create :assessment, :with_gross_income_summary_and_records,
+               :with_disposable_income_summary,
+               submission_date: current_date,
+               with_child_dependants: children
+      end
       let(:rent_or_mortgage_category) { assessment.cash_transaction_categories.detect { |cat| cat.name == "rent_or_mortgage" } }
       let(:rent_or_mortgage_transactions) { rent_or_mortgage_category.cash_transactions.order(:date) }
       let(:monthly_cash_housing) { rent_or_mortgage_transactions.average(:amount).round(2).to_d }
       let(:children) { 0 }
 
       before do
-        stub_request(:get, "https://www.gov.uk/bank-holidays.json")
-          .to_return(body: file_fixture("bank-holidays.json").read)
-
-        [2.months.ago, 1.month.ago, Date.current].each do |date|
+        [current_date - 2.months, current_date - 1.month, current_date].each do |date|
           create :housing_cost_outgoing,
                  disposable_income_summary: assessment.disposable_income_summary,
                  payment_date: date,
@@ -437,7 +440,7 @@ module Calculators
     def create_housing_benefit_payments(amount)
       housing_benefit_type = create :state_benefit_type, label: "housing_benefit"
       state_benefit = create :state_benefit, gross_income_summary: assessment.gross_income_summary, state_benefit_type: housing_benefit_type
-      [2.months.ago, 1.month.ago, Date.current].each do |pay_date|
+      [current_date - 2.months, current_date - 1.month, current_date].each do |pay_date|
         create :state_benefit_payment, state_benefit:, amount:, payment_date: pay_date
       end
     end

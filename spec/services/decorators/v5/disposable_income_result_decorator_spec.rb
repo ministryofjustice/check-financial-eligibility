@@ -4,7 +4,10 @@ module Decorators
   module V5
     RSpec.describe DisposableIncomeResultDecorator, :vcr do
       let(:unlimited) { 999_999_999_999.0 }
-      let(:assessment) { create :assessment, :with_gross_income_summary, proceedings: proceeding_hash }
+      let(:assessment) do
+        create :assessment, :with_gross_income_summary, proceedings: proceeding_hash,
+                                                        submission_date: Date.new(2022, 6, 6)
+      end
       let(:summary) do
         create :disposable_income_summary,
                assessment:,
