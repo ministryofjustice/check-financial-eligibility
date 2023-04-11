@@ -205,9 +205,7 @@ RSpec.configure do |config|
             minItems: 1,
             items: {
               type: :object,
-              # allow for legacy redundant net_employment_income field
-              additionalProperties: true,
-              description: "Employment payment detail",
+              additionalProperties: false,
               required: %i[client_id date gross benefits_in_kind tax national_insurance],
               properties: {
                 client_id: {
@@ -233,12 +231,16 @@ RSpec.configure do |config|
                 tax: {
                   "$ref" => "#/components/schemas/currency",
                   description: "Amount of tax paid - normally negative, but can be positive for a tax refund",
-                  example: "-10.01",
+                  example: -10.01,
                 },
                 national_insurance: {
                   "$ref" => "#/components/schemas/currency",
                   description: "Amount of national insurance paid - normally negative, but can be positive for a tax refund",
-                  example: "-5.24",
+                  example: -5.24,
+                },
+                net_employment_income: {
+                  type: :number,
+                  description: "Legacy field not used in calculation",
                 },
               },
             },

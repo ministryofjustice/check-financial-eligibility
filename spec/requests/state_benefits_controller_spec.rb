@@ -61,6 +61,31 @@ RSpec.describe StateBenefitsController, type: :request do
     end
 
     context "invalid_payload" do
+      before do
+        post_payload
+      end
+
+      context "with missing parameter date" do
+        let(:params) do
+          {
+            state_benefits: [
+              {
+                name: state_benefit_type1.label,
+                payments: [
+                  { amount: 266.95, client_id: "abc123" },
+                ],
+              },
+            ],
+          }
+        end
+
+        it "returns an error" do
+          expect(parsed_response[:errors])
+            .to include(/The property '#\/state_benefits\/0\/payments\/0' did not contain a required property of 'date' in schema/)
+          expect(StateBenefitPayment.count).to eq 0
+        end
+      end
+
       context "missing source in the second element" do
         let(:params) do
           new_hash = state_benefit_params
@@ -69,13 +94,11 @@ RSpec.describe StateBenefitsController, type: :request do
         end
 
         it "returns unsuccessful" do
-          post_payload
           expect(response.status).to eq 422
         end
 
         it "contains success false in the response body" do
-          post_payload
-          expect(parsed_response).to match(errors: [/The property '#\/state_benefits\/1' did not contain a required property of 'name' in schema file/], success: false)
+          expect(parsed_response).to match(errors: [/The property '#\/state_benefits\/1' did not contain a required property of 'name' in schema/], success: false)
         end
 
         it "does not create any state benefit records" do

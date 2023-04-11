@@ -456,12 +456,15 @@ RSpec.describe "Full V5 passported spec" do
            "payments" =>
              [{ "payment_date" => "2020-04-22",
                 "amount" => 36.59,
+                housing_cost_type: "rent",
                 "client_id" => "TX-outgoing-rent-mortgage-1" },
               { "payment_date" => "2020-05-23",
                 "amount" => 100.0,
+                housing_cost_type: "rent",
                 "client_id" => "TX-outgoing-rent-mortgage-2" },
               { "payment_date" => "2020-06-01",
                 "amount" => 46.82,
+                housing_cost_type: "rent",
                 "client_id" => "TX-outgoing-rent-mortgage-3" }] },
          { "name" => "child_care",
            "payments" =>

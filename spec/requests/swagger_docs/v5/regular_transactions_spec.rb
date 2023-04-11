@@ -26,14 +26,16 @@ RSpec.describe "regular_transactions", type: :request, swagger_doc: "v5/swagger.
                         { category: "maintenance_out", operation: "debit", frequency: "four_weekly", amount: 123_456.78 },
                       ],
                   },
+                  required: %i[regular_transactions],
                   properties: {
                     regular_transactions: {
                       type: :array,
-                      required: %i[category operation frequency amount],
                       description: "Zero or more regular transactions",
                       items: {
                         type: :object,
                         description: "regular transaction detail",
+                        required: %i[category operation frequency amount],
+                        additionalProperties: false,
                         properties: {
                           category: {
                             type: :string,
@@ -53,11 +55,7 @@ RSpec.describe "regular_transactions", type: :request, swagger_doc: "v5/swagger.
                             description: "Frequency with which regular transaction is made or received",
                             example: CFEConstants::VALID_REGULAR_TRANSACTION_FREQUENCIES.first,
                           },
-                          amount: {
-                            type: :number,
-                            format: :decimal,
-                            example: 101.01,
-                          },
+                          amount: { "$ref" => "#/components/schemas/currency" },
                         },
                       },
                     },

@@ -13,6 +13,7 @@ RSpec.describe "V5 Assessments", type: :request, vcr: true, swagger_doc: "v5/swa
                 schema: {
                   type: :object,
                   additionalProperties: false,
+                  required: %i[submission_date],
                   properties: {
                     client_reference_id: {
                       type: :string,
@@ -41,7 +42,6 @@ RSpec.describe "V5 Assessments", type: :request, vcr: true, swagger_doc: "v5/swa
         let(:params) do
           {
             submission_date: "2022-05-19",
-            proceeding_types: { ccms_codes: %w[DA001] },
           }
         end
 
@@ -61,7 +61,7 @@ RSpec.describe "V5 Assessments", type: :request, vcr: true, swagger_doc: "v5/swa
 
         run_test! do |response|
           body = JSON.parse(response.body, symbolize_names: true)
-          expect(body[:errors]).to include(/The property '#\/' did not contain a required property of 'submission_date' in schema file/)
+          expect(body[:errors]).to include(/The property '#\/' did not contain a required property of 'submission_date' in schema/)
         end
       end
     end

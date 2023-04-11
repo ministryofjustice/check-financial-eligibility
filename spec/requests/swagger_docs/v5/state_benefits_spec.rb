@@ -21,12 +21,15 @@ RSpec.describe "state_benefits", type: :request, swagger_doc: "v5/swagger.yaml" 
                   description: "A set of other regular income sources",
                   example: JSON.parse(File.read(Rails.root.join("spec/fixtures/state_benefits.json"))),
                   properties: {
+                    required: %i[state_benefits],
+                    additionalProperties: false,
                     state_benefits: {
                       type: :array,
                       description: "One or more state benefits receved by the applicant and categorized by name",
                       items: {
                         type: :object,
                         required: %i[name payments],
+                        additionalProperties: false,
                         description: "State benefit payment detail",
                         properties: {
                           name: {
@@ -36,9 +39,10 @@ RSpec.describe "state_benefits", type: :request, swagger_doc: "v5/swagger.yaml" 
                           },
                           payments: {
                             type: :array,
-                            required: %i[client_id date amount],
                             description: "One or more state benefit payments details",
                             items: {
+                              required: %i[client_id date amount],
+                              additionalProperties: false,
                               type: :object,
                               description: "Payment detail",
                               properties: {
@@ -55,10 +59,8 @@ RSpec.describe "state_benefits", type: :request, swagger_doc: "v5/swagger.yaml" 
                                   example: "1992-07-22",
                                 },
                                 amount: {
-                                  type: :number,
-                                  format: :decimal,
+                                  "$ref" => "#/components/schemas/currency",
                                   description: "Amount of payment received",
-                                  example: 101.01,
                                 },
                                 flags: {
                                   type: :object,
@@ -114,7 +116,7 @@ RSpec.describe "state_benefits", type: :request, swagger_doc: "v5/swagger.yaml" 
 
         run_test! do |response|
           body = JSON.parse(response.body, symbolize_names: true)
-          expect(body[:errors]).to include(/The property '#\/state_benefits\/0' did not contain a required property of 'name' in schema file/)
+          expect(body[:errors]).to include(/The property '#\/state_benefits\/0' did not contain a required property of 'name' in schema/)
         end
       end
     end

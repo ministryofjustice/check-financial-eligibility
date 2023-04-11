@@ -101,10 +101,85 @@ RSpec.describe RegularTransactionsController, type: :request do
       it "returns expected errors" do
         request
         expect(parsed_response[:errors])
-          .to include(%r{The property '#/regular_transactions/0' did not contain a required property of 'category' in schema file://public/schemas/regular_transactions.json},
-                      %r{The property '#/regular_transactions/0' did not contain a required property of 'operation' in schema file://public/schemas/regular_transactions.json},
-                      %r{The property '#/regular_transactions/0' did not contain a required property of 'frequency' in schema file://public/schemas/regular_transactions.json},
-                      %r{The property '#/regular_transactions/0' did not contain a required property of 'amount' in schema file://public/schemas/regular_transactions.json})
+          .to include(%r{The property '#/regular_transactions/0' did not contain a required property of 'category' in schema},
+                      %r{The property '#/regular_transactions/0' did not contain a required property of 'operation' in schema},
+                      %r{The property '#/regular_transactions/0' did not contain a required property of 'frequency' in schema},
+                      %r{The property '#/regular_transactions/0' did not contain a required property of 'amount' in schema})
+      end
+    end
+
+    context "with category not in list" do
+      let(:params) do
+        { regular_transactions:
+            [{ category: "foobar",
+               operation: "credit",
+               amount: 9.99,
+               frequency: "monthly" }] }
+      end
+
+      it_behaves_like "unsuccessful response"
+
+      it "returns expected errors" do
+        request
+        expect(parsed_response[:errors])
+          .to include(/The property '#\/regular_transactions\/0\/category' value "foobar" did not match one of the following values:/)
+      end
+    end
+
+    context "with operation not in list" do
+      let(:params) do
+        { regular_transactions:
+            [{ category: "rent_or_mortgage",
+               operation: "foobar",
+               amount: 9.99,
+               frequency: "monthly" }] }
+      end
+
+      it_behaves_like "unsuccessful response"
+
+      it "returns expected errors" do
+        request
+        expect(parsed_response[:errors])
+          .to include(/The property '#\/regular_transactions\/0\/operation' value "foobar" did not match one of the following values: credit, debit/)
+      end
+    end
+
+    context "with blank values" do
+      let(:params) do
+        { regular_transactions:
+            [{ category: "",
+               operation: "",
+               frequency: "",
+               amount: "" }] }
+      end
+
+      it_behaves_like "unsuccessful response"
+
+      it "returns expected errors" do
+        request
+        expect(parsed_response[:errors])
+          .to include(%r{The property '#/regular_transactions/0/category' value "" did not match one of the following values:},
+                      %r{The property '#/regular_transactions/0/operation' value "" did not match one of the following values: credit, debit},
+                      %r{The property '#/regular_transactions/0/frequency' value "" did not match one of the following values: three_monthly, monthly, four_weekly, two_weekly, weekly, unknown},
+                      %r{The property '#/regular_transactions/0/amount' value "" did not match the regex})
+      end
+    end
+
+    context "with nil amount" do
+      let(:params) do
+        { regular_transactions:
+            [{ category: "maintenance_in",
+               operation: "credit",
+               frequency: "monthly",
+               amount: nil }] }
+      end
+
+      it_behaves_like "unsuccessful response"
+
+      it "returns expected errors" do
+        request
+        expect(parsed_response[:errors])
+          .to include(/The property '#\/regular_transactions\/0\/amount' of type null matched the disallowed schema/)
       end
     end
   end

@@ -96,6 +96,50 @@ RSpec.describe EmploymentsController, type: :request do
           expect { post_payload }.not_to change(EmploymentPayment, :count)
         end
       end
+
+      context "negative net income" do
+        let(:params) do
+          {
+            employment_income: [
+              {
+                name: "Job 1",
+                client_id: SecureRandom.uuid,
+                payments: [
+                  {
+                    client_id: SecureRandom.uuid,
+                    date: "2021-10-30",
+                    gross: 46.00,
+                    benefits_in_kind: 16.60,
+                    tax: -104.10,
+                    national_insurance: -18.66,
+                  },
+                  {
+                    client_id: SecureRandom.uuid,
+                    date: "2021-10-30",
+                    gross: 46.00,
+                    benefits_in_kind: 16.60,
+                    tax: -104.10,
+                    national_insurance: -18.66,
+                  },
+                  {
+                    client_id: SecureRandom.uuid,
+                    date: "2021-10-30",
+                    gross: 46.00,
+                    benefits_in_kind: 16.60,
+                    tax: -104.10,
+                    national_insurance: -18.66,
+                  },
+                ],
+              },
+            ],
+          }
+        end
+
+        before { post_payload }
+
+        it_behaves_like "it fails with message",
+                        /Validation failed: Net income must be greater than or equal to 0/
+      end
     end
 
     context "invalid_assessment_id" do

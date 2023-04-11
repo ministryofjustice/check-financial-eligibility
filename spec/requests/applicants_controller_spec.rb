@@ -39,7 +39,7 @@ RSpec.describe ApplicantsController, type: :request do
           {
             assessment_id: assessment.id,
             applicant: {
-              date_of_birth: future_date,
+              date_of_birth: future_date.to_s,
               involvement_type: "applicant",
               has_partner_opponent: false,
               receives_qualifying_benefit: true,

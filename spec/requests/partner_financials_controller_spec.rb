@@ -41,7 +41,7 @@ describe PartnerFinancialsController, :calls_bank_holiday, type: :request do
       end
     end
 
-    context "with invalid vehicles" do
+    context "with vehicle from the future" do
       let(:partner_financials_params) do
         {
           partner: {
@@ -59,6 +59,30 @@ describe PartnerFinancialsController, :calls_bank_holiday, type: :request do
 
       it "returns error" do
         expect(parsed_response[:errors]).to include(/Date of purchase cannot be in the future/)
+      end
+    end
+
+    context "with vehicle missing date of purchase" do
+      let(:partner_financials_params) do
+        {
+          partner: {
+            date_of_birth:,
+            employed: true,
+          },
+          vehicles: [
+            {
+              value: 5000,
+            },
+          ],
+        }
+      end
+
+      it "returns error" do
+        expect(parsed_response[:errors]).to include(/date_of_purchase/)
+      end
+
+      it "does not create any vehicles" do
+        expect(Vehicle.count).to eq(0)
       end
     end
 
@@ -107,6 +131,146 @@ describe PartnerFinancialsController, :calls_bank_holiday, type: :request do
 
       it "returns error" do
         expect(parsed_response[:errors]).to include(/The property '#\/capitals\/bank_accounts\/0' did not contain a required property of 'description'/)
+      end
+    end
+
+    context "with invalid regular transactions" do
+      let(:partner_financials_params) do
+        {
+          partner: {
+            date_of_birth:,
+            employed: true,
+          },
+          regular_transactions: [
+            {
+              category: "benefits",
+              operation: "ribbit",
+              amount: 9.99,
+              frequency: "monthly",
+            },
+          ],
+        }
+      end
+
+      it "returns error" do
+        expect(parsed_response[:errors]).to include(/ribbit/)
+      end
+
+      it "does not create any transactions" do
+        expect(RegularTransaction.count).to eq(0)
+      end
+    end
+
+    context "with invalid state benefits" do
+      let(:partner_financials_params) do
+        {
+          partner: {
+            date_of_birth:,
+            employed: true,
+          },
+          state_benefits: [
+            {
+              payments: [
+                { date: 3.days.ago.to_date, amount: 266.95, client_id: "abc123" },
+              ],
+            },
+          ],
+        }
+      end
+
+      it "returns error" do
+        expect(parsed_response[:errors]).to include(/name/)
+      end
+
+      it "does not create any benefits" do
+        expect(StateBenefit.count).to eq(0)
+      end
+    end
+
+    context "with invalid dependants" do
+      let(:partner_financials_params) do
+        {
+          partner: {
+            date_of_birth:,
+            employed: true,
+          },
+          dependants: [
+            {
+              in_full_time_education: false,
+              date_of_birth: 1.year.ago.to_date.to_s,
+              relationship: "quirky",
+            },
+          ],
+        }
+      end
+
+      it "returns error" do
+        expect(parsed_response[:errors]).to include(/relationship/)
+      end
+
+      it "does not create any dependants" do
+        expect(Dependant.count).to eq(0)
+      end
+    end
+
+    context "with invalid employment" do
+      let(:partner_financials_params) do
+        {
+          partner: {
+            date_of_birth:,
+            employed: true,
+          },
+          employments: [
+            {
+              name: "Job 1",
+              client_id: "employment-id-1",
+              payments: [
+                {
+                  client_id: "employment-1-payment-1",
+                  date: "2021-10-30",
+                  national_insurance: -18.66,
+                },
+              ],
+            },
+          ],
+        }
+      end
+
+      it "returns error" do
+        expect(parsed_response[:errors].join).to include("gross")
+        expect(parsed_response[:errors].join).to include("benefits_in_kind")
+        expect(parsed_response[:errors].join).to include("tax")
+      end
+
+      it "does not create an employment" do
+        expect(Employment.count).to eq(0)
+      end
+    end
+
+    context "with invalid additional_properties" do
+      let(:partner_financials_params) do
+        {
+          partner: {
+            date_of_birth:,
+            employed: true,
+          },
+          additional_properties: [
+            {
+              value: 1_000,
+              outstanding_mortgage: 0,
+              shared_with_housing_assoc: false,
+              subject_matter_of_dispute: false,
+            },
+          ],
+        }
+      end
+
+      it "returns error" do
+        expect(parsed_response[:errors][0]).to include("percentage_owned")
+      end
+
+      it "does not create any properties" do
+        expect(Property.count).to eq(0)
       end
     end
 

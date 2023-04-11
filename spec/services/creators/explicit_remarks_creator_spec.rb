@@ -17,21 +17,6 @@ RSpec.describe Creators::ExplicitRemarksCreator do
       }
     end
 
-    let(:invalid_params) do
-      {
-        explicit_remarks: [
-          {
-            category: "policy_disregards",
-            details: %w[xxxx zzzzz],
-          },
-          {
-            category: "other_stuff",
-            details: %w[xxxx zzzzz],
-          },
-        ],
-      }
-    end
-
     context "with valid payload" do
       let(:params) { valid_params }
 
@@ -47,22 +32,6 @@ RSpec.describe Creators::ExplicitRemarksCreator do
         call
         remarks = ExplicitRemark.where(assessment_id: assessment.id, category: "policy_disregards").map(&:remark)
         expect(remarks).to match_array(%w[disregard_1 disregard_2])
-      end
-    end
-
-    context "with invalid payload, unacceptable category" do
-      let(:params) { invalid_params }
-
-      it "#success? is false" do
-        expect(call.success?).to be false
-      end
-
-      it "does not create any records" do
-        expect { call }.not_to change(ExplicitRemark, :count)
-      end
-
-      it "stores the error on the object" do
-        expect(call.errors).to include(%r{The property '#/explicit_remarks/1/category' value "other_stuff" did not match one of the following values: policy_disregards})
       end
     end
 

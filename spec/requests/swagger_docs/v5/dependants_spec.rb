@@ -46,16 +46,12 @@ RSpec.describe "dependants", type: :request, swagger_doc: "v5/swagger.yaml" do
                             description: "Dependant's relationship to the applicant",
                           },
                           monthly_income: {
-                            type: :number,
-                            format: :decimal,
+                            "$ref" => "#/components/schemas/currency",
                             description: "Dependant's monthly income",
-                            example: 101.01,
                           },
                           assets_value: {
-                            type: :number,
-                            format: :decimal,
+                            "$ref" => "#/components/schemas/currency",
                             description: "Dependant's total assets value",
-                            example: 0.0,
                           },
                         },
                       },
@@ -110,7 +106,7 @@ RSpec.describe "dependants", type: :request, swagger_doc: "v5/swagger.yaml" do
 
         run_test! do |response|
           body = JSON.parse(response.body, symbolize_names: true)
-          expect(body[:errors]).to include(/The property '#\/dependants\/0\/in_full_time_education' of type null did not match the following type: boolean in schema file/)
+          expect(body[:errors]).to include(/The property '#\/dependants\/0\/in_full_time_education' of type null did not match the following type: boolean in schema/)
         end
       end
     end

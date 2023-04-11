@@ -78,7 +78,7 @@ RSpec.describe IrregularIncomesController, type: :request do
         end
 
         it "returns an error" do
-          expect(parsed_response[:errors]).to eq ["The property '#/payments/0' did not contain a required property of 'frequency' in schema file://public/schemas/irregular_incomes.json"]
+          expect(parsed_response[:errors]).to include(/The property '#\/payments\/0' did not contain a required property of 'frequency' in schema/)
         end
       end
 
@@ -114,7 +114,7 @@ RSpec.describe IrregularIncomesController, type: :request do
         end
 
         it "returns an error" do
-          expect(parsed_response[:errors]).to eq ["The property '#/payments' had more items than the allowed 2 in schema file://public/schemas/irregular_incomes.json"]
+          expect(parsed_response[:errors]).to include(/The property '#\/payments' had more items than the allowed 2 in schema/)
         end
       end
 
@@ -132,7 +132,7 @@ RSpec.describe IrregularIncomesController, type: :request do
 
         it "contains success false in the response body" do
           post_payload
-          expect(parsed_response).to eq(success: false, errors: ["The property '#/payments/0' did not contain a required property of 'income_type' in schema file://public/schemas/irregular_incomes.json"])
+          expect(parsed_response[:errors]).to include(/The property '#\/payments\/0' did not contain a required property of 'income_type' in schema/)
         end
 
         it "does not create irregular income payment record" do
@@ -159,7 +159,8 @@ RSpec.describe IrregularIncomesController, type: :request do
 
         it "contains an error message" do
           post_payload
-          expect(parsed_response).to eq({ success: false, errors: ["The property '#/payments/0/income_type' value \"imagined_type\" did not match one of the following values: student_loan, unspecified_source in schema file://public/schemas/irregular_incomes.json"] })
+          expect(parsed_response[:errors])
+            .to include(/The property '#\/payments\/0\/income_type' value "imagined_type" did not match one of the following values: student_loan, unspecified_source in schema/)
         end
 
         it "does not create irregular income payments record" do

@@ -35,26 +35,6 @@ module Creators
         end
       end
 
-      context "with missing parameter date" do
-        let(:state_benefits_params) do
-          {
-            state_benefits: [
-              {
-                name: state_benefit_type1.label,
-                payments: [
-                  { amount: 266.95, client_id: "abc123" },
-                ],
-              },
-            ],
-          }
-        end
-
-        it "returns an error" do
-          expect(creator.errors).to match [/The property '#\/state_benefits\/0\/payments\/0' did not contain a required property of 'date' in schema file/]
-          expect(StateBenefitPayment.count).to eq 0
-        end
-      end
-
       def state_benefits_params
         {
           state_benefits: [

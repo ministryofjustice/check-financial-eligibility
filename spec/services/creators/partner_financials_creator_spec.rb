@@ -149,40 +149,6 @@ module Creators
         end
       end
 
-      context "with invalid employment" do
-        let(:partner_financials_params) do
-          {
-            partner: {
-              date_of_birth:,
-              employed: true,
-            },
-            employments: [
-              {
-                name: "Job 1",
-                client_id: "employment-id-1",
-                payments: [
-                  {
-                    client_id: "employment-1-payment-1",
-                    date: "2021-10-30",
-                    national_insurance: -18.66,
-                  },
-                ],
-              },
-            ],
-          }
-        end
-
-        it "returns error" do
-          expect(creator.errors.join).to include("gross")
-          expect(creator.errors.join).to include("benefits_in_kind")
-          expect(creator.errors.join).to include("tax")
-        end
-
-        it "does not create an employment" do
-          expect { creator }.not_to change(Employment, :count)
-        end
-      end
-
       context "with valid regular transactions" do
         let(:partner_financials_params) do
           {
@@ -208,33 +174,6 @@ module Creators
         it "creates a transaction object" do
           creator
           expect(assessment.partner_gross_income_summary.regular_transactions.count).to eq 1
-        end
-      end
-
-      context "with invalid regular transactions" do
-        let(:partner_financials_params) do
-          {
-            partner: {
-              date_of_birth:,
-              employed: true,
-            },
-            regular_transactions: [
-              {
-                category: "benefits",
-                operation: "ribbit",
-                amount: 9.99,
-                frequency: "monthly",
-              },
-            ],
-          }
-        end
-
-        it "returns error" do
-          expect(creator.errors[0]).to include("ribbit")
-        end
-
-        it "does not create any transactions" do
-          expect { creator }.not_to change(RegularTransaction, :count)
         end
       end
 
@@ -267,32 +206,6 @@ module Creators
         end
       end
 
-      context "with invalid state benefits" do
-        let(:partner_financials_params) do
-          {
-            partner: {
-              date_of_birth:,
-              employed: true,
-            },
-            state_benefits: [
-              {
-                payments: [
-                  { date: 3.days.ago.to_date, amount: 266.95, client_id: "abc123" },
-                ],
-              },
-            ],
-          }
-        end
-
-        it "returns error" do
-          expect(creator.errors[0]).to include("name")
-        end
-
-        it "does not create any benefits" do
-          expect { creator }.not_to change(StateBenefit, :count)
-        end
-      end
-
       context "with valid properties" do
         let(:partner_financials_params) do
           {
@@ -319,33 +232,6 @@ module Creators
         it "creates a property object" do
           creator
           expect(assessment.partner_capital_summary.properties.count).to eq 1
-        end
-      end
-
-      context "with invalid additional_properties" do
-        let(:partner_financials_params) do
-          {
-            partner: {
-              date_of_birth:,
-              employed: true,
-            },
-            additional_properties: [
-              {
-                value: 1_000,
-                outstanding_mortgage: 0,
-                shared_with_housing_assoc: false,
-                subject_matter_of_dispute: false,
-              },
-            ],
-          }
-        end
-
-        it "returns error" do
-          expect(creator.errors[0]).to include("percentage_owned")
-        end
-
-        it "does not create any properties" do
-          expect { creator }.not_to change(Property, :count)
         end
       end
 
@@ -407,30 +293,6 @@ module Creators
         end
       end
 
-      context "with invalid vehicles" do
-        let(:partner_financials_params) do
-          {
-            partner: {
-              date_of_birth:,
-              employed: true,
-            },
-            vehicles: [
-              {
-                value: 5000,
-              },
-            ],
-          }
-        end
-
-        it "returns error" do
-          expect(creator.errors[0]).to include("date_of_purchase")
-        end
-
-        it "does not create any vehicles" do
-          expect { creator }.not_to change(Vehicle, :count)
-        end
-      end
-
       context "with valid dependants" do
         let(:partner_financials_params) do
           {
@@ -455,32 +317,6 @@ module Creators
         it "creates dependants" do
           creator
           expect(assessment.partner_dependants.count).to eq 1
-        end
-      end
-
-      context "with invalid dependants" do
-        let(:partner_financials_params) do
-          {
-            partner: {
-              date_of_birth:,
-              employed: true,
-            },
-            dependants: [
-              {
-                in_full_time_education: false,
-                date_of_birth: 1.year.ago.to_date.to_s,
-                relationship: "quirky",
-              },
-            ],
-          }
-        end
-
-        it "returns error" do
-          expect(creator.errors[0]).to include("relationship")
-        end
-
-        it "does not create any dependants" do
-          expect { creator }.not_to change(Dependant, :count)
         end
       end
     end

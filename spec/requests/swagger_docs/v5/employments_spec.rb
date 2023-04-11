@@ -7,9 +7,7 @@ RSpec.describe "employments", type: :request, swagger_doc: "v5/swagger.yaml" do
       consumes "application/json"
       produces "application/json"
 
-      description <<~DESCRIPTION.chomp
-        Add applicant employment income to an assessment.
-      DESCRIPTION
+      description << "Add applicant employment income to an assessment."
 
       assessment_id_parameter
 
@@ -23,24 +21,14 @@ RSpec.describe "employments", type: :request, swagger_doc: "v5/swagger.yaml" do
                   properties: {
                     employment_income: {
                       type: :array,
-                      required: %i[name client_id payments],
-                      description: "One or more employment income details",
                       items: {
                         type: :object,
-                        description: "Employment income detail",
+                        additionalProperties: false,
+                        required: %i[name client_id payments],
                         properties: {
-                          name: {
-                            type: :string,
-                            description: "Identifying name for this employment - e.g. employer's name",
-                          },
-                          client_id: {
-                            type: :string,
-                            description: "Client supplied id to identify the employment",
-                          },
-                          receiving_only_statutory_sick_or_maternity_pay: {
-                            type: :boolean,
-                            description: "Client is in receipt only of Statutory Sick Pay (SSP) or Statutory Maternity Pay (SMP)",
-                          },
+                          name: { type: :string },
+                          client_id: { type: :string },
+                          receiving_only_statutory_sick_or_maternity_pay: { type: :boolean },
                           payments: { "$ref" => "#/components/schemas/EmploymentPaymentList" },
                         },
                       },

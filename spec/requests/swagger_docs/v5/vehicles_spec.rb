@@ -30,13 +30,11 @@ RSpec.describe "vehicles", type: :request, swagger_doc: "v5/swagger.yaml" do
                         required: %i[value date_of_purchase],
                         properties: {
                           value: {
-                            type: :number,
-                            format: :decimal,
+                            "$ref" => "#/components/schemas/positive_currency",
                             description: "Financial value of the vehicle",
                           },
                           loan_amount_outstanding: {
-                            type: :number,
-                            format: :decimal,
+                            "$ref" => "#/components/schemas/currency",
                             description: "Amount remaining, if any, of a loan used to purchase the vehicle",
                           },
                           date_of_purchase: {

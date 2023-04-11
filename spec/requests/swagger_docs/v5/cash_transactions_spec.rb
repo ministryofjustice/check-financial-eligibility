@@ -28,6 +28,8 @@ RSpec.describe "cash_transactions", type: :request, swagger_doc: "v5/swagger.yam
                       items: {
                         type: :object,
                         description: "Income detail",
+                        additionalProperties: false,
+                        required: %i[category payments],
                         properties: {
                           category: {
                             type: :string,
@@ -40,17 +42,15 @@ RSpec.describe "cash_transactions", type: :request, swagger_doc: "v5/swagger.yam
                             items: {
                               type: :object,
                               description: "Payment detail",
+                              additionalProperties: false,
+                              required: %i[amount client_id date],
                               properties: {
                                 date: {
                                   type: :string,
                                   format: :date,
                                   example: "1992-07-22",
                                 },
-                                amount: {
-                                  type: :number,
-                                  format: :decimal,
-                                  example: "101.01",
-                                },
+                                amount: { "$ref" => "#/components/schemas/positive_currency" },
                                 client_id: {
                                   type: :string,
                                   format: :uuid,
@@ -62,7 +62,37 @@ RSpec.describe "cash_transactions", type: :request, swagger_doc: "v5/swagger.yam
                         },
                       },
                     },
-                    outgoings: { "$ref" => "#/components/schemas/OutgoingsList" },
+                    outgoings: {
+                      type: :array,
+                      items: {
+                        type: :object,
+                        additionalProperties: false,
+                        required: %i[category payments],
+                        properties: {
+                          category: {
+                            description: "The category of the outgoing transaction",
+                            type: :string,
+                            enum: %w[child_care rent_or_mortgage maintenance_out legal_aid],
+                          },
+                          payments: {
+                            description: "The payments of the outgoing transaction",
+                            type: :array,
+                            items: {
+                              type: :object,
+                              required: %i[amount client_id date],
+                              properties: {
+                                amount: { "$ref" => "#/components/schemas/positive_currency" },
+                                client_id: { type: :string },
+                                date: {
+                                  type: "string",
+                                  format: "date",
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
                   },
                 }
 

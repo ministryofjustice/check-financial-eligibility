@@ -23,10 +23,10 @@ RSpec.describe "explicit_remarks", type: :request, swagger_doc: "v5/swagger.yaml
                   properties: {
                     explicit_remarks: {
                       type: :array,
-                      required: %i[category details],
                       description: "One or more remarks by category",
                       items: {
                         type: :object,
+                        required: %i[category details],
                         description: "Explicit remark",
                         properties: {
                           category: {

@@ -85,6 +85,7 @@ RSpec.describe "full_assessment", :calls_bank_holiday, type: :request, swagger_d
                         properties: {
                           ccms_code: {
                             type: :string,
+                            enum: CFEConstants::VALID_PROCEEDING_TYPE_CCMS_CODES,
                             example: "DA001",
                             description: "The code expected by CCMS",
                           },
@@ -332,10 +333,8 @@ RSpec.describe "full_assessment", :calls_bank_holiday, type: :request, swagger_d
                                   example: "1992-07-22",
                                 },
                                 amount: {
-                                  type: :number,
-                                  format: :decimal,
+                                  "$ref" => "#/components/schemas/currency",
                                   description: "Amount of payment received",
-                                  example: 101.01,
                                 },
                                 client_id: {
                                   type: :string,

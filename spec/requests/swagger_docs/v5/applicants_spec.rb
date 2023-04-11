@@ -8,10 +8,7 @@ RSpec.describe "applicants", type: :request, swagger_doc: "v5/swagger.yaml" do
       consumes "application/json"
       produces "application/json"
 
-      description <<~DESCRIPTION.chomp
-        This endpoint will create an Applicant and associate it with
-        an existing Assessment which has been created via `POST /assessments`
-      DESCRIPTION
+      description << "This endpoint will create an Applicant and associate it with an existing Assessment which has been created via `POST /assessments`"
 
       assessment_id_parameter
 
@@ -20,16 +17,21 @@ RSpec.describe "applicants", type: :request, swagger_doc: "v5/swagger.yaml" do
                 required: true,
                 schema: {
                   type: :object,
-                  required: %i[date_of_birth has_partner_opponent receives_qualifying_benefit],
+                  required: %i[applicant],
                   properties: {
                     applicant: {
                       type: :object,
                       description: "Object describing pertinent applicant details",
+                      required: %i[date_of_birth has_partner_opponent receives_qualifying_benefit],
+                      additionalProperties: false,
                       properties: {
                         date_of_birth: { type: :string,
                                          format: :date,
                                          example: "1992-07-22",
                                          description: "Applicant date of birth" },
+                        employed: {
+                          "type": %w[boolean null],
+                        },
                         has_partner_opponent: { type: :boolean,
                                                 example: false,
                                                 description: "Applicant has partner opponent" },
@@ -39,6 +41,10 @@ RSpec.describe "applicants", type: :request, swagger_doc: "v5/swagger.yaml" do
                         receives_asylum_support: { type: :boolean,
                                                    example: false,
                                                    description: "Applicant receives section 4 or section 95 Asylum Support" },
+                        involvement_type: {
+                          type: :string,
+                          "enum": %w[applicant],
+                        },
                       },
                     },
                   },
@@ -82,7 +88,7 @@ RSpec.describe "applicants", type: :request, swagger_doc: "v5/swagger.yaml" do
 
         run_test! do |response|
           body = JSON.parse(response.body, symbolize_names: true)
-          expect(body[:errors]).to include(/The property '#\/applicant' did not contain a required property of 'date_of_birth' in schema file:/)
+          expect(body[:errors]).to include(/The property '#\/applicant' did not contain a required property of 'date_of_birth' in schema/)
         end
       end
     end

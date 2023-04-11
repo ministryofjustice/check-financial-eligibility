@@ -24,6 +24,7 @@ RSpec.describe "proceeding_types", type: :request, swagger_doc: "v5/swagger.yaml
                   properties: {
                     proceeding_types: {
                       type: :array,
+                      minItems: 1,
                       description: "One or more proceeding_type details",
                       items: {
                         type: :object,
@@ -31,6 +32,7 @@ RSpec.describe "proceeding_types", type: :request, swagger_doc: "v5/swagger.yaml
                         properties: {
                           ccms_code: {
                             type: :string,
+                            enum: CFEConstants::VALID_PROCEEDING_TYPE_CCMS_CODES,
                             example: "DA001",
                             description: "The code expected by CCMS",
                           },
@@ -87,7 +89,7 @@ RSpec.describe "proceeding_types", type: :request, swagger_doc: "v5/swagger.yaml
 
         run_test! do |response|
           body = JSON.parse(response.body, symbolize_names: true)
-          expect(body[:errors]).to include(/The property '#\/proceeding_types\/0\/client_involvement_type' value "X" did not match one of the following values: A, D, W, Z, I in schema file/)
+          expect(body[:errors]).to include(/The property '#\/proceeding_types\/0\/client_involvement_type' value "X" did not match one of the following values: A, D, W, Z, I in schema/)
         end
       end
     end

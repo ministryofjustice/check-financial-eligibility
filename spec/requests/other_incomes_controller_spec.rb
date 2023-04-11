@@ -74,9 +74,9 @@ RSpec.describe OtherIncomesController, type: :request do
           expect(response.status).to eq 422
         end
 
-        it "contains success false in the response body" do
+        it "contains has an error in the response body" do
           post_payload
-          expect(parsed_response).to match(errors: [/The property '#\/other_incomes\/1' did not contain a required property of 'source' in schema file/], success: false)
+          expect(parsed_response[:errors]).to include(/The property '#\/other_incomes\/1' did not contain a required property of 'source' in schema/)
         end
 
         it "does not create any other income source records" do
@@ -95,22 +95,24 @@ RSpec.describe OtherIncomesController, type: :request do
           new_hash
         end
 
-        it "returns unsuccessful" do
+        before do
           post_payload
-          expect(response.status).to eq 422
         end
 
-        it "contains success false in the response body" do
-          post_payload
-          expect(parsed_response).to match(errors: [/The property '#\/other_incomes\/1\/payments\/0' did not contain a required property of 'client_id' in schema file/], success: false)
+        it "returns unsuccessful" do
+          expect(response).to have_http_status(:unprocessable_entity)
+        end
+
+        it "contains an error in the response body" do
+          expect(parsed_response[:errors]).to include(/The property '#\/other_incomes\/1\/payments\/0' did not contain a required property of 'client_id' in schema/)
         end
 
         it "does not create any other income source records" do
-          expect { post_payload }.not_to change(OtherIncomeSource, :count)
+          expect(OtherIncomeSource.count).to eq(0)
         end
 
         it "does not create any other income payment records" do
-          expect { post_payload }.not_to change(OtherIncomePayment, :count)
+          expect(OtherIncomePayment.count).to eq(0)
         end
       end
 
@@ -153,7 +155,6 @@ RSpec.describe OtherIncomesController, type: :request do
     end
 
     context "with missing payment date" do
-      let(:assessment_id) { SecureRandom.uuid }
       let(:other_income_params) do
         {
           other_incomes: [
@@ -182,7 +183,6 @@ RSpec.describe OtherIncomesController, type: :request do
     end
 
     context "with invalid client_id" do
-      let(:assessment_id) { SecureRandom.uuid }
       let(:other_income_params) do
         {
           other_incomes: [

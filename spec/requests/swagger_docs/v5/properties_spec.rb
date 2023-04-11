@@ -33,22 +33,20 @@ RSpec.describe "properties", type: :request, swagger_doc: "v5/swagger.yaml" do
                           description: "Applicant's main home details",
                           properties: {
                             value: {
-                              type: :number,
-                              format: :decimal,
+                              "$ref" => "#/components/schemas/currency",
                               description: "Financial value of the property",
-                              example: 500_000.01,
                             },
                             outstanding_mortgage: {
-                              type: :number,
-                              format: :decimal,
+                              "$ref" => "#/components/schemas/currency",
                               description: "Amount outstanding on all mortgages against this property",
-                              example: 999.99,
                             },
                             percentage_owned: {
                               type: :number,
                               format: :decimal,
                               description: "Percentage share of the property which is owned by the applicant",
                               example: 99.99,
+                              minimum: 0,
+                              maximum: 100,
                             },
                             shared_with_housing_assoc: {
                               type: :boolean,
@@ -62,10 +60,10 @@ RSpec.describe "properties", type: :request, swagger_doc: "v5/swagger.yaml" do
                         },
                         additional_properties: {
                           type: :array,
-                          required: %i[value outstanding_mortgage percentage_owned shared_with_housing_assoc],
                           description: "One or more additional properties owned by the applicant",
                           items: {
                             type: :object,
+                            required: %i[value outstanding_mortgage percentage_owned shared_with_housing_assoc],
                             description: "Additional property details",
                             properties: {
                               value: {

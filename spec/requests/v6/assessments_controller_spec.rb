@@ -124,11 +124,8 @@ module V6
 
         it "returns error JSON" do
           codes = CFEConstants::VALID_PROCEEDING_TYPE_CCMS_CODES.join(", ")
-          expect(parsed_response)
-            .to eq({
-              success: false,
-              errors: ["The property '#/proceeding_types/0/ccms_code' value \"ZZ\" did not match one of the following values: #{codes} in schema file://#"],
-            })
+          expect(parsed_response[:errors])
+            .to include(/The property '#\/proceeding_types\/0\/ccms_code' value "ZZ" did not match one of the following values: #{codes} in schema/)
         end
       end
 
@@ -140,7 +137,8 @@ module V6
         end
 
         it "returns error JSON" do
-          expect(parsed_response[:errors]).to include(%r{The property '#/proceeding_types' did not contain a minimum number of items 1 in schema})
+          expect(parsed_response[:errors])
+            .to include(/The property '#\/proceeding_types' did not contain a minimum number of items 1 in schema/)
         end
       end
 
@@ -160,6 +158,23 @@ module V6
         end
       end
 
+      context "with a future date of birth" do
+        let(:params) do
+          { applicant: { has_partner_opponent: false,
+                         receives_qualifying_benefit: false,
+                         date_of_birth: "2900-01-09",
+                         employed: } }
+        end
+
+        it "returns error" do
+          expect(response).to have_http_status(:unprocessable_entity)
+        end
+
+        it "returns error JSON" do
+          expect(parsed_response[:errors]).to include(/Date of birth cannot be in future/)
+        end
+      end
+
       context "with an dependant error" do
         let(:params) { { dependants: {} } }
 
@@ -168,7 +183,8 @@ module V6
         end
 
         it "returns error JSON" do
-          expect(parsed_response[:errors]).to include(%r{The property '#/dependants' of type object did not match the following type: array in schema})
+          expect(parsed_response[:errors])
+            .to include(/The property '#\/dependants' of type object did not match the following type: array in schema/)
         end
       end
 
@@ -218,7 +234,8 @@ module V6
         end
 
         it "returns error JSON" do
-          expect(parsed_response[:errors]).to include(%r{The property '#/cash_transactions/income' of type object did not match the following type: array in schema})
+          expect(parsed_response[:errors])
+            .to include(/The property '#\/cash_transactions\/income' of type object did not match the following type: array in schema/)
         end
       end
 

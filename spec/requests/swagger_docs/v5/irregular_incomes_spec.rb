@@ -20,13 +20,16 @@ RSpec.describe "irregular_incomes", type: :request, swagger_doc: "v5/swagger.yam
                   type: :object,
                   description: "A set of irregular income payments",
                   example: { payments: [{ income_type: "student_loan", frequency: "annual", amount: 123_456.78 }] },
+                  required: %i[payments],
                   properties: {
                     payments: {
                       type: :array,
-                      required: %i[income_type frequency amount],
+                      minItems: 0,
+                      maxItems: 2,
                       description: "One or more irregular payment details",
                       items: {
                         type: :object,
+                        required: %i[income_type frequency amount],
                         description: "Irregular payment detail",
                         properties: {
                           income_type: {
@@ -94,7 +97,8 @@ RSpec.describe "irregular_incomes", type: :request, swagger_doc: "v5/swagger.yam
 
         run_test! do |response|
           body = JSON.parse(response.body, symbolize_names: true)
-          expect(body[:errors]).to include("The property '#/payments/0' did not contain a required property of 'income_type' in schema file://public/schemas/irregular_incomes.json")
+          expect(body[:errors])
+            .to include(/The property '#\/payments\/0' did not contain a required property of 'income_type' in schema/)
         end
       end
     end
