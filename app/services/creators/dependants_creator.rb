@@ -1,43 +1,24 @@
 module Creators
-  class DependantsCreator < BaseCreator
-    attr_accessor :assessment_id, :dependants
-
-    def initialize(assessment_id:, dependants_params:, relationship: :dependants)
-      super()
-      @assessment_id = assessment_id
-      @dependants_params = dependants_params
-      @relationship = relationship
-    end
-
-    def call
-      if json_validator.valid?
-        create_records
-      else
-        self.errors = json_validator.errors
+  class DependantsCreator
+    Result = Struct.new :errors, keyword_init: true do
+      def success?
+        errors.empty?
       end
-      self
     end
 
-  private
+    class << self
+      def call(dependants:, dependants_params:)
+        create_dependants(dependants:, dependants_params:)
+        Result.new(errors: []).freeze
+      rescue ActiveRecord::RecordInvalid => e
+        Result.new(errors: e.record.errors.full_messages).freeze
+      end
 
-    def create_records
-      create_dependants
-    rescue CreationError => e
-      self.errors = e.errors
-    end
+    private
 
-    def create_dependants
-      self.dependants = assessment.send(@relationship).create!(dependants_attributes)
-    rescue ActiveRecord::RecordInvalid => e
-      raise CreationError, e.record.errors.full_messages
-    end
-
-    def dependants_attributes
-      @dependants_attributes ||= @dependants_params[:dependants]
-    end
-
-    def json_validator
-      @json_validator ||= JsonValidator.new("dependants", @dependants_params)
+      def create_dependants(dependants:, dependants_params:)
+        dependants.create!(dependants_params[:dependants])
+      end
     end
   end
 end

@@ -4,6 +4,8 @@ class ProceedingType < ApplicationRecord
   validates :client_involvement_type, inclusion: { in: CFEConstants::VALID_CLIENT_INVOLVEMENT_TYPES, message: "invalid client_involvement_type: %{value}" }
   validate :proceeding_type_code_validations
 
+  validates :ccms_code, uniqueness: { scope: :assessment_id }
+
 private
 
   def proceeding_type_code_validations

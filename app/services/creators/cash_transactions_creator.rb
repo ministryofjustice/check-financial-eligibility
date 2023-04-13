@@ -1,26 +1,30 @@
 module Creators
-  class CashTransactionsCreator < BaseCreator
-    delegate :gross_income_summary, to: :assessment
+  class CashTransactionsCreator
+    Result = Struct.new :errors, keyword_init: true do
+      def success?
+        errors.empty?
+      end
+    end
 
-    def initialize(assessment_id:, cash_transaction_params:)
-      super()
-      @assessment_id = assessment_id
+    class << self
+      def call(assessment:, cash_transaction_params:)
+        new(assessment:, cash_transaction_params:).call
+      end
+    end
+
+    def initialize(assessment:, cash_transaction_params:)
+      @assessment = assessment
       @cash_transaction_params = cash_transaction_params
     end
 
     def call
-      if json_validator.valid?
-        create_records
-      else
-        errors.concat(json_validator.errors)
-      end
-      self
+      create_records
     end
 
   private
 
     def valid_dates
-      base_date = assessment.submission_date.beginning_of_month
+      base_date = @assessment.submission_date.beginning_of_month
       @valid_dates ||= [
         base_date - 4.months,
         base_date - 3.months,
@@ -30,34 +34,33 @@ module Creators
     end
 
     def create_records
-      [income_attributes, outgoings_attributes].each { |categories| validate_categories(categories) }
-      return unless errors.empty?
+      errors = [income_attributes, outgoings_attributes].map { |categories| validate_categories(categories) }.flatten
+      return Result.new(errors:).freeze unless errors.empty?
 
       ActiveRecord::Base.transaction do
         income_attributes.each { |category_hash| create_category(category_hash, "credit") }
         outgoings_attributes.each { |category_hash| create_category(category_hash, "debit") }
-      rescue StandardError => e
-        errors << "#{e.class} :: #{e.message}\n#{e.backtrace.join("\n")}"
       end
+      Result.new(errors: []).freeze
     end
 
     def validate_categories(categories)
-      categories.each { |category_hash| validate_category(category_hash) }
+      categories.map { |category_hash| validate_category(category_hash) }.compact
     end
 
     def validate_category(category_hash)
       if category_hash[:payments].size != 3
-        errors << "There must be exactly 3 payments for category #{category_hash[:category]}"
-        return
+        return "There must be exactly 3 payments for category #{category_hash[:category]}"
       end
-      validate_payment_dates(category_hash)
+
+      validate_payment_dates(category: category_hash[:category], payments: category_hash[:payments])
     end
 
-    def validate_payment_dates(category_hash)
-      dates = category_hash[:payments].map { |payment| Date.parse(payment[:date]) }.sort
+    def validate_payment_dates(category:, payments:)
+      dates = payments.map { |payment| Date.parse(payment[:date]) }.sort
       return if dates == first_three_valid_dates || dates == last_three_valid_dates
 
-      errors << "Expecting payment dates for category #{category_hash[:category]} to be 1st of three of the previous 3 months"
+      "Expecting payment dates for category #{category} to be 1st of three of the previous 3 months"
     end
 
     def first_three_valid_dates
@@ -69,7 +72,7 @@ module Creators
     end
 
     def create_category(category_hash, operation)
-      cash_transaction_category = CashTransactionCategory.create!(gross_income_summary:,
+      cash_transaction_category = CashTransactionCategory.create!(gross_income_summary: @assessment.gross_income_summary,
                                                                   name: category_hash[:category],
                                                                   operation:)
       category_hash[:payments].each { |payment| create_cash_transaction(payment, cash_transaction_category) }
@@ -80,10 +83,6 @@ module Creators
                               date: Date.parse(payment[:date]),
                               amount: payment[:amount],
                               client_id: payment[:client_id])
-    end
-
-    def json_validator
-      @json_validator ||= JsonValidator.new("cash_transaction", @cash_transaction_params)
     end
 
     def income_attributes

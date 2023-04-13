@@ -1,14 +1,11 @@
-class AssessmentsController < ApplicationController
+class AssessmentsController < CreationController
+  before_action :validate, only: [:create]
+
   def create
-    json_validator ||= JsonValidator.new("assessment", assessment_params)
-    if json_validator.valid?
-      if assessment_creation_service.success?
-        render json: { success: true, assessment_id: assessment_creation_service.assessment.id, errors: [] }
-      else
-        render_unprocessable(assessment_creation_service.errors)
-      end
+    if assessment_creation_service.success?
+      render json: { success: true, assessment_id: assessment_creation_service.assessment.id, errors: [] }
     else
-      render_unprocessable(json_validator.errors)
+      render_unprocessable(assessment_creation_service.errors)
     end
   end
 
@@ -24,6 +21,10 @@ class AssessmentsController < ApplicationController
   end
 
 private
+
+  def validate
+    validate_json_schema "assessment", assessment_params
+  end
 
   def assessment_incomplete?
     assessment.proceeding_types.empty? || assessment.applicant.nil?

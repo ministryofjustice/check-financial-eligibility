@@ -1,20 +1,16 @@
-class RegularTransactionsController < ApplicationController
+class RegularTransactionsController < CreationController
+  before_action :load_assessment
+
   def create
-    if creation_service.success?
-      render_success
-    else
-      render_unprocessable(creation_service.errors)
-    end
+    json_validate_and_render "regular_transactions", regular_transaction_params, lambda {
+      Creators::RegularTransactionsCreator.call(
+        gross_income_summary: @assessment.gross_income_summary,
+        regular_transaction_params:,
+      )
+    }
   end
 
 private
-
-  def creation_service
-    @creation_service ||= Creators::RegularTransactionsCreator.call(
-      assessment_id: params[:assessment_id],
-      regular_transaction_params:,
-    )
-  end
 
   def regular_transaction_params
     JSON.parse(request.raw_post, symbolize_names: true)

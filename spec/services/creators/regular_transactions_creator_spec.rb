@@ -21,7 +21,7 @@ RSpec.describe Creators::RegularTransactionsCreator do
 
   describe ".call" do
     subject(:creator) do
-      described_class.call(assessment_id: assessment.id,
+      described_class.call(gross_income_summary: assessment.gross_income_summary,
                            regular_transaction_params: params)
     end
 
@@ -35,8 +35,6 @@ RSpec.describe Creators::RegularTransactionsCreator do
 
     context "with valid payload" do
       let(:params) { valid_params }
-
-      it { expect(creator).to be_instance_of(described_class) }
 
       it "creates a regular transaction record" do
         expect { creator }.to change(assessment.gross_income_summary.regular_transactions, :count).by(1)
@@ -53,12 +51,16 @@ RSpec.describe Creators::RegularTransactionsCreator do
       end
     end
 
-    context "with invalid assessment id" do
-      before { allow(assessment).to receive(:id).and_return("abcd") }
+    context "with invalid params" do
+      let(:params) do
+        { regular_transactions:
+            [{ category: "something unknown",
+               operation: "credit",
+               amount: 9.99,
+               frequency: "monthly" }] }
+      end
 
-      let(:params) { valid_params }
-
-      it_behaves_like "unsuccessful creation", "No such assessment id"
+      it_behaves_like "unsuccessful creation", "Category is not a valid credit category: something unknown"
     end
 
     context "with credit category in list" do

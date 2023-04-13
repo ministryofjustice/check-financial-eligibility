@@ -4,7 +4,6 @@ module Creators
   RSpec.describe PropertiesCreator do
     let(:assessment) { create :assessment, :with_capital_summary }
     let(:capital_summary) { assessment.capital_summary }
-    let(:assessment_id) { assessment.id }
     let(:main_home) do
       {
         value: 500_000,
@@ -42,7 +41,7 @@ module Creators
 
     subject(:creator) do
       described_class.call(
-        assessment_id:,
+        capital_summary:,
         properties_params:,
       )
     end
@@ -56,13 +55,19 @@ module Creators
         end
 
         describe "#properties" do
+          before do
+            creator
+          end
+
+          let(:result) { Property.all }
+
           it "returns array of properties" do
-            expect(creator.properties.size).to eq 3
-            expect(creator.properties.map(&:class).uniq).to eq [Property]
+            expect(result.size).to eq 3
+            expect(result.map(&:class).uniq).to eq [Property]
           end
 
           it "returns the ids of the new property records in the response" do
-            expect(creator.properties.map(&:id)).to match_array capital_summary.properties.map(&:id)
+            expect(result.map(&:id)).to match_array capital_summary.properties.map(&:id)
           end
         end
 
@@ -76,25 +81,6 @@ module Creators
           expect {
             creator
           }.to change { assessment.properties.count }.by(3)
-        end
-      end
-
-      context "invalid assessment id" do
-        let(:assessment_id) { SecureRandom.uuid }
-
-        describe "#success?" do
-          it "returns false" do
-            expect(creator.success?).to be false
-          end
-        end
-
-        it "returns errors" do
-          expect(creator.errors.size).to eq 1
-          expect(creator.errors.first).to eq "No such assessment id"
-        end
-
-        it "does not create any property records" do
-          expect { creator }.not_to change(Property, :count)
         end
       end
     end

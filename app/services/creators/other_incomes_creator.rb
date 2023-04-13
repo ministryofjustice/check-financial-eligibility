@@ -1,68 +1,41 @@
 module Creators
-  class OtherIncomesCreator < BaseCreator
-    attr_accessor :assessment_id, :employments_attributes
+  class OtherIncomesCreator
+    Result = Data.define(:success?)
 
-    delegate :gross_income_summary, to: :assessment
-
-    attr_reader :other_income_sources
-
-    def initialize(assessment_id:, other_incomes_params:)
-      super()
-      @assessment_id = assessment_id
-      @other_incomes_params = other_incomes_params
-      @other_income_sources = []
-    end
-
-    def call
-      if json_validator.valid?
-        create_records
-      else
-        errors.concat(json_validator.errors)
+    class << self
+      def call(assessment:, other_incomes_params:)
+        ActiveRecord::Base.transaction do
+          create_other_income(assessment:, other_incomes_params:)
+        end
+        Result.new(success?: true)
       end
-      self
-    end
 
-  private
+    private
 
-    def create_records
-      ActiveRecord::Base.transaction do
-        assessment
-        create_other_income
-      rescue CreationError => e
-        self.errors = e.errors
+      def create_other_income(assessment:, other_incomes_params:)
+        other_incomes(other_incomes_params).each do |other_income_source_params|
+          create_other_income_source(assessment:, other_income_source_params:)
+        end
       end
-    end
 
-    def create_other_income
-      return if other_incomes.empty?
-
-      other_incomes.each do |other_income_source_params|
-        @other_income_sources << create_other_income_source(other_income_source_params)
+      def create_other_income_source(assessment:, other_income_source_params:)
+        other_income_source = assessment.gross_income_summary.other_income_sources.create!(name: normalize(other_income_source_params[:source]))
+        other_income_source_params[:payments].each do |payment_params|
+          other_income_source.other_income_payments.create!(
+            payment_date: payment_params[:date],
+            amount: payment_params[:amount],
+            client_id: payment_params[:client_id],
+          )
+        end
       end
-    end
 
-    def create_other_income_source(other_income_source_params)
-      other_income_source = gross_income_summary.other_income_sources.create!(name: normalize(other_income_source_params[:source]))
-      other_income_source_params[:payments].each do |payment_params|
-        other_income_source.other_income_payments.create!(
-          payment_date: payment_params[:date],
-          amount: payment_params[:amount],
-          client_id: payment_params[:client_id],
-        )
+      def normalize(name)
+        name.underscore.tr(" ", "_")
       end
-      other_income_source
-    end
 
-    def normalize(name)
-      name.underscore.tr(" ", "_")
-    end
-
-    def other_incomes
-      @other_incomes ||= @other_incomes_params.fetch(:other_incomes, nil)
-    end
-
-    def json_validator
-      @json_validator ||= JsonValidator.new("other_incomes", @other_incomes_params)
+      def other_incomes(other_incomes_params)
+        other_incomes_params.fetch(:other_incomes, nil)
+      end
     end
   end
 end

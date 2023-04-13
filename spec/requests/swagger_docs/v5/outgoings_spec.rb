@@ -57,7 +57,7 @@ RSpec.describe "outgoings", type: :request, swagger_doc: "v5/swagger.yaml" do
 
         run_test! do |response|
           body = JSON.parse(response.body, symbolize_names: true)
-          expect(body[:errors]).to include(/The property '#\/outgoings\/0\/name' value "foobar" did not match one of the following values: child_care, rent_or_mortgage, maintenance_out, legal_aid in schema file/)
+          expect(body[:errors]).to include(/The property '#\/outgoings\/0\/name' value "foobar" did not match one of the following values: child_care, rent_or_mortgage, maintenance_out, legal_aid/)
         end
       end
     end

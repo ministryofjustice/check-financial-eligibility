@@ -1,20 +1,16 @@
-class ApplicantsController < ApplicationController
+class ApplicantsController < CreationController
+  before_action :load_assessment
+
   def create
-    if creation_service.success?
-      render_success
-    else
-      render_unprocessable(creation_service.errors)
-    end
+    json_validate_and_render("applicant_v5", applicant_params, lambda {
+      Creators::ApplicantCreator.call(
+        assessment: @assessment,
+        applicant_params:,
+      )
+    })
   end
 
 private
-
-  def creation_service
-    @creation_service ||= Creators::ApplicantCreator.call(
-      assessment_id: params[:assessment_id],
-      applicant_params:,
-    )
-  end
 
   def applicant_params
     JSON.parse(request.raw_post, symbolize_names: true)

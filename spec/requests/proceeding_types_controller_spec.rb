@@ -4,7 +4,7 @@ RSpec.describe ProceedingTypesController, type: :request do
   describe "POST proceeding types" do
     let(:assessment) { create :assessment }
     let(:headers) { { "CONTENT_TYPE" => "application/json" } }
-    let(:mock_creator) { instance_double(Creators::ProceedingTypesCreator, success?: mock_response, errors: mock_errors) }
+    let(:mock_creator) { instance_double(Creators::ProceedingTypesCreator::Result, success?: mock_response, errors: mock_errors) }
     let(:payload) do
       {
         proceeding_types:,
@@ -12,7 +12,7 @@ RSpec.describe ProceedingTypesController, type: :request do
     end
     let(:params) do
       {
-        assessment_id: assessment.id,
+        assessment:,
         proceeding_types_params: payload,
       }
     end
@@ -111,7 +111,7 @@ RSpec.describe ProceedingTypesController, type: :request do
         end
 
         it "returns an error message" do
-          expect(parsed_response[:errors]).to include(/ActiveRecord::RecordNotUnique/)
+          expect(parsed_response[:errors]).to include(/Ccms code has already been taken/)
         end
       end
     end

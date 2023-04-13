@@ -35,17 +35,7 @@ module Decorators
       end
 
       describe "#as_json" do
-        subject(:decorator) { described_class.new(assessment, calculation_output).as_json }
-
-        before do
-          partner_financials_params = {
-            partner: {
-              employed: true,
-              date_of_birth: 30.years.ago.to_date.to_s,
-            },
-          }
-          Creators::PartnerFinancialsCreator.call(assessment_id: assessment.id, partner_financials_params:)
-        end
+        subject(:decorator) { described_class.new(assessment.reload, calculation_output).as_json }
 
         it "has the required keys in the returned hash" do
           expected_keys = %i[
@@ -58,9 +48,6 @@ module Decorators
             disposable_income
             capital
             remarks
-            partner_disposable_income
-            partner_gross_income
-            partner_capital
           ]
           expect(decorator[:assessment].keys).to match_array expected_keys
         end
@@ -77,13 +64,7 @@ module Decorators
 
         context "with partner" do
           before do
-            partner_financials_params = {
-              partner: {
-                employed: true,
-                date_of_birth: 30.years.ago.to_date.to_s,
-              },
-            }
-            Creators::PartnerFinancialsCreator.call(assessment_id: assessment.id, partner_financials_params:)
+            create(:partner, assessment:)
           end
 
           it "includes partner information" do

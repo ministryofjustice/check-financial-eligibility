@@ -5,26 +5,18 @@ module Creators
         errors.empty?
       end
     end
+
     class << self
       def call(employments_params:, employment_collection:)
-        json_validator = JsonValidator.new("employment", employments_params)
-        if json_validator.valid?
-          create_records employments_params, employment_collection
-        else
-          Result.new(errors: json_validator.errors).freeze
-        end
-      end
-
-  private
-
-      def create_records(employments_params, employment_collection)
         ActiveRecord::Base.transaction do
           create_employment employments_params, employment_collection
           Result.new(errors: []).freeze
         rescue ActiveRecord::RecordInvalid => e
-          Result.new(errors: [e.message]).freeze
+          Result.new(errors: e.record.errors.full_messages).freeze
         end
       end
+
+  private
 
       def create_employment(employments_params, employment_collection)
         employments_params[:employment_income].each do |attributes|

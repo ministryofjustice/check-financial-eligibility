@@ -23,7 +23,7 @@ RSpec.describe Creators::EmploymentsCreator do
     end
 
     it "returns an error" do
-      expect(creator.errors).to eq(["Validation failed: Net income must be greater than or equal to 0"])
+      expect(creator.errors).to eq(["Net income must be greater than or equal to 0"])
     end
   end
 

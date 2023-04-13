@@ -1,20 +1,16 @@
-class PropertiesController < ApplicationController
+class PropertiesController < CreationController
+  before_action :load_assessment
+
   def create
-    if creation_service.success?
-      render_success
-    else
-      render_unprocessable(creation_service.errors)
-    end
+    json_validate_and_render("properties", properties_params, lambda {
+      Creators::PropertiesCreator.call(
+        capital_summary: @assessment.capital_summary,
+        properties_params:,
+      )
+    })
   end
 
 private
-
-  def creation_service
-    @creation_service ||= Creators::PropertiesCreator.call(
-      assessment_id: params[:assessment_id],
-      properties_params:,
-    )
-  end
 
   def properties_params
     JSON.parse(request.raw_post, symbolize_names: true)

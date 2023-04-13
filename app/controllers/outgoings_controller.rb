@@ -1,22 +1,16 @@
-class OutgoingsController < ApplicationController
+class OutgoingsController < CreationController
   before_action :load_assessment
 
   def create
-    if outgoing_creation_service.success?
-      render_success
-    else
-      render_unprocessable(outgoing_creation_service.errors)
-    end
+    json_validate_and_render "outgoings", outgoings_params, lambda {
+      Creators::OutgoingsCreator.call(
+        outgoings_params:,
+        disposable_income_summary: @assessment.disposable_income_summary,
+      )
+    }
   end
 
 private
-
-  def outgoing_creation_service
-    @outgoing_creation_service ||= Creators::OutgoingsCreator.call(
-      outgoings_params:,
-      disposable_income_summary: @assessment.disposable_income_summary,
-    )
-  end
 
   def outgoings_params
     JSON.parse(request.raw_post, symbolize_names: true)

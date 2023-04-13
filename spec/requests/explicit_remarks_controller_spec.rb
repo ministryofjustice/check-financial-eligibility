@@ -44,21 +44,8 @@ RSpec.describe ExplicitRemarksController, type: :request do
         end
 
         it "parsed responses contains errors" do
-          expect(parsed_response).to eq(success: false, errors: ["Assessment must exist"])
+          expect(parsed_response).to eq(success: false, errors: ["No such assessment id"])
         end
-      end
-    end
-
-    context "with valid payload but error in creation service" do
-      let(:payload) { valid_payload }
-
-      before do
-        allow_any_instance_of(Creators::ExplicitRemarksCreator).to receive(:success?).and_return(false)
-        post assessment_explicit_remarks_path(assessment.id), params: payload.to_json, headers:
-      end
-
-      it "returns unprocessable entity" do
-        expect(response).to have_http_status(:unprocessable_entity)
       end
     end
 

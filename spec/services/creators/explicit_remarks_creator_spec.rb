@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Creators::ExplicitRemarksCreator do
   describe ".call" do
-    subject(:call) { described_class.call(assessment_id: assessment.id, explicit_remarks_params: params) }
+    subject(:call) { described_class.call(assessment:, explicit_remarks_params: params) }
 
     let(:assessment) { create :assessment }
 
@@ -35,13 +35,21 @@ RSpec.describe Creators::ExplicitRemarksCreator do
       end
     end
 
-    context "with valid payload but unknown exception raised" do
-      let(:params) { valid_params }
+    context "with invalid payload" do
+      let(:params) do
+        {
+          explicit_remarks: [
+            {
+              category: "invalid",
+              details: %w[disregard_1 disregard_2],
+            },
+          ],
+        }
+      end
 
       it "stores the error on the object" do
-        allow_any_instance_of(described_class).to receive(:create_remark_category).and_raise(ArgumentError, "Argument error detailed message")
         expect(call.success?).to be false
-        expect(call.errors).to eq ["ArgumentError - Argument error detailed message"]
+        expect(call.errors).to eq ["Category invalid is not a valid remark category"]
       end
     end
   end

@@ -1,74 +1,46 @@
 module Creators
-  class StateBenefitsCreator < BaseCreator
-    attr_accessor :assessment_id
-
-    attr_reader :result
-
-    def initialize(assessment_id:, state_benefits_params:, gross_income_summary: nil)
-      super()
-      @assessment_id = assessment_id
-      @state_benefits_params = state_benefits_params
-      @result = []
-      @explicit_gross_income_summary = gross_income_summary
-    end
-
-    def call
-      if json_validator.valid?
-        create_records
-      else
-        errors.concat(json_validator.errors)
-      end
-      self
-    end
-
-  private
-
-    def create_records
-      ActiveRecord::Base.transaction do
-        assessment
-        create_state_benefits
-      rescue CreationError => e
-        self.errors = e.errors
+  class StateBenefitsCreator
+    Result = Struct.new(:errors, keyword_init: true) do
+      def success?
+        errors.empty?
       end
     end
 
-    def create_state_benefits
-      state_benefits.each do |state_benefit_attributes|
-        @result << create_state_benefit(state_benefit_attributes)
+    class << self
+      def call(gross_income_summary:, state_benefits_params:)
+        ActiveRecord::Base.transaction do
+          create_state_benefits(gross_income_summary:, state_benefits_params:)
+          Result.new(errors: []).freeze
+        rescue ActiveRecord::RecordInvalid => e
+          Result.new(errors: e.record.errors.full_messages).freeze
+        end
       end
-    rescue ActiveRecord::RecordInvalid => e
-      raise CreationError, e.record.errors.full_messages
-    end
 
-    def create_state_benefit(state_benefit_attributes)
-      state_benefit = StateBenefit.generate!(gross_income_summary, state_benefit_attributes[:name])
-      state_benefit_attributes[:payments].each do |payment|
-        state_benefit.state_benefit_payments.create!(
-          payment_date: payment[:date],
-          amount: payment[:amount],
-          client_id: payment[:client_id],
-          flags: generate_flags(payment),
-        )
+    private
+
+      def create_state_benefits(gross_income_summary:, state_benefits_params:)
+        state_benefits_params[:state_benefits].each do |state_benefit_attributes|
+          create_state_benefit(gross_income_summary:, state_benefit_attributes:)
+        end
       end
-      state_benefit
-    end
 
-    def generate_flags(hash)
-      return false if hash[:flags].blank?
+      def create_state_benefit(gross_income_summary:, state_benefit_attributes:)
+        state_benefit = StateBenefit.generate!(gross_income_summary, state_benefit_attributes[:name])
+        state_benefit_attributes[:payments].each do |payment|
+          state_benefit.state_benefit_payments.create!(
+            payment_date: payment[:date],
+            amount: payment[:amount],
+            client_id: payment[:client_id],
+            flags: generate_flags(payment),
+          )
+        end
+      end
 
-      hash[:flags].map { |k, v| k if v.eql?(true) }.compact
-    end
+      def generate_flags(hash)
+        return false if hash[:flags].blank?
 
-    def state_benefits
-      @state_benefits ||= @state_benefits_params[:state_benefits]
-    end
-
-    def json_validator
-      @json_validator ||= JsonValidator.new("state_benefits", @state_benefits_params)
-    end
-
-    def gross_income_summary
-      @explicit_gross_income_summary || assessment.gross_income_summary
+        hash[:flags].map { |k, v| k if v.eql?(true) }.compact
+      end
     end
   end
 end

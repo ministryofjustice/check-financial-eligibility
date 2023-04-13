@@ -1,52 +1,68 @@
 module Creators
-  class PartnerFinancialsCreator < BaseCreator
-    attr_accessor :assessment_id
+  class PartnerFinancialsCreator
+    Result = Struct.new(:errors, keyword_init: true) do
+      def success?
+        errors.empty?
+      end
+    end
 
-    def initialize(assessment_id:, partner_financials_params:)
-      super()
-      @assessment_id = assessment_id
+    class << self
+      def call(assessment:, partner_financials_params:)
+        new(assessment:, partner_financials_params:).call
+      end
+    end
+
+    def initialize(assessment:, partner_financials_params:)
+      @assessment = assessment
       @partner_financials_params = partner_financials_params
     end
 
     def call
-      Assessment.transaction { create_records }
-      self
+      Assessment.transaction do
+        create_records
+      end
     end
 
   private
 
+    attr_reader :assessment
+
     def create_records
-      create_partner
-      create_summaries
-      create_irregular_income
-      create_employments
-      create_regular_transactions
-      create_state_benefits
-      create_additional_properties
-      create_capitals
-      create_vehicles
-      create_dependants
-      create_outgoings
-    rescue CreationError => e
-      self.errors = e.errors
+      errors = []
+      errors.concat(create_partner.errors)
+      errors.concat(create_summaries.errors)
+      errors.concat(create_irregular_income.errors)
+      errors.concat(create_employments.errors)
+      errors.concat(create_regular_transactions.errors)
+      errors.concat(create_state_benefits.errors)
+      errors.concat(create_additional_properties.errors)
+      errors.concat(create_capitals.errors)
+      errors.concat(create_vehicles.errors)
+      errors.concat(create_dependants.errors)
+      errors.concat(create_outgoings.errors)
+      Result.new(errors:).freeze
+    rescue ActiveRecord::RecordInvalid => e
+      Result.new(errors: e.record.errors.full_messages).freeze
     end
 
     def create_partner
-      raise(CreationError, ["There is already a partner for this assesssment"]) if assessment.partner.present?
-
-      assessment.create_partner!(partner_attributes.slice(:date_of_birth, :employed))
-    rescue ActiveRecord::RecordInvalid => e
-      raise CreationError, e.record.errors.full_messages
+      if assessment.partner.present?
+        Result.new(errors: ["There is already a partner for this assesssment"]).freeze
+      else
+        assessment.create_partner!(partner_attributes.slice(:date_of_birth, :employed))
+        Result.new(errors: []).freeze
+      end
     end
 
     def create_summaries
       assessment.create_partner_capital_summary!
       assessment.create_partner_gross_income_summary!
       assessment.create_partner_disposable_income_summary!
+      Result.new(errors: []).freeze
     end
 
     def create_irregular_income
-      return if irregular_income_params.blank?
+      return Result.new(errors: []) if irregular_income_params.blank?
 
       IrregularIncomeCreator.call(
         irregular_income_params: { payments: irregular_income_params },
@@ -55,54 +71,44 @@ module Creators
     end
 
     def create_regular_transactions
-      return if regular_transaction_params.blank?
+      return Result.new(errors: []).freeze if regular_transaction_params.blank?
 
-      creator = RegularTransactionsCreator.call(
-        assessment_id: @assessment_id,
+      RegularTransactionsCreator.call(
         regular_transaction_params: { regular_transactions: regular_transaction_params },
         gross_income_summary: assessment.partner_gross_income_summary,
       )
-
-      errors.concat(creator.errors)
     end
 
     def create_employments
-      return if employment_params.blank?
+      return Result.new(errors: []).freeze if employment_params.blank?
 
       employments_params = { employment_income: employment_params }
-      creator = EmploymentsCreator.call(
+      EmploymentsCreator.call(
         employments_params:,
         employment_collection: assessment.partner_employments,
       )
-
-      errors.concat(creator.errors)
     end
 
     def create_state_benefits
-      return if state_benefit_params.blank?
+      return Result.new(errors: []).freeze if state_benefit_params.blank?
 
-      creator = StateBenefitsCreator.call(
-        assessment_id: @assessment_id,
+      StateBenefitsCreator.call(
         state_benefits_params: { state_benefits: state_benefit_params },
         gross_income_summary: assessment.partner_gross_income_summary,
       )
-
-      errors.concat(creator.errors)
     end
 
     def create_additional_properties
-      return if additional_property_params.blank?
+      return Result.new(errors: []).freeze if additional_property_params.blank?
 
-      creator = PartnerPropertiesCreator.call(
-        assessment_id: @assessment_id,
+      PartnerPropertiesCreator.call(
+        capital_summary: assessment.partner_capital_summary,
         properties_params: additional_property_params,
       )
-
-      errors.concat(creator.errors)
     end
 
     def create_capitals
-      return if capital_params.blank?
+      return Result.new(errors: []).freeze if capital_params.blank?
 
       CapitalsCreator.call(
         capital_params:,
@@ -111,38 +117,30 @@ module Creators
     end
 
     def create_vehicles
-      return if vehicle_params.blank?
+      return Result.new(errors: []).freeze if vehicle_params.blank?
 
-      creator = VehicleCreator.call(
-        assessment_id: @assessment_id,
+      VehicleCreator.call(
         vehicles_params: { vehicles: vehicle_params },
         capital_summary: assessment.partner_capital_summary,
       )
-
-      errors.concat(creator.errors)
     end
 
     def create_outgoings
-      return if outgoings_params.blank?
+      return Result.new(errors: []).freeze if outgoings_params.blank?
 
-      creator = OutgoingsCreator.call(
+      OutgoingsCreator.call(
         disposable_income_summary: assessment.partner_disposable_income_summary,
         outgoings_params: { outgoings: outgoings_params },
       )
-
-      errors.concat(creator.errors)
     end
 
     def create_dependants
-      return if dependant_params.blank?
+      return Result.new(errors: []).freeze if dependant_params.blank?
 
-      creator = DependantsCreator.call(
-        assessment_id: @assessment_id,
+      DependantsCreator.call(
+        dependants: @assessment.partner_dependants,
         dependants_params: { dependants: dependant_params },
-        relationship: :partner_dependants,
       )
-
-      errors.concat(creator.errors)
     end
 
     def partner_attributes

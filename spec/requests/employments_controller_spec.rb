@@ -138,7 +138,7 @@ RSpec.describe EmploymentsController, type: :request do
         before { post_payload }
 
         it_behaves_like "it fails with message",
-                        /Validation failed: Net income must be greater than or equal to 0/
+                        /Net income must be greater than or equal to 0/
       end
     end
 

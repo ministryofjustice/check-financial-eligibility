@@ -8,7 +8,7 @@ module Creators
 
     subject(:creator) do
       described_class.call(
-        assessment_id: assessment.id,
+        assessment:,
         other_incomes_params: {
           other_incomes: other_income_params,
         },

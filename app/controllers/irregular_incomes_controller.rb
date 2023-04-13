@@ -1,17 +1,13 @@
-class IrregularIncomesController < ApplicationController
+class IrregularIncomesController < CreationController
   before_action :load_assessment
 
   def create
-    json_validator = JsonValidator.new("irregular_incomes", irregular_income_params)
-    if json_validator.valid?
+    json_validate_and_render "irregular_incomes", irregular_income_params, lambda {
       Creators::IrregularIncomeCreator.call(
         irregular_income_params:,
         gross_income_summary: @assessment.gross_income_summary,
       )
-      render_success
-    else
-      render_unprocessable(json_validator.errors)
-    end
+    }
   end
 
 private

@@ -14,7 +14,7 @@ module Creators
       }
     end
 
-    subject(:creator) { described_class.call(assessment_id:, partner_financials_params:) }
+    subject(:creator) { described_class.call(assessment:, partner_financials_params:) }
 
     describe ".call" do
       context "with valid basic partner payload" do
@@ -46,14 +46,6 @@ module Creators
 
           it "does not create a Partner" do
             expect { creator }.not_to change(Partner, :count)
-          end
-        end
-
-        context "assessment id does not exist" do
-          let(:assessment_id) { SecureRandom.uuid }
-
-          it "returns an error" do
-            expect(creator.errors).to eq ["No such assessment id"]
           end
         end
 

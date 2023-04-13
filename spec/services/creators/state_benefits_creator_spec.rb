@@ -9,7 +9,10 @@ module Creators
       let!(:state_benefit_type3) { create :state_benefit_type }
       let(:state_benefits) { state_benefits_params }
 
-      subject(:creator) { described_class.call(assessment_id: assessment.id, state_benefits_params:) }
+      subject(:creator) do
+        described_class.call(gross_income_summary: assessment.gross_income_summary,
+                             state_benefits_params:)
+      end
 
       it "creates all the required state benefits records" do
         expect { creator }.to change(StateBenefitPayment, :count).by(6)

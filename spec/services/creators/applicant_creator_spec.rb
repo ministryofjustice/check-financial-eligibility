@@ -4,7 +4,6 @@ module Creators
   RSpec.describe ApplicantCreator do
     describe "POST applicant" do
       let(:assessment) { create :assessment }
-      let(:assessment_id) { assessment.id }
       let(:date_of_birth) { Faker::Date.backward.to_s }
       let(:applicant_params) do
         {
@@ -18,7 +17,7 @@ module Creators
         }
       end
 
-      subject(:creator) { described_class.call(assessment_id:, applicant_params:) }
+      subject(:creator) { described_class.call(assessment:, applicant_params:) }
 
       describe ".call" do
         context "valid payload" do
@@ -70,14 +69,6 @@ module Creators
 
             it "does not create an applicant" do
               expect { creator }.not_to change(Applicant, :count)
-            end
-          end
-
-          context "assessment id does not exist" do
-            let(:assessment_id) { SecureRandom.uuid }
-
-            it "returns an error" do
-              expect(creator.errors).to eq ["No such assessment id"]
             end
           end
 

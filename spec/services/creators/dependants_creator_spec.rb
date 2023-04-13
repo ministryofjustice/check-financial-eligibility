@@ -4,11 +4,10 @@ module Creators
   RSpec.describe DependantsCreator do
     include Rails.application.routes.url_helpers
     let(:assessment) { create :assessment }
-    let(:assessment_id) { assessment.id }
     let(:dependants_attributes) { attributes_for_list(:dependant, 2).map { |v| v.merge(date_of_birth: v.fetch(:date_of_birth).to_s) } }
     let(:dependants_params) { { dependants: dependants_attributes } }
 
-    subject(:creator) { described_class.call(assessment_id:, dependants_params:) }
+    subject(:creator) { described_class.call(dependants: assessment.dependants, dependants_params:) }
 
     context "valid payload" do
       it "creates two dependant records for this assessment" do
@@ -30,10 +29,16 @@ module Creators
       end
 
       describe "#dependants" do
+        before do
+          creator
+        end
+
+        let(:result) { Dependant.all }
+
         it "returns the created dependants" do
-          expect(creator.dependants.count).to eq(dependants_attributes.count)
-          expect(creator.dependants.first).to be_a(Dependant)
-          expect(creator.dependants.first.assessment.id).to eq(assessment.id)
+          expect(result.count).to eq(dependants_attributes.count)
+          expect(result.first).to be_a(Dependant)
+          expect(result.first.assessment.id).to eq(assessment.id)
         end
       end
     end
@@ -55,27 +60,6 @@ module Creators
         it "returns an error payload" do
           expect(creator.errors.size).to eq 1
           expect(creator.errors).to include "Date of birth cannot be in future"
-        end
-      end
-    end
-
-    context "no such assessment id" do
-      let(:assessment_id) { SecureRandom.uuid }
-
-      describe "#success?" do
-        it "returns false" do
-          expect(creator.success?).to be false
-        end
-
-        it "does not create a Dependant record" do
-          expect { creator }.not_to change(Dependant, :count)
-        end
-      end
-
-      describe "errors" do
-        it "returns an error payload" do
-          expect(creator.errors.size).to eq 1
-          expect(creator.errors[0]).to eq "No such assessment id"
         end
       end
     end

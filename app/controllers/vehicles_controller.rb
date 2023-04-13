@@ -1,20 +1,16 @@
-class VehiclesController < ApplicationController
+class VehiclesController < CreationController
+  before_action :load_assessment
+
   def create
-    if creation_service.success?
-      render_success
-    else
-      render_unprocessable(creation_service.errors)
-    end
+    json_validate_and_render "vehicles", vehicles_params, lambda {
+      Creators::VehicleCreator.call(
+        vehicles_params:,
+        capital_summary: @assessment.capital_summary,
+      )
+    }
   end
 
 private
-
-  def creation_service
-    @creation_service ||= Creators::VehicleCreator.call(
-      assessment_id: params[:assessment_id],
-      vehicles_params:,
-    )
-  end
 
   def vehicles_params
     JSON.parse(request.raw_post, symbolize_names: true)

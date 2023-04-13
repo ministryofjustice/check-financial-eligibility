@@ -1,32 +1,29 @@
 module Creators
-  class PropertiesCreator < BaseCreator
-    attr_accessor :assessment_id, :properties
+  class PropertiesCreator
+    Result = Struct.new :errors, keyword_init: true do
+      def success?
+        errors.empty?
+      end
+    end
 
-    delegate :capital_summary, to: :assessment
+    class << self
+      def call(capital_summary:, properties_params:)
+        new(capital_summary:, properties_params:).call
+      end
+    end
 
-    def initialize(assessment_id:, properties_params:)
-      super()
-      @assessment_id = assessment_id
+    def initialize(capital_summary:, properties_params:)
+      @capital_summary = capital_summary
       @properties_params = properties_params
       @properties = []
     end
 
     def call
-      if json_validator.valid?
-        create_records
-      else
-        self.errors = json_validator.errors
-      end
-      self
+      create_properties
+      Result.new(errors: []).freeze
     end
 
   private
-
-    def create_records
-      create_properties
-    rescue CreationError => e
-      self.errors = e.errors
-    end
 
     def create_properties
       new_main_home
@@ -44,24 +41,19 @@ module Creators
     end
 
     def new_property(attrs, main_home)
-      attrs[:main_home] = main_home
-      @properties << capital_summary.properties.create!(attrs)
+      @capital_summary.properties.create!(attrs.merge(main_home:))
     end
 
     def main_home_attributes
-      @main_home_attributes ||= properties_attributes[:main_home]
+      properties_attributes[:main_home]
     end
 
     def additional_properties_attributes
-      @additional_properties_attributes ||= properties_attributes[:additional_properties]
+      properties_attributes[:additional_properties]
     end
 
     def properties_attributes
-      @properties_attributes ||= @properties_params[:properties]
-    end
-
-    def json_validator
-      @json_validator ||= JsonValidator.new("properties", @properties_params)
+      @properties_params[:properties]
     end
   end
 end

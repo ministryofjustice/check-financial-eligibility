@@ -22,22 +22,22 @@ module Creators
 
       CREATE_FUNCTIONS = [
         lambda { |assessment, params|
-          Creators::ProceedingTypesCreator.call(assessment_id: assessment.id,
+          Creators::ProceedingTypesCreator.call(assessment:,
                                                 proceeding_types_params: { proceeding_types: params[:proceeding_types] })
         },
         lambda { |assessment, params|
-          Creators::ApplicantCreator.call(assessment_id: assessment.id,
+          Creators::ApplicantCreator.call(assessment:,
                                           applicant_params: { applicant: params[:applicant] })
         },
         lambda { |assessment, params|
           if params[:dependants]
-            Creators::DependantsCreator.call(assessment_id: assessment.id,
+            Creators::DependantsCreator.call(dependants: assessment.dependants,
                                              dependants_params: { dependants: params[:dependants] })
           end
         },
         lambda { |assessment, params|
           if params[:cash_transactions]
-            Creators::CashTransactionsCreator.call(assessment_id: assessment.id,
+            Creators::CashTransactionsCreator.call(assessment:,
                                                    cash_transaction_params: params[:cash_transactions])
           end
         },
@@ -55,19 +55,19 @@ module Creators
         },
         lambda { |assessment, params|
           if params[:other_incomes]
-            Creators::OtherIncomesCreator.call(assessment_id: assessment.id,
+            Creators::OtherIncomesCreator.call(assessment:,
                                                other_incomes_params: { other_incomes: params[:other_incomes] })
           end
         },
         lambda { |assessment, params|
           if params[:state_benefits]
-            Creators::StateBenefitsCreator.call(assessment_id: assessment.id,
+            Creators::StateBenefitsCreator.call(gross_income_summary: assessment.gross_income_summary,
                                                 state_benefits_params: { state_benefits: params[:state_benefits] })
           end
         },
         lambda { |assessment, params|
           if params[:vehicles]
-            Creators::VehicleCreator.call(assessment_id: assessment.id,
+            Creators::VehicleCreator.call(capital_summary: assessment.capital_summary,
                                           vehicles_params: { vehicles: params[:vehicles] })
           end
         },
@@ -75,14 +75,12 @@ module Creators
           if params[:capitals]
             Creators::CapitalsCreator.call(capital_params: params[:capitals],
                                            capital_summary: assessment.capital_summary)
-            # CapitalsCreator no longer returns errors - it throws exceptions
-            CreationResult.new(errors: [])
           end
         },
         lambda { |assessment, params|
           if params[:regular_transactions]
             Creators::RegularTransactionsCreator.call(
-              assessment_id: assessment.id,
+              gross_income_summary: assessment.gross_income_summary,
               regular_transaction_params: { regular_transactions: params[:regular_transactions] },
             )
           end
@@ -95,19 +93,19 @@ module Creators
         },
         lambda { |assessment, params|
           if params[:properties]
-            Creators::PropertiesCreator.call(assessment_id: assessment.id,
+            Creators::PropertiesCreator.call(capital_summary: assessment.capital_summary,
                                              properties_params: { properties: params[:properties] })
           end
         },
         lambda { |assessment, params|
           if params[:partner]
-            Creators::PartnerFinancialsCreator.call(assessment_id: assessment.id,
+            Creators::PartnerFinancialsCreator.call(assessment:,
                                                     partner_financials_params: params[:partner])
           end
         },
         lambda { |assessment, params|
           if params[:explicit_remarks]
-            Creators::ExplicitRemarksCreator.call(assessment_id: assessment.id,
+            Creators::ExplicitRemarksCreator.call(assessment:,
                                                   explicit_remarks_params: { explicit_remarks: params[:explicit_remarks] })
           end
         },

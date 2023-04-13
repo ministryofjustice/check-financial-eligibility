@@ -10,7 +10,7 @@ describe Creators::CashTransactionsCreator do
     let(:month2) { Date.current.beginning_of_month - 2.months }
     let(:month3) { Date.current.beginning_of_month - 1.month }
 
-    subject(:creator) { described_class.call(assessment_id: assessment.id, cash_transaction_params:) }
+    subject(:creator) { described_class.call(assessment:, cash_transaction_params:) }
 
     context "happy_path" do
       let(:params) { valid_params }
@@ -95,22 +95,6 @@ describe Creators::CashTransactionsCreator do
 
         it "returns expected errors" do
           expect(creator.errors).to eq ["Expecting payment dates for category child_care to be 1st of three of the previous 3 months"]
-        end
-      end
-
-      context "exception raised" do
-        let(:params) { valid_params }
-
-        before do
-          allow(CashTransaction).to receive(:create!).and_raise(ArgumentError, "xxxx")
-          creator
-        end
-
-        it_behaves_like "it is unsuccessful"
-
-        it "returns details of exception in errors" do
-          expect(creator.errors.first).to match(/^ArgumentError :: xxxx/)
-          expect(creator.errors.first).to match(/in `create_cash_transaction/)
         end
       end
     end

@@ -7,15 +7,10 @@ module Creators
     end
     class << self
       def call(disposable_income_summary:, outgoings_params:)
-        json_validator = JsonValidator.new("outgoings", outgoings_params)
-        if json_validator.valid?
-          ActiveRecord::Base.transaction do
-            outgoings_params[:outgoings].each { |outgoing| create_outgoing_collection(disposable_income_summary, outgoing) }
-          end
-          Result.new(errors: []).freeze
-        else
-          Result.new(errors: json_validator.errors).freeze
+        ActiveRecord::Base.transaction do
+          outgoings_params[:outgoings].each { |outgoing| create_outgoing_collection(disposable_income_summary, outgoing) }
         end
+        Result.new(errors: []).freeze
       rescue ActiveRecord::RecordInvalid => e
         Result.new(errors: e.record.errors.full_messages).freeze
       end

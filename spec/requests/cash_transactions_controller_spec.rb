@@ -7,7 +7,7 @@ RSpec.describe CashTransactionsController, type: :request do
     let(:gross_income_summary) { assessment.gross_income_summary }
     let(:headers) { { "CONTENT_TYPE" => "application/json" } }
     let(:creator_class) { Creators::CashTransactionsCreator }
-    let(:creator_instance) { instance_double(creator_class) }
+    let(:creator_instance) { instance_double(creator_class::Result) }
     let(:month1) { Date.current.beginning_of_month - 3.months }
     let(:month2) { Date.current.beginning_of_month - 2.months }
     let(:month3) { Date.current.beginning_of_month - 1.month }
@@ -26,13 +26,13 @@ RSpec.describe CashTransactionsController, type: :request do
         allow(creator_instance).to receive(:success?).and_return(true)
         allow(creator_class)
           .to receive(:call)
-               .with(assessment_id:, cash_transaction_params: params).and_return(creator_instance)
+               .with(assessment:, cash_transaction_params: params).and_return(creator_instance)
         post_payload
         expect(response).to have_http_status(:success)
       end
 
       context "creation is valid" do
-        let(:creator_service) { instance_double Creators::CashTransactionsCreator, success?: true }
+        let(:creator_service) { instance_double Creators::CashTransactionsCreator::Result, success?: true }
 
         before do
           allow(creator_class).to receive(:call).and_return(creator_service)
@@ -50,7 +50,7 @@ RSpec.describe CashTransactionsController, type: :request do
       end
 
       context "creation is invalid" do
-        let(:creator_service) { instance_double Creators::CashTransactionsCreator, success?: false, errors: ["error 1", "error 2"] }
+        let(:creator_service) { instance_double Creators::CashTransactionsCreator::Result, success?: false, errors: ["error 1", "error 2"] }
 
         before do
           allow(creator_class).to receive(:call).and_return(creator_service)

@@ -10,7 +10,7 @@ module Creators
     describe ".call" do
       subject(:service) do
         described_class.call(
-          assessment_id: assessment.id,
+          capital_summary: assessment.capital_summary,
           vehicles_params:,
         )
       end
