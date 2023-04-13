@@ -254,7 +254,7 @@ components:
               can be positive for a tax refund
             example: -5.24
           net_employment_income:
-            type: number
+            "$ref": "#/components/schemas/currency"
             description: Legacy field not used in calculation
     Asset:
       type: object

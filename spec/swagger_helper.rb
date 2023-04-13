@@ -239,7 +239,7 @@ RSpec.configure do |config|
                   example: -5.24,
                 },
                 net_employment_income: {
-                  type: :number,
+                  "$ref" => "#/components/schemas/currency",
                   description: "Legacy field not used in calculation",
                 },
               },
