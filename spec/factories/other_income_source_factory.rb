@@ -8,7 +8,9 @@ FactoryBot.define do
 
     trait :with_monthly_payments do
       after(:create) do |record|
-        [Date.current, 1.month.ago, 2.months.ago].each do |date|
+        [record.assessment.submission_date,
+         record.assessment.submission_date - 1.month,
+         record.assessment.submission_date - 2.months].each do |date|
           create :other_income_payment, other_income_source: record, amount: 75.0, payment_date: date, client_id: SecureRandom.uuid
         end
       end

@@ -30,7 +30,8 @@ RSpec.describe "applicants", type: :request, swagger_doc: "v5/swagger.yaml" do
                                          example: "1992-07-22",
                                          description: "Applicant date of birth" },
                         employed: {
-                          "type": %w[boolean null],
+                          type: %w[boolean null],
+                          description: "Deprecated field - calculation uses presence of employment data",
                         },
                         has_partner_opponent: { type: :boolean,
                                                 example: false,

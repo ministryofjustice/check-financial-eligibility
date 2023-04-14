@@ -7,7 +7,8 @@ module Utilities
 
     before do
       amounts.each do |amount|
-        create :employment_payment, employment:, gross_income_monthly_equiv: amount
+        # date isn't used in this scenario
+        create :employment_payment, employment:, gross_income_monthly_equiv: amount, date: Date.current
       end
     end
 

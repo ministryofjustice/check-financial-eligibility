@@ -240,7 +240,7 @@ RSpec.configure do |config|
                 },
                 net_employment_income: {
                   "$ref" => "#/components/schemas/currency",
-                  description: "Legacy field not used in calculation",
+                  description: "Deprecated field not used in calculation",
                 },
               },
             },

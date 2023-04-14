@@ -255,7 +255,7 @@ components:
             example: -5.24
           net_employment_income:
             "$ref": "#/components/schemas/currency"
-            description: Legacy field not used in calculation
+            description: Deprecated field not used in calculation
     Asset:
       type: object
       additionalProperties: false
@@ -429,6 +429,8 @@ paths:
                       type:
                       - boolean
                       - 'null'
+                      description: Deprecated field - calculation uses presence of
+                        employment data
                     has_partner_opponent:
                       type: boolean
                       example: false
@@ -2500,7 +2502,6 @@ paths:
                   description: The partner of the applicant
                   required:
                   - date_of_birth
-                  - employed
                   properties:
                     date_of_birth:
                       type: string
@@ -2510,7 +2511,8 @@ paths:
                     employed:
                       type: boolean
                       example: true
-                      description: Whether the applicant's partner is employed
+                      description: Deprecated field - calculation uses presence of
+                        employment data
                 irregular_incomes:
                   type: array
                   description: One or more irregular payment details

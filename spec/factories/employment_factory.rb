@@ -10,7 +10,9 @@ FactoryBot.define do
 
     trait :with_monthly_payments do
       after(:create) do |record, evaluator|
-        [Time.zone.today, 1.month.ago.to_date, 2.months.ago.to_date].each do |date|
+        [record.assessment.submission_date,
+         record.assessment.submission_date - 1.month,
+         record.assessment.submission_date - 2.months].each do |date|
           create :employment_payment, employment: record, date:,
                                       gross_income: evaluator.gross_monthly_income
         end
@@ -23,7 +25,9 @@ FactoryBot.define do
 
   trait :with_irregular_payments do
     after(:create) do |record|
-      [Time.zone.today, 32.days.ago.to_date, 64.days.ago.to_date].each do |date|
+      [record.assessment.submission_date,
+       record.assessment.submission_date - 32.days,
+       record.assessment.submission_date - 64.days].each do |date|
         create :employment_payment, employment: record, date:, gross_income: 1500, gross_income_monthly_equiv: 1500
       end
     end

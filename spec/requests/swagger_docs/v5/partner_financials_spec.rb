@@ -24,7 +24,7 @@ RSpec.describe "partner_financials", type: :request, swagger_doc: "v5/swagger.ya
                     partner: {
                       type: :object,
                       description: "The partner of the applicant",
-                      required: %i[date_of_birth employed],
+                      required: %i[date_of_birth],
                       properties: {
                         date_of_birth: {
                           type: :string,
@@ -35,7 +35,7 @@ RSpec.describe "partner_financials", type: :request, swagger_doc: "v5/swagger.ya
                         employed: {
                           type: :boolean,
                           example: true,
-                          description: "Whether the applicant's partner is employed",
+                          description: "Deprecated field - calculation uses presence of employment data",
                         },
                       },
                     },
