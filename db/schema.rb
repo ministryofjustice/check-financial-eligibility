@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_31_170201) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_14_114501) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -25,14 +25,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_31_170201) do
     t.boolean "employed"
     t.boolean "receives_asylum_support", default: false, null: false
     t.index ["assessment_id"], name: "index_applicants_on_assessment_id"
-  end
-
-  create_table "assessment_errors", force: :cascade do |t|
-    t.uuid "assessment_id", null: false
-    t.uuid "record_id"
-    t.string "record_type"
-    t.string "error_message"
-    t.index ["assessment_id"], name: "index_assessment_errors_on_assessment_id"
   end
 
   create_table "assessments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -50,8 +42,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_31_170201) do
 
   create_table "bank_holidays", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "dates"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "capital_items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -300,7 +292,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_31_170201) do
   end
 
   add_foreign_key "applicants", "assessments"
-  add_foreign_key "assessment_errors", "assessments"
   add_foreign_key "capital_items", "capital_summaries"
   add_foreign_key "capital_summaries", "assessments"
   add_foreign_key "cash_transaction_categories", "gross_income_summaries"
