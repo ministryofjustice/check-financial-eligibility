@@ -41,7 +41,7 @@ RSpec.describe CullStaleAssessmentsService do
   def create_assessment_and_associated_records
     ass = create :assessment
     create :applicant, assessment: ass
-    create :assessment_error, assessment: ass
+    # create :assessment_error, assessment: ass
     create_list :dependant, 2, assessment: ass
     create :capital_summary, :with_everything, :with_eligibilities, assessment: ass
     create :gross_income_summary,
@@ -59,7 +59,6 @@ RSpec.describe CullStaleAssessmentsService do
   def associated_models
     [
       Applicant,
-      AssessmentError,
       CapitalItem,
       CapitalSummary,
       CashTransactionCategory,

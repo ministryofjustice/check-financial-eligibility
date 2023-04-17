@@ -23,7 +23,7 @@ class Assessment < ApplicationRecord
   has_many :properties, through: :capital_summary, dependent: :destroy
   has_many :vehicles, through: :capital_summary, dependent: :destroy
   has_many :capital_items, through: :capital_summary, dependent: :destroy
-  has_many :assessment_errors, dependent: :destroy
+  has_many :assessment_errors, dependent: nil
   has_many :explicit_remarks, dependent: :destroy
   has_many :employments, dependent: :destroy, class_name: "ApplicantEmployment"
   has_many :partner_employments, dependent: :destroy
