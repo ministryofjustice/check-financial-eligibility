@@ -396,7 +396,7 @@ GEM
       attr_extras (>= 6.2.4)
       diff-lcs
       patience_diff
-    thor (1.2.1)
+    thor (1.2.2)
     timeout (0.3.2)
     trailblazer-option (0.1.2)
     tzinfo (2.0.6)
