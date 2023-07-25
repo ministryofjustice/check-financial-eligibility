@@ -1,5 +1,14 @@
 [![CircleCI](https://circleci.com/gh/ministryofjustice/check-financial-eligibility.svg?style=shield)](https://circleci.com/gh/ministryofjustice/check-financial-eligibility/tree/main)
 
+# DEPRECATION
+
+**NOTICE**
+
+**25 July 2023: This repo is deprecated, in favour of: [CFE-Civil](https://github.com/ministryofjustice/cfe-civil)**
+
+---
+
+
 # Ministry of Justice
 
 
